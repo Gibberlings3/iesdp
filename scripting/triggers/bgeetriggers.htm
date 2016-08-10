@@ -1,7 +1,8 @@
 ---
-title: "BGEE(2) Script Triggers"
+title: "BGEE Script Triggers"
 ---
-    <div class="title_main"> BGEE(2) Script Triggers </div>
+    
+    <div class="title_main"> BG(2)EE Script Triggers </div>
     <br />
     <strong>0x0001 Acquired(S:ResRef*)</strong><br />
     NT Returns true only if the current CRE obtained the specified item in the last script round.<br />
@@ -155,7 +156,8 @@ title: "BGEE(2) Script Triggers"
     corresponding actions will never take place.<br />
     <br />
     <strong>0x4031 HaveSpell(I:Spell*Spell)</strong><br />
-    Returns true only if the active CRE has the specified spell memorised.<br />
+    <strong>0x4031 HaveSpellRES(S:Spell*)</strong><br />
+    Returns true only if the active CRE has the specified spell (either as symbolic value or resource string) memorised.<br />
     <br />
     <strong>0x4032 HaveAnySpells()</strong><br />
     Returns true if the active CRE has at least one spell memorised.<br />
@@ -179,6 +181,7 @@ title: "BGEE(2) Script Triggers"
     Exact opposite of above.<br />
     <br />
     <strong>0x4039 NumTimesTalkedTo(I:Num*)</strong><br />
+    <strong>0x4039 NumberOfTimesTalkedTo(I:Num*)</strong><br />
     Returns true only if the player's party has spoken to the active CRE the exact number of times specified.<br />
     NB. NumTimesTalkedTo seems to increment when a PCinitiates conversion with an NPC, or an NPC initiates conversation with a PC. NumTimesTalkedTo does not seem to increment for force-talks, interactions, interjections and self-talking.<br />
     <br />
@@ -277,6 +280,7 @@ title: "BGEE(2) Script Triggers"
     Appears to be broken.<br />
     <br />
     <strong>0x4058 OutOfAmmo()</strong><br />
+    <strong>0x4058 HaveUsableWeapon()</strong><br />
     Seems to be broken. Returns true only if the active CRE has no ammunition for the current ranged weapon.<br />
     <br />
     <strong>0x4059 NumTimesInteracted(I:NPC*NPC,I:Num*)</strong><br />
@@ -304,6 +308,7 @@ title: "BGEE(2) Script Triggers"
     NT Not used in any existing scripts.<br />
     <br />
     <strong>0x4061 HasItem(S:ResRef*,O:Object*)</strong><br />
+    <strong>0x4061 HasItemType(O:Object*,I:Type*ITEMFLAG,I:IgnoreDestructible*BOOLEAN)</strong><br />
     Returns true only if the specified object has the specified item in its inventory. This trigger also checks with container items (e.g. Bags of Holding).<br />
     <br />
     <strong>0x4062 InteractingWith(O:Object*)</strong><br />
@@ -350,9 +355,6 @@ title: "BGEE(2) Script Triggers"
     <br />
     <strong>0x0070 Clicked(O:Object*)</strong><br />
     Only for trigger regions. Returns true if the specified object clicked on the trigger region running this script.<br />
-    <br />
-    <strong>0x4039 NumberOfTimesTalkedTo(I:Num*)</strong><br />
-    Returns true only if the number of times the party has spoken to this creature is equal to the number specified.<br />
     <br />
     <strong>0x4071 NumDead(S:Name*,I:Num*)</strong><br />
     Returns true only if the number of creatures with script name &quot;Name&quot; that have been killed is equal to the 2nd parameter.<br />
@@ -435,6 +437,7 @@ title: "BGEE(2) Script Triggers"
     Returns true only if the specified object is in the party and in the slot specified (slots are 0-5). Party slots are based on join order; Player1 is in slot 0, Player2 in slot 1 etc.<br />
     <br />
     <strong>0x0091 SpellCast(O:Object*,I:Spell*Spell)</strong><br />
+    <strong>0x0091 SpellCastRES(S:Spell*,O:Object*)</strong><br />
     Returns true only if the specified object cast the spell in the 2nd paramater in the last script round.<br />
     <br />
     <strong>0x4092 InLine(S:Target*,O:Object*)</strong><br />
@@ -484,6 +487,7 @@ title: "BGEE(2) Script Triggers"
     Returns true only if specified object is in the active area. The active area is that in which player 1 is. This trigger will crash the game if the specified creature is not in the active area and is not a global object.<br />
     <br />
     <strong>0x00A1 SpellCastOnMe(O:Caster*,I:Spell*Spell)</strong><br />
+    <strong>0x00A1 SpellCastOnMeRES(S:Spell*,O:Caster*)</strong><br />
     Returns true only if the specified object cast the specified spell on the active CRE in the last scriptround.<br />
     <br />
     <strong>0x40A2 CalanderDay(I:Day*)</strong><br />
@@ -499,9 +503,11 @@ title: "BGEE(2) Script Triggers"
     Returns true only if the object in the 2nd parameter has the scriptname specified.<br />
     <br />
     <strong>0x00A6 SpellCastPriest(O:Object*,I:Spell*Spell)</strong><br />
+    <strong>0x00A6 SpellCastPriestRES(S:Spell*,O:Object*)</strong><br />
     Returns true only if the specified object cast the specified priest spell in the last script round.<br />
     <br />
     <strong>0x00A7 SpellCastInnate(O:Object*,I:Spell*Spell)</strong><br />
+    <strong>0x00A7 SpellCastInnateRES(S:Spell*,O:Object*)</strong><br />
     Returns true only if the specified object cast the specified innate spell in the last script round.<br />
     NB. The spell level must match the spells definition (in spell.ids) for the trigger to return true.<br />
     <br />
@@ -668,17 +674,14 @@ title: "BGEE(2) Script Triggers"
     <strong>0x40DA HaveSpellParty(I:Spell*Spell)</strong><br />
     Returns true if any of the party members have the specified spell memorised.<br />
     <br />
-    <strong>0x4031 HaveSpellRES(S:Spell*)</strong><br />
-    ToB only. Returns true if the active CRE has the specified (by the string parameter) spell memorised.<br />
-    <br />
     <strong>0x40DB AmIInWatchersKeepPleaseIgnoreTheLackOfApostophe()</strong><br />
-    ToB only. Returns true only if the active CRE is in a Watcher's Keep (i.e. the current area begins with AR30).<br />
+    Returns true only if the active CRE is in a Watcher's Keep (i.e. the current area begins with AR30).<br />
     <br />
     <strong>0x40DB InWatchersKeep()</strong><br />
-    ToB only. Returns true only if the active CRE is in a Watcher's Keep (i.e. the current area begins with AR30).<br />    
+    Returns true only if the active CRE is in a Watcher's Keep (i.e. the current area begins with AR30).<br />    
     <br />
-    <strong>0x40DC AreaCheckAllegiance()</strong><br />
-    <span class="unknown">Unknown</span>.<br />
+    <strong>0x40DC AreaCheckAllegiance(I:Allegience*EA)</strong><br />
+    This trigger will check if any creatures of the specified allegiance are present in the current area.<br />
     <br />        
     <strong>0x40DD IsTouchGUI()</strong><br />
     Returns true only if the current device has touch screen capability.<br />
@@ -687,10 +690,117 @@ title: "BGEE(2) Script Triggers"
     Returns true if the DLC specified by the DLCName parameter has been purchased. Note: Returns true on PC/Mac/Linux as all DLCs are automatically available.<br />
     <br />
     <strong>0x40DF BeenInParty(S:Name*)</strong><br />
-    Returns true if the specified creature has been in the party.<br />
+    Returns true if the specified creature has been in the party at any point.<br />
     <br />
     <strong>0x40E0 NextTriggerObject(O:Object*)</strong><br />
-    BG2EE only. Defines the object that the next trigger will be evaluated in reference to. This trigger does not evaluate and does not count as a trigger in an OR() block. If the object cannot be found, the next trigger will evaluate to false.<br />
-  </div>
-</div>
-
+    Defines the object that the next trigger will be evaluated in reference to. This trigger does not evaluate and does not count as a trigger in an OR() block. If the object cannot be found, the next trigger will evaluate to false.<br />
+    <br />
+    <strong>0x40E1 ExtendedStateCheck(O:Object*,I:State*extstate)</strong><br />
+    Returns true only if the specified object is in the state specified (uses EXTSTATE.IDS).<br />
+    <br />
+    <strong>0x40E2 CheckSpellState(O:Object*,I:State*splstate)</strong><br />
+    Returns true only if the specified object is in the state specified (uses SPELLSTATE.IDS). Spell states can be set via <a href="../../opcodes/bgee.htm#op328">opcode 328</a>.<br />
+    <br />
+    <strong>0x40E3 NearLocation(O:Object*,I:PointX*,I:PointY*,I:Range*)</strong><br />
+    Returns true if the specified object is within the range of the specified point. Works similar to Range, but with a point instead of an object.<br />
+    <br />
+    <strong>0x40E4 NearSavedLocation(O:Object*,S:Global*,I:Range*)</strong><br />
+    Returns true if the object is near its home location (in case the specified variable doesn't exist) or near a point marked by a variable. The default home location for creatures is equal to their default position in the ARE file.<br />
+    <br />
+    <strong>0x40E5 Switch(S:Global*,S:Area*)</strong><br />
+    The switch trigger can be used to change how the RESPONSE # sections are evaluated. Using this trigger causes the RESPONSE sections to evaluate the global specified by the 1st parameter in the scope defined by the 2nd parameter.<br />
+    <br />
+    <strong>0x40E6 IsWeaponRanged(O:Object*)</strong><br />
+    Returns true if a ranged weapon (i.e. bow or thrown axe) is currently equipped and selected on the specified object.<br />
+    <br />
+    <strong>0x40E7 ButtonDisabled(I:Button*BUTTON)</strong><br />
+    Returns true if the specified interface button is disabled.<br />
+    <br />
+    <strong>0x40E8 HasItemCategory(O:Object*,I:Itemtype*ITEMCAT,I:Equipped*BOOLEAN)</strong><br />
+    Returns true if the target object has one or more items of the specified item category in their inventory. The 3rd parameter defines whether the item has to be equipped as well.<br />
+    <br />
+    <strong>0x40E9 NightmareModeOn()</strong><br />
+    Returns true if Nightmare Mode is active (aka "Legacy of Bhaal" mode in BGEE/BG2EE or "Heart of Fury" mode in IWDEE).<br />
+    <br />
+    <strong>0x40EA OriginalClass(O:Object*,I:Class*CLASS)</strong><br />
+    Returns true if the original class of a dual-classed creature equals the class specified in the 2nd parameter.<br />
+    <br />
+    <strong>0x00EB CutSceneBroken()</strong><br />
+    Returns true if a breakable cutscene has been terminated by the user.<br />
+    <br />
+    <strong>0x40EC WeaponEffectiveVs(O:Object*,I:Hand*HAND)</strong><br />
+    Returns true if the weapon equipped in the hand defined by the 2nd parameter of the active creature can hit the target object specified in the 1st parameter.<br />
+    <br />
+    <strong>0x40ED INI(S:Name*,I:Number*)</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40EE reserved1()</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40EF reserved2()</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40F0 reserved3()</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40F1 ModalStateObject(O:Object*,I:ModalState*Modal)</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40F2 WeaponCanDamage(O:Object*,I:Hand*HAND)</strong><br />
+    Returns true if the weapon equipped in the hand defined by the 2nd parameter of the active creature can cause non-zero damage to the target object specified in the 1st parameter.<br />
+    <br />
+    <strong>0x40F3 NumKilledByParty(I:Number*)</strong><br />
+    Returns true if the total count of killed creatures by the party equals the specified number.<br />
+    <br />
+    <strong>0x40F4 NumKilledByPartyGT(I:Number*)</strong><br />
+    Returns true if the total count of killed creatures by the party is greater than the specified number.<br />
+    <br />
+    <strong>0x40F5 NumKilledByPartyLT(I:Number*)</strong><br />
+    Returns true if the total count of killed creatures by the party is less than the specified number.<br />
+    <br />
+    <strong>0x40F6 CanTurn(O:Object*,I:Difference*)</strong><br />
+    Returns true if the active CRE can turn the (undead) target object with a level difference equal to or greater than the value specified in the 2nd parameter.<br />
+    <br />
+    <strong>0x40F7 reserved()</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40F8 CanEquipRanged()</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40F9 ImmuneToSpellLevel(O:Object*,I:Level*)</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40FA StoryModeOn()</strong><br />
+    Returns true if Story Mode is active.<br />
+    <br />
+    <strong>0x40FB IsForcedRandomEncounterActive(S:Area*)</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40FC reserved()</strong><br />
+    NT<br />
+    <br />
+    <strong>0x40FD ClassLevel(O:Object*,I:Category*CLASSCAT,I:Value*)</strong><br />
+    Returns true only if the experience level of the specified object in the class denoted by the 2nd parameter equals the 3rd parameter.<br />
+    <br />
+    <strong>0x40FE ClassLevelGT(O:Object*,I:Category*CLASSCAT,I:Value*)</strong><br />
+    Returns true only if the experience level of the specified object in the class denoted by the 2nd parameter is greater than the 3rd parameter.<br />
+    <br />
+    <strong>0x40FF ClassLevelLT(O:Object*,I:Category*CLASSCAT,I:Value*)</strong><br />
+    Returns true only if the experience level of the specified object in the class denoted by the 2nd parameter is less than the 3rd parameter.<br />
+    <br />
+    <strong>0x4100 SecretDoorDetected(O:Object*,I:Open*BOOLEAN)</strong><br />
+    Returns true only if the hidden door specified by the 1st parameter has been detected, and its opened state equals the 2nd parameter.<br />
+    <br />
+    <strong>0x0101 reserved()</strong><br />
+    NT<br />
+    <br />
+    <strong>0x4102 HaveKnownSpell(I:Spell*Spell)</strong><br />
+    <strong>0x4102 HaveKnownSpellRES(S:Spell*)</strong><br />
+    Returns true if the active CRE has the specified spell scribed in their spellbook. It does not have to be memorised.<br />
+    <br />
+    <strong>0x4103 CheckItemSlot(O:Object*,S:Item*,I:Slot*SLOTS)</strong><br />
+    NT<br />
+    <br />
+    <strong>0x4104 CurrentAmmo(S:ResRef*,O:Object*)</strong><br />
+    NT<br />
+    <br />

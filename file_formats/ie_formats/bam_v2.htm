@@ -68,22 +68,22 @@ This file format describes animated graphics. Such files are used for animations
           <tr>
             <td>0x000c</td>
             <td>4 (dword)</td>
-            <td>Count of <a href="#bamv2_CycleEntry">cycles</a></td>
+            <td>Count of <a href="#bamv2_CycleEntry">cycle entries</a></td>
           </tr>
           <tr>
             <td>0x0010</td>
             <td>4 (dowrd)</td>
-            <td>Count of <a href="#bamv2_DataBlock">cycles</a></td>
+            <td>Count of <a href="#bamv2_DataBlock">data blocks</a></td>
           </tr>
           <tr>
             <td>0x0014</td>
             <td>4 (dword)</td>
-            <td>Offset (from start of file) to <a href="#bamv2_FrameEntry">frame entries</a> (which are immediately followed by <a href="#bamv2_CycleEntry">cycle entries</a>)</td>
+            <td>Offset (from start of file) to <a href="#bamv2_FrameEntry">frame entries</a></td>
           </tr>
           <tr>
             <td>0x0018</td>
             <td>4 (dword)</td>
-            <td>Offset (from start of file) to <a href="#bamv2_CycleEntry">cycles</a></td>
+            <td>Offset (from start of file) to <a href="#bamv2_CycleEntry">cycle entries</a></td>
           </tr>
           <tr>
             <td>0x001c</td>
@@ -152,7 +152,7 @@ This file format describes animated graphics. Such files are used for animations
     <div class="fileHeader"><a name="bamv2_CycleEntry">BAM v2 Cycle Entries</a></div>
     <div class="indent1">
       <br />
-      These entries refer to a range of indices in the <a href="#bamv2_FrameLUT">frame lookup table</a>, which in turn points to the actual frames. Note that entries in the <a href="#bamv2_FrameLUT">frame lookup table</a> can also be shared between cycles.<br />
+      These entries refer to a range of indices in the <a href="#bamv2_FrameEntry">frame entries table</a>.<br />
       <br />
       <table border="1" width="98%">
         <colgroup>
@@ -171,12 +171,12 @@ This file format describes animated graphics. Such files are used for animations
           <tr>
             <td>0x0000</td>
             <td>2 (word)</td>
-            <td>Count of <a href="#bamv2_FrameLUT">frame indices</a> in this cycle</td>
+            <td>Count of <a href="#bamv2_FrameEntry">frame entries</a> in this cycle</td>
           </tr>
           <tr>
             <td>0x0002</td>
             <td>2 (word)</td>
-            <td>Index into <a href="#bamv2_FrameLUT">frame lookup table</a> of first frame index in this cycle</td>
+            <td>Start index of <a href="#bamv2_FrameEntry">frame entries</a> in this cycle</td>
           </tr>
         </tbody>
       </table>
@@ -217,22 +217,22 @@ This file format describes animated graphics. Such files are used for animations
             <td>Source y coordinate</td>
           </tr>
           <tr>
-            <td>0x000a</td>
+            <td>0x000c</td>
             <td>4 dword</td>
             <td>Width</td>
           </tr>
           <tr>
-            <td>0x000c</td>
+            <td>0x0010</td>
             <td>4 dword</td>
             <td>Height</td>
           </tr>
           <tr>
-            <td>0x000e</td>
+            <td>0x0014</td>
             <td>4 dword</td>
             <td>Target x coordinate</td>
           </tr>
           <tr>
-            <td>0x000e</td>
+            <td>0x0018</td>
             <td>4 dword</td>
             <td>Target y coordinate</td>
           </tr>          

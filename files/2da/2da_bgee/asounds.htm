@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BG(2):EE 2DA Files : asounds.2da </title>
+<link rel="stylesheet" type="text/css" href="../../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> asounds.2da</div>
+<br />
+Each animation sound 2da contains soundset information associated with each animation with the same 4-letter animation code (see ANIMSND.2DA). Rows are paired and are associated with an animation sequences (see SEQ.IDS). The first row of each pair contains space-delimited sound resource references. When the animation sequence is played, one of the listed sounds are chosen at random. This is ignored if the sound name is identical to the default value (i.e. ***). The second row of each pair contains the frame number of the animation cycle (see relevant BAM files) to play the chosen sound.<br />
+<br />
+All the SEQ.IDS-related rows are always played unless the creature is STATE_SILENCED. The rows Battle_Cry and Selection are used only if there are no available battle cry and selection sounds present within the CRE file, respectively.<br />
+<br />
+For example, the file AIRELE1.CRE animation type is CGAMEANIMATIONTYPE_ELEMENTAL_AIR, coded as MAIR. It therefore uses MAIR.2DA for its animation soundset. The ATTACK row pair has three sounds: airel01, nosound, and nosound, played at frames 2, 0, and 0 respectively. When this creature attacks, one sound from this list is chosen from random and played. Note "nosound" is an invalid sound, so no sound plays at all. AIRELE1.CRE will use the Battle_Cry and Selection sounds in MAIR.2DA, because it has no valid battle cry and selection sounds present in the CRE file.<br />
+<br />
+<pre>
+Mair/air elemental
+***
+SOUND
+ATTACK  airel01  nosound  nosound
+ATTACK 2 0 0
+AWAKE ***
+AWAKE 0
+CAST ***
+CAST 0
+CONJURE ***
+CONJURE 0
+DAMAGE airel06
+DAMAGE 0
+DIE airel07
+DIE 0
+HEAD_TURN ***
+HEAD_TURN 0
+READY ***
+READY 0
+SHOOT ***
+SHOOT 0
+TWITCH ***
+TWITCH 0
+WALK ***
+WALK 0
+ATTACK_SLASH airel03 nosound nosound
+ATTACK_SLASH 2 0 0
+ATTACK_BACKSLASH airel04 nosound nosound
+ATTACK_BACKSLASH 2 0 0
+ATTACK_JAB airel05 nosound nosound
+ATTACK_JAB 0
+EMERGE ***
+EMERGE 0
+HIDE ***
+HIDE 0
+SLEEP ***
+SLEEP 0
+Battle_Cry airel01 airel02
+Battle_Cry 0 0
+Selection airel01
+Selection 0
+</pre>
+<br />
+Note. BG2: Throne of Bhaal has a bug where only the first and last sounds will play if there are more than 2 sounds listed under a row. The middle sounds will not play correctly. For example, MSOL.2DA has the following ATTACK row pair, and solarg02 will never play when a creature of animation CGAMEANIMATIONTYPE_SOLAR (MSOL) attacks.<br />
+<br />
+<pre>
+Msol/Solar
+***
+SOUND
+ATTACK solarg01 solarg02 nosound
+ATTACK 0        0        0
+</pre>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

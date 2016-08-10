@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BG(2):EE 2DA Files : xl3000.2da </title>
+<link rel="stylesheet" type="text/css" href="../../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> xl3000.2da</div>
+<br />
+This file defines the links from additional areas on the <a href="../../../file_formats/ie_formats/wmap_v1.htm">worldmap</a>.<br />
+It is the substitute of area link entries in WMP files.<br />
+<br />
+In BG2EE we have:<br />
+
+<pre>
+2DA V1.0
+*
+           AREA       FLAGS     ENTRY_POINT DISTANCE_SCALE  ENCOUNTER_PROB  ENCOUNTER0  ENCOUNTER1  ENCOUNTER2  ENCOUNTER3  ENCOUNTER4  LINKTO_DIR 
+1          OH6000     4         EXITWMP     1               0               *           *           *           *           *           *
+2          OH6100     4         EXITW       1               0               *           *           *           *           *           *
+3          OH6200     4         EXITW       1               0               *           *           *           *           *           *
+4          AR0020     1         EXITNE      5               0               *           *           *           *           *           *
+5          AR2000     4         EXITNW      5               0               *           *           *           *           *           *
+6          AR1200     8         EXITW       6               0               *           *           *           *           *           *
+7          AR1100     4         EXITSE      6               0               *           *           *           *           *           *
+8          AR1300     4         EXITSE      5               0               *           *           *           *           *           *
+9          OH6000     4         EXITSE      1               0               *           *           *           *           *           *
+10         AR1200     4         EXITSW      6               0               *           *           *           *           *           2
+11         AR2000     4         EXITSW      5               0               *           *           *           *           *           2
+12         AR2000     4         EXITSW      5               0               *           *           *           *           *           1
+13         AR2000     4         EXITSW      5               0               *           *           *           *           *           3
+14         AR1100     4         EXITSW      6               0               *           *           *           *           *           2
+15         AR1100     4         EXITSW      6               0               *           *           *           *           *           3
+16         AR1300     4         EXITSW      5               0               *           *           *           *           *           2
+17         AR1300     4         EXITSW      5               0               *           *           *           *           *           3
+18         AR0020     4         EXITSW      5               0               *           *           *           *           *           2
+19         AR0020     4         EXITSW      5               0               *           *           *           *           *           0
+20         OH6000     4         EXITE       1               0               *           *           *           *           *           1
+21         OH6100     4         EXITE       1               0               *           *           *           *           *           1
+22         OH6200     4         EXITE       1               0               *           *           *           *           *           1
+</pre>
+
+Where first column indicates simply the next number of link from given area and:<br />
+<br />
+<table border="1" width="555">
+  <thead>
+    <tr>
+      <th width="73">offset in WMP file</th>
+      <th width="120">Name in 2DA</th>
+      <th width="340">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="73">N/A</td>
+      <td width="120">AREA</td>
+      <td width="340">Name of destination area</td>
+    </tr>
+    <tr>
+      <td width="73">0x0004</td>
+      <td width="120">ENTRY_POINT</td>
+      <td width="340">Name of the entry point in the destination area</td>
+    </tr>
+    <tr>
+      <td width="73">0x0024</td>
+      <td width="120">DISTANCE_SCALE</td>
+      <td width="340"><div class="unknown">DISTANCE_SCALE - multipier of the flags. </div></td> 
+    </tr>
+    <tr>
+      <td width="73">0x0028</td>
+      <td width="120">Flags/</td>
+      <td width="340"><div class="unknown">Flags. Related with travel time.</div></td>
+    </tr>
+    <tr>
+      <td width="73">0x002c</td>
+      <td width="120">ENCOUNTER0</td>
+      <td width="340">Area of random encounter resref (ENCOUNTER0)</td>
+    </tr>
+    <tr>
+      <td width="73">0x0034</td>
+      <td width="120">ENCOUNTER1</td>
+      <td width="340">Area of random encounter resref (ENCOUNTER1)</td>
+    </tr>
+    <tr>
+      <td width="73">0x003c</td>
+      <td width="120">ENCOUNTER2</td>
+      <td width="340">Area of random encounter resref (ENCOUNTER2)</td>
+    </tr>
+    <tr>
+      <td width="73">0x0044</td>
+      <td width="120">ENCOUNTER3</td>
+      <td width="340">Area of random encounter resref (ENCOUNTER3)</td>
+    </tr>
+    <tr>
+      <td width="73">0x004c</td>
+      <td width="120">ENCOUNTER4</td>
+      <td width="340">Area of random encounter resref (ENCOUNTER4)</td>
+    </tr>
+    <tr>
+      <td width="73">0x0054</td>
+      <td width="120">ENCOUNTER_PROB</td>
+      <td width="340">Probability of random encounter</td>
+    </tr>
+    <tr>
+      <td width="73">0x0028</td>
+      <td width="120">128 (bytes)</td>
+      <td width="340"><div class="unknown">Unknown/reserved</div></td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+
+NB. Values in the Link_To column mean:<br />
+* : Link to the area defined in the AREA column<br />
+0 : Link from the area defined in the AREA column to add to the North group of the area<br />
+1 : Link to add to the East group<br />
+2 : Link to add to the South group<br />
+3 : Link to add to the West group<br />
+
+The links added to the area defined in the AREA column are added before existing links of the selected group.<br />
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

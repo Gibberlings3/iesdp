@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BG(2):EE 2DA Files : kitlist.2da </title>
+<link rel="stylesheet" type="text/css" href="../../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> kitlist.2da</div>
+<br />
+This file defines kit-related information.<br />
+The first column contains numeric identifiers for each kit.<br />
+The second column contains character identifiers for each kit.<br />
+The third column lists a value of a strref, which contains the kit name in lowercase (eg. berserker).<br />
+The fourth column lists a value of a strref, which contains the kit name in mixed case (eg. Berserker).<br />
+The fifth column lists a value of a strref, which contains a summary description of the kit.<br />
+The sixth column contains the filename of the clab to be used when levelling up the kit.<br />
+The seventh column is a column index into weapprof.2da.<br />
+The eighth column contains a valae relating to the items the kit is allowed to use. These values correspond to the kit usability flags in itm files.<br />
+The ninth column lists identifiers, controlling which class selection screen the kit appears under (and also some main kit restrictions, such as the buttons in the button bar).<br />
+The tenth column defines a value that is referenced in KIT.IDS which can be referred to in script actions or triggers.<br />
+In BG2EE we have:<br />
+<pre>
+2DA              V1.0
+*
+                 ROWNAME          LOWER            MIXED            HELP             ABILITIES        PROFICIENCY      UNUSABLE         CLASS            KITIDS
+0                RESERVE          *                *                *                *                *                *                *                *
+1                BERSERKER        25179            25151            25201            CLABFI02         29               0x00000001       2                0x00004001
+2                WIZARD_SLAYER    25180            25152            25203            CLABFI03         30               0x00000002       2                0x00004002
+3                KENSAI           25181            25153            25204            CLABFI04         31               0x00000004       2                0x00004003
+4                CAVALIER         25182            25154            25206            CLABPA02         32               0x00000008       6                0x00004004
+5                INQUISITOR       25184            25155            25207            CLABPA03         33               0x00000010       6                0x00004005
+6                UNDEAD_HUNTER    25185            25156            25208            CLABPA04         34               0x00000020       6                0x00004006
+7                FERALAN          25186            25157            25209            CLABRN02         35               0x00008000       12               0x00004007
+8                STALKER          25187            25158            25211            CLABRN03         36               0x00010000       12               0x00004008
+9                BEASTMASTER      25188            25159            25212            CLABRN04         37               0x00020000       12               0x00004009
+10               ASSASIN          25189            25160            25213            CLABTH02         38               0x00040000       4                0x0000400A
+11               BOUNTY_HUNTER    25190            25161            25215            CLABTH03         39               0x00080000       4                0x0000400B
+12               SWASHBUCKLER     25191            25162            25216            CLABTH04         40               0x00100000       4                0x0000400C
+13               BLADE            25192            25164            25217            CLABBA02         41               0x00200000       5                0x0000400D
+14               JESTER           25193            25165            25219            CLABBA03         42               0x00400000       5                0x0000400E
+15               SKALD            25194            25166            25220            CLABBA04         43               0x00800000       5                0x0000400F
+16               TOTEMIC_DRUID    25198            25171            25224            CLABDR02         44               0x08000000       11               0x00004010
+17               SHAPESHIFTER     25199            25173            25225            CLABDR03         45               0x10000000       11               0x00004011
+18               BEAST_FRIEND     25200            25174            25227            CLABDR04         46               0x20000000       11               0x00004012
+19               TALOS            25195            25168            25221            CLABPR02         47               0x01000000       3                0x00004013
+20               HELM             25196            25169            25222            CLABPR03         48               0x02000000       3                0x00004014
+21               LATHANDER        25197            25170            25223            CLABPR04         49               0x04000000       3                0x00004015
+22               ABJURER          597              502              9564             CLABMA02         21               0x00000040       1                0x00000040
+23               CONJURER         2179             504              9565             CLABMA06         22               0x00000080       1                0x00000080
+24               DIVINER          2846             2012             9566             CLABMA05         23               0x00000100       1                0x00000100
+25               ENCHANTER        2861             2022             9567             CLABMA09         24               0x00000200       1                0x00000200
+26               ILLUSIONIST      2862             12785            9568             CLABMA08         25               0x00000400       1                0x00000400
+27               INVOKER          3015             12786            9569             CLABMA07         26               0x00000800       1                0x00000800
+28               NECROMANCER      12744            12787            9570             CLABMA03         27               0x00001000       1                0x00001000
+29               TRANSMUTER       12745            12788            9571             CLABMA04         28               0x00002000       1                0x00002000
+30               WILDMAGE         54893            54894            54892            CLABMA01         52               0x80000000       1                0x80000000
+31               BARBARIAN        45855            45859            45869            CLABFI05         51               0x40000000       2                0x40000000
+32               Blackguard       77512            77513            77514            CLABPA06         53               0x00000021       6                0x00004020
+33               SHADOWDANCER     74296            74297            74298            CLABTH05         54               0x00004000       4                0x00004021
+34               DWARVEN_DEFENDER 74299            74300            74301            CLABFI06         55               0x00004000       2                0x00004022
+35               DRAGON_DISCIPLE  74302            74303            74304            CLABSO01         56               0x00004000       19               0x00004023
+36               DARK_MOON        74305            74306            74307            CLABMO02         57               0x00004000       20               0x00004024
+37               SUN_SOUL         74308            74309            74310            CLABMO03         58               0x00004000       20               0x00004025
+38               LATHANDER_X      25197            25170            25223            CLABPR04         49               0x04000000       3                0x00004015
+39               GRIZZLY_BEAR     16119            16119            86479            CLABBEAR         60               0xFFFFFFFF       2                
+40               OHTYR            103137           93785            93786            OHTYR            61               0x00004000       3                0x00004028
+</pre>
+
+CLASS values are (from class.ids):<br />
+<div class="indent1">
+  1 - Mage<br />
+  2 - Fighter<br />
+  3 - Cleric<br />
+  4 - Thief<br />
+  5 - Bard<br />
+  6 - Paladin<br />
+  9 - <br />
+  10 - <br />
+  11 - Druid<br />
+  12 - Ranger<br />
+  19 - Sorcerer<br />
+  20 - Monk<br />
+</div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

@@ -11,19 +11,24 @@ title: "CLUA Console"
   
   <div id="enable">
     <br />
-    <strong>Activating the Console (BG:EE)</strong><br />
+    <strong>Activating the Console in BG(2): EE</strong><br />
     <div class="indent1">
-      Enable <br />
-        <div class="indent1">
+      Enable (before patch v2.0)<br />
+      <div class="indent1">
         Open the Baldur.ini file (located in the 'Documents\Baldur's Gate - Enhanced Edition' directory). <br />
         Find the line <span class="highlight"> INSERT INTO options ROWS ( </span> and add the text <span class="highlight"> 'Program Options',	'Debug Mode',	'1', </span> underneath. <br />
+      </div>
+      Enable (patch v2.0 or later)<br />
+      <div class="indent1">
+        Open the Baldur.lua file (located in the 'Documents\Baldur's Gate - Enhanced Edition' directory). <br />
+        Add the line <span class="highlight">SetPrivateProfileString('Program Options','Debug Mode','1')</span> to it. <br />
       </div>
       Access <br />
       <div class="indent1">
         Create a new game / load a save game.<br />
         Press <span class="highlight"> ctrl </span> and <span class="highlight"> space </span> together.<br />
         CLUA commands can be entered in the editing area that appears at the bottom of the screen.<br />
-        Commands must be prefixed with <span class="highlight"> CLUAConsole: </span><br />
+        Commands must be prefixed with <span class="highlight"> CLUAConsole: </span> (before patch v2.0) or <span class="highlight"> C: </span> (since patch v2.0 and possibly before).<br />
       </div>
       <br />
     </div>
@@ -52,7 +57,7 @@ title: "CLUA Console"
         CTRL+K &nbsp;&nbsp; Creature under cursor kick out party<br />
         CTRL+L &nbsp;&nbsp; Plays animation (selected by CTRL+I)<br />
         CTRL+M &nbsp;&nbsp; (Followed by ENTER) Debug Dump (if [Game Options] Wild Surge Keys = 1)<br />
-          CTRL+O &nbsp;&nbsp; (Followed by ENTER) Write Debug Dump to log file (if [Program Options] Logging On = 1)<br />
+        CTRL+O &nbsp;&nbsp; (Followed by ENTER) Write Debug Dump to log file (if [Program Options] Logging On = 1)<br />
         CTRL+P &nbsp;&nbsp; Keep screen centred on selected character<br />
         CTRL+Q &nbsp;&nbsp; Creature under cursor joins party<br />
         CTRL+R &nbsp;&nbsp; Heals character under cursor<br />
@@ -108,6 +113,16 @@ title: "CLUA Console"
       DisplayText("&lt;string&gt;")<br />
       <div class="indent1">
         Displays the text specified by &lt;string&gt;.<br />
+      </div>
+      Eval(&lt;string&gt;)<br />
+      <div class="indent1">
+        Executes the script action specified by &lt;string&gt;.<br />
+        The whole string can be enclosed into single quotes (') so that double quotes<br />
+        can still be used within the script action.<br />
+      </div>
+      Exec(&lt;string&gt;)<br />
+      <div class="indent1">
+        Executes all clua commands contained in the text file specified by &lt;string&gt;.<br />
       </div>
       EnableCheatKeys(&lt;int&gt;)<br />
       <div class="indent1">
@@ -180,6 +195,12 @@ title: "CLUA Console"
       TestAllDialog()<br />
       <div class="indent1">
         Lists all dialog file in the game, and checks for errors.<br />
+      </div>
+      WriteScript(&lt;string&gt;)<br />
+      <div class="indent1">
+        Output scripts into the directory specified by &lt;string&gt;. <br />
+        Place mouse cursor of creature to evaluate scripts attached to that creature.<br />
+        Otherwise it will evaluate area scripts.<br />
       </div>
       </div>
       </div>

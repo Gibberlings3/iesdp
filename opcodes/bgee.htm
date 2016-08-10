@@ -140,9 +140,18 @@ title: "Opcodes"
   <span class="opnamedata">HP: Damage [12]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Damage Amount</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Flags</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Damages the target by the value specified by the 'Damage Amount' field, with the damage type specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0           Crushing<br/>1           Crushing Set to Value<br/>2           Crushing Set to Percentage<br/>3           Crushing Reduce by Percentage<br/>65536       Acid<br/>65537       Acid Set to Value<br/>65538       Acid Set to Percentage<br/>65539       Acid Reduce by Percentage<br/>131072      Cold<br/>131073      Cold Set to Value<br/>131074      Cold Set to Percentage<br/>131075      Cold Reduce by Percentage<br/>262144      Electricity<br/>262145      Electricity Set to Value<br/>262146      Electricity Set to Percentage<br/>262147      Electricity Reduce by Percentage<br/>524288      Fire<br/>524289      Fire Set to Value<br/>524290      Fire Set to Percentage<br/>524291      Fire Reduce by Percentage<br/>1048576     Piercing<br/>1048577     Piercing Set to Value<br/>1048578     Piercing Set to Percentage<br/>1048579     Piercing Reduce by Percentage<br/>2097152     Poison<br/>2097153     Poison Set to Value<br/>2097154     Poison Set to Percentage<br/>2097155     Poison Reduce by Percentage<br/>4194304     Magic<br/>4194305     Magic Set to Value<br/>4194306     Magic Set to Percentage<br/>4194307     Magic Reduce by Percentage<br/>8388608     Missile<br/>8388609     Missile Set to Value<br/>8388610     Missile Set to Percentage<br/>8388611     Missile Reduce by Percentage<br/>16777216    Slashing<br/>16777217    Slashing Set to Value<br/>16777218    Slashing Set to Percentage<br/>16777218    Slashing Reduce by Percentage<br/>33554432    Magic Fire<br/>33554433    Magic Fire Set to Value<br/>33554434    Magic Fire Set to Percentage<br/>33554435    Magic Fire Reduce by Percentage<br/>67108864    Magic Cold<br/>67108865    Magic Cold Set to Value<br/>67108866    Magic Cold Set to Value<br/>67108867    Magic Cold Reduce by Percentage<br/>134217728   Stunning<br/>134217729   Stunning Set to Value<br/>134217730   Stunning Set to Percentage<br/>134217731   Stunning Reduce by Percentage<br/>268435456   Soul Eater<br/>268435457   Soul Eater Set to Value<br/>268435458   Soul Eater Set to Percentage<br/>268435459   Soul Eater Reduce by Percentage<br/>1073741824  Disease<br/>1073741825  Disease Set to Value<br/>1073741826  Disease Set to Percentage<br/>1073741827  Disease Reduce by Percentage<br/>The Dice values can be used to inflict varying damage amounts - e.g. 2d6 would do 2-12 damage (Damage type is still specified by the 'Type' value).<br/>NB. 'Stunning' damage does not stun the target. Stunning damage cannot kill a creature, creatures are reduced to 1 HP and are knocked unconscious.<br/>NB. Using 'Magic Fire' or 'Magic Cold' as a damage type will result the game to crash if the damage kills the target.<br/>NB. If 'Damage Amount' and the Dice values are both non-zero, the total damage inflicted is: 'Damage Amount' + Dice value.<br/>NB. 'Damage Amount' can be positive or negative (though the damage sound will play in either case).</div><br />
+  <div class="descriptiondata">Damages the target by the value specified by the 'Damage Amount' field, with the damage type specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0           Crushing<br/>1           Crushing Set to Value<br/>2           Crushing Set to Percentage<br/>3           Crushing Reduce by Percentage<br/>65536       Acid<br/>65537       Acid Set to Value<br/>65538       Acid Set to Percentage<br/>65539       Acid Reduce by Percentage<br/>131072      Cold<br/>131073      Cold Set to Value<br/>131074      Cold Set to Percentage<br/>131075      Cold Reduce by Percentage<br/>262144      Electricity<br/>262145      Electricity Set to Value<br/>262146      Electricity Set to Percentage<br/>262147      Electricity Reduce by Percentage<br/>524288      Fire<br/>524289      Fire Set to Value<br/>524290      Fire Set to Percentage<br/>524291      Fire Reduce by Percentage<br/>1048576     Piercing<br/>1048577     Piercing Set to Value<br/>1048578     Piercing Set to Percentage<br/>1048579     Piercing Reduce by Percentage<br/>2097152     Poison<br/>2097153     Poison Set to Value<br/>2097154     Poison Set to Percentage<br/>2097155     Poison Reduce by Percentage<br/>4194304     Magic<br/>4194305     Magic Set to Value<br/>4194306     Magic Set to Percentage<br/>4194307     Magic Reduce by Percentage<br/>8388608     Missile<br/>8388609     Missile Set to Value<br/>8388610     Missile Set to Percentage<br/>8388611     Missile Reduce by Percentage<br/>16777216    Slashing<br/>16777217    Slashing Set to Value<br/>16777218    Slashing Set to Percentage<br/>16777218    Slashing Reduce by Percentage<br/>33554432    Magic Fire<br/>33554433    Magic Fire Set to Value<br/>33554434    Magic Fire Set to Percentage<br/>33554435    Magic Fire Reduce by Percentage<br/>67108864    Magic Cold<br/>67108865    Magic Cold Set to Value<br/>67108866    Magic Cold Set to Value<br/>67108867    Magic Cold Reduce by Percentage<br/>134217728   Stunning<br/>134217729   Stunning Set to Value<br/>134217730   Stunning Set to Percentage<br/>134217731   Stunning Reduce by Percentage<br/>268435456   Soul Eater<br/>268435457   Soul Eater Set to Value<br/>268435458   Soul Eater Set to Percentage<br/>268435459   Soul Eater Reduce by Percentage<br/>1073741824  Disease<br/>1073741825  Disease Set to Value<br/>1073741826  Disease Set to Percentage<br/>1073741827  Disease Reduce by Percentage<br/>The Dice values can be used to inflict varying damage amounts - e.g. 2d6 would do 2-12 damage (Damage type is still specified by the 'Type' value).
+<br/><br/>Known bit values for 'Flags' are:
+<br/>Bit 0 - Drain HP to caster
+<br/>Bit 1 - Transfer HP to target
+<br/>Bit 2 - Fist damage only
+<br/>Bit 8 - Save for half
+<br/>Bit 9 - Made save
+<br/>Bit 10 - Does not wake sleepers
+<br/><br/>NB. 'Stunning' damage does not stun the target. Stunning damage cannot kill a creature, creatures are reduced to 1 HP and are knocked unconscious.<br/>NB. Using 'Magic Fire' or 'Magic Cold' as a damage type will result the game to crash if the damage kills the target.<br/>NB. If 'Damage Amount' and the Dice values are both non-zero, the total damage inflicted is: 'Damage Amount' + Dice value.<br/>NB. 'Damage Amount' can be positive or negative (though the damage sound will play in either case).</div><br />
   <hr />
   <br />
 </div>
@@ -866,9 +875,16 @@ title: "Opcodes"
   <span class="opnamedata">State: Disease [78]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Damage</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Behaviour</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.<br/>Known values for 'Type' are:<br/>0   1 HP per second<br/>1   1 HP per second<br/>2   'Damage' per Second<br/>3   Cause 1HP every 'Damage' seconds<br/>4   Strength Penalty<br/>5   Dexterity Penalty<br/>6   Constitution Penalty<br/>7   Intelligence Penalty<br/>8   Wisdom Penalty<br/>9   Charisma Penalty<br/>10  Slow Effect<br/>'Damage' can be positive (penalty) or negative (bonus).<br/>Permanent timing modes require a duration for this effect to work.</div><br />
+  <div class="descriptiondata">Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.<br/>Known values for 'Type' are:<br/>0   1 HP per second<br/>1   1 HP per second<br/>2   'Damage' per Second<br/>3   Cause 1HP every 'Damage' seconds<br/>4   Strength Penalty<br/>5   Dexterity Penalty<br/>6   Constitution Penalty<br/>7   Intelligence Penalty<br/>8   Wisdom Penalty<br/>9   Charisma Penalty<br/>10  Slow Effect
+<br/>11  Mold touch/Single
+<br/>12  Mold touch/Decrement
+<br/>13  Contagion<br/><br/>'Damage' can be positive (penalty) or negative (bonus).
+<br/><br/>The field 'Behaviour' is used for "Mold touch" and consists of two word values:
+<br/>First word: # rounds to apply the affect
+<br/>Second word: Whether to use damage defined in 'Damage'.<br/><br/>Permanent timing modes require a duration for this effect to work.</div><br />
   <hr />
   <br />
 </div>
@@ -1603,6 +1619,7 @@ title: "Opcodes"
   <span class="opnamedata">Spell: Disable Spell Casting Abilities [145]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Spell Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Show message?</span><br />
   <span class="descriptionheading">Description:</span><br />
 
   <div class="descriptiondata">Disables spell casting abilities of the targeted creature(s), in the style specified by the 'Spell Type;' field.<br/>Known values for 'Type' are:<br/>0   Wizard<br/>1   Priest<br/>2   Innate</div><br />
@@ -1966,6 +1983,7 @@ title: "Opcodes"
   <span class="opnamedata">Spell Effect: THAC0 vs. Creature Type Modifier [178]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> IDS Entry</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Statistic Modifier</span><br />
   <span class="descriptionheading">Description:</span><br />
 
   <div class="descriptiondata">Alters the targeted creature(s) THAC0 against the creature type specified by the 'IDS Entry' field in the specified 'IDS File'.<br/>The actual modifier value is placed in the Parameter 3 field in an external effect.<br/>Known values for 'IDS File' are:<br/>2   EA.ids<br/>3   General.ids<br/>4   Race.ids<br/>5   Class.ids<br/>6   Specific.ids<br/>7   Gender.ids<br/>8   Align.ids<br/>9   Kit.ids</div><br />
@@ -1977,6 +1995,7 @@ title: "Opcodes"
   <span class="opnamedata">Spell Effect: Damage vs. Creature Type Modifier [179]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Reference Value</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Reference IDS</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Statistic Modifier</span><br />
   <span class="descriptionheading">Description:</span><br />
 
   <div class="descriptiondata">Alters the targeted creature(s) damage against the creature type specified by the 'IDS Entry' field in the specified 'IDS File'. The actual modifier value is placed in the Parameter 3 field in an external effect - dice values are ignored.<br/>Known values for 'IDS File' are:<br/>2   EA.ids<br/>3   General.ids<br/>4   Race.ids<br/>5   Class.ids<br/>6   Specific.ids<br/>7   Gender.ids<br/>8   Align.ids<br/>9   Kit.ids</div><br />
@@ -1999,9 +2018,11 @@ title: "Opcodes"
   <span class="opnamedata">Item: Can't Use Itemtype [181]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Item Type</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Restriction</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Description note</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The targeted creature(s) cannot use the item type specified by the 'Item Type' field for the purpose specified by the 'Restriction' field. <br/>Known values for 'Restriction' are:<br/>0   Equip<br/>1   Use</div><br />
+  <div class="descriptiondata">The targeted creature(s) cannot use the item type specified by the 'Item Type' field for the purpose specified by the 'Restriction' field. <br/>Known values for 'Restriction' are:<br/>0   Equip<br/>1   Use
+<br/><br/>The message defined in 'Description note' will be displayed whenever this effect is triggered.</div><br />
   <hr />
   <br />
 </div>
@@ -2406,9 +2427,12 @@ title: "Opcodes"
   <span class="opnamedata">Protection: Stoneskin [218]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Amount</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Icon</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field.</div><br />
+  <div class="descriptiondata">Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field.
+<br/>'Icon' defines the index from statdesc.2da for custom portrait icons.
+</div><br />
   <hr />
   <br />
 </div>
@@ -2560,9 +2584,24 @@ title: "Opcodes"
   <span class="opnamedata">Spell Effect: Cast Spell on Condition [232]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Target</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Condition</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Extra</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Casts the spell specified by the resource field on the target specified by the 'Target' field, when the condition from the 'Condition' field is true. The conditions are akin to various triggers.<br/>Known values for 'Target' are:<br/>0   Effect Target<br/>1   LastHitter<br/>2   NearestEnemyOf<br/>3   Nearest<br/>Known values for 'Condition' are:<br/>0   HitBy()<br/>1   See(NearestEnemyOf())<br/>2   HPPercentLT(Myself 50)<br/>3   HPPercentLT(Myself 25)<br/>4   HPPercentLT(Myself 10)<br/>5   StateCheck(Myself,STATE_HELPLESS) i.e. unconscious<br/>6   StateCheck(Myself,STATE_POISONED) i.e. poisoned<br/>7   AttackedBy('Target')<br/>8   PersonalSpaceDistance('Target',4)<br/>9   PersonalSpaceDistance('Target',10)<br/>10  Unknown - every round<br/>11  TookDamage()<br/>12  Kill made<br/>13  TimeofDay<br/>For a 'Condition' of 13, the 'Target' parameter must be 0. The time of day should be stored in 0x02c.<br/>Parameter 3 (EFF) activates the portrait icon and immediately triggers the HitBy() trigger</div><br />
+  <div class="descriptiondata">Casts the spell specified by the resource field on the target specified by the 'Target' field, when the condition from the 'Condition' field is true. The conditions are akin to various triggers.<br/>Known values for 'Target' are:<br/>0   Effect Target<br/>1   LastHitter<br/>2   NearestEnemyOf<br/>3   Nearest<br/><br/>Known values for 'Condition' are:<br/>0   HitBy()<br/>1   See(NearestEnemyOf())<br/>2   HPPercentLT(Myself 50)<br/>3   HPPercentLT(Myself 25)<br/>4   HPPercentLT(Myself 10)<br/>5   StateCheck(Myself,STATE_HELPLESS) i.e. unconscious<br/>6   StateCheck(Myself,STATE_POISONED) i.e. poisoned<br/>7   AttackedBy('Target')<br/>8   PersonalSpaceDistance('Target',4)<br/>9   PersonalSpaceDistance('Target',10)<br/>10  Unknown - every round<br/>11  TookDamage()<br/>12  Kill made<br/>13  Time of Day is 'Extra'
+<br/>14  Target in 'Extra' range
+<br/>15  Target's state is 'Extra'
+<br/>16  Target dies
+<br/>17  Target died
+<br/>18  Target turned by
+<br/>19  Target HP &lt; 'Extra'
+<br/>20  Target HP % &lt; 'Extra'
+<br/><br/>The 'Extra' field is used for the following 'Target' values:
+<br/>13: Use value from TIMEODAY.IDS
+<br/>14: Range in feet
+<br/>15: Use value from STATE.IDS
+<br/>18: Any numeric value
+<br/>20: Any numeric value
+<br/><br/>For a 'Condition' of 13, the 'Target' parameter must be 0.<br/><br/>Parameter 3 (EFF) activates the portrait icon and immediately triggers the HitBy() trigger</div><br />
   <hr />
   <br />
 </div>
@@ -3319,9 +3358,39 @@ title: "Opcodes"
   <span class="opnamedata">Stat: Critical Hit Modifier [301]</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Statistic Modifier</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #3:</span><span class="parameterdata"> Weapon Category</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Weapon Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">This effect improves the Critical Hit chances. <br/>Critical hits will occur on a roll (on a 1d20) greater or equal to:<br/>20 - 'Statistic Modifier'</div><br />
+  <div class="descriptiondata">This effect improves the Critical Hit chances. <br/>Critical hits will occur on a roll (on a 1d20) greater or equal to:<br/>20 - 'Statistic Modifier'
+<br />
+<br/>Known values for 'Weapon Type' are:
+<br/>0  All Weapons
+<br/>1  Melee Weapon only
+<br/>2  Ranged Weapon only
+<br />
+<br/>Known values for 'Weapon Category' are (based on values from <a href="../files/ids/bg2ee/itemcat.htm">itemcat.ids</a>):
+<br/>0  Any category
+<br/>5  ARROW
+<br/>14 BULLET
+<br/>15 BOW
+<br/>16 DAGGER
+<br/>17 MACE
+<br/>18 SLING
+<br/>19 SMSWORD
+<br/>20 BGSWORD
+<br/>21 HAMMER
+<br/>22 MSTAR
+<br/>23 FLAIL
+<br/>24 DART
+<br/>25 AXE
+<br/>26 STAFF
+<br/>27 XBOW
+<br/>28 FIST
+<br/>29 SPEAR
+<br/>30 POLEARM
+<br/>31 BOLT
+</div><br />
   <hr />
   <br />
 </div>
@@ -3517,9 +3586,11 @@ title: "Opcodes"
   <span class="opnamedata">Usability: Item Usability</span><br />
   <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> IDS Entry</span><br />
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Description note</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">This effect restricts the item to creature(s) matching the object identifiers. The string to display when an invalid creature attempts to use the item is held in 0x2c.<br/>Known values for 'IDS File' are:<br/>2   EA.ids<br/>3   General.ids<br/>4   Race.ids<br/>5   Class.ids<br/>6   Specific.ids<br/>7   Gender.ids<br/>8   Align.ids<br/>9   Kit.ids<br/>10  Actor's name<br/>11  Actor's scripting name (8 maximum in resource field)<br/>If 'IDS File' is set to 10, the item is restricted to characters with the name specified by the strref held in parameter1.<br/>If 'IDS File' is set to 11, the item is restricted to characters with the death variable specified by the resource field.</div><br />
+  <div class="descriptiondata">This effect restricts the item to creature(s) matching the object identifiers. The string to display when an invalid creature attempts to use the item is held in 0x2c.<br/>Known values for 'IDS File' are:<br/>2   EA.ids<br/>3   General.ids<br/>4   Race.ids<br/>5   Class.ids<br/>6   Specific.ids<br/>7   Gender.ids<br/>8   Align.ids<br/>9   Kit.ids<br/>10  Actor's name<br/>11  Actor's scripting name (8 maximum in resource field)<br/>If 'IDS File' is set to 10, the item is restricted to characters with the name specified by the strref held in parameter1.<br/>If 'IDS File' is set to 11, the item is restricted to characters with the death variable specified by the resource field.
+<br/><br/>The message defined in 'Description note' will be displayed whenever this effect is triggered.</div><br />
   <hr />
   <br />
 </div>
@@ -3542,6 +3613,700 @@ title: "Opcodes"
   <span class="descriptionheading">Description:</span><br />
 
   <div class="descriptiondata">Removes effects from the resource specified by the resouce key, in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Default<br/>1   Equipped effects list only<br/>2   Timed effects list only<br/>If used with a timing mode other than Duration (0) the effect behaves as per effect 206.</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op322" class="opcode">
+  <span class="opnumberdata">#322 (0x322)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op323" class="opcode">
+  <span class="opnumberdata">#323 (0x323)</span>
+  <span class="opnamedata">Stat:Turn Undead Level</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Statistic Modifier</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> TurnLevel = TurnLevel + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> TurnLevel = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> TurnLevel = (TurnLevel * 'Statistic Modifier' value) / 100"</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op324" class="opcode">
+  <span class="opnumberdata">#324 (0x324)</span>
+  <span class="opnamedata">Protection: Immunity Spell and Message</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Value</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Stat Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Known values for 'Stat Type' are defined in splprot.2da. splprot.2da uses three codes (labeled STAT, VALUE and RELATION) to define a targeting type.
+  <br/><br/>STAT is either a straight stat value (listed in stat.ids) or a pseudo stat of the to be targeted creature:
+  <br/>0x100 - source equals target
+  <br/>0x101 - source is not target
+  <br/>0x102 - circle size
+  <br/>0x103 - circle size
+  <br/>0x104 - use two rows of splprot.2da
+  <br/>0x105 - source and target morale match
+  <br/>0x106 - areatype (like outdoors, forest, etc)
+  <br/>0x107 - time of day (in hours)
+  <br/>0x108 - source and target ethical match
+  <br/>0x109 - evasion
+  <br/>0x10a - EA
+  <br/>0x10b - GENERAL
+  <br/>0x10c - RACE
+  <br/>0x10d - CLASS
+  <br/>0x10e - SPECIFIC
+  <br/>0x10f - GENDER
+  <br/>0x110 - ALIGNMENT
+  <br/>0x111 - STATE
+  <br/>0x112 - SPELL STATE
+  <br/>0x113 - source and target allies
+  <br/>0x114 - source and target enemies
+  <br/>0x115 - summon creature limit
+  <br/>0x116 - chapter check
+  <br/><br/>VALUE is a number used to compare to the stat using a relational operator. Depending on the stat/operator it could be a bit value (hexadecimal allowed). If value is set to -1, then 'Value' of the opcode will be used.
+  <br/><br/>RELATION is an index to a relational operator:
+  <br/>0 - less or equal
+  <br/>1 - equal
+  <br/>2 - less
+  <br/>3 - greater
+  <br/>4 - greater or equal
+  <br/>5 - not equal
+  <br/>6 - binary less or equal (stat doesn't contain extra bits not in value)
+  <br/>7 - binary more or equal (stat contains all bits of value)
+  <br/>8 - binary match (at least one bit is common)
+  <br/>9 - binary not match (none of the bits are common)
+  <br/>10 - binary more (stat contains at least one bit not in value)
+  <br/>11 - binary less (stat doesn't contain all the bits of value)</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op325" class="opcode">
+  <span class="opnumberdata">#325 (0x325)</span>
+  <span class="opnamedata">Stat: Save vs. all</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Statistic Modifier</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Alters all saving throws by the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op326" class="opcode">
+  <span class="opnumberdata">#326 (0x326)</span>
+  <span class="opnamedata">Add Effects List</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Value</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Stat Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">The creature type specified by the 'Stat Type' field will be affected by the spell in the 'Resource' field. See <a href="#op324">opcode #324</a> for more information.</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op327" class="opcode">
+  <span class="opnumberdata">#327 (0x327)</span>
+  <span class="opnamedata">Graphics: Icewind Visual Spell Hit (plays sound)</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Target</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Shows the lighting effect specified by the 'Type' value. These effects are usually used for spell hits based on the spell school.
+<br/>If Target is non-zero then the effect will be played in the original target point (ignores spell target).
+<br/>Known values of type are listed in projectl.ids starting at offset 0x1000.</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op328" class="opcode">
+  <span class="opnumberdata">#328 (0x328)</span>
+  <span class="opnamedata">State: Set State</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Mode</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Sets the state of the targetted creature(s) to the value specified by the 'Type' field.
+<br/>These effects could be detected by the gamescript trigger ExtendedStateCheck. (see extstate.ids).
+<br/>Known values for 'Type' are:
+<br/>0   Chaotic Command
+<br/>1   Miscast Magic
+<br/>2   Pain
+<br/>3   Greater Malison
+<br/>4   Blood Rage
+<br/>5   Cats Grace
+<br/>6   Mold Touch
+<br/>7   Shroud of Flame
+<br/>If 'Mode' was set to 1, then this effect behaves like IWD2 Set State effect. (see splstate.ids)</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op329" class="opcode">
+  <span class="opnumberdata">#329 (0x329)</span>
+  <span class="opnamedata">Spell Effect: Slow Poison</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Slow Factor</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Applies the slow poison effect to the targeted creature(s), using the 'Slow Factor' field.</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op330" class="opcode">
+  <span class="opnumberdata">#330 (0x330)</span>
+  <span class="opnamedata">Text: Float Text</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Strref</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Displays the text specified by the 'Strref' field, in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Default (show strref)
+<br/>1   Cynicism (show Cynicism strrefs)</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op331" class="opcode">
+  <span class="opnumberdata">#331 (0x331)</span>
+  <span class="opnamedata">Summon: Random Monster Summoning</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Count</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Mode</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Summons a number of monsters, equal to the Dice rolls+'Count'. The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are listed in smtables.2da.
+<br/>If the resource field is filled, it will use a .2da to determine which monsters to summon.
+<br/>If used from an external effect (.eff), the vvc field controls the bam/vvc file played over the creatures when summoning.
+<br/>If used from an external effect (.eff), the second vvc field controls the bam file played over the target area when summoning.
+<br/>Setting 'Mode' to 2 will use the caster's level instead of Dice rolls.</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op332" class="opcode">
+  <span class="opnumberdata">#332 (0x332)</span>
+  <span class="opnamedata">Stat: Specific Damage Modifier</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Modifier</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Increases the damage caused by the character. The 'Type' parameter defines which damage type is increased. The modifier is either a flat value modifier for type 0, or a percentile modifier for all other cases.
+<br/>Known values for 'Type' are:
+<br/>0   all damage increased
+<br/>1   Fire damage
+<br/>2   Cold damage
+<br/>3   Electricity damage
+<br/>4   Acid damage
+<br/>5   Magic damage
+<br/>6   Poison damage
+<br/>7   Slashing damage
+<br/>8   Piercing damage
+<br/>9   Crushing damage
+<br/>10  Missile damage</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op333" class="opcode">
+  <span class="opnumberdata">#333 (0x333)</span>
+  <span class="opnamedata">Spell Effect: Static Charge</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Number</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Level</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Delay</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Casts a secondary spell (default: original resource+B) on the target, for a number of strikes specified by the 'Number' field. The spell will be cast once per 'Special' through its projectile.
+<br/>If a spell 'Level' is not specified, then the spell will be cast at level 1 and the damage opcodes will inherit the dice values of this effect, otherwise the spell will be cast at the given level.
+<br/>'Delay' specifies the delay between hits, its default value is 6 (one round).</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op334" class="opcode">
+  <span class="opnumberdata">#334 (0x334)</span>
+  <span class="opnamedata">Spell Effect: Turn Undead</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Turns undead just like the modal action. The caster must have some turn undead levels to be effective. See <a href="#op323">opcode #323</a></div><br />
+  <hr />
+  <br />
+</div>
+<div id="op335" class="opcode">
+  <span class="opnumberdata">#335 (0x335)</span>
+  <span class="opnamedata">Spell Effect: Seven Eyes</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> State</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Eye Group</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">This effect sets spellstate 'State', increases the seven eyes stat and grants special ability named in the resource field.
+<br/>'Type' selects the blocked spell or effect, the blocking criteria are listed in 7eyes.2da thus works like a very selective spell trap.
+<br/>'Eye Group' may be used to define separate eye groups (it will remove 336 opcodes of the same type).</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op336" class="opcode">
+  <span class="opnumberdata">#336 (0x336)</span>
+  <span class="opnamedata">Graphics: Display Eyes Overlay</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Sequence</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Displays a twin VVC linked to the target. The last letter of the VVC is stored in 'Sequence'</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op337" class="opcode">
+  <span class="opnumberdata">#337 (0x337)</span>
+  <span class="opnamedata">Remove: Opcode</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Param</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Opcode</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Removes all 'Opcode' from target, that has the same param2 as 'Param'. Use -1 to ignore the parameter.</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op338" class="opcode">
+  <span class="opnumberdata">#338 (0x338)</span>
+  <span class="opnamedata">Disable Rest</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> StrRef</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Mode</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Disables save and/or rest, prints the string when they are attempted.
+<br/>Known values for 'Mode' are:
+<br/>0 - cannot rest
+<br/>1 - cannot save
+<br/>2 - cannot save or rest</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op339" class="opcode">
+  <span class="opnumberdata">#339 (0x339)</span>
+  <span class="opnamedata">Alter Animation</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Value and Modifier</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Projectile Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Range</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Modifies an area animation's Cycle and plays an area hit animation over it indexed by 'Projectile Type'.
+<br/>'Value' is the high word of the first parameter, 'Modifier' is a bitfield manipulation operation. 'Range' defines the range of effect.
+<br/>Known values for 'Modifier' are:
+<br/>0 - Set 'Value' - ignores original
+<br/>1 - And 'Value' - keeps bits
+<br/>2 - Or 'Value' - sets bits
+<br/>3 - Xor 'Value' - toggles bits
+<br/>4 - And not 'Value' - turns off bits</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op340" class="opcode">
+  <span class="opnumberdata">#340 (0x340)</span>
+  <span class="opnamedata">Spell Effect: Change Backstab Effect</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Sets the Back Stab effect of the targetted creature to the spell specified by the resource key. Both parameters should be 0 (zero).</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op341" class="opcode">
+  <span class="opnumberdata">#341 (0x341)</span>
+  <span class="opnamedata">Spell Effect: Change Critical Hit Effect</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Use</span><br />
+  <span class="parameterheading">Parameter #3:</span><span class="parameterdata"> Weapon Category</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Weapon Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Sets the Critical Hit effect of the targetted creature to the spell specified by the resource key.
+<br/>Known values for 'Use' are:
+<br/>0 - Use spell for critical hits of both hands
+<br/>1 - Use spell for critical hit only by this weapon
+<br />
+<br/>Known values for 'Weapon Type' are:
+<br/>0  All Weapons
+<br/>1  Melee Weapon only
+<br/>2  Ranged Weapon only
+<br />
+<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode 301</a>
+</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op342" class="opcode">
+  <span class="opnumberdata">#342 (0x342)</span>
+  <span class="opnamedata">Animation: Override Data</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Value</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Field</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Overrides the character animation's blood color or body heat flag.
+<br/>Known values for 'Field' are:
+<br/>1 - Override body heat
+<br/>2 - Override blood color</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op343" class="opcode">
+  <span class="opnumberdata">#343 (0x343)</span>
+  <span class="opnamedata">HP Swap</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Mode</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Known values for 'Mode' are:
+<br/>0 - Swap if caster HP > target HP
+<br/>1 - Always swap</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op344" class="opcode">
+  <span class="opnumberdata">#344 (0x344)</span>
+  <span class="opnamedata">Enchantment vs. creature type</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> IDS Entry</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Enchantment Level</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Known values for 'IDS File' are:
+<br/>2 EA.ids
+<br/>3 General.ids
+<br/>4 Race.ids
+<br/>5 Class.ids
+<br/>6 Specific.ids
+<br/>7 Gender.ids
+<br/>8 Align.ids
+<br/>9 Kit.ids</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op345" class="opcode">
+  <span class="opnumberdata">#345 (0x345)</span>
+  <span class="opnamedata">Enchantment bonus</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Enchantment Level</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Weapon Slot</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Known values for 'Type' are:
+<br/>0 Magical weapons ('Enchantment Level' and below)
+<br/>1 Magical weapons (all)
+<br/>2 Non-magical weapons
+<br/>3 Silver
+<br/>4 Non-silver
+<br/>5 Non-silver/Non-magical
+<br/>6 Two-handed
+<br/>7 Non two-handed
+<br/>8 Cursed
+<br/>9 Non-cursed
+<br/>10 Cold iron
+<br/>11 Non-cold iron
+<br/><br/>'Weapon Slot' can be one of the following:
+<br/>0 - current weapon (the one to which this opcode is attached as an equipped effect)
+<br/>1 - main hand weapon
+<br/>2 - off hand weapon
+<br/>3 - both weapons
+<br/><br/>NB: 'Parameter4' is the item type of the affected weapon (0 matches all). This can be set to affect only fists, for example.
+</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op346" class="opcode">
+  <span class="opnumberdata">#346 (0x346)</span>
+  <span class="opnamedata">Save vs. school bonus</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Statistic Modifier</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Primary Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0 Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
+<br/>1 Flat Value Modifier -> Save = 'Statistic Modifier' value
+<br/>2 Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
+<br/><br/>'Primary Type' defines the school of magic to save against (see mschool.2da).</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op347" class="opcode">
+  <span class="opnumberdata">#347 (0x347)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op348" class="opcode">
+  <span class="opnumberdata">#348 (0x348)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op349" class="opcode">
+  <span class="opnumberdata">#349 (0x349)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op350" class="opcode">
+  <span class="opnumberdata">#350 (0x350)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op351" class="opcode">
+  <span class="opnumberdata">#351 (0x351)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op352" class="opcode">
+  <span class="opnumberdata">#352 (0x352)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op353" class="opcode">
+  <span class="opnumberdata">#353 (0x353)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op354" class="opcode">
+  <span class="opnumberdata">#354 (0x354)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op355" class="opcode">
+  <span class="opnumberdata">#355 (0x355)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op356" class="opcode">
+  <span class="opnumberdata">#356 (0x356)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op357" class="opcode">
+  <span class="opnumberdata">#357 (0x357)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op358" class="opcode">
+  <span class="opnumberdata">#358 (0x358)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op359" class="opcode">
+  <span class="opnumberdata">#359 (0x359)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op360" class="opcode">
+  <span class="opnumberdata">#360 (0x360)</span>
+  <span class="opnamedata">Stat: Ignore Reputation Breaking Point</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Allows joinable NPCs stay in the party regardless of reputation.</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op361" class="opcode">
+  <span class="opnumberdata">#361 (0x361)</span>
+  <span class="opnamedata">Cast spell on critical miss</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unused</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Use</span><br />
+  <span class="parameterheading">Parameter #3:</span><span class="parameterdata"> Weapon Category</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Weapon Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Applies the spell specified by the resource key when the target suffers a critical miss. The target of the critical miss effect is the attacker.
+<br/>Known values for 'Use' are:
+<br/>0 - Apply Critical Miss chance for both hands
+<br/>1 - Apply Critical Miss chance only for this weapon
+<br />
+<br/>Known values for 'Weapon Type' are:
+<br/>0  All Weapons
+<br/>1  Melee Weapon only
+<br/>2  Ranged Weapon only
+<br />
+<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode 301</a>
+</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op362" class="opcode">
+  <span class="opnumberdata">#362 (0x362)</span>
+  <span class="opnamedata">Critical miss bonus</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Statistic Modifier</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Use</span><br />
+  <span class="parameterheading">Parameter #3:</span><span class="parameterdata"> Weapon Category</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Weapon Type</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">This effect increases the chance of suffering a Critical Miss. Critical Misses will occur on a roll (on a 1d20) lower or equal to: 1 + 'Statistic Modifier'.
+<br/>Known values for 'Use' are:
+<br/>0 - Apply Critical Miss chance for both hands
+<br/>1 - Apply Critical Miss chance only for this weapon
+<br />
+<br/>Known values for 'Weapon Type' are:
+<br/>0  All Weapons
+<br/>1  Melee Weapon only
+<br/>2  Ranged Weapon only
+<br />
+<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode 301</a>
+</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op363" class="opcode">
+  <span class="opnumberdata">#363 (0x363)</span>
+  <span class="opnamedata">Movement rate check</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Movement Rate</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Modal State</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Trying to move will break the current modal action, and breaking the modal action will remove this effect and any other effects applied by the same spell.
+<br/>Known values for 'Type' are:
+<br/>0 Cumulative Modifier -> Movement = Movement + 'Statistic Modifier' value
+<br/>1 Flat Value Modifier -> Movement = 'Statistic Modifier' value
+<br/>2 Percentage Modifier -> Movement = (Movement * 'Statistic Modifier' value) / 100
+<br/><br/>'Modal State' defines the modal state to check (see modal.ids).</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op364" class="opcode">
+  <span class="opnumberdata">#364 (0x364)</span>
+  <span class="opnamedata">Unused</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">Unused</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op365" class="opcode">
+  <span class="opnumberdata">#365 (0x365)</span>
+  <span class="opnamedata">Make unselectable</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Dialogue enabled</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> AI enabled</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Selection circle color</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">'Special' parameter: Enable selection circle color?
+<br/><br/>Any non-zero value in param1, param2, or special field enables dialogue, AI, and selection circle color respectively.</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op366" class="opcode">
+  <span class="opnumberdata">#366 (0x366)</span>
+  <span class="opnamedata">Spell: Apply Spell On Move</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Special:</span><span class="parameterdata"> Modal State</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">This opcode applies the spell file (SPL) specified in the resref field to the target creature if it moves.
+<br/>The spell should be applied instantly and any casting times in the SPL file should be ignored.
+<br/><br/>'Modal State' defines the modal state to check (see modal.ids).</div><br />
+  <hr />
+  <br />
+</div>
+<div id="op367" class="opcode">
+  <span class="opnumberdata">#367 (0x367)</span>
+  <span class="opnamedata">Minimum base stats</span><br />
+  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Enabled</span><br />
+  <span class="descriptionheading">Description:</span><br />
+
+  <div class="descriptiondata">This is used in story mode. Any non-zero value in 'Enabled' enables it. Ensures that base stats of the affected creature can not be reduced to 0.</div><br />
   <hr />
   <br />
 </div>

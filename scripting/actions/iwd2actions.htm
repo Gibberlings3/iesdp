@@ -414,7 +414,7 @@
   
   <div class="actionHeader"><a name="18">18 Hide()</a></div>
   <div class="indent1">
-  This action instructs the active creature to attempt to Hide in Shadows. This action can be used for any creature (not just thieves) though success in hiding is dependent on points in the Stealth skill.<br />
+  This action instructs the active creature to attempt to Hide in Shadows. This action can be used for any creature (not just thieves) though success in hiding is dependent on points in the Stealth skill. A hidden creature is treated as STATE_INVISIBLE.<br />
 <br /> 
   <pre class="code">
   IF
@@ -3129,6 +3129,7 @@ The example is from AR0516.bcs.<br />
   
   <div class="actionHeader"><a name="293">293</a> UnHide(O:Object*)</div>
   <div class="indent1">
+  This action removes any invisibility effects and aborts the hiding in shadows modal action.<br />
   <br />
   </div>
   
@@ -3231,6 +3232,7 @@ The example is from AR0516.bcs.<br />
   
   <div class="actionHeader"><a name="311">311</a> SpellWait(I:Spell*Spell)</div>
   <div class="indent1">
+Adds a Wait action to the queue for the current object, equal to the exact casting time of the spell, i.e. the script writing need not worry about time spent inactive due to failed/cancelled spells. If the parameter is 0 a Wait action equal to the casting time of the previous cast spell is added to the queue.<br /> 
   <br />
   </div>
   
@@ -3266,6 +3268,7 @@ The example is from AR0516.bcs.<br />
   
   <div class="actionHeader"><a name="318">318</a> SetCreatureAreaFlag(O:Object*,I:Flag*CREAREFL,I:Value*BOOLEAN)</div>
   <div class="indent1">
+  This action sets/clears bits in creature flags (CRE file, offset 0x10) for the specified object.<br />
   <br />
   </div>
   
@@ -3293,16 +3296,19 @@ The example is from AR0516.bcs.<br />
   
   <div class="actionHeader"><a name="323">323</a> WaitAnimation(O:Target*,I:Sequence*Sequence)</div>
   <div class="indent1">
+  This action waits for the target object to complete the indicated animation sequence, if the sequence is underway.<br />
   <br />
   </div>
   
   <div class="actionHeader"><a name="324">324</a> SetMusic(I:SetSlot*MUSICS,I:With*MUSIC)</div>
   <div class="indent1">
+  This action set the area music. The SetSlot parameter links to the area music slow, the With parameter refers to a MUS file.<br />
   <br />
   </div>
   
   <div class="actionHeader"><a name="325">325</a> SetAreaFlags(I:Flags*AREAFLAG,I:BitMode*BITMODE)</div>
   <div class="indent1">
+  This action sets/clear the area flags held at 0xc in the ARE file for the current area.<br />
   <br />
   </div>
 

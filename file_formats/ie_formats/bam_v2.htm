@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BAM File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+
+    <div class="title_main">BAM file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG1EE, BG2EE</div><br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+
+This file format describes animated graphics. Such files are used for animations (both creature animations, item and spell animations) and interactive GUI elements (e.g. buttons) and for logical collections of images (e.g. fonts). BAM files can contain multiple sequences of animations, up to a limit of 255.<br /> <br />
+    NB. While the BAM format allows the dimensions of a frame to be very large, the engine will only show frames up to a certain size. This maximum size varies with the version of the engine:<br />
+      <div class="indent1">
+      <span class="unknown">BG1: Unknown</span><br />
+      BG2:  256*256<br />
+      <span class="unknown">PST: Unknown (greater than 256*256)</span><br />
+      <span class="unknown">IWD1: Unknown</span><br />
+      <span class="unknown">IWD2: Unknown</span><br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Overall structure:<br />
+      <div class="indent1">
+        <li><a href="#bamv2_Header">Header</a></li>
+        <li><a href="#bamv2_FrameEntry">Frame entries</a></li>
+        <li><a href="#bamv2_CycleEntry">Cycle entries</a></li>
+        <li><a href="#bamv2_FrameLUT">Frame Lookup Table</a></li>
+        <li><a href="#bamv2_DataBlock">Data blocks</a></li>
+      </div>
+      <br />
+    </div>    
+
+    <div class="fileHeader"><a name="bamv2_Header">BAM v2 Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature ('BAM ')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (char array)</td>
+            <td>Version ('v2 ')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Count of <a href="#bamv2_FrameEntry">frame entries</a></td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (dword)</td>
+            <td>Count of <a href="#bamv2_CycleEntry">cycles</a></td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>4 (dowrd)</td>
+            <td>Count of <a href="#bamv2_DataBlock">cycles</a></td>
+          </tr>
+          <tr>
+            <td>0x0014</td>
+            <td>4 (dword)</td>
+            <td>Offset (from start of file) to <a href="#bamv2_FrameEntry">frame entries</a> (which are immediately followed by <a href="#bamv2_CycleEntry">cycle entries</a>)</td>
+          </tr>
+          <tr>
+            <td>0x0018</td>
+            <td>4 (dword)</td>
+            <td>Offset (from start of file) to <a href="#bamv2_CycleEntry">cycles</a></td>
+          </tr>
+          <tr>
+            <td>0x001c</td>
+            <td>4 (dword)</td>
+            <td>Offset (from start of file) to <a href="#bamv2_DataBlock">data blocks</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="bamv2_FrameEntry">BAM v2 Frame Entries</a></div>
+    <div class="indent1">
+      <br />
+      Cycles may share the frames, which is accomplished by using a layer of indirection. Instead of specifying which frames belong to a given cycle, each cycle has a list of frame indices.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>2 (word)</td>
+            <td>Frame width</td>
+          </tr>
+          <tr>
+            <td>0x0002</td>
+            <td>2 (word)</td>
+            <td>Frame height</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>2 (signed word)</td>
+            <td>Frame center X coordinate</td>
+          </tr>
+          <tr>
+            <td>0x0006</td>
+            <td>2 (signed word)</td>
+            <td>Frame center Y coordinate</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>2 (word)</td>
+            <td>Start index of data blocks</td>
+          </tr>
+          <tr>
+            <td>0x000a</td>
+            <td>2 (word)</td>
+            <td>Count of data blocks</td>
+          </tr>          
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="bamv2_CycleEntry">BAM v2 Cycle Entries</a></div>
+    <div class="indent1">
+      <br />
+      These entries refer to a range of indices in the <a href="#bamv2_FrameLUT">frame lookup table</a>, which in turn points to the actual frames. Note that entries in the <a href="#bamv2_FrameLUT">frame lookup table</a> can also be shared between cycles.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>2 (word)</td>
+            <td>Count of <a href="#bamv2_FrameLUT">frame indices</a> in this cycle</td>
+          </tr>
+          <tr>
+            <td>0x0002</td>
+            <td>2 (word)</td>
+            <td>Index into <a href="#bamv2_FrameLUT">frame lookup table</a> of first frame index in this cycle</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="bamv2_DataBlock">Data Block</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>PVRZ page <br />
+                Refers to MOSxxxx.PVRZ files, where xxxx is a zero-padded four-digits decimal number.</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 dword</td>
+            <td>Source x coordinate</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 dword</td>
+            <td>Source y coordinate</td>
+          </tr>
+          <tr>
+            <td>0x000a</td>
+            <td>4 dword</td>
+            <td>Width</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 dword</td>
+            <td>Height</td>
+          </tr>
+          <tr>
+            <td>0x000e</td>
+            <td>4 dword</td>
+            <td>Target x coordinate</td>
+          </tr>
+          <tr>
+            <td>0x000e</td>
+            <td>4 dword</td>
+            <td>Target y coordinate</td>
+          </tr>          
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

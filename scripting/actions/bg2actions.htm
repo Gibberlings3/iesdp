@@ -104,41 +104,7 @@
     
   <div class="actionHeader"><a name="2">2 AddWayPoint(P:WayPoint*)</a></div>
   <div class="indent1">
-  This action is used to set waypoints for a creature to move between; it is commonly used from area scripts to script barmaids moving in a route around the bar. The point parameter represents the X and Y coordinates of the waypoint to add.<br />
-  <br />
-  <pre class="code">
-  IF
-    Global(&quot;KRNEWWAY&quot;,&quot;GLOBAL&quot;,0)
-  THEN
-    RESPONSE #100
-      SetGlobal(&quot;KRNEWWAY&quot;,&quot;GLOBAL&quot;,1)
-      AddWayPoint([100.200])
-      AddWayPoint([200.300])
-  END
-  </pre>
-  <br />
-  The following script, showing how to move to waypoints preset in the area file, is taken from the barmaid at the Copper Coronet.<br />
-  <br />
-  <pre class="code">
-  IF
-    Detect([PC])
-    Allegiance(Myself,NEUTRAL)
-    Global(&quot;quest1&quot;,&quot;LOCALS&quot;,0)
-  THEN
-    RESPONSE #100
-      MoveToObject(&quot;Way3&quot;)
-      ActionOverride(&quot;DRUNK2&quot;,DisplayStringHead(Myself,4592)
-      Wait(1)
-      DisplayStringHead(Myself,4604)
-      Wait(2)
-      MoveToObject(&quot;Way4&quot;)
-      Wait(1)
-      MoveToObject(&quot;Way3&quot;)
-      DisplayStringHead(Myself,4611)
-      Wait(2)
-      SetGlobal(&quot;quest1&quot;,&quot;LOCALS&quot;,1)
-  END
-  </pre>
+  <div class="unknown">This action has not been seen to produce any results.</div>
   <br />
   </div>
   
@@ -161,23 +127,7 @@
   
   <div class="actionHeader"><a name="5">5 BackStab(O:Target*)</a></div>
   <div class="indent1">
-    This action instructs the active creature to backstab the specified target. Note that some creatures (notably dragons and golems) are immune to being backstabbed, that not all weapons are valid to backstab with, and that the active creature must be hidden to make a successful backstab. <span class="unknown">This action causes the game to crash. As long as the correct conditions are met, the first attack of a hidden creature will count as a backstab attack.</span><br />
-  <br />
-  <pre class="code">
-  IF
-   See(NearestEnemyOf())
-   Range(NearestEnemyOf(),4)
-   !Race(NearestEnemyOf(),DRAGON)
-   !Race(NearestEnemyOf(),GOLEM)
-   !InParty(NearestEnemyOf(Myself))
-   OR(2)
-     StateCheck(Myself,STATE_INVISIBLE)
-     StateCheck(Myself,STATE_IMPROVEDINVISIBLITY)
-  THEN 
-    RESPONSE #100
-      Attack(NearestEnemyOf())
-  END
-  </pre>
+  <div class="unknown">This action has not been seen to produce any results.</div>
   <br />
   </div>
   
@@ -254,17 +204,7 @@
   
   <div class="actionHeader"><a name="11">11 EquipItem(S:Object*)</a></div>
   <div class="indent1">
-  This action instructs the active creature to equip the specified item. The item needs to be in one of the creatures quickslots.<br />
-  <br />
-  <pre class="code">
-  IF
-    HasItem(&quot;Sw1h01&quot;,Myself)
-    !HasItemEquipedReal(&quot;Sw1h01&quot;,Myself)
-  THEN
-    RESPONSE #100
-      Equip(&quot;Sw1h01&quot;,Myself)
-  END
-  </pre>
+  <div class="unknown">This action has not been seen to produce any results.</div>
   <br />
   </div>
   
@@ -290,19 +230,7 @@
   
   <div class="actionHeader"><a name="14">14 GetItem(S:Object*,O:Target*)</a></div>
   <div class="indent1">
-  <span class="unknown">This action has not been seen to produce any results.</span><br />
-  <br />
-  <pre class="code">
-  IF
-    See([ANYONE])
-    !HasItem(&quot;Sw1h01&quot;,Myself)
-    HasItem(&quot;Sw1h01&quot;,LastSeenBy ())
-  THEN
-    RESPONSE #100
-      MoveToObject(LastSeenBy())
-      GetItem(&quot;Sw1h01&quot;,LastSeenBy())
-  END
-  </pre>
+  <div class="unknown">This action has not been seen to produce any results.</div>
   <br />
   </div>
   
@@ -398,7 +326,7 @@ This action instructs the active creature to give the specified item (parameter 
   
   <div class="actionHeader"><a name="18">18 Hide()</a></div>
   <div class="indent1">
-This action instructs the active creature to attempt to Hide in Shadows. This action can be used for any creature (not just thieves) though success in hiding is dependent on points in the Stealth skill.<br />
+  This action instructs the active creature to attempt to Hide in Shadows. This action can be used for any creature (not just thieves) though success in hiding is dependent on points in the Stealth skill. A hidden creature is treated as STATE_INVISIBLE.<br />
 <br /> 
   <pre class="code">
   IF
@@ -432,7 +360,7 @@ This action instructs the active creature to attempt to Hide in Shadows. This ac
   
   <div class="actionHeader"><a name="20">20 LayHands(O:Target*)</a></div>
   <div class="indent1">
-  This action is a leftover from BG1 - it does not work in BG2.<br />
+  <div class="unknown">This action has not been seen to produce any results.</div>
   <br />
   </div>
   
@@ -3061,7 +2989,7 @@ This action creates the item specified by the resref parameter on the creature s
   
   <div class="actionHeader"><a name="248">248</a> SetTokenObject(S:Token*,O:Object)</div>
   <div class="indent1">
-  This action can transfer a token value from the performer of the action to the target. The action can also be used for targeting: using SetTokenObject("MYTARGET",[ENEMY.0.0.MAGE_ALL]) will set a target marker on the nearest enemy mage. You could then use Attack("MYTARGET") to attack that mage. Values assigned by this action are not saved.<br />
+  This action sets the token specified by the string parameter (e.g. DAMAGER) to the name of the object specified in the object parameter. Values assigned by this action are not persisted to save games.<br />
   <br />
   </div>
   
@@ -3583,13 +3511,13 @@ Other states are untested.<br />
   
   <div class="actionHeader"><a name="326">326</a> ExitPocketPlane()</div>
   <div class="indent1">
-  This action tleports the party to the area from which the "Area Switch: Pocket Plane" effect was last used. If this effect has never been used, or the party is not in the Pocket Plane this action has no effect.<br />
+  This action teleports the party to the area from which the "Area Switch: Pocket Plane" effect was last used. If this effect has never been used, or the party is not in the Pocket Plane this action has no effect.<br />
   <br />
   </div>
   
   <div class="actionHeader"><a name="327">327</a> AddXP2DA(S:Column*)</div>
   <div class="indent1">
-  This action gives a level dependent amount of XP to the party. The XP amount is listed in xplist.2da at the intersection of the party level (column) and quest row (the mis-named parameter). The default file lists the same XP value for all quests for all levels.<br />
+  This action gives a level dependent amount of XP to the party or a single party member. The XP amount is listed in xplist.2da at the intersection of the party level (column) and quest row (the mis-named parameter). The <a href="../../files/2da/2da_tob/xplist.htm">file</a> lists the same XP value for all quests for all levels.<br />
   <br />
   </div>
   

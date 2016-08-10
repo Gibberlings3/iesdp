@@ -135,7 +135,7 @@
     Returns true only if the specified key was pressed in the last script round. Hotkeys defined in keymap.ini take precedence over hotkeys expected by this trigger.<br />
     <br />
     <strong>0x0022 TimerExpired(I:ID*)</strong><br />
-    Returns true only if the local timer with the specified ID has expired.<br />
+    Returns true only if the local timer with the specified ID has expired. This action does not work as a state or response trigger in dialogs.<br />
     <br />
     <strong>0x4023 True()</strong><br />
     Always returns true.<br />
@@ -509,7 +509,7 @@
     Returns true if the specified object is on the screen.<br />
     <br />
     <strong>0x40A0 InActiveArea(O:Object*)</strong><br />
-    Returns true only if specified object is in the active area. The active area is that in which player 1 is.<br />
+    Returns true only if specified object is in the active area. The active area is that in which player 1 is. This trigger will crash the game if the specified creature is not in the active area and is not a global object.<br />
     <br />
     <strong>0x00A1 SpellCastOnMe(O:Caster*,I:Spell*Spell)</strong><br />
     Returns true only if the specified object cast the specified spell on the active CRE in the last scriptround.<br />
@@ -675,7 +675,7 @@
     NT Returns true if the specified object which can be dead or alive is in the party.<br />
     <br />
     <strong>0x40D4 AreaCheckObject(S:ResRef*,O:Object*)</strong><br />
-    Returns true if the specified object is in the area specified.<br />
+    Returns true if the specified object is in the area specified. This trigger can cause a crash if the specified area is not loaded.<br />
     <br />
     <strong>0x40D5 ActuallyInCombat()</strong><br />
     Returns true if combat counter is greater than 0.<br />
@@ -686,13 +686,13 @@
     to this trigger.<br />
     <br />
     <strong>0x40D7 LevelParty(I:Num*)</strong><br />
-    NT Returns true only if the level of the highest-levelled party member is equal to the number specified.<br />
+    Returns true only if the average level of the party is equal to the number specified. Only the highest level of dual/multi-class characters is taken into account.<br />
     <br />
     <strong>0x40D8 LevelPartyGT(I:Num*)</strong><br />
-    NT As above but greater than.<br />
+    Returns true only if the average level of the party is greater than the number specified. Only the highest level of dual/multi-class characters is taken into account.<br />
     <br />
     <strong>0x40D9 LevelPartyLT(I:Num*)</strong><br />
-    NT As above but less than.<br />
+    Returns true only if the average level of the party is less than the number specified. Only the highest level of dual/multi-class characters is taken into account.<br />
     <br />
     <strong>0x40DA HaveSpellParty(I:Spell*Spell)</strong><br />
     Returns true if any of the party members have the specified spell memorised.<br />

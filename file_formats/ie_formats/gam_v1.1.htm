@@ -136,8 +136,14 @@
               <ul>
                 <li>bit0: Rain</li>
                 <li>bit1: Snow</li>
+                <li>bit2: Light Rain</li>
+                <li>bit3: Medium Rain</li>
+                <li>bit4: Light Wind</li>
+                <li>bit5: Medium Wind</li>
+                <li>bit6: Rare Lightning</li>
+                <li>bit7: Lightning</li>
+                <li>bit8: Storm Increasing</li>
               </ul>
-              <span class="unknown">Higher bits determine the density and intensity of the weather</span>
             </td>
           </tr>
           <tr> 
@@ -153,12 +159,12 @@
           <tr>
             <td>0x0028</td>
             <td>4 (dword)</td>
-            <td><div class="unknown">Unknown</div></td>
+            <td><div class="unknown">Offset to party inventory</div></td>
           </tr>
           <tr>
             <td>0x002c</td>
             <td>4 (dword)</td>
-            <td><div class="unknown">Unknown</div></td>
+            <td><div class="unknown">Count of party inventory</div></td>
           </tr>
           <tr>
             <td>0x0030</td>
@@ -607,18 +613,18 @@
         </tr>
         <tr>
           <td>0x0010</td>
-          <td>2 (word)</td>
+          <td>1 (byte)</td>
           <td>Party member (0 = Not in party, 1 = In party)</td>
         </tr>
         <tr>
-          <td>0x0012</td>
-          <td>1 (byte)</td>
-          <td>First letter of CRE resref (changed to *)</td>
+          <td>0x0011</td>
+          <td>2 (word)</td>
+          <td>Unused</td>
         </tr>
         <tr>
           <td>0x0013</td>
           <td>1 (byte)</td>
-          <td><span class="unknown">Unknown</unknown></td>
+          <td>First letter of CRE resref (changed to *)</td>
         </tr>
         <tr>
           <td>0x0014</td>
@@ -738,8 +744,30 @@
           </tr>
           <tr>
             <td>0x0008</td>
-            <td>4 (dword)</td>
+            <td>1 (byte)</td>
             <td>Current chapter number</td>
+          </tr>
+          <tr>
+            <td>0x0009</td>
+            <td>1 (byte)</td>
+            <td>Read by character x</td>
+          </tr>
+          <tr>
+            <td>0x000a</td>
+            <td>1 (byte)</td>
+            <td>Journal section
+              <ul>
+                <li>bit 0: Quests</li>
+                <li>bit 1: Competed quest</li>
+                <li>bit 2: Journal Info</li>
+              </ul>
+              NB. If no bits are set, the entry is a user-note
+            </td>
+          </tr>
+            <tr>
+            <td>0x000b</td>
+            <td>1 (byte)</td>
+            <td>Location flag (0x1F = external TOT/TOH, 0xFF = internal TLK) </td>
           </tr>
         </tbody>
       </table>

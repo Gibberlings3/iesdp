@@ -97,12 +97,12 @@
           </tr>
           <tr>
             <td>0x0008</td>
-            <td>4 (dword)</td>
+            <td>4 (strref)</td>
             <td>Unidentified Name (strref)</td>
           </tr>
           <tr>
             <td>0x000c</td>
-            <td>4 (dword)</td>
+            <td>4 (strref)</td>
             <td>Identified Name (strref)</td>
           </tr>
           <tr>
@@ -122,8 +122,8 @@
           </tr>
           <tr>
             <td>0x001e</td>
-            <td>1*4 (4 char)</td>
-            <td><a href="#Header_Usability"> Usability</td>
+            <td>1*4 (byte)</td>
+            <td><a href="#Header_Usability"> Usability bitmask</td>
           </tr>
           <tr>
             <td>0x0022</td>
@@ -132,84 +132,69 @@
           </tr>
           <tr>
             <td>0x0024</td>
-            <td>1 (char)</td>
+            <td>2 (word)</td>
             <td>Min Level</td>
           </tr>
           <tr>
-            <td>0x0025</td>
-            <td>1 (char)</td>
-            <td><span class="unknown">Unknown</span></td>
-          </tr>
-          <tr>
             <td>0x0026</td>
-            <td>1 (char)</td>
+            <td>2 (word)</td>
             <td>Min Strength (unused in BG1)</td>
           </tr>
           <tr>
-            <td>0x0027</td>
-            <td>1 (char)</td>
-            <td><span class="unknown">Unknown</span></td>
-          </tr>
-          <tr>
             <td>0x0028</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td>Min Strength Bonus (unused in BG1) <br />
                 Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and would therefore not be able to equip any weapon with a Strength Bonus restriction.</td>
           </tr>
           <tr>
             <td>0x0029</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td><a href="#Header_KitUsability"> Kit Usability 1</a></td>
           </tr>
           <tr>
             <td>0x002a</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td>Min Intelligence (unused in BG1)</td>
           </tr>
           <tr>
             <td>0x002b</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td><a href="#Header_KitUsability"> Kit Usability 2</a></td>
           </tr>
           <tr>
             <td>0x002c</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td>Min Dexterity (unused in BG1)</td>
           </tr>
           <tr>
             <td>0x002d</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td><a href="#Header_KitUsability"> Kit Usability 3</a></td>
           </tr>
           <tr>
             <td>0x002e</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td>Min Wisdom (unused in BG1)</td>
           </tr>
           <tr>
             <td>0x002f</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td><a href="#Header_KitUsability"> Kit Usability 4</a></td>
           </tr>
           <tr>
             <td>0x0030</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td>Min Constitution (unused in BG1)</td>
           </tr>
           <tr>
             <td>0x0031</td>
-            <td>1 (char)</td>
+            <td>1 (byte)</td>
             <td><a href="#Header_Proficiency"> Weapon Proficiency</a></td>
           </tr>
           <tr>
             <td>0x0032</td>
-            <td>1 (char)</td>
+            <td>2 (word)</td>
             <td>Min Charisma</td>
-          </tr>
-          <tr>
-            <td>0x0033</td>
-            <td>1 (char)</td>
-            <td><span class="unknown">Unknown</span></td>
           </tr>
           <tr>
             <td>0x0034</td>
@@ -496,13 +481,8 @@
         </tr>
         <tr>
           <td>0x0026</td>
-          <td>2 (word)</td>
+          <td>4 (dword)</td>
           <td><a href="#ExtHeader_Flags"> Flags</a></td>
-        </tr>
-        <tr>
-          <td>0x0028</td>
-          <td>2 (word)</td>
-          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>0x002a</td>
@@ -687,7 +667,7 @@
           <tr>
             <td>0x002c</td>
             <td>4 (dword)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td><span class="unknown">Special</span></td>
           </tr>
         </tbody>
       </table>
@@ -721,58 +701,58 @@
           <td>0</td>
           <td> Unsellable (critical item)*</td>
           <td> Silver</td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
         </tr>
         <tr>
           <td>1</td>
           <td> Two-handed</td>
           <td> Cold-Iron</td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
         </tr>
         <tr>
           <td>2</td>
           <td> Movable</td>
           <td> Unsellable (stolen) / two handed animation <br /><br />
                Set offhand animations for 0x5###-0x6### animId series (excluding 0x64##) when weapon placed in offhand.</td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
         </tr>
         <tr>
           <td>3</td>
           <td> Displayable</td>
           <td> Conversable</td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
         </tr>
         <tr>
           <td>4</td>
           <td> Cursed</td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
         </tr>
         <tr>
           <td>5</td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
+          <td> <span class="unknown"> Cannot scribe to spellbook (scrolls) </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
         </tr>
         <tr>
           <td>6</td>
           <td> Magical</td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
         </tr>
         <tr>
           <td>7</td>
           <td> Bow</td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
-          <td> <span class="unknown"> Unknown </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
+          <td> <span class="unknown"> Unused </span></td>
         </tr>
       </tbody>
     </table>

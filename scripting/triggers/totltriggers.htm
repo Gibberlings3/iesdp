@@ -61,12 +61,13 @@
     <br />
     <strong>0x400A Alignment(O:Object*,I:Alignment*Align)</strong><br />
     Returns true only if the alignment of the specified object matches that in the second parameter.<br />
+    Note: The game does not ship with an alignment.ids file, so script compilers may fail to compile scripts with this trigger, unless the trigger definition is altered, or the alignment.ids file is provided.<br/>
     <br />
     <strong>0x400B Allegiance(O:Object*,I:Allegience*EA)</strong><br />
     Returns true only if the Enemy/Ally status of the specified object matches that in the second parameter.<br />
     <br />
     <strong>0x400C Class(O:Object*,I:Class*Class)</strong><br />
-    Returns true only if the Class of the specified object matches that in the second parameter.<br />
+    Returns true only if the Class of the specified object matches that in the second parameter. ClassEx should generally be used in preference, as it will detect multi-class objects, unlike this trigger.<br />
     <br />
     <strong>0x400D Exists(O:Object*)</strong><br />
     NT Returns true only if the specified object exists.<br />
@@ -135,7 +136,7 @@
     Returns true only if the specified key was pressed in the last script round. Hotkeys defined in keymap.ini take precedence over hotkeys expected by this trigger.<br />
     <br />
     <strong>0x0022 TimerExpired(I:ID*)</strong><br />
-    Returns true only if the local timer with the specified ID has expired.<br />
+    Returns true only if the local timer with the specified ID has expired. This action does not work as a state or response trigger in dialogs.<br />
     <br />
     <strong>0x4023 True()</strong><br />
     Always returns true.<br />

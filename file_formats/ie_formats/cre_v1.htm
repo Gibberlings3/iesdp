@@ -116,6 +116,7 @@
                 <li>bit 15 Been in Party</li>
                 <li><span class="unknown">bit 16 Restore item in hand</span></li>
                 <li><span class="unknown">bit 17 Un-sets bit 16</span></li>
+                <li><span class="unknown">bit 18 - 23 Unused</span></li>
                 <li><span class="unknown">bit 24 Related to random walk (ea)</span></li>
                 <li><span class="unknown">bit 25 Related to random walk (general)</span></li>
                 <li><span class="unknown">bit 26 Related to random walk (race)</span></li>
@@ -160,15 +161,10 @@
           </tr>
           <tr>
             <td>0x0028</td>
-            <td>2 (word)</td>
+            <td>4 (dword)</td>
             <td>Animation ID (ANIMATE.IDS)<br />
                 There is some structure to the ordering of these entries, however, it is mostly hard-coded into the .exe, and uneditable.
             </td>
-          </tr>
-          <tr>
-            <td>0x002a</td>
-            <td>2 (word)</td>
-            <td><span class="unknown">Unknown</span></td>
           </tr>
           <tr>
             <td>0x002c</td>
@@ -447,8 +443,68 @@
           </tr>
           <tr>
             <td>0x0076</td>
-            <td>13 (bytes)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x0077</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x0078</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x0079</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x007a</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x007b</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x007c</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x007d</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x007e</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x007f</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x0080</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x0081</td>
+            <td>1 (byte)</td>
+            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+          </tr>
+          <tr>
+            <td>0x0082</td>
+            <td>1 (byte)</td>
+            <td>Turn undead level</td>
           </tr>
           <tr>
             <td>0x0083</td>
@@ -457,8 +513,8 @@
           </tr>
           <tr>
             <td>0x0084</td>
-            <td>32 (bytes)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>32 (char array)</td>
+            <td>Tracking target</td>
           </tr>
           <tr>
             <td>0x00a4</td>
@@ -894,7 +950,12 @@
           <tr>
             <td>0x0008</td>
             <td>4 (dword)</td>
-            <td>Memorised: 0 = No, 1 = Yes</td>
+            <td>Memorised
+              <ul>
+                <li>bit 0 Memorised</li>
+                <li>bit 1 Disabled</li>
+              </ul>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -990,7 +1051,7 @@
         <li>Quiver 1</li>
         <li>Quiver 2</li>
         <li>Quiver 3</li>
-        <li>?</li>
+        <li>Quiver 4 (cannot be accesed from GUI)</li>
         <li>Cloak</li>
         <li>Quick item 1</li>
         <li>Quick item 2</li>

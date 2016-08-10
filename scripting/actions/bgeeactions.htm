@@ -1,0 +1,3835 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BGEE(2) Script Actions </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> BGEE(2) Script Actions </div>
+    <br />
+    
+    <div class="center">
+    <a href="#20"> 20 </a> || <a href="#40"> 40 </a> || <a href="#60"> 60 </a> || <a href="#82"> 82 </a> || <a href="#100"> 100 </a> || <a href="#120"> 120 </a> || <a href="#140"> 140 </a> || <a href="#160"> 160 </a> || <a href="#180"> 180 </a> || <a href="#200"> 200 </a> || <a href="#220"> 220 </a> || <a href="#240"> 240 </a> || <a href="#260"> 260 </a> || <a href="#280"> 280 </a> || <a href="#300"> 300 </a> || <a href="#320"> 320 </a> || <a href="#340"> 340 </a> || <a href="#358"> 358 </a>
+    </div>
+    
+  <div class="actionHeader"><a name="0">0 NoAction()</a></div>
+  <div class="indent1">
+  This action can be used to do nothing - many characters walk around randomly or stand in one place doing nothing:<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #50
+      RandomWalk()
+    RESPONSE #50
+      NoAction()
+  END
+  </pre>
+  <br />
+  NoAction() is also commonly used as a hanging action in targeting blocks. This is a matter of good practice rather than necessary. The NoAction() action will never be rum since the block always returns false, but the having an action in the scripting block allows scripting programs to accurately check for errors.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(NearestEnemyOf(Myself))
+    False()
+  THEN
+    RESPONSE #100
+      NoAction()
+  END
+  </pre>
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="1"> 1 ActionOverride(O:Actor*,A:Action*)</a></div>
+  <div class="indent1">
+  This action can be used to control another creature. A creature referenced as the result of SetTokenObject is not a valid target for the ActionOverride action. The following is from the Irenicus cutscene after leaving his abode in chapter 1.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      Wait(1)
+      FadeToColor([20.0],0)
+      Wait(2)
+      JumpToPoint([869.340])
+      MoveViewPoint([909.346],INSTANT)
+      ActionOverride(Player2,JumpToPoint([825.370]))
+      ActionOverride(Player3,JumpToPoint([886.384]))
+      ActionOverride(Player4,JumpToPoint([952.386]))
+      ActionOverride(Player5,JumpToPoint([987.362]))
+      ActionOverride(Player6,JumpToPoint([1005.404]))
+      Face(10)
+      ActionOverride(Player2,Face(10))
+      ActionOverride(Player3,Face(10))
+      ActionOverride(Player4,Face(8))
+      ActionOverride(Player5,Face(6))
+      ActionOverride(Player6,Face(6))
+      ActionOverride(&quot;Anomen&quot;,JumpToPoint([909.346]))
+      ActionOverride(&quot;Anomen&quot;,Face(10))
+      Wait(1)
+      FadeFromColor([20.0],0)
+      Wait(2)
+      ActionOverride(&quot;Anomen&quot;,StartDialogueNoSet(Player1))
+  END
+  </pre>
+  <br />
+  </div>
+    
+  <div class="actionHeader"><a name="2">2 AddWayPoint(P:WayPoint*)</a></div>
+  <div class="indent1">
+  <div class="unknown">This action has not been seen to produce any results.</div>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="3">3 Attack(O:Target*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to continually attack the target, i.e. the active creature will not switch targets until its target is dead.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF])
+    Class(LastSeenBy(),MAGE_ALL)
+    !InParty(LastSeenBy())
+   THEN
+     RESPONSE #100
+       Attack(LastSeenBy())
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="5">5 BackStab(O:Target*)</a></div>
+  <div class="indent1">
+  <div class="unknown">This action has not been seen to produce any results.</div>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="7">7 CreateCreature(S:NewObject*,P:Location*,I:Face*DIR)</a></div>
+  <div class="indent1">
+  This action is used to create a creature - either an NPC, a neutral creature or an enemy. NewObject is the filename of the creature to create, Location is the coordinates to create the creature at ([x.y] format) and direction being the direction the creature is facing (0-15, 0 being south and the facing values increasing as the character turns clockwise). Note that a coordinate of [-1.-1] will create the creature next to the active creature.<br />
+  <br />
+  This script is from the area script for the Copper Coronet (AR0406) and creates extra guards when the Player is discovered in the off limits area.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;CopperGuards&quot;,&quot;GLOBAL&quot;,1)
+  THEN
+    RESPONSE #100
+      CreateCreature(&quot;ccguard1&quot;,[2338.412],14)
+      CreateCreature(&quot;ccguard2&quot;,[2318.457],14)
+      CreateCreature(&quot;ccguard1&quot;,[2749.793],6)
+      CreateCreature(&quot;ccguard2&quot;,[2791.831],6)
+      CreateCreature(&quot;ccguard1&quot;,[1981.762],14)
+      CreateCreature(&quot;ccguard1&quot;,[1286.1500],14)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="8">8 Dialogue(O:Object*)</a></div>
+  <div class="actionHeader">8 Dialog(O:Object*)</div>
+  <div class="indent1">
+  This action instructs the active creature to initiate dialog with the target creature. Dialog will not be initiated if the creature using this action has been assigned a dialog that has all top level conditions returning false.<br />
+  <br />
+  <pre class="code">
+  IF
+    GlobalTimerExpired(&quot;Yeslick&quot;,&quot;GLOBAL&quot;)
+    Global(&quot;FLOODED&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      Dialogue([PC])
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="9">9 DropItem(S:Object*,P:Location*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to drop the specified item at the specified location (relative to the active creature). The active creature must have the item to be dropped. Note that a coordinate of [-1.-1] will drop the item next to the active creature.<br />
+  <br />
+  <pre class="code">
+  IF
+    Clicked([ANYONE])
+    Range(LastTrigger,12)
+  THEN
+    RESPONSE #100
+      DropItem(&quot;SCRL1B&quot;,[345.1210])
+  END
+  </pre>
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="10">10 Enemy()</a></div>
+  <div class="indent1">
+  This action is used to change the allegiance of the active creature to enemy (making them hostile to the PC). This example script, from a peasant, will turn the creature hostile if it is attacked.<br />
+  <br />
+  <pre class="code">
+  IF
+    AttackedBy([GOODCUTOFF],Myself)
+    Allegiance(Myself,NEUTRAL)
+  THEN
+    RESPONSE #100
+      Enemy()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="11">11 EquipItem(S:Object*)</a></div>
+  <div class="indent1">
+  <div class="unknown">This action has not been seen to produce any results.</div>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="13">13 FindTraps()</a></div>
+  <div class="indent1">
+  This action instructs the active creature to enter Detect Traps modal state. This action can be used for any creature (not just thieves) though success in detecting traps is dependent on points in the Find Traps skill.<br />
+  <br />
+  <pre class="code">
+  IF
+    ActionListEmpty()
+    !Exists([EVILCUTOFF])
+    !ModalState( Myself,DETECTTRAPS)
+    OR(2)
+    !StateCheck(Myself,STATE_INVISIBLE)
+    !StateChe ck(Myself,STATE_IMPROVEDINVISIBILITY)
+  THEN
+    RESPONSE #100
+      FindTraps()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="14">14 GetItem(S:Object*,O:Target*)</a></div>
+  <div class="indent1">
+  <div class="unknown">This action has not been seen to produce any results.</div>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="15">15 GiveItem(S:Object*,O:Target*)</a></div>
+  <div class="indent1">
+This action instructs the active creature to give the specified item (parameter 1) to the specified target (parameter 2). The active creature must possess the item to pass it (holding it within a container within the inventory is fine). The sample script makes uses of modified IDS files (action, instant, trigger and svtiobj) though such modification are not necessary to use the GiveItem action itself.<br />
+  <br />
+  <pre class="code">
+  IF
+    HPPercentLT(Myself,40)
+    !HasItem(&quot;potn52&quot;,Myself)
+  THEN
+    RESPONSE #100
+      GlobalShout(3015)
+      SetGlobal(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,1)
+  END
+  
+  IF
+    Heard([GOODCUTOFF],3015)
+    HasItem(&quot;potn52&quot;,Myself)
+    HPPercentGT(Myself,40)
+    Global(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,1)
+  THEN
+    RESPONSE #100
+      MoveToObject(LastHeardBy())
+      GiveItem(&quot;potn52&quot;,LastHeardBy())
+      SetGlobal(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,0)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="16">16 GiveOrder(O:Object*,I:Order*)</a></div>
+  <div class="indent1">
+  This action is used in conjunction with the ReceivedOrder trigger, and works in a similar way to a global shout. The action passes a numeric order to the specified creature. Only one creature at a time responds to an order, and creatures to not detect their own orders.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF])
+    OR(3)
+    Class(Myself,FIGHTER_ALL)
+    Class(Myself,RANGER_ALL)
+    Class(Myse lf,PALADIN_ALL)
+  THEN
+    RESPONSE #100
+      GiveOrder([PC.0.0.THIEF_ALL],100)
+  END
+  
+  IF
+    ReceivedOrder(Myself,100)
+    Class(Myself,THIEF_ALL)
+  THEN
+    RESPONSE #100
+      RunAwayFrom([EVILCUTOFF],120)
+      Hide()
+  END
+  </pre>
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="17">17 Help()</a></div>
+  <div class="indent1">
+  This action acts similar to shout, but does not accept values. The range of the Help action is slightly larger than the default visual radius of NPCs.<br />
+  <br />
+  <pre class="code">
+  IF
+    HitBy([ANYONE],CRUSHING)
+  THEN
+    RESPONSE #50
+      Help()
+      Attack(NearestEnemyOf(Myself))
+    RESPONSE #50
+      RunAwayFrom(NearestEnemyOf(Myself),75)
+  END
+  
+  IF
+    Help([0.0.GIBBERLING])
+  THEN
+    RESPONSE #100
+      Attack(NearestEnemyOf(LastHelp(Myself)))
+  END
+  
+  IF
+    See(NearestEnemyOf(Myself))
+  THEN
+    RESPONSE #100
+      Help()
+      AttackReevaluate(NearestEnemyOf(Myself),30)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="18">18 Hide()</a></div>
+  <div class="indent1">
+  This action instructs the active creature to attempt to Hide in Shadows. This action can be used for any creature (not just thieves) though success in hiding is dependent on points in the Stealth skill. A hidden creature is treated as STATE_INVISIBLE.<br />
+<br /> 
+  <pre class="code">
+  IF
+    !See([EVILCUTOFF])
+    OR(2)
+    !StateCheck(Myself,STATE_INVISIBLE)
+    !StateCheck(Myself,STATE_IMPROVEDINVISIBLITY)
+  THEN
+    RESPONSE #100
+      Hide()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="19">19 JoinParty()</a></div>
+  <div class="indent1">
+  This action adds the active creature to the party. If the party is currently full the 'select party members' dialog is shown. JoinParty clears the ActionQueue of the active creature.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([PC])
+    Global(&quot;KRJOINPARTY&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      JoinParty()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="20">20 LayHands(O:Target*)</a></div>
+  <div class="indent1">
+  <div class="unknown">This action has not been seen to produce any results.</div>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="21">21 LeaveParty()</a></div>
+  <div class="indent1">
+  This action causes the active creature to leave the party. This action calls DropInventory() as part of its execution.<br />
+  <br />
+  <pre class="code">
+  IF
+    HappinessLT(Myself,-299)
+  THEN
+    RESPONSE #100
+      ChangeAIScript(&quot;&quot;,DEFAULT)
+      SetLeavePartyDialogFile()
+      LeaveParty()
+      EscapeArea()
+  END<br />
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="22">22 MoveToObject(O:Target*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to move to the specified object. The action does not update the current position of the actor, saved in ARE files. The example script shows the creature moving towards the nearest enemy.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(NearestEnemyOf())
+    !Range(NearestEnemyOf(),4)
+  THEN
+    RESPONSE #100
+      MoveToObject(NearestEnemyOf())
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="23">23 MoveToPoint(P:Point*)</a></div>
+  <div class="indent1">
+  This action causes the active creature to move to the specified coordinates. The action will update the position of creatures as stored in ARE files (first by setting the coordinates of the destination point, then by setting the coordinates of the current point once the destination is reached).<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      MoveToPoint([526.1193])
+      Wait(3)
+      RandomWalk()
+      Wait(5)
+      RandomWalk()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="24">24 Panic()</a></div>
+  <div class="indent1">
+  This action causes the active creature to move randomly around the screen.<br />
+  <br />
+  <pre class="code">
+  IF
+    HPPercentLT(Myself,15)
+  THEN
+    RESPONSE #100
+     Panic()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="25">25 PickPockets(O:Target*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to attempt to pickpocket the target. This action can be used for any creature (not just thieves) though success in pick pocketing is dependent on points in the Pickpocket skill. Note that a failed pickpocket attempt is treated as an attack, hence the Attacked() trigger will return true if a pickpocket attempt is failed.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([ANYONE])
+    OR(2)
+    Class(Myself,THIEF_ALL)
+    Class(Myself,BARD_ALL)
+  THEN
+    RESPONSE #100
+      PickPockets([ANYONE])
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="26">26 PlaySound(S:Sound*)</a></div>
+  <div class="indent1">
+  This action will cause the active creature to play the specified sound. Both WAV and WAVC files can be played by the action.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      PlaySound(&quot;CAS_M06&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="27">27 ProtectPoint(P:Target*,I:Range*)</a></div>
+  <div class="indent1">
+  This action causes the active creature to guard the specified point, staying within the specified range.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      ProtectPoint([1738.543],10)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="28">28 RemoveTraps(O:Trap*)</a></div>
+  <div class="indent1">
+  This action causes the active creature to attempt to disarm the specified trap. This action can be used for any creature (not just thieves) though success in disarming is dependent on points in the Disarm Trap skill.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(&quot;Trap01&quot;)
+    Class(Myself,THIEF_ALL)
+  THEN
+    RESPONSE #100
+      RemoveTraps(&quot;Trap01&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="29">29 RunAwayFrom(O:Creature*,I:Time*)</a></div>
+  <div class="indent1">
+  This action causes the active creature to run away from the specified creature, for the specified time. The time parameter is measured in AI updates, which default to 15 updates per second. Occasionally, fleeing creatures stop to attack another creature.<br />
+  <br />
+  <pre class="code">
+  IF
+    HPPercentLT(Myself,30)
+  THEN
+    RESPONSE #100
+      RunAwayFrom(LastAttackerOf(Myself),180)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="30">30 SetGlobal(S:Name*,S:Area*,I:Value*)</a></div>
+  <div class="indent1">
+  This action sets a variable (specified by name) in the scope (specified by area) to the value (specified by value). See the <a href="../../appendices/variables.htm">variable type</a> appendix for details on variables.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;KRINAREA&quot;,&quot;AR0400&quot;,0)
+  THEN
+    RESPONSE #100
+      CreateCreature(&quot;ORC01&quot;,[1738.543],0)
+      SetGlobal(&quot;KRINAR EA&quot;,&quot;AR0400&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="31">31 Spell(O:Target*,I:Spell*Spell)</a></div>
+  <div class="actionHeader"><a name="31">31 SpellRES(S:RES*, O:Target*)</a></div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the target object. The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span><br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF])
+    !InParty([EVILCUTOFF])
+    !HasBounceEffects([ EVILCUTOFF])//like cloak of mirroring or spell deflection
+    !HasImmunityEffects([EVILCUTOFF])//
+    HaveSpell(WIZARD_MAGIC_MISSILE)
+    OR(2)
+    !StateCheck([EVILCUTOFF],STATE_INVISIBLE)
+    !StateCheck([EVILCUTOFF],STATE_IMPROVEDINVISIBLITY)
+    CheckStatLT([EVILCUTOFF], 30,RESISTMAGIC)
+    !Race([EVILCUTOFF],LICH)
+    !Race([EVILCUTOFF],RAKSHASA)
+  THEN
+    RESPONSE #100
+      Spell([EVILCUTOFF],WIZARD_MAGIC_MISSILE)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="33">33 Turn()</a></div>
+  <div class="indent1">
+  This action turns any undead creatures within range of the active creature. This action can be used for any creature (not just paladins/clerics) though success in turning is dependent on the Turn Undead level of the creature, which is only calculated for paladins and clerics. The chance to successfully turn undead is based on creatures level and class. Paladins turn at 2 levels less than clerics of the same level. An undead creature will be destroyed/controlled if its level is more than 7 levels below the active creatures turn undead level. An undead creature may be turned (i.e. forced to flee) is its level is equal to, or up to 4 levels below, the active creatures turn undead level.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF])
+    General([EVILCUTOFF],UNDEAD)
+    LevelGT(Mysel f,12)
+    OR(2)
+    Class(Myself,PALADIN_ALL)
+    Class(Myself,CLERIC_ALL)
+  THEN
+    RESPONSE #100
+      Turn()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="34">34 UseItem(S:Object*,O:Target*)</a></div><br />
+  <div class="actionHeader">34 UseItemSlotAbility(O:Target*, I:Slot*, I:Ability*)</a></div><br />
+  <div class="actionHeader">34 UseItemSlot(O:Target*, I:Slot*)</div>
+  <div class="indent1">
+  This action instructs the active creature to use the specified item (object) on the specified target (target). The ability number (i.e. extended header index) to use may be specified. This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (not in a container within the inventory) - though it need not be equipped.<br />
+  <br />
+  <pre class="code">
+  IF
+    HPPercentLT(Myself,50)
+    HasItem(&quot;potn52&quot;,Myself)
+  THEN
+    RESPONSE #100
+      DisplayStringHead(Myself,46150) //quaffs a potion
+      UseItem(&quot;potn52&quot;,Myself)
+      Continue()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="36">36 Continue()</a></div>
+  <div class="indent1">
+This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly. Use of continue in a script block will cause the parser to treater subsequent empty response blocks as though they contained a Continue() command - this parsing can be stopped by including a NoAction() in the empty response block.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(NearestEnemyOf())
+    !InParty(NearestEnemyOf())
+  THEN
+    RESPONSE #100
+      AttackOneRound(NearestEnemyOf())
+      Continue()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="37">37 FollowPath()</a></div>
+  <div class="indent1">
+  <span class="unknown">Unknown</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="38">38 Swing()</a></div>
+  <div class="indent1">
+  This action instructs the active creature to play the swing weapon animation. Note that some objects do not have this animation.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      Swing()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="39">39 Recoil()</a></div>
+  <div class="indent1">
+  This action instructs the active creature to play the recoil animation. Note that some objects do not have this animation.<br />
+  <br />
+  <pre class="code">
+  IF
+    TookDamage()
+  THEN
+    RESPONSE #100
+      Recoil()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="40">40 PlayDead(I:Time*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to &quot;play dead&quot;, i.e. to lay on the ground, for the specified interval (measured in AI updates per second (AI updates default to 15 per second). If used on a PC, the player can override the action by issuing a standard move command.<br />
+  <br />
+  <pre class="code">
+  IF
+    HPPercentLT(Myself,30)
+  THEN
+    RESPONSE #100
+      PlayDead(240)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="47">47 Formation(O:Leader*,P:Offset*)</a></div>
+  <div class="indent1">
+  This action can used to make the active creature follow the creature specified by the leader parameter, maintain a relative position determined by the offset parameter.<br />
+  <br />
+  <pre class="code">
+  IF
+    CombatCounter(0)
+    Allegiance(Myself,NEUTRAL)
+  THEN
+    RESPONSE #100
+      Formation(&quot;QSLMAGE1&quot;,[-2.-5])
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="48">48 JumpToPoint(P:Target*)</a></div>
+  <div class="indent1">
+  This action instantly moves the active creature to the specified point.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      ClearAllActions()
+      FadeToColor([20.0],0)
+      MoveViewPoint([1738.543],INSTANT)
+      JumpToPoint([1738.543])
+      Wait(1)
+      CreateVisualEffectObject(&quot;SPCLOUD1&quot;,Player1)
+      Wait(1)
+      CreateVisualEffectObject(&quot;SPFLESHS&quot;,Player1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="49">49 MoveViewPoint(P:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  This action scrolls the view point (i.e. the area of the current map being displayed onscreen) to the target point ([x.y] at the specified speed. Speeds are taken from <a href="../../files/ids/bg2/scroll.htm">scroll.ids</a> (VERY_FAST is equivalent to normal walking speed).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="50">50 MoveViewObject(O:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  This action scrolls the view point (i.e. the area of the current map being displayed onscreen) to the target object ([x.y] at the specified speed. Speeds are taken from <a href="../../files/ids/bg2/scroll.htm">scroll.ids</a> (VERY_FAST is equivalent to normal walking speed). The example script is from a cutscene; CUT03C.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      FadeToColor([20.0],0)
+      Wait(1)
+      ActionOverride(&quot;SPY406&quot;,DestroySelf())
+      MoveViewObject(Myself,INSTANT)
+      Wait(1)
+      FadeFromColor([20.0],0)
+      ActionOverride(&quot;cpchick1&quot;,DestroySelf())
+      ActionOverride(&quot;cpchick2&quot;,DestroySelf())
+      Wait(1)
+      ActionOverride(&quot;Surly&quot;,StartDialogueNoSet(Player1))
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="51">51 ClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="52">52 ClickLButtonObject(O:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="53">53 ClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="54">54 ClickRButtonObject(O:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="55">55 DoubleClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="56">56 DoubleClickLButtonObject(O:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="57">57 DoubleClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="58">58 DoubleClickRButtonObject(O:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="59">59 MoveCursorPoint(P:Target*,I:ScrollSpeed*Scroll)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="60">60 ChangeAIScript(S:ScriptFile*,I:Level*Scrlev)</a></div>
+  <div class="indent1">
+  This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from <a href="../../files/ids/bg2/scrlev.htm">scrlev.ids</a>. Scripts can be set for any scriptable object (container, creature, door etc.), but are not persisted.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF.0.DOG])
+  THEN
+    RESPONSE #100
+      ChangeAIScript(&quot;DOGFIGHT&quot;,DEFAULT)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="61">61 StartTimer(I:ID*,I:Time*)</a></div>
+  <div class="indent1">
+  This action starts a timer local to the active creature. The timer is measured in seconds, and the timer value is not saved in save games. The timer is checked with the TimerExpired trigger.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;KRDEAD&quot;,&quot;LOCALS&quot;,0 )
+    Dead(&quot;Shadra01&quot;)
+  THEN
+    RESPONSE #100
+      StartTimer(&quot;SPAWNMON&quot;,12)
+      SetGlobal(&quot;KRDEAD&quot;,&quot;LOCALS&quot;,1)
+  END
+  
+  IF
+    Timer Expired(&quot;SPAWNMON&quot;)
+    Global(&quot;KRDEAD&quot;,&quot;LOCALS&quot;,1)
+  THEN
+    RESPONSE #100
+      CreateCreature(&quot;Grothgar&quot;,[700.700],0)
+  END
+  </pre>
+  <br />
+  </div>
+
+  
+  <div class="actionHeader"><a name="62">62 SendTrigger(O:Target*,I:TriggerNum*)</a></div>
+  <div class="indent1">
+  This action is used as a form of script communication, in conjunction with the Trigger() trigger. The action has the same range as GiveOrder and affects only one creature at a time. Note that the LastTrigger() object does not get set after receiving a trigger.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="63">63 Wait(I:Time*)</a></div>
+  <div class="indent1">
+  This action causes a delay in script processing. The time is measured in seconds.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(Player1)
+    See(Player6)
+  THEN
+    RESPONSE #100
+      MoveToObject(Player1)
+      Wait(2)
+      MoveToObject(Player6)
+      Wait(4)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="64">64 UndoExplore()</a></div>
+  <div class="indent1">
+  This action resets the fog of war for the area the active creature is in. <br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      UndoExplore()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="65">65 Explore()</a></div>
+  <div class="indent1">
+  This action removes the fog of war for the area the active creature is in.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      Explore()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="66">66 DayNight(I:TimeOfDay*Time)</a></div>
+  <div class="indent1">
+  This action changes the time of day. The time parameter is taken from <a href="../../files/ids/bg2/time.htm">time.ids</a>, though a direct number can be specified. The example script is from when Irenicus leaves his dungeon.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;AmaWaukeen&quot;,&quot;GLOBAL&quot;,1)
+  THEN
+    RESPONSE #100
+      DayNight(MIDNIGHT)
+      SetGlobal(&quot;AmaWaukeen&quot;,&quot;GLOBAL&quot;,2)
+      FadeToColor([20.0],0)
+      CreateCreature(&quot;shthass1&quot;,[877.898],7)
+      StartCutSceneMode()
+      StartCutScene(&quot;cut24a&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="67">67 Weather(I:Weather*Weather)</a></div>
+  <div class="indent1">
+  This action changes the weather. The action only works in outdoors areas that have weather enabled in the ARE file. Values for the weather parameter are from <a href="../../files/ids/bg2/weather.htm">weather.ids</a>. Note that the fog weather type does not work.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;KRSTORM&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      Weather(RAIN)
+      SetGlobal(&quot;KRSTORM&quot;,&quot;GLOBAL&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="68">68 CallLightning(O:Target*)</a></div>
+  <div class="indent1">
+  This action calls lightning from the sky against the specified target, causing immediate death (unless the target has the MinHP effect applied). The lightning does not always show, and if it does, it is not always in the expected location.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(&quot;DRUID12a&quot;)
+      CallLightning(&quot;Orc05&quot;)
+      CallLightning(&quot;Orc06&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="69">69 VEquip(I:item*)</a></div>
+  <div class="indent1">
+  This action will sequentially change the visual representation of armour the active creature is wearing. The action cycles from the lowest (none) to the highest (plate mail) armour level.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="70">70 NIDSpecial1()-81 NIDSpecial12()</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="82">82 CreateItem(S:ResRef*,I:Usage1*,I:Usage2*,I:Usage3*)</a></div>
+  <div class="indent1">
+  This action creates the specified item (resref) on the active creature. The usage parameters determine the number of items created or the number of charges on the item, depending on the item type being created. The example  script is from AR0602.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;BG1Pantaloons&quot;,&quot;GLOBAL&quot;,0)
+    PartyHasItem(&quot;MISC47&quot;)
+  THEN
+    RESPONSE #100
+      SetGlobal(&quot;BG1Pantaloons&quot;,&quot;GLOBAL&quot;,1)
+      ActionOverride(&quot;Picture1&quot;,CreateItem(&quot;MISC47&quot;,0,0,0))
+      Continue()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="83">83 SmallWait(I:Time*)</a></div>
+  <div class="indent1">
+  This action is similar to <a href="#63">Wait()</a>, it causes a delay in script processing. The time is measured in AI updates (which default to 15 per second)<br />
+  <br />
+  <pre class="code">
+  IF
+    See(NearestEnemyOf())
+  THEN
+    RESPONSE #100
+      DisplayStingHead(Myself,50712)// Attack!! Attack!!
+      SmallWait(120)
+      Attack(NearestEnemyOf())
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="84">84 Face(I:Direction*DIR)</a></div>
+  <div class="indent1">
+This action instructs the active creature to face the specified direction. Directions run from 0-15 with 0 being south and moving clockwise. Negative values act as relative directions to the current direction.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;BeholderBehavior&quot;,&quot;LOCALS&quot;,0)
+    See([PC])
+    HPGT(Myself,65)
+  THEN
+    RESPONSE #100
+      FaceObject([PC])
+      ForceSpell([PC],BEHOLDER_CHARM_PERSON)
+      Continue()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="85">85 RandomWalk()</a></div>
+  <div class="indent1">
+  This action causes the active creature to walk randomly, staying within the current area. The example script is blbear.bcs; it instructs bears to walk rather than fight if the nearest enemy is a druid.<br />
+  <br />
+  <pre class="code">
+  IF
+    Delay(5)
+    See(NearestEnemyOf(Myself))
+    Class(NearestEnemyOf(Myself),DRUID)
+    NumCreatureGT([ENEMY],1)
+  THEN
+    RESPONSE #100
+      RandomWalk()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="86">86 SetInterrupt(I:State*Boolean)</a> </div>
+  <div class="indent1">
+  This action sets whether a creature can be interrupted while carrying out script actions.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(Player2)
+    !Range(Player2,4)
+  THEN
+    RESPONSE #100
+      SetInterrupt(FALSE)
+      MoveToObject(&quot;Player2&quot;)
+      SetInterrupt (TRUE)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="87">87 ProtectObject(O:Target*,I:Range*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to protect the specified creature (i.e. attack any enemies of the creature), while staying within the specified range. The example script is from IWD, 4003bsg.bcs and controls the zombies guarding Presio.(4003BSG.bcs).<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      ProtectObject(&quot;Presio&quot;,100)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="88">88 Leader(P:Point*)</a> </div>
+  <div class="indent1">
+  This action instructs the active creature to move to the specified point and marks the creature as a leader. The following example script sets Player1 walking to [3363.2954] and sets Player2 and Player3 to &quot;follow&quot; to [3363.2954] in a line and with minimal walking into each other. This action is not fully understood, and is not particularly reliable.<br />
+  <br />
+  <pre class="code">
+  IF
+   HotKey(E)
+  THEN
+   RESPONSE #100
+     ActionOverride(Player1,Leader([3363.2954]))
+     ActionOverride(Player2,Follow([3363.2954]))
+     ActionOverride(Player3,Follow([3363.2954]))
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="89">89 Follow(P:Point*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to move to the specified point following the marked Leader.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="90">90 MoveToPointNoRecticle(P:Point*)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="91">91 LeaveArea(S:Area*,P:Point*,I:Face*DIR)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to leave the current area.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="92">92 SelectWeaponAbility(I:WeaponNum*Slots,I:AbilityNum*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to select the specified slot, and use the ability in the extended header specified by the ability parameter. The example script is from ankheg.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(NearestEnemyOf(Myself))
+    Range(NearestEnemyOf(Myself),5)
+    Delay(12)
+  THEN
+    RESPONSE #40
+      SelectWeaponAbility(SLOT_WEAPON,0)
+      RunAwayFrom(NearestEnemyOf(Myself),45)
+      AttackReevaluate(NearestEnemyOf(Myself),15)
+    RESPONSE #60
+      SelectWeaponAbility(SLOT_WEAPON1,0)
+      AttackReevaluate(NearestEnemyOf(Myself),15)
+  END
+  </pre>
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="93">93 LeaveAreaName(I:Target*)</a></div>
+  <div class="indent1">
+  The signature of this action is not listed in the action.ids file provided with the game. This action causes the active creature to leave the area using the trigger region identified by the specified parameter. The parameter is the internal global ID of the region.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="94">94 GroupAttack(O:Target*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to attack creatures with the same specific value as the target creature.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="95">95 SpellPoint(P:Target*,I:Spell*Spell)</a></div>
+  <div class="actionHeader"><a name="95">95 SpellPointRES(S:RES*, P:Target*)</a></div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The example script is from andris.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,0)
+    See(NearestEnemyOf(Myself))
+  THEN
+    RESPONSE #100
+      ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)
+      Wait(1)
+      SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)
+      SetGlobal(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="96">96 Rest()</a></div>
+  <div class="indent1">
+  This action applies the benefits of resting (i.e. healing, restoring spells and restoring abilities) to the active creature. The action does not play the rest movie or advance game time. The example script is from cut28a.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      StorePartyLocations()
+      FadeToColor([30.0],0)
+      Wait(1)
+      Rest()
+      ActionOverride(Player2,Rest())
+      ActionOverride(Player3,Rest())
+      ActionOverride(Player4,Rest())
+      ActionOverride(Player5,Rest())
+      ActionOverride(Player6,Rest())
+  (cut short for brevity)
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="97">97 UseItemPoint(S:Item,P:Target*,I:Ability*)</a></div> 
+  <div class="actionHeader">97 UseItemPointSlot(P:Target*,I:Slot*)</div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="98">98 AttackNoSound(O:Target*)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action instructs the active creature to attack the target, without sounding a battlecry.</span><br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="100">100 RandomFly()</a></div>
+  <div class="indent1">
+  This action gives the appearance of flying - the active creature is able to pass over impassable areas. The example script is from randfly.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      RandomFly()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="101">101 FlyToPoint(P:Point*, I:time*)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action is used internally by action 100 (RandomFly); it moves the active creature towards the given point for the specified amount of time.</span><br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="102">102 MoraleSet(O:Target*,I:Morale*)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action sets the morale of the active creature.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="103">103 MoraleInc(O:Target*,I:Morale*)</a></div>
+  <div class="indent1">
+  This action alters the morale of the target by the specified amount. The change amount can be positive or negative. The example script is from bardsh.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    Allegiance(Myself,NEUTRAL)
+    Global(&quot;PlayerAttackedActors&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      SetGlobal(&quot;PlayerAttackedActors&quot;,&quot;GLOBAL&quot;,1)
+      MoraleInc(Myself,-5)
+      Enemy()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="104">104 MoraleDec(O:Target*,I:Morale*)</a></div>
+  <div class="indent1">
+  This action alters the morale of the target by the specified amount. The change amount can be positive or negative.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="105">105 AttackOneRound(O:Target*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to attack the specified target for one round.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(NearestEnemyOf())
+  THEN
+    RESPONSE #100
+      AttackOneRound(NearestEnemyOf())
+  END
+  </pre >
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="106">106 Shout(I:ID*SHOUTIDS)</a></div>
+  <div class="indent1">
+  This action is used to shout the specified number. The action is used in conjunction with the Heard trigger. A silenced creature cannot shout. Shout can be Heard() throughout the current area.<br />
+  <br />
+  <pre class="code">
+  IF
+    StateCheck(Myself,STATE_POISONED)
+  THEN
+    RESPONSE #100
+      Shout(4010)
+  END
+  </pre>
+  <br />
+  <pre class="code">
+  IF
+    Heard([GOODCUTOFF],4010)
+    HaveSpell(CLERIC_SLOW_POISON)
+  THEN
+    RESPONSE #100
+      Spell(LastHeardBy(),CLERIC_SLOW_POISON)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="107">107 MoveToOffset(P:Offset*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to move a certain distance from its current location; i.e. the point is relative to the creatures current location.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="108">108 EscapeArea()</a></div>
+  <div class="actionHeader">108 EscapeAreaMove(S:Area*,I:X*,I:Y*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action, in its first form, instructs the active creature to leave the current area, either by walking, or, if the path is blocked, by simply disappearing. In the actions second form the action functions as a combination of EscapeAreaDestroy() and MoveBetweenAreas(). The parameters are similar to MoveBetweenAreas(), in that it takes in all the same information, but unlike MoveBetweenAreas(), the character will search for the nearest enabled travel trigger, move to that, then execute his movement to the specified area. If no travel trigger is found, the creature will just execute the movement.<br />
+<br />
+The action is uninterruptable; actions listed this one in a script may not execute as intended.<br />
+  <br />
+  <pre class="code">
+  IF
+    HPPercentLT(Myself,35)
+  THEN
+    RESPONSE #100
+      EscapeArea()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="109">109 IncrementGlobal(S:Name*,S:Area*,I:Value*)</a></div>
+  <div class="indent1">
+This action alters the specified variable, in the specified scope, by the amount indicated. The amount can be positive or negative. Variables in the local scope cannot be changed with this action.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF]
+    !Specifics(LastSeenBy(),4000)
+    !Inparty(LastSeenBy())
+    !Allegiance(LastSeenBy([GOODCUTOFF])
+  THEN
+    RESPONSE #100
+      ChangeSpecifics(LastSeenBy(),4000)
+      IncrementGlobal(&quot;KR_MONSTER_COUNTER_ALIVE&quot;,&quot;GLOBAL&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="110">110 LeaveAreaLUA(S:Area*,S:Parchment*,P:Point*,I:Face*DIR)</a></div>
+  <div class="indent1">
+  This action changes the current area.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;MissionPackSave&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      TextScreen(&quot;toscst&quot;)
+      ActionOverride(Player1,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3048.831],4))
+      ActionOverride(Player2,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3055.917],4))
+      ActionOverride(Player3,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[2990.913],4))
+      ActionOverride(Player4,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[2992.812],4))
+      ActionOverride(Player5,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3079.737],4))
+      ActionOverride(Player6,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3005.742],4))
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="111">111 DestroySelf()</a> </div>
+  <div class="indent1">
+  This action removes the active creature from the game. No death variable is set. The example script is from the Irenicus cutscene at the beginning of the game.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(&quot;CSCowl7&quot;)
+      ForceSpell(&quot;CSIren&quot;,0)
+      Wait(1)
+      DestroySelf()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="112">112 UseContainer()</a></div>
+  <div class="indent1">
+  This action is used by the engine internally. An object id is expected in the in1 parameter.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="113">113 ForceSpell(O:Target,I:Spell*Spell)</a></div>
+  <div class="actionHeader">113 ForceSpellRES(S:RES*, O:Target)</div>
+  <div class="actionHeader">113 ForceSpellRES(S:RES*, O:Target,I:CastingLevel)</div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span> The example script is from suelfw9.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global("Scene2","AR2800",2)
+    See([ENEMY])
+    Global("Fight","LOCALS",2)
+  THEN
+    RESPONSE #100
+      IncrementGlobal("Fight","LOCALS",1)
+      ForceSpell([ENEMY],WIZARD_POWER_WORD_SLEEP)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="114">114 ForceSpellPoint(P:Target,I:Spell*Spell)</a></div>
+  <div class="actionHeader">114 ForceSpellPointRES(S:RES*, P:Target)</div>
+  <div class="actionHeader">114 ForceSpellPointRES(S:RES*, P:Target,I:CastingLevel)</div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,0)
+    See(NearestEnemyOf(Myself))
+  THEN
+    RESPONSE #100
+      ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)
+      Wait(1)
+      SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)
+      SetGlobal(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="115">115 SetGlobalTimer(S:Name*,S:Area*,I:Time*GTimes)</a></div>
+  <div class="indent1">
+  This action sets a global timer. The timer is checked by the GlobalTimerExpired trigger or GlobalTimerNotExpired trigger.<br />
+  <br />
+  <pre class="code">
+  IF
+    GlobalTimerExpired(&quot;Areana&quot;,&quot;GLOBAL&quot;)
+    !Exists(&quot;TorLobo&quot;)
+    !Dead(&quot;TorLobo&quot;)
+  THEN
+    RESPONSE #100
+      ActionOverride(&quot;Areana&quot;,DestroySelf())
+      CreateCreature(&quot;TORLOB&quot;,[349.474],0)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="116">116 TakePartyItem(S:Item*)</a></div>
+  <div class="indent1">
+  This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). Characters are checked in current party order. The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). If an item is found in a container on an earlier player and in the inventory of a later player, both item instances may be removed. All slots are checked; inventory slots are checked in the following order<br />
+<br />
+  <pre class="code">
+  0, 2, 4, 6, 8, 10, 12, 14
+  1, 3, 5, 7, 9, 11, 13, 15
+  </pre>
+<br />
+The example is from AR0516.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;ThrallOrb&quot;,&quot;GLOBAL&quot;,2)
+    PartyHasItem(&quot;MISC7Y&quot;)
+  THEN
+    RESPONSE #100
+      TakePartyItem(&quot;MISC7Y&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="117">117 TakePartyGold(I:Amount*)</a> </div>
+  <div class="indent1">
+  This action takes the specified amount of gold from the party. If performed by a party member, the gold is transferred to that characters gold stat (in the CRE file) and re-added to the party pot when the character re-joins the party.<br /> The example script is from AR0602.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;TakeImportItems&quot;,&quot;AR0602&quot;,0)
+  THEN
+    RESPONSE #100
+      SetGlobal(&quot;TakeImportItems&quot;,&quot;AR0602&quot;,1)
+      SetGlobal(&quot;Chapter&quot;,&quot;GLOBAL&quot;,1)
+      ActionOverride(&quot;Malaaq&quot;,MoveBetweenAreas(&quot;AR0601&quot;,[345.591],14))
+      ActionOverride(&quot;DuegarClanChief&quot;,TakeItemListPartyNum(&quot;IMPORT01&quot;,1))
+      ActionOverride(&quot;Shelf1&quot;,TakeItemListPartyNum(&quot;IMPORT03&quot;;,1))
+      SmallWait(4)
+      TakePartyGold(2147483647)
+  (cut short for brevity)
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="118">118 GivePartyGold(I:Amount*)</a></div>
+  <div class="indent1">
+  This action gives the specified amount of gold to the party. The active creature must have the gold in its &quot;money variable&quot;.<br />
+  <br />
+  <pre class="code">
+  IF
+    G(&quot;KRGIVEGOLD&quot;,0)
+  THEN
+    RESPONSE #100
+      GivePartyGold(500)
+      SG(&quot;KRGIVEGOLD&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="119">119 DropInventory()</a></div>
+  <div class="indent1">
+  This action causes the active creature to drop all its inventory items. The example script is from the cutscene with Mazzy fighting the ogre; cut16a.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      FadeToColor([20.0],0)
+      Wait(1)
+      ActionOverride(&quot;mazzy&quot;,DropInventory())
+      Wait(2)
+  (cut short for brevity)
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="120">120 StartCutScene(S:CutScene*)</a></div>
+  <div class="indent1">
+  This action starts a cutscene; a cinematic sequence that removes the GUI and player control. The cutscene parameter is the script name to run. The example script is from the Irenicus cutscene cut01.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      LeaveAreaLUAPanic(&quot;AR0700&quot;,&quot;&quot;,[2753.868],4)
+      LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2753.868],4)
+      ActionOverride(Player2,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2805.882],4))
+      ActionOverride(Player3,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2791.820],4))
+      ActionOverride(Player4,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2764.788],2))
+      ActionOverride(Player5,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2781.716],0))
+      ActionOverride(Player6,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2763.668],0))
+      Wait(1)
+      Explore()
+      MultiPlayerSync()
+      SetGlobal(&quot;EnteredWaukeen&quot;,&quot;AR0700&quot;,1)
+      TextScreen(&quot;SCENE01&quot;)
+      ActionOverride(&quot;Imoen&quot;,SetDialog(&quot;None&quot;))
+      ActionOverride(&quot;Imoen&quot;,LeaveParty())
+      ActionOverride(&quot;Imoen&quot;,GivePartyAllEquipment())
+      ActionOverride(&quot;Imoen&quot;,DestroySelf())
+      CreateCreature(&quot;CSIMOEN&quot;,[2732.831],2)
+      CreateCreature(&quot;CSIREN&quot;,[2557.935],0)
+      CreateCreature(&quot;CSTHIEF1&quot;,[2740.1009],6)
+      CreateCreature(&quot;CSTHIEF2&quot;,[2678.1043],6)
+      CreateCreature(&quot;CSTHIEF3&quot;,[2579.1075],8)
+      CreateCreature(&quot;CSTHIEF4&quot;,[2488.1078],10)
+      CreateCreature(&quot;CSGAYL&quot;,[2671.1101],6)
+      CreateCreature(&quot;AMNG1&quot;,[2736.1260],0)
+      SmallWait(1)
+      MoveViewPoint([2576.908],INSTANT)
+      DayNight(DAWN_END)
+      FadeFromColor([40.0],0)
+      StartCutScene(&quot;Cut01a&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="121">121 StartCutSceneMode()</a></div>
+  <div class="indent1">
+  This action starts a cutscene. Player control is removed, and scripts stop running. Note that actions already in the action list are not cleared without an explicit call to ClearAllActions. The example script is from are0507.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;AmsiHouse&quot;,&quot;GLOBAL&quot;,3)
+    !Dead(&quot;amsi&quot;)
+  THEN
+    RESPONSE #100
+      ClearAllActions()
+      StartCutSceneMode()
+      ActionOverride(&quot;amsi&quot;,StartDialogueNoSet(Player1))
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="122">122 EndCutSceneMode()</a></div>
+  <div class="indent1">
+  This action ends a cutscene, and restores the GUI and player control. The example script is from ar0800.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    GlobalGT(&quot;BodhiJob&quot;,&quot;GLOBAL&quot;,0)
+    Global(&quot;Movie02&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      ClearAllActions()
+      SetGlobal(&quot;Movie02&quot;,&quot;GLOBAL&quot;,1)
+      StartCutSceneMode()
+      FadeToColor([30.0],0)
+      Wait(2)
+      EndCutSceneMode()
+      TextScreen(&quot;SCENE04&quot;)
+      SmallWait(1)
+      StartCutSceneMode()
+      StartCutScene(&quot;Movie02a&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="123">123 ClearAllActions()</a></div>
+  <div class="indent1">
+  This action clears any queued actions for all creatures in the area. The example script is from ar0507.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;AmsiHouse&quot;,&quot;GLOBAL&quot;,3)
+    !Dead(&quot;amsi&quot;)
+  THEN
+    RESPONSE #100
+      ClearAllActions()
+      StartCutSceneMode()
+      ActionOverride(&quot;amsi&quot;,StartDialogueNoSet(Player1))
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="124">124 Berserk()</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="125">125 Deactivate(O:Object*)</a></div>
+  <div class="indent1">
+  This action deactivates the target creature. The creature remains in the area, but is removed from play - i.e. it is invisible and cannot be interacted with.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="126">126 Activate(O:Object*)</a></div>
+  <div class="indent1">
+  This action activates the target creature. The creature is returned to play - i.e. it is visible and can be interacted with.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="127">127 CutSceneId(O:Object*)</a></div>
+  <div class="indent1">
+  This action is used internally in a cutscene to make the object with the specified death variable perform actions. The action appears to only work from a creature script. The example script is from cut01.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      LeaveAreaLUAPanic(&quot;AR0700&quot;,&quot;&quot;,[2753.868],4)
+      LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2753.868],4)
+  (cut short for brevity)
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="128">128 AnkhegEmerge()</a></div>
+  <div class="indent1">
+  This action is likely called directly by the engine, and is used to give ankegs give the appearance of emerging from the ground. Calling the action from script has no effect.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="129">129 AnkhegHide()</a></div>
+  <div class="indent1">
+  This action is likely called directly by the engine, and is used to give ankegs give the appearance of burrowing into the ground. Calling the action from script has no effect.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="130">130 RandomTurn()</a></div>
+  <div class="indent1">
+  This action causes the active creature to turn in a random direction. The example script is from waitturn.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      RandomTurn()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="131">131 Kill(O:Object*)</a></div>
+  <div class="indent1">
+  This action causes the target creature to die, dropping any droppable items they are carrying.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;KillArntra04&quot;,&quot;AR0307&quot;,1)
+  THEN
+    RESPONSE #100
+      SetGlobal(&quot;KillArntra04&quot;,&quot;AR0307&quot;,2)
+      ActionOverride(&quot;arntra04&quot;,Face(10))
+      Wait(1)
+      ForceSpell(&quot;arntra04&quot;,CLERIC_FLAME_STRIKE)
+      Wait(1)
+      Kill(&quot;arntra04&quot;)
+      CreateCreature(&quot;Arntra05&quot;,[3213.485],0)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="132">132 VerbalConstant(O:Object*,I:Constant*soundOff)</a></div>
+  <div class="indent1">
+  This action plays a sound linked to the object.<br />
+  <br />
+  <pre class="code">
+  IF
+    Delay(2)
+    HPPercentLT(Myself,35)
+  THEN
+    RESPONSE #95
+      Shout(HURT)
+      Continue()
+    RESPONSE #5
+      VerbalConstant(Myself,HURT)
+      Shout(HURT)
+      Continue()
+  END<br />
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="133">133 ClearActions(O:Object*)</a></div>
+  <div class="indent1">
+  This action clears the action list of the specified object (including ModalActions). The example script is from ar2400.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    GlobalTimerExpired(&quot;udWaitOgreDoor&quot;,&quot;GLOBAL&quot;)
+    Global(&quot;HaveOgreOpenDoor&quot;,&quot;AR2400&quot;,0)
+    Global(&quot;udGithDead&quot;,&quot;AR2400&quot;,0)
+    !Global(&quot;udMind&quot;,&quot;GLOBAL&quot;,30)
+  THEN
+    RESPONSE #100
+      SetInterrupt(FALSE)
+      SetGlobal(&quot;HaveOgreOpenDoor&quot;,&quot;AR2400&quot;,1)
+      ClearActions(Player1)
+      ClearActions(Player2)
+      ClearActions(Player3)
+      ClearActions(Player4)
+      ClearActions(Player5)
+      ClearActions(Player6)
+      SetInterrupt(TRUE)
+      StartCutSceneMode()
+      StartCutScene(&quot;Cut44i&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="134">134 AttackReevaluate(O:Target*,I:ReevaluationPeriod*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to attack the target for the specified time (ReevaluationPeriod) which is measured in AI updates (which default to 15 per second).The script will then run again, checking for other true conditions.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF])
+    Range(LastSeenBy(),4)
+    !InParty(LastSeenBy())
+    !Allegiance(LastSeenBy(Myself),GOODCUTOFF)
+    !Class(LastSeenBy(Myself),INNOCENT)
+    InWeaponRange(LastSeenBy())
+    HasWeaponEquiped()
+  THEN
+    RESPONSE #100
+      AttackReevaluate(LastSeenBy(),30)
+  END
+  </pre>
+  <br />
+  </div>
+
+  
+  <div class="actionHeader"><a name="135">135 LockScroll()</a></div>
+  <div class="indent1">
+  This action locks the screen on the active creature, preventing the screen from being scrolled away. The action only works from a creature script.<br />
+  <br />
+  <pre class="code">
+  IF
+    CombatCounter(0)
+  THEN
+    RESPONSE #100
+      LockScroll()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="136">136 UnlockScroll()</a></div>
+  <div class="indent1">
+  This action unlocks the screen if it has been locked.<br />
+  <br />
+  <pre class="code">
+  IF
+    OR(2)
+    HotKey(H)
+    !CombatCounter(0)
+  THEN
+    RESPONSE #100
+      UnlockScroll()
+  END
+  </pre>
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="137">137 StartDialog(S:DialogFile*,O:Target*)</a></div>
+  <div class="actionHeader">137 StartDialogue(S:DialogFile*,O:Target*)</div>
+  <div class="indent1">
+  This action instructs the active creature to start the specified dialog with the specified target. The dialog can be initiated from a distance and must have at least one state with all its top level conditions true else it will not initiate. The active creature has its dialog file permanently set to the file specified by the DialogFile parameter.<br />
+  <br />
+  <pre class="code">
+  IF
+   See([PC])
+   NumTimesTalkedTo(0)
+  THEN
+    RESPONSE #100
+      StartDialog(&quot;andris&quot;,[PC])
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="138">138 SetDialog(S:DialogFile*)</a></div>
+  <div class="actionHeader">138 SetDialogue(S:DialogFile*)</div>
+  <div class="indent1">
+  This action sets the dialog file of the active creature to the specified file. SetDialogue(&quot;&quot;) will set the dialog file to nothing.<br />
+  <br />
+  <pre class="code">
+  IF
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    Global(&quot;KR_CHANGE_DIALOG&quot;,&quot;LOCALS&quot;,0)
+  THEN
+    RESPONSE #100
+      SetDialogue(&quot;&quot;)
+      SetGlobal(&quot;KR_CHANGE_DIALOG&quot;,&quot;LOCALS&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="139">139 PlayerDialog(O:Target*)</a></div>
+  <div class="actionHeader"><a name="139">139 PlayerDialogue(O:Target*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to start a dialog with the target creature, from any distance. If the target is invalid, no action will be taken.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="140">140 GiveItemCreate(S:ResRef*,O:Object*,I:Usage1*,I:Usage2*,I:Usage3*)</a></div>
+  <div class="indent1">
+This action creates the item specified by the resref parameter on the creature specified by the object parameter, with quantity/charges controlled by the usage parameters.<br />
+  <br />
+  <pre class="code">
+  IF
+    GlobalTimerExpired(&quot;dwVith&quot;,&quot;GLOBAL&quot;)
+    Global(&quot;dwVithal&quot;,&quot;GLOBAL&quot;,3)
+  THEN
+    RESPONSE #100
+      CreateVisualEffectObject(&quot;SPPLANAR&quot;,&quot;udvith&quot;)
+      Wait(2)
+      Activate(&quot;udvith&quot;)
+      GiveItemCreate(&quot;scrl8z&quot;,&quot;udvith&quot;,1,1,0)
+      GiveItemCreate(&quot;scrl9g&quot;,&quot;udvith&quot;,1,1,0)
+      GiveItemCreate(&quot;scrl9e&quot;,&quot;udvith&quot;,1,1,0)
+      GiveItemCreate(&quot;scrl9v&quot;,&quot;udvith&quot;,1,1,0)
+      GiveItemCreate(&quot;scrl9r&quot;,&quot;udvith&quot;,1,1,0)
+      SetGlobal(&quot;dwVithal&quot;,&quot;GLOBAL&quot;,4)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="141">141 GivePartyGoldGlobal(S:Name*,S:Area*)</a></div>
+  <div class="indent1">
+  This action gives the party a sum of gold corresponding to the given global variable. The gold amount is deducted from the active creature. The example script will give the party 50gp.<br />
+  <pre class="code">
+  IF
+    Global("Cash","GLOBAL",50)
+  THEN
+    RESPONSE #100
+      GivePartyGoldGlobal("Cash","GLOBAL")
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="142">142 UseDoor()</a></div>
+  <div class="indent1">
+  This action is used by the engine internally. An object id is expected in the in1 parameter.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="143">143 OpenDoor(O:Object*)</a></div>
+  <div class="indent1">
+  This action will open the specified door. If the door is locked the creature must possess the correct key. Some doors central to the plot doors cannot be opened. The active creature can stick on this action if it fails.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(&quot;Door01&quot;
+    OpenState(&quot;Door01&quot;,FALSE)
+    !See([GOODCUTOFF])
+    !TargetUnreachable(&quot;Door01&quot;)
+  THEN
+    RESPONSE #100
+      MoveToObjectNoInterrupt(&quot;Door01&quot;)
+      Unlock(&quot;Door01&quot; )
+      OpenDoor(&quot;Door01&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="144">144 CloseDoor(O:Object*)</a></div>
+  <div class="indent1">
+  This action closes the specified door. The example script is from ar0300.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    OR(2)
+    Global(&quot;LyrosJob&quot;,&quot;GLOBAL&quot;,3)
+    Dead(&quot;lyros&quot;)
+    Exists(&quot;Rylock&quot;)
+    Global(&quot;RylockLeavesHarperDoor&quot;,&quot;AR0300&quot;,0)
+  THEN
+    RESPONSE #100
+      SetGlobal(&quot;RylockLeavesHarperDoor&quot;,&quot;AR0300&quot;,1)
+      CloseDoor(&quot;DOOR0308&quot;)
+      Lock(&quot;DOOR0308&quot;)
+      ActionOverride(&quot;Rylock&quot;,EscapeArea())
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="145">145 PickLock(O:Object*)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="146">146 Polymorph(I:AnimationType*Animate)</a></div>
+  <div class="indent1">
+  This action causes the active creature to change animation to the specified animation (values from <a href="../../files/ids/bg2/animate.htm">animate.ids</a>)<br />
+  <br />
+  <pre class="code">
+  IF
+    !InPartyAllowDead(&quot;Aerie&quot;)
+    !Dead(&quot;Aerie&quot;)
+    !GlobalGT(&quot;AerieTransform&quot;,&quot;GLOBAL&quot;,0)
+    Global(&quot;Aerie&quot;,&quot;AR0607&quot;,0)
+    Global(&quot;KalahI&quot;,&quot;AR0607&quot;,0)
+  THEN
+    RESPONSE #100
+      MoveGlobal(&quot;Ar0607&quot;,&quot;Aerie&quot;,[318.378])
+      ChangeEnemyAlly(&quot;Aerie&quot;,NEUTRAL)
+      SetGlobal(&quot;Aerie&quot;,&quot;AR0607&quot;,1)
+      ActionOverride(&quot;Aerie&quot;,Polymorph(MAGE_FEMALE_ELF))
+      ActionOverride(&quot;Aerie&quot;,SetBeenInPartyFlags())
+      SetGlobal(&quot;AerieTransform&quot;,&quot;GLOBAL&quot;,2)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="147">147 RemoveSpell(I:Spell*Spell)</a></div>
+  <div class="actionHeader"><a name="147">147 RemoveSpellRES(S:RES*)</a></div>
+  <div class="indent1">
+  This action removes one memorised indtance of the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in <a href="../../files/ids/bg2/spell.htm">spell.ids</a>. <br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;KR_ANTI_PALADIN_CHANGE&quot;,&quot;LOCALS&quot;,1)
+  THEN
+    RESPONSE #100
+      RemoveSpell(PALADIN_LAY_ON_HANDS)
+      RemoveSpell(PALADIN_DETECT_EVIL)
+      RemoveSpell(PALADIN_PROTECTION_FROM_EVIL)
+      SetGlobal(&quot;KR_ANTI_PALADIN_CHANGE&quot;,&quot;LOCALS&quot;,2)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="148"> 148 BashDoor(0:Object)</a></div>
+  <div class="indent1">
+  This action is miscoded in the default action.ids file (the number 0 should be the capital letter O). When corrected, this action causes the active creature to attempt to bash the specified door.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="149">149 EquipMostDamagingMelee()</a></div>
+  <div class="indent1">
+  This action instructs the active creature to equip the most damaging melee weapon from those available in the quickslots. Damage is calculated on the THAC0 bonus and damage - special bonuses versus creature types and elemental damages are not checked.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF])
+  THEN
+    RESPONSE #100
+      EquipMostDamagingMelee()
+      Attack([EVILCUTOFF])
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="150">150 StartStore(S:Store*,O:Target*)</a></div>
+  <div class="indent1">
+  This action starts the specified store with the specified object.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;KRSTART_STORE&quot;,&quot;LOCALS&quot;,1)
+  THEN
+    RESPONSE #100
+      StartStore(&quot;Tem4802&quot;,LastTalkedToBy())
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="151">151 DisplayString(O:Object*,I:StrRef*)</a></div>
+  <div class="indent1">
+  This action displays the strref specified by the StrRef parameter in the message window, attributing the text to the specified object.<br />
+  <br />
+  <pre class="code">
+  IF
+    HasItem(&quot;potn52&quot;,Myself)
+    HPPercentLT((),50)
+  THEN
+    RESPONSE #100
+      UseItem(&quot;potn52&quot;,Myself)
+      DisplayString(Myself,46150)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="152">152 ChangeAIType(O:Object*)</a></div>
+  <div class="indent1">
+  This action changes the IDS identifiers for the active creature to the values specified. The object parameter must be in the IDS object form (i.e  [EA.GENERAL.RACE.CLASS.SPECIFIC.GENDER.ALIGN]). If parameters are missing, they will default to 0. If a symbolic object is passed, all identifiers will be cleared and the IDS identifier bytes will be filled. ChangeAIType(NearestEnemyOf(LastSeenBy(LastTalkedToBy(LastTrigger())))) would zero Allegiance, General, Race, Class, Specific, Gender, and Alignment, set spec 1 to &quot;Myself&quot; (the <a href="../../files/ids/bg2/object.htm">object.ids</a> value, 1), 2 to LastTrigger, 3 to LastTalkedToBy, 4 to LastSeenBy, and 5 to NearestEnemyOf.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="153">153 ChangeEnemyAlly(O:Object*,I:Value*EA)</a></div>
+  <div class="indent1">
+  This action changes the EA status of the target creature to the specified value. Values are from <a href="../../files/ids/bg2/ea.htm">ea.ids</a>.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global&quot;KR_ENEMYALLY_CHANGE&quot;,&quot;LOCALS&quot;,0)
+  THEN
+    RESPONSE #100
+     SetGlobal&quot;KR_ENEMYALLY_CHANGE&quot;,&quot;LOCALS&quot;,1)
+      ChangeEnemyAlly(Myself,NEUTRAL)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="154">154 ChangeGeneral(O:Object*,I:Value*General)</a></div>
+  <div class="indent1">
+  This action changes the general status of the target creature to the specified value. Values are from <a href="../../files/ids/bg2/general.htm">general.ids</a>.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global&quot;KR_GENERAL_CHANGE&quot;,&quot;LOCALS&quot; ,0)
+  THEN
+    RESPONSE #100
+      SetGlobal&quot;KR_GENERAL_CHANGE&quot;,&quot;LOCALS&quot;,1)
+      ChangeGeneral(Myself,UNDEAD)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="155">155 ChangeRace(O:Object*,I:Value*Race)</a></div>
+  <div class="indent1">
+  This action changes the race of the target creature to the specified value. Values are from <a href="../../files/ids/bg2/race.htm">race.ids</a>.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global&quot;KR_RACE_CHANGE&quot;,&quot;LOCALS&quot;,0)
+  THEN
+    RESPONSE #100
+      SetGlobal&quot;KR_RACE_CHANGE&quot;,&quot;LOCALS&quot;,1)
+      ChangeRace(Myself,DRAGON)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="156">156 ChangeClass(O:Object*,I:Value*Class)</a></div>
+  <div class="indent1">
+  This action changes the class of the target creature to the specified value. Values are from <a href="../../files/ids/bg2/class.htm">class.ids</a>.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global&quot;KR_CLASS_CHANGE&quot;,&quot;LOCALS&quot;,0)&lt; br&gt;
+  THEN
+    RESPONSE #100
+      SetGlobal&quot;KR_CLASS_CHANGE&quot;,&quot;LOCALS&quot;,1)
+      ChangeClass(Myself,FIGHTER)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="157">157 ChangeSpecifics(O:Object*,I:Value*Specific)</a></div>
+  <div class="indent1">
+  This action changes the specific status of the target creature to the specified value. Values are from <a href="../../files/ids/bg2/specific.htm">specific.ids</a>. The action produces inconsistent results when used on player characters in multiplayer games. The specific value is represented by one byte, and so is limited to values 0-255. The example script assigns a script to a newly created simulacrum.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([ALLY])
+    !InParty(LastSeenBy(Myself))
+    !Gender(LastSeenBy(Myself),SUMMONED)
+    !General(LastSeenBy(Myself),ANIMAL)
+    !General(LastSeenBy(Myself),MONSTER)
+    !General(LastSeenBy(Myself),UNDEAD)
+    !General(LastSeenBy (Myself),GIANTHUMANOID)
+    !Race(LastSeenBy(Myself),ELEMENTAL)
+    !Race(LastSeenBy(Myself),MEPHIT)
+    !Race(LastSeenBy(Myself),IMP)
+    !HasItem(&quot;IMOENHP1&amp;q uot;,LastSeenBy(Myself))
+    !HasItem(&quot;MINHP1&quot;,LastSeenBy(Myself))
+    !Specifics(LastSeenBy(Myself),100)
+  THEN
+    RESPONSE #100
+      DisplayStringHead(LastSeenBy(Myself),26234) // 'Simulacrum'
+      ActionOverride(LastSeenBy(Myself), ChangeAIScript(&quot;gbSim&amp;quot;,DEFAULT))
+      ChangeSpecifics(LastSeenBy(Myself),100)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="158">158 ChangeGender(O:Object*,I:Value*Gender)</a></div>
+  <div class="indent1">
+  This action changes the gender of the target creature to the specified value. Values are from <a href="../../files/ids/bg2/gender.htm">gender.ids</a>. The example script changes the gender of summoned creatures to neither, to bypass the 5 concurrent summoned creatures limit.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([ALLY])
+    !InParty(LastSeenBy(Myself))
+    Gender(LastS eenBy(Myself),SUMMONED)
+    !Specifics(LastSeenBy(Myself),3001)
+  THEN
+    RESPONSE #100
+      ChangeGender(LastSeenBy(),NEITHER)
+      ChangeSpecifics(LastSeenBy(Myself), 3001)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="159">159 ChangeAlignment(O:Object*,I:Value*Align)</a></div>
+  <div class="indent1">
+  This action changes the alignment of the target creature to the specified value. Values are from <a href="../../files/ids/bg2/align.htm">align.ids</a>. <br />
+  <br />
+  <pre class="code">
+  IF
+    Global&quot;KR_ALIGN_CHANGE&quot;,&quot;LOCALS&quot;,0)&lt;
+  THEN
+    RESPONSE #100
+      SetGlobal&quot;KR_ALIGN_CHANGE&quot;,&quot;LOCALS&quot;,1)
+      ChangeAlignment(LastSeenBy(Myself),CHAOTIC_GOOD)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="160">160 ApplySpell(O:Target,I:Spell*Spell)</a></div>
+  <div class="actionHeader"><a name="160">160 ApplySpellRES(S:RES*, O:Target)</a></div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The RES action applies the spell at the lowest casting level - the casting level of the originating creature is ignored. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by ApplySpell use a single dice value. The example script is used to mimic a contingency from mage18y.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    See(NearestEnemyOf(Myself))
+    Global(&quot;Prep&quot;,&quot;LOCALS&quot;,0)
+  THEN
+    RESPONSE #100
+      ApplySpell(Myself,WIZARD_STONE_SKIN)
+      ApplySpell(Myself,WIZARD_SPELL_TRAP)
+      ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
+      ApplySpell(Myself,WIZARD_SPELL_TURNING)
+      ApplySpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+      ApplySpell(SixthNearestEnemyOf(Myself),WIZARD_MONSTER_SUMMONING_4)
+      SetGlobal(&quot;Prep&quot;,&quot;LOCALS&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="161">161 IncrementChapter(S:RESREF*)</a></div>
+  <div class="indent1">
+  This action is used to increment the chapter, and display a text screen (specified by the resref parameter - a 2DA file). The example script is from ar1803.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Dead(&quot;Davaeorn&quot;)
+    Global(&quot;Chapter&quot;,&quot;GLOBAL&quot;,4)
+  THEN
+    RESPONSE #100
+      RevealAreaOnMap(&quot;AR0900&quot;)
+      IncrementChapter(&quot;Chptxt5&quot;)
+      AddJournalEntry(15839,USER)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="162">162 ReputationSet(I:Reputation*)</a></div>
+  <div class="indent1">
+  This action sets the reputation to the specified value.<br />
+  <pre class="code">
+  IF
+    Global(&quot;KRGOODDEED&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      SetReputation(20)
+      SG(&quot;KRGOODDEED&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="163">163 ReputationInc(I:Reputation*)</a></div>
+  <div class="indent1">
+  This action alters the reputation by the specified value (which can be either negative or positive). The example script is from baldur.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    InParty(&quot;Viconia&quot;)
+    Global(&quot;ViconiaJoinedParty&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      ReputationInc(-2)
+      SetGlobal(&quot;ViconiaJoinedParty&quot;,&quot;GLOBAL&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="164">164 AddexperienceParty(I:XP*)</a></div>
+  <div class="indent1">
+  This action gives the specified amount of experience to the party. The XP amount is distributed among all current living party members. The example script is from ar1300.bcs.<br />
+  <pre class="code">
+  IF
+    OpenState(&quot;Bridge01&quot;,TRUE)
+    Global(&quot;BridgeOpen&quot;,&quot;GLOBAL&quot;,0)
+    !Dead(&quot;Torgal&quot;)
+  THEN
+    RESPONSE #100
+    SetGlobal(&quot;BridgeOpen&quot;,&quot;GLOBAL&quot;,1)
+    DisplayString(Myself,'The drawbridge has been lowered.')
+    CreateCreature(&quot;KPCAPT03&quot;,[2400.1592],6)
+    CreateCreature(&quot;KPSOLD03&quot;,[2425.1676],6)
+    CreateCreature(&quot;KPSOLD04&quot;,[2371.1754],6)
+    CreateCreature(&quot;KPSOLD05&quot;,[2315.1805],6)
+    CreateCreature(&quot;TROLGI01&quot;,[2391.1592],0)
+    CreateCreature(&quot;TROLGI02&quot;,[2282.1742],0)
+    CreateCreature(&quot;KPYUAN01&quot;,[2251.1731],0)
+    AddexperienceParty(29750)
+  (cut short for brevity)
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="165">165 AddExperiencePartyGlobal(S:Name*,S:Area*)</a> </div>
+  <div class="indent1">
+  This action adds experience to the party, with the amount corresponding to a global variable.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global("MyXP","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("MyXP","GLOBAL",50)
+      AddExperiencePartyGlobal("MyXP","GLOBAL")
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="166">166 SetNumTimesTalkedTo(I:Num*)</a></div>
+  <div class="indent1">
+  This action sets the number of times the active creature has been talked to (by player characters). The example script is from ar0103.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;BrielbaraMove&quot;,&quot;GLOBAL&quot;,1)
+    !Exists(&quot;Brielbara&quot;)
+    !Dead(&quot;Brielbara&quot;)
+  THEN
+    RESPONSE #100
+      CreateCreature(&quot;BRIELB&quot;,[418.376],0)
+      ActionOverride(&quot;Brielbara&quot;,SetNumTimesTalkedTo(1))
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="167">167 StartMovie(S:ResRef*)</a></div>
+  <div class="indent1">
+  This action is used to a play a movie (MVE file). The example script is from ar108.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;EnteredPalace&quot;,&quot;GLOBAL&quot;,0)
+  THEN
+    RESPONSE #100
+      StartMovie(&quot;PALACE&quot;)
+      SetGlobal(&quot;EnteredPalace&quot;,&quot;GLOBAL&quot;,1)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="168">168 Interact(O:Object*)</a></div>
+  <div class="indent1">
+  This action is used to initiate banter between NPCs. The example script is from edwin.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    InParty(Myself)
+    Gender(Myself,FEMALE)
+    InParty(&quot;Aerie&quot;)
+    See(&quot;Aerie&quot;)
+    !Dead(&quot;Aerie&quot;)
+    !StateCheck(&quot;Aerie&quot;,STATE_SLEEPING)
+    Range(&quot;Aerie&quot;,10)
+    CombatCounter(0)
+    !Range(SecondNearest([PC]),10)
+    Global(&quot;EdwinW1&quot;,&quot;LOCALS&quot;,0)
+  THEN
+    RESPONSE #100
+      Interact(&quot;Aerie&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="169">169 DestroyItem(S:ResRef*)</a></div>
+  <div class="indent1">
+  This action removes a single instance of the specified item from the active creature, unless the item exists in a stack, in which case the entire stack is removed. The example script is from ar1000.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global(&quot;CerndBaby&quot;,&quot;GLOBAL&quot;,1)
+    Global(&quot;CerndBabyTake&quot;,&quot;AR1000&quot;,0)
+  THEN
+    RESPONSE #100
+      SetGlobal(&quot;CerndBabyTake&quot;,&quot;AR1000&quot;,1)
+      TakePartyItem(&quot;misc8t&quot;)
+      DestroyItem(&quot;misc8t&quot;)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="170">170 RevealAreaOnMap(S:ResRef*)</a></div>
+  <div class="indent1">
+  This action reveals an area on the worldmap, enabling travelling to it.<br />
+  <br />
+  <pre class="code">
+  IF
+    Dead(&quot;Davaeorn&quot;)
+    Global(&quot;Chapter&quot;,&quot;GLOBAL&quot;,4)
+  THEN
+    RESPONSE #100
+      RevealAreaOnMap(&quot;AR0900&quot;)
+      IncrementChapter(&quot;Chptxt5&quot;)
+      AddJournalEntry(15839,USER)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="171">171 GiveGoldForce(I:Amount*)</a></div>
+  <div class="indent1">
+  This action gives the specified amount of gold to the party. The active creature need not have the gold in its &quot;money variable&quot;. A negative amount will remove gold from the active creature.<br />
+  <br />
+  <pre class="code">
+  IF
+    NumTimesTalkedTo(30)
+  THEN
+    RESPONSE #100
+      SetNumTimesTalkedTo(31)
+      GiveGoldForce(300)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="172">172 ChangeTileState(O:Tile*,I:State*Boolean)</a></div>
+  <div class="indent1">
+  This action sets the open/closed graphic of a tile in a WED file.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="173">173 AddJournalEntry(I:Entry*,I:Type*JourType)</a></div>
+  <div class="indent1">
+  This action adds an entry into the journal. The entry parameter is the strref to add, and the JourType is the type of entry (i.e. the location within the journal to add the entry to) - values are from <a href="../../files/ids/bg2/jourtype.htm">jourtype.ids</a>. The example script is from ar0511.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    Dead(&quot;JanGith1&quot;)
+    Dead(&quot;JanGith2&quot;)
+    Global(&quot;ThumbSeeker&quot;,&quot;GLOBAL&quot;,2)
+    Global(&quot;HiddenJournal&quot;,&quot;AR0511&quot;,0)
+  THEN
+    RESPONSE #100
+      SetGlobal(&quot;HiddenJournal&quot;,&quot;AR0511&quot;,1)
+      AddJournalEntry(34726,QUEST)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="174">174 EquipRanged()</a></div>
+  <div class="indent1">
+  This action instructs the active creature to a ranged weapon from the weapons available in the quickslots.<br />
+  <br />
+  <pre class="code">
+  IF
+    See([EVILCUTOFF])
+    !Range([EVILCUTOFF],4)
+    OR(28)
+    !HasItemEquiped(&quot;Bow01&quot;,())
+    !HasItemEquiped(&quot;Bow02&quot;,())
+    !HasItemEquiped(&quot;Bow03&quot;,())
+    !HasItemEquiped(&quot;Bow04&quot;,())
+    !HasItemEquipedReal(&quot;Bow05&quot;,())
+    !HasItemEquipedReal(&quot;Bow06&quot;,())
+    !HasItemEquipedReal(&quot;Bow07&quot;,())
+    !HasItemEquipedReal(&quot;Bow08&quot;,())
+    !HasItemEquipedReal(&quot;Bow09&quot;,())
+    !HasItemEquipedReal(&quot;Bow10&quot;,())
+    !HasItemEquipedReal(&quot;Bow11&quot;,())
+    !HasItemEquipedReal(&quot;Bow12&quot;,())
+    !HasItemEquipedReal(&quot;Bow13&quot;,())
+    !HasItemEquipedReal(&quot;Bow14&quot;,())
+    !HasItemEquipedReal(&quot;Bow15&quot;,())
+    !HasItemEquipedReal(&quot;Bow16&quot;,())
+    !HasItemEquipedReal(&quot;Bow17&quot;,())
+    !HasItemEquipedReal(&quot;Bow18&quot;,())
+    !HasItemEquipedReal(&quot;Bow19&quot;,())
+    !HasItemEquipedReal(&quot;Bow20&quot;,())
+    !HasItemEquipedReal(&quot;Bow21&quot;,())
+    !HasItemEquipedReal(&quot;Bow22&quot;,())
+    !HasItemEquipedReal(&quot;Bow23&quot;,())
+    !HasItemEquipedReal(&quot;Bow24&quot;,())
+    !HasItemEquipedReal(&quot;Bow25&quot;,())
+    !HasItemEquipedReal(&quot;Bow26&quot;,())
+    !HasItemEquipedReal(&quot;Bow98&quot;,())
+    !HasItemEquipedReal(&quot;Bow99&quot;,())
+  THEN
+    RESPONSE #100
+      EquipRanged()
+      AttackReevaluate([EVILCUTOFF],30)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="175">175 SetLeavePartyDialogFile()</a></div>
+  <div class="actionHeader">175 SetLeavePartyDialogueFile()</div>
+  <div class="indent1">
+  This action sets the dialog for the active creature to their leave dialog.<br />
+  <br />
+  <pre class="code">
+  IF
+    !InParty(Myself)
+    HPGT(Myself,0)
+  THEN
+    RESPONSE #100
+      SetLeavePartyDialogFile()
+      Dialogue(Player1)
+      ChangeAIScript(&quot;&quot;,DEFAULT)
+  END
+  </pre>
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="176">176 EscapeAreaDestroy(I:Delay*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to search for the nearest travel trigger point for the specified time (measured in second) before giving up and just disappearing.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="177">177 TriggerActivation(O:Object*,I:State*Boolean)</a></div>
+  <div class="indent1">
+  This action is used in conjunction with trigger region in ARE files. The action sets the activation state a trigger region (specified by the object parameter).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="178">178 BreakInstants()</a></div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="179">179 DialogInterrupt(I:State*Boolean)</a></div>
+  <div class="actionHeader"><a name="179">179 DialogueInterrupt(I:State*Boolean)</a></div>
+  <div class="indent1">
+  This action sets the interrupt state of the active creature. When set to false the creature cannot receive dialog requests or issue verbal constants. The interrupt state of a creature is not saved.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="180">180 MoveToObjectFollow(O:Object*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to move to the specified object. Once the active creature reaches the object, it will follow the target if it moves. This behaviour continues until a different action is issued or until the target creature travels between areas.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="181">181 ReallyForceSpell(O:Target,I:Spell*Spell)</a></div>
+  <div class="actionHeader"><a name="181">181 ReallyForceSpellRES(S:RES*, O:TargetI:Spell*Spell)</a></div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell.  This action does not work in the script round where the active creature has died.<br />
+
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="182">182 MakeUnselectable(I:Time*)</a></div>
+  <div class="indent1">
+  This action changes the active creature's selection circle to purple - making it unselectable. Creatures made unselectable stop processing scripts.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="183">183 MultiPlayerSync()</a></div>
+  <div class="indent1">
+  This action is used in multiplayer games to ensure that players are at the same point before continuing.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="184">184 RunAwayFromNoInterrupt(O:Creature*,I:Time*)</a></div>
+  <div class="indent1">
+  This action causes the active creature to run away from the specified creature, for the specified time. The time parameter is measured in AI updates, which default to 15 updates per second. Occasionally, fleeing creatures stop to attack another creature. Conditions are not checked until the time has expired.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="185">185 SetMasterArea(S:Name*)</a></div>
+  <div class="indent1">
+  This action adds the specified area to the top of the area script processing stack. When the player enters an area that is not in the mastarea.2da the associated script is added to the bottom of the area script processing stack. When the player enters an area that is in mastarea.2da the associated script is added to the top of the area script processing stack.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="186">186 EndCredits()</a></div>
+  <div class="indent1">
+  This action shows the ending credits.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="187">187 StartMusic(I:Slot*,I:Flags*MFLAGS)</a></div>
+  <div class="indent1">
+  This action tarts playing a music track. The slot parameter refers to the music slots contained in the ARE header. The flag parameter indicates how the music should be played - values are from <a href="../../files/ids/bg2/mflags.htm">mflags.ids</a>.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="188">188 TakePartyItemAll(S:Item*)</a></div>
+  <div class="indent1">
+  This action removes all instances of the specified item from the party. The items are placed in the inventory of the active creature. Items contained in containers (e.g. Bag of Holding) are not taken.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="189">189 LeaveAreaLUAPanic(S:Area*,S:Parchment*,P:Point*,I:Face*DIR)</a></div>
+  <div class="indent1">
+  This action changes the current area.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="190">190 SaveGame(I:Slot*)</a></div>
+  <div class="indent1">
+  This action saves the game in the specified save slot.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="191">191 SpellNoDec(O:Target*,I:Spell*Spell)</a></div>
+  <div class="actionHeader">191SpellNoDecRES(S:RES*,O:Target*)</div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the target object. The spell need not be currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. The spell will not be removed from the casters memory after casting. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="192">192 SpellPointNoDec(P:Target*,I:Spell*Spell)</a></div>
+  <div class="actionHeader">192 SpellPointNoDecRES(S:RES*,P:Target*)</div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. The spell will be removed from the casters memory. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The example script is from andris.bcs.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="193">193 TakePartyItemRange(S:Item*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to take the specified item from the party, if they are nearby. A range for the action cannot be specified.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="194">194 ChangeAnimation(S:ResRef*)</a></div>
+  <div class="indent1">
+  This action will change the animation of the active creature to match that of the specified CRE file. If the active creature is in the party, the action will create the specified creature.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="195">195 Lock(O:Object*)</a></div>
+  <div class="indent1">
+  This action will lock the specified door/container.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="196">196 Unlock(O:Object*)</a></div>
+  <div class="indent1">
+  This action will unlock the specified door/container.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="197">197 MoveGlobal(S:Area*,O:Object*,P:Point*)</a></div>
+  <div class="indent1">
+  This action will move the specified object to the target area, at the indicated point. The action will only work for creatures in the GAM file - i.e. NPCs or that have been added via MakeGlobal.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="198">198 StartDialogueNoSet(O:Object*)</a></div>
+  <div class="actionHeader"><a name="198">198 StartDialogNoSet(O:Object*)</a></div>
+  <div class="indent1">
+  This action instructs the active creature to initiate dialog with the target object, using its currently assigned dialog file. This action can be used from a distance and will work whether the target creature is in sight or not. Dialog will not be initiated if the creature using this action has been assigned a dialog that has all top level conditions returning false. If the target is invalid, the active creature will initiate dialog with Player1.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="199"> 199 TextScreen(S:TextList*) </a></div>
+  <div class="indent1">
+  This action displays a textscreen, showing text and graphics from the specified 2DA file.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="200">200</a> RandomWalkContinuous()</div>
+  <div class="indent1">
+  This action causes the active creature to walk randomly, without pausing.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="201">201</a> DetectSecretDoor(O:Object*)</div>
+  <div class="indent1">
+  This action will highlight the specified secret door in purple, to indicate it has been detected.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="202">202</a> FadeToColor(P:Point*,I:Blue*)</div>
+  <div class="indent1">
+  This action will fade the screen. The point parameter is given in [x.y] format with the x coordinate specifying the number of AI updates (which default to 15 per second) to take to complete the fade action.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="203">203</a> FadeFromColor(P:Point*,I:Blue*)</div>
+  <div class="indent1">
+  This action will unfade the screen. The point parameter is given in [x.y] format with the x coordinate specifying the number of AI updates (which default to 15 per second) to take to complete the fade action.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="204">204</a> TakePartyItemNum(S:ResRef*,I:Num*)</div>
+  <div class="indent1">
+  This action will remove a number of instances (specified by the Num parameter) of the specified item from the party. The items will be removed from players in order, for example; Player1 has 3 instances of "MYITEM" in their inventory, Player2 has 2 instance of "MYITEM," and Player3 has 1 instance. If the action TakePartyItemNum("MYITEM", 4) is run, all 3 instances of "MYITEM" will be taken from Player1, and 1 instance will be taken from Player2. This leaves Player2 and Player3 each with one instance of "MYITEM." If the last item of an item type stored in a container STO file is removed by this action, the amount becomes zero. Items with zero quantities cannot be seen in-game, cannot be removed by TakePartyItem, and will not count toward a container's current item load. If the item to be taken is in a stack, and the stack is in a quickslot, the item will be removed, and the remaining stack will be placed in the inventory. If the inventory is full, the stack item will be dropped on the ground.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="205">205 WaitWait(I:Time*)</a></div>
+  <div class="indent1">
+  This action functions the same as Wait.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="207">207</a> MoveToPointNoInterrupt(P:Point*)</div>
+  <div class="indent1">
+  This action causes the active creature to move to the specified coordinates. The action will update the position of creatures as stored in ARE files (first by setting the coordinates of the destination point, then by setting the coordinates of the current point once the destination is reached). Conditions are not checked until the destination point is reached.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="208">208</a> MoveToObjectNoInterrupt(O:Object*)</div>
+  <div class="indent1">
+  This action instructs the active creature to move to the specified object. The action does not update the current position of the actor, saved in ARE files. Conditions are not checked until the destination point is reached.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="209">209</a> SpawnPtActivate(O:Object*)</div>
+  <div class="indent1">
+  As it says, this action will activate a spawn point in an area. The Object should be the name of the spawn point as written in the ARE file.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="210">210</a> SpawnPtDeactivate(O:Object*)</div>
+  <div class="indent1">
+  This action is used in conjunction with spawn points in ARE files. The action sets the enabled state of a spawn point (specified by the object parameter).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="211">211</a> SpawnPtSpawn(O:Object*)</div>
+  <div class="indent1">
+  This action causes an activated spawn point to spawn creatures, regardless of whether the time for spawning has expired. The Object should be the name of the spawn point as written in the ARE file.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="212">212</a> GlobalShout(I:ID*SHOUTIDS)</div>
+  <div class="indent1">
+  This action acts like Shout() without the range limit.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="213">213</a> StaticStart(O:Object*)</div>
+  <div class="indent1">
+  This action is used in conjunction with animations in ARE files. The action will start the specified animation.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="214">214</a> StaticStop(O:Object*)</div>
+  <div class="indent1">
+  This action is used in conjunction with animations in ARE files. The action will stop the specified animation.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="215">215</a> FollowObjectFormation(O:Object*,I:Formation*,I:Position*)</div>
+  <div class="indent1">
+  This action instructs the active creature to follow the target object, in the specified formation, taking up the specified position. The Formation parameter represents the formation type (e.g. two lines, arrowhead, single line). The position should be in the range [0,5]. The example script is from dlsctc02.bcs.<br />
+  <br />
+  <pre class="code">
+  IF
+    !Range("DLSCTC02",12)
+    Global("DontFollow","DL0302",0)
+  THEN
+    RESPONSE #100
+      FollowObjectFormation("DLSCTC02",1,6)
+    RESPONSE #100
+      FollowObjectFormation("DLSCTC02",1,5)
+    RESPONSE #100
+      FollowObjectFormation("DLSCTC02",2,6)
+    RESPONSE #100
+      FollowObjectFormation("DLSCTC02",2,5)
+  END
+  
+  IF
+    Global("FollowTheLeader","LOCALS",1)
+    Range("DLSCTC02",6)
+    Global("DontFollow","DL0302",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",0)
+  END
+  
+  IF
+    OR(2)
+    !Range("DLSCTC02",9)
+    Range("DLSCTC02",1)
+    Global("DontFollow","DL0302",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",1,2)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",1,3)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",1,4)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",1,5)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",1,1)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",2,1)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",2,2)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",2,3)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",2,4)
+    RESPONSE #100
+      SetGlobal("FollowTheLeader","LOCALS",1)
+      FollowObjectFormation("DLSCTC02",2,5)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="216">216</a> AddFamiliar()</div>
+  <div class="indent1">
+  This action causes the active creature to become the players ally. The active creature does not act as a normal familiar (i.e. no HP bonus or Constitution loss on death).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="217">217</a> RemoveFamiliar()</div>
+  <div class="indent1">
+  This action removes the ally flag set by AddFamiliar.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="218">218</a> PauseGame()</div>
+  <div class="indent1">
+  This action pauses the game. Script processing is halted while the game is paused.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="219">219</a> ChangeAnimationNoEffect(S:ResRef*)</div>
+  <div class="indent1">
+  This action will change the animation of the active creature to match that of the specified CRE file. If the active creature is in the party, the action will create the specified creature. No lighting effects are played.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="220">220</a> TakeItemListParty(S:ResRef*)</div>
+  <div class="indent1">
+  This action removes the items listed in the specified 2DA file from the party.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="221">221</a> SetMoraleAI(I:Morale*MoraleAI)</div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="222">222</a> IncMoraleAI(I:Morale*MoraleAI)</div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="223">223</a> DestroyAllEquipment()</div>
+  <div class="indent1">
+  This action destroys all items on the active creature.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="224">224</a> GivePartyAllEquipment()</div>
+  <div class="indent1">
+  This action causes the active creature to give all their items to the party.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="225">225</a> MoveBetweenAreas(S:Area*,P:Location*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action will move the active creature to the specified point in the indicated area, facing the appropriate direction.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="225">225</a> MoveBetweenAreasEffect(S:Area*,S:Graphic*,P:Location*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action will move the active creature to the specified point in the indicated area, facing the appropriate direction, and plays the specified graphics when the creature disappears.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="226">226</a> TakeItemListPartyNum(S:ResRef*,I:Num*)</div>
+  <div class="indent1">
+  This action will remove the specified number of items from the party, as listed in the specified 2DA file.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="227">227</a> CreateCreatureObject(S:ResRef*,O:Object*,I:Usage1*,I:Usage2*,I:Usage3*)</div>
+  <div class="indent1">
+  This action will create the specified creature next to the specified object. The facing of the creature is controlled by the Usage1 parameter.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="228">228</a> CreateCreatureImpassable(S:NewObject*,P:Location*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action creates the specified creature on a normally impassable surface (e.g. on a wall, on water, on a roof).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="229">229</a> FaceObject(O:Object*)</div>
+  <div class="indent1">
+  This action instructs the active creature to face the target object.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="230">230</a> RestParty()</div>
+  <div class="indent1">
+  This action duplicates the effects of resting. Such resting is not interruptible, and functions even if enemies are nearby.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="231">231</a> CreateCreatureDoor(S:NewObject*,P:Location*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action creates the specified creature at the specified location, and plays the dimension door graphic. The creature appears after approximately 100 AI cycles (~3.5 seconds at the default of 30 frame/second).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="232">232</a> CreateCreatureObjectDoor(S:ResRef*,O:Object*,I:Usage1*,I:Usage2*,I:Usage3*)</div>
+  <div class="indent1">
+  This action will create the specified creature next to the specified object, and plays the dimension door graphic. The facing of the creature is controlled by the Usage1 parameter. The creature appears after approximately 100 AI cycles (~3.5 seconds at the default of 30 frame/second).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="233">233</a> CreateCreatureObjectOffScreen(S:ResRef*,O:Object*,I:Usage1*,I:Usage2*,I:Usage3*)</div>
+  <div class="indent1">
+  This action creates the specified creature just off-screen from the current viewpoint (the north/south/east/west direction is random). The facing of the creature is controlled by the Usage1 parameter.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="234">234</a> MoveGlobalObjectOffScreen(O:Object*,O:Target*)</div>
+  <div class="indent1">
+  This action moves the object creature a screen away from the specified target creature. The target object must be stored in the GAM file (i.e. NPC or added explicitly via the MakeGlobal action.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="235">235</a> SetQuestDone(I:STRREF*)</div>
+  <div class="indent1">
+  This action removes the specified strref from the quest section of the journal.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="236">236</a> StorePartyLocations()</div>
+  <div class="indent1">
+  This action stores the current location of party members in the GAM file.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="237">237</a> RestorePartyLocations()</div>
+  <div class="indent1">
+  This action moves the party to the stored locations (previously stored with StorePartyLocations). The action clears the stored locations from the GAM file.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="238">238</a> CreateCreatureOffScreen(S:ResRef*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action creates the specified creature just offscreen from the active creature.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="239">239</a> MoveToCenterOfScreen(I:NotInterruptableFor*)</div>
+  <div class="indent1">
+  This action moves the active creature to the centre of the screen. Script conditions are not checked for the specified duration (measured in seconds) or until the creature has reached the screen centre.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="240">240</a> ReallyForceSpellDead(O:Target,I:Spell*Spell)</div>
+  <div class="actionHeader">240 ReallyForceSpellDeadRES(S:RES*,O:Target)</div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span> This action works in the script round where the active creature has died.<br />
+  <br />
+  <pre class="code">
+  IF
+      Die()xx
+  THEN
+      RESPONSE #100
+          ReallyForceSpellDead(Myself,ILLUSION_DEATH)
+          Wait(1)
+          DestroySelf()
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="241">241</a> Calm(O:Object)</div>
+  <div class="indent1">
+  This action reverses the effect of the Panic action, and may also remove other effects.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="242">242</a> Ally()</div>
+  <div class="indent1">
+  This action changes the active creature's allegiance to ALLY (i.e. a green selection circle).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="243">243</a> RestNoSpells()</div>
+  <div class="indent1">
+  This action rests the party, but doesn't force healing spells to be cast on injured party members.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="244">244</a> SaveLocation(S:Area*,S:Global*,P:Point*)</div>
+  <div class="indent1">
+  This action is similar to StorePartyLocations() but with one object.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="245">245</a> SaveObjectLocation(S:Area*,S:Global*,O:Object*)</div>
+  <div class="indent1">
+  This action stores the location of the specified object in the named variable.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global("SavedMyPos","LOCALS",0)
+  THEN
+    RESPONSE #50
+      SetGlobal("SavedMyPos","LOCALS",1)
+      SaveObjectLocation("LOCALS","DefaultLocation",Myself)
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="246">246</a> CreateCreatureAtLocation(S:GLOBAL*,S:Area*,S:ResRef*)</div>
+  <div class="indent1">
+  This action creates the specified creature at the specified saved location.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="247">247</a> SetToken(S:Token*,I:STRREF*)</div>
+  <div class="indent1">
+  This action sets the specified token to the specified value. Whenever the token is then used within a strref, the current value of the token will be displayed. Values assigned by this action are not saved.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="248">248</a> SetTokenObject(S:Token*,O:Object)</div>
+  <div class="indent1">
+  This action sets the token specified by the string parameter (e.g. DAMAGER) to the name of the object specified in the object parameter. Values assigned by this action are not persisted to save games.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="249">249</a> SetGabber(O:Object)</div>
+  <div class="indent1">
+  This action updates various tokens based on the specified object.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="250">250</a> CreateCreatureObjectCopy(S:ResRef*,O:Object*,I:Usage1*,I:Usage2*,I:Usage3*)</div>
+  <div class="indent1">
+  This action creates the specified creature and sets its animation to that of the active creature.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="251">251</a> HideAreaOnMap(S:ResRef*)</div>
+  <div class="indent1">
+  This action hides an area on the worldmap, preventing travelling to it.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="252">252</a> CreateCreatureObjectOffset(S:ResRef*,O:Object*,P:Offset*)</div>
+  <div class="indent1">
+  This action creates the specified creature at a location offset from the target object point.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="253">253</a> ContainerEnable(O:Object,I:Bool*BOOLEAN)</div>
+  <div class="indent1">
+  This action is used in conjunction with containers in ARE files. The action sets the enabled state of a container (specified by the object parameter).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="254">254</a> ScreenShake(P:Point*,I:Duration*)</div>
+  <div class="indent1">
+  This action shakes the game view. The point parameter dictates how far to shake the screen along the x and y axis. The duration parameter dictates how long the shaking lasts.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="255">255</a> AddGlobals(S:Name*,S:Name2*)</div>
+  <div class="indent1">
+  This action will add the variable specified by parameter 2 onto the variable specified by parameter 1. An example script is below.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global("Var1","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("Var1","GLOBAL",75) //Var1 = 75
+      SetGlobal("Var2","GLOBAL",25) //Var2 = 25
+      AddGlobals("Var1","Var2") //Var1 = 100
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="256">256</a> CreateItemNumGlobal(S:Global*,S:Area*,S:ResRef*)</div>
+  <div class="actionHeader">256 CreateItemGlobal(S:Global*,S:Area*,S:ResRef*)</div>
+  <div class="indent1">
+  This action creates a quantity of items equal to a global variable on the active creature. The example script will create 50 arrows.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global("Arrows","LOCALS",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("Arrows","LOCALS",50)
+      CreateItemNumGlobal("Arrows","LOCALS","AROW01")
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="257">257</a> PickUpItem(S:ResRef*)</div>
+  <div class="indent1">
+  This action instructs the active creature remove the item from the area and put it in their inventory (assuming the inventory has enough room and the item exists).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="258">258</a> FillSlot(I:Slot*SLOTS)</div>
+  <div class="indent1">
+  This action will attempt to fill a slot in the active creature's inventory with the appropriate item type. Using FillSlot(SLOT_WEAPON) will look for any weapon in the inventory, and move the first such item into the weapon slot. Any item already in the slot is destroyed.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="259">259</a> AddXPObject(O:Object*,I:XP*)</div>
+  <div class="indent1">
+  This action adds the specified amount of XP onto the specified object.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="260">260</a> DestroyGold(I:Gold*)</div>
+  <div class="indent1">
+  This action removes the specified amount of gold from the party. DestroyGold(0) will remove all gold from current creature. Note that this action affects the gold stat of the creature (not Party Gold or MISC07 items).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="261">261</a> SetHomeLocation(P:Point*)</div>
+  <div class="indent1">
+  This action stores a &quot;home&quot; location into memory for a creature. The location is not saved.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="262">262</a> DisplayStringNoName(O:Object*,I:StrRef*)</div>
+  <div class="indent1">
+  This action displays the strref specified by the StrRef parameter in the message window, without attributing the text to an object.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="263">263</a> EraseJournalEntry(I:STRREF*)</div>
+  <div class="indent1">
+  This action removes the specified strref from the journal, regardless of the journal section the entry is in - except the user section.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="264">264</a> CopyGroundPilesTo(S:ResRef*,P:Location*)</div>
+  <div class="indent1">
+  This action copies all items lying around on the ground in the current area to the specified point in the target area.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="265">265</a> DialogueForceInterrupt(O:Object*)</div>
+  <div class="actionHeader"><a name="265">265</a> DialogForceInterrupt(O:Object*)</div>
+  <div class="actionHeader"><a name="266">266</a> StartDialogInterrupt(S:DialogFile*,O:Target*)</div>
+  <div class="actionHeader"><a name="266">266</a> StartDialogueInterrupt(S:DialogFile*,O:Target*)</div>
+  <div class="actionHeader"><a name="267">267</a> StartDialogueNoSetInterrupt(O:Object*)</div>
+  <div class="actionHeader"><a name="267">267</a> StartDialogNoSetInterrupt(O:Object*)</div>
+  <div class="indent1">
+  These actions work the same as their counterpart dialog actions. The only difference is that they are important enough to interrupt other dialogs already in action.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="268">268</a> RealSetGlobalTimer(S:Name*,S:Area*,I:Time*GTimes)</div>
+  <div class="indent1">
+  This action sets a global timer measured in seconds (of real time).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="269"> 269</a> DisplayStringHead(O:Object*,I:StrRef*)</div>
+  <div class="indent1">
+  This action displays the specified string over the head on the specified object (on the game-screen). The string may also be shown in the message log, depending on options specified in baldur.ini.<br />
+  <br />
+  <pre class="code">
+  IF
+    HPPercentLT(Myself,50)
+    HasItem(&quot;Potn52&quot;,Myself)
+  THEN
+    RESPONSE #100
+      DisplayStringHead(Myself,46150)
+      UseItem(&quot;Potn52&quot;,Myself)
+  END<br />
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="270">270</a> PolymorphCopy(O:Object*)</div>
+  <div class="indent1">
+  This action changes the animation of the active creature to match the animation of the target object.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="271">271</a> VerbalConstantHead(O:Object*,I:Constant*soundOff)</div>
+  <div class="indent1">
+  This action plays the specified sound from the character's soundset.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="272">272</a> CreateVisualEffect(S:Object*,P:Location*)</div>
+  <div class="indent1">
+  This action plays the animation specified by the object parameter at the specified location ([x.y]). Animation preference order is applied, i.e. the engine first looks to play a VVC file of the specified name, if no such a file exists, the engine looks to play a BAM file of the specified.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="273">273</a> CreateVisualEffectObject(S:DialogFile*,O:Target*)</div>
+  <div class="indent1">
+  This action plays the animation specified by the (mis-named) DialogFile parameter on the specified object. Animation preference order is applied, i.e. the engine first looks to play a VVC file of the specified name, if no such a file exists, the engine looks to play a BAM file of the specified.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="274">274</a> AddKit(I:Kit*KIT)</div>
+  <div class="indent1">
+  This action removes the active creature's current kit and adds the specified kit. Abilities from any previous kit are removed. AddKit(0) can be used to remove a creatures current kit without adding a new one. Class restrictions apply for kits. When attempting adding an invalid kit, the existing kit (if any) will be replied.<br />
+  <br />
+  </div>
+    
+  <div class="actionHeader"><a name="275">275</a> StartCombatCounter()</div>
+  <div class="indent1">
+  This action can be used to manually start the combat counter.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="276">276</a> EscapeAreaNoSee()</div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="277">277</a> EscapeAreaObject(O:Object*)</div>
+  <div class="indent1">
+  This action instructs the active creature to leave the area via the specified region.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="277">277</a> EscapeAreaObjectMove(S:ResRef*,O:Object*,I:X*,I:Y*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action instructs the target object to leave the current area, either by walking, or, if the path is blocked, by simply disappearing. The action functions as a combination of EscapeAreaDestroy() and MoveBetweenAreas(). The parameters are similar to MoveBetweenAreas(), in that it takes in all the same information, but unlike MoveBetweenAras(), the character will search for the nearest travel trigger, move to that, then execute his movement to the specified area. If he cannot find a travel trigger, he will execute the movement.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="278">278</a> TakeItemReplace(S:Give*,S:Take*,O:Object*)</div>
+  <div class="indent1">
+  This action replaces the item in second parameter with the item in first parameter. If the target does not have the item in the second parameter, the item in the first parameter will still be created in the inventory. Note that this action will not automatically equip the item that's created.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="279">279</a> AddSpecialAbility(S:ResRef*)</div>
+  <div class="indent1">
+  This action adds the specified spell to the active creature. The message &lt;creature_name&gt; has gained a special ability: "Ability" is displayed in the message log.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="280">280</a> DestroyAllDestructableEquipment()</div>
+  <div class="indent1">
+  This action destroys all destructible equipment on the active creature. Items flagged as indestructible (magical) will not be destroyed.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="281">281</a> RemovePaladinHood()</div>
+  <div class="indent1">
+  This action changes a Paladin to a Fallen Paladin.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="282">282</a> RemoveRangerHood()</div>
+  <div class="indent1">
+  This action changes a Ranger to a Fallen Ranger.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="283">283</a> RegainPaladinHood()</div>
+  <div class="indent1">
+  This action restores a Fallen Paladin to normal Paladin status. Increments Reputation to 10?<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="284">284</a> RegainRangerHood()</div>
+  <div class="indent1">
+  This action restores a Fallen Ranger to normal Ranger status. Increments Reputation to 10?<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="285">285</a> PolymorphCopyBase(O:Object*)</div>
+  <div class="indent1">
+  This action copies the base animation (i.e. no armour or colouring) of the target creature to the active creature.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="286">286</a> HideGUI()</div>
+  <div class="indent1">
+  This action hides the docking borders, menus, etc. on the sides of the screen.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="287">287</a> UnhideGUI()</div>
+  <div class="indent1">
+  This action restores the docking borders, menus etc. to the sides of the screen.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="288">288</a> SetName(I:STRREF*)</div>
+  <div class="indent1">
+  This action changes the name of the active creature to the specified strref.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="289">289</a> AddSuperKit(I:Kit*KIT)</div>
+  <div class="indent1">
+  This action sets the active creatures kit to the specified kit . Abilities from any previous kits are kept. Class restrictions apply for kits. When attempting adding an invalid kit, the existing kit (if any) will be replied.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="290">290</a> PlayDeadInterruptable(I:Time*)</div>
+  <div class="actionHeader"><a name="290">290</a> PlayDeadInterruptible(I:Time*)</div>
+  <div class="indent1">
+  This action instructs the active creature to &quot;play dead&quot;, i.e. to lay on the ground, for the specified interval (measured in AI updates per second (AI updates default to 15 per second). If used on a PC, the player can override the action by issuing a standard move command. Other conditions are checked during the play dead period.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="291">291</a> MoveGlobalObject(O:Object*,O:Target*)</div>
+  <div class="indent1">
+  This action says to jump the object in the first parameter to the object in the second parameter. The object in the first parameter does NOT have to be in the same area as the target, but must already be present in the saved game (as either an NPC or MakeGlobal()).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="292">292</a> DisplayStringHeadOwner(S:Item*,I:STRREF*)</div>
+  <div class="indent1">
+  This action displays the specified strref over the head of the creature with the specified item. The action only checks current party members.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="293">293</a> StartDialogOverride(S:DialogFile*,O:Target*)</div>
+  <div class="actionHeader"><a name="293">293</a> StartDialogOverride(S:DialogFile*,O:Target*,I:Unused,I:Unused,I:ConverseAsItem)</div>
+  <div class="indent1">
+  This action instructs the active creature to start the specified dialog with the specified target. The dialog can be initiated from a distance and must have at least one state with all its top level conditions true else it will not initiate. The active creature will not have its dialog file permanently set to the file specified by the DialogFile parameter.<br />
+  The second signature of this action is not listed in the action.ids file provided with the game. When using this signature, the third integer paramter can be used to indicate the dialog is initiated by an item (e.g. Lilarcor) - if this is the case, the item name will be used as the creature name in the feedback window.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="294">294</a> StartDialogOverrideInterrupt(S:DialogFile*,O:Target*)</div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="295">295</a> CreateCreatureCopyPoint(S:ResRef*,O:Object*,P:Dest*)</div>
+  <div class="indent1">
+  This action creates the specified creature at the specified point and sets its animation to that of the active creature.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="296">296</a> BattleSong()</div>
+  <div class="indent1">
+  This action instructs the active creature to play their associated bard song.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="297">297</a> MoveToSavedLocation(S:GLOBAL*,S:Area*)</div>
+  <div class="actionHeader"><a name="297">297</a> MoveToSavedLocationn(S:GLOBAL*,S:Area*)</div>
+  <div class="indent1">
+  This action instructs the active creature to move to the previously saved specified location.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global("MoveToLocation","LOCALS",0)
+  THEN
+   RESPONSE #50
+      SetGlobal("MoveToLocation","LOCALS",1)
+      MoveToSavedLocationn("DefaultLocation","LOCALS")
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="298">298</a> ApplyDamage(O:Object*,I:Amount*,I:Type*DMGTYPE)</div>
+  <div class="indent1">
+  This action inflicts the specified amount of damage (of the specified type) on the target creature.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="299">299</a> BanterBlockTime(I:Time*)</div>
+  <div class="indent1">
+  This action extends the time taken for the banter timer to expire. The banter timers are hardcoded and every time one expires an NPC's b****.dlg is called.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="300">300</a> BanterBlockFlag(I:State*Boolean)</div>
+  <div class="indent1">
+  This action dictates whether the banter timer can expire.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="301">301</a> AmbientActivate(O:Object*,I:State*BOOLEAN)</div>
+  <div class="indent1">
+  This action is used in conjunction with animations in ARE files. The action sets the enabled state of an animation (specified by the object parameter).<br />
+  <br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="302">302</a> AttachTransitionToDoor(S:GLOBAL*,O:Object*)</div>
+  <div class="indent1">
+  This action is untested. It is likely that the first parameter refers to a transition trigger and the second parameter refers to a door type in an area. In this manner, the trigger is activated and deactivated based on the open state of the door.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="303">303</a> DeathMatchPositionGlobal(S:Areaname*,P:Dest*,I:Player*)</div>
+  <div class="actionHeader"><a name="304">304</a> DeathMatchPositionArea(S:Areaname*,P:Dest*,I:Player*)</div>
+  <div class="actionHeader"><a name="305">305</a> DeathMatchPositionLocal(S:Areaname*,P:Dest*,I:Player*)</div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results. It is likely they were used for the unimplemented multiplayer deathmatch mode.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="306">306</a> ApplyDamagePercent(O:Object*,I:Amount*,I:Type*DMGTYPE)</div>
+  <div class="indent1">
+  This action applies a percentage damage (of the specified damage type) to the target object.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="307">307</a> SG(S:Name*,I:Num*)</div>
+  <div class="indent1">
+  This action acts as a shortcut for SetGlobal(). The action can only set global variables.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="308">308</a> AddMapNote(P:Position*,I:StringRef*)</div>
+  <div class="indent1">
+  This action will add a map note onto the current area's mini-map at the specified position. The position is a location on the actual area map (not the minimap).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="309">309</a> DemoEnd()</div>
+  <div class="indent1">
+  This action ends the demo and returns the player to the game selection screen.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="310">310</a> MoveGlobalsTo(S:FromArea*,S:ToArea*,P:Location*)</div>
+  <div class="indent1">
+  This action is untested. It is likely to move all creatures present in the saved game that are currently in the FromArea parameter and move them to the Location in the ToArea parameter.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="311">311</a> DisplayStringWait(O:Object*,I:StrRef*)</div>
+  <div class="indent1">
+  This action displays the specified string over the head on the specified object (on the game-screen). The text stays onscreen until the associated sound has completed playing.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="312">312</a> StateOverrideTime(I:Time*)</div>
+  <div class="actionHeader"><a name="313">313</a> StateOverrideFlag(I:State*Boolean)</div>
+  <div class="indent1">
+  This action instructs all creatures in the current area(?) ignore the following states flags for the time specified, or until a save-game reload. The creatures still have the state flags set. This action mainly seems to be used to get player characters to look like they are &quot;paying attention&quot; to anything that is happening around them.<br />
+The following states are overridden:<br />
+  <ul>
+    <li>state_sleeping</li>
+    <li>state_panic</li>
+    <li>state_stunned</li>
+    <li>state_helpless</li>
+    <li>state_confused</li>
+  </ul>
+  The following states are not overridden:<br />
+  <ul>
+    <li>state_invisible</li>
+    <li>state_frozen_death</li>
+    <li>state_stone_death</li>
+    <li>state_dead</li>
+    <li>state_silence</li>
+    <li>state_charmed</li>
+    <li>state_improved invisibility</li>
+    <li>state_mirror_image</li>
+  </ul>
+Other states are untested.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="314">314</a> SetRestEncounterProbabilityDay(I:Prob*)</div>
+  <div class="indent1">
+  This action modifies the probability of a daytime rest interruption (by modifying fields in the ARE file).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="315">315</a> SetRestEncounterProbabilityNight(I:Prob*)</div>
+  <div class="indent1">
+  This action modifies the probability of a night-time rest interruption (by modifying fields in the ARE file).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="316">316</a> SoundActivate(O:Object*,I:State*BOOLEAN)</div>
+  <div class="indent1">
+  This action is used in conjunction with ambient sounds in ARE files. The action sets the enabled state of an ambient sound (specified by the object parameter).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="317">317</a> PlaySong(I:Song*)</div>
+  <div class="indent1">
+  The action plays the specified song. Values are from songlist.2da.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="318">318</a> ForceSpellRange(O:Target,I:Spell*Spell)</div>
+  <div class="actionHeader">318 ForceSpellRangeRES(S:RES*,O:Target)</div>
+  <div class="indent1">
+  This action is untested. It is likely that it will force the specified spell if the target is within range of the spell.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="319">319</a> ForceSpellPointRange(P:Target,I:Spell*Spell)</div>
+  <div class="actionHeader">319 ForceSpellPointRangeRES(S:RES*,P:Target)</div>
+  <div class="indent1">
+  This action is untested. It is likely that it will force the specified spell if the point is within range of the spell.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="320">320</a> SetPlayerSound(O:Object*,I:STRREF*,I:SlotNum*SNDSLOT)</div>
+  <div class="indent1">
+  This action changes the specified sound reference (SndSlot) on the specified creature to the specified value. It should be noted that the biography can be changed by this action, as it is listed as a SoundSlot (EXISTANCE5).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="321">321</a> SetAreaRestFlag(I:CanRest*)</div>
+  <div class="indent1">
+  This action dictates whether resting is allowed in the current area.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="322">322</a> FakeEffectExpiryCheck(O:Object*,I:Ticks*)</div>
+  <div class="indent1">
+  This action removes effects with a duration timing mode from the specified object, if the remaining duration is below the ticks parameter. The action appears to only work from a creature script. <br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="323">323</a> CreateCreatureImpassableAllowOverlap(S:NewObject*,P:Location*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action creates the specified creature at the specified location, facing the specified direction. The creature will be created even if the searchmap is marked as impassable, or whether there are any other obstructions.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="324">324</a> SetBeenInPartyFlags()</div>
+  <div class="indent1">
+  This action sets the BeenInParty flag in the CRE file of the active creature. This action also triggers appropriate dialog and script file changes (as referenced in PDIALOG.2da).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="325">325</a> GoToStartScreen()</div>
+  <div class="indent1">
+  This action returns the player to the game start screen.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="326">326</a> ExitPocketPlane()</div>
+  <div class="indent1">
+  This action teleports the party to the area from which the "Area Switch: Pocket Plane" effect was last used. If this effect has never been used, or the party is not in the Pocket Plane this action has no effect.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="327">327</a> AddXP2DA(S:Column*)</div>
+  <div class="indent1">
+  This action gives a level dependent amount of XP to the party or a single party member. The XP amount is listed in xplist.2da at the intersection of the party level (column) and quest row (the mis-named parameter). The <a href="../../files/2da/2da_tob/xplist.htm">file</a> lists the same XP value for all quests for all levels.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="328">328</a> RemoveMapNote(P:Position*,I:STRREF*)</div>
+  <div class="indent1">
+  This will remove a map note from the current area's mini-map at the specified position. The position is a location on the actual area map (not the minimap).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="329">329</a> TriggerWalkTo(O:Object*)</div>
+  <div class="indent1">
+  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="330">330</a> AddAreaType(I:Type*AREATYPE)</div>
+  <div class="indent1">
+  This action will add area type flags (e.g. outdoor, dungeon) to the current area. The areatype value is OR'd, so multiple values can be set. Values are from <a href="../../files/ids/bg2/areatype.htm">areatype.ids</a><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="331">331</a> RemoveAreaType(I:Type*AREATYPE)</div>
+  <div class="indent1">
+  This action will remove area type flags (e.g. outdoor, dungeon) to the current area. Values are from <a href="../../files/ids/bg2/areatype.htm">areatype.ids</a><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="332">332</a> AddAreaFlags(I:Type*AREAFLAG)</div>
+  <div class="indent1">
+  This action will add area flags (e.g. save enabled, tutorial) to the current area. The area flags value is OR'd, so multiple values can be set. Values are from <a href="../../files/ids/bg2/areaflag.htm">areaflag.ids</a>.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="333">333</a> RemoveAreaFlags(I:Type*AREAFLAG)</div>
+  <div class="indent1">
+  This action will remove area flags (e.g. save enabled, tutorial) to the current area. The area flags value is OR'd, so multiple values can be set. Values are from <a href="../../files/ids/bg2/areaflag.htm">areaflag.ids</a>.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="334">334</a> StartDialogNoName(S:DialogFile*,O:Target*)</div>
+  <div class="indent1">
+  This action instructs the active creature to start the specified dialog with the specified target. The dialog can be initiated from a distance and must have at least one state with all its top level conditions true else it will not initiate. The active creature name will not appear as the dialog attribution.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="335">335</a> SetTokenGlobal(S:GLOBAL*,S:Area*,S:Token*)</div>
+  <div class="indent1">
+  This action sets the specified token to the given variable (in the specified scope). The example script will display 100 over the head of the active creature.<br />
+  <br />
+  <pre class="code">
+  IF
+    Global("Value","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("Value","GLOBAL",100)
+      SetTokenGlobal("Value","GLOBAL","PPOINTS")
+      DisplayStringHead(Myself,63037) //63037  is &lt;PPOINTS&gt; for me
+  END
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="336">336</a> MakeGlobal()</div>
+  <div class="indent1">
+  This action adds the active creature to the GAM file.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="337">337</a> ReallyForceSpellPoint(P:Target*,I:Spell*Spell)</div>
+  <div class="actionHeader">337 ReallyForceSpellPointRES(S:RES*,P:Target*)</div>
+  <div class="indent1">
+  This action causes the active creature to cast the specified spell at the target point. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="338">338</a> SetCutSceneLite(I:BOOL*BOOLEAN)</div> 
+  <div class="actionHeader"><a name="338">338</a> CutAllowScripts(I:BOOL*BOOLEAN)</div>
+  <div class="actionHeader"><a name="338">338</a> SetCursorState(I:BOOL*BOOLEAN)</div>
+  <div class="indent1">
+  This action starts a cutscene. Player control is removed, though all scripts keep running. Note that actions already in the action list are not cleared without an explicit call to ClearAllActions. The example script is from are0507.bcs.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="339">339</a> SwingOnce()</div>
+  <div class="indent1">
+  This action instructs the active creature to play the swing weapon animation once. Note that some objects do not have this animation.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="340">340</a> StaticSequence(O:Object*,I:Sequence*)</div>
+  <div class="indent1">
+  This action is used in conjunction with animations in ARE files. The action will start the specified animation sequence.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="341">341</a> StaticPalette(S:Palette*,O:Object*)</div>
+  <div class="indent1">
+  This action changes the palette (BMP file) of the specified animation object.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="342">342</a> DisplayStringHeadDead(O:Object*,I:StrRef*)</div>
+  <div class="indent1">
+  This action displays the specified string over the head on the specified object (on the game-screen) even if the target is dead.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="343">343</a> MoveToExpansion()</div>
+  <div class="indent1">
+  This action moves the party to ToB, changes the worldmap, and switches scripts and dialogs to the X25 versions.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="344">344</a> StartRainNow()</div>
+  <div class="indent1">
+  This action will immediately set the weather to raining, over the current overlay (rather than taking several seconds to darken the area before starting to rain).<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="345">345</a> SetSequence(I:Sequence*SEQ)</div>
+  <div class="indent1">
+  This action instructs the active creature to perform the specified animation sequence. Values are from <a href="../../files/ids/bg2/seq.htm">seq.ids</a>.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="346">346</a> DisplayStringNoNameHead(O:Object*,I:StrRef*)</div>
+  <div class="indent1">
+  This action displays the specified string over the head on the specified object (on the game-screen), without displaying it in the message log.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="347">347</a> SetEncounterProbability(S:FromArea*,S:ToArea*,I:Probability*)</div>
+  <div class="indent1">
+  This action modifies the probability of a travel encounter (by modifying fields in the WMP file) between the specified areas.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="348">348</a> SetupWish(I:Column*,I:Count*)</div> 
+  <div class="actionHeader"><a name="349">349</a> SetupWishObject(O:Creature*,I:Count*)</div>
+  <div class="indent1">
+  This action instructs the engine to use the fourth column of wish.2da and carry out a RandomNum(2,1) action starting at the top and working down. If the RandomNum returns with a 1 then the appropriate global for that spell is set. Once the maximum &quot;wish choices&quot; have been selected, the dialog continues and casts the  selected spell.<br />
+<br />
+  From a dialog: <br />
+  &bull;IF ~CheckStatGT(LastTalkedToBy,17,WIS)~ THEN DO ~SetupWish(4,1)~ GOTO 8<br />
+  &bull;IF ~Global("WishPower01","GLOBAL",1)~ THEN REPLY #72526 /* ~'Breach' on everyone in the area, including the party.~ */ DO ~ActionOverride(LastTalkedToBy,ForceSpellRES("spwish26",Myself))<br />
+  ApplySpell(Myself,POOF_GONE)~ EXIT<br />
+  <br />
+  The key is the Global("WishPower**","GLOBAL",1). The highest is "WishPower37", and the highest number in the WISH.2DA is also 37. There are a total of 46 SPWISH**.SPL files, but 9 are unused:<br />
+  <ul>
+  <li>SPWISH01 STR Bonus +1</li>
+  <li>SPWISH02 INT Bonus +1</li>
+  <li>SPWISH03 DEX Bonus +1</li>
+  <li>SPWISH04 CON Bonus +1</li>
+  <li>SPWISH05 WIS Bonus +1</li>
+  <li>SPWISH06 CHA Bonus +1</li>
+  <li>SPWISH07 Restoration</li>
+  <li>SPWISH09 Globe of Blades</li>
+  <li>SPWISH15 Gain 10,000 Gold (Party)</li>
+  </ul>
+  <br />
+  Looking at the spells that have a "WishPower**" next to them, this list can be derived (sorted by Wisdom level (E=enemies, P=party, C=caster A=All)):<br />
+  
+  <pre>
+  Low (9-)            Medium (10-14)      High (15-17)        Ultra (18+)
+  
+  Heal             E  Heal             E  Heal             E  TS &amp; IA (X2)     P 
+  Improved Haste   E  Improved Haste   E  Improved Haste   E  Improved Haste   E
+  Dark Planetar    E  Silenced         A  Dark Planetar    E  Lose 10,000 gp   P
+  Level Drain      P  Level Drain      P  WIS (3)          P  Level Drain      P 
+  Hit Points -50%  C  Hit Points -50%  C  TS &amp; IA (X2)     P  Hit Points -50%  C
+  Hit Points -15%  P  Haste            A  Hit Points -15%  P  Mass Raise Dead  P
+  Lose Spells      C  Lose Spells      C  Lose Spells      C  WIS (3)          P
+  STR (3)          P  STR (3)          P  STR (3)          P  Haste            A
+  CON (3)          P  CON (3)          P  Stats (25)       P  Stats (25)       P
+  DEX (3)          P  DEX (3)          P  DEX (3)          P  Rest &amp; Remem.    P
+  INT (3)          P  INT (3)          P  Silenced         A  Bad Luck         A
+  Slowed           P  Slowed           P  Rest &amp; Remem.    P  Meteor Swarm     C
+  Restoration      P  Restoration      P  Improved Haste   P  Restoration      P
+  Gr. Deathblow    P  Gr. Deathblow    P  Gr. Deathblow    P  Gr. Deathblow    P
+  Hardiness        P  Hardiness        P  Breach           E  Hardiness        P
+  Create Wand      C  Create Wand      C  Create Wand      C  Create Wand      C
+  Create Potion    C  Create Potion    C  Create Potion    C  Create Potion    C
+  Breach           A  Breach           A  Breach           A  Improved Haste   P
+  Wing Buffet      A  Wing Buffet      A  Wing Buffet      A  Breach           E
+  Heal             A  Heal             A  Heal             A  Heal             A
+  STR (18)         A  STR (18)         A  STR (18)         A  STR (18)         A
+  Miscast Magic    A  Miscast Magic    A  Miscast Magic    A  Miscast Magic    A 
+  Magic Resist     A  Magic Resist     A  Magic Resist     A  Magic Resist     A
+  Abi-Dalzim's     A  Abi-Dalzim's     A  Abi-Dalzim's     A  Abi-Dalzim's     A
+  Intoxicated      A  Intoxicated      A  Intoxicated      A  Intoxicated      A
+  Bad Luck         A  Bad Luck         A  Bad Luck         A
+                  / Breach             E  Stats (25)       P \
+              OR &lt;                                            &gt; OR
+                  \ Rest &amp; Remem.      P Mass Raise Dead   P /
+  </pre>
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="350">350</a> LeaveAreaLUAEntry(S:Area*,S:Entry*,P:Point*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action changes the current area. The active creature will move to the specified entry point (from entries.2da) before travelling. The action appears  to only work from a creature script.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="351">351</a> LeaveAreaLUAPanicEntry(S:Area*,S:Entry*,P:Point*,I:Face*DIR)</div>
+  <div class="indent1">
+  This action changes the current area. The creature moves to the destination point (from entries.2da) before travelling (the point parameter is unused).<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="352">352</a> SetAreaScript(S:Script*,I:ScriptSlot)</div>
+  <div class="indent1">
+  This action changes the script specified by the scriptslot parameter to the script specified by the script parameter, for the current area.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="353">353</a> AdvanceTime(I:Time*GTIMES)</div>
+  <div class="indent1">
+  This action advances the game-time by the amount specified by the Time parameter.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="354">354</a> RunAwayFromNoInterruptNoLeaveArea(O:Creature*,I:Time*)</div>
+  <div class="indent1">
+  This action causes the active creature to run away from the specified creature, for the specified time. The time parameter is measured in AI updates, which default to 15 updates per second.<br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="355">355</a> RunAwayFromNoLeaveArea(O:Creature*,I:Time*)</div>
+  <div class="indent1">
+  This action causes the active creature to run away from the specified creature, for the specified time, without leaving the current area.<br />
+  <br />
+  </div>  
+
+  <div class="actionHeader"><a name="356">356</a> TransformItem(S:OldItem*,S:NewItem*)</div>
+  <div class="indent1">
+  This action changes the item specified by the OldItem parameter into the item specified by the NewItem parameter, retaining the charges/flags of OldItem.<br />
+  <br />
+  </div>  
+
+  <div class="actionHeader"><a name="357">357</a> ForceRandomEncounter</div>
+  <div class="indent1">
+  This action will force the party into the selected area on their next worldmap travel. Only one ForceRandomEncounter can be in play at a time so subsequent use will clear the previous one. It will also be cleared once the party arrives in the designated area.<br />
+  <br />
+  </div>  
+
+  <div class="actionHeader"><a name="358">358</a> JumpToObject(O:Target*)</div>
+  <div class="indent1">
+  This action teleports the active creature to the object specified by the Target parameter.<br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="359">359</a> SetMusic(I:Slot*MUSIC,I:Song*SONGLIST)</div>
+  <div class="indent1">
+  <span class="unknown">Unknown</span><br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="360">360</a> ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)</div>
+  <div class="indent1">
+  <span class="unknown">Unknown</span><br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="361">361</a> DisplayStringPoint(I:Strref*,P:Location*)</div>
+  <div class="indent1">
+  <span class="unknown">Unknown</span><br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="362">362</a> RemoveStoreItem(S:Store*,S:Item*,I:Count*)</div>
+  <div class="indent1">
+  <span class="unknown">Unknown</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="363">363</a> AddStoreItem(S:Store*,S:Item*,I:Count*,I:Flags*)</div>
+  <div class="indent1">
+  <span class="unknown">Unknown</span><br />
+  <br />
+  </div>
+
+  <div class="actionHeader"><a name="364">364</a> SetGlobalRandom(S:Variable*,S:Area*,I:Count*,I:Size*)</div>
+  <div class="indent1">
+  <span class="unknown">Unknown</span><br />
+  <br />
+  </div>
+  
+  <div class="actionHeader"><a name="365">365</a> DestroyGroundPiles()</div>
+  <div class="indent1">
+  <span class="unknown">Unknown</span><br />
+  <br />
+  </div>
+  
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

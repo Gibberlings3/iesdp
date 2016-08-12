@@ -3,6 +3,7 @@ tmp=fsflgdgmdslgndlgndfgldfmgddfdfgf.fdsf
 
 
 for f in $@; do
+	[[ ! -f $f ]] && continue
 	ptitle=$( sed -n '/<title>/ s,^[^>]*>\([^<]*\)<.*$,\1,p' "$f")
 	# clear header/footer
 	sed -i '1,/title_main/ { /title_main/!d }' "$f"

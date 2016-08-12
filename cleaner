@@ -3,6 +3,7 @@ tmp=fsflgdgmdslgndlgndfgldfmgddfdfgf.fdsf
 
 
 for f in $@; do
+	ptitle=$( sed -n '/<title>/ s,^[^>]*>\([^<]*\)<.*$,\1,p' "$f")
 	# clear header/footer
 	sed -i '1,/title_main/ { /title_main/!d }' "$f"
 	sed -i '/id="footer/,$ d' "$f"
@@ -11,7 +12,8 @@ for f in $@; do
 	{
 	echo ---
 	echo -n "title: "
-	sed -n '1 s,^[^>]*>\([^<]*\)<.*$,\1,p' "$f"
+	title=$(sed -n '1 s,^[^>]*>\([^<]*\)<.*$,\1,p' "$f" | sed 's,^\s*,,; s,\s*$,,')
+	[[ -z $title ]] && echo $ptitle || echo $title
 	echo ---
 	cat "$f"
 	} > $tmp

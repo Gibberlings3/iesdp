@@ -11,9 +11,10 @@ for f in $@; do
 	# add front matter
 	{
 	echo ---
-	echo -n "title: "
+	echo -n 'title: "'
 	title=$(sed -n '1 s,^[^>]*>\([^<]*\)<.*$,\1,p' "$f" | sed 's,^\s*,,; s,\s*$,,')
-	[[ -z $title ]] && echo $ptitle || echo $title
+	[[ -z $title ]] && echo -n $ptitle || echo -n $title
+	echo '"'
 	echo ---
 	cat "$f"
 	} > $tmp

@@ -1,0 +1,19 @@
+#!/bin/bash
+tmp=fsflgdgmdslgndlgndfgldfmgddfdfgf.fdsf
+
+
+for f in $@; do
+	# clear header/footer
+	sed -i '1,/title_main/ { /title_main/!d }' "$f"
+	sed -i '/id="footer/,$ d' "$f"
+
+	# add front matter
+	{
+	echo ---
+	echo -n "title: "
+	sed -n '1 s,^[^>]*>\([^<]*\)<.*$,\1,p' "$f"
+	echo ---
+	cat "$f"
+	} > $tmp
+	mv $tmp "$f"
+done

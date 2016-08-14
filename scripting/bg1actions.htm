@@ -818,10 +818,8 @@ generic trap or area scripts.<br />
 <div class="actionHeader"><a name="31">31 Spell(O:Target*,I:Spell*Spell)</a></div>
 <div class="actionHeader"><a name="31">31 SpellRES(S:RES*, O:Target*)</a></div>
 <div class="indent1">
-Is used to cast a spell. With Target being the person you want to cast the spell on and 
-spell from spell.ids. For the Spell() action to work, the spell must be flagged as memorized 
-on the caster. Unlike some other spellcasting actions, Spell() IS interruptible during casting.<br />
-The casting creature must meet the level requirements as set in the spell file.<br />
+Casts a spell on target O object. S is always a maximum 7-character long SPL filename written with upper case (without the SPL extension). Additionally, the filename cannot consist only of numbers. The spell must be memorized by the caster. It is interruptible during casting. The spellcaster must meet the level requirements of the spell.<br />
+Warning: according to tests, it doesn't work reliably.<br />
 <br />
 <div class="code">
 IF<br />
@@ -896,6 +894,7 @@ END<br />
 Is used to tell the creature running the script to continue looking for actions for the 
 Action List. As you get more advanced, Continue() becomes one of the most useful functions 
 you can find, especially for efficiency. See <a href="http://tutorials.teambg.net/scripting/index.htm#Essential">this section</a> of the Complete Scripting Guide for information on how Continue() is processed by the scripting engine.<br />
+Note that continue may prevent actions being completed until the script parser has finished its execution cycle.<br />
 <br />
 <div class="code">
 IF<br />
@@ -1557,9 +1556,8 @@ Is not used in any in game scripts...Not sure exactly what this does.<br />
 <div class="actionHeader"><a name="95">95 SpellPoint(P:Target*,I:Spell*Spell)</a></div>
 <div class="actionHeader"><a name="95">95 SpellPointRES(S:RES*, P:Target*)</a></div>
 <div class="indent1">
-Casts a memorized spell at the specified X.Y location. The downside of this action is that 
-you must know the exact X.Y location to cast the spell at, useful if the object is going to 
-be in one spot, but hard to implement for players. The example used is from Andris.bcs.<br />
+Casts a spell on target P[x.y] point. S is always a maximum 7-character long SPL filename written with upper case, without the SPL extension. Additionally, the filename cannot consist only of numbers. The spell must be memorized by the caster. It is interruptible during casting. The spellcaster must meet the level requirements of the spell.<br />
+The example used is from Andris.bcs.<br />
 <br />
 <div class="code">
 IF<br />
@@ -1813,33 +1811,31 @@ END<br />
 <br />
 </div>
 
-<div class="actionHeader"><a name="113">113 ForceSpell(O:Target,I:Spell*Spell)</a></div>
 <div class="actionHeader"><a name="113">113 ForceSpellRES(S:RES*, O:Target)</a></div>
+<div class="actionHeader"><a name="113">113 ForceSpell(O:Target,I:Spell*Spell)</a></div>
 <div class="indent1">
-Forces the object to cast the specified spell. The spell cannot be interrupted and the object 
-does not need to have the spell memorized or even have the spell. Used by traps a lot to create 
-the trap damage. The casting creature must meet the level requirements as set in the spell file.<br />
-Example is from Andris.bcs.<br />
+Forces the object to cast the specified spell. The spell cannot be interrupted and the object does not need to have the spell memorized or even have the spell. Used by traps a lot to create the trap damage. The casting creature must meet the level requirements as set in the spell file.<br />
+Example is from suelfw9.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,0)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,1)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Global("Scene2","AR2800",2)
+  See([ENEMY])
+  Global("Fight","LOCALS",2)
+THEN
+  RESPONSE #100
+    IncrementGlobal("Fight","LOCALS",1)
+    ForceSpell([ENEMY],WIZARD_POWER_WORD_SLEEP)
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="114">114 ForceSpellPoint(P:Target,I:Spell*Spell)</a></div>
 <div class="actionHeader"><a name="114">114 ForceSpellPointRES(S:RES*, P:Target)</a></div>
 <div class="indent1">
-same as above only the target is an X.Y location.<br />
+Forces the object running the script to cast the spell specified by the S parameter. P is the spell's target [x.y] point, S is always a SPL filename written with upper case, without the SPL extension. The spell cannot be interrupted and the caster does not need to have the spell memorized or even have the spell.
+<br />
 <br />
 <div class="code">
 IF<br />
@@ -2748,10 +2744,7 @@ END<br />
 <div class="actionHeader"><a name="160">160 ApplySpell(O:Target,I:Spell*Spell)</a></div>
 <div class="actionHeader"><a name="160">160 ApplySpellRES(S:RES*, O:Target)</a></div>
 <div class="indent1">
-Instantly (1/4 of a second or less usually.) Does not play the casting animations. Used to mimic 
-contingencies for enemy spell casters. Also, the spell cannot be interrupted and area effect spells 
-that target multiple objects will only affect the specified (single) object.<br />
-<br />
+Instantly casts the spell on target O object. S is always a SPL filename written with upper case, without the SPL extension. Does not play the casting animations. The spell cannot be interrupted and area effect spells that target multiple objects will only affect the specified target object.<br />
 Example is used to mimic a contigency from MAGE18Y.bcs.<br />
 <br />
 <div class="code">
@@ -3153,9 +3146,7 @@ effect... at least until a different action is issued or until the creature trav
 <div class="actionHeader"><a name="181">181 ReallyForceSpell(O:Target,I:Spell*Spell)</a></div>
 <div class="actionHeader"><a name="181">181 ReallyForceSpellRES(S:RES*, O:TargetI:Spell*Spell)</a></div>
 <div class="indent1">
-This is yet another action in the Spell() family. This command will do the same thing as 
-ForceSpell(), but with 0 casting time.<br />
-The casting creature must meet the level requirements as set in the spell file.<br />
+Forces the object running the script to cast the spell specified by the S parameter. The casting time is 0, the spell is cast instantly. O is the spell's target object, S is always a SPL filename written with upper case, without the SPL extension. The spell cannot be interrupted and the object does not need to have the spell memorized or even have the spell.<br />
 <br />
 </div>
 
@@ -3234,17 +3225,14 @@ This will save the game, named Final Save.<br />
 <div class="actionHeader"><a name="191">191 SpellNoDec(O:Target*,I:Spell*Spell)</a></div>
 <div class="actionHeader"><a name="191">191 SpellNoDecRES(S:RES*, O:Target*)</a></div>
 <div class="indent1">
-If I were to lengthen the name of this action, it would be called SpellNoDecrease. In short, it 
-works the same way as Spell does--it will only cast a spell if it's in memory, and it's interruptible. 
-The one difference is that it will not remove the spell from a caster's memory... it says "NO!" to 
-decreasing. Yeah, that's a stupid personification. Whatever.<br />
+Casts a spell on target O object. S is always a SPL filename written with upper case, without the SPL extension. The spell must be memorized by the caster, and it won't be removed from the caster's memory if cast via this action. It is interruptible during casting. The spellcaster must meet the level requirements of the spell.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="192">192 SpellPointNoDec(P:Target*,I:Spell*Spell)</a></div>
 <div class="actionHeader"><a name="192">192 SpellPointNoDecRES(S:RES*, P:Target*)</a></div>
 <div class="indent1">
-See above. This one just targets a point in [x.y] format as opposed to an object.<br />
+Casts a spell on target P[x.y] point. S is always a SPL filename written with upper case, without the SPL extension. The spell must be memorized by the caster. SpellPointNoDecRES shouldn't remove the spell from the caster's memory but according to tests this part does NOT work (the spell is cast but is also removed from memorized spells.) It is interruptible during casting. The spellcaster must meet the level requirements of the spell.<br />
 <br />
 </div>
 

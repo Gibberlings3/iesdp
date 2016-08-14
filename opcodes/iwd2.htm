@@ -54,7 +54,10 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 1&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;'Key&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
 2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;(Key&nbsp;*&nbsp;'Key&nbsp;Modifier'&nbsp;value)<br>&nbsp&nbsp&nbsp
 /&nbsp;100<br>&nbsp&nbsp&nbsp
-3&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Same&nbsp;as&nbsp;0<br>
+3&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Same&nbsp;as&nbsp;0<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Note:&nbsp;When&nbsp;this&nbsp;opcode&nbsp;is&nbsp;stacked,&nbsp;the&nbsp;values&nbsp;of&nbsp;the&nbsp;Key<br>&nbsp&nbsp&nbsp
+Modifier&nbsp;are&nbsp;stacked,&nbsp;not&nbsp;the&nbsp;number&nbsp;of&nbsp;attacks.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -371,7 +374,9 @@ The&nbsp;Dice&nbsp;values&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;inflict&nbsp;v
 -&nbsp;e.g.&nbsp;2d6&nbsp;would&nbsp;do&nbsp;2-12&nbsp;damage&nbsp;(Damage&nbsp;type&nbsp;is&nbsp;still&nbsp;specified<br>&nbsp&nbsp&nbsp
 by&nbsp;the&nbsp;'Type'&nbsp;value).<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
-NB.&nbsp;'Stunning'&nbsp;damage&nbsp;does&nbsp;not&nbsp;stun&nbsp;the&nbsp;target.<br>&nbsp&nbsp&nbsp
+NB.&nbsp;'Stunning'&nbsp;damage&nbsp;does&nbsp;not&nbsp;stun&nbsp;the&nbsp;target.&nbsp;Stunning<br>&nbsp&nbsp&nbsp
+damage&nbsp;cannot&nbsp;kill&nbsp;a&nbsp;creature,&nbsp;creatures&nbsp;are&nbsp;reduced&nbsp;to<br>&nbsp&nbsp&nbsp
+1&nbsp;HP&nbsp;and&nbsp;are&nbsp;knocked&nbsp;unconscious.<br>&nbsp&nbsp&nbsp
 NB.&nbsp;Using&nbsp;'Magic&nbsp;Fire'&nbsp;as&nbsp;a&nbsp;damage&nbsp;type&nbsp;will&nbsp;result&nbsp;the<br>&nbsp&nbsp&nbsp
 game&nbsp;to&nbsp;crash&nbsp;if&nbsp;the&nbsp;damage&nbsp;kills&nbsp;the&nbsp;target.<br>&nbsp&nbsp&nbsp
 NB.&nbsp;If&nbsp;'Damage&nbsp;Amount'&nbsp;and&nbsp;the&nbsp;Dice&nbsp;values&nbsp;are&nbsp;both&nbsp;non-zero,<br>&nbsp&nbsp&nbsp
@@ -754,11 +759,15 @@ Modifier'&nbsp;value)&nbsp;/&nbsp;100<br>&nbsp&nbsp&nbsp
 |-----------------------------------------------------------------------|<br>
 <b>#32 (0x20) <u>Cure: Death (Raise Dead) [32]</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Raises&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;from&nbsp;the&nbsp;dead.<br>&nbsp&nbsp&nbsp
-This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br>
+This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
+0&nbsp;&nbsp;&nbsp;Standard&nbsp;resurrection<br>&nbsp&nbsp&nbsp
+43&nbsp;&nbsp;Resurrection&nbsp;and&nbsp;un-petrification<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -989,9 +998,9 @@ Both&nbsp;parameters&nbsp;should&nbsp;be&nbsp;0&nbsp;(zero).<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Removes&nbsp;the&nbsp;silence&nbsp;effect&nbsp;from&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
-Both&nbsp;parameters&nbsp;should&nbsp;be&nbsp;0&nbsp;(zero).<br>&nbsp&nbsp&nbsp
-This&nbsp;effect&nbsp;has&nbsp;no&nbsp;duration.<br>
+Removes&nbsp;the&nbsp;silence&nbsp;effect&nbsp;and&nbsp;the&nbsp;silenced&nbsp;state&nbsp;from&nbsp;the<br>&nbsp&nbsp&nbsp
+targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -1349,11 +1358,19 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 &nbsp&nbsp&nbsp
 The&nbsp;Creature&nbsp;Number&nbsp;parameter&nbsp;set&nbsp;the&nbsp;number&nbsp;to&nbsp;be&nbsp;summoned,<br>&nbsp&nbsp&nbsp
 and&nbsp;the&nbsp;Summoning&nbsp;Animation&nbsp;parameter&nbsp;sets&nbsp;the&nbsp;type&nbsp;of&nbsp;animation<br>&nbsp&nbsp&nbsp
-to&nbsp;use&nbsp;for&nbsp;the&nbsp;summoning.&nbsp;Known&nbsp;values&nbsp;for&nbsp;the&nbsp;Summoning<br>&nbsp&nbsp&nbsp
-Animation&nbsp;parameter&nbsp;are:&nbsp;0&nbsp;for&nbsp;no&nbsp;animation,&nbsp;1&nbsp;for&nbsp;monster<br>&nbsp&nbsp&nbsp
-summoning&nbsp;circle,&nbsp;2&nbsp;for&nbsp;animal&nbsp;summoning&nbsp;circle,&nbsp;3&nbsp;for&nbsp;earth<br>&nbsp&nbsp&nbsp
-summoning&nbsp;circle,&nbsp;4&nbsp;for&nbsp;fire&nbsp;summoning&nbsp;circle,&nbsp;5&nbsp;for&nbsp;water<br>&nbsp&nbsp&nbsp
-summoning&nbsp;circle,&nbsp;and&nbsp;7&nbsp;for&nbsp;puff&nbsp;of&nbsp;smoke&nbsp;only.<br>
+to&nbsp;use&nbsp;for&nbsp;the&nbsp;summoning.<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Known&nbsp;values&nbsp;for&nbsp;the&nbsp;Summoning&nbsp;Animation&nbsp;parameter&nbsp;are:<br>&nbsp&nbsp&nbsp
+0&nbsp;&nbsp;&nbsp;no&nbsp;animation<br>&nbsp&nbsp&nbsp
+1&nbsp;&nbsp;&nbsp;monster&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+2&nbsp;&nbsp;&nbsp;animal&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+3&nbsp;&nbsp;&nbsp;earth&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+4&nbsp;&nbsp;&nbsp;fire&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+5&nbsp;&nbsp;&nbsp;water&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+7&nbsp;&nbsp;&nbsp;puff&nbsp;of&nbsp;smoke&nbsp;only<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+The&nbsp;Dice&nbsp;values&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;set&nbsp;the&nbsp;number&nbsp;of&nbsp;creatures<br>&nbsp&nbsp&nbsp
+summoned,&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;Number&nbsp;parameter<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -1391,15 +1408,19 @@ are&nbsp;undefined.<br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#71 (0x47) <u>Sex Change</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Sex Choice<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Sex Type<br>
+<b>#71 (0x47) <u>IDS: Sex Change [71]</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Gender Modifier<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-The&nbsp;Sex&nbsp;Choice&nbsp;parameter&nbsp;sets&nbsp;the&nbsp;sex&nbsp;to&nbsp;change&nbsp;to,&nbsp;and&nbsp;the<br>&nbsp&nbsp&nbsp
-Sex&nbsp;Type&nbsp;sets&nbsp;how&nbsp;the&nbsp;effect&nbsp;functions.&nbsp;Known&nbsp;values&nbsp;for<br>&nbsp&nbsp&nbsp
-the&nbsp;Sex&nbsp;Type&nbsp;parameter&nbsp;are&nbsp;0&nbsp;for&nbsp;Reversal,&nbsp;and&nbsp;1&nbsp;for&nbsp;Set<br>&nbsp&nbsp&nbsp
-To&nbsp;Sex&nbsp;Choice&nbsp;value.<br>
+Alters&nbsp;the&nbsp;gender&nbsp;of&nbsp;the&nbsp;targetted&nbsp;creature(s)&nbsp;to&nbsp;the&nbsp;value<br>&nbsp&nbsp&nbsp
+specified&nbsp;by&nbsp;the&nbsp;'Gender.ids'&nbsp;field,&nbsp;in&nbsp;the&nbsp;style&nbsp;specified<br>&nbsp&nbsp&nbsp
+by&nbsp;the&nbsp;'Type'&nbsp;value.<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
+0&nbsp;Reverse&nbsp;Gender<br>&nbsp&nbsp&nbsp
+1&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;'Statistic&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
+(values&nbsp;from&nbsp;gender.ids)<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -1522,14 +1543,13 @@ Both&nbsp;parameters&nbsp;should&nbsp;be&nbsp;0&nbsp;(zero).<br>
 
 |-----------------------------------------------------------------------|<br>
 <b>#80 (0x50) <u>State: Deafness [80]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Undefined<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Undefined<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Applies&nbsp;the&nbsp;Deafness&nbsp;effect&nbsp;on&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;-<br>&nbsp&nbsp&nbsp
-creatures&nbsp;suffer&nbsp;an&nbsp;unknown&nbsp;percentage&nbsp;casting&nbsp;failure&nbsp;rate.<br>&nbsp&nbsp&nbsp
-This&nbsp;is&nbsp;cumulative&nbsp;with&nbsp;Miscast&nbsp;Magic.<br>&nbsp&nbsp&nbsp
-Both&nbsp;parameters&nbsp;should&nbsp;be&nbsp;0&nbsp;(zero).<br>
+This&nbsp;effect&nbsp;causes&nbsp;the&nbsp;target&nbsp;resistant&nbsp;of&nbsp;bard&nbsp;songs&nbsp;and<br>&nbsp&nbsp&nbsp
+some&nbsp;sound&nbsp;based&nbsp;spells,&nbsp;and&nbsp;increases&nbsp;failure&nbsp;of&nbsp;arcane<br>&nbsp&nbsp&nbsp
+or&nbsp;divine&nbsp;spells&nbsp;by&nbsp;20%.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -1884,7 +1904,9 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 value<br>&nbsp&nbsp&nbsp
 1&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Level&nbsp;=&nbsp;'Statistic&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
 2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Level&nbsp;=&nbsp;(Level&nbsp;*&nbsp;'Statistic&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-value)&nbsp;/&nbsp;100<br>
+value)&nbsp;/&nbsp;100<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+The&nbsp;class&nbsp;to&nbsp;receive&nbsp;the&nbsp;level&nbsp;change&nbsp;is&nbsp;specified&nbsp;at&nbsp;0x2c<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3150,14 +3172,13 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#171 (0xab) <u>Spell: Give Innate Ability [171]</u></b><br>
+<b>#171 (0xab) <u>Spell: Give Ability [171]</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Gives&nbsp;the&nbsp;innate&nbsp;ability&nbsp;specified&nbsp;by&nbsp;the&nbsp;resource&nbsp;key&nbsp;to<br>&nbsp&nbsp&nbsp
-the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
-Both&nbsp;parameters&nbsp;should&nbsp;be&nbsp;0&nbsp;(zero).<br>
+Gives&nbsp;the&nbsp;spell&nbsp;specified&nbsp;by&nbsp;the&nbsp;resource&nbsp;key&nbsp;to&nbsp;the&nbsp;targeted<br>&nbsp&nbsp&nbsp
+creature(s).<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3454,7 +3475,9 @@ values&nbsp;are:&nbsp;0&nbsp;for&nbsp;False,&nbsp;and&nbsp;1&nbsp;for&nbsp;True.
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Alters&nbsp;the&nbsp;casting&nbsp;time&nbsp;of&nbsp;spells&nbsp;by&nbsp;the&nbsp;value&nbsp;specified<br>&nbsp&nbsp&nbsp
-by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
+by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.&nbsp;This&nbsp;effect&nbsp;is&nbsp;cummulative.<br>&nbsp&nbsp&nbsp
+Positive&nbsp;values&nbsp;decrease&nbsp;the&nbsp;casting&nbsp;time,&nbsp;negative&nbsp;values<br>&nbsp&nbsp&nbsp
+increase&nbsp;the&nbsp;casting&nbsp;time.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3465,7 +3488,7 @@ by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Alters&nbsp;the&nbsp;weapons&nbsp;attack&nbsp;speed&nbsp;by&nbsp;the&nbsp;value&nbsp;specified&nbsp;by<br>&nbsp&nbsp&nbsp
-the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
+the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.&nbsp;This&nbsp;effect&nbsp;is&nbsp;not&nbsp;cummulative.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5223,7 +5246,9 @@ Both&nbsp;parameters&nbsp;should&nbsp;be&nbsp;0&nbsp;(zero).<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Sets&nbsp;the&nbsp;spell&nbsp;state.&nbsp;The&nbsp;known&nbsp;values&nbsp;for&nbsp;this&nbsp;effect&nbsp;are<br>&nbsp&nbsp&nbsp
-listed&nbsp;in&nbsp;SPLSTATE.ids.&nbsp;For&nbsp;example:&nbsp;0&nbsp;HOPELESSNESS.&nbsp;<br>
+listed&nbsp;in&nbsp;SPLSTATE.ids.&nbsp;SPLSTATE.ids&nbsp;can&nbsp;hold&nbsp;up&nbsp;to&nbsp;255<br>&nbsp&nbsp&nbsp
+values,&nbsp;so&nbsp;new&nbsp;values&nbsp;can&nbsp;be&nbsp;added&nbsp;on&nbsp;top&nbsp;of&nbsp;the&nbsp;defaults.<br>&nbsp&nbsp&nbsp
+<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5383,7 +5408,9 @@ Both&nbsp;parameters&nbsp;should&nbsp;be&nbsp;0&nbsp;(zero).<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Applies&nbsp;the&nbsp;beholder&nbsp;dispel&nbsp;magic&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted<br>&nbsp&nbsp&nbsp
-creature(s).<br>
+creature(s).<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+SPIN164&nbsp;is&nbsp;periodically&nbsp;applied&nbsp;to&nbsp;creatures&nbsp;near&nbsp;the&nbsp;target.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5393,7 +5420,10 @@ creature(s).<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Applies&nbsp;the&nbsp;harpy&nbsp;wail&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>
+Applies&nbsp;the&nbsp;harpy&nbsp;wail&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+SPIN166&nbsp;is&nbsp;periodically&nbsp;applied&nbsp;to&nbsp;creatures&nbsp;near&nbsp;the&nbsp;target,<br>&nbsp&nbsp&nbsp
+and&nbsp;EFF_P111&nbsp;is&nbsp;played.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5403,7 +5433,10 @@ Applies&nbsp;the&nbsp;harpy&nbsp;wail&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creatu
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Applies&nbsp;the&nbsp;jackalwere&nbsp;gaze&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>
+Applies&nbsp;the&nbsp;jackalwere&nbsp;gaze&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+The&nbsp;text&nbsp;Jackalwere&nbsp;Gaze&nbsp;is&nbsp;applied&nbsp;over&nbsp;the&nbsp;target,&nbsp;and<br>&nbsp&nbsp&nbsp
+SPIN179&nbsp;is&nbsp;periodically&nbsp;applied&nbsp;to&nbsp;creatures&nbsp;near&nbsp;the&nbsp;target.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5628,11 +5661,20 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-The&nbsp;Type&nbsp;parameter&nbsp;sets&nbsp;how&nbsp;the&nbsp;effect&nbsp;functions,&nbsp;known&nbsp;values<br>&nbsp&nbsp&nbsp
-are:&nbsp;0&nbsp;for&nbsp;no&nbsp;animation,&nbsp;1&nbsp;for&nbsp;monster&nbsp;summoning&nbsp;circle,<br>&nbsp&nbsp&nbsp
-2&nbsp;for&nbsp;animal&nbsp;summoning&nbsp;circle,&nbsp;3&nbsp;for&nbsp;earth&nbsp;summoning&nbsp;circle,<br>&nbsp&nbsp&nbsp
-4&nbsp;for&nbsp;fire&nbsp;summoning&nbsp;circle,&nbsp;5&nbsp;for&nbsp;water&nbsp;summoning&nbsp;circle,<br>&nbsp&nbsp&nbsp
-and&nbsp;7&nbsp;for&nbsp;puff&nbsp;of&nbsp;smoke.<br>
+The&nbsp;Type&nbsp;parameter&nbsp;sets&nbsp;how&nbsp;the&nbsp;effect&nbsp;functions.<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Known&nbsp;values&nbsp;for&nbsp;Type&nbsp;are:<br>&nbsp&nbsp&nbsp
+0&nbsp;&nbsp;&nbsp;no&nbsp;animation<br>&nbsp&nbsp&nbsp
+1&nbsp;&nbsp;&nbsp;monster&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+2&nbsp;&nbsp;&nbsp;animal&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+3&nbsp;&nbsp;&nbsp;earth&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+4&nbsp;&nbsp;&nbsp;fire&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+5&nbsp;&nbsp;&nbsp;water&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+7&nbsp;&nbsp;&nbsp;puff&nbsp;of&nbsp;smoke<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+The&nbsp;EA&nbsp;field&nbsp;of&nbsp;the&nbsp;summoned&nbsp;creature&nbsp;is&nbsp;set&nbsp;to&nbsp;ally.<br>&nbsp&nbsp&nbsp
+The&nbsp;Dice&nbsp;values&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;set&nbsp;the&nbsp;number&nbsp;of&nbsp;creatures<br>&nbsp&nbsp&nbsp
+summoned,&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;Number&nbsp;parameter.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5642,11 +5684,21 @@ and&nbsp;7&nbsp;for&nbsp;puff&nbsp;of&nbsp;smoke.<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-The&nbsp;Type&nbsp;parameter&nbsp;sets&nbsp;how&nbsp;the&nbsp;effect&nbsp;functions,&nbsp;known&nbsp;values<br>&nbsp&nbsp&nbsp
-are:&nbsp;0&nbsp;for&nbsp;no&nbsp;animation,&nbsp;1&nbsp;for&nbsp;monster&nbsp;summoning&nbsp;circle,<br>&nbsp&nbsp&nbsp
-2&nbsp;for&nbsp;animal&nbsp;summoning&nbsp;circle,&nbsp;3&nbsp;for&nbsp;earth&nbsp;summoning&nbsp;circle,<br>&nbsp&nbsp&nbsp
-4&nbsp;for&nbsp;fire&nbsp;summoning&nbsp;circle,&nbsp;5&nbsp;for&nbsp;water&nbsp;summoning&nbsp;circle,<br>&nbsp&nbsp&nbsp
-and&nbsp;7&nbsp;for&nbsp;puff&nbsp;of&nbsp;smoke.<br>
+The&nbsp;Type&nbsp;parameter&nbsp;sets&nbsp;how&nbsp;the&nbsp;effect&nbsp;functions.<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Known&nbsp;values&nbsp;for&nbsp;Type&nbsp;are:<br>&nbsp&nbsp&nbsp
+0&nbsp;&nbsp;&nbsp;no&nbsp;animation<br>&nbsp&nbsp&nbsp
+1&nbsp;&nbsp;&nbsp;monster&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+2&nbsp;&nbsp;&nbsp;animal&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+3&nbsp;&nbsp;&nbsp;earth&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+4&nbsp;&nbsp;&nbsp;fire&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+5&nbsp;&nbsp;&nbsp;water&nbsp;summoning&nbsp;circle<br>&nbsp&nbsp&nbsp
+7&nbsp;&nbsp;&nbsp;puff&nbsp;of&nbsp;smoke<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+The&nbsp;EA&nbsp;field&nbsp;of&nbsp;the&nbsp;summoned&nbsp;creature&nbsp;is&nbsp;set&nbsp;to&nbsp;enemy.<br>&nbsp&nbsp&nbsp
+The&nbsp;Dice&nbsp;values&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;set&nbsp;the&nbsp;number&nbsp;of&nbsp;creatures<br>&nbsp&nbsp&nbsp
+summoned,&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;Number&nbsp;parameter<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 

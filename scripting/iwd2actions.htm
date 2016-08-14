@@ -198,10 +198,10 @@ END<br />
 <br />
 </div>
 
-<div class="actionHeader"><a name="7">7 CreateCreature(S:NewObject*,P:Location*,I:Face*)</a></div>
+<div class="actionHeader"><a name="7">7 CreateCreature(S:NewObject*,S:ScriptName*P:Location*,I:Face*)</a></div>
 <div class="indent1">
 Is used to create anything from creature files (.cre like Orc01.cre) to NPC's (.cre 
-as in Aerie.cre). With NewObject being the creature name, Location being [x.y] and 
+as in Aerie.cre). With NewObject being the creature name, ScriptName being the death variable, Location being [x.y] and 
 direction being which way they are facing (from 0-15, 0 being south and the facing 
 values increasing as the character turns clockwise) .<br />
 <br />
@@ -216,12 +216,7 @@ IF<br />
 &nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;CopperGuards&quot;,&quot;GLOBAL&quot;,1)<br />
 THEN<br />
 &nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[2338.412],14)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard2&quot;,[2318.457],14)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[2749.793],6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard2&quot;,[2791.831],6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[1981.762],14)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[1286.1500],14)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;50HNT&quot;,&quot;HUNTER_1_NEW&quot;,[2005.1070],0)<br />
 END<br />
 </div>
 <br />
@@ -898,6 +893,7 @@ END<br />
 Is used to tell the creature running the script to continue looking for actions for the 
 Action List. As you get more advanced, Continue() becomes one of the most useful functions 
 you can find, especially for efficiency. See <a href="http://tutorials.teambg.net/scripting/index.htm#Essential">this section</a> of the Complete Scripting Guide for information on how Continue() is processed by the scripting engine.<br />
+Note that continue may prevent actions being completed until the script parser has finished its execution cycle.<br />
 <br />
 <div class="code">
 IF<br />
@@ -1825,23 +1821,20 @@ END<br />
 
 <div class="actionHeader"><a name="113">113 ForceSpell(O:Target,I:Spell*Spell)</a></div>
 <div class="indent1">
-Forces the object to cast the specified spell. The spell cannot be interrupted and the object 
-does not need to have the spell memorized or even have the spell. Used by traps a lot to create 
-the trap damage. The casting creature must meet the level requirements as set in the spell file.<br />
-Example is from Andris.bcs.<br />
+Forces the object to cast the specified spell. The spell cannot be interrupted and the object does not need to have the spell memorized or even have the spell. Used by traps a lot to create the trap damage. The casting creature must meet the level requirements as set in the spell file.<br />
+Example is from suelfw9.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,0)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,1)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Global("Scene2","AR2800",2)
+  See([ENEMY])
+  Global("Fight","LOCALS",2)
+THEN
+  RESPONSE #100
+    IncrementGlobal("Fight","LOCALS",1)
+    ForceSpell([ENEMY],WIZARD_POWER_WORD_SLEEP)
+END
+</pre>
 <br />
 </div>
 
@@ -3961,6 +3954,8 @@ Flags are from splcast.ids, values are additive.<br />
 
 <div class="actionHeader"><a name="322">322</a> MatchHP(O:Target*,I:Flags*HPFlags)</div>
 <div class="indent1">
+This action copies the executing actor's current or max hp into the target's current or max hp.<br />
+It is used when the current creature object is cloned into another creature (e.g. Worg+rider split, slime split).<br />
 <br />
 </div>
 

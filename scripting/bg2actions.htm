@@ -1,11 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
 <title> BG2: ToB Script Actions </title>
 <link rel="stylesheet" type="text/css" href="general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
 
 <body>
 <div class="title_main"> BG2: ToB Script Actions </div>
+<div>
+
 Original descriptions (0-175): KensaiRyu<br />
 Revised descriptions (0-175) + 176-351: Max <br />
 Additional input: SimDing0.<br />
@@ -188,115 +192,101 @@ Is used to create anything from creature files (.cre like Orc01.cre) to NPC's (.
 &nbsp;&nbsp;&nbsp;&nbsp;CreateCreature(&quot;ccguard1&quot;,[2338.412],14)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;CreateCreature (&quot;CRENAME&quot;,[X.Y],D)<br />
 <br />
-An example of this command is spawning additional guards in the Copper Coronet via 
-the area script (AR0406) when the Player Characters are discovered in the back room (where they are not supposed to be).<br />
+An example of this command is spawning additional guards in the Copper Coronet via the area script (AR0406) when the Player Characters are discovered in the back room (where they are not supposed to be).<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;CopperGuards&quot;,&quot;GLOBAL&quot;,1)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[2338.412],14)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard2&quot;,[2318.457],14)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[2749.793],6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard2&quot;,[2791.831],6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[1981.762],14)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[1286.1500],14)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Global(&quot;CopperGuards&quot;,&quot;GLOBAL&quot;,1)
+THEN
+  RESPONSE #100
+    CreateCreature(&quot;ccguard1&quot;,[2338.412],14)
+    CreateCreature(&quot;ccguard2&quot;,[2318.457],14)
+    CreateCreature(&quot;ccguard1&quot;,[2749.793],6)
+    CreateCreature(&quot;ccguard2&quot;,[2791.831],6)
+    CreateCreature(&quot;ccguard1&quot;,[1981.762],14)
+    CreateCreature(&quot;ccguard1&quot;,[1286.1500],14)
+END
+</pre>
 <br />
-Another use for this command is spawning creatures near the protagonist. Heres an 
-example of failed thieving:<br />
+Another use for this command is spawning creatures near the protagonist. Heres an example of failed thieving:<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Opened([ANYONE])<br />
-&nbsp;&nbsp;&nbsp; &nbsp;See([NOTGOOD])<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!StateCheck(LastTrigger,STATE_INVISIBLE)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!StateCheck(LastTrigger,STATE_IMPROVEDINVISIBILITY)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DisplayString(LastTrigger,9896)<br />
-//Someone has noticed you! You hear the guards being<br />
-// summoned<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(3)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;WATCHN&quot;,[-1.-1],0)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;WATCHN2&quot;,[-1.-1],0)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;WATCHN2&quot;,[-1.-1],0)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Opened([ANYONE])
+  See([NOTGOOD])
+  !StateCheck(LastTrigger,STATE_INVISIBLE)
+  !StateCheck(LastTrigger,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    DisplayString(LastTrigger,9896) //Someone has noticed you! You hear the guards being summoned
+    Wait(3)
+    CreateCreature(&quot;WATCHN&quot;,[-1.-1],0)
+    CreateCreature(&quot;WATCHN2&quot;,[-1.-1],0)
+    CreateCreature(&quot;WATCHN2&quot;,[-1.-1],0)
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="8">8 Dialogue(O:Object*)<br />
 8 Dialog(O:Object*)</a></div>
 <div class="indent1">
-Because these 2 actions have the same # (8) they both have the same function. To 
-start a dialog file with the listed object.<br />
-Dialog files are found in Dialog.tlk and use the same language as scripting commands. 
-If the creature using this action has been assigned a dialog that has all top level 
-conditions returning false, this action will not work.<br />
+Because these 2 actions have the same # (8) they both have the same function. To start a dialog file with the listed object.<br />
+Dialog files are found in Dialog.tlk and use the same language as scripting commands. If the creature using this action has been assigned a dialog that has all top level conditions returning false, this action will not work.<br />
 <br />
-In the example Yeslick will start a conversation if both of the following are true: 
-the global timer &quot;Yeslick&quot; is expired and the Global Variable &quot;FLOODED&quot; is at 0.<br />
+In the example Yeslick will start a conversation if both of the following are true: the global timer &quot;Yeslick&quot; is expired and the Global Variable &quot;FLOODED&quot; is at 0.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;GlobalTimerExpired(&quot;Yeslick&quot;,&quot;GLOBAL&quot;)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;FLOODED&quot;,&quot;GLOBAL&quot;,0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Dialogue([PC])<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  GlobalTimerExpired(&quot;Yeslick&quot;,&quot;GLOBAL&quot;)
+  Global(&quot;FLOODED&quot;,&quot;GLOBAL&quot;,0)
+THEN
+  RESPONSE #100
+    Dialogue([PC])
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="9">9 DropItem(S:Object*,P:Location*)</a></div>
 <div class="indent1">
-Is used to drop an object to the [x.y] coordinates. An Examples I created is dropping 
-a scroll on the ground after the PC's rotate a wheel by clicking on it. Note the 
-object running the script must be carrying the object to drop it.<br />
+Is used to drop an object to the [x.y] coordinates. An example I created is dropping a scroll on the ground after the PC's rotate a wheel by clicking on it. Note the object running the script must be carrying the object to drop it.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Clicked([ANYONE])<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Range(LastTrigger,12)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;Global(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp; DisplayStringHead(Myself,48334)// you may rotate the wheel if you want<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,1)<br />
-END<br />
-<br />
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Clicked([ANYONE])<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Range(LastTrigger,12)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;Global(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,1)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-DropItem(&quot;SCRL1B&quot;,345.1210)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Clicked([ANYONE])
+  Range(LastTrigger,12)
+  Global(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,0)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,48334) // you may rotate the wheel if you want
+    SetGlobal(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,1)
+END
+
+IF
+  Clicked([ANYONE])
+  Range(LastTrigger,12)
+  Global(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,1)
+THEN
+  RESPONSE #100
+    DropItem(&quot;SCRL1B&quot;,345.1210)
+END
+</pre>
 <br />
 You can also use this command to drop items the player is carrying by changing the X Y locations to [-1.-1]<br />
 <br />
-One use for this could be scripting your characters to automatically drop any cursed 
-items found.<br />
+One use for this could be scripting your characters to automatically drop any cursed items found.<br />
 <br />
-<div class="code">
-IF<br />
-HasItem(&quot;Sw1h01&quot;,Myself)<br />
-THEN<br />
-RESPONSE #100<br />
-DropItem(&quot;Sw1h01&quot;,[-1.-1])<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  HasItem(&quot;Sw1h01&quot;,Myself)
+THEN
+  RESPONSE #100
+    DropItem(&quot;Sw1h01&quot;,[-1.-1])
+END
+</pre>
 <br />
-When used from a character's or creatures script, the Location is relative to that 
-actor's position on the map.<br />
+When used from a character's or creatures script, the Location is relative to that actor's position on the map.<br />
 For example, using 
 <span class="code">ActionOverride(&quot;Minsc&quot;,DropItem(&quot;POTN52&quot;,[0.0]))</span> 
 would make the item drop right below Minsc's feet.<br />
@@ -305,152 +295,133 @@ would make the item drop right below Minsc's feet.<br />
 
 <div class="actionHeader"><a name="10">10 Enemy()</a></div>
 <div class="indent1">
-Is used to Set the Enemy/Ally Allegiance to Enemy of Player Characters. An example of 
-this is if a peasant is attacked his allegiance will change from Neutral to Enemy.<br />
+Is used to Set the Enemy/Ally Allegiance to Enemy of Player Characters. An example of this is if a peasant is attacked his allegiance will change from Neutral to Enemy.<br />
 <br />
-<div class="code">
-IF<br />
-AttackedBy([GOODCUTOFF],Myself)<br />
-Allegiance(Myself,NEUTRAL )<br />
-THEN<br />
-RESPONSE #100<br />
-Enemy()<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  AttackedBy([GOODCUTOFF],Myself)
+  Allegiance(Myself,NEUTRAL )
+THEN
+  RESPONSE #100
+    Enemy()
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="11">11 EquipItem(S:Object*)</a></div>
 <div class="indent1">
-Should equip the item, however I have not tried this action yet. I will test it in a 
-script and update if it does not work.It is probably not a good idea to script this 
-as it might destroy whatever else is presently equipped I will find out tonight and.<br />
+Should equip the item, however I have not tried this action yet. I will test it in a script and update if it does not work.It is probably not a good idea to script this as it might destroy whatever else is presently equipped I will find out tonight and.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;HasItem(&quot;Sw1h01&quot;,Myself)<br />
-&nbsp;!HasItemEquipedReal(&quot;Sw1h01&quot;,Myself)<br />
-THEN<br />
-&nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp; Equip(&quot;Sw1h01&quot;,Myself)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  HasItem(&quot;Sw1h01&quot;,Myself)
+  !HasItemEquipedReal(&quot;Sw1h01&quot;,Myself)
+THEN
+  RESPONSE #100
+    Equip(&quot;Sw1h01&quot;,Myself)
+END
+</pre>
 <br />
-After testing I believe the Equip action is broken the above script does not work, I 
-have also tried about 4 other scripts with no effect. I will test some more on this 
-and post results if anyone else has more info please post.<br />
+After testing I believe the Equip action is broken the above script does not work, I have also tried about 4 other scripts with no effect. I will test some more on this and post results if anyone else has more info please post.<br />
 <br />
-UPDATE ON THE ACTION EQUIPITEM : It does work for weapons, you just need to have them 
-in the quickslot to be equipped.<br />
+UPDATE ON THE ACTION EQUIPITEM : It does work for weapons, you just need to have them in the quickslot to be equipped.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="13">13 FindTraps()</a></div>
 <div class="indent1">
-Is used to do just that. You can script any character to try and find traps, however 
-if they dont have any points in the ability it will be futile. This command is often 
-used in scripts for Thieves.<br />
+Is used to do just that. You can script any character to try and find traps, however if they dont have any points in the ability it will be futile. This command is often used in scripts for Thieves.<br />
 <br />
-<div class="code">
-IF<br />
-ActionListEmpty()<br />
-!Exists([EVILCUTOFF])<br />
-!ModalState( Myself,DETECTTRAPS)<br />
-OR(2)<br />
-!StateCheck(Myself,STATE_INVISIBLE)<br />
-!StateChe ck(Myself,STATE_IMPROVEDINVISIBILITY)<br />
-THEN<br />
-RESPONSE #100<br />
-FindTraps()<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  ActionListEmpty()
+  !Exists([EVILCUTOFF])
+  !ModalState( Myself,DETECTTRAPS)
+  OR(2)
+    !StateCheck(Myself,STATE_INVISIBLE)
+    !StateChe ck(Myself,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    FindTraps()
+END
+</pre>
 <br />
 </div>
 
 
 <div class="actionHeader"><a name="14">14 GetItem(S:Object*,O:Target*)</a></div>
 <div class="indent1">
-Suggest's that this command can be used to get an Item however I have been unable to 
-get it to work. I have tried the following script with no effect:<br />
+Suggest's that this command can be used to get an Item however I have been unable to get it to work. I have tried the following script with no effect:<br />
 <br />
-<div class="code">
-IF<br />
-See([ANYONE])<br />
-!HasItem(&quot;Sw1h01&quot;,Myself)<br />
-HasItem(&quot;Sw1h01&quot;,LastSeenBy ())<br />
-THEN<br />
-RESPONSE #100<br />
-MoveToObject(LastSeenBy())<br />
-GetItem(&quot;Sw1h01&quot;,LastSeenBy())<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  See([ANYONE])
+  !HasItem(&quot;Sw1h01&quot;,Myself)
+  HasItem(&quot;Sw1h01&quot;,LastSeenBy ())
+THEN
+  RESPONSE #100
+    MoveToObject(LastSeenBy())
+    GetItem(&quot;Sw1h01&quot;,LastSeenBy())
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="15">15 GiveItem(S:Object*,O:Target*)</a></div>
 <div class="indent1">
-Will allow you to pass items back and forth. However you must have the item to pass 
-it back and forth. Examples of this are rings of regeneration swapped between players 
-as needed and giving potions to characters that don't have any if no cleric is present. 
-Note that the command global shout requires modified Action, Instant, trigger, and 
-svtriobj, ids files. If you need these files I can send you the modified ones. They 
-need to be put in the scriptcompiler directory, not the override folder.<br />
+Will allow you to pass items back and forth. However you must have the item to pass it back and forth. Examples of this are rings of regeneration swapped between players as needed and giving potions to characters that don't have any if no cleric is present. Note that the command global shout requires modified Action, Instant, trigger, and svtriobj, ids files. If you need these files I can send you the modified ones. They need to be put in the scriptcompiler directory, not the override folder.<br />
 <br />
-<div class="code">
-IF<br />
-HPPercentLT(Myself,40)// if my hitpoints are at 40%<br />
-!HasItem(&quot;potn52&quot;,Myself)// and I dont have a potion of extra healing<br />
-THEN<br />
-RESPONSE #100<br />
-GlobalShout(3015)// shout so everyone in the area hears<br />
-SetGlobal(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,1)<br />
-END<br />
-<br />
-IF<br />
-Heard([GOODCUTOFF],3015)// i hear the shout<br />
-HasItem(&quot;potn52&quot;,Myself)// and have the potion<br />
-HPPercentGT(Myself,40)// and if my hitpoints are better than 40%<br />
-Global(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,1)<br />
-THEN<br />
-RESPONSE #100<br />
-MoveToObject(LastHeardBy())// move to whoever shouted<br />
-GiveItem(&quot;potn52&quot;,LastHeardBy()) and give them the potion<br />
-SetGlobal(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,0)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  HPPercentLT(Myself,40)// if my hitpoints are at 40%
+  !HasItem(&quot;potn52&quot;,Myself)// and I dont have a potion of extra healing
+THEN
+  RESPONSE #100
+    GlobalShout(3015)// shout so everyone in the area hears
+    SetGlobal(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,1)
+END
+
+IF
+  Heard([GOODCUTOFF],3015)// i hear the shout
+  HasItem(&quot;potn52&quot;,Myself)// and have the potion
+  HPPercentGT(Myself,40)// and if my hitpoints are better than 40%
+  Global(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,1)
+THEN
+  RESPONSE #100
+    MoveToObject(LastHeardBy())// move to whoever shouted
+    GiveItem(&quot;potn52&quot;,LastHeardBy()) and give them the potion
+    SetGlobal(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,0)
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="16">16 GiveOrder(O:Object*,I:Order*)</a></div>
 <div class="indent1">
-Is used to issue an order (numeric) and is used in conjunction with 
-ReceivedOrder(O:Object*,I:Order ID*), found in TRIGGER.ids. This is similiar to global shout.
-Only one creature at a time responds to an order. Creatures to not detect their own orders.
-The script I created for an example is used to give an order to the thief player characters if the 
-fighter/ranger/paladin running the script sees an enemy. I would use this to keep 
-my weak or low hp's thief alive.<br />
+Is used to issue an order (numeric) and is used in conjunction with ReceivedOrder(O:Object*,I:Order ID*), found in TRIGGER.ids. This is similiar to global shout. Only one creature at a time responds to an order. Creatures to not detect their own orders. The script I created for an example is used to give an order to the thief player characters if the fighter/ranger/paladin running the script sees an enemy. I would use this to keep my weak or low hp's thief alive.<br />
 <br />
-<div class="code">
-IF<br />
-See([EVILCUTOFF])<br />
-OR(3)<br />
-Class(Myself,FIGHTER_ALL)<br />
-Class(Myself,RANGER_ALL)<br />
-Class(Myse lf,PALADIN_ALL)<br />
-THEN<br />
-RESPONSE #100<br />
-GiveOrder([PC.0.0.THIEF_ALL],100)<br />
-END<br />
-<br />
-IF<br />
-ReceivedOrder(Myself,100)<br />
-Class(Myself,THIEF_ALL)<br />
-THEN<br />
-RESPONSE #100<br />
-RunAwayFrom([EVILCUTOFF],120)<br />
-Hide()&nbsp;&nbsp; &nbsp;<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  See([EVILCUTOFF])
+  OR(3)
+    Class(Myself,FIGHTER_ALL)
+    Class(Myself,RANGER_ALL)
+    Class(Myse lf,PALADIN_ALL)
+THEN
+  RESPONSE #100
+    GiveOrder([PC.0.0.THIEF_ALL],100)
+END
+
+IF
+  ReceivedOrder(Myself,100)
+  Class(Myself,THIEF_ALL)
+THEN
+  RESPONSE #100
+    RunAwayFrom([EVILCUTOFF],120)
+    Hide()&nbsp;&nbsp; &nbsp;
+END
+</pre>
 <br />
 </div>
 
@@ -874,6 +845,7 @@ END<br />
 <div class="actionHeader"><a name="36">36 Continue()</a></div>
 <div class="indent1">
 Is used to tell the creature running the script to continue looking for actions for the Action List. As you get more advanced, Continue() becomes one of the most useful functions you can find, especially for efficiency.<br />
+Note that continue may prevent actions being completed until the script parser has finished its execution cycle.<br />
 <br />
 <div class="code">
 IF<br />
@@ -1773,9 +1745,7 @@ END<br />
 
 <div class="actionHeader"><a name="111">111 DestroySelf()</a> </div>
 <div class="indent1">
-Removes the object running the script from the game completely and does not set a sprite is 
-dead (death) variable. The example is from the Irenicus cutscene at the beginning of the game, 
-and is used to remove the cowled wizards at the end of the cutscene.<br />
+Removes the object running the script from the game completely and does not set a sprite is dead (death) variable. The example is from the Irenicus cutscene at the beginning of the game, and is used to remove the cowled wizards at the end of the cutscene.<br />
 <br />
 <div class="code">
 IF<br />
@@ -1794,29 +1764,26 @@ END<br />
 <div class="actionHeader"><a name="112">112 UseContainer()</a></div>
 <div class="indent1">
 This action seems broken.<br />
-<div class="unknown>Triggers an interaction with a container object.</div>
+<div class="unknown">Triggers an interaction with a container object.</div>
 <br />
 </div>
 
 <div class="actionHeader"><a name="113">113 ForceSpell(O:Target,I:Spell*Spell)</a></div>
 <div class="indent1">
-Forces the object to cast the specified spell. The spell cannot be interrupted and the object 
-does not need to have the spell memorized or even have the spell. Used by traps a lot to create 
-the trap damage. The casting creature must meet the level requirements as set in the spell file.<br />
-Example is from Andris.bcs.<br />
+Forces the object to cast the specified spell. The spell cannot be interrupted and the object does not need to have the spell memorized or even have the spell. Used by traps a lot to create the trap damage. The casting creature must meet the level requirements as set in the spell file.<br />
+Example is from suelfw9.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,0)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,1)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Global("Scene2","AR2800",2)
+  See([ENEMY])
+  Global("Fight","LOCALS",2)
+THEN
+  RESPONSE #100
+    IncrementGlobal("Fight","LOCALS",1)
+    ForceSpell([ENEMY],WIZARD_POWER_WORD_SLEEP)
+END
+</pre>
 <br />
 </div>
 
@@ -2533,7 +2500,7 @@ END<br />
 <br />
 </div>
 
-<div class="actionHeader"><a name="150 StartStore(S:Store*,O:Target*)">150 StartStore(S:Store*,O:Target*)</a></div>
+<div class="actionHeader"><a name="150"> StartStore(S:Store*,O:Target*)">150 StartStore(S:Store*,O:Target*)</a></div>
 <div class="indent1">
 Starts the specified store (********.STO) with the specified object. Useful for custom 
 merchants. And mostly used in dialogues instead of scripts, though the actions are the 
@@ -2848,26 +2815,25 @@ END<br />
 <div class="indent1">
 Adds the amount of XP specified to the party. The example is from AR1300.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;OpenState(&quot;Bridge01&quot;,TRUE)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;BridgeOpen&quot;,&quot;GLOBAL&quot;,0)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;Torgal&quot;)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;BridgeOpen&quot;,&quot;GLOBAL&quot;,1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DisplayString(Myself,'The
-drawbridge has been lowered.')<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPCAPT03&quot;,[2400.1592],6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPSOLD03&quot;,[2425.1676],6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPSOLD04&quot;,[2371.1754],6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPSOLD05&quot;,[2315.1805],6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;TROLGI01&quot;,[2391.1592],0)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;TROLGI02&quot;,[2282.1742],0)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPYUAN01&quot;,[2251.1731],0)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddexperienceParty(29750)<br />
-(Cut short for brevity)<br />
-</div>
+<pre class="code">
+IF
+  OpenState(&quot;Bridge01&quot;,TRUE)
+  Global(&quot;BridgeOpen&quot;,&quot;GLOBAL&quot;,0)
+  !Dead(&quot;Torgal&quot;)
+THEN
+  RESPONSE #100
+    SetGlobal(&quot;BridgeOpen&quot;,&quot;GLOBAL&quot;,1)
+    DisplayString(Myself,'The drawbridge has been lowered.')
+    CreateCreature(&quot;KPCAPT03&quot;,[2400.1592],6)
+    CreateCreature(&quot;KPSOLD03&quot;,[2425.1676],6)
+    CreateCreature(&quot;KPSOLD04&quot;,[2371.1754],6)
+    CreateCreature(&quot;KPSOLD05&quot;,[2315.1805],6)
+    CreateCreature(&quot;TROLGI01&quot;,[2391.1592],0)
+    CreateCreature(&quot;TROLGI02&quot;,[2282.1742],0)
+    CreateCreature(&quot;KPYUAN01&quot;,[2251.1731],0)
+    AddexperienceParty(29750)
+    (Cut short for brevity)
+</pre>
 <br />
 </div>
 
@@ -2875,15 +2841,15 @@ drawbridge has been lowered.')<br />
 <div class="indent1">
 Adds a value of experience corresponding to a global variable to the party. For example:<br />
 <br />
-<div class="code">
-IF<br />
-Global("MyXP","GLOBAL",0)<br />
-THEN<br />
-RESPONSE #100<br />
-SetGlobal("MyXP","GLOBAL",50)<br />
-AddExperiencePartyGlobal("MyXP","GLOBAL")<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Global("MyXP","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("MyXP","GLOBAL",50)
+    AddExperiencePartyGlobal("MyXP","GLOBAL")
+END
+</pre>
 <br />
 Will add 50 XP to the party.<br />
 <br />
@@ -2891,20 +2857,20 @@ Will add 50 XP to the party.<br />
 
 <div class="actionHeader"><a name="166">166 SetNumTimesTalkedTo(I:Num*)</a></div>
 <div class="indent1">
-Sets the number of times the object running the script has been talked to by player characters. 
+Sets the number of times the object running the script has been talked to by player characters.<br />
 The example is from AR0103.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;BrielbaraMove&quot;,&quot;GLOBAL&quot;,1)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!Exists(&quot;Brielbara&quot;)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;Brielbara&quot;)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;BRIELB&quot;,[418.376],0)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Brielbara&quot;,SetNumTimesTalkedTo(1))<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Global(&quot;BrielbaraMove&quot;,&quot;GLOBAL&quot;,1)
+  !Exists(&quot;Brielbara&quot;)
+  !Dead(&quot;Brielbara&quot;)
+THEN
+  RESPONSE #100
+    CreateCreature(&quot;BRIELB&quot;,[418.376],0)
+    ActionOverride(&quot;Brielbara&quot;,SetNumTimesTalkedTo(1))
+END
+</pre>
 <br />
 </div>
 
@@ -2912,15 +2878,15 @@ END<br />
 <div class="indent1">
 Is used to play a movie (.mve format). The example is from AR108.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;EnteredPalace&quot;,&quot;GLOBAL&quot;,0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartMovie(&quot;PALACE&quot;)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;EnteredPalace&quot;,&quot;GLOBAL&quot;,1)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Global(&quot;EnteredPalace&quot;,&quot;GLOBAL&quot;,0)
+THEN
+  RESPONSE #100
+    StartMovie(&quot;PALACE&quot;)
+    SetGlobal(&quot;EnteredPalace&quot;,&quot;GLOBAL&quot;,1)
+END
+</pre>
 <br />
 </div>
 
@@ -2928,42 +2894,41 @@ END<br />
 <div class="indent1">
 Is used for initiating interparty banter betweeen NPCs. The Example used is from Edwin.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;InParty(Myself)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Gender(Myself,FEMALE)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;InParty(&quot;Aerie&quot;)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;See(&quot;Aerie&quot;)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;Aerie&quot;)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!StateCheck(&quot;Aerie&quot;,STATE_SLEEPING)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Range(&quot;Aerie&quot;,10)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;CombatCounter(0)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!Range(SecondNearest([PC]),10)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;EdwinW1&quot;,&quot;LOCALS&quot;,0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Interact(&quot;Aerie&quot;)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  InParty(Myself)
+  Gender(Myself,FEMALE)
+  InParty(&quot;Aerie&quot;)
+  See(&quot;Aerie&quot;)
+  !Dead(&quot;Aerie&quot;)
+  !StateCheck(&quot;Aerie&quot;,STATE_SLEEPING)
+  Range(&quot;Aerie&quot;,10)
+  CombatCounter(0)
+  !Range(SecondNearest([PC]),10)
+  Global(&quot;EdwinW1&quot;,&quot;LOCALS&quot;,0)
+THEN
+  RESPONSE #100
+    Interact(&quot;Aerie&quot;)
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="169">169 DestroyItem(S:ResRef*)</a></div>
 <div class="indent1">
-Completly destroys all instances of the specified item from the object running the script. 
-The example is from AR1000.bcs.<br />
+Completly destroys all instances of the specified item from the object running the script. The example is from AR1000.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;CerndBaby&quot;,&quot;GLOBAL&quot;,1)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;CerndBabyTake&quot;,&quot;AR1000&quot;,0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;CerndBabyTake&quot;,&quot;AR1000&quot;,1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;TakePartyItem(&quot;misc8t&quot;)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DestroyItem(&quot;misc8t&quot;)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Global(&quot;CerndBaby&quot;,&quot;GLOBAL&quot;,1)
+  Global(&quot;CerndBabyTake&quot;,&quot;AR1000&quot;,0)
+THEN
+  RESPONSE #100
+    SetGlobal(&quot;CerndBabyTake&quot;,&quot;AR1000&quot;,1)
+    TakePartyItem(&quot;misc8t&quot;)
+    DestroyItem(&quot;misc8t&quot;)
+END
+</pre>
 <br />
 </div>
 
@@ -2971,44 +2936,39 @@ END<br />
 <div class="indent1">
 Adds an ARE file to the WMP to enable traveling to it via world map.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Dead(&quot;Davaeorn&quot;)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;Chapter&quot;,&quot;GLOBAL&quot;,4)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RevealAreaOnMap(&quot;AR0900&quot;)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;IncrementChapter(&quot;Chptxt5&quot;)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddJournalEntry(15839,USER)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Dead(&quot;Davaeorn&quot;)
+  Global(&quot;Chapter&quot;,&quot;GLOBAL&quot;,4)
+THEN
+  RESPONSE #100
+    RevealAreaOnMap(&quot;AR0900&quot;)
+    IncrementChapter(&quot;Chptxt5&quot;)
+    AddJournalEntry(15839,USER)
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="171">171 GiveGoldForce(I:Amount*)</a></div>
 <div class="indent1">
-Forces the amount of gold. This means that, unlike GivePartyGold(), GiveGoldForce() does 
-not require the action's user to have the gold to give it. Another feasible name, then, 
-could be AddPartyGold(I:Amount*). Note that using a negative value here will remove gold 
-from the performer of the action, which can be very useful for scrapping gold.<br />
+Forces the amount of gold. This means that, unlike GivePartyGold(), GiveGoldForce() does not require the action's user to have the gold to give it. Another feasible name, then, could be AddPartyGold(I:Amount*). Note that using a negative value here will remove gold from the performer of the action, which can be very useful for scrapping gold.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;NumTimesTalkedTo(30)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetNumTimesTalkedTo(31)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GiveGoldForce(300)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  NumTimesTalkedTo(30)
+THEN
+  RESPONSE #100
+    SetNumTimesTalkedTo(31)
+    GiveGoldForce(300)
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="172">172 ChangeTileState(O:Tile*,I:State*Boolean)</a></div>
 <div class="indent1">
-Is used to toggle the open/closed state graphics of a tile in a WED file. This would most 
-commonly be associated with doors, but a door does not have to exist in the ARE for this 
-action to work since it references a name in the WED file.<br />
+Is used to toggle the open/closed state graphics of a tile in a WED file. This would most commonly be associated with doors, but a door does not have to exist in the ARE for this action to work since it references a name in the WED file.<br />
 <br />
 </div>
 
@@ -3016,18 +2976,18 @@ action to work since it references a name in the WED file.<br />
 <div class="indent1">
 Adds a dialog tlk reference number into your journal. Example is from AR0511.bcs.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Dead(&quot;JanGith1&quot;)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Dead(&quot;JanGith2&quot;)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;ThumbSeeker&quot;,&quot;GLOBAL&quot;,2)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;HiddenJournal&quot;,&quot;AR0511&quot;,0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;HiddenJournal&quot;,&quot;AR0511&quot;,1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddJournalEntry(34726,QUEST)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  Dead(&quot;JanGith1&quot;)
+  Dead(&quot;JanGith2&quot;)
+  Global(&quot;ThumbSeeker&quot;,&quot;GLOBAL&quot;,2)
+  Global(&quot;HiddenJournal&quot;,&quot;AR0511&quot;,0)
+THEN
+  RESPONSE #100
+    SetGlobal(&quot;HiddenJournal&quot;,&quot;AR0511&quot;,1)
+    AddJournalEntry(34726,QUEST)
+END
+</pre>
 <br />
 </div>
 
@@ -3035,64 +2995,63 @@ END<br />
 <div class="indent1">
 Equips a ranged weapon if one is in a quickslot.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;See([EVILCUTOFF])<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!Range([EVILCUTOFF],4)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;OR(28)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquiped(&quot;Bow01&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquiped(&quot;Bow02&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquiped(&quot;Bow03&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquiped(&quot;Bow04&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow05&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow06&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow07&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow08&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow09&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow10&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow11&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow12&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow13&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow14&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow15&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow16&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow17&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow18&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow19&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow20&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow21&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow22&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow23&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow24&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow25&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow26&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow98&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow99&quot;,())<br />
-&nbsp;&nbsp;&nbsp; &nbsp;THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;EquipRanged()<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AttackReevaluate([EVILCUTOFF],30)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  See([EVILCUTOFF])
+  !Range([EVILCUTOFF],4)
+  OR(28)
+    !HasItemEquiped(&quot;Bow01&quot;,())
+    !HasItemEquiped(&quot;Bow02&quot;,())
+    !HasItemEquiped(&quot;Bow03&quot;,())
+    !HasItemEquiped(&quot;Bow04&quot;,())
+    !HasItemEquipedReal(&quot;Bow05&quot;,())
+    !HasItemEquipedReal(&quot;Bow06&quot;,())
+    !HasItemEquipedReal(&quot;Bow07&quot;,())
+    !HasItemEquipedReal(&quot;Bow08&quot;,())
+    !HasItemEquipedReal(&quot;Bow09&quot;,())
+    !HasItemEquipedReal(&quot;Bow10&quot;,())
+    !HasItemEquipedReal(&quot;Bow11&quot;,())
+    !HasItemEquipedReal(&quot;Bow12&quot;,())
+    !HasItemEquipedReal(&quot;Bow13&quot;,())
+    !HasItemEquipedReal(&quot;Bow14&quot;,())
+    !HasItemEquipedReal(&quot;Bow15&quot;,())
+    !HasItemEquipedReal(&quot;Bow16&quot;,())
+    !HasItemEquipedReal(&quot;Bow17&quot;,())
+    !HasItemEquipedReal(&quot;Bow18&quot;,())
+    !HasItemEquipedReal(&quot;Bow19&quot;,())
+    !HasItemEquipedReal(&quot;Bow20&quot;,())
+    !HasItemEquipedReal(&quot;Bow21&quot;,())
+    !HasItemEquipedReal(&quot;Bow22&quot;,())
+    !HasItemEquipedReal(&quot;Bow23&quot;,())
+    !HasItemEquipedReal(&quot;Bow24&quot;,())
+    !HasItemEquipedReal(&quot;Bow25&quot;,())
+    !HasItemEquipedReal(&quot;Bow26&quot;,())
+    !HasItemEquipedReal(&quot;Bow98&quot;,())
+    !HasItemEquipedReal(&quot;Bow99&quot;,())
+THEN
+  RESPONSE #100
+    EquipRanged()
+    AttackReevaluate([EVILCUTOFF],30)
+END
+</pre>
 <br />
 </div>
 
 <div class="actionHeader"><a name="175">175 SetLeavePartyDialogFile()</a></div>
 <div class="indent1">
-Is used to set the associated NPC party leave dialog, usually a couple questions like you want me 
-to stay here or go to the Copper Coronet?<br />
+Is used to set the associated NPC party leave dialog, usually a couple questions like you want me to stay here or go to the Copper Coronet?<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp; &nbsp;!InParty(Myself)<br />
-&nbsp;&nbsp;&nbsp; &nbsp;HPGT(Myself,0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetLeavePartyDialogFile()<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Dialogue(Player1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ChangeAIScript(&quot;&quot;,DEFAULT)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  !InParty(Myself)
+  HPGT(Myself,0)
+THEN
+  RESPONSE #100
+    SetLeavePartyDialogFile()
+    Dialogue(Player1)
+    ChangeAIScript(&quot;&quot;,DEFAULT)
+END
+</pre>
 <br />
 </div>
 
@@ -3100,32 +3059,24 @@ END<br />
 <div class="indent1">
 See above.<br />
 <br />
-Something I want add: The triggers used in the game do not ever exceed 31. So I believe that is the 
-limit for them. Triggers are the conditons that determine if the script actions occur, like InParty()
- or HPPercentLT.<br />
-<br />
 </div>
 
 <div class="actionHeader"><a name="176">176 EscapeAreaDestroy(I:Delay*)</a></div>
 <div class="indent1">
-The actor who issues this action will search for the nearest travel trigger point for the specified 
-Delay time before giving up and destroying itself completely from the game (as per DestroySelf()).<br />
+The actor who issues this action will search for the nearest travel trigger point for the specified Delay time before giving up and destroying itself completely from the game (as per DestroySelf()).<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="177">177 TriggerActivation(O:Object*,I:State*Boolean)</a></div>
 <div class="indent1">
-This action is used in conjunction with trigger points in ARE files. It will toggle the appearance 
-flag of a trigger, so using TriggerActivation("TRAP01",FALSE) will stop TRAP01 from doing anything, 
-and using TriggerActivation("TRAP01",TRUE) would enable it.<br />
+This action is used in conjunction with trigger points in ARE files. It will toggle the appearance flag of a trigger, so using TriggerActivation("TRAP01",FALSE) will stop TRAP01 from doing anything, and using TriggerActivation("TRAP01",TRUE) would enable it.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="178">178 BreakInstants()</a></div>
 <div class="indent1">
 Presumably fongs instants. And their lassies.<br />
-Really, though, this is completely untested, but I'd assume that this adds instants (seen in the 
-INSTANT.ids) to the action list rather than performing them immediately.<br />
+Really, though, this is completely untested, but I'd assume that this adds instants (seen in the INSTANT.ids) to the action list rather than performing them immediately.<br />
 <br />
 </div>
 
@@ -3139,57 +3090,40 @@ This information is not saved.<br />
 
 <div class="actionHeader"><a name="180">180 MoveToObjectFollow(O:Object*)</a></div>
 <div class="indent1">
-This will make the performer of the action move to the specified object. Once he reaches the 
-object, however, the action is not over. Any time the object moves, this action will still take 
-effect... at least until a different action is issued or until the creature travels between areas.<br />
+This will make the performer of the action move to the specified object. Once he reaches the object, however, the action is not over. Any time the object moves, this action will still take effect... at least until a different action is issued or until the creature travels between areas.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="181">181 ReallyForceSpell(O:Target,I:Spell*Spell)</a></div>
 <div class="indent1">
-This is yet another action in the Spell() family. This command will do the same thing as 
-ForceSpell(), but with 0 casting time.<br />
+This is yet another action in the Spell() family. This command will do the same thing as ForceSpell(), but with 0 casting time.<br />
 The casting creature must meet the level requirements as set in the spell file.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="182">182 MakeUnselectable(I:Time*)</a></div>
 <div class="indent1">
-This action does what it says and a little bit more. When used, it will change the target's 
-circle to purple and make it unselectable by anyone. And although it doesn't say it outright, 
-the user of MakeUnselectable() has its scripts stop running for the duration. Using 
-MakeUnselectable(0) will end the unselectable state.<br />
+This action does what it says and a little bit more. When used, it will change the target's circle to purple and make it unselectable by anyone. And although it doesn't say it outright, the user of MakeUnselectable() has its scripts stop running for the duration. Using MakeUnselectable(0) will end the unselectable state.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="183">183 MultiPlayerSync()</a></div>
 <div class="indent1">
-This is used in multiplayer games, usually cutscenes, to ensure that players are at the same 
-point before continuing play. You can think of it as a lag buffer of sorts. Players with faster 
-connections will wait for players with slower connections to catch up before the game continues. 
-This helps prevent both major lag and crashes.<br />
+This is used in multiplayer games, usually cutscenes, to ensure that players are at the same point before continuing play. You can think of it as a lag buffer of sorts. Players with faster connections will wait for players with slower connections to catch up before the game continues. This helps prevent both major lag and crashes.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="184">184 RunAwayFromNoInterrupt(O:Creature*,I:Time*)</a></div>
 <div class="indent1">
-This does the same thing as RunAwayFrom(), but prevents conditions from being tested while the 
-Time is still active.<br />
+This does the same thing as RunAwayFrom(), but prevents conditions from being tested while the Time is still active.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="185">185 SetMasterArea(S:Name*)</a></div>
 <div class="indent1">
-To explain SetMasterArea(), you must understand how area scripts are run. Whenever you enter a 
-new area that is NOT in the MASTAREA.2da, it will be added to the bottom of the area script stack. 
-Whenever you enter a new area that IS in the MASTAREA.2da, it will be added to the top of the area 
-script stack. Let's say I have one player in AR0900 and one player in AR0902.Both scripts are 
-active, with AR0900 on the top of the stack because it appears in MASTAREA.2da. Using 
-SetMasterArea("AR0902") would change it so that AR0902.bcs is added to the top of the stack, 
-directly above AR0900.bcs.<br />
+To explain SetMasterArea(), you must understand how area scripts are run. Whenever you enter a new area that is NOT in the MASTAREA.2da, it will be added to the bottom of the area script stack. Whenever you enter a new area that IS in the MASTAREA.2da, it will be added to the top of the area script stack. Let's say I have one player in AR0900 and one player in AR0902.Both scripts are active, with AR0900 on the top of the stack because it appears in MASTAREA.2da. Using SetMasterArea("AR0902") would change it so that AR0902.bcs is added to the top of the stack, directly above AR0900.bcs.<br />
 <br />
-This may seem useless at first, but if you get into priority scripting in areas, this is must 
-have knowledge--otherwise you'll have problems and say "WHY ISN'T MY AREA SCRIPT WORKING!?"<br />
+This may seem useless at first, but if you get into priority scripting in areas, this is must have knowledge--otherwise you'll have problems and say "WHY ISN'T MY AREA SCRIPT WORKING!?"<br />
 <br />
 </div>
 
@@ -3208,8 +3142,7 @@ The Flags parameter refers to the way the song should be played (fade in/out, st
 
 <div class="actionHeader"><a name="188">188 TakePartyItemAll(S:Item*)</a></div>
 <div class="indent1">
-Will take all instances of the specified item from the party and give them to the performer 
-of this action (excepting items contained in a Bag of Holding, and possibly other containers such as Scroll cases).<br />
+Will take all instances of the specified item from the party and give them to the performer of this action (excepting items contained in a Bag of Holding, and possibly other containers such as Scroll cases).<br />
 <br />
 </div>
 
@@ -3221,8 +3154,7 @@ This really does the same thing as LeaveAreaLUA(). Completely pointless as far a
 
 <div class="actionHeader"><a name="190">190 SaveGame(I:Slot*)</a></div>
 <div class="indent1">
-This will save the game in the specified save slot. Unless you're a player doing this in your 
-AI scripts, it's usually bad practice to save in anything other than slot 0, which is the auto-save.<br />
+This will save the game in the specified save slot. Unless you're a player doing this in your AI scripts, it's usually bad practice to save in anything other than slot 0, which is the auto-save.<br />
 <br />
 </div>
 
@@ -3240,8 +3172,7 @@ See above. This one just targets a point in [x.y] format as opposed to an object
 
 <div class="actionHeader"><a name="193">193 TakePartyItemRange(S:Item*)</a></div>
 <div class="indent1">
-This seems pretty useless to me since you can't specify a range, but the performer of this action 
-will only be able to take the given item if he is close to a party member.<br />
+This seems pretty useless to me since you can't specify a range, but the performer of this action will only be able to take the given item if he is close to a party member.<br />
 <br />
 </div>
 
@@ -3254,8 +3185,7 @@ For characters in the party, this action will create specified creature.<br />
 
 <div class="actionHeader"><a name="195">195 Lock(O:Object*)</a></div>
 <div class="indent1">
-The object here should be a door or container in a given area. This isn't too scriptable for 
-player AI, but can be a good effect for creature/area scripts. It locks doors and containers.<br />
+The object here should be a door or container in a given area. This isn't too scriptable for player AI, but can be a good effect for creature/area scripts. It locks doors and containers.<br />
 <br />
 </div>
 
@@ -3267,8 +3197,7 @@ See above. It unlocks doors and containers.<br />
 
 <div class="actionHeader"><a name="197">197 MoveGlobal(S:Area*,O:Object*,P:Point*)</a></div>
 <div class="indent1">
-This action is ONLY useful for NPC's that have already been added to the saved game file. It will 
-jump the given object to the area and point specified. The syntax is pretty straightforward:<br />
+This action is ONLY useful for NPC's that have already been added to the saved game file. It will jump the given object to the area and point specified. The syntax is pretty straightforward:<br />
 <br />
 <div class="code"> MoveGlobal("AREA","MINSC",[x.y]) </div>
 <br />
@@ -3277,17 +3206,13 @@ jump the given object to the area and point specified. The syntax is pretty stra
 <div class="actionHeader"><a name="198">198 StartDialogueNoSet(O:Object*)</a></div>
 <div class="actionHeader"><a name="198">198 StartDialogNoSet(O:Object*)</a></div>
 <div class="indent1">
-Will start a dialog already assigned to the performer of this action with the object. Unlike 
-Dialog(), this is used from a distance. It will initiate whether or not a character is in sight. 
-If the creature using this action has been assigned a dialog that has all top level conditions 
-returning false, this action will not work. If the target is invalid, the active creature will initiate dialog with Player1.<br />
+Will start a dialog already assigned to the performer of this action with the object. Unlike Dialog(), this is used from a distance. It will initiate whether or not a character is in sight. If the creature using this action has been assigned a dialog that has all top level conditions returning false, this action will not work. If the target is invalid, the active creature will initiate dialog with Player1.<br />
 <br />
 </div>
 
-<div class="actionHeader"><a name="199 TextScreen(S:TextList*)">199 TextScreen(S:TextList*) </a></div>
+<div class="actionHeader"><a name="199"> 199 TextScreen(S:TextList*) </a></div>
 <div class="indent1">
-The TextList parameter refers to a 2da file. The 2da file specifies both a strref and 
-a MOS file which allows for text screens to be played.<br />
+The TextList parameter refers to a 2da file. The 2da file specifies both a strref and a MOS file which allows for text screens to be played.<br />
 <br />
 </div>
 
@@ -3299,20 +3224,14 @@ See RandomWalk(). The only difference here is the character tends not to stand a
 
 <div class="actionHeader"><a name="201">201</a> DetectSecretDoor(O:Object*)</div>
 <div class="indent1">
-Not very usable in player scripts since you have to know the name of the door--which should be 
-secret--before using this action. Might be good in an area script for effect, however. This will 
-highlight an undetected secret door in that purple "detected" color.<br />
+Not very usable in player scripts since you have to know the name of the door--which should be secret--before using this action. Might be good in an area script for effect, however. This will highlight an undetected secret door in that purple "detected" color.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="202">202</a> FadeToColor(P:Point*,I:Blue*)</div>
 <div class="indent1">
-This action, although some of its parameters are unknown, is frequently useful. It can be used in 
-cutscene situations, and especially for masking undesirable calculations or character movements on 
-the screen. The parameters, however, are strange. The Point parameter is still taken in the [x.y] 
-format, but x specifies the number of AI updates rather than an actual point. For example, using 
-FadeToColor([20.0],0) would fade to black in 20 AI updates. Parameters besides the x are undefined 
-and could use some investigation.<br />
+This action, although some of its parameters are unknown, is frequently useful. It can be used in cutscene situations, and especially for masking undesirable calculations or character movements on the screen. The parameters, however, are strange. The Point parameter is still taken in the [x.y] 
+format, but x specifies the number of AI updates rather than an actual point. For example, using FadeToColor([20.0],0) would fade to black in 20 AI updates. Parameters besides the x are undefined and could use some investigation.<br />
 <br />
 </div>
 
@@ -3324,58 +3243,45 @@ See above. The only difference this has is that it fades back to normal rather t
 
 <div class="actionHeader"><a name="204">204</a> TakePartyItemNum(S:ResRef*,I:Num*)</div>
 <div class="indent1">
-This will take a quantity of referenced items from the party. It should be noted that the game 
-always runs from player1-player6. Here's an example. Player1 has 3 instances of "MYITEM" in 
-his inventory, Player2 has 2 instance of "MYITEM," and Player3 has 1. If I use 
-TakePartyItemNum("MYITEM",4), all 3 instances of "MYITEM" will be taken from Player1, and 
-1 instance will be taken from Player2. This leaves Player2 and Player3 each with one instance 
-of "MYITEM."<br />
+This will take a quantity of referenced items from the party. It should be noted that the game always runs from player1-player6. Here's an example. Player1 has 3 instances of "MYITEM" in his inventory, Player2 has 2 instance of "MYITEM," and Player3 has 1. If I use TakePartyItemNum("MYITEM",4), all 3 instances of "MYITEM" will be taken from Player1, and 1 instance will be taken from Player2. This leaves Player2 and Player3 each with one instance of "MYITEM."<br />
 NB. If the last item of an item type stored in a container .sto file is removed by this action, the amount becomes zero. Items with zero quantities cannot be seen in-game, cannot be removed by TakePartyItem, and will not count toward a container's current item load.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="207">207</a> MoveToPointNoInterrupt(P:Point*)</div>
 <div class="indent1">
-This does the same thing as MoveToPoint(), but disallows other conditions to be checked until 
-the character reaches the given point.<br />
+This does the same thing as MoveToPoint(), but disallows other conditions to be checked until the character reaches the given point.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="208">208</a> MoveToObjectNoInterrupt(O:Object*)</div>
 <div class="indent1">
-This does the same thing as MoveToObject(), but disallows other conditions to be checked until 
-the character reaches the given object.<br />
+This does the same thing as MoveToObject(), but disallows other conditions to be checked until the character reaches the given object.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="209">209</a> SpawnPtActivate(O:Object*)</div>
 <div class="indent1">
-As it says, this action will activate a spawn point in an area. The Object should be the name of 
-the spawn point as written in the ARE file.<br />
+As it says, this action will activate a spawn point in an area. The Object should be the name of the spawn point as written in the ARE file.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="210">210</a> SpawnPtDeactivate(O:Object*)</div>
 <div class="indent1">
-As it says, this action will deactivate a spawn point in an area. The Object should be the name of 
-the spawn point as written in the ARE file.<br />
+As it says, this action will deactivate a spawn point in an area. The Object should be the name of the spawn point as written in the ARE file.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="211">211</a> SpawnPtSpawn(O:Object*)</div>
 <div class="indent1">
-This action will cause an activated spawn point to spawn creatures, regardless of whether the time for 
-spawning has expired. The Object should be the name of the spawn point as written in the ARE file.<br />
+This action will cause an activated spawn point to spawn creatures, regardless of whether the time for spawning has expired. The Object should be the name of the spawn point as written in the ARE file.<br />
 <br />
 </div>
 
 <div class="actionHeader"><a name="212">212</a> GlobalShout(I:ID*SHOUTIDS)</div>
 <div class="indent1">
-GlobalShout() acts like Shout(), except there is no range to it. If I use GlobalShout(10), any creature 
-in the area can use Heard() to detect it, assuming that creature is loaded into the game. What I 
-mean by "loaded into the game" is that, once creatures leave the sight of PC's, their AI is often 
-turned off. To keep their AI on, they need to have the AIFAST.itm equipped or effect #293 
-"Enable Offscreen AI" applied. <br />
+GlobalShout() acts like Shout(), except there is no range to it. If I use GlobalShout(10), any creature in the area can use Heard() to detect it, assuming that creature is loaded into the game. What I mean by "loaded into the game" is that, once creatures leave the sight of PC's, their AI is often 
+turned off. To keep their AI on, they need to have the AIFAST.itm equipped or effect #293 "Enable Offscreen AI" applied. <br />
 <br />
 </div>
 
@@ -3394,78 +3300,74 @@ Stops the specified area animation.<br />
 
 <div class="actionHeader"><a name="215">215</a> FollowObjectFormation(O:Object*,I:Formation*,I:Position*)</div>
 <div class="indent1">
-This is a very useful function. The Formation parameter takes in the value corresponding to the type of 
-formation (i.e. two lines, arrowhead, single line, etc.) and the Position parameter takes in the position 
-of that formation. The Position value should be from 0 to 5.<br />
+This is a very useful function. The Formation parameter takes in the value corresponding to the type of formation (i.e. two lines, arrowhead, single line, etc.) and the Position parameter takes in the position of that formation. The Position value should be from 0 to 5.<br />
 <br />
 You can use this command for backstabbing, since it will allow the character to move behind a target.<br />
 <br />
-Personally, I find this command very useful for random following scripts. For example, here DLSCTC02 is 
-the leader of a number of soldiers searching through a cave. This script is used on all the soldiers to 
-keep them following in random positions around the leader.<br />
+Personally, I find this command very useful for random following scripts. For example, here DLSCTC02 is the leader of a number of soldiers searching through a cave. This script is used on all the soldiers to keep them following in random positions around the leader.<br />
 <br />
-<div class="code">
-IF<br />
-&nbsp;&nbsp;&nbsp;&nbsp;!Range("DLSCTC02",12)//&nbsp;~Rhinsan~<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Global("DontFollow","DL0302",0)
-THEN<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",1,6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",1,5)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",2,6)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",2,5)<br />
-END<br />
-<br />
-IF<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Global("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Range("DLSCTC02",6)//&nbsp;~Rhinsan~<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Global("DontFollow","DL0302",0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",0)<br />
-END<br />
-<br />
-IF<br />
-&nbsp;&nbsp;&nbsp;&nbsp;OR(2)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!Range("DLSCTC02",9)//&nbsp;~Rhinsan~<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Range("DLSCTC02",1)//&nbsp;~Rhinsan~<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Global("DontFollow","DL0302",0)<br />
-THEN<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",1,2)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",1,3)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",1,4)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",1,5)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",1,1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",2,1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",2,2)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",2,3)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",2,4)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;RESPONSE&nbsp;#100<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetGlobal("FollowTheLeader","LOCALS",1)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FollowObjectFormation("DLSCTC02",2,5)<br />
-END<br />
-</div>
+<pre class="code">
+IF
+  !Range("DLSCTC02",12)// ~Rhinsan~
+  Global("DontFollow","DL0302",0)
+THEN
+  RESPONSE #100
+    FollowObjectFormation("DLSCTC02",1,6)
+  RESPONSE #100
+    FollowObjectFormation("DLSCTC02",1,5)
+  RESPONSE #100
+    FollowObjectFormation("DLSCTC02",2,6)
+  RESPONSE #100
+    FollowObjectFormation("DLSCTC02",2,5)
+END
+
+IF
+  Global("FollowTheLeader","LOCALS",1)
+  Range("DLSCTC02",6)// ~Rhinsan~
+  Global("DontFollow","DL0302",0)
+THEN
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",0)
+END
+
+IF
+  OR(2)
+    !Range("DLSCTC02",9)// ~Rhinsan~
+    Range("DLSCTC02",1)// ~Rhinsan~
+  Global("DontFollow","DL0302",0)
+THEN
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",1,2)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",1,3)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",1,4)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",1,5)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",1,1)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",2,1)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",2,2)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",2,3)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",2,4)
+  RESPONSE #100
+    SetGlobal("FollowTheLeader","LOCALS",1)
+    FollowObjectFormation("DLSCTC02",2,5)
+END
+</pre>
 <br />
 </div>
 
@@ -3918,7 +3820,7 @@ This will replace the item in second parameter with the item in first parameter.
 
 <div class="actionHeader"><a name="279">279</a> AddSpecialAbility(S:ResRef*)</div>
 <div class="indent1">
-Adds an innate ability onto the target. Displays a Player1 has gained a special ability: "Ablity."<br />
+Adds the specified spell to the creature running the script. Displays a message in the form &lt;creature_name&gt; has gained a special ability: "Ablity".<br />
 <br />
 </div>
 
@@ -4408,18 +4310,18 @@ Looking at the spells that have a "WishPower**" next to them, this list can be d
 <pre>
 Low (9-)            Medium (10-14)      High (15-17)        Ultra (18+)
 
-Heal             E  Heal             E  Heal             E  TS & IA (X2)     P 
+Heal             E  Heal             E  Heal             E  TS &amp; IA (X2)     P 
 Improved Haste   E  Improved Haste   E  Improved Haste   E  Improved Haste   E
 Dark Planetar    E  Silenced         A  Dark Planetar    E  Lose 10,000 gp   P
 Level Drain      P  Level Drain      P  WIS (3)          P  Level Drain      P 
-Hit Points -50%  C  Hit Points -50%  C  TS & IA (X2)     P  Hit Points -50%  C
+Hit Points -50%  C  Hit Points -50%  C  TS &amp; IA (X2)     P  Hit Points -50%  C
 Hit Points -15%  P  Haste            A  Hit Points -15%  P  Mass Raise Dead  P
 Lose Spells      C  Lose Spells      C  Lose Spells      C  WIS (3)          P
 STR (3)          P  STR (3)          P  STR (3)          P  Haste            A
 CON (3)          P  CON (3)          P  Stats (25)       P  Stats (25)       P
-DEX (3)          P  DEX (3)          P  DEX (3)          P  Rest & Remem.    P
+DEX (3)          P  DEX (3)          P  DEX (3)          P  Rest &amp; Remem.    P
 INT (3)          P  INT (3)          P  Silenced         A  Bad Luck         A
-Slowed           P  Slowed           P  Rest & Remem.    P  Meteor Swarm     C
+Slowed           P  Slowed           P  Rest &amp; Remem.    P  Meteor Swarm     C
 Restoration      P  Restoration      P  Improved Haste   P  Restoration      P
 Gr. Deathblow    P  Gr. Deathblow    P  Gr. Deathblow    P  Gr. Deathblow    P
 Hardiness        P  Hardiness        P  Breach           E  Hardiness        P
@@ -4435,8 +4337,8 @@ Abi-Dalzim's     A  Abi-Dalzim's     A  Abi-Dalzim's     A  Abi-Dalzim's     A
 Intoxicated      A  Intoxicated      A  Intoxicated      A  Intoxicated      A
 Bad Luck         A  Bad Luck         A  Bad Luck         A
                 / Breach             E  Stats (25)       P \
-            OR <                                            > OR
-                \ Rest & Remem.      P Mass Raise Dead   P /
+            OR &lt;                                            &gt; OR
+                \ Rest &amp; Remem.      P Mass Raise Dead   P /
 </pre><br />
 In conclusion, ~SetupWish(4,1)~ tells the game to go down column 4 of the WISH.2DA and do a RandomNum(2,1) (or some such) starting at the top, and working it's way down. If the RandomNum returns with a 1, then the game sets the appropriate Global for that spell.<br />
 Once the maximum "wish choices" have been selected, the dialog continues and casts the  selected spell.<br />
@@ -4452,6 +4354,8 @@ See LeaveAreaLUA(). The difference is that this will move the character to the s
 <div class="actionHeader"><a name="351">351</a> LeaveAreaLUAPanicEntry(S:Area*,S:Entry*,P:Point*,I:Face*)</div>
 <div class="indent1">
 See LeaveAreaLUAPanic(). The difference is that this will move the character to the specified Entry Point before travelling to the area.<br />
+</div>
+
 </div>
 </body>
 </html>

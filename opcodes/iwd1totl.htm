@@ -48,7 +48,10 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 0&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;Key&nbsp;+&nbsp;'Key&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
 1&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;'Key&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
 2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;(Key&nbsp;*&nbsp;'Key&nbsp;Modifier'&nbsp;value)<br>&nbsp&nbsp&nbsp
-/&nbsp;100<br>
+/&nbsp;100<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Note:&nbsp;When&nbsp;this&nbsp;opcode&nbsp;is&nbsp;stacked,&nbsp;the&nbsp;values&nbsp;of&nbsp;the&nbsp;Key<br>&nbsp&nbsp&nbsp
+Modifier&nbsp;are&nbsp;stacked,&nbsp;not&nbsp;the&nbsp;number&nbsp;of&nbsp;attacks.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -366,7 +369,9 @@ The&nbsp;Dice&nbsp;values&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;inflict&nbsp;v
 -&nbsp;e.g.&nbsp;2d6&nbsp;would&nbsp;do&nbsp;2-12&nbsp;damage&nbsp;(Damage&nbsp;type&nbsp;is&nbsp;still&nbsp;specified<br>&nbsp&nbsp&nbsp
 by&nbsp;the&nbsp;'Type'&nbsp;value).<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
-NB.&nbsp;'Stunning'&nbsp;damage&nbsp;does&nbsp;not&nbsp;stun&nbsp;the&nbsp;target.<br>&nbsp&nbsp&nbsp
+NB.&nbsp;'Stunning'&nbsp;damage&nbsp;does&nbsp;not&nbsp;stun&nbsp;the&nbsp;target.&nbsp;Stunning<br>&nbsp&nbsp&nbsp
+damage&nbsp;cannot&nbsp;kill&nbsp;a&nbsp;creature,&nbsp;creatures&nbsp;are&nbsp;reduced&nbsp;to<br>&nbsp&nbsp&nbsp
+1&nbsp;HP&nbsp;and&nbsp;are&nbsp;knocked&nbsp;unconscious.<br>&nbsp&nbsp&nbsp
 NB.&nbsp;Using&nbsp;'Magic&nbsp;Fire'&nbsp;as&nbsp;a&nbsp;damage&nbsp;type&nbsp;will&nbsp;result&nbsp;the<br>&nbsp&nbsp&nbsp
 game&nbsp;to&nbsp;crash&nbsp;if&nbsp;the&nbsp;damage&nbsp;kills&nbsp;the&nbsp;target.<br>&nbsp&nbsp&nbsp
 NB.&nbsp;If&nbsp;'Damage&nbsp;Amount'&nbsp;and&nbsp;the&nbsp;Dice&nbsp;values&nbsp;are&nbsp;both&nbsp;non-zero,<br>&nbsp&nbsp&nbsp
@@ -1040,7 +1045,8 @@ Removes&nbsp;the&nbsp;invisibility&nbsp;effect&nbsp;from&nbsp;the&nbsp;targeted&
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Removes&nbsp;the&nbsp;silence&nbsp;effect&nbsp;from&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+Removes&nbsp;the&nbsp;silence&nbsp;effect&nbsp;and&nbsp;the&nbsp;silenced&nbsp;state&nbsp;from&nbsp;the<br>&nbsp&nbsp&nbsp
+targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
 This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
@@ -1512,18 +1518,14 @@ Removes&nbsp;the&nbsp;Non-Detection&nbsp;effect&nbsp;from&nbsp;the&nbsp;targeted
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Alters&nbsp;the&nbsp;gender&nbsp;of&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;to&nbsp;the&nbsp;value<br>&nbsp&nbsp&nbsp
+Alters&nbsp;the&nbsp;gender&nbsp;of&nbsp;the&nbsp;targetted&nbsp;creature(s)&nbsp;to&nbsp;the&nbsp;value<br>&nbsp&nbsp&nbsp
 specified&nbsp;by&nbsp;the&nbsp;'Gender.ids'&nbsp;field,&nbsp;in&nbsp;the&nbsp;style&nbsp;specified<br>&nbsp&nbsp&nbsp
 by&nbsp;the&nbsp;'Type'&nbsp;value.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
 Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
-0&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;'Gender&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
-1&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;Gender&nbsp;+&nbsp;'Gender&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-value<br>&nbsp&nbsp&nbsp
-2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;(Gender&nbsp;*&nbsp;'Gender&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-value)&nbsp;/&nbsp;100<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-If&nbsp;both&nbsp;parameters&nbsp;are&nbsp;left&nbsp;at&nbsp;0,&nbsp;gender&nbsp;is&nbsp;inverted.<br>
+0&nbsp;Reverse&nbsp;Gender<br>&nbsp&nbsp&nbsp
+1&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;'Statistic&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
+(values&nbsp;from&nbsp;gender.ids)<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -2124,8 +2126,7 @@ specified&nbsp;by&nbsp;the&nbsp;'opcode'&nbsp;field.<br>&nbsp&nbsp&nbsp
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Gives&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;protection&nbsp;from&nbsp;effects&nbsp;with<br>&nbsp&nbsp&nbsp
-a&nbsp;Power&nbsp;equal&nbsp;to,&nbsp;or&nbsp;lower&nbsp;than&nbsp;the&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Spell<br>&nbsp&nbsp&nbsp
-Power'&nbsp;field.<br>&nbsp&nbsp&nbsp
+a&nbsp;Power&nbsp;equal&nbsp;to&nbsp;that&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Spell&nbsp;Power'&nbsp;field.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
 Known&nbsp;values&nbsp;for&nbsp;'Spell&nbsp;Power'&nbsp;are:<br>&nbsp&nbsp&nbsp
 1<br>&nbsp&nbsp&nbsp
@@ -3358,13 +3359,13 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#171 (0xab) <u>Spell: Give Innate Ability [171]</u></b><br>
+<b>#171 (0xab) <u>Spell: Give Ability [171]</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Gives&nbsp;the&nbsp;innate&nbsp;ability&nbsp;specified&nbsp;by&nbsp;the&nbsp;resource&nbsp;key&nbsp;to<br>&nbsp&nbsp&nbsp
-the&nbsp;targeted&nbsp;creature(s).<br>
+Gives&nbsp;the&nbsp;spell&nbsp;specified&nbsp;by&nbsp;the&nbsp;resource&nbsp;key&nbsp;to&nbsp;the&nbsp;targeted<br>&nbsp&nbsp&nbsp
+creature(s).<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3689,7 +3690,9 @@ between&nbsp;spells.<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Alters&nbsp;the&nbsp;casting&nbsp;time&nbsp;of&nbsp;spells&nbsp;by&nbsp;the&nbsp;value&nbsp;specified<br>&nbsp&nbsp&nbsp
-by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
+by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.&nbsp;This&nbsp;effect&nbsp;is&nbsp;cummulative.<br>&nbsp&nbsp&nbsp
+Positive&nbsp;values&nbsp;decrease&nbsp;the&nbsp;casting&nbsp;time,&nbsp;negative&nbsp;values<br>&nbsp&nbsp&nbsp
+increase&nbsp;the&nbsp;casting&nbsp;time.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3700,7 +3703,7 @@ by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Alters&nbsp;the&nbsp;weapons&nbsp;attack&nbsp;speed&nbsp;by&nbsp;the&nbsp;value&nbsp;specified&nbsp;by<br>&nbsp&nbsp&nbsp
-the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
+the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.&nbsp;This&nbsp;effect&nbsp;is&nbsp;not&nbsp;cummulative.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -4714,74 +4717,49 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#236 (0xec) <u>HP: Cold Damage [236]</u></b><br>
+<b>#236 (0xec) <u>Chill Touch [236]</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Damage<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Inflicts&nbsp;cold&nbsp;damage&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;equal&nbsp;that<br>&nbsp&nbsp&nbsp
-that&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Damage'&nbsp;field.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
-The&nbsp;Dice&nbsp;values&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;inflict&nbsp;varying&nbsp;damage&nbsp;amounts<br>&nbsp&nbsp&nbsp
--&nbsp;eg&nbsp;2d6&nbsp;would&nbsp;do&nbsp;2-12&nbsp;damage&nbsp;(Damage&nbsp;type&nbsp;is&nbsp;still&nbsp;specified<br>&nbsp&nbsp&nbsp
-by&nbsp;the&nbsp;'Type'&nbsp;value).<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-NB.&nbsp;If&nbsp;'Damage&nbsp;Amount'&nbsp;and&nbsp;the&nbsp;Dice&nbsp;values&nbsp;are&nbsp;both&nbsp;non-zero,<br>&nbsp&nbsp&nbsp
-the&nbsp;total&nbsp;damage&nbsp;inflicted&nbsp;is:&nbsp;'Damage&nbsp;+&nbsp;Dice&nbsp;value.<br>
+237,1,<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#237 (0xed) <u>HP: Crushing Damage [237]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Damage<br>
+<b>#0 (0x0) <u>Irrelevant</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Damages the target by the value specified by the 'Damage Amount' field, with a damage type of crushing.
+
+The Dice values can be used to inflict varying damage amounts - eg 2d6 would do 2-12 damage (Damage type is still specified by the 'Type' value).
+
+NB. If 'Damage Amount' and the Dice values are both non-zero, the total damage inflicted is: 'Damage + Dice value.<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Stat: Save vs. all [238]<br>
+&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
+&nbsp&nbsp&nbsp
+Statistic&nbsp;Modifier<br>
+|-----------------------------------------------------------------------| <br>
+<br>
+
+|-----------------------------------------------------------------------|<br>
+<b>#0 (0x0) <u>Alters all saving throws by the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+
+Known values for 'Type' are:
+0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
+1   Flat Value Modifier -> Save = 'Statistic Modifier' value
+2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
+
+'Statistic Modifier' can be positive or negative.</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Cure: Slow Poison [239]<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Damages&nbsp;the&nbsp;target&nbsp;by&nbsp;the&nbsp;value&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Damage<br>&nbsp&nbsp&nbsp
-Amount'&nbsp;field,&nbsp;with&nbsp;a&nbsp;damage&nbsp;type&nbsp;of&nbsp;crushing.<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-The&nbsp;Dice&nbsp;values&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;inflict&nbsp;varying&nbsp;damage&nbsp;amounts<br>&nbsp&nbsp&nbsp
--&nbsp;eg&nbsp;2d6&nbsp;would&nbsp;do&nbsp;2-12&nbsp;damage&nbsp;(Damage&nbsp;type&nbsp;is&nbsp;still&nbsp;specified<br>&nbsp&nbsp&nbsp
-by&nbsp;the&nbsp;'Type'&nbsp;value).<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-NB.&nbsp;If&nbsp;'Damage&nbsp;Amount'&nbsp;and&nbsp;the&nbsp;Dice&nbsp;values&nbsp;are&nbsp;both&nbsp;non-zero,<br>&nbsp&nbsp&nbsp
-the&nbsp;total&nbsp;damage&nbsp;inflicted&nbsp;is:&nbsp;'Damage&nbsp;+&nbsp;Dice&nbsp;value.<br>
+Irrelevant<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#238 (0xee) <u>Stat: Save vs. all [238]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Statistic Modifier<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
-&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
-&nbsp&nbsp&nbsp
-Alters&nbsp;all&nbsp;saving&nbsp;throws&nbsp;by&nbsp;the&nbsp;modifier&nbsp;value&nbsp;specified<br>&nbsp&nbsp&nbsp
-by&nbsp;the&nbsp;'Statistic&nbsp;Modifier'&nbsp;field&nbsp;in&nbsp;the&nbsp;style&nbsp;specified<br>&nbsp&nbsp&nbsp
-by&nbsp;the&nbsp;'Type'&nbsp;field.<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
-0&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Save&nbsp;=&nbsp;Save&nbsp;+&nbsp;'Statistic&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-value<br>&nbsp&nbsp&nbsp
-1&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Save&nbsp;=&nbsp;'Statistic&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
-2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Save&nbsp;=&nbsp;(Save&nbsp;*&nbsp;'Statistic&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-value)&nbsp;/&nbsp;100<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-'Statistic&nbsp;Modifier'&nbsp;can&nbsp;be&nbsp;positive&nbsp;or&nbsp;negative.<br>
-|-----------------------------------------------------------------------| <br>
-<br>
-
-|-----------------------------------------------------------------------|<br>
-<b>#239 (0xef) <u>Cure: Slow Poison [239]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
-&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
-&nbsp&nbsp&nbsp
-Applies&nbsp;the&nbsp;slow&nbsp;poison&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>
-|-----------------------------------------------------------------------| <br>
-<br>
-
-|-----------------------------------------------------------------------|<br>
-<b>#240 (0xf0) <u>Summon: Icewind Summoning Spell [240]</u></b><br>
+<b>#0 (0x0) <u>Summon: Icewind Summoning Spell [240]</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Creature Number<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
@@ -4918,7 +4896,12 @@ Applies&nbsp;the&nbsp;beltyns&nbsp;burning&nbsp;blood&nbsp;effect&nbsp;to&nbsp;t
 creature(s).<br>&nbsp&nbsp&nbsp
 The&nbsp;affected&nbsp;creature(s)&nbsp;go&nbsp;bersek&nbsp;for&nbsp;the&nbsp;number&nbsp;of&nbsp;attack<br>&nbsp&nbsp&nbsp
 specified&nbsp;by&nbsp;the&nbsp;'Strike&nbsp;Number'&nbsp;field,&nbsp;on&nbsp;a&nbsp;failed&nbsp;saving<br>&nbsp&nbsp&nbsp
-throw&nbsp;vs&nbsp;spells.<br>
+throw&nbsp;vs&nbsp;spells.<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Note:&nbsp;In&nbsp;IWD&nbsp;(with&nbsp;no&nbsp;expansions)&nbsp;param1&nbsp;acts&nbsp;as&nbsp;a&nbsp;bonus<br>&nbsp&nbsp&nbsp
+to&nbsp;damage,&nbsp;rather&nbsp;than&nbsp;a&nbsp;strike&nbsp;number.<br>&nbsp&nbsp&nbsp
+Note:&nbsp;This&nbsp;effect&nbsp;can&nbsp;lead&nbsp;to&nbsp;a&nbsp;crash&nbsp;upon&nbsp;save&nbsp;game&nbsp;loading,<br>&nbsp&nbsp&nbsp
+if&nbsp;a&nbsp;creature&nbsp;is&nbsp;killed&nbsp;due&nbsp;to&nbsp;this&nbsp;effect.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5652,7 +5635,7 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Leave&nbsp;both&nbsp;parameters&nbsp;at&nbsp;all&nbsp;zeros&nbsp;for&nbsp;this&nbsp;Effect&nbsp;to&nbsp;work.<br>
+Sets&nbsp;the&nbsp;global&nbsp;variable&nbsp;GEM_ACTIVE&nbsp;to&nbsp;1.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5795,7 +5778,9 @@ This&nbsp;effect&nbsp;will&nbsp;refresh&nbsp;spells&nbsp;and&nbsp;remove&nbsp;an
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Applies&nbsp;the&nbsp;beholder&nbsp;dispel&nbsp;magic&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted<br>&nbsp&nbsp&nbsp
-creature(s).<br>
+creature(s).<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+SPIN164&nbsp;is&nbsp;periodically&nbsp;applied&nbsp;to&nbsp;creatures&nbsp;near&nbsp;the&nbsp;target.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5805,7 +5790,10 @@ creature(s).<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Applies&nbsp;the&nbsp;harpy&nbsp;wail&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>
+Applies&nbsp;the&nbsp;harpy&nbsp;wail&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+SPIN166&nbsp;is&nbsp;periodically&nbsp;applied&nbsp;to&nbsp;creatures&nbsp;near&nbsp;the&nbsp;target,<br>&nbsp&nbsp&nbsp
+and&nbsp;EFF_P111&nbsp;is&nbsp;played.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -5815,7 +5803,10 @@ Applies&nbsp;the&nbsp;harpy&nbsp;wail&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creatu
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Applies&nbsp;the&nbsp;jackalwere&nbsp;gaze&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>
+Applies&nbsp;the&nbsp;jackalwere&nbsp;gaze&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+The&nbsp;text&nbsp;Jackalwere&nbsp;Gaze&nbsp;is&nbsp;applied&nbsp;over&nbsp;the&nbsp;target,&nbsp;and<br>&nbsp&nbsp&nbsp
+SPIN179&nbsp;is&nbsp;periodically&nbsp;applied&nbsp;to&nbsp;creatures&nbsp;near&nbsp;the&nbsp;target.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 

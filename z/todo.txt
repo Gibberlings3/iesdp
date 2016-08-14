@@ -1,0 +1,152 @@
+IESDP
+  file ordering:
+    plt -> bam
+    vef -> vvc -> bam
+
+
+inventory bam files:
+  sequence 0 = large
+  sequence 1 = small
+
+exe map
+bg2
+  0x006B7258    dword   Starting XP of new SoA character (89,000)
+  0x006B725C    dword   Max starting XP of imported SoA character (161,000)
+  0x006B7260    dword   Starting XP of new ToB character (2,950,000)
+  0x006B7264    dword   Max starting XP of imported ToB character (2,500,000)
+
+IWD: enable animationchange opcode (53)
+  totl:
+  On position: 0xf9144 there is an 0xe8 byte. Replace it with 0x35.
+
+  original iwd:
+  On position: 0xe932c there is an 0xe8 byte. Replace it with 0x35.
+
+are
+ animation, 0x38 - height - affects whether animation is covered by wall or not
+
+
+http://forums.blackwyrmlair.net/index.php?showtopic=544
+
+Ctrl + B = character speed? range is 0 to 22
+
+disease done via effect, with primary type of 16
+
+
+http://student.fsid.cvut.cz/zahradni/baldur/CHEATY.TXT
+http://lua-users.org/wiki/ShellAccess
+
+CLUAConsole:DisplayText(tostring(CInfGame:GetWorldTimer()));
+MyChitin:SetLimitTransparency(1);
+
+
+IWD2 slots.ids
+0 amulet
+1 armour
+2 belt
+3 boot
+4 cloak
+5 gloves
+6 helm
+7 left ring
+8 right ring
+9 unused shield???
+10 fist
+11-13 quiver
+14 - quiver?
+From the misc slots 15-42
+15-17 -> 3 quick item slots
+18-41 -> 24 inventory slots
+42 -> magic weapon slot
+43-50 8 quick weapon slots (4 left/right hand pairs)
+
+clasweap.2da desc is wrong
+
+
+
+
+SetCurrentXP
+ 009826B4     8945 FC        MOV DWORD PTR SS:[EBP-4],EAX
+
+Load file-types?
+  00436636  |> 68 2C5FB000    PUSH bgmain.00B05F2C                     ;  ASCII "CHU"
+
+Load files?
+  00618A6A  |. 68 C001B200    PUSH bgmain.00B201C0                     ;  ASCII "RModCHR"
+
+Debug dumps
+  00897F9D  |. 68 7457B500    PUSH bgmain.00B55774                     ;  ASCII "CRE Resref: %.*s"
+
+Animations?
+  00817A2A  |. 68 E0EBB400    PUSH bgmain.00B4EBE0                     ;  ASCII "MBAS"
+
+Effects?
+  004F2A66  |. 8BEC           MOV EBP,ESP
+  007B5B43  |. 6A 00          PUSH 0                                   ; /Arg3 = 00000000
+  00799C80  |. 6A 00          PUSH 0                                   ; /Arg3 = 00000000
+  0078B489  |. E8 AA7F2500    CALL bgmain.009E3438                     ; \bgmain.009E3438
+  0078493A  |. C700 1C33AB00  MOV DWORD PTR DS:[EAX],bgmain.00AB331C
+  0077B9C3  |. 6A 1B          PUSH 1B                                  ; |Arg1 = 0000001B
+
+INI Loading (ToB Nuisance dialog)
+  007982D7  |. 50             PUSH EAX                                 ; /FileName
+
+Chargen
+  0072278E  |> 68 B84CB300    PUSH bgmain.00B34CB8                     ; /Arg1 = 00B34CB8 ASCII "CHARBASE"
+
+Wish spell
+  0054955E  |. C745 E0 190000>|MOV DWORD PTR SS:[EBP-20],19
+
+Animations played upon damage (electrical, blood etc)
+  008B1D8D
+
+Death Movie
+  007E0D1D   68 1CA6B400      PUSH bgmain.00B4A61C                     ; ASCII "DEATHAND"
+
+
+
+
+http://forums.blackwyrmlair.net/index.php?showtopic=805
+
+PRO
+0x00118  1 (byte)  Light spot size (X axis) -> should be 2 (word)
+
+
+
+
+
+http://forums.spellholdstudios.net/index.php?showtopic=21221&hl=
+http://nwnbuilders.com/modules.php?op=modload&name=News&file=article&sid=51
+http://ccg.dladventures.com/index.php/Textures#PLT_Textures
+
+
+
+
+Smoketest:
+
+DLG 1.0 > Header
+It is not mentioned that, for BG2 at least, offset 0x0030 contains the pause-control bits. They are nonexistant in BG1. Though WeiDU will, without being asked, create this flag when it compiles a dialog, the state index points past it to the start of the state table (0x0034), so BG1 doesn't even know it's there. Otherwise the game would likely crash, as the first state's strref normally sits at that offset in BG1.
+
+DLG 1.0 > Transition Table > Flags 0x0000:
+  Bit 4, when set to 1, notifies the user that the journal is being updated.
+  Bit 7, when set to 1, causes the specified text to be added to the Journal section of the player journal.
+
+
+
+
+
+
+Update for Icewind Dale.
+
+Icewind Dale has the <singleclass>_ALL class masks in its CLASS.IDS file, but they don't work. Instead use the script trigger ClassEx() with a single class designation:
+
+ClassEx(Myself,FIGHTER) = all fighters
+ClassEx(Myself,CLERIC) = all clerics
+ClassEx(Myself,DRUID) = all druids
+ClassEx(Myself,THIEF) = all thieves
+ClassEx(Myself,BARD) = all bards
+ClassEx(Myself,MAGE) = all magi
+
+Some multi/dual-class characters can satisfy multiple tests (Fighter/Thief = all fighters, all thieves), so you need to use the ! (not) operator to rule out classes you don't want, if any. Icewind Dale uses ClassEx() in dialogs the same way BG2 uses Class() with class masks. Keep in mind that dual-class characters who have not grown enough in their new class to regain the abilities of their old class will only be detectable by means of their new class. IWD lacks BG2's kits and special classes so there is less to test for.
+
+This is the case regardless of whether HoW/TLM are installed; they don't add a modified CLASS.IDS into the override folder so the original (BIFed) IWD version is used.

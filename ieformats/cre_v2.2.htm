@@ -31,8 +31,7 @@ Overall Structure<br />
   <li><a href="#CREV2_2_Header">Header</a>
   <li><a href="#CREV2_2_KnownSpell">Known spells section</a>
   <li><a href="#CREV2_2_MemSpellInfo">Spell memorization info</a>
-  <li><a href="#CREV2_2_MemSpell">Memorized spells section</a>
-  <li><a href="">Effects</a>
+  <li><a href="eff_v2.htm">Effects</a>
   <li><a href="#CREV2_2_Item">Items section</a>
   <li><a href="#CREV2_2_ItemSlots">&quot;Item slots&quot;</a></li>
 </div>
@@ -104,7 +103,7 @@ Overall Structure<br />
     <tr>
       <td>0x0014</td>
       <td>4 (dword)</td>
-      <td>XP (gained for killing this creature)</td>
+      <td><span class="unknown">XP (gained for killing this creature)</span></td>
     </tr>
     <tr>
       <td>0x0018</td>
@@ -236,7 +235,7 @@ Overall Structure<br />
     <tr>
       <td>0x0050</td>
       <td>1 (byte)</td>
-      <td><span class="unknown">Unknown</span></td>
+      <td>Base Attack Bonus (BAB) for non party characters</td>
     </tr>
     <tr>
       <td>0x0051</td>
@@ -320,8 +319,13 @@ Overall Structure<br />
     </tr>
     <tr>
       <td>0x0061</td>
-      <td>6 (bytes)</td>
+      <td>5 (bytes)</td>
       <td><span class="unknown">Unknown. Further resistances?</span></td>
+    </tr>
+    <tr>
+      <td>0x0066</td>
+      <td>1 (byte)</td>
+      <td>Intoxication</td>
     </tr>
     <tr>
       <td>0x0067</td>
@@ -414,7 +418,12 @@ Overall Structure<br />
     </tr>
     <tr>
       <td>0x01bc</td>
-      <td>4 (dword)</td>
+      <td>1 (byte)</td>
+      <td><span class="unknown">Creature enchantment level</span></td>
+    </tr>
+    <tr>
+      <td>0x01bd</td>
+      <td>3 (bytes)</td>
       <td><span class="unknown">Unknown</span></td>
     </tr>
     <tr>
@@ -599,12 +608,12 @@ Overall Structure<br />
     </tr>
     <tr>
       <td>0x021d</td>
-      <td>1 (resref)</td>
+      <td>1 (byte)</td>
       <td>Disable Device</td>
     </tr>
     <tr>
       <td>0x021e</td>
-      <td>1 (byte1)</td>
+      <td>1 (byte)</td>
       <td>Hide</td>
     </tr>
 
@@ -655,8 +664,13 @@ Overall Structure<br />
     </tr>
     <tr>
       <td>0x0228</td>
-      <td>51 (bytes)</td>
+      <td>50 (bytes)</td>
       <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x025a</td>
+      <td>1 (byte)</td>
+      <td>XP category (values from moncrate.2da)</td>
     </tr>
     <tr>
       <td>0x025b</td>
@@ -775,7 +789,22 @@ Overall Structure<br />
     </tr>
     <tr>
       <td>0x029c</td>
-      <td>4 (byte)</td>
+      <td>1 (byte)</td>
+      <td>Visible (0 = no, 1 = yes)</td>
+    </tr>
+    <tr>
+      <td>0x029d</td>
+      <td>1 (byte)</td>
+      <td>Set &lt;scriptname&gt;_DEAD variable on death (0 = no, 1 = yes)</td>
+    </tr>
+    <tr>
+      <td>0x029e</td>
+      <td>1 (byte)</td>
+      <td>Set KILL_&lt;scriptname&gt;_CNT on death (0 = no, 1 = yes)</td>
+    </tr>
+    <tr>
+      <td>0x029f</td>
+      <td>1 (byte)</td>
       <td><span class="unknown">Unknown</span></td>
     </tr>
     <tr>
@@ -797,12 +826,14 @@ Overall Structure<br />
     <tr>
       <td>0x02aa</td>
       <td>32 (byte)</td>
-      <td><span class="unknown">Unknown</span></td>
+      <td>Secondary death variable</td>
     </tr>
     <tr>
       <td>0x02ca</td>
       <td>32 (char array)</td>
-      <td>2nd Script Name</td>
+      <td>Tertiary death variable<br />
+         Note: Two death variables can be stored here, if they are separate by a colon, e.g. FOO:BAR would set both FOO_DEAD and BAR_DEAD.
+      </td>
     </tr>
     <tr>
       <td>0x02ea</td>
@@ -858,7 +889,7 @@ Overall Structure<br />
     <tr>
       <td>0x0389</td>
       <td>1 (byte)</td>
-      <td>Gender (GENDER.IDS)</td>
+      <td>Sex (GENDER.IDS)</td>
     </tr>
     <tr>
       <td>0x038a</td>
@@ -1643,7 +1674,7 @@ Overall Structure<br />
     <tr>
       <td>0x0612</td>
       <td>4 (dword)</td>
-      <td>Item Slots Offset</td>
+      <td><a href="#CREV2_2_ItemSlots">Item slots</a> Offset</td>
     </tr>
     <tr>
       <td>0x0616</td>
@@ -1774,7 +1805,7 @@ of entries formatted as follows:<br />
     <tr>
       <td>0x0000</td>
       <td>8 (resref)</td>
-      <td>Resource name of the <a href="ITMformat.htm">ITM file</a> holding the particular item</td>
+      <td>Resource name of the <a href="ITM_V1.htm">ITM file</a> holding the particular item</td>
     </tr>
     <tr>
       <td>0x0008</td>

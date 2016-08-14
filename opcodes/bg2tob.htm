@@ -54,7 +54,10 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 1&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;'Key&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
 2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;(Key&nbsp;*&nbsp;'Key&nbsp;Modifier'&nbsp;value)<br>&nbsp&nbsp&nbsp
 /&nbsp;100<br>&nbsp&nbsp&nbsp
-3&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Same&nbsp;as&nbsp;0<br>
+3&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Same&nbsp;as&nbsp;0<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Note:&nbsp;When&nbsp;this&nbsp;opcode&nbsp;is&nbsp;stacked,&nbsp;the&nbsp;values&nbsp;of&nbsp;the&nbsp;Key<br>&nbsp&nbsp&nbsp
+Modifier&nbsp;are&nbsp;stacked,&nbsp;not&nbsp;the&nbsp;number&nbsp;of&nbsp;attacks.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -398,7 +401,9 @@ The&nbsp;Dice&nbsp;values&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;inflict&nbsp;v
 -&nbsp;e.g.&nbsp;2d6&nbsp;would&nbsp;do&nbsp;2-12&nbsp;damage&nbsp;(Damage&nbsp;type&nbsp;is&nbsp;still&nbsp;specified<br>&nbsp&nbsp&nbsp
 by&nbsp;the&nbsp;'Type'&nbsp;value).<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
-NB.&nbsp;'Stunning'&nbsp;damage&nbsp;does&nbsp;not&nbsp;stun&nbsp;the&nbsp;target.<br>&nbsp&nbsp&nbsp
+NB.&nbsp;'Stunning'&nbsp;damage&nbsp;does&nbsp;not&nbsp;stun&nbsp;the&nbsp;target.&nbsp;Stunning<br>&nbsp&nbsp&nbsp
+damage&nbsp;cannot&nbsp;kill&nbsp;a&nbsp;creature,&nbsp;creatures&nbsp;are&nbsp;reduced&nbsp;to<br>&nbsp&nbsp&nbsp
+1&nbsp;HP&nbsp;and&nbsp;are&nbsp;knocked&nbsp;unconscious.<br>&nbsp&nbsp&nbsp
 NB.&nbsp;Using&nbsp;'Magic&nbsp;Fire'&nbsp;or&nbsp;'Magic&nbsp;Cold'&nbsp;as&nbsp;a&nbsp;damage&nbsp;type<br>&nbsp&nbsp&nbsp
 will&nbsp;result&nbsp;the&nbsp;game&nbsp;to&nbsp;crash&nbsp;if&nbsp;the&nbsp;damage&nbsp;kills&nbsp;the&nbsp;target.<br>&nbsp&nbsp&nbsp
 NB.&nbsp;If&nbsp;'Damage&nbsp;Amount'&nbsp;and&nbsp;the&nbsp;Dice&nbsp;values&nbsp;are&nbsp;both&nbsp;non-zero,<br>&nbsp&nbsp&nbsp
@@ -1104,7 +1109,8 @@ This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Removes&nbsp;the&nbsp;silence&nbsp;effect&nbsp;from&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+Removes&nbsp;the&nbsp;silence&nbsp;effect&nbsp;and&nbsp;the&nbsp;silenced&nbsp;state&nbsp;from&nbsp;the<br>&nbsp&nbsp&nbsp
+targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
 This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
@@ -1373,7 +1379,8 @@ a&nbsp;1%&nbsp;chance&nbsp;of&nbsp;success&nbsp;or&nbsp;failure.<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Applies&nbsp;the&nbsp;modifier&nbsp;value&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Statistic&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-field&nbsp;in&nbsp;the&nbsp;style&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Type'&nbsp;field.<br>&nbsp&nbsp&nbsp
+field&nbsp;in&nbsp;the&nbsp;style&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Type'&nbsp;field,&nbsp;altering<br>&nbsp&nbsp&nbsp
+a&nbsp;the&nbsp;Move&nbsp;Silently&nbsp;skill.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
 Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 0&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Stealth&nbsp;=&nbsp;Stealth&nbsp;+&nbsp;'Statistic<br>&nbsp&nbsp&nbsp
@@ -1563,18 +1570,14 @@ This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Alters&nbsp;the&nbsp;gender&nbsp;of&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;to&nbsp;the&nbsp;value<br>&nbsp&nbsp&nbsp
+Alters&nbsp;the&nbsp;gender&nbsp;of&nbsp;the&nbsp;targetted&nbsp;creature(s)&nbsp;to&nbsp;the&nbsp;value<br>&nbsp&nbsp&nbsp
 specified&nbsp;by&nbsp;the&nbsp;'Gender.ids'&nbsp;field,&nbsp;in&nbsp;the&nbsp;style&nbsp;specified<br>&nbsp&nbsp&nbsp
 by&nbsp;the&nbsp;'Type'&nbsp;value.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
 Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
-0&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;'Gender&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
-1&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;Gender&nbsp;+&nbsp;'Gender&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-value<br>&nbsp&nbsp&nbsp
-2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;(Gender&nbsp;*&nbsp;'Gender&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-value)&nbsp;/&nbsp;100<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-If&nbsp;both&nbsp;parameters&nbsp;are&nbsp;left&nbsp;at&nbsp;0,&nbsp;gender&nbsp;is&nbsp;inverted.<br>
+0&nbsp;Reverse&nbsp;Gender<br>&nbsp&nbsp&nbsp
+1&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;'Statistic&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
+(values&nbsp;from&nbsp;gender.ids)<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -2093,15 +2096,14 @@ specified&nbsp;by&nbsp;the&nbsp;'opcode'&nbsp;field.<br>&nbsp&nbsp&nbsp
 
 |-----------------------------------------------------------------------|<br>
 <b>#102 (0x66) <u>Protection: from Spell Levels [102]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Spell Power<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Spell Level<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Gives&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;protection&nbsp;from&nbsp;effects&nbsp;with<br>&nbsp&nbsp&nbsp
-a&nbsp;Power&nbsp;equal&nbsp;to,&nbsp;or&nbsp;lower&nbsp;than&nbsp;the&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Spell<br>&nbsp&nbsp&nbsp
-Power'&nbsp;field.<br>&nbsp&nbsp&nbsp
+Gives&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;protection&nbsp;from&nbsp;spells&nbsp;up<br>&nbsp&nbsp&nbsp
+to&nbsp;the&nbsp;level&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Spell&nbsp;Level'&nbsp;field.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
-Known&nbsp;values&nbsp;for&nbsp;'Spell&nbsp;Power'&nbsp;are:<br>&nbsp&nbsp&nbsp
+Known&nbsp;values&nbsp;for&nbsp;'Spell&nbsp;Level'&nbsp;are:<br>&nbsp&nbsp&nbsp
 1<br>&nbsp&nbsp&nbsp
 ..<br>&nbsp&nbsp&nbsp
 9<br>
@@ -3522,13 +3524,13 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#171 (0xab) <u>Spell: Give Innate Ability [171]</u></b><br>
+<b>#171 (0xab) <u>Spell: Give Ability [171]</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Gives&nbsp;the&nbsp;innate&nbsp;ability&nbsp;specified&nbsp;by&nbsp;the&nbsp;resource&nbsp;key&nbsp;to<br>&nbsp&nbsp&nbsp
-the&nbsp;targeted&nbsp;creature(s).<br>
+Gives&nbsp;the&nbsp;spell&nbsp;specified&nbsp;by&nbsp;the&nbsp;resource&nbsp;key&nbsp;to&nbsp;the&nbsp;targeted<br>&nbsp&nbsp&nbsp
+creature(s).<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3941,7 +3943,9 @@ between&nbsp;spells.<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Alters&nbsp;the&nbsp;casting&nbsp;time&nbsp;of&nbsp;spells&nbsp;by&nbsp;the&nbsp;value&nbsp;specified<br>&nbsp&nbsp&nbsp
-by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
+by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.&nbsp;This&nbsp;effect&nbsp;is&nbsp;cummulative.<br>&nbsp&nbsp&nbsp
+Positive&nbsp;values&nbsp;decrease&nbsp;the&nbsp;casting&nbsp;time,&nbsp;negative&nbsp;values<br>&nbsp&nbsp&nbsp
+increase&nbsp;the&nbsp;casting&nbsp;time.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3952,7 +3956,7 @@ by&nbsp;the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
 Alters&nbsp;the&nbsp;weapons&nbsp;attack&nbsp;speed&nbsp;by&nbsp;the&nbsp;value&nbsp;specified&nbsp;by<br>&nbsp&nbsp&nbsp
-the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.<br>
+the&nbsp;'Speed&nbsp;Modifier'&nbsp;field.&nbsp;This&nbsp;effect&nbsp;is&nbsp;not&nbsp;cummulative.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -4958,6 +4962,8 @@ field,&nbsp;for&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
 NB:&nbsp;The&nbsp;Proficiency&nbsp;Modifier&nbsp;effect&nbsp;cannot&nbsp;increment&nbsp;proficiency<br>&nbsp&nbsp&nbsp
 points,&nbsp;it&nbsp;can&nbsp;only&nbsp;SET&nbsp;them.<br>&nbsp&nbsp&nbsp
+NB.&nbsp;The&nbsp;Proficiency&nbsp;Modifier&nbsp;cannot&nbsp;decrement&nbsp;the&nbsp;proficiency<br>&nbsp&nbsp&nbsp
+points.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
 Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 Axe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;92<br>&nbsp&nbsp&nbsp
@@ -5498,7 +5504,8 @@ Creates&nbsp;the&nbsp;item&nbsp;specified&nbsp;by&nbsp;the&nbsp;resource&nbsp;ke
 of&nbsp;items&nbsp;created&nbsp;is&nbsp;controlled&nbsp;by&nbsp;the&nbsp;'Charges'&nbsp;field.&nbsp;The<br>&nbsp&nbsp&nbsp
 number&nbsp;of&nbsp;secondary&nbsp;charge&nbsp;is&nbsp;determined&nbsp;by&nbsp;P3.&nbsp;The&nbsp;number<br>&nbsp&nbsp&nbsp
 of&nbsp;tertiary&nbsp;charges&nbsp;is&nbsp;determined&nbsp;by&nbsp;P4&nbsp;(external&nbsp;eff's).<br>&nbsp&nbsp&nbsp
-The&nbsp;item&nbsp;is&nbsp;created&nbsp;in&nbsp;the&nbsp;Inventory.<br>&nbsp&nbsp&nbsp
+The&nbsp;item&nbsp;is&nbsp;created&nbsp;in&nbsp;the&nbsp;Inventory,&nbsp;and&nbsp;has&nbsp;the&nbsp;'can&nbsp;not<br>&nbsp&nbsp&nbsp
+steal'&nbsp;bit&nbsp;set.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
 NB.&nbsp;The&nbsp;difference&nbsp;from&nbsp;opcode&nbsp;#122&nbsp;is&nbsp;that&nbsp;when&nbsp;used&nbsp;in<br>&nbsp&nbsp&nbsp
 an&nbsp;external&nbsp;.eff,&nbsp;the&nbsp;duration&nbsp;(from&nbsp;the&nbsp;calling&nbsp;file)&nbsp;is<br>&nbsp&nbsp&nbsp

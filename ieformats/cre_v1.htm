@@ -32,7 +32,7 @@ Overall Structure<br />
   <li><a href="#CREV1_0_KnownSpell">Known spells section</a>
   <li><a href="#CREV1_0_MemSpellInfo">Spell memorization info</a>
   <li><a href="#CREV1_0_MemSpell">Memorized spells section</a>
-  <li><a href="">Effects</a></li>
+  <li><a href="eff_v2.htm">Effects</a></li>
   <li><a href="#CREV1_0_Item">Items section</a>
   <li><a href="#CREV1_0_ItemSlots">&quot;Item slots&quot;</a></li>
 </div>
@@ -477,7 +477,7 @@ Overall Structure<br />
     <tr>
       <td>0x0237</td>
       <td>1 (byte)</td>
-      <td>Gender (from gender.ids) - not changed by effects</td>
+      <td>Sex (from gender.ids) - checkable via the sex stat</td>
     </tr>
     <tr>
       <td>0x0238</td>
@@ -666,7 +666,7 @@ Overall Structure<br />
     <tr>
       <td>0x0275</td>
       <td>1 (byte)</td>
-      <td>Gender (GENDER.IDS)</td>
+      <td>Gender (GENDER.IDS). Dictates the casting voice, and checked for the summoning cap.</td>
     </tr>
     <tr>
       <td>0x0276</td>
@@ -726,7 +726,7 @@ Overall Structure<br />
     <tr>
       <td>0x02b8</td>
       <td>4 (dword)</td>
-      <td>Offset to <a href="#CREV1_0_ItemSlot">Item slots</a></td>
+      <td>Offset to <a href="#CREV1_0_ItemSlots">Item slots</a></td>
     </tr>
     <tr>
       <td>0x02bc</td>
@@ -741,17 +741,17 @@ Overall Structure<br />
     <tr>
       <td>0x02c4</td>
       <td>4 (dword)</td>
-      <td>Offset to <a href="../Effects/effects.htm">effects</a></td>
+      <td>Offset to <a href="eff_v2.htm">effects</a></td>
     </tr>
     <tr>
       <td>0x02c8</td>
       <td>4 (dword)</td>
-      <td>Count of <a href="../Effects/effects.htm">effects</a>.</td>
+      <td>Count of <a href="eff_v2.htm">effects</a>.</td>
     </tr>
     <tr>
       <td>0x02cc</td>
       <td>8 (resref)</td>
-      <td><a href="DLGformat.htm">Dialog file</a>. Can be overriden by script, or area.
+      <td><a href="dlg_v1.htm">Dialog file</a>. Can be overriden by script, or area.
     </td>
     </tr>
   </tbody>
@@ -784,7 +784,7 @@ This section details which spells the creature knows, and it consists of an arra
     <tr>
       <td>0x0000</td>
       <td>8 (resref)</td>
-      <td>Resource name of the <a href="SPLformat.htm">SPL file</a> holding the particular spell</td>
+      <td>Resource name of the <a href="SPL_V1.htm">SPL file</a> holding the particular spell</td>
     </tr>
     <tr>
       <td>0x0008</td>
@@ -891,7 +891,7 @@ an array of entries formatted as follows.<br />
     <tr>
       <td>0x0000</td>
       <td>8 (resref)</td>
-      <td>Resource name of the <a href="SPLformat.htm">SPL file</a> holding the particular memorized spell</td>
+      <td>Resource name of the <a href="SPL_V1.htm">SPL file</a> holding the particular memorized spell</td>
     </tr>
     <tr>
       <td>0x0008</td>
@@ -925,12 +925,12 @@ of entries formatted as follows:<br />
     <tr>
       <td>0x0000</td>
       <td>8 (resref)</td>
-      <td>Resource name of the <a href="ITMformat.htm">ITM file</a> holding the particular item</td>
+      <td>Resource name of the <a href="ITM_V1.htm">ITM file</a> holding the particular item</td>
     </tr>
     <tr>
       <td>0x0008</td>
       <td>2 (word)</td>
-      <td><span class="unknown">Item duration (replace with drained item)</span></td>
+      <td><span class="unknown">Item expiration time (replace with drained item)</span></td>
     </tr>
     <tr>
       <td>0x000a</td>

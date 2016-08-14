@@ -54,7 +54,10 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 1&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;'Key&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
 2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Key&nbsp;=&nbsp;(Key&nbsp;*&nbsp;'Key&nbsp;Modifier'&nbsp;value)<br>&nbsp&nbsp&nbsp
 /&nbsp;100<br>&nbsp&nbsp&nbsp
-3&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Same&nbsp;as&nbsp;0<br>
+3&nbsp;&nbsp;&nbsp;Cumulative&nbsp;Modifier&nbsp;->&nbsp;Same&nbsp;as&nbsp;0<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Note:&nbsp;When&nbsp;this&nbsp;opcode&nbsp;is&nbsp;stacked,&nbsp;the&nbsp;values&nbsp;of&nbsp;the&nbsp;Key<br>&nbsp&nbsp&nbsp
+Modifier&nbsp;are&nbsp;stacked,&nbsp;not&nbsp;the&nbsp;number&nbsp;of&nbsp;attacks.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -262,7 +265,11 @@ damage&nbsp;has&nbsp;been&nbsp;rolled)<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
 Keep&nbsp;in&nbsp;mind&nbsp;that&nbsp;if&nbsp;a&nbsp;character&nbsp;makes&nbsp;a&nbsp;save&nbsp;for&nbsp;damage<br>&nbsp&nbsp&nbsp
 type&nbsp;1&nbsp;or&nbsp;2&nbsp;without&nbsp;the&nbsp;NEG&nbsp;Resource&nbsp;Key,&nbsp;the&nbsp;Fixed&nbsp;Damage<br>&nbsp&nbsp&nbsp
-will&nbsp;be&nbsp;cut&nbsp;in&nbsp;half,&nbsp;which&nbsp;will&nbsp;cause&nbsp;MORE&nbsp;Hp&nbsp;loss!<br>
+will&nbsp;be&nbsp;cut&nbsp;in&nbsp;half,&nbsp;which&nbsp;will&nbsp;cause&nbsp;MORE&nbsp;Hp&nbsp;loss!<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+NB.&nbsp;'Stunning'&nbsp;damage&nbsp;does&nbsp;not&nbsp;stun&nbsp;the&nbsp;target.&nbsp;Stunning<br>&nbsp&nbsp&nbsp
+damage&nbsp;cannot&nbsp;kill&nbsp;a&nbsp;creature,&nbsp;creatures&nbsp;are&nbsp;reduced&nbsp;to<br>&nbsp&nbsp&nbsp
+1&nbsp;HP&nbsp;and&nbsp;are&nbsp;knocked&nbsp;unconscious.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -885,7 +892,8 @@ This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Removes&nbsp;the&nbsp;silence&nbsp;effect&nbsp;from&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+Removes&nbsp;the&nbsp;silence&nbsp;effect&nbsp;and&nbsp;the&nbsp;silenced&nbsp;state&nbsp;from&nbsp;the<br>&nbsp&nbsp&nbsp
+targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
 This&nbsp;effect&nbsp;ignores&nbsp;durations&nbsp;attributed&nbsp;to&nbsp;it.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
@@ -1210,83 +1218,48 @@ Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
 Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
 1&nbsp;&nbsp;&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Stealth&nbsp;=&nbsp;'Statistic&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
 value<br>&nbsp&nbsp&nbsp
-2&nbsp;&nbsp;&nbsp;Percentage&nbsp;Modifier&nbsp;->&nbsp;Stealth&nbsp;=&nbsp;(Stealth&nbsp;*&nbsp;'Statistic<br>&nbsp&nbsp&nbsp
-Modifier'&nbsp;value)&nbsp;/&nbsp;100<br>
+60,1,<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#60 (0x3c) <u>Miscast Magic</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Statistic Modifier<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Modifier Type<br>
+<b>#0 (0x0) <u>Type</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>The targeted creature(s) will fail to cast the type of spell specified by the 'Type' field, 'Percent Chance' percent of the time.
+
+Known values for 'Type' are:
+0   Mage Spells
+1   Cleric Spells<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Crash [61]<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-The&nbsp;Modifier&nbsp;Type&nbsp;parameter&nbsp;sets&nbsp;how&nbsp;the&nbsp;Statistic&nbsp;Modifier<br>&nbsp&nbsp&nbsp
-works.&nbsp;If&nbsp;it&nbsp;it&nbsp;a&nbsp;00&nbsp;then&nbsp;it&nbsp;makes&nbsp;the&nbsp;Modifier&nbsp;a&nbsp;flat&nbsp;point<br>&nbsp&nbsp&nbsp
-modifier&nbsp;(i.e.&nbsp;statistic&nbsp;plus&nbsp;the&nbsp;modifier&nbsp;number),&nbsp;if&nbsp;it<br>&nbsp&nbsp&nbsp
-is&nbsp;01&nbsp;the&nbsp;Modifier&nbsp;is&nbsp;a&nbsp;straight&nbsp;stat&nbsp;change&nbsp;(i.e.&nbsp;the&nbsp;statistic<br>&nbsp&nbsp&nbsp
-becomes&nbsp;what&nbsp;ever&nbsp;value&nbsp;the&nbsp;Modifier&nbsp;is),&nbsp;and&nbsp;if&nbsp;it&nbsp;is&nbsp;a<br>&nbsp&nbsp&nbsp
-02&nbsp;then&nbsp;the&nbsp;Modifier&nbsp;is&nbsp;a&nbsp;percentile&nbsp;modifier&nbsp;(i.e.&nbsp;the<br>&nbsp&nbsp&nbsp
-ability&nbsp;is&nbsp;multiplied&nbsp;by&nbsp;the&nbsp;Modifier&nbsp;value&nbsp;in&nbsp;percent&nbsp;so<br>&nbsp&nbsp&nbsp
-10&nbsp;is&nbsp;10%&nbsp;making&nbsp;the&nbsp;ability&nbsp;10%&nbsp;of&nbsp;its&nbsp;value).<br>
+Undefined<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#61 (0x3d) <u>Crash [61]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Undefined<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Undefined<br>
+<b>#0 (0x0) <u>This effect crashes the game.
+This effect has previously been referenced as Alchemy.</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Spell: Priest Spell Slots Modifier [62]<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Slot Amount Modifier<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-This&nbsp;effect&nbsp;crashes&nbsp;the&nbsp;game.<br>&nbsp&nbsp&nbsp
-This&nbsp;effect&nbsp;has&nbsp;previously&nbsp;been&nbsp;referenced&nbsp;as&nbsp;Alchemy.<br>
+Spell&nbsp;Level<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#62 (0x3e) <u>Spell: Priest Spell Slots Modifier [62]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Slot Amount Modifier<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Spell Level<br>
+<b>#0 (0x0) <u>
+63,1,</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>,<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>,<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Alters&nbsp;the&nbsp;number&nbsp;of&nbsp;priest&nbsp;spell&nbsp;slots&nbsp;available&nbsp;to&nbsp;the<br>&nbsp&nbsp&nbsp
-targeted&nbsp;creature(s),&nbsp;as&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Slot&nbsp;Amount&nbsp;Modifier'<br>&nbsp&nbsp&nbsp
-field,&nbsp;at&nbsp;the&nbsp;level&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Spell&nbsp;Level'&nbsp;field.<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-Known&nbsp;values&nbsp;for&nbsp;'Spell&nbsp;Level'&nbsp;are:<br>&nbsp&nbsp&nbsp
-0&nbsp;&nbsp;&nbsp;Double&nbsp;spells<br>&nbsp&nbsp&nbsp
-1&nbsp;&nbsp;&nbsp;Level&nbsp;1<br>&nbsp&nbsp&nbsp
-..&nbsp;&nbsp;..<br>&nbsp&nbsp&nbsp
-9&nbsp;&nbsp;&nbsp;Level&nbsp;9<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-For&nbsp;a&nbsp;'Spell&nbsp;Level'&nbsp;of&nbsp;0,&nbsp;the&nbsp;amount&nbsp;if&nbsp;spell&nbsp;slots&nbsp;is&nbsp;doubled<br>&nbsp&nbsp&nbsp
-for&nbsp;the&nbsp;level&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Slot&nbsp;Amount&nbsp;Modifier'&nbsp;value,<br>&nbsp&nbsp&nbsp
-and&nbsp;all&nbsp;levels&nbsp;below:<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-1&nbsp;&nbsp;&nbsp;Level&nbsp;1<br>&nbsp&nbsp&nbsp
-2&nbsp;&nbsp;&nbsp;Level&nbsp;2<br>&nbsp&nbsp&nbsp
-4&nbsp;&nbsp;&nbsp;Level&nbsp;3<br>&nbsp&nbsp&nbsp
-8&nbsp;&nbsp;&nbsp;Level&nbsp;4<br>&nbsp&nbsp&nbsp
-16&nbsp;&nbsp;Level&nbsp;5<br>&nbsp&nbsp&nbsp
-32&nbsp;&nbsp;Level&nbsp;6<br>&nbsp&nbsp&nbsp
-64&nbsp;&nbsp;Level&nbsp;7<br>&nbsp&nbsp&nbsp
-<br>&nbsp&nbsp&nbsp
-'Statistic&nbsp;Modifier'&nbsp;can&nbsp;be&nbsp;positive&nbsp;or&nbsp;negative.<br>
+,<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#63 (0x3f) <u>State: Infravision [63]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Undefined<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Undefined<br>
-&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
-&nbsp&nbsp&nbsp
-Gives&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;infravision.<br>
-|-----------------------------------------------------------------------| <br>
-<br>
-
-|-----------------------------------------------------------------------|<br>
-<b>#64 (0x40) <u>State: Remove Infravision [64]</u></b><br>
+<b>#0 (0x0) <u>State: Remove Infravision [64]</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Undefined<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Undefined<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
@@ -1373,23 +1346,19 @@ are&nbsp;undefined&nbsp;at&nbsp;this&nbsp;time.<br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#71 (0x47) <u>Sex Modifier</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Statistic Modifier<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Modifier Type<br>
+<b>#71 (0x47) <u>IDS: Sex Change [71]</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Gender Modifier<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Type<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-This&nbsp;effect&nbsp;has&nbsp;different&nbsp;abilities:<br>&nbsp&nbsp&nbsp
-Leave&nbsp;both&nbsp;parameters&nbsp;at&nbsp;0&nbsp;for&nbsp;the&nbsp;sex&nbsp;to&nbsp;be&nbsp;swapped.&nbsp;Note<br>&nbsp&nbsp&nbsp
-that&nbsp;this&nbsp;will&nbsp;also&nbsp;alter&nbsp;the&nbsp;creature's&nbsp;animation.<br>&nbsp&nbsp&nbsp
-Setting&nbsp;the&nbsp;Modifier&nbsp;Type&nbsp;to&nbsp;1&nbsp;changes&nbsp;the&nbsp;sex&nbsp;of&nbsp;the&nbsp;creature<br>&nbsp&nbsp&nbsp
-based&nbsp;on&nbsp;the&nbsp;Statistic&nbsp;Modifier&nbsp;parameter.&nbsp;These&nbsp;values<br>&nbsp&nbsp&nbsp
-are&nbsp;valid&nbsp;for&nbsp;the&nbsp;Statistic&nbsp;Modifier&nbsp;Parameter:<br>&nbsp&nbsp&nbsp
-0&nbsp;Unknown&nbsp;(nothing&nbsp;shown)<br>&nbsp&nbsp&nbsp
-1&nbsp;Male<br>&nbsp&nbsp&nbsp
-2&nbsp;Female<br>&nbsp&nbsp&nbsp
-3&nbsp;Other<br>&nbsp&nbsp&nbsp
-4&nbsp;Neither<br>&nbsp&nbsp&nbsp
-5&nbsp;Both<br>
+Alters&nbsp;the&nbsp;gender&nbsp;of&nbsp;the&nbsp;targetted&nbsp;creature(s)&nbsp;to&nbsp;the&nbsp;value<br>&nbsp&nbsp&nbsp
+specified&nbsp;by&nbsp;the&nbsp;'Gender.ids'&nbsp;field,&nbsp;in&nbsp;the&nbsp;style&nbsp;specified<br>&nbsp&nbsp&nbsp
+by&nbsp;the&nbsp;'Type'&nbsp;value.<br>&nbsp&nbsp&nbsp
+<br>&nbsp&nbsp&nbsp
+Known&nbsp;values&nbsp;for&nbsp;'Type'&nbsp;are:<br>&nbsp&nbsp&nbsp
+0&nbsp;Reverse&nbsp;Gender<br>&nbsp&nbsp&nbsp
+1&nbsp;Flat&nbsp;Value&nbsp;Modifier&nbsp;->&nbsp;Gender&nbsp;=&nbsp;'Statistic&nbsp;Modifier'&nbsp;value<br>&nbsp&nbsp&nbsp
+(values&nbsp;from&nbsp;gender.ids)<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -1922,14 +1891,14 @@ specified&nbsp;by&nbsp;the&nbsp;'opcode'&nbsp;field.<br>&nbsp&nbsp&nbsp
 
 |-----------------------------------------------------------------------|<br>
 <b>#102 (0x66) <u>Protection: from Spell Levels [102]</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Spell Level<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Spell Power<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Gives&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;protection&nbsp;from&nbsp;spells&nbsp;up<br>&nbsp&nbsp&nbsp
-to&nbsp;the&nbsp;level&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Spell&nbsp;Level'&nbsp;field.<br>&nbsp&nbsp&nbsp
+Gives&nbsp;the&nbsp;targeted&nbsp;creature(s)&nbsp;protection&nbsp;from&nbsp;effects&nbsp;with<br>&nbsp&nbsp&nbsp
+a&nbsp;Power&nbsp;equal&nbsp;to&nbsp;that&nbsp;specified&nbsp;by&nbsp;the&nbsp;'Spell&nbsp;Power'&nbsp;field.<br>&nbsp&nbsp&nbsp
 <br>&nbsp&nbsp&nbsp
-Known&nbsp;values&nbsp;for&nbsp;'Spell&nbsp;Level'&nbsp;are:<br>&nbsp&nbsp&nbsp
+Known&nbsp;values&nbsp;for&nbsp;'Spell&nbsp;Power'&nbsp;are:<br>&nbsp&nbsp&nbsp
 1<br>&nbsp&nbsp&nbsp
 ..<br>&nbsp&nbsp&nbsp
 9<br>
@@ -2884,15 +2853,15 @@ This&nbsp;effect&nbsp;is&nbsp;unknown&nbsp;at&nbsp;this&nbsp;time.<br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#171 (0xab) <u>Add Innate Ability</u></b><br>
+<b>#171 (0xab) <u>Spell: Give Ability [171]</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Leave&nbsp;both&nbsp;parameters&nbsp;at&nbsp;all&nbsp;zeros&nbsp;for&nbsp;this&nbsp;Effect&nbsp;to&nbsp;work.<br>&nbsp&nbsp&nbsp
-The&nbsp;Resource&nbsp;Key&nbsp;must&nbsp;be&nbsp;set&nbsp;to&nbsp;the&nbsp;Innate&nbsp;Ability&nbsp;Name.<br>&nbsp&nbsp&nbsp
-Note&nbsp;that&nbsp;what&nbsp;abilities&nbsp;characters&nbsp;can&nbsp;have&nbsp;in&nbsp;PS:T&nbsp;depend<br>&nbsp&nbsp&nbsp
-on&nbsp;the&nbsp;creature's&nbsp;death&nbsp;variable.<br>
+Gives&nbsp;the&nbsp;spell&nbsp;specified&nbsp;by&nbsp;the&nbsp;resource&nbsp;key&nbsp;to&nbsp;the&nbsp;targeted<br>&nbsp&nbsp&nbsp
+creature(s).<br>&nbsp&nbsp&nbsp
+Note&nbsp;that&nbsp;the&nbsp;abilities&nbsp;characters&nbsp;can&nbsp;have&nbsp;depend&nbsp;on&nbsp;the<br>&nbsp&nbsp&nbsp
+creature&nbsp;death&nbsp;variable.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3114,154 +3083,71 @@ of&nbsp;the&nbsp;effects.<br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#187 (0xbb) <u>Play BAM File/3D Effect (Single/Dual Sequence, Transparent, Sticky)</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB Ratio<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
+<b>#187 (0xbb) <u>Play BAM File Blended and Sticky</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Method<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Set&nbsp;the&nbsp;resource&nbsp;reference&nbsp;to&nbsp;the&nbsp;BAM&nbsp;file&nbsp;you&nbsp;wish&nbsp;to&nbsp;use.<br>&nbsp&nbsp&nbsp
-The&nbsp;RGB&nbsp;ratio&nbsp;determines&nbsp;the&nbsp;colour&nbsp;alteration,&nbsp;if&nbsp;any&nbsp;is<br>&nbsp&nbsp&nbsp
-desired.<br>&nbsp&nbsp&nbsp
-The&nbsp;first&nbsp;byte&nbsp;is&nbsp;the&nbsp;amount&nbsp;of&nbsp;red&nbsp;(0-255),&nbsp;the&nbsp;second<br>&nbsp&nbsp&nbsp
-the&nbsp;amount&nbsp;of&nbsp;green&nbsp;(0-255),&nbsp;and&nbsp;the&nbsp;third&nbsp;the&nbsp;amount&nbsp;of<br>&nbsp&nbsp&nbsp
-blue&nbsp;(0-255).<br>&nbsp&nbsp&nbsp
-Leaving&nbsp;these&nbsp;values&nbsp;at&nbsp;zero&nbsp;will&nbsp;leave&nbsp;the&nbsp;BAM&nbsp;file&nbsp;the<br>&nbsp&nbsp&nbsp
-original&nbsp;colour.&nbsp;This&nbsp;effect&nbsp;is&nbsp;specifically&nbsp;designed&nbsp;for<br>&nbsp&nbsp&nbsp
-single&nbsp;and&nbsp;dual&nbsp;sequence&nbsp;animations&nbsp;(dual&nbsp;as&nbsp;in&nbsp;animations<br>&nbsp&nbsp&nbsp
-with&nbsp;two&nbsp;sides&nbsp;that&nbsp;appear&nbsp;on&nbsp;either&nbsp;side&nbsp;of&nbsp;the&nbsp;target.<br>&nbsp&nbsp&nbsp
-When&nbsp;cast,&nbsp;this&nbsp;effect&nbsp;will&nbsp;play&nbsp;the&nbsp;BAM&nbsp;sticky&nbsp;and&nbsp;transparent.<br>
+Plays&nbsp;BAM&nbsp;file&nbsp;along&nbsp;with&nbsp;other&nbsp;special&nbsp;features.&nbsp;<br>&nbsp&nbsp&nbsp
+Known&nbsp;bit&nbsp;values&nbsp;of&nbsp;Method&nbsp;are:<br>&nbsp&nbsp&nbsp
+1&nbsp;-&nbsp;Repeat&nbsp;animation,&nbsp;otherwise&nbsp;duration&nbsp;counts,&nbsp;except<br>&nbsp&nbsp&nbsp
+for&nbsp;permanent&nbsp;which&nbsp;plays&nbsp;once.<br>&nbsp&nbsp&nbsp
+2&nbsp;-&nbsp;Removes&nbsp;stickiness&nbsp;(background&nbsp;animation)<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#188 (0xbc) <u>Play BAM File/3D Effect Type 2(I)</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB Ratio<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Properties<br>
+<b>#188 (0xbc) <u>Play BAM File Not Blended</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Method<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Set&nbsp;the&nbsp;resource&nbsp;reference&nbsp;to&nbsp;the&nbsp;BAM&nbsp;file&nbsp;you&nbsp;wish&nbsp;to&nbsp;use.<br>&nbsp&nbsp&nbsp
-The&nbsp;RGB&nbsp;ratio&nbsp;determines&nbsp;the&nbsp;colour&nbsp;alteration,&nbsp;if&nbsp;any&nbsp;is<br>&nbsp&nbsp&nbsp
-desired.<br>&nbsp&nbsp&nbsp
-The&nbsp;first&nbsp;byte&nbsp;is&nbsp;the&nbsp;amount&nbsp;of&nbsp;red&nbsp;(0-255),&nbsp;the&nbsp;second<br>&nbsp&nbsp&nbsp
-the&nbsp;amount&nbsp;of&nbsp;green&nbsp;(0-255),&nbsp;and&nbsp;the&nbsp;third&nbsp;the&nbsp;amount&nbsp;of<br>&nbsp&nbsp&nbsp
-blue&nbsp;(0-255).<br>&nbsp&nbsp&nbsp
-Leaving&nbsp;these&nbsp;values&nbsp;at&nbsp;zero&nbsp;will&nbsp;leave&nbsp;the&nbsp;BAM&nbsp;file&nbsp;the<br>&nbsp&nbsp&nbsp
-original&nbsp;colour.&nbsp;The&nbsp;second&nbsp;parameter&nbsp;is&nbsp;the&nbsp;properties<br>&nbsp&nbsp&nbsp
-of&nbsp;the&nbsp;effect.<br>&nbsp&nbsp&nbsp
-A&nbsp;value&nbsp;of&nbsp;0&nbsp;will&nbsp;leave&nbsp;it&nbsp;non-sticky,&nbsp;non-3d.<br>&nbsp&nbsp&nbsp
-A&nbsp;value&nbsp;of&nbsp;'528384'&nbsp;(or&nbsp;'00&nbsp;16&nbsp;08&nbsp;00'&nbsp;when&nbsp;edited&nbsp;singly)<br>&nbsp&nbsp&nbsp
-will&nbsp;make&nbsp;the&nbsp;effect&nbsp;3D&nbsp;and&nbsp;stick&nbsp;to&nbsp;the&nbsp;target.<br>&nbsp&nbsp&nbsp
-A&nbsp;value&nbsp;of&nbsp;1&nbsp;causes&nbsp;random&nbsp;placement&nbsp;of&nbsp;the&nbsp;effect&nbsp;near<br>&nbsp&nbsp&nbsp
-the&nbsp;target,&nbsp;but&nbsp;it's&nbsp;not&nbsp;3D&nbsp;or&nbsp;sticky.<br>&nbsp&nbsp&nbsp
-A&nbsp;value&nbsp;of&nbsp;'1179648'&nbsp;(or&nbsp;'00&nbsp;00&nbsp;18&nbsp;00')&nbsp;causes&nbsp;the&nbsp;RGB&nbsp;parameter<br>&nbsp&nbsp&nbsp
-to&nbsp;become&nbsp;a&nbsp;transpaency&nbsp;parameter&nbsp;(0-255&nbsp;for&nbsp;the&nbsp;first&nbsp;byte),<br>&nbsp&nbsp&nbsp
-is&nbsp;3d&nbsp;but&nbsp;not&nbsp;sticky,&nbsp;and&nbsp;will&nbsp;fade&nbsp;itself&nbsp;away&nbsp;after&nbsp;the<br>&nbsp&nbsp&nbsp
-duration&nbsp;expires&nbsp;using&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;hit&nbsp;dice&nbsp;for&nbsp;the<br>&nbsp&nbsp&nbsp
-effect&nbsp;to&nbsp;time&nbsp;it.<br>&nbsp&nbsp&nbsp
-A&nbsp;value&nbsp;of&nbsp;'1183744'&nbsp;(or&nbsp;'00&nbsp;16&nbsp;18&nbsp;00)&nbsp;changes&nbsp;the&nbsp;colour<br>&nbsp&nbsp&nbsp
-parameter&nbsp;to&nbsp;a&nbsp;transparency&nbsp;parameter&nbsp;of&nbsp;0-255&nbsp;in&nbsp;the&nbsp;first<br>&nbsp&nbsp&nbsp
-byte,&nbsp;makes&nbsp;the&nbsp;effect&nbsp;'fade&nbsp;away'&nbsp;when&nbsp;completed,&nbsp;using<br>&nbsp&nbsp&nbsp
-the&nbsp;hit&nbsp;dice&nbsp;of&nbsp;the&nbsp;effect&nbsp;to&nbsp;time&nbsp;the&nbsp;fade,&nbsp;and&nbsp;is&nbsp;3d/Sticky.<br>&nbsp&nbsp&nbsp
-A&nbsp;value&nbsp;of&nbsp;'3280896'(or&nbsp;'00&nbsp;16&nbsp;50&nbsp;00')produces&nbsp;a&nbsp;3D&nbsp;sticky<br>&nbsp&nbsp&nbsp
-transparent&nbsp;effect&nbsp;that&nbsp;uses&nbsp;the&nbsp;RGB&nbsp;bytess&nbsp;for&nbsp;special<br>&nbsp&nbsp&nbsp
-colourization.<br>&nbsp&nbsp&nbsp
-Further&nbsp;properties&nbsp;are&nbsp;undetermined&nbsp;at&nbsp;this&nbsp;time.<br>
+Plays&nbsp;BAM&nbsp;file&nbsp;along&nbsp;with&nbsp;other&nbsp;special&nbsp;features.<br>&nbsp&nbsp&nbsp
+Known&nbsp;bit&nbsp;values&nbsp;of&nbsp;Method&nbsp;are:<br>&nbsp&nbsp&nbsp
+0x1000&nbsp;&nbsp;&nbsp;-&nbsp;Sticky&nbsp;flag&nbsp;(default&nbsp;is&nbsp;opposite&nbsp;as&nbsp;with&nbsp;#187)<br>&nbsp&nbsp&nbsp
+0x30000&nbsp;&nbsp;-&nbsp;Both&nbsp;bits&nbsp;must&nbsp;be&nbsp;set,&nbsp;this&nbsp;causes&nbsp;Repeat&nbsp;animation<br>&nbsp&nbsp&nbsp
+0x100000&nbsp;-&nbsp;RGB&nbsp;is&nbsp;used&nbsp;as&nbsp;transparency,&nbsp;fade&nbsp;totally&nbsp;at<br>&nbsp&nbsp&nbsp
+speed&nbsp;of&nbsp;DiceSize<br>&nbsp&nbsp&nbsp
+There&nbsp;are&nbsp;four&nbsp;effects&nbsp;doing&nbsp;exactly&nbsp;the&nbsp;same,&nbsp;this&nbsp;is&nbsp;probably<br>&nbsp&nbsp&nbsp
+to&nbsp;have&nbsp;resistances&nbsp;against&nbsp;opcode.<br>&nbsp&nbsp&nbsp
+#188&nbsp;used&nbsp;for&nbsp;swarm&nbsp;curse<br>&nbsp&nbsp&nbsp
+#189&nbsp;used&nbsp;mostly&nbsp;for&nbsp;Ravel's&nbsp;spells&nbsp;(black&nbsp;barbed&nbsp;curse,<br>&nbsp&nbsp&nbsp
+vampiric&nbsp;touch,&nbsp;blacksphere,&nbsp;cone&nbsp;of&nbsp;cold&nbsp;and&nbsp;stygian&nbsp;ice.)<br>&nbsp&nbsp&nbsp
+#190&nbsp;appears&nbsp;to&nbsp;be&nbsp;unused<br>&nbsp&nbsp&nbsp
+#191&nbsp;used&nbsp;for&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;spells.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#189 (0xbd) <u>Play BAM File/3D Effect Type 2(II)</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB Ratio<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Properties<br>
+<b>#189 (0xbd) <u>Play BAM File Not Blended</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Method<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Set&nbsp;the&nbsp;resource&nbsp;reference&nbsp;to&nbsp;the&nbsp;BAM&nbsp;file&nbsp;you&nbsp;wish&nbsp;to&nbsp;use.<br>&nbsp&nbsp&nbsp
-&nbsp;The&nbsp;RGB&nbsp;ratio&nbsp;determines&nbsp;the&nbsp;colour&nbsp;alteration,&nbsp;if&nbsp;any<br>&nbsp&nbsp&nbsp
-is&nbsp;desired.&nbsp;&nbsp;The&nbsp;first&nbsp;byte&nbsp;is&nbsp;the&nbsp;amount&nbsp;of&nbsp;red&nbsp;(0-255),<br>&nbsp&nbsp&nbsp
-the&nbsp;second&nbsp;the&nbsp;amount&nbsp;of&nbsp;green&nbsp;(0-255),&nbsp;and&nbsp;the&nbsp;third&nbsp;the<br>&nbsp&nbsp&nbsp
-amount&nbsp;of&nbsp;blue&nbsp;(0-255).&nbsp;&nbsp;Leaving&nbsp;these&nbsp;values&nbsp;at&nbsp;zero&nbsp;will<br>&nbsp&nbsp&nbsp
-leave&nbsp;the&nbsp;BAM&nbsp;file&nbsp;the&nbsp;original&nbsp;colour.&nbsp;The&nbsp;second&nbsp;parameter<br>&nbsp&nbsp&nbsp
-is&nbsp;the&nbsp;properties&nbsp;of&nbsp;the&nbsp;effect.&nbsp;&nbsp;A&nbsp;value&nbsp;of&nbsp;0&nbsp;will&nbsp;leave<br>&nbsp&nbsp&nbsp
-it&nbsp;non-sticky,&nbsp;non-3d.&nbsp;A&nbsp;value&nbsp;of&nbsp;'528384'&nbsp;(or&nbsp;'00&nbsp;16&nbsp;08<br>&nbsp&nbsp&nbsp
-00'&nbsp;when&nbsp;edited&nbsp;singly)&nbsp;will&nbsp;make&nbsp;the&nbsp;effect&nbsp;3D&nbsp;and&nbsp;stick<br>&nbsp&nbsp&nbsp
-to&nbsp;the&nbsp;target.&nbsp;A&nbsp;value&nbsp;of&nbsp;1&nbsp;causes&nbsp;random&nbsp;placement&nbsp;of&nbsp;the<br>&nbsp&nbsp&nbsp
-effect&nbsp;near&nbsp;the&nbsp;target,&nbsp;but&nbsp;it's&nbsp;not&nbsp;3D&nbsp;or&nbsp;sticky.&nbsp;A&nbsp;value<br>&nbsp&nbsp&nbsp
-of&nbsp;'1179648'&nbsp;(or&nbsp;'00&nbsp;00&nbsp;18&nbsp;00')&nbsp;causes&nbsp;the&nbsp;RGB&nbsp;parameter<br>&nbsp&nbsp&nbsp
-to&nbsp;become&nbsp;a&nbsp;transpaency&nbsp;parameter&nbsp;(0-255&nbsp;for&nbsp;the&nbsp;first&nbsp;byte),<br>&nbsp&nbsp&nbsp
-is&nbsp;3d&nbsp;but&nbsp;not&nbsp;sticky,&nbsp;and&nbsp;will&nbsp;fade&nbsp;itself&nbsp;away&nbsp;after&nbsp;the<br>&nbsp&nbsp&nbsp
-duration&nbsp;expires&nbsp;using&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;hit&nbsp;dice&nbsp;for&nbsp;the<br>&nbsp&nbsp&nbsp
-effect&nbsp;to&nbsp;time&nbsp;it.&nbsp;A&nbsp;value&nbsp;of&nbsp;'1183744'&nbsp;(or&nbsp;'00&nbsp;16&nbsp;18&nbsp;00)<br>&nbsp&nbsp&nbsp
-changes&nbsp;the&nbsp;colour&nbsp;parameter&nbsp;to&nbsp;a&nbsp;transparency&nbsp;parameter<br>&nbsp&nbsp&nbsp
-of&nbsp;0-255&nbsp;in&nbsp;the&nbsp;first&nbsp;byte,&nbsp;makes&nbsp;the&nbsp;effect&nbsp;'fade&nbsp;away'<br>&nbsp&nbsp&nbsp
-when&nbsp;completed,&nbsp;using&nbsp;the&nbsp;hit&nbsp;dice&nbsp;of&nbsp;the&nbsp;effect&nbsp;to&nbsp;time<br>&nbsp&nbsp&nbsp
-the&nbsp;fade,&nbsp;and&nbsp;is&nbsp;3d/Sticky.&nbsp;A&nbsp;value&nbsp;of&nbsp;'3280896'(or&nbsp;'00<br>&nbsp&nbsp&nbsp
-16&nbsp;50&nbsp;00')produces&nbsp;a&nbsp;3D&nbsp;sticky&nbsp;transparent&nbsp;effect&nbsp;that&nbsp;uses<br>&nbsp&nbsp&nbsp
-the&nbsp;RGB&nbsp;bytess&nbsp;for&nbsp;special&nbsp;colourization.&nbsp;Further&nbsp;properties<br>&nbsp&nbsp&nbsp
-are&nbsp;undetermined&nbsp;at&nbsp;this&nbsp;time.<br>
+Plays&nbsp;BAM&nbsp;file&nbsp;along&nbsp;with&nbsp;other&nbsp;special&nbsp;features.<br>&nbsp&nbsp&nbsp
+See&nbsp;use&nbsp;at&nbsp;#188<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#190 (0xbe) <u>Play BAM File/3D Effect Type 2(III)</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB Ratio<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Properties<br>
+<b>#190 (0xbe) <u>Play BAM File Not Blended</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Method<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Set&nbsp;the&nbsp;resource&nbsp;reference&nbsp;to&nbsp;the&nbsp;BAM&nbsp;file&nbsp;you&nbsp;wish&nbsp;to&nbsp;use.<br>&nbsp&nbsp&nbsp
-&nbsp;The&nbsp;RGB&nbsp;ratio&nbsp;determines&nbsp;the&nbsp;colour&nbsp;alteration,&nbsp;if&nbsp;any<br>&nbsp&nbsp&nbsp
-is&nbsp;desired.&nbsp;&nbsp;The&nbsp;first&nbsp;byte&nbsp;is&nbsp;the&nbsp;amount&nbsp;of&nbsp;red&nbsp;(0-255),<br>&nbsp&nbsp&nbsp
-the&nbsp;second&nbsp;the&nbsp;amount&nbsp;of&nbsp;green&nbsp;(0-255),&nbsp;and&nbsp;the&nbsp;third&nbsp;the<br>&nbsp&nbsp&nbsp
-amount&nbsp;of&nbsp;blue&nbsp;(0-255).&nbsp;&nbsp;Leaving&nbsp;these&nbsp;values&nbsp;at&nbsp;zero&nbsp;will<br>&nbsp&nbsp&nbsp
-leave&nbsp;the&nbsp;BAM&nbsp;file&nbsp;the&nbsp;original&nbsp;colour.&nbsp;The&nbsp;second&nbsp;parameter<br>&nbsp&nbsp&nbsp
-is&nbsp;the&nbsp;properties&nbsp;of&nbsp;the&nbsp;effect.&nbsp;&nbsp;A&nbsp;value&nbsp;of&nbsp;0&nbsp;will&nbsp;leave<br>&nbsp&nbsp&nbsp
-it&nbsp;non-sticky,&nbsp;non-3d.&nbsp;A&nbsp;value&nbsp;of&nbsp;'528384'&nbsp;(or&nbsp;'00&nbsp;16&nbsp;08<br>&nbsp&nbsp&nbsp
-00'&nbsp;when&nbsp;edited&nbsp;singly)&nbsp;will&nbsp;make&nbsp;the&nbsp;effect&nbsp;3D&nbsp;and&nbsp;stick<br>&nbsp&nbsp&nbsp
-to&nbsp;the&nbsp;target.&nbsp;A&nbsp;value&nbsp;of&nbsp;1&nbsp;causes&nbsp;random&nbsp;placement&nbsp;of&nbsp;the<br>&nbsp&nbsp&nbsp
-effect&nbsp;near&nbsp;the&nbsp;target,&nbsp;but&nbsp;it's&nbsp;not&nbsp;3D&nbsp;or&nbsp;sticky.&nbsp;A&nbsp;value<br>&nbsp&nbsp&nbsp
-of&nbsp;'1179648'&nbsp;(or&nbsp;'00&nbsp;00&nbsp;18&nbsp;00')&nbsp;causes&nbsp;the&nbsp;RGB&nbsp;parameter<br>&nbsp&nbsp&nbsp
-to&nbsp;become&nbsp;a&nbsp;transpaency&nbsp;parameter&nbsp;(0-255&nbsp;for&nbsp;the&nbsp;first&nbsp;byte),<br>&nbsp&nbsp&nbsp
-is&nbsp;3d&nbsp;but&nbsp;not&nbsp;sticky,&nbsp;and&nbsp;will&nbsp;fade&nbsp;itself&nbsp;away&nbsp;after&nbsp;the<br>&nbsp&nbsp&nbsp
-duration&nbsp;expires&nbsp;using&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;hit&nbsp;dice&nbsp;for&nbsp;the<br>&nbsp&nbsp&nbsp
-effect&nbsp;to&nbsp;time&nbsp;it.&nbsp;A&nbsp;value&nbsp;of&nbsp;'1183744'&nbsp;(or&nbsp;'00&nbsp;16&nbsp;18&nbsp;00)<br>&nbsp&nbsp&nbsp
-changes&nbsp;the&nbsp;colour&nbsp;parameter&nbsp;to&nbsp;a&nbsp;transparency&nbsp;parameter<br>&nbsp&nbsp&nbsp
-of&nbsp;0-255&nbsp;in&nbsp;the&nbsp;first&nbsp;byte,&nbsp;makes&nbsp;the&nbsp;effect&nbsp;'fade&nbsp;away'<br>&nbsp&nbsp&nbsp
-when&nbsp;completed,&nbsp;using&nbsp;the&nbsp;hit&nbsp;dice&nbsp;of&nbsp;the&nbsp;effect&nbsp;to&nbsp;time<br>&nbsp&nbsp&nbsp
-the&nbsp;fade,&nbsp;and&nbsp;is&nbsp;3d/Sticky.&nbsp;A&nbsp;value&nbsp;of&nbsp;'3280896'(or&nbsp;'00<br>&nbsp&nbsp&nbsp
-16&nbsp;50&nbsp;00')produces&nbsp;a&nbsp;3D&nbsp;sticky&nbsp;transparent&nbsp;effect&nbsp;that&nbsp;uses<br>&nbsp&nbsp&nbsp
-the&nbsp;RGB&nbsp;bytess&nbsp;for&nbsp;special&nbsp;colourization.&nbsp;Further&nbsp;properties<br>&nbsp&nbsp&nbsp
-are&nbsp;undetermined&nbsp;at&nbsp;this&nbsp;time.<br>
+Plays&nbsp;BAM&nbsp;file&nbsp;along&nbsp;with&nbsp;other&nbsp;special&nbsp;features.<br>&nbsp&nbsp&nbsp
+See&nbsp;use&nbsp;at&nbsp;#188<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
 |-----------------------------------------------------------------------|<br>
-<b>#191 (0xbf) <u>Play BAM File/3D Effect Type 2(IV)</u></b><br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB Ratio<br>
-&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Properties<br>
+<b>#191 (0xbf) <u>Play BAM File Not Blended</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>RGB<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Method<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Set&nbsp;the&nbsp;resource&nbsp;reference&nbsp;to&nbsp;the&nbsp;BAM&nbsp;file&nbsp;you&nbsp;wish&nbsp;to&nbsp;use.<br>&nbsp&nbsp&nbsp
-&nbsp;The&nbsp;RGB&nbsp;ratio&nbsp;determines&nbsp;the&nbsp;colour&nbsp;alteration,&nbsp;if&nbsp;any<br>&nbsp&nbsp&nbsp
-is&nbsp;desired.&nbsp;&nbsp;The&nbsp;first&nbsp;byte&nbsp;is&nbsp;the&nbsp;amount&nbsp;of&nbsp;red&nbsp;(0-255),<br>&nbsp&nbsp&nbsp
-the&nbsp;second&nbsp;the&nbsp;amount&nbsp;of&nbsp;green&nbsp;(0-255),&nbsp;and&nbsp;the&nbsp;third&nbsp;the<br>&nbsp&nbsp&nbsp
-amount&nbsp;of&nbsp;blue&nbsp;(0-255).&nbsp;&nbsp;Leaving&nbsp;these&nbsp;values&nbsp;at&nbsp;zero&nbsp;will<br>&nbsp&nbsp&nbsp
-leave&nbsp;the&nbsp;BAM&nbsp;file&nbsp;the&nbsp;original&nbsp;colour.&nbsp;The&nbsp;second&nbsp;parameter<br>&nbsp&nbsp&nbsp
-is&nbsp;the&nbsp;properties&nbsp;of&nbsp;the&nbsp;effect.&nbsp;&nbsp;A&nbsp;value&nbsp;of&nbsp;0&nbsp;will&nbsp;leave<br>&nbsp&nbsp&nbsp
-it&nbsp;non-sticky,&nbsp;non-3d.&nbsp;A&nbsp;value&nbsp;of&nbsp;'528384'&nbsp;(or&nbsp;'00&nbsp;16&nbsp;08<br>&nbsp&nbsp&nbsp
-00'&nbsp;when&nbsp;edited&nbsp;singly)&nbsp;will&nbsp;make&nbsp;the&nbsp;effect&nbsp;3D&nbsp;and&nbsp;stick<br>&nbsp&nbsp&nbsp
-to&nbsp;the&nbsp;target.&nbsp;A&nbsp;value&nbsp;of&nbsp;1&nbsp;causes&nbsp;random&nbsp;placement&nbsp;of&nbsp;the<br>&nbsp&nbsp&nbsp
-effect&nbsp;near&nbsp;the&nbsp;target,&nbsp;but&nbsp;it's&nbsp;not&nbsp;3D&nbsp;or&nbsp;sticky.&nbsp;A&nbsp;value<br>&nbsp&nbsp&nbsp
-of&nbsp;'1179648'&nbsp;(or&nbsp;'00&nbsp;00&nbsp;18&nbsp;00')&nbsp;causes&nbsp;the&nbsp;RGB&nbsp;parameter<br>&nbsp&nbsp&nbsp
-to&nbsp;become&nbsp;a&nbsp;transpaency&nbsp;parameter&nbsp;(0-255&nbsp;for&nbsp;the&nbsp;first&nbsp;byte),<br>&nbsp&nbsp&nbsp
-is&nbsp;3d&nbsp;but&nbsp;not&nbsp;sticky,&nbsp;and&nbsp;will&nbsp;fade&nbsp;itself&nbsp;away&nbsp;after&nbsp;the<br>&nbsp&nbsp&nbsp
-duration&nbsp;expires&nbsp;using&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;hit&nbsp;dice&nbsp;for&nbsp;the<br>&nbsp&nbsp&nbsp
-effect&nbsp;to&nbsp;time&nbsp;it.&nbsp;A&nbsp;value&nbsp;of&nbsp;'1183744'&nbsp;(or&nbsp;'00&nbsp;16&nbsp;18&nbsp;00)<br>&nbsp&nbsp&nbsp
-changes&nbsp;the&nbsp;colour&nbsp;parameter&nbsp;to&nbsp;a&nbsp;transparency&nbsp;parameter<br>&nbsp&nbsp&nbsp
-of&nbsp;0-255&nbsp;in&nbsp;the&nbsp;first&nbsp;byte,&nbsp;makes&nbsp;the&nbsp;effect&nbsp;'fade&nbsp;away'<br>&nbsp&nbsp&nbsp
-when&nbsp;completed,&nbsp;using&nbsp;the&nbsp;hit&nbsp;dice&nbsp;of&nbsp;the&nbsp;effect&nbsp;to&nbsp;time<br>&nbsp&nbsp&nbsp
-the&nbsp;fade,&nbsp;and&nbsp;is&nbsp;3d/Sticky.&nbsp;A&nbsp;value&nbsp;of&nbsp;'3280896'(or&nbsp;'00<br>&nbsp&nbsp&nbsp
-16&nbsp;50&nbsp;00')produces&nbsp;a&nbsp;3D&nbsp;sticky&nbsp;transparent&nbsp;effect&nbsp;that&nbsp;uses<br>&nbsp&nbsp&nbsp
-the&nbsp;RGB&nbsp;bytess&nbsp;for&nbsp;special&nbsp;colourization.&nbsp;Further&nbsp;properties<br>&nbsp&nbsp&nbsp
-are&nbsp;undetermined&nbsp;at&nbsp;this&nbsp;time.<br>
+Plays&nbsp;BAM&nbsp;file&nbsp;along&nbsp;with&nbsp;other&nbsp;special&nbsp;features.<br>&nbsp&nbsp&nbsp
+See&nbsp;use&nbsp;at&nbsp;#188<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3374,6 +3260,46 @@ Known&nbsp;values&nbsp;for&nbsp;'Effect'&nbsp;are:<br>&nbsp&nbsp&nbsp
 <br>
 
 |-----------------------------------------------------------------------|<br>
+<b>#197 (0xc5) <u>None</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
+&nbsp&nbsp&nbsp
+This&nbsp;opcode&nbsp;has&nbsp;no&nbsp;effect.<br>
+|-----------------------------------------------------------------------| <br>
+<br>
+
+|-----------------------------------------------------------------------|<br>
+<b>#198 (0xc6) <u>None</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
+&nbsp&nbsp&nbsp
+This&nbsp;opcode&nbsp;has&nbsp;no&nbsp;effect.<br>
+|-----------------------------------------------------------------------| <br>
+<br>
+
+|-----------------------------------------------------------------------|<br>
+<b>#199 (0xc7) <u>None</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
+&nbsp&nbsp&nbsp
+This&nbsp;opcode&nbsp;has&nbsp;no&nbsp;effect.<br>
+|-----------------------------------------------------------------------| <br>
+<br>
+
+|-----------------------------------------------------------------------|<br>
+<b>#200 (0xc8) <u>None</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
+&nbsp&nbsp&nbsp
+This&nbsp;opcode&nbsp;has&nbsp;no&nbsp;effect.<br>
+|-----------------------------------------------------------------------| <br>
+<br>
+
+|-----------------------------------------------------------------------|<br>
 <b>#201 (0xc9) <u>Special FX</u></b><br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Effect<br>
@@ -3396,6 +3322,16 @@ creature:<br>&nbsp&nbsp&nbsp
 14&nbsp;is&nbsp;Infernal&nbsp;Shield<br>&nbsp&nbsp&nbsp
 15&nbsp;is&nbsp;Submerge&nbsp;the&nbsp;Will<br>&nbsp&nbsp&nbsp
 16&nbsp;is&nbsp;Balance&nbsp;in&nbsp;All&nbsp;Things<br>
+|-----------------------------------------------------------------------| <br>
+<br>
+
+|-----------------------------------------------------------------------|<br>
+<b>#202 (0xca) <u>None</u></b><br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #1: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
+&nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
+&nbsp&nbsp&nbsp
+This&nbsp;opcode&nbsp;has&nbsp;no&nbsp;effect.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 
@@ -3483,7 +3419,9 @@ NB.&nbsp;Scripts&nbsp;and&nbsp;animations&nbsp;continue&nbsp;to&nbsp;run<br>
 &nbsp&nbsp&nbsp&nbsp<i>Parameter #2: </i>Irrelevant<br>
 &nbsp&nbsp&nbsp&nbsp<i>Description: </i><br>
 &nbsp&nbsp&nbsp
-Applies&nbsp;the&nbsp;Fist&nbsp;Of&nbsp;Iron&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>
+Applies&nbsp;the&nbsp;Fist&nbsp;of&nbsp;Iron&nbsp;effect&nbsp;to&nbsp;the&nbsp;targeted&nbsp;creature(s).<br>&nbsp&nbsp&nbsp
+This&nbsp;results&nbsp;in&nbsp;the&nbsp;targetted&nbsp;creature(s)&nbsp;gaining&nbsp;+3&nbsp;Fist<br>&nbsp&nbsp&nbsp
+THAC0&nbsp;and&nbsp;+6&nbsp;Fist&nbsp;damage.<br>
 |-----------------------------------------------------------------------| <br>
 <br>
 

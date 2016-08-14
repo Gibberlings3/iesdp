@@ -40,13 +40,13 @@
     Note that the LastAttacker object is only set for physical attacks (i.e. spell and script damage does not set LastAttacker).<br />
     <br />
     <strong>0x0003 Help(O:Object*)</strong><br />
-    Returns true if the specified object shouted for help (using the Help() action?) in the last script round.<br />
+    Returns true if the specified object shouted for Help() in the two script rounds. Help() has a range of approximately 40.<br />
     <br />
     <strong>0x0004 Joins(O:Object*)</strong><br />
-    NT<br />
+    Returns true if the specified object has joined the party in the last script round. This trigger is only sent to player characters.<br />
     <br />
     <strong>0x0005 Leaves(O:Object*)</strong><br />
-    NT<br />
+    Returns true if the specified object has left the party in the last script round. This trigger is only sent to player characters.<br />
     <br />
     <strong>0x0006 ReceivedOrder(O:Object*,I:Order ID*)</strong><br />
     NT<br />
@@ -103,7 +103,7 @@
     Returns true only if the Race of the specified object is the same as that specified by the 2nd parameter.<br />
     <br />
     <strong>0x4018 Range(O:Object*,I:Range*)</strong><br />
-    Returns true only if the specified object is within distance given (in feet) of the active CRE. Range seems limited to the default visual range (30), and does not bypass objects.<br />
+    Returns true only if the specified object is within distance given (in feet) of the active CRE. Range seems limited to the default visual range (30), and does not bypass objects. Range is affected by foot circle size (e.g. the minimum range for a huge foot circle creature (Dragon) is 8). Melee range is 4.<br />
     <br />
     <strong>0x4019 Reputation(O:Object*,I:Reputation*)</strong><br />
     Returns true only if the reputation of the specified object is equal to the second parameter.<br />
@@ -305,7 +305,7 @@
     Appears to be broken.<br />
     <br />
     <strong>0x4058 OutOfAmmo()</strong><br />
-    NT Returns true only if the active CRE has no ammunition for the current ranged weapon.<br />
+    Seems to be broken. Returns true only if the active CRE has no ammunition for the current ranged weapon.<br />
     <br />
     <strong>0x4059 NumTimesInteracted(I:NPC*NPC,I:Num*)</strong><br />
     NT Returns true only if the specified NPC has interacted with the party a number of times equal to the 2nd parameter.<br />
@@ -425,7 +425,7 @@
     Returns true only if the active CRE is in the area specified.<br />
     <br />
     <strong>0x407F HasItemEquiped(S:ResRef*,O:Object*)</strong><br />
-    Returns true if the specified object has the specified item in one of its quicklots if it is a weapon, or has it equipped if it is a piece of armour of an amulet etc.<br />
+    Returns true if the specified object has the specified item in one of its quicklots if it is a weapon, or has it equipped if it is a piece of armour of an amulet etc. This trigger does not work for Melf's Minute Meteors.<br />
     <br />
     <strong>0x4080 NumCreatureVsParty(O:Object*,I:Number*)</strong><br />
     Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is equal to the 2nd parameter.<br />
@@ -460,7 +460,7 @@
     Returns true if any of the next 'OrCount' triggers returns true.<br />
     <br />
     <strong>0x4090 InPartySlot(O:Object*,I:Slot*)</strong><br />
-    Returns true only if the specified object is in the party and in the slot specified (slots are 0-5).<br />
+    Returns true only if the specified object is in the party and in the slot specified (slots are 0-5). Party slots are based on join order; Player1 is in slot 0, Player2 in slot 1 etc.<br />
     <br />
     <strong>0x0091 SpellCast(O:Object*,I:Spell*Spell)</strong><br />
     Returns true only if the specified object cast the spell in the 2nd paramater in the last script round.<br />
@@ -573,7 +573,7 @@
 </ul>
     <br />
     <strong>0x40B2 HasItemSlot(O:Object*,I:Slot*SLOTS)</strong><br />
-    NT Returns true only if the specified object has an item in the specified slot.<br />
+    NT Returns true only if the specified object has an item in the specified slot. This trigger does not work for Melf's Minute Meteors.<br />
     <br />
     <strong>0x40B3 PersonalSpaceDistance(O:Object*,I:Range*)</strong><br />
     NT Returns true if the specified object exactly as far away from the active CRE as the 2nd parameter specifies.<br />
@@ -623,7 +623,7 @@
     Returns true only if the specified object can carry no more items.<br />
     <br />
     <strong>0x40C2 HasItemEquipedReal(S:ResRef*,O:Object*)</strong><br />
-    Returns true only if the specified object has the specified item equipped and it is in use.<br />
+    Returns true only if the specified object has the specified item equipped and it is in use. This trigger does not work for Melf's Minute Meteors.<br />
     <br />
     <strong>0x40C3 XP(O:Object*,I:XP)</strong><br />
     Returns true if the specified object has experience points equal to the number specified.<br />

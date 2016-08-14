@@ -36,7 +36,7 @@
     
     <div class="fileHeader">General Description</div>
     <div class="indent1">
-      This file format describes an effect (opcode) and its parameters. The format is an extended version of that found embedded in creatures, items and spells, and is a replacement for the version 1 embedded effects used in BG1.<br />
+      This file format describes an effect (opcode) and its parameters. The format is an extended version of that found embedded in creatures, items and spells, and is a replacement for the version 1 embedded effects used in BG1. The engine appears to roll a probability for each valid target type, rather than one probability per attack.<br />
     </div>
     <br />
     
@@ -191,7 +191,12 @@
         <tr>
           <td>0x002e</td>
           <td>2 (word)</td>
-          <td>Probability 2</td>
+            <td>Probability 2<br />
+              <br />
+              Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.<br />
+              Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.<br />
+              Probability range is 0-99<br />
+            </td>
         </tr>
         <tr>
           <td>0x0030</td>

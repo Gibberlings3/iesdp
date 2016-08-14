@@ -386,7 +386,17 @@
         </tr>
         <tr>
           <td>0x00d4</td>
-          <td>88 (bytes)</td>
+          <td>4 (dword)</td>
+          <td>Automap note offset</td>
+        </tr>
+        <tr>
+          <td>0x00d8</td>
+          <td>4 (dword)</td>
+          <td>Automap note count</td>
+        </tr>
+        <tr>
+          <td>0x00dc</td>
+          <td>80 (bytes)</td>
           <td><span class="unknown">Unknown</span></td>
         </tr>
       </tbody>
@@ -463,7 +473,13 @@
           <tr>
             <td>0x002f</td>
             <td>1 (byte)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td><span class="unknown">Difficulty check (spawn of difficulty match)
+              <ul>
+                <li>bit 0: Area difficulty 1</li>
+                <li>bit 1: Area difficulty 2</li>
+                <li>bit 2: Area difficulty 3</li>
+              </ul>
+            </span></td>
           </tr>
           <tr>
             <td>0x002f</td>
@@ -557,27 +573,27 @@
           <tr>
             <td>0x0058</td>
             <td>8 (resref)</td>
-            <td>Script (General)</td>
+            <td>Script (Special 3)</td>
           </tr>
           <tr>
             <td>0x0060</td>
             <td>8 (resref)</td>
-            <td>Script (Class)</td>
+            <td>Script (Special 2)</td>
           </tr>
           <tr>
             <td>0x0068</td>
             <td>8 (resref)</td>
-            <td>Script (Race)</td>
+            <td>Script (Combat)</td>
           </tr>
           <tr>
             <td>0x0070</td>
             <td>8 (resref)</td>
-            <td>Script (Default)</td>
+            <td>Script (Movement)</td>
           </tr>
           <tr>
             <td>0x0078</td>
             <td>8 (resref)</td>
-            <td>Script (Specific)</td>
+            <td>Script (Team)</td>
           </tr>
           <tr>
             <td>0x0080</td>
@@ -596,7 +612,12 @@
           </tr>
           <tr>
             <td>0x0090</td>
-            <td>128 (bytes)</td>
+            <td>8 (resref)</td>
+            <td>Script (Special 1)</td>
+          </tr>
+          <tr>
+            <td>0x0098</td>
+            <td>120 (bytes)</td>
             <td><span class="unknown">Unknown</span></td>
           </tr>
         </tbody>
@@ -608,7 +629,7 @@
     <div class="indent1">
       <br />
       Regions have previously been known as &quot;Info points&quot;, this is the name the Bioware editors assigned to these structure types by default.<br />
-      This section is 0xB8h bytes in length.<br />
+      This section is 0xC4h bytes in length.<br />
       <br />
       <table border="1" width="98%">
         <colgroup>
@@ -685,12 +706,12 @@
                 <li>bit 2: Party Required flag (for travel triggers)</li>
                 <li>bit 3: Detectable</li>
                 <li><span class="unknown">bit 4: Unknown </span></li>
-                <li><span class="unknown">bit 5: Unknown </span></li>
+                <li><span class="unknown">bit 5: Active in tutorial area only</span></li>
                 <li>bit 6: NPC can trigger</li>
                 <li><span class="unknown">bit 7: Unknown </span></li>
                 <li>bit 8: Deactivated (for proximity triggers)</li>
-                <li>bit 9: NPC can't pass (for travel triggers)</li>
-                <li><span class="unknown">bit 10: Alternative Point</span></li>
+                <li><span class="unknown">bit 09: Alternative Point</span></li>
+                <li><span class="unknown">bit 10: Unknown </span></li>
                 <li><span class="unknown">bit 11: Used by door? </span></li>
                 <li><span class="unknown">bit 12: Unknown </span></li>
                 <li><span class="unknown">bit 13: Unknown </span></li>

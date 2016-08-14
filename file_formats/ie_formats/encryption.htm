@@ -33,7 +33,7 @@
     <br />
     <div class="fileHeader">Text resource encryption</div>
     <div class="indent1">
-      Several text files (mainly IDS files) are encrypted, to prevent casual tampering. The encryption is achieved by a simple 512bit XOR scheme. Each byte of the plaintext is XOR'd with a byte of the key. The key is rotated cyclically. The IE key is 64 bytes, so bytes 0-63 of the plaintext are XOR'd with bytes 0-63 of key, bytes 64-127 are XOR'd with bytes 0-63 of key, etc.<br />
+      Several text files (mainly IDS files) are encrypted, to prevent casual tampering. The encryption is achieved by a simple 512bit XOR scheme. Each byte of the plaintext is XOR'd with a byte of the key. The key is rotated cyclically. The IE key is 64 bytes, so bytes 0-63 of the plaintext are XOR'd with bytes 0-63 of key, bytes 64-127 are XOR'd with bytes 0-63 of key, etc. Encrypted files have a 'header' of 0xFF 0xFF are the first two bytes.<br />
       <br />
       The encryption key is:<br />
       <pre>
@@ -56,6 +56,8 @@
       <pre>
         char = (char &gt;&gt; 1) - 8
       </pre>
+      <br />
+      Strings within the IWD2 executable are encrypted with the algorithm: y=x*2+8.
     </div>
   </div>
 </div>

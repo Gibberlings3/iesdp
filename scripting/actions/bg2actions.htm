@@ -51,17 +51,6 @@
   END
   </pre>
   <br />
-  This command also sets a creatures ModalState to 0, and so can be used to stop other modal actions (e.g. Bard Song).<br />
-  <br />
-  <pre class="code">
-  IF
-    ModalState(BATTLESONG)
-  THEN
-    RESPONSE #100
-      NoAction()
-  END
-  </pre>
-  <br />
   NoAction() is also commonly used as a hanging action in targeting blocks. This is a matter of good practice rather than necessary. The NoAction() action will never be rum since the block always returns false, but the having an action in the scripting block allows scripting programs to accurately check for errors.<br />
   <br />
   <pre class="code">
@@ -319,7 +308,7 @@
   
   <div class="actionHeader"><a name="15">15 GiveItem(S:Object*,O:Target*)</a></div>
   <div class="indent1">
-This action instructs the active creature to give the specified item (parameter 1) to the specified target (parameter 2). The active creature must possess the item to pass it. The sample script makes uses of modified IDS files (action, instant, trigger and svtiobj) though such modification are not necessary to use the GiveItem action itself.<br />
+This action instructs the active creature to give the specified item (parameter 1) to the specified target (parameter 2). The active creature must possess the item to pass it (holding it within a container within the inventory is fine). The sample script makes uses of modified IDS files (action, instant, trigger and svtiobj) though such modification are not necessary to use the GiveItem action itself.<br />
   <br />
   <pre class="code">
   IF
@@ -660,7 +649,7 @@ This action instructs the active creature to attempt to Hide in Shadows. This ac
   <div class="actionHeader">34 UseItemSlotAbility(O:Target*, I:Slot*, I:Ability*)</a></div><br />
   <div class="actionHeader">34 UseItemSlot(O:Target*, I:Slot*)</div>
   <div class="indent1">
-  This action instructs the active creature to use the specified item (object) on the specified target (target). The ability number (i.e. extended header index) to use may be specified. This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (though it need not be equipped).<br />
+  This action instructs the active creature to use the specified item (object) on the specified target (target). The ability number (i.e. extended header index) to use may be specified. This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (not in a container within the inventory) - though it need not be equipped.<br />
   <br />
   <pre class="code">
   IF
@@ -678,7 +667,7 @@ This action instructs the active creature to attempt to Hide in Shadows. This ac
   
   <div class="actionHeader"><a name="36">36 Continue()</a></div>
   <div class="indent1">
-This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly.<br />
+This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly. Use of continue in a script block will cause the parser to treater subsequent empty response blocks as though they contained a Continue() command - this parsing can be stopped by including a NoAction() in the empty response block.<br />
   <br />
   <pre class="code">
   IF
@@ -1328,7 +1317,7 @@ This action instructs the active creature to face the specified direction. Direc
   
   <div class="actionHeader"><a name="106">106 Shout(I:ID*SHOUTIDS)</a></div>
   <div class="indent1">
-  This action is used to shout the specified number. The action is used in conjunction with the Heard trigger. A silenced creature cannot shout.<br />
+  This action is used to shout the specified number. The action is used in conjunction with the Heard trigger. A silenced creature cannot shout. Shout can be Heard() throughout the current area.<br />
   <br />
   <pre class="code">
   IF
@@ -1500,7 +1489,7 @@ This action alters the specified variable, in the specified scope, by the amount
   
   <div class="actionHeader"><a name="116">116 TakePartyItem(S:Item*)</a></div>
   <div class="indent1">
-  This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). Inventory slots are checked in the following order<br />
+  This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). Characters are checked in current party order. The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). If an item is found in a container on an earlier player and in the inventory of a later player, both item instances may be removed. All slots are checked; inventory slots are checked in the following order<br />
 <br />
   <pre class="code">
   0, 2, 4, 6, 8, 10, 12, 14
@@ -1788,7 +1777,7 @@ The example is from AR0516.bcs.<br />
   
   <div class="actionHeader"><a name="133">133 ClearActions(O:Object*)</a></div>
   <div class="indent1">
-  This action clears the action list of the specified object. The example script is from ar2400.bcs.<br />
+  This action clears the action list of the specified object (including ModalActions). The example script is from ar2400.bcs.<br />
   <br />
   <pre class="code">
   IF
@@ -3166,7 +3155,7 @@ This action creates the item specified by the resref parameter on the creature s
   
   <div class="actionHeader"><a name="260">260</a> DestroyGold(I:Gold*)</div>
   <div class="indent1">
-  This action removes the specified amount of gold from the party.<br />
+  This action removes the specified amount of gold from the party. DestroyGold(0) will remove all gold from current creature. Note that this action affects the gold stat of the creature (not Party Gold or MISC07 items).<br />
   <br />
   </div>
   

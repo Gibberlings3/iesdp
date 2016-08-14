@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title> EFF File Format </title>
+<title> VEF File Format </title>
 <link rel="stylesheet" type="text/css" href="../../css/general.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
@@ -28,28 +28,83 @@
     <div id="logo">
       <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
     </div>
-    
-    <div class="title_main">EFF file format</div>
+
+    <div class="title_main">VEF file format</div>
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1">BG1: TotS, BG2, BG2: ToB, IWD, IWD:HoW, IWD:TotL, PST</div><br />
+    <div class="indent1">BG2, BG2: ToB</div>
+    <br />
     
     <div class="fileHeader">General Description</div>
     <div class="indent1">
-      This file format describes an effect (opcode) and its parameters. The format is only ever found embedded in other files. The engine appears to roll a probability for each valid target type, rather than one probability per attack.<br />
+      Visual effects allow you to group other visual effects, animations, and sounds together and specify the timing with which each component plays. This is powerful in the sense that you can create a whole visual effect display with these files. VEF files can be used with the actions CreateVisualEffect(S:Object*,P:Location*) and CreateVisualEffectObject(S:Object*,O:Target*), and in effect opcode 215 (Graphics: Play 3D Effect).<br />
+    </div>
+    <br />
+
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Overall structure<br />
+      <div class="indent1">
+        <li><a href="#vefv1_0_Header">Header</a>
+        <li><a href="#vefv1_0_VisualEffect">Visual Effect</a>
+      </div>
     </div>
     <br />
     
-    <div class="fileHeader"><a name="effv1">EFF V1.0</a></div>
+    <div class="fileHeader"><a name="vefv1_0_Header">Header</a></div>
     <div class="indent1">
-      Overall structure:<br />
-      <div class="indent1">
-        <li><a href="#effv1_Header">Header</a>
-      </div>
-      <br />
+    <br />
+    The header is fixed at 0x18 bytes.<br />
+    <br />
+    <table border="1" width="98%">
+      <colgroup>
+        <col width="5%" />
+        <col width="12%" />
+         <col width="*" />
+      </colgroup>
+      <tr>
+        <th>Offset</th>
+        <th>Size (data type)</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>0x0000</td>
+        <td>4 (char array)</td>
+        <td>Signature ('VEF ')</td>
+      </tr>
+      <tr>
+        <td>0x0004</td>
+        <td>4 (char array)</td>
+        <td>Version ('    ')</td>
+      </tr>
+      <tr>
+        <td>0x0008</td>
+        <td>4 (dword)</td>
+        <td>Offset to visual effect components 1</td>
+      </tr>
+      <tr>
+        <td>0x000c</td>
+        <td>4 (dword)</td>
+        <td>Count of visual effect components 1</td>
+      </tr>
+      <tr>
+        <td>0x0010</td>
+        <td>4 (dword)</td>
+        <td>Offset to visual effect components 1</td>
+      </tr>
+      <tr>
+        <td>0x0014</td>
+        <td>4 (dword)</td>
+        <td>Count of visual effect components 2</td>
+      </tr>
+    </table>
     </div>
-    
-    <div class="fileHeader"><a name="effv1_Header">EFF V1.0 Header</a></div>
+    <br />
+
+
+    <div class="fileHeader"><a name="vefv1_0_VisualEffect">VEF Visual Effect</a></div>
+    <br />
+      Visual components can be VEF, VVC, BAM, or WAV. Support for VEF means that you can actually nest components within each other. Each visual effect entry has a fixed size of 0xe0 bytes. It is advisable not to use looping components because this will accumulate visual effect components and cause the game to grind to a halt.<br />
     <br />
     <div class="indent1">
     <table border="1" width="98%">
@@ -68,101 +123,49 @@
       <tbody>
         <tr>
           <td>0x0000</td>
-          <td>2 (word)</td>
-          <td>Effect type</td>
-        </tr>
-        <tr>
-          <td>0x0002</td>
-          <td>1 (byte)</td>
-          <td>Target type<br />
-              <ul>
-                <li>0=None</li>
-                <li>1=Self (pre-projectile)</li>
-                <li>2=Pre-target</li>
-                <li>3=Party</li>
-                <li>4=Everyone (inc. party)</li>
-                <li>5=Everyone (excl. party)</li>
-              </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>0x0003</td>
-          <td>1 (byte)</td>
-          <td>Power</td>
+          <td>4 (dword)</td>
+          <td>Ticks until start</td>
         </tr>
         <tr>
           <td>0x0004</td>
           <td>4 (dword)</td>
-          <td>Parameter 1</td>
+          <td>Unused</td>
         </tr>
         <tr>
           <td>0x0008</td>
           <td>4 (dword)</td>
-          <td>Parameter 2</td>
+          <td>Ticks until loop</td>
         </tr>
         <tr>
           <td>0x000c</td>
-          <td>1 (byte)</td>
-          <td>Timing Mode</td>
-        </tr>
-        <tr>
-          <td>0x000d</td>
-          <td>1 (byte)</td>
-          <td>Dispel/Resistance</td>
-        </tr>
-        <tr>
-          <td>0x000e</td>
           <td>4 (dword)</td>
-          <td>Duration</td>
+          <td>Resource Type
+            <ul>
+              <li>0 WAV</li>
+              <li>1 VVC / BAM</li>
+              <li>2 VEF / VVC / BAM</li>
+            </ul>
+          </td>
         </tr>
         <tr>
-          <td>0x0012</td>
-          <td>1 (byte)</td>
-          <td>Probability 1</td>
-        </tr>
-        <tr>
-          <td>0x0013</td>
-          <td>1 (byte)</td>
-            <td>Probability 2<br />
-              <br />
-              Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.<br />
-              Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.<br />
-              Probability range is 0-99<br />
-            </td>
-        </tr>
-        <tr>
-          <td>0x0014</td>
+          <td>0x0010</td>
           <td>8 (resref)</td>
-          <td>Resref key</td>
+          <td>Resource name</td>
+        </tr>
+        <tr>
+          <td>0x0018</td>
+          <td>4 (dword)</td>
+          <td>Continuous Cycles (only for Resource Type 1)</td>
         </tr>
         <tr>
           <td>0x001c</td>
-          <td>4 (dword)</td>
-          <td>Dice count</td>
-        </tr>
-        <tr>
-          <td>0x0020</td>
-          <td>4 (dword)</td>
-          <td>Dice sides</td>
-        </tr>
-        <tr>
-          <td>0x0024</td>
-          <td>4 (dword)</td>
-          <td>Saving throw type</td>
-        </tr>
-        <tr>
-          <td>0x0028</td>
-          <td>4 (dword)</td>
-          <td>Saving throw bonus</td>
-        </tr>
-        <tr>
-          <td>0x002c</td>
-          <td>4 (dword)</td>
-          <td>Unknown</td>
+          <td>124 (bytes)</td>
+          <td>Unused</td>
         </tr>
       </tbody>
     </table>
     </div>
+    <br />
   </div>
 </div>
 
@@ -182,6 +185,6 @@
 
   <hr />
 </div>
-
+    
 </body>
 </html>

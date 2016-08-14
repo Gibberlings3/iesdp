@@ -416,7 +416,14 @@
         <tr>
           <td>0x0014</td>
           <td>2 (word)</td>
-          <td>THAC0 bonus</td>
+          <td>THAC0 bonus <br />
+            A successful hit will always occur if any of the conditions below is true<br />
+            <ul>
+              <li>This field is set to 32767</li>
+              <li>The target creature(s) is STATE_HELPLESS </li>
+              <li>The target is affected by time stop</li>
+            </ul>
+            </td>
         </tr>
         <tr>
           <td>0x0016</td>
@@ -529,7 +536,7 @@
     
     <div class="fileHeader"><a name="itmv1_Feature_Block">Feature Block</a></div><br />
     <div class="indent1">
-      Any action carried out by an item is done by feature blocks, each of which holds an effect number as well as targetting and timing information.<br />
+      Any action carried out by an item is done by feature blocks, each of which holds an effect number as well as targetting and timing information. The engine appears to roll a probability for each valid target type, rather than one probability per attack.<br />
       <br />
       <table border="1" width="98%">
         <colgroup>
@@ -636,7 +643,12 @@
           <tr>
             <td>0x0013</td>
             <td>1 (char)</td>
-            <td>Probability 2</td>
+            <td>Probability 2<br />
+              <br />
+              Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.<br />
+              Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.<br />
+              Probability range is 0-99<br />
+            </td>
           </tr>
           <tr>
             <td>0x0014</td>
@@ -722,7 +734,8 @@
         <tr>
           <td>2</td>
           <td> Movable</td>
-          <td> Unsellable (stolen) / two handed animation</td>
+          <td> Unsellable (stolen) / two handed animation <br /><br />
+               Set offhand animations for 0x5###-0x6### animId series (excluding 0x64##) when weapon placed in offhand.</td>
           <td> <span class="unknown"> Unknown </span></td>
           <td> <span class="unknown"> Unknown </span></td>
         </tr>

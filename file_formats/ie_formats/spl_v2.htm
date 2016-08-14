@@ -397,7 +397,7 @@
     
     <div class="fileHeader"><a name="splv2_Feature_Block">Feature Block</a></div><br />
     <div class="indent1">
-      Any action carried out by a spell is done by feature blocks, each of which holds an effect number as well as targetting and timing information.<br />
+      Any action carried out by a spell is done by feature blocks, each of which holds an effect number as well as targetting and timing information. The engine appears to roll a probability for each valid target type, rather than one probability per attack.<br />
       <br />
       <table border="1" width="98%">
         <colgroup>
@@ -504,7 +504,12 @@
           <tr>
             <td>0x0013</td>
             <td>1 (char)</td>
-            <td>Probability 2</td>
+            <td>Probability 2<br />
+              <br />
+              Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.<br />
+              Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.<br />
+              Probability range is 0-99<br />
+            </td>
           </tr>
           <tr>
             <td>0x0014</td>

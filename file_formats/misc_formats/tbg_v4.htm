@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> TBG File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> TBG File Format </div>
+
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div><br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+       This file format allows files to be transferred between IE installations, while keeping strrefs intact. TBG V4.0 handles most filetypes (including ITM, SPL, CRE and DLG).<br />
+    Naming conventions are as follows:
+      <div class="indent1">
+        *  *.TBG - Item TBG Files<br />
+        * *-A.TBG - Area TBG Files<br />
+        * *-B.TBG - Script TBG Files<br />
+        * *-C.TBG - Creature TBG Files<br />
+        * *-D.TBG - Dialog TBG Files<br />
+        * *-H.TBG - CHUI TBG Files<br />
+        * *-N.TBG - NPC TBG Files<br />
+        * *-P.TBG - SRC TBG Files<br />
+        * *-S.TBG - Spell TBG Files<br />
+        * *-T.TBG - Store TBG Files<br />
+        * *-E.TBG - Effect TBG Files<br />
+      </div>
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Overall Structure:<br />
+        <ul>
+          <li><a href="#formTBGV4_0_Header">Header</a></li>
+          <li><a href="#formTBGV4_0_TextHeader">Text Headers</a></li>
+          <li><a href="#formTBGV4_0_StrRefLocations">StrRef Locations</a></li>
+          <li><a href="#formTBGV4_0_ASCIILocations">ASCII Locations</a></li>
+          <li><a href="#formTBGV4_0_File">File</a></li>
+          <li><a href="#formTBGV4_0_TextEntries">Text Entries</a></li>
+        </ul>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="formTBGV4_0_Header">TBG V4.0 Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (datatype)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature (&quot;TBG4&quot;)</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>Null</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>12 (char array)</td>
+            <td>Filename</td>
+          </tr>
+          <tr>
+            <td>0x0014</td>
+            <td>4 (dword)</td>
+            <td>File offset</td>
+          </tr>
+          <tr>
+            <td>0x0018</td>
+            <td>4 (dword)</td>
+            <td>File length</td>
+          </tr>
+          <tr>
+            <td>0x001C</td>
+            <td>4 (dword)</td>
+            <td>Infinity Engine ID
+              <ul>
+                <li>value 0x01- Baldur's Gate</li>
+                <li>value 0x02- Planescape: Torment</li>
+                <li>value 0x03- Icewind Dale</li>
+                <li>value 0x04- Baldur's Gate II: Shadows of Amn</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0020</td>
+            <td>4 (dword)</td>
+            <td>Text Entries Offset</td>
+          </tr>
+          <tr>
+            <td>0x0024</td>
+            <td>4 (dword)</td>
+            <td>Count of Text Headers</td>
+          </tr>
+          <tr>
+            <td>0x0028</td>
+            <td>4 (dword)</td>
+            <td>Text Headers Offset</td>
+          </tr>
+          <tr>
+            <td>0x002C</td>
+            <td>4 (dword)</td>
+            <td>Count of strrefs</td>
+          </tr>
+          <tr>
+            <td>0x0030</td>
+            <td>4 (dword)</td>
+            <td>StrRefs Offset</td>
+          </tr>
+          <tr>
+            <td>0x0034</td>
+            <td>4 (dword)</td>
+            <td>Number of ASCII entries</td>
+          </tr>
+          <tr>
+            <td>0x0038</td>
+            <td>4 (dword)</td>
+            <td>ASCII Locations Offset</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="formTBGV4_0_TextHeader">TBG V4.0 Text Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (datatype)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Offset (from start of text entries) to text</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>Length of text</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>8 (char array)</td>
+            <td>Associated sound filename</td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>4 (dword)</td>
+            <td>Volume variance of sound file</td>
+          </tr>
+          <tr>
+            <td>0x0014</td>
+            <td>4 (dword)</td>
+            <td>Pitch variance of sound file</td>
+          </tr>
+          <tr>
+            <td>0x0018</td>
+            <td>2 (word)</td>
+            <td>Entry type into dialog.tlk file:
+              <ul>
+                <li>value 0x00- unused entry</li>
+                <li>value 0x02- unused entry</li>
+                <li>value 0x03- normal text</li>
+                <li>value 0x07- Parse special character strings in text (BG2 only all others auto-parse with a value of 0x03)</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x001A</td>
+            <td>4 (dword)</td>
+            <td>Offest in strref locations for text entry (Long) in File:
+              <ul>
+                <li>0xFFFFFFFF- No strref locations</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x001E</td>
+            <td>4 (dword)</td>
+            <td>Count of strref locations for text entry (Long) in File</td>
+          </tr>
+          <tr>
+            <td>0x0022</td>
+            <td>4 (dword)</td>
+            <td>Offest in strref locations for text entry (ASCII) in File:
+              <ul>
+                <li>0xFFFFFFFF- No StrRefs Locations</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0026</td>
+            <td>4 (dword)</td>
+            <td>Count of StrRefs Locations for text entry (ASCII) in File</td>
+          </tr>
+          <tr>
+            <td>0x002A</td>
+            <td>4 (dword)</td>
+            <td>Offest in ASCII Locations for length incrementation in File:
+              <ul>
+                <li>0xFFFFFFFF- No ASCII Locations</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x002E</td>
+            <td>4 (dword)</td>
+            <td>Count of ASCII locations for length incremenataion in File</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="formTBGV4_0_StrRefLocations">TBG V4.0 StrRef Locations</a></div>
+    <div class="indent1">
+      <br />
+      This is simply a group of dwords holding the offsets for the locations in the File to put the new strref values from the imported Text Entries.<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="formTBGV4_0_ASCIILocations">TBG V4.0 ASCII Locations</a></div>
+    <div class="indent1">
+    <br />
+      This is simply a group of dwords holding the offsets for the locations in the File to increment by the length of the new StrRef values from the imported Text Entries.<br />
+    </div>
+    <br />
+    
+    
+    <div class="fileHeader"><a name="formTBGV4_0_File">TBG V4.0 File</a></div>
+    <div class="indent1">
+      <br />
+      This is the actual file that is to be transferred.<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="formTBGV4_0_TextEntries">TBG V4.0 Text Entries</a></div>
+    <div class="indent1">
+      <br />
+      This is all the actual text that will be actually imported into the Infinity Engine game.<br />
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

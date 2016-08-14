@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> CLUA Console </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> CLUA Console</div> 
+    <br />
+    <ul>
+      <li><a href="#enable"> Enabling / Accessing the CLUA Console</a></li>
+      <li><a href="#keys"> Cheat Keys </a></li>
+      <li><a href="#commands"> Commands </a></li>
+    </ul>
+
+<div id="enable">
+  <br />
+  <strong>Activating the Console (IWD)</strong><br />
+  <div class="indent1">
+  Enable <br />
+  <div class="indent1">
+  Icewind Dale must be patched to version 1.5 or above.<br />
+  Open the Icewind.ini file (located in the IWD installaion directory). <br />
+  Find the line <span class="highlight"> [Game Options] </span> and add the text <span class="highlight"> Cheats=1 </span> underneath. <br />
+  </div>
+  Access <br />
+  <div class="indent1">
+    Create a new game / load a save game.<br />
+    Press <span class="highlight"> ctrl </span> and <span class="highlight"> tab </span> together.<br />
+    CLUA commands can be entered in the editing area that appears at the bottom of the screen.<br />
+    Commands must be prefixed with <span class="highlight"> CHEATERSDOPROSPER: </span><br />
+  </div>
+  <br />
+  </div>
+</div>
+
+<div id="enablehow">
+  <br />
+  <strong>IWD: HoW / TotL</strong><br />
+  <div class="indent1">
+  Enable <br />
+  <div class="indent1">
+  Open the Icewind.ini file (located in the IWD installaion directory). <br />
+  Find the line <span class="highlight"> [Game Options] </span> and add the text <span class="highlight"> Cheats=1 </span> underneath. <br />
+  </div>
+  Access <br />
+  <div class="indent1">
+    Create a new game / load a save game.<br />
+    Press <span class="highlight"> ctrl </span> and <span class="highlight"> tab </span> together.<br />
+    CLUA commands can be entered in the editing area that appears at the bottom of the screen.<br />
+    Commands must be prefixed with <span class="highlight"> GETYOURCHEATON: </span><br />
+  </div>
+  <br />
+  </div>
+</div>
+
+<div id="keys">
+  <br />
+  <strong> Cheat Keys</strong><br />
+  <div class="indent1">
+  After using the EnableCheatKeys() command the following cheat keys are activated.<br />
+  <div class="indent1">
+  CTRL+1 &nbsp;&nbsp; Change armor level animation<br />
+  CTRL+2 &nbsp;&nbsp; Fade screen to black<br />
+  CTRL+3 &nbsp;&nbsp; Fade screen to normal<br />
+  CTRL+4 &nbsp;&nbsp; Highlight background-interactive objects<br />
+  CTRL+5 &nbsp;&nbsp; Unknown<br />
+  CTRL+6 &nbsp;&nbsp; Change avatar animation previous<br />
+  CTRL+7 &nbsp;&nbsp; Change avatar animation next<br />
+  CTRL+8 &nbsp;&nbsp; Highlights the text boxes<br />
+  CTRL+9 &nbsp;&nbsp; Highlight the sprites<br />
+  CTRL+0 &nbsp;&nbsp; Unknown<br />
+  CTRL+A &nbsp;&nbsp; Animation avatar (see CTRL+S)<br />
+  CTRL+C &nbsp;&nbsp; jump to next chapter<br />
+  CTRL+D &nbsp;&nbsp; Display some numbers (framerate related?)<br />
+  CTRL+F &nbsp;&nbsp; Turn the character<br />
+  CTRL+H &nbsp;&nbsp; Play last FMV sequence<br />
+  CTRL+J &nbsp;&nbsp; Teleport to cursor position<br />
+  CTRL+K &nbsp;&nbsp; Creature under cursor kick out party<br />
+  CTRL+M &nbsp;&nbsp; (Followed by ENTER) Debug Dump<br />
+  CTRL+Q &nbsp;&nbsp; Creature under cursor joins party<br />
+  CTRL+R &nbsp;&nbsp; Heals character under cursor<br />
+  CTRL+S &nbsp;&nbsp; Select avatar animation<br />
+  CTRL+X &nbsp;&nbsp; Extended position information<br />
+  CTRL+Y &nbsp;&nbsp; Kills creature under cursor<br />
+  </div>
+  <br />
+  </div>
+</div>
+
+<div id="commands">
+  <br />
+  <strong> Using the Console</strong>
+  <div class="indent1">
+  Commands <br />
+  <div class="indent1">
+  AddGold(&lt;int&gt;)<br />
+  <div class="indent1">
+    Adds the gold specified by &lt;int&gt; to the party.
+  </div>
+  AddSpell("&lt;string&gt;",&lt;int&gt;)<br />
+  <div class="indent1">
+    Adds the spell specified by &lt;string&gt; to the selected character, &lt;int&gt; times. <br />
+    &lt;string&gt; also accepts value of "mage", "priest" and "all", which will add all the spells of the respective class to the selected character.
+  </div>
+  CheckVar("&lt;string&gt;","&lt;string2&gt;")<br />
+  <div class="indent1">
+    Displays the variable specified by &lt;string1&gt; (of type &lt;string2&gt;).
+  </div>
+  CreateItem("&lt;string&gt;",&lt;int&gt;,&lt;int2&gt;,&lt;int3&gt;)<br />
+  <div class="indent1">
+    Creates the item specified by &lt;string&gt;. The parameters control the amount/charges of the item.
+  </div>
+  EnableCheatKeys(&lt;int&gt;)<br />
+  <div class="indent1">
+    Enables (1) or disables (0) cheat keys, based on the value of &lt;int&gt;.
+  </div>
+  ExploreArea()<br />
+  <div class="indent1">
+    Explores the current area.
+  </div>
+  FirstAid()<br />
+  <div class="indent1">
+    Creatres 5 healing potions , 5 antidotes, and 1 Scroll Of Stone To Flesh.
+  </div>
+  Hans()<br />
+  <div class="indent1">
+    Teleports the selected characters to the mousepointer.
+  </div>
+  JeffKAttacks()<br />
+  <div class="indent1">
+    Summons a cyclops that attacks enemies.
+  </div>
+  JeffKDefends()<br />
+  <div class="indent1">
+    Summons a cyclops that defends the party.
+  </div>
+  Midas()<br />
+  <div class="indent1">
+    Adds 500 GP to party.
+  </div>
+    MoveToArea("&lt;string&gt;")<br />
+  <div class="indent1">
+    Move the selected characters to the area specified by &lt;string&gt;.
+  </div>
+  SetChapter(&lt;int&gt;)<br />
+  <div class="indent1">
+    Sets the chapter to &lt;int&gt;.
+  </div>
+  SetCurrentXP("&lt;int&gt;")<br />
+  <div class="indent1">
+    Sets the XP of the selected character to &lt;int&gt;.
+  </div>
+  SetGlobal("&lt;string1&gt;",&lt;"string2&gt;",&lt;int&gt;)<br />
+  <div class="indent1">
+    Sets the variable specified by &lt;string1&gt; (of type &lt;string2&gt;) to the value of &lt;int&gt;
+  </div>
+  </div>
+  <br />
+  <br />
+  NB. While the console is enabled, the following cheat is also enabled.<br />
+  At the stat distribution screen, pressing CTRL+8 will yield maximum stat value.<br />
+</div>
+</div>
+
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

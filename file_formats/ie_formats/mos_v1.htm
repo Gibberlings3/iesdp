@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> MOS File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+ 
+    <div class="title_main">MOS file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div>
+    <br />
+    
+    <div class="fileHeader">File versions</div>
+    <div class="indent1">
+    <a href="#mos_v1_Header">MOS</a><br />
+    <a href="#mosc_v1_Header">MOSC</a><br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      This file format describes static graphics in a tile based bitmap format. Such files are used for mini-maps and GUI backgrounds.<br />
+    <br />
+    </div>
+    
+    <div class="fileHeader"><a name="formMOSV1">MOS V1</a></div>
+    <div class="indent1">
+      Overall structure:<br />
+      <div class="indent1">
+        <li><a href="#mos_v1_Header">Header</a>
+        <li><a href="#mos_v1_Palette">Palettes</a>
+        <li><a href="#mos_v1_TileOs">Tile offsets</a>
+        <li><a href="#mos_v1_TileData">Tile data</a></li>
+      </div>
+      <br />
+    </div>
+    
+    <div class="fileHeader"><a name="mos_v1_Header">MOS V1 Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature ('MOS ')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (char array)</td>
+            <td>Version ('V1 ')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>2 (word)</td>
+            <td>Width (pixels)</td>
+          </tr>
+          <tr>
+            <td>0x000a</td>
+            <td>2 (word)</td>
+            <td>Height (pixels)</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>2 (word)</td>
+            <td>Columns (blocks)</td>
+          </tr>
+          <tr>
+            <td>0x000e</td>
+            <td>2 (word)</td>
+            <td>Rows (blocks)</td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>4 (dword)</td>
+            <td>Block size (pixels)</td>
+          </tr>
+          <tr>
+            <td>0x0014</td>
+            <td>4 (dword)</td>
+            <td>Offset (from start of file) to <a href="#mos_v1_Palette">palettes</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="mos_v1_Palette">MOS V1 Palettes</a></div>
+    <br />
+    <div class="indent1">
+      This is an array of palettes. Each palette contains 256 entires, and each entry is an RGBAQUAD. The palette blocks are found in the same order as the pixel blocks they correspond to (i.e. by increasing column number, then by increasing row number).<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="mos_v1_TileOs">MOS V1 Tile offsets</a></div>
+    <br />
+    <div class="indent1">
+    This section immediately follows the <a href="#mos_v1_Palette">palettes</a>. This is an array of <code>columns * rows</code> dwords, which are the offsets from the beginning of the pixel data to each tile's pixel data. These pointers are in the same order as the <a href="#mos_v1_Palette">palette</a> data.<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="mos_v1_TileData">MOS V1 Tile data</a></div>
+    <br />
+    <div class="indent1">
+        This section contains the tile data, ordered left-to-right, top-to-bottom order. The blocks on the right and the bottom rows are only as large as they need to be (i.e. <code>width modulo 64</code> and <code>height modulo 64</code>) based on the width in pixels and the blocksize of 64 pixels. In general, the block layout looks like:<br />
+      <br />
+      <div align="center">
+        <center>
+        <table border="1">
+          <tbody>
+            <tr height="10%">
+              <th align="middle" colSpan="6">Image</th>
+            </tr>
+            <tr height="26%">
+              <td align="middle" height="20%" width="15%">Block 0,0<br />
+                64*64 pixels</td>
+              <td align="middle" height="20%" width="15%">Block 1,0<br />
+                64*64 pixels</td>
+              <td align="middle" height="20%" width="15%">Block 2,0<br />
+                64x64 pixels</td>
+              <td align="middle" height="20%" width="15%">...</td>
+              <td align="middle" height="20%" width="15%">Block (n-1),0<br />
+                64*64 pixel</td>
+              <td align="middle" height="20%" width="10%">Block n,0<br />
+                x*64 pixels</td>
+            </tr>
+            <tr height="26%">
+              <td align="middle" height="20%" width="15%">Block 0,1<br />
+                64*64 pixels</td>
+              <td align="middle" height="20%" width="15%">Block 1,1<br />
+                64*64 pixels</td>
+              <td align="middle" height="20%" width="15%">Block 2,1<br />
+                64x64 pixels</td>
+              <td align="middle" height="20%" width="15%">...</td>
+              <td align="middle" height="20%" width="15%">Block (n-1),1<br />
+                64*64 pixel</td>
+              <td align="middle" height="20%" width="10%">Block n,1<br />
+                x*64 pixels</td>
+            </tr>
+            <tr height="26%">
+              <td align="middle" height="20%" width="15%">...</td>
+              <td align="middle" height="20%" width="15%">...</td>
+              <td align="middle" height="20%" width="15%">...</td>
+              <td align="middle" height="20%" width="15%">...</td>
+              <td align="middle" height="20%" width="15%">...</td>
+              <td align="middle" height="20%" width="10%">...</td>
+            </tr>
+            <tr height="12%">
+              <td align="middle" width="15%">Block 0,m<br />
+                64*y pixels</td>
+              <td align="middle" width="15%">Block 1,m<br />
+                64*y pixels</td>
+              <td align="middle" width="15%">Block 2,m<br />
+                64*y pixels</td>
+              <td align="middle" height="20%" width="15%">...</td>
+              <td align="middle" width="15%">Block (n-1),m<br />
+                64*y pixels</td>
+              <td align="middle" width="10%">Block n,m<br />
+                x*y pixels</td>
+            </tr>
+          </tbody>
+        </table>
+        </center>
+      </div>
+    </div>
+    <br />
+
+    <br />
+    <hr />
+    <br />
+
+
+    <div class="title_main">MOSC file format</div>
+    <br />
+
+    <div class="fileHeader"><a name="mos_v1">MOSC V1</a></div>
+    <div class="indent1">
+    Overall structure:<br />
+    <div class="indent1">
+      <li><a href="#mos_v1_Header">Header</a>
+      <li><em>zlib compressed data</em></li>
+    </div>
+    <br />
+    </div>
+
+
+    <div class="fileHeader"><a name="mosc_v1_Header">MOSC V1 Header</a></div>
+    <div class="indent1">
+    <br />
+      A MOSC file consists of a 12 byte header followed by a zlib compressed MOS file.<br />
+    <br />
+    <table border="1" width="98%">
+      <colgroup>
+        <col width="5%" />
+        <col width="12%" />
+         <col width="*" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Offset</th>
+          <th>Size (data type)</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0x0000</td>
+          <td>4 (char array)</td>
+          <td>Signature ('MOSC')</td>
+        </tr>
+        <tr>
+          <td>0x0004</td>
+          <td>4 (char array)</td>
+          <td>Version ('V1 ')</td>
+        </tr>
+        <tr>
+          <td>0x0008</td>
+          <td>4 (dword)</td>
+          <td>Uncompressed data length</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

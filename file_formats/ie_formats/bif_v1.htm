@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BIF File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+
+    <div class="title_main">BIFF file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div>
+    <br />
+    
+    <div class="fileHeader">File versions</div>
+    <div class="indent1">
+    <a href="#bif_v1">BIF</a> (BG1, IWD1, PST)<br />
+    <a href="#bifc_v1">BIFC</a> (IWD1)<br />
+    <a href="#bifc_v1.0">BIFC 1.0</a> (BG2)<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      This file format is a simple archive format, used mainly both to simplify organization of the files by grouping logically related files together (especially for areas). There is also a gain from having few large files rather than many small files, due to the wastage in the FAT and NTFS file systems. BIF files containing areas typically contain:<br />
+      <ul>
+        <li>one or more WED files, detailing tiles and wallgroups</li>
+        <li>one or more TIS files, containing the tileset itself</li>
+        <li>one or more MOS files, containing the minimap graphic</li>
+        <li>3 or 4 bitmap files which contain one pixel for each tile needed to cover the region</li>
+      </ul>
+      <br />
+      The bitmaps are named xxxxxxHT.BMP, xxxxxxLM.BMP, xxxxxxSR.BMP and optionally xxxxxxLN.BMP.
+      <ul>
+        <li>xxxxxxHT.BMP: Height map, detailing altitude of each tile cell in the associated wed file</li>
+        <li>xxxxxxLM.BMP: Light map, detailing the level and colour of illumination each tile cell on the map. Used during daytime</li>
+        <li>xxxxxxLN.BMP: Light map, detailing the level and colour of illumination each tile cell on the map. Used during night-time</li>
+        <li>xxxxxxSR.BMP: Search Map, detailing where characters cannot walk, and the footstep sounds</li>
+      </ul>
+      <br />
+    </div>
+    
+    <div class="fileHeader"><a name="bif_v1">BIFF V1</a></div>
+    <div class="indent1">
+      Overall structure:<br />
+      <div class="indent1">
+        <li><a href="#bif_v1_Header">Header</a>
+        <li><a href="#bif_v1_FileEntry">File entries</a>
+        <li><a href="#bif_v1_TilesetEntry">Tileset entries</a>
+        <li><em>Data for the contained files</em></li>
+      </div>
+      <br />
+    </div>
+    
+    <div class="fileHeader"><a name="bif_v1_Header">BIFF V1 Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature ('BIFF')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (char array)</td>
+            <td>Version ('V1 ')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Count of <a href="#BIFFV1_FileEntry">file entries</a></td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (dword)</td>
+            <td>Count of <a href="#BIFFV1_TilesetEntry">tileset entries</a></td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>4 (dword)</td>
+            <td>Offset (from start of file) to <a href="#bif_v1_FileEntry">file entries</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="bif_v1_FileEntry">BIFF V1 File Entries</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Resource locator <br />
+            NB: On disk, only bits 0-13 are matched. They are matched against the file index in the &quot;resource locator&quot; field from the KEY file resource entries which claim to exist in this BIFF.</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>Offset (from start of file) to resource data</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Size of this resource</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>2 (word)</td>
+            <td>Type of this resource</td>
+          </tr>
+          <tr>
+            <td>0x000e</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="bif_v1_TilesetEntry">BIFF V1 Tileset Entries</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Resource locator <br />
+              NB: On disk, only bits 14-19 are matched upon. They are matched against the tileset index in the &quot;resource locator&quot; field from the KEY file resource entries which claim to exist in this BIFF.</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>Offset (from start of file) to resource data</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Count of tiles in this resource</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (dword)</td>
+            <td>Size of each tile in this resource</td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>2 (word)</td>
+            <td>Type of this resource (always 0x3eb - TIS)</td>
+          </tr>
+          <tr>
+            <td>0x0012</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <br />
+    <hr />
+    <br />
+
+    <div class="title_main">BIFC V1 file format</div>
+    
+    <div class="fileHeader"><a name="bifc_v1">BIFC V1</a></div>
+    <div class="indent1">
+      Overall structure:<br />
+      <div class="indent1">
+        <li><a href="#bifc_v1_Header">Header</a>
+        <li><em>Compressed file data</em></li>
+      </div>
+      This format is identical to the SAV file format, except for the signature and version fields. The data, once uncompressed, is formatted as a normal BIF file, as seen above. Note that the SAV files can hold more than one compressed file. It is unknown whether this occurs also in CBF files.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="bifc_v1_Header">Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature ('BIF ')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (char array)</td>
+            <td>Version ('V1.0')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Length of filename</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>(ASCIIZ char array)</td>
+            <td>Filename (length specified by previous field)</td>
+          </tr>
+          <tr>
+            <td>sizeof(filename)+0x0010</td>
+            <td>4 (dword)</td>
+            <td>Uncompressed data length</td>
+          </tr>
+          <tr>
+            <td>sizeof(filename)+0x0014</td>
+            <td>4 (dword)</td>
+            <td>Compressed data length</td>
+          </tr>
+          <tr>
+            <td>sizeof(filename)+0x0018</td>
+            <td>Variable (raw data)</td>
+            <td>Compressed data</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <br />
+    <hr />
+    <br />
+
+    <div class="title_main">BIFC V1.0 file format</div>
+    
+    <div class="fileHeader"><a name="bifc_v1.0">BIFC V1.0 (compressed)</a></div>
+    <div class="indent1">
+      Overall structure:<br />
+      <div class="indent1">
+        <li><a href="#bifc_v1.0_Header">Header</a>
+        <li><a href="#bifc_v1.0_Blocks">zlib-compressed blocks</a></li>
+      </div>
+      The file is broken up into blocks (usually 8192 bytes each), which are compressed separately. Each block consists of an uncompressed size and a compressed size, and then the zlib compressed data.<br />
+      </div>
+    <br />
+
+    <div class="fileHeader"><a name="bifc_v1.0_Header">Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature ('BIFC')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (char array)</td>
+            <td>Version ('V1.0')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Uncompressed BIF size</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="bifc_v1.0_Blocks">Compressed Blocks</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Decompressed size</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>Compressed size</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>varies (bytes)</td>
+            <td>Compressed data</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

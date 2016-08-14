@@ -1,83 +1,125 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title> BG: TotS Trap Scripts </title>
-<link rel="stylesheet" type="text/css" href="general.css" />
+<title> BG1: TotS Trap Scripts </title>
+<link rel="stylesheet" type="text/css" href="../css/general.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
 
 <body>
-<div class="title_main">Trap scripts in BG:TotS.</div>
-<div class="indent1">
-  <br />
-  <br />
-  Container traps - CT (they have Opened() as a trigger and are used mostly on chests and doors.):<br />
-  CTAR - TRAP_ARROW<br />
-  CTAR2 - TRAP_ARROW x10 each delayed by 1s<br />
-  CTAR3 - TRAP_ARROW_SLAYING<br />
-  CTAR4 - TRAP_ARROW_ACID<br />
-  CTAR5 - TRAP_ARROW_BITING<br />
-  CTAR6 - TRAP_ARROW_DETONATION<br />
-  CTAR7 - TRAP_ARROW_DISPELLING<br />
-  CTAR8 - TRAP_ARROW_FIRE<br />
-  CTAR9 - TRAP_ARROW_ICE<br />
-  CTAR10 - TRAP_ARROW_PIERCING<br />
-  CTAS - WIZARD_AGANNAZAR_SCORCHER<br />
-  CTCK - WIZARD_CLOUDKILL<br />
-  CTCL - TRAP_CALL_LIGHTNING<br />
-  CTCON - TRAP_CONFUSION<br />
-  CTCORB - TRAP_CHROMATIC_ORB<br />
-  CTDC - TRAP_DIRE_CHARM<br />
-  CTFB - TRAP_FIREBALL<br />
-  CTFB2 - TRAP_FIREBALL x5 each delayed by 2s<br />
-  CTFS - TRAP_FLAMESTRIKE<br />
-  CTHP - TRAP_HOLD_PERSON<br />
-  CTLB - TRAP_LIGHTNING_BOLT<br />
-  CTLB2 - TRAP_LIGHTNING_BOLT x2 delayed by 1s<br />
-  CTMM - TRAP_MAGIC_MISSILE<br />
-  CTSC - TRAP_STINKING_CLOUD<br />
-  CTSI - TRAP_SILENCE<br />
-  <br />
-  Ground Traps - GT (they have Entered() as a trigger):<br />
-  GTAR - TRAP_ARROW<br />
-  GTAR2 - TRAP_ARROW x10 each delayed by 1s<br />
-  GTAR3 - TRAP_ARROW_SLAYING<br />
-  GTAR4 - TRAP_ARROW_ACID<br />
-  GTAR5 - TRAP_ARROW_BITING<br />
-  GTAR6 - TRAP_ARROW_DETONATION<br />
-  GTAR7 - TRAP_ARROW_DISPELLING<br />
-  GTAR8 - TRAP_ARROW_FIRE<br />
-  GTAR9 - TRAP_ARROW_ICE<br />
-  GTAR10 - TRAP_ARROW_PIERCING<br />
-  GTAS - WIZARD_AGANNAZAR_SCORCHER<br />
-  GTCK - WIZARD_CLOUDKILL<br />
-  GTCL - TRAP_CALL_LIGHTNING<br />
-  GTCON - TRAP_CONFUSION<br />
-  GTCORB - TRAP_CHROMATIC_ORB<br />
-  GTDC - TRAP_DIRE_CHARM<br />
-  GTFB - TRAP_FIREBALL<br />
-  GTFB2 - TRAP_FIREBALL x5 each delayed by 2s<br />
-  GTFS - TRAP_FLAMESTRIKE<br />
-  GTGW - CLERIC_GLYPH_OF_WARDING<br />
-  GTHP - TRAP_HOLD_PERSON<br />
-  GTLB - TRAP_LIGHTNING_BOLT<br />
-  GTMM - TRAP_MAGIC_MISSILE<br />
-  GTSC - TRAP_STINKING_CLOUD<br />
-  GTSI - TRAP_SILENCE<br />
-  GTST - WIZARD_SKULL_TRAP<br />
-  GTWEB - WIZARD_WEB<br />
-  GTWEREWO - summons werewolfs at [-1.-1] if global "Infected" =1<br />
-  <br />
-  Others (they are not displaying 'Trap activated' message):<br />
-  CRUSHTRP - CRUSHING_TRAP and closes doors<br />
-  CRUSHTR2 - CRUSHING_TRAP and closes doors<br />
-  CRUSHTR3 - CRUSHING_TRAP and closes doors<br />
-  FIREDAM - FIREDRAKE_DAMAGE<br />
-  SAREVARO - TRAP_ARROW<br />
-  SAREVFIR - TRAP_FIREBALL<br />
-  SAREVSTI - TRAP_STINKING_CLOUD<br />
-  SAREVWEB - WIZARD_WEB<br />
-  TRPSKEL - TRAP_STINKING_CLOUD and it summons three skeletons<br />
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> BG1: TotS Trap Scripts</div>
+    <div class="indent1">
+      <br />
+      <br />
+      Container traps - CT (they have Opened() as a trigger and are used mostly on chests and doors.):<br />
+      CTAR - TRAP_ARROW<br />
+      CTAR2 - TRAP_ARROW x10 each delayed by 1s<br />
+      CTAR3 - TRAP_ARROW_SLAYING<br />
+      CTAR4 - TRAP_ARROW_ACID<br />
+      CTAR5 - TRAP_ARROW_BITING<br />
+      CTAR6 - TRAP_ARROW_DETONATION<br />
+      CTAR7 - TRAP_ARROW_DISPELLING<br />
+      CTAR8 - TRAP_ARROW_FIRE<br />
+      CTAR9 - TRAP_ARROW_ICE<br />
+      CTAR10 - TRAP_ARROW_PIERCING<br />
+      CTAS - WIZARD_AGANNAZAR_SCORCHER<br />
+      CTCK - WIZARD_CLOUDKILL<br />
+      CTCL - TRAP_CALL_LIGHTNING<br />
+      CTCON - TRAP_CONFUSION<br />
+      CTCORB - TRAP_CHROMATIC_ORB<br />
+      CTDC - TRAP_DIRE_CHARM<br />
+      CTFB - TRAP_FIREBALL<br />
+      CTFB2 - TRAP_FIREBALL x5 each delayed by 2s<br />
+      CTFS - TRAP_FLAMESTRIKE<br />
+      CTHP - TRAP_HOLD_PERSON<br />
+      CTLB - TRAP_LIGHTNING_BOLT<br />
+      CTLB2 - TRAP_LIGHTNING_BOLT x2 delayed by 1s<br />
+      CTMM - TRAP_MAGIC_MISSILE<br />
+      CTSC - TRAP_STINKING_CLOUD<br />
+      CTSI - TRAP_SILENCE<br />
+      <br />
+      Ground Traps - GT (they have Entered() as a trigger):<br />
+      GTAR - TRAP_ARROW<br />
+      GTAR2 - TRAP_ARROW x10 each delayed by 1s<br />
+      GTAR3 - TRAP_ARROW_SLAYING<br />
+      GTAR4 - TRAP_ARROW_ACID<br />
+      GTAR5 - TRAP_ARROW_BITING<br />
+      GTAR6 - TRAP_ARROW_DETONATION<br />
+      GTAR7 - TRAP_ARROW_DISPELLING<br />
+      GTAR8 - TRAP_ARROW_FIRE<br />
+      GTAR9 - TRAP_ARROW_ICE<br />
+      GTAR10 - TRAP_ARROW_PIERCING<br />
+      GTAS - WIZARD_AGANNAZAR_SCORCHER<br />
+      GTCK - WIZARD_CLOUDKILL<br />
+      GTCL - TRAP_CALL_LIGHTNING<br />
+      GTCON - TRAP_CONFUSION<br />
+      GTCORB - TRAP_CHROMATIC_ORB<br />
+      GTDC - TRAP_DIRE_CHARM<br />
+      GTFB - TRAP_FIREBALL<br />
+      GTFB2 - TRAP_FIREBALL x5 each delayed by 2s<br />
+      GTFS - TRAP_FLAMESTRIKE<br />
+      GTGW - CLERIC_GLYPH_OF_WARDING<br />
+      GTHP - TRAP_HOLD_PERSON<br />
+      GTLB - TRAP_LIGHTNING_BOLT<br />
+      GTMM - TRAP_MAGIC_MISSILE<br />
+      GTSC - TRAP_STINKING_CLOUD<br />
+      GTSI - TRAP_SILENCE<br />
+      GTST - WIZARD_SKULL_TRAP<br />
+      GTWEB - WIZARD_WEB<br />
+      GTWEREWO - summons werewolfs at [-1.-1] if global "Infected" =1<br />
+      <br />
+      Others (they are not displaying 'Trap activated' message):<br />
+      CRUSHTRP - CRUSHING_TRAP and closes doors<br />
+      CRUSHTR2 - CRUSHING_TRAP and closes doors<br />
+      CRUSHTR3 - CRUSHING_TRAP and closes doors<br />
+      FIREDAM - FIREDRAKE_DAMAGE<br />
+      SAREVARO - TRAP_ARROW<br />
+      SAREVFIR - TRAP_FIREBALL<br />
+      SAREVSTI - TRAP_STINKING_CLOUD<br />
+      SAREVWEB - WIZARD_WEB<br />
+      TRPSKEL - TRAP_STINKING_CLOUD and it summons three skeletons<br />
+    </div>
+  </div>
 </div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
 </body>
 </html>

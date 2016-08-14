@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BMP File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+
+    <div class="title_main">BMP file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div>
+    <br />
+    
+    <div class="fileHeader">General Description</div>
+    <a href="http://www.daubnet.com/formats/BMP.html" class="offsite">http://www.daubnet.com/formats/BMP.html</a><br />
+    <br />
+    Table of Contents<br />
+    
+    <ul>
+      <li><a href="#BasicDescription">Basic Description</a></li>
+      <li><a href="#BasicFileFormat">Basic File Format</a></li>
+      <li><a href="#RasterData">Raster Data Encoding</a></li>
+      <li><a href="#Portability">Portability</a></li>
+      <li><a href="#Trademarks">Trademarks, Patents and Royalties</a></li>
+      <li><a href="#CrossChecking">Cross Checking Software</a></li>
+      <li>Resources
+        <ul>
+          <li><a href="#OnlineResources">Online</a></li>
+          <li><a href="#PaperResources">Paper</a></li>
+        </ul>
+      </li>
+    </ul>
+    Last updated: Jan 14. 1998<br />
+    <br />
+    <hr />
+    <br />
+    <a name="BasicDescription"> Basic Description</a><br />
+    This file format is the MS-Windows standard format. It holds black&amp;white-,
+    16-color, 256-color and Truecolor images. The palletized 16-color and 256-color
+    images may be compressed via run length encoding. Notice there is also a OS/2-BMP format.<br />
+    <br />
+    <hr />
+    <br />
+    <a name="BasicFileFormat">Basic File Format</a><br />
+    <br />
+            <table border="1" width="98%">
+              <tbody>
+                <tr>
+                  <th colspan="3">Name</th>
+                  <th>Size</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td colspan="3">Header</td>
+                  <td>14 bytes</td>
+                  <td>Windows Structure:
+                    BITMAPFILEHEADER</td>
+                </tr>
+                <tr>
+                  <td>0x00</td>
+                  <td colspan="2">Signature</td>
+                  <td>2 bytes</td>
+                  <td>'BM'</td>
+                </tr>
+                <tr>
+                  <td>0x02</td>
+                  <td colspan="2">FileSize</td>
+                  <td>4 bytes</td>
+                  <td>File size in bytes</td>
+                </tr>
+                <tr>
+                  <td>0x06</td>
+                  <td colspan="2">Reserved</td>
+                  <td>4 bytes</td>
+                  <td>unused (=0)</td>
+                </tr>
+                <tr>
+                  <td>0x0a</td>
+                  <td colspan="2">DataOffset</td>
+                  <td>4 bytes</td>
+                  <td>File offset to Raster Data</td>
+                </tr>
+                <tr>
+                  <td colspan="3">InfoHeader</td>
+                  <td>40 bytes</td>
+                  <td>Windows Structure:
+                    BITMAPINFOHEADER</td>
+                </tr>
+                <tr>
+                  <td>0x0e</td>
+                  <td colspan="2">Size</td>
+                  <td>4 bytes</td>
+                  <td>Size of InfoHeader =40&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>0x12</td>
+                  <td colspan="2">Width</td>
+                  <td>4 bytes</td>
+                  <td>Bitmap Width</td>
+                </tr>
+                <tr>
+                  <td>0x16</td>
+                  <td colspan="2">Height</td>
+                  <td>4 bytes</td>
+                  <td>Bitmap Height</td>
+                </tr>
+                <tr>
+                  <td>0x1a</td>
+                  <td colspan="2">Planes</td>
+                  <td>2 bytes</td>
+                  <td>Number of Planes (=1)</td>
+                </tr>
+                <tr>
+                  <td>0x1c</td>
+                  <td colspan="2">BitCount</td>
+                  <td>2 bytes</td>
+                  <td>Bits per Pixel&nbsp;&nbsp;<br />
+                    1 = monochrome palette. NumColors =
+                    1&nbsp;&nbsp;<br />
+                    4 = 4bit palletized. NumColors = 16&nbsp;&nbsp;<br />
+                    8 = 8bit palletized. NumColors =
+                    256&nbsp;<br />
+                    16 = 16bit RGB. NumColors = 65536
+                    (?)&nbsp;<br />
+                    24 = 24bit RGB. NumColors = 16M</td>
+                </tr>
+                <tr>
+                  <td>0x1e</td>
+                  <td colspan="2">Compression</td>
+                  <td>4 bytes</td>
+                  <td>Type of Compression&nbsp;&nbsp;<br />
+                    0 = BI_RGB&nbsp;&nbsp; <a href="#RasterData">no
+                    compression</a>&nbsp;&nbsp;<br />
+                    1 = BI_RLE8 <a href="#Raster8RLE">8bit
+                    RLE encoding</a>&nbsp;&nbsp;<br />
+                    2 = BI_RLE4 <a href="#Raster4RLE">4bit
+                    RLE encoding</a></td>
+                </tr>
+                <tr>
+                  <td>0x22</td>
+                  <td colspan="2">ImageSize</td>
+                  <td>4 bytes</td>
+                  <td>(compressed) Size of Image&nbsp;<br />
+                    It is valid to set this =0 if
+                    Compression = 0</td>
+                </tr>
+                <tr>
+                  <td>0x26</td>
+                  <td colspan="2">XpixelsPerM</td>
+                  <td>4 bytes</td>
+                  <td>horizontal resolution:
+                    Pixels/meter</td>
+                </tr>
+                <tr>
+                  <td>0x2a</td>
+                  <td colspan="2">YpixelsPerM</td>
+                  <td>4 bytes</td>
+                  <td>vertical resolution: Pixels/meter</td>
+                </tr>
+                <tr>
+                  <td>0x2e</td>
+                  <td colspan="2">ColorsUsed</td>
+                  <td>4 bytes</td>
+                  <td>Number of actually used colors</td>
+                </tr>
+                <tr>
+                  <td>0x32</td>
+                  <td colspan="2">ColorsImportant</td>
+                  <td>4 bytes</td>
+                  <td>Number of important colors&nbsp;<br />
+                    0 = all</td>
+                </tr>
+                <tr>
+                  <td>0x36</td>
+                  <td colspan="3">ColorTable</td>
+                  <td>4 * NumColors bytes</td>
+                  <td>present only if Info.BitsPerPixel
+                    &lt;= 8&nbsp;&nbsp;<br />
+                    colors should be ordered by
+                    importance</td>
+                </tr>
+                <tr>
+                  <td rowspan="5">&nbsp;</td>
+                  <td rowspan="4">&nbsp;</td>
+                  <td>Red</td>
+                  <td>1 byte</td>
+                  <td>Red intensity</td>
+                </tr>
+                <tr>
+                  <td>Green</td>
+                  <td>1 byte</td>
+                  <td>Green intensity</td>
+                </tr>
+                <tr>
+                  <td>Blue</td>
+                  <td>1 byte</td>
+                  <td>Blue intensity</td>
+                </tr>
+                <tr>
+                  <td>reserved</td>
+                  <td>1 byte</td>
+                  <td>unused (=0)</td>
+                </tr>
+                <tr>
+                  <td colspan="4">repeated NumColors
+                    times</td>
+                </tr>
+                <tr>
+                  <td colspan="3">Raster Data</td>
+                  <td>Info.ImageSize bytes</td>
+                  <td>The pixel data</td>
+                </tr>
+              </tbody>
+            </table>
+    
+    <hr />
+    <table width="90%">
+      <tbody>
+        <tr>
+          <td>
+            <h2><a name="RasterData"></a>Raster Data encoding</h2>
+            Depending on the image's BitCount and on
+            the Compression flag there are 6 different encoding schemes. All of them
+            share the following:&nbsp;
+            <p>Pixels are stored bottom-up,
+            left-to-right. Pixel lines are padded with zeros to end on a 32bit
+            (4byte) boundary. For uncompressed formats every line will have the same
+            number of bytes. Color indices are zero based, meaning a pixel color of
+            0 represents the first color table entry, a pixel color of 255 (if there
+            are that many) represents the 256th entry. For images with more than 256
+            colors there is <strong>no</strong> color table.&nbsp;</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    &nbsp;
+    <table width="90%">
+      <tbody>
+        <tr>
+          <td>
+            <h3><a name="Raster1"></a>Raster Data encoding for 1bit / black &amp; white images</h3>
+            BitCount = 1 Compression = 0&nbsp;<br />
+            Every byte holds 8 pixels, its highest
+            order bit representing the leftmost pixel of those. There are 2 color
+            table entries. Some readers will ignore them though, and assume that 0
+            is black and 1 is white. If you are storing black and white pictures you
+            should stick to this, with any other 2 colors this is not an issue.
+            Remember padding with zeros up to a 32bit boundary (This can be up to 31
+            zeros/pixels!)&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    &nbsp;
+    <table width="90%">
+      <tbody>
+        <tr>
+          <td>
+            <h3><a name="Raster4"></a>Raster Data encoding for 4bit / 16 color images</h3>
+            BitCount = 4 Compression = 0&nbsp;<br />
+            Every byte holds 2 pixels, its high order 4
+            bits representing the left of those. There are 16 color table entries.
+            These colors do not have to be the 16 MS-Windows standard colors.
+            Padding each line with zeros up to a 32bit boundary will result in up to
+            28 zeros = 7 'wasted pixels'.</td>
+        </tr>
+      </tbody>
+    </table>
+    &nbsp;
+    <table width="90%">
+      <tbody>
+        <tr>
+          <td>
+            <h3><a name="Raster8"></a>Raster Data encoding for 8bit / 256 color images</h3>
+            BitCount = 8 Compression = 0&nbsp;<br />
+            Every byte holds 1 pixel. There are 256
+            color table entries. Padding each line with zeros up to a 32bit boundary
+            will result in up to 3 bytes of zeros = 3 'wasted pixels'.</td>
+        </tr>
+      </tbody>
+    </table>
+    &nbsp;
+    <table width="90%">
+      <tbody>
+        <tr>
+          <td>
+            <h3><a name="Raster24"></a>Raster Data encoding for 16bit / hicolor images</h3>
+            BitCount = 16 Compression = 0&nbsp;<br />
+            Every 2bytes / 16bit holds 1 pixel.&nbsp;&nbsp;<br />
+            &lt;<i>information missing</i>: the 16 bit
+            was introduced together with Video For Windows? Is it a
+            memory-only-format?&gt;&nbsp;<br />
+            The pixels are no color table pointers.
+            There are no color table entries. Padding each line with zeros up to a
+            16bit boundary will result in up to 2 zero bytes.</td>
+        </tr>
+      </tbody>
+    </table>
+    &nbsp;
+    <table width="90%">
+      <tbody>
+        <tr>
+          <td>
+            <h3><a name="Raster24"></a>Raster Data encoding for 24bit / truecolor images</h3>
+            BitCount = 24 Compression = 0&nbsp;<br />
+            Every 4bytes / 32bit holds 1 pixel. The
+            first holds its red, the second its green, and the third its blue
+            intensity. The fourth byte is reserved and should be zero. There are no
+            color table entries. The pixels are no color table pointers. No zero
+            padding necessary.</td>
+        </tr>
+      </tbody>
+    </table>
+    &nbsp;
+    <table width="90%">
+      <tbody>
+        <tr>
+          <td>
+            <h3><a name="Raster4RLE"></a>Raster Data compression for 4bit / 16 color images</h3>
+            BitCount = 4 Compression = 2&nbsp;<br />
+            The pixel data is stored in 2bytes / 16bit
+            chunks.&nbsp; The first of these specifies the number of consecutive
+            pixels with the same pair of color. The second byte defines two color
+            indices. The resulting pixel pattern will be interleaved high-order
+            4bits and low order 4 bits (ABABA...). If the first byte is zero, the
+            second defines an escape code. The End-of-Bitmap is zero padded to end
+            on a 32bit boundary. Due to the 16bit-ness of this structure this will
+            always be either two zero bytes or none.&nbsp;&nbsp;<br />
+            &nbsp;
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>n</strong> (byte 1)</td>
+                  <td><strong>c</strong> (Byte 2)</td>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td>&gt;0</td>
+                  <td>any</td>
+                  <td><strong>n</strong> pixels are to be drawn.
+                    The 1st, 3rd, 5th, ... pixels' color is in <strong>c</strong>'s high-order
+                    4 bits, the even pixels' color is in <strong>c</strong>'s low-order 4
+                    bits. If both color indices are the same, it results in just <strong>n</strong>
+                    pixels of color <strong>c</strong></td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>End-of-line</td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>End-of-Bitmap</td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>2</td>
+                  <td>Delta. The following 2 bytes
+                    define an unsigned offset in x and y direction (y being up) The
+                    skipped pixels should get a color zero.</td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>&gt;=3</td>
+                  <td>The following <strong>c</strong> bytes will
+                    be read as single pixel colors just as in uncompressed files. up
+                    to 12 bits of zeros follow, to put the file/memory pointer on a
+                    16bit boundary again.</td>
+                </tr>
+              </tbody>
+            </table>
+            &nbsp;
+            <table>
+              <caption><strong>Example for 4bit RLE</strong></caption>
+              <tbody>
+                <tr>
+                  <th>Compressed Data</th>
+                  <th>Expanded data</th>
+                </tr>
+                <tr>
+                  <td>03 04</td>
+                  <td>0 4 0</td>
+                </tr>
+                <tr>
+                  <td>05 06</td>
+                  <td>0 6 0 6 0</td>
+                </tr>
+                <tr>
+                  <td>00 06 45 56 67 00</td>
+                  <td>4 5 5 6 6 7</td>
+                </tr>
+                <tr>
+                  <td>04 78</td>
+                  <td>7 8 7 8</td>
+                </tr>
+                <tr>
+                  <td>00 02 05 01</td>
+                  <td>Move 5 right and 1 up. (Windows
+                    docs say <i>down</i>, which is wrong)</td>
+                </tr>
+                <tr>
+                  <td>00 00</td>
+                  <td>End-of-line</td>
+                </tr>
+                <tr>
+                  <td>09 1E</td>
+                  <td>1 E 1 E 1 E 1 E 1</td>
+                </tr>
+                <tr>
+                  <td>00 01</td>
+                  <td>EndofBitmap</td>
+                </tr>
+                <tr>
+                  <td>00 00</td>
+                  <td>Zero padding for 32bit boundary</td>
+                </tr>
+              </tbody>
+            </table>
+            &nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    &nbsp;
+    <table width="90%">
+      <tbody>
+        <tr>
+          <td>
+            <h3><a name="Raster8RLE"></a>Raster Data compression for 8bit / 256 color images</h3>
+            BitCount = 8 Compression = 1&nbsp;<br />
+            The pixel data is stored in 2bytes / 16bit
+            chunks.&nbsp; The first of these specifies the number of consecutive
+            pixels with the same color. The second byte defines their color index.
+            If the first byte is zero, the second defines an escape code. The
+            End-of-Bitmap is zero padded to end on a 32bit boundary. Due to the
+            16bit-ness of this structure this will always be either two zero bytes
+            or none.&nbsp;&nbsp;<br />
+            &nbsp;
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>n</strong> (byte 1)</td>
+                  <td><strong>c</strong> (Byte 2)</td>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td>&gt;0</td>
+                  <td>any</td>
+                  <td><strong>n</strong> pixels of color number <strong>c</strong></td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>End-of-line</td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>EndOfBitmap</td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>2</td>
+                  <td>Delta. The following 2 bytes
+                    define an unsigned offset in x and y direction (y being up) The
+                    skipped pixels should get a color zero.</td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>&gt;=3</td>
+                  <td>The following <strong>c</strong> bytes will
+                    be read as single pixel colors just as in uncompressed files. A
+                    zero follows, if <strong>c</strong> is odd, putting the file/memory
+                    pointer on a 16bit boundary again.</td>
+                </tr>
+              </tbody>
+            </table>
+            &nbsp;
+            <table>
+              <caption><strong>Example for 8bit RLE</strong></caption>
+              <tbody>
+                <tr>
+                  <th>Compressed Data</th>
+                  <th>Expanded data</th>
+                </tr>
+                <tr>
+                  <td>03 04</td>
+                  <td>04 04 04</td>
+                </tr>
+                <tr>
+                  <td>05 06</td>
+                  <td>06 06 06 06 06</td>
+                </tr>
+                <tr>
+                  <td>00 03 45 56 67 00</td>
+                  <td>45 56 67</td>
+                </tr>
+                <tr>
+                  <td>02 78</td>
+                  <td>78 78</td>
+                </tr>
+                <tr>
+                  <td>00 02 05 01</td>
+                  <td>Move 5 right and 1 up. (Windows
+                    docs say <i>down</i>, which is wrong)</td>
+                </tr>
+                <tr>
+                  <td>00 00</td>
+                  <td>End-of-line</td>
+                </tr>
+                <tr>
+                  <td>09 1E</td>
+                  <td>1E 1E 1E 1E 1E 1E 1E 1E 1E</td>
+                </tr>
+                <tr>
+                  <td>00 01</td>
+                  <td>End-of-bitmap</td>
+                </tr>
+                <tr>
+                  <td>00 00</td>
+                  <td>Zero padding for 32bit boundary</td>
+                </tr>
+              </tbody>
+            </table>
+            &nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <hr />
+    <br />
+    <a name="Portability"></a>Portability<br />
+    Although BMPs were invented by Microsoft for its Windows platform, 
+    a lot of programs on other platforms are capable of reading and 
+    writing them. Notice the Intel order in 2byte and 4-byte integer values 
+    (Least significant byte first). The 16bit BMPs have been introduced to 
+    Windows after the others, still puzzling many applications.<br />
+    <br />
+    <hr />
+    <br />
+    <a name="Trademarks"></a>Trademarks, Patents and Royalties<br />
+    To my knowledge: None.<br />
+    <br />
+    <hr />
+    <br />
+    <a name="CrossChecking"></a>Cross-Checking Software<br />
+    This section is for programmers, who wish to cross-check their implementation 
+    with others. This is an incomplete list of programs, which are available as 
+    freeware / shareware / try-before-buy etc.<br />
+    <br />
+    The following software is able to decode BMP files<br />
+    <ul>
+      <li>easiest: Make the file the MS-Windows' background.</li>
+      <li>MS-Paint / Paintbrush</li>
+      <li>JASC Paint Shop Pro</li>
+    </ul>
+    <br />
+    The following software is able to encode BMP files<br />
+    <ul>
+      <li>JASC Paint Shop Pro</li>
+      <li>MS-Paint / Paintbrush</li>
+    </ul>
+    <br />
+    <hr />
+    <br />
+    <a name="OnlineResources"></a>Online Resources<br />
+      <a href="http://www.dcs.ed.ac.uk/~mxr/gfx/" class="offsite" >http://www.dcs.ed.ac.uk/~mxr/gfx/</a>&nbsp;<br />
+    <br />
+    <hr />
+    <br />
+    <a name="PaperResources"></a>Paper Resources<br />
+    MS-Windows SDK<br />
+    [German:] Referenzhandbuch Dateiformate by Günter Born.<br />
+    <br />
+    The following suggestions are from the Graphics Fileformats FAQ:<br />
+    <ul>
+      <li>Inside Windows File Formats, Tom Swan, Sams Publishing 1993.<br />
+                ISBN 0-672-30338-8 $24.95 softcover, 337 pages and 1 disk (3.5 in.).<br />
+                Order: Sams Publishing, 2201 West 103rd Street, Indianapolis,
+                IN 46290&nbsp;</li>
+      <li>Luse, Marv. &quot;The BMP File Format,&quot; Dr. Dobb's Journal, #219 September<br />
+                1994 (Vol 9, Issue 10), pp. 18-22.<br />
+                code available at: <a href="ftp://ftp.mv.com/pub/ddj/1994/1994.09/bmp.zip" class="offsite">ftp://ftp.mv.com/pub/ddj/1994/1994.09/bmp.zip</a></li>
+      <li>The BMP File Format: Part I+II, Dr.
+                Dobb's Journal, David Charlap, #228+#229<br />
+                March+April 1995 (Vol. 20, Issue 3+4).<br />
+                code available at: <a href="ftp://ftp.mv.com/pub/ddj/1995/1995.03/bmp.zip" class="offsite">ftp://ftp.mv.com/pub/ddj/1995/1995.03/bmp.zip</a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

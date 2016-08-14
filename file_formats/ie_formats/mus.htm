@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> MUS File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+
+    <div class="title_main">MUS file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div>
+    <br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      This file format acts as a playlist for ACM files, determining loops and &quot;interrupt state&quot; effects. An &quot;interrupt state effect&quot; controls the music (usually a fadeout effect) to play when another ACM file is interrupted by a special condition (end of combat, start of romance music,
+    etc.).<br /> 
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <br />
+    <div class="indent1">
+      MUS files are simple ASCII files that can be edited by any text editor. The files are always located in the music folder in the main game folder and any paths inside MUS files are relative. The BG2 file BC1.mus will be used to describe the file format.<br />
+      <br />
+      <div class="indent1">
+        <div class="code">
+          BC1<br />
+          10<br />
+          A1
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZA<br />
+          B1
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZA<br />
+          C1
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZA<br />
+          D1
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZD<br />
+          E1
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZD<br />
+          E2
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZD<br />
+          F1
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZD<br />
+          G1
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZG<br />
+          H1
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZH<br />
+          J1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;B1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;@TAG ZJ<br />
+          # B1B is loop<br />
+        </div>
+      </div>
+      <br />
+      This file will be examined line by line below.<br />
+      <br />
+      &bull;Line 1-BC1<br />
+      This line indicates the subfolder (within the music directory) that files used in MUS can be found.<br />
+      <br />
+      &bull;Line 2-10<br />
+      This line reports the amount of ACM files in the main playlist. Interrupt state ACMs are not included in this count.<br />
+      <br />
+      &bull;Line 3-A1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@TAG ZA<br />
+      This line is the first line of the actual playlist. It consists of the characters A1, 18 spaces and a string &quot;@TAG ZA&quot;. The first part, A1, means play the file BC1A1.acm under the BC1 subdirectory of the music. The spaces are used as a delimiter to seperate the playlist ACM and the interrupt state ACM. The amount of spaces is determined as:<br />
+      <span class="indent1">AmountOfSpaces = 20 - AmountOfCharactersInMainPlaylistEntry</span><br />
+      The third part (@TAG ZA) determines the interrupt state ACM. This entry is composed of a @TAG, a single space, and the name of the interrupt state ACM. This means &quot;Play BC1A1.acm&quot;. If the music should be stopped while this sound clip is playing, play &quot;BC1ZA.acm&quot; after &quot;BC1A1.acm&quot; has finished and then stop. If the music should continue, go to the next line of the play list.<br />
+      <br />
+      &bull;Line 12-J1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;B1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;@TAG ZJ<br />
+      The last entry in the playlist, in addition to normal ACM entry and interrupt state ACM entry, also includes an &quot;End of File Loop&quot; entry. If no loop is specified and no interupt occurs the game automatically loops to the start of the MUS file. This line consists of J1, 8 spaces, B1, 8 spaces and a string &quot;@TAG ZJ&quot;. The first entry (J1) is the usual playlist entry (BC1J1.ACM). The amount of spaces following is calculated as 10 - AmountOfCharsInPlaylistEntry. The next part (BC1) is the &quot;End of File Loop&quot; entry. The loop line tells the engine to switch to another playlist when the current playlist is completed. In the example file, the engine will move to BC1B1.acm when BC1.mus is complete. The following spaces are calculated as 10 - AmountOfCharsInEndOfFileLoopEntry. The last part (TAG @ZJ) is a standard interrupt state, as detailed above.<br />
+  
+  
+      <br />
+      <br />
+  
+  Each IE game includes a silent ACM file which can be used in playlists as shown in Tav1.mus from BG2.<br />
+      <div class="code">
+        TAV1<br />
+        6<br />
+        SPC1<br />
+        A<br />
+        SPC1<br />
+        SPC1<br />
+        SPC1<br />
+        SPC1&nbsp;&nbsp;&nbsp; TAV1 A<br />
+      </div>
+      The playlist indicates to the engine to play 62 seconds of silence, then sound &quot;A&quot; then 4 silence files (248 seconds), then to repeat the playlist.<br />
+      <br />
+  
+      The name of the silent ACM file varies between games:<br />
+      <ul>
+        <li>PST - SPC.acm /Music/</li>
+        <li>BG2, PST - SPC1.acm /Music/</li>
+        <li>IWD2 - MX0000A.acm /Music/MX0000</li>
+        <li>IWD  - MX9000A.acm /Music/MX9000A</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader">Additional remarks:</div><br />
+    <div class="indent1">
+      Songs are linked to areas and scripts via a 2da file. MUS files must be added to the relevant 2da file before they can be used (by their index number).<br />
+      <div class="indent1">
+        BG1: Hard-coded (<a href="#bg1songlist">value list</a>)<br />
+        BG2: <a href="../../files/2da/2da_tob/songlist.htm"> songlist.2da </a><br />
+        PST: Unknown<br />
+        IWD: <a href="../../files/2da/2da_totl/music.htm"> </a> music.2da </a><br />
+        IWD2: <a href="../../files/2da/2da_iwd2/music.htm"> </a> music.2da </a><br />
+      </div>
+      <br />
+    </div>
+
+
+    <br />
+    <div class="fileHeader">Location</div><br />
+    <div class="indent1">
+      MUS files are normally located in the music directory in the game directory. The MUS files are attached/linked to areas or romances by their index number.<br />
+      <br />
+      <br />
+      <div class="indent1">
+        <strong><u>Music Subfolders in BGI</u></strong><br />
+        <br />
+        <strong>Folder BC1</strong><br />
+        City battle music<br />
+        <br />
+        <strong>Folder BC2</strong><br />
+        City battle music (alternative). Copy of BC1.MUS with unused ACMs in BC2 folder.<br />
+        <br />
+        <strong>Folder BD1</strong><br />
+        Dungeon battle music<br />
+        <br />
+        <strong>Folder BD2</strong><br />
+        Dungeon battle music (alternative). Copy of BD1.MUS with unused ACMs in BD2 folder.<br />
+        <br />
+        <strong>Folder BF1</strong><br />
+        Forest battle music<br />
+        <br />
+        <strong>Folder BF2</strong><br />
+        Forest battle music (alternative). Copy of BF1.MUS with unused ACMs in BF2 folder.<br />
+        <br />
+        <strong>Folder BL1</strong><br />
+        Unknown battle music.<br />
+        <br />
+        <strong>Folder BL2</strong><br />
+        Unknown battle music (alternative). Copy of BL1.MUS with unused ACMs in BL2 folder.<br />
+        <br />
+        <strong>Folder BP1</strong><br />
+        Unknown battle music.<br />
+        <br />
+        <strong>Folder BP2</strong><br />
+        Unknown battle music (alternative). Copy of BP1.MUS with unused ACMs in BP2 folder.<br />
+        <br />
+        <strong>Folder BW1</strong><br />
+        Unknown battle music.<br />
+        <br />
+        <strong>Folder CDAY1</strong><br />
+        City daytime music<br />
+        <br />
+        <strong>Folder CDAY2</strong><br />
+        City daytime music (alternative). Copy of CDAY1.MUS with unused ACMs in CDAY2 folder.<br />
+        <br />
+        <strong>Folder CHANTS</strong><br />
+        Chant music. Copy of TEMPLE.MUS with unused ACM in CHANT folder.<br />
+        <br /> 
+        <strong>Folder CHAPTER</strong><br />
+        Chapter Screen music. Has no ACMs or folder, though it refers to a CHAPTER folder. Instead of this music playing (if the MUS is changed to point to another folder), various music is played depending on chapter. For instance, the prologue plays the CDAY1 MUS file. This seems to be hardcoded.<br />
+        <br /> 
+        <strong>Folder CNITE</strong><br />
+        City night-time music.<br />
+        <br /> 
+        <strong>Folder DEATH</strong><br />
+        Death music. Has no ACMs or folder, though it refers to a DEATH folder. Death FMV used instead.<br />
+        <br /> 
+        <strong>Folder DREAM</strong><br />
+        Dream music. Copy of CNITE.MUS with unused ACM in DREAM folder.<br />
+        <br /> 
+        <strong>Folder DUNG1</strong><br />
+        Dungeon music.<br />
+        <br />
+        <strong>Folder DUNG2</strong><br />
+        Dungeon music. Copy of DUNG1.MUS with unused ACM in DUNG2 folder.<br />
+        <br />
+        <strong>Folder DUNG3</strong><br />
+        Dungeon music. Copy of DUNG1.MUS with unused ACM in DUNG3 folder.<br />
+        <br />
+        <strong>Folder FDAY</strong><br />
+        Forest daytime music.<br />
+        <br />
+        <strong>Folder FNITE</strong><br />
+        Forest night-time music.<br />
+        <br />
+        <strong>Folder FORT</strong><br />
+        Fortress music?.<br />
+        <br />
+        <strong>Folder PDAY</strong><br />
+        Unknown daytime music.<br />
+        <br />
+        <strong>Folder PNITE</strong><br />
+        Unknown nightime music.<br />
+        <br />
+        <strong>Folder TAV1</strong><br />
+        Tavern music<br />
+        <br />
+        <strong>Folder TAV2</strong><br />
+        Tavern music. Copy of TAV1.MUS with unused ACM in TAV2 folder.<br />
+        <br />
+        <strong>Folder TAV3</strong><br />
+        Tavern music.<br />
+        <br />
+        <strong>Folder TAV4</strong><br />
+        Tavern music. Copy of TAV3.MUS with unused ACM in TAV4 folder.<br />
+        <br />
+        <strong>Folder TDAY1</strong><br />
+        Town daytime music?<br />
+        <br />
+        <strong>Folder TDAY2</strong><br />
+        Town daytime music (alternative). Copy of TDAY1.MUS with unused ACM in TDAY2 folder.<br />
+        <strong>Folder TEMPLE</strong><br />
+        Temple music.<br />
+        <br />
+        <strong>Folder THEME</strong><br />
+        Main Menu theme music.<br />
+        <br />
+        <strong>Folder TNITE</strong><br />
+        Town night-time music?<br />
+      </div>
+
+      <br />
+      <br />
+      <strong><u>Music Subfolders in BGII</u></strong><br />
+      <div class="indent1">
+        <br />
+        <strong>Folder BC1</strong><br />
+        Standard combat music. MUS entry BC1.mus. Index Number 46.<br />
+        <br />
+        <strong>Folder BC2</strong><br />
+        Standard combat music. MUS entry BC2.mus. Index Number 47.<br />
+        <br />
+        <strong>Folder BD1</strong><br />
+        Combat music for Irenicus' Dungeon. MUS entry BD1.mus. Index Number 48.<br />
+        <br />
+        <strong>Folder BD2</strong><br />
+        Combat Music. MUS entry BD2.mus. Index Number 49.<br />
+        <br />
+        <strong>Folder BD3</strong><br />
+        Dungeon combat music. MUS entry BD3.mus. Index Number 50.<br />
+        <br />
+        <strong>Folder BF1</strong><br />
+        Combat music. MUS entry BF1.mus. Index Number 51.<br />
+        <br />
+        <strong>Folder BF2</strong><br />
+        Combat music. MUS entry BF2.mus. Index Number 52.<br />
+        <br />
+        <strong>Folder BJR</strong><br />
+        Dragons' combat music. MUS entry BJR.mus. Index Number 53.<br />
+        <br />
+        <strong>Folder BM1</strong><br />
+        Combat music. MUS entry BM1.mus. Index Number 54.<br />
+        <br />
+        <strong>Folder BM2</strong><br />
+        Combat music. MUS entry BM2.mus. Index Number 55.<br />
+        <br />
+        <strong>Folder BP1</strong><br />
+        Dungeon combat music. MUS entry BP1.mus. Index Number 56.<br />
+        <br />
+        <strong>Folder BP2</strong><br />
+        Vampire/Shadow Thief combat music. MUS entry BP2.mus. Index Number 57.<br />
+        <br />
+        <strong>Folder BRD</strong><br />
+        Dragons' combat music. MUS entry BRD.mus. Index Number 58.<br />
+        <br />
+        <strong>Folder BSD</strong><br />
+        Combat Music. MUS entry BSD. Index Number 59.<br />
+        <br />
+        <strong>Folder BST</strong><br />
+        Combat Music. MUS entry BST.Index Number 60.<br />
+        <br />
+        <strong>Folder harp_v2</strong><br />
+        Harp melody. MUS entry HARP_V2.mus. Index Number 62.<br />
+        <br />
+        <strong>Folder harp_v6</strong><br />
+        Harp melody. MUS entry HARP_v6.mus. Index Number 63.<br />
+        <br />
+        <strong>Folder MX0011</strong><br />
+        Dreams' &nbsp;music. MUS entry MX0011.mus. Index Number 1.<br />
+        <br />
+        <strong>Folder MX0012</strong><br />
+        Dreams' music. MUS entry MX0012.mus. Index Number 2.<br />
+        <br />
+        <strong>Folder MX0013</strong><br />
+        Dreams' music. MUS entry MX0013.mus. Index Number 3.<br />
+        <br />
+        <strong>Folder MX0015</strong><br />
+        Noble houses' music. MUS entry MX0015.mus. Index Number 4.<br />
+        <br />
+        <strong>Folder MX0020</strong><br />
+        City Gates' music. MUS entry MX0020.mus. Index number 5.<br />
+      </div>
+
+
+      <br />
+      <br />
+      <a id="bg1songlist"><strong><u>Songlist values for BG1: TotS </u></strong><br />
+      <div class="indent1">
+        0 *<br />
+        1 CDAY1.mus<br />
+        2 CDAY2.mus<br />
+        3 CNITE.mus<br />
+        4 CHANTS.mus<br />
+        5 DREAM.mus<br />
+        6 Festi.mus<br />
+        7 FDay.mus<br />
+        8 FNite.mus<br />
+        9 PDay.mus<br />
+        10 PNite.mus<br />
+        11 Temple.mus<br />
+        12 Theme.mus<br />
+        13 TDay1.mus<br />
+        14 TDay2.mus<br />
+        15 TNite.mus<br />
+        16 Dung1.mus<br />
+        17 Dung2.mus<br />
+        18 Dung3.mus<br />
+        19 BC1.mus<br />
+        20 BC2.mus<br />
+        21 BD1.mus<br />
+        22 BD2.mus<br />
+        23 BL1.mus<br />
+        24 BL2.mus<br />
+        25 BF1.mus<br />
+        26 BF2.mus<br />
+        27 BP1.mus<br />
+        28 BP2.mus<br />
+        29 BW1.mus<br />
+        30 Bridge.mus<br />
+        31 Fort.mus<br />
+        32 Chapter.mus<br />
+        33 MPO900.mus<br />
+        34 TAV1.mus<br />
+        35 TAV2.mus<br />
+        36 TAV3.mus<br />
+        37 TAV4.mus<br />
+        38 DEATH.mus<br />
+        <br />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

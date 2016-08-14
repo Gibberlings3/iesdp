@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> IDS File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+
+    <div class="title_main">IDS file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div>
+    <br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      This file format is generally a text based lookup table. IDS files provide a method to map a symbolic name to a numeric identifier. The file fall into two categories; those required by the game, and those required for ease-of-use in scripting. Files required by the game (e.g. projectl.ids) are referenced at run-time to convert a number (as stored in an ITM or SPL) into a filename. Files used by scripting are referenced when scripts are compiled/decompile. When scripts are decompiled, IDS files can optionally be used to convert the numeric format stored in BSC files back to the symbolic name.  When scripts are compiled, if a symbolic name has been used, the relevant IDS file must be present to convert the name into a numeric value. In either case, once the compilation/decompilation is done, the IDS file is no longer used.
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Overall structure<br />
+      <div class="indent1">
+        <li><a href="#idsv1_0_Header">Header</a>
+        <li><a href="#idsv1_0_Data">Data entry</a>
+      </div>
+      <br />
+    </div>
+
+
+    
+    <div class="fileHeader"><a name="idsv9_1_Header">Header</a></div>
+    <div class="indent1">
+      The IDS file header consists of two lines, either of which may be omitted. The first line is the file identifier (usually IDS or IDS V1.0). The second line is the number of entries in the file (this value is not always correct).<br />
+      <br />
+    </div>
+
+    <div class="fileHeader"><a name="idsv1_0_Data">Data Entry</a></div>
+    <div class="indent1">
+      The main section of an IDS file are the data entries. The data entries are specified in two columns, the value and the identifier. The value can be specificied in decimal or hexadecimal (using the 0x0000 notation).<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">Encryption</div>
+    <div class="indent1">
+      NB. Some files are encrypted as detailed on the <a href="encryption.htm">encryption page</a>.
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

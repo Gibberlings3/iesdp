@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BG2: ToB 2DA Files : rndmagic.2da </title>
+<link rel="stylesheet" type="text/css" href="../../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> rndmagic.2da</div>
+<br />
+This file defines what items are generated when a creature uses an item of filename RNDMAGx#.ITM, where x=any character (even letters and symbols, and has no bearing on how RNDMAGIC.2DA is read), and #=the row number of RNDMAGIC.2DA to use (can be 1-9).  RNDMAGx#.ITM is replaced by the generated item.  Therefore, this works like a random treasure table.<br />
+<br />
+The first column of RNDMAGIC.2DA specifies the name of the row, currently a simple generic name.  The rest of the 19 columns have headers 2, 3, 4, 5, ..., 18, 19, 20.  The column used is specified by a roll of a D20, with rolls of 1 replacing RNDTREx#.ITM with no item.  Note that this is different from RNDEQUIP.2DA, RNDSCROL.2DA, and RNDWEP.2DA, which have an extra column labelled '1', but similar to RNDTREAS.2DA.  Only 20 columns in total are supported, else the 2da file will fail to work entirely.  When this happens, all RNDTREx#.ITMs are replaced by erroneous invisible items that cannot be removed.<br />
+<br />
+The BG2:ToB version of RNDMAGIC.2DA is shown below.  In essence, RNDMAGIC.2DA works exactly the same as RNDEQUIP.2DA, so see RNDEQUIP.2DA for an example of how RNDMAGIC.2DA works.  However, RNDMAGIC.2DA can be directly referenced by RNDTREAS.2DA or RNDEQUIP.2DA without actually having RNDMAGx#.ITM as a resource.  For example, an entry in RNDTREAS.2DA that reads RNDMAG03, and a D20 roll of 3 will replace RNDTREx#.ITM with BOLT05.<br />
+<br />
+In BG2:ToB we have:<br />
+<pre>
+2DA V1.0
+*
+           2          3          4          5          6          7          8          9          10         11         12         13         14         15         16         17         18         19         20         
+LOW        RNDWEP02   RNDWEP01   BULL03*3   POTN31     RNDSCR02   RNDSCR01   SCRL06     SCRL04     POTN08     POTN43     POTN44     POTN37     POTN19     POTN28     BULL02*5   AROW02*5   BOLT02*5   RNDWEP01   RNDWEP02   
+HIGH       RNDWEP03   RNDWEP02   RNDWEP01   SCRL08     SCRL09     RNDSCR03   SCRL16     POTN17     POTN08     POTN10     AROW04     AROW09     BOLT04     BOLT03     AROW06     RNDWEP01   RNDWEP02   RNDWEP02   RNDWEP03   
+</pre>
+
+RNDMAGIC.2DA supports 9 functional rows of random treasure.  Rows 10 and above are completely ignored.  If RNDMAGx#.ITM references a non-existant or an ignored row number (or if #=0 under any circumstances), then RNDMAGx#.ITM is replaced by an erroneous invisible item that cannot be removed.  Note that the replacing item is NOT RNDMAGx#.ITM itself, in this case. This blank item can likely be altered by setting the default 2da entry to a valid item.<br />
+<br />
+Items that can be referenced:<br />
+<ul>
+<li>specific items (for stackable items, a *# suffix, that is, an asterisk followed by a number, can be added to the item ResRef to specify the amount of that item to create, e.g. BOLT04*4 generates a single stack of 4 BOLT04 items; for non-stackable items, a *# suffix does nothing; the limitations on the size of # are the same as that for gold pieces described below)</li>
+<li>#, that is, a number, refers to a gold value (e.g. #=016 replaces RNDMAGx#.ITM with a stack of 16 gold).  The maximum stack of gold allowable is 256 pieces.  More than that listed will max out at 231 (interestingly, this is the remainder when you divide 256 into 999; # need not be three digits, so if #=4 or #=04 or #-004, a stack of 4 gold will still be generated without error)-*, that is, a single asterisk, generates an erroneous item, i.e. an invisible item that cannot be removed.  This is useful if you want your creature not to drop anything, but you do not want to use this for containers and item piles</li>
+<li>RNDSCR##, which references RNDSCROL.2DA, where ##=row number to use, allowing further randomisation; 2D10 are rolled to determine which column of this file to use</li>
+<li>RNDWEP##, which references RNDWEP.2DA, where ##=row number to use, allowing a third level of randomisation; a D20 is rolled to determine which column of this file to use</li>
+</ul>
+<br />
+Items that cannot be referenced:<br />
+<ul>
+<li>RNDEQU##; using this will create RNDEQU##.ITM, exactly as it is (circular loops are not possible)</li>
+<li>RNDMAG##; using this will create RNDMAG##.ITM, exactly as it is (circular loops are not possible)</li>
+<li>RNDTRE##; using this will create RNDTRE##.ITM, exactly as it is (circular loops are not possible)</li>
+</ul>
+<br />
+Since RNDMAGIC.2DA can reference RNDSCROL.2DA and RNDWEP.2DA but not RNDTREAS.2DA nor RNDEQUIP.2DA, this 2da file is the third to the top of the random treasure table hierarchy.
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

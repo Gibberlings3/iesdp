@@ -1,0 +1,750 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> CHR File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main">CHR file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1"> IWD2</div>
+    <br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      This file format describes an exported party member. The format consists of a CHR header, followed by a standard CRE file.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Overall structure:<br />
+      <div class="indent1">
+        <li><a href="#CHRV2_2_CHR_Header">CHR file header</a>
+        <li>Internal CRE v.2.2 file header
+        <li>Known spells section
+        <li>Spell memorization info
+        <li>Memorized spells section
+        <li>Effects
+        <li>Items section
+        <li>&quot;Item slots&quot;</li>
+      </div>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="CHRV2_2_CHR_Header">CHR V2.2 Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+        <tr>
+          <th>Offset</th>
+          <th>Size (data type)</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4(char array)</td>
+            <td>Signature ('CHR ')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4(char array)</td>
+            <td>Version ('V2.2')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>32(string)</td>
+            <td>Name of Protagonist/Player</td>
+          </tr>
+          <tr>
+            <td>0x0028</td>
+            <td>4 (dword)</td>
+            <td>Offset to CRE structure</td>
+          </tr>
+          <tr>
+            <td>0x002c</td>
+            <td>4 (dword)</td>
+            <td>Length of the CRE structure</td>
+          </tr>
+          <tr>
+            <td>0x0030</td>
+            <td>2 (word)</td>
+            <td>Quickweapon</td>
+          </tr>
+          <tr>
+            <td>0x0032</td>
+            <td>2 (word)</td>
+            <td>Quickshield</td>
+          </tr>
+          <tr>
+            <td>0x0034</td>
+            <td>2 (word)</td>
+            <td>Quickweapon</td>
+          </tr>
+          <tr>
+            <td>0x0036</td>
+            <td>2 (word)</td>
+            <td>Quickshield</td>
+          </tr>
+          <tr>
+            <td>0x0038</td>
+            <td>2 (word)</td>
+            <td>Quickweapon</td>
+          </tr>
+          <tr>
+            <td>0x003a</td>
+            <td>2 (word)</td>
+            <td>Quickshield</td>
+          </tr>
+          <tr>
+            <td>0x003c</td>
+            <td>2 (word)</td>
+            <td>Quickweapon</td>
+          </tr>
+          <tr>
+            <td>0x003e</td>
+            <td>2 (word)</td>
+            <td>Quickshield</td>
+          </tr>
+          <tr>
+            <td>0x0040</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x0042</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x0044</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x0046</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x0048</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x004a</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x004c</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x004e</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x0050</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 1</td>
+          </tr>
+          <tr>
+            <td>0x0058</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 2</td>
+          </tr>
+          <tr>
+            <td>0x0060</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 3</td>
+          </tr>
+          <tr>
+            <td>0x0068</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 4</td>
+          </tr>
+          <tr>
+            <td>0x0070</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 5</td>
+          </tr>
+          <tr>
+            <td>0x0078</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 6</td>
+          </tr>
+          <tr>
+            <td>0x0080</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 7</td>
+          </tr>
+          <tr>
+            <td>0x0088</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 8</td>
+          </tr>
+          <tr>
+            <td>0x0090</td>
+            <td>8 (resref)</td>
+            <td>Quickspell 9</td>
+          </tr>
+          <tr>
+            <td>0x0098</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x0099</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x009a</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x009b</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x009c</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x009d</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x009e</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x009f</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x00a0</td>
+            <td>1 (byte)</td>
+            <td>Quickspell class</td>
+          </tr>
+          <tr>
+            <td>0x00a1</td>
+            <td>1 (byte)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x00a2</td>
+            <td>2 (word)</td>
+            <td>Quickitem 1</td>
+          </tr>
+          <tr>
+            <td>0x00a4</td>
+            <td>2 (word)</td>
+            <td>Quickitem 2</td>
+          </tr>
+          <tr>
+            <td>0x00a6</td>
+            <td>2 (word)</td>
+            <td>Quickitem 3</td>
+          </tr>
+          <tr>
+            <td>0x00a8</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x00aa</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x00ac</td>
+            <td>2 (word)</td>
+            <td>Slot usable</td>
+          </tr>
+          <tr>
+            <td>0x00ae</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00b6</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00be</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00c6</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00ce</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00d6</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00de</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00e6</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00ee</td>
+            <td>8 (resref)</td>
+            <td>Quick innate</td>
+          </tr>
+          <tr>
+            <td>0x00f6</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x00fa</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x00fe</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0102</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0106</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x010a</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x010e</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0112</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0116</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x011a</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x011e</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0122</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0126</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x012a</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x012e</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0132</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0136</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x013a</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x013e</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 1</td>
+          </tr>
+          <tr>
+            <td>0x0142</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 2</td>
+          </tr>
+          <tr>
+            <td>0x0146</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 3</td>
+          </tr>
+          <tr>
+            <td>0x014a</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 4</td>
+          </tr>
+          <tr>
+            <td>0x014e</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 5</td>
+          </tr>
+          <tr>
+            <td>0x0152</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 6</td>
+          </tr>
+          <tr>
+            <td>0x0156</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 7</td>
+          </tr>
+          <tr>
+            <td>0x015a</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 8</td>
+          </tr>
+          <tr>
+            <td>0x015e</td>
+            <td>4 (dword)</td>
+            <td>Configurable quickslot 9</td>
+          </tr>
+          <tr>
+            <td>0x0162</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0164</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0166</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0168</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x016a</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x016c</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x016e</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0170</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0172</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0174</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0176</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0178</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x017a</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x017c</td>
+            <td>8 (resref)</td>
+            <td>Soundset</td>
+          </tr>
+          <tr>
+            <td>0x0184</td>
+            <td>20 (char array)</td>
+            <td>Voiceset</td>
+          </tr>
+          <tr>
+            <td>0x01a4</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01a8</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01ac</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01b0</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01b4</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01b8</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01bc</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01c0</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01c4</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01c8</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01cc</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01d0</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01d4</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01d8</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01dc</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01e0</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01e4</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01e8</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01ec</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01f0</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01f4</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01f8</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x01fc</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0200</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0204</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0208</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x020c</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0210</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0214</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0218</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x021c</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x0220</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+    </div>
+    
+    <div class="fileHeader"><a name="CHRV2_2_Header"><a href="cre_v2.2.htm"></a>CRE V2.2 File</a></div> 
+    <br />
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

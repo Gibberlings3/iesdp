@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> Notes and Conventions </title>
+<link rel="stylesheet" type="text/css" href="../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> Notes and Conventions</div>
+
+    <div class="fileHeader">Introduction</div>
+    <div class="indent1">
+      This section is an overview of concepts and conventions used throughout the IESDP and serves as a continuation of the <a href="http://www.ugcs.caltech.edu/~jedwin/baldur.html" class="offsite"> Infinity Engine File Format Hacking Project</a>. <br />
+    </div>
+
+    <br />
+
+    <div class="fileHeader">General</div>
+    <div class="indent1">
+      All versions of the Infinity Engine, except that used in Planescape: Torment, make some internal of the <a href="http://www.lua.org/" class="offsite">Lua</a> programming language, as developed by TeCGraf at the Pontifical Catholic University of Rio de Janeiro in Brazil. In the Infinity Engine, LUA is primarily used for the cheats/debugging console. The debug console actually allows complete LUA programs to be entered and run, though these programs can only have a very limited affect on the game and the engine. The LUA <a href="http://www.lua.org/docs.html" class="offsite">documentation</a> is available online, though knowledge of LUA is of limited use in IE modding. It should be mentionned, that unlike other engines where LUA is used, the Infinity Engine AI scripts have nothing to do with LUA.<br />
+      <br />
+      The data types used to describe the file formats used by the Infinity Engine are:<br />
+      <br />
+      
+      <table border="1" width="100%">
+        <colgroup>
+          <col width="10%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Data type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>char array</td>
+            <td>An array of ASCII characters of a fixed length</td>
+          </tr>
+          <tr>
+            <td>ASCIIZ string</td>
+            <td>An array of ASCII characters terminated by a NUL character (ASCII 00). Note that the full length of the array need not be used, and may in fact contain garbage data, so long as a NUL character is found earlier in the array to mark the end of valid data.</td>
+          </tr>
+          <tr>
+            <td>word</td>
+            <td>A little-endian &quot;word&quot; of 16-bits</td>
+          </tr>
+          <tr>
+            <td>dword</td>
+            <td>A little-endian &quot;double-word&quot; of 32-bits</td>
+          </tr>
+          <tr>
+            <td>point</td>
+            <td>A point within some reference frame, composed of two 16-bit words; the first is the x-coordinate and the second is the y-coordinate.</td>
+          </tr>
+          <tr>
+            <td>rect</td>
+            <td>A rectangle within some reference frame, composed of 4 16-bit words; the order of the coordinates is: <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>. Typically this is used to store bounding boxes of various objects.</td>
+          </tr>
+          <tr>
+            <td>strref</td>
+            <td>A reference into the 'TLK' resource -- a 32-bit number which can be mapped to a string via a lookup into the TLK table.</td>
+          </tr>
+          <tr>
+            <td>resref</td>
+            <td>A reference to a specific resource -- a string (max 8 characters) which is mapped to a resource (stored in a BIF file or an override directory) via the KEY file. Note that these are always treated as 8 characters long; unused characters should generally be filled with NUL bytes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <br />
+    When bits are numbered, they will be numbered with the least-significant bit as 0, and the most significant bit as 7, 15, or 31, for byte, word, or dword,
+    respectively.<br />
+
+    <br />
+    
+    <div class="fileHeader"><a name="FileFormats">File Formats</a></div>
+    <div class="indent1">
+      Several file types are used in the Infinity Engine. These file types can be identified in three different ways. First, most file formats have a numerical code (e.g. 0x03e8), called the <code>resType</code>. Second, all file formats have a file extension (e.g. 2da), which is used to determine what format the data inside is expected to be. Third, most of the file formats contain a 4-byte signature string in the file header to indicate the file type, and a 4-byte version string to indicate the file format version.<br />
+      <br />
+      <div class="indent1">
+        <table border="1" width="100%">
+          <colgroup>
+            <col width="5%" />
+            <col width="8%" />
+            <col width="8%" />
+            <col width="15%" />
+            <col width="*" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>ResType</th>
+              <th>Extension</th>
+              <th>Format tag</th>
+              <th>Notes</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>N/A</td>
+              <td>.key</td>
+              <td>'<code>KEY </code>'</td>
+              <td>&nbsp;</td>
+              <td>A directory of resources, resource locations and resource types. Each game generally have one KEY file, located in the main game directory.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.bif</code></td>
+              <td>'<code>BIFF</code>'</td>
+              <td>&nbsp;</td>
+              <td>Archive containing resources; indexed by the KEY file.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.cbf</code></td>
+              <td>'<code>BIF </code>'</td>
+              <td>&nbsp;</td>
+              <td>zlib compressed BIF file; index by the KEY file.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.tlk</code></td>
+              <td>'<code>TLK </code>'</td>
+              <td>&nbsp;</td>
+              <td>Table in which strings and sounds are looked up by strref.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.acm</code></td>
+              <td>???</td>
+              <td>&nbsp;</td>
+              <td>Music.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.mus</code></td>
+              <td>N/A</td>
+              <td>Text format</td>
+              <td>Music playlist.</td>
+            </tr>
+            <tr>
+              <td>0x0001</td>
+              <td><code>.bmp</code></td>
+              <td>N/A</td>
+              <td>&nbsp;</td>
+              <td>Microsoft-endorsed standard for static graphics. Often used for storing palettes, in which case the file will be a 1x1 pixel image with a full palette. Only uncompressed BMP files are supported, though the engine supports colour depths of 4, 8, and 24 bits.</td>
+            </tr>
+            <tr>
+              <td>0x0002</td>
+              <td><code>.mve</code></td>
+              <td>???</td>
+              <td>&nbsp;</td>
+              <td>Movies. Proprietry Interplay format.</td>
+            </tr>
+            <tr>
+              <td>0x0004</td>
+              <td><code>.wav</code>
+                <p><code>.wac</code></p>
+              </td>
+              <td>'<code>WAVC</code>'</td>
+              <td>&nbsp;</td>
+              <td>Sounds. Note that 'WAVC' and 'RIFF' .wav files are used interchangeably throughout the engine; WAVC is an internal format -- more precisely, an ACM file with a header attached to simplify buffer estimation during file decompression.</td>
+            </tr>
+            <tr>
+              <td>0x0004</td>
+              <td><code>.wav</code></td>
+              <td>N/A</td>
+              <td>&nbsp;</td>
+              <td>RIFF wave files. The Microsoft <code>mmio*</code> routines are not used for WAV reading, meaning files must be simple and straightforward.</td>
+            </tr>
+            <tr>
+              <td>0x0005</td>
+              <td>N/A</td>
+              <td>'WFX '</td>
+              <td>&nbsp;</td>
+              <td>Wave FX file. WFX files are used to determine variation for playback of wave sounds.</td>
+            </tr>
+            <tr>
+              <td>0x0006</td>
+              <td>.plt</td>
+              <td>'<code>PLT </code>'</td>
+              <td>&nbsp;</td>
+              <td>Graphics, specifically paperdolls (as displayed on the inventory screen).</td>
+            </tr>
+            <tr>
+              <td>0x03e8</td>
+              <td><code>.bam</code></td>
+              <td>'<code>BAM </code>'</td>
+              <td>&nbsp;</td>
+              <td>Graphics, specifically animations though also multi-frame static graphics. The format supports multiple animation cycles, each containing multiple frames.</td>
+            </tr>
+            <tr>
+              <td>0x03e8</td>
+              <td><code>.bam</code></td>
+              <td>'<code>BAMC</code>'</td>
+              <td>&nbsp;</td>
+              <td>zlib compressed BAM file.</td>
+            </tr>
+            <tr>
+              <td>0x03e9</td>
+              <td><code>.wed</code></td>
+              <td>'<code>WED</code>'</td>
+              <td>&nbsp;</td>
+              <td>Area region information.</td>
+            </tr>
+            <tr>
+              <td>0x03ea</td>
+              <td><code>.chu</code></td>
+              <td>'<code>CHUI</code>'</td>
+              <td>&nbsp;</td>
+              <td>GUI definition.</td>
+            </tr>
+            <tr>
+              <td>0x03eb</td>
+              <td><code>.tis</code></td>
+              <td>N/A</td>
+              <td>&nbsp;</td>
+              <td>Graphics, specifically area art.</td>
+            </tr>
+            <tr>
+              <td>0x03ec</td>
+              <td><code>.mos</code></td>
+              <td>'<code>MOS</code>'</td>
+              <td>&nbsp;</td>
+              <td>Graphics, specifically minimaps and GUI backgrounds.</td>
+            </tr>
+            <tr>
+              <td>0x03ec</td>
+              <td><code>.mos</code></td>
+              <td>'<code>MOSC</code>'</td>
+              <td>&nbsp;</td>
+              <td>zlib compressed MOS file.</td>
+            </tr>
+            <tr>
+              <td>0x03ed</td>
+              <td><code>.itm</code></td>
+              <td>'<code>ITM</code>'</td>
+              <td>&nbsp;</td>
+              <td>Items.</td>
+            </tr>
+            <tr>
+              <td>0x03ee</td>
+              <td><code>.spl</code></td>
+              <td>'<code>SPL</code>'</td>
+              <td>&nbsp;</td>
+              <td>Spells.</td>
+            </tr>
+            <tr>
+              <td>0x03ef</td>
+              <td><code>.bcs</code></td>
+              <td>N/A</td>
+              <td>Text format</td>
+              <td>Compiled script.</td>
+            </tr>
+            <tr>
+              <td>0x03f0</td>
+              <td><code>.ids</code></td>
+              <td>N/A</td>
+              <td>Text format</td>
+              <td>Identifier tables. Generally a mapping from numbers to text, typically giving descriptive names or labels to engine internals.</td>
+            </tr>
+            <tr>
+              <td>0x03f1</td>
+              <td><code>.cre</code></td>
+              <td>'<code>CRE</code>'</td>
+              <td>&nbsp;</td>
+              <td>Creatures.</td>
+            </tr>
+            <tr>
+              <td>0x03f2</td>
+              <td><code>.are</code></td>
+              <td>'<code>AREA</code>'</td>
+              <td>&nbsp;</td>
+              <td>Area defintion, including actor, door, region and container details.</td>
+            </tr>
+            <tr>
+              <td>0x03f3</td>
+              <td><code>.dlg</code></td>
+              <td>'<code>DLG</code>'</td>
+              <td>&nbsp;</td>
+              <td>Dialog definition.</td>
+            </tr>
+            <tr>
+              <td>0x03f4</td>
+              <td><code>.2da</code></td>
+              <td><code>2DA</code>'</td>
+              <td>Text format.</td>
+              <td>2-dimensional array. Note that the signature may not occur at the start of the file; there may be leading spaces, or the file may be encrypted using a XOR encryption scheme.</td>
+            </tr>
+            <tr>
+              <td>0x03f5</td>
+              <td><code>.gam</code></td>
+              <td>'<code>GAME</code>'</td>
+              <td>&nbsp;</td>
+              <td>Save games, specifically party details.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.sav</code></td>
+              <td>'<code>SAV</code>'</td>
+              <td>&nbsp;</td>
+              <td>Save games, specifically area and store details.</td>
+            </tr>
+            <tr>
+              <td>0x03f6</td>
+              <td><code>.sto</code></td>
+              <td>'<code>STOR</code>'</td>
+              <td>&nbsp;</td>
+              <td>Stores.</td>
+            </tr>
+            <tr>
+              <td>0x03f7</td>
+              <td><code>.wmp</code></td>
+              <td>'<code>WMAP</code>'</td>
+              <td>&nbsp;</td>
+              <td>World map.</td>
+            </tr>
+            <tr>
+              <td>0x03f8</td>
+              <td><code>.chr</code></td>
+              <td>'<code>CHR</code>'</td>
+              <td>&nbsp;</td>
+              <td>Characters.</td>
+            </tr>
+            <tr>
+              <td>0x03f8</td>
+              <td><code>.eff</code></td>
+              <td>'<code>EFF </code>'</td>
+              <td>ToTSC and IWD and BG2</td>
+              <td>Effects; a replacement for the 30-byte effect structure found in CRE and ITM files. The EFF V2.0 format can be found either as a standalone file or embedded in CRE, ITM and SPL files.</td>
+            </tr>
+            <tr>
+              <td>0x03f9</td>
+              <td><code>.bs</code></td>
+              <td>N/A</td>
+              <td>Text format</td>
+              <td>Compiled script, for character AI scripts.</td>
+            </tr>
+            <tr>
+              <td>0x03fa</td>
+              <td><code>.chr</code></td>
+              <td>'<code>CHR</code>'</td>
+              <td>&nbsp;</td>
+              <td>Character.</td>
+            </tr>
+            <tr>
+              <td>0x03fb</td>
+              <td>.vvc</td>
+              <td><code>'VVC'</code></td>
+              <td>&nbsp;</td>
+              <td>Visual 'spell casting' effects.</td>
+            </tr>
+            <tr>
+              <td>0x03fc</td>
+              <td><code>.vef</code></td>
+              <td>???</td>
+              <td>Baldur's Gate 2 only</td>
+              <td>Visual effects. There are no known files of this type.</td>
+            </tr>
+            <tr>
+              <td>0x03fd</td>
+              <td>.pro</td>
+              <td><code>'PRO'</code></td>
+              <td>&nbsp;</td>
+              <td>Projectiles.</td>
+            </tr>
+            <tr>
+              <td><code>N/A</code></td>
+              <td>.res</td>
+              <td>???</td>
+              <td>Text format<br />
+                  IWD only</td>
+              <td>Character biography.</td>
+            </tr>
+            <tr>
+              <td>0x03fe</td>
+              <td><code>.bio</code></td>
+              <td>???</td>
+              <td>Text format<br />
+                  Baldur's Gate 2 only</td>
+              <td>Character biography.</td>
+            </tr>
+            <tr>
+              <td>0x044c</td>
+              <td><code>.ba</code></td>
+              <td>???</td>
+              <td>Baldur's Gate 2 only</td>
+              <td><span class="unknown">Unknown</span></td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.baf</code></td>
+              <td>N/A</td>
+              <td>Text format</td>
+              <td>Uncompiled scripts.</td>
+            </tr>
+            <tr>
+              <td>0x0802</td>
+              <td><code>.ini</code></td>
+              <td>N/A</td>
+              <td>Text format<br />
+                Planescape: Torment and Icewind Dale</td>
+              <td>Quest and spawn information.</td>
+            </tr>
+            <tr>
+              <td>0x0803</td>
+              <td><code>.src</code></td>
+              <td>N/A</td>
+              <td>Planescape: Torment only</td>
+              <td>Overhead text.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.toh</code></td>
+              <td>'<code>TLK </code>'</td>
+              <td>Icewind Dale only/BG2 only</td>
+              <td>&quot;Talk Table Override Header&quot;. This is used to override to specific entries in the <code>TLK</code> file. TOH files are used in conjunction with the TOT file.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td>.tot</td>
+              <td>N/A</td>
+              <td>Icewind Dale only/BG2 only</td>
+              <td>&quot;Talk Table Override Text&quot;. This is used to override to specific entries in the TLK file. TOT files are used in conjunction with the TOH file.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td>.var</td>
+              <td>N/A</td>
+              <td>Planescape Torment only</td>
+              <td>File that stores variables declarations for starting game.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

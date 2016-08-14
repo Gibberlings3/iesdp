@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> D File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> D File Format</div>
+
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">Weidu</div><br />
+    
+    <div class="indent1">
+    <br />
+    NB. Description taken from Weidu readme, with permission. Check <a href="http://www.weidu.org" class="offsite"> weidu.org </a> for latest information, as this information is subject to rapid change.<br />
+    <br />
+    The <TT><A HREF="#D">D</A></TT> file format is a way of describing Infinity Engine dialogues
+    and modifications to Infinity Engine Dialogues in a portable,
+    easy-to-understand format. It supports foreign language translations and
+    allows you to describe extensions to existing game dialogues without
+    forcing you to describe their content. This allows you to write mods that
+    work with mods written by others. <br />
+    <br />
+    The <TT><A HREF="#D">D</A></TT> file format is presented here in an extended context-free
+    grammar notation. If you are unfamiliar with CFGs, take a look
+    <TT><A HREF="http://www.wikipedia.com/wiki/Context-free_grammar" class="offsite">http://www.wikipedia.com/wiki/Context-free_grammar</A></TT>
+    or 
+    <TT><A HREF="http://www.cs.rochester.edu/users/faculty/nelson/courses/csc_173/grammars/cfg.html" class="offsite">http://www.cs.rochester.edu/users/faculty/nelson/courses/csc_173/grammars/cfg.html</A></TT>. 
+    You don't really need to understand a CFG formally, though. <br />
+    <br />
+    To get a real idea of how they work, use WeiDU to create JAHEIRA.D for
+    yourself and look at it in a text editor. You can also browse the <TT>examples</TT>
+    and <TT>test</TT> directories that come with WeiDU.<br />
+    <br />
+    All of the syntax keywords are given in a <TT>UPPERCASE COURIER</TT>.
+    All other keywords are symbolic. Notes:
+    <UL><LI>
+    bar <FONT COLOR="#ff0000"> list </FONT>means "0 or more copies of bar". 
+    <LI><FONT COLOR="#ff0000"> [ </FONT>foo <FONT COLOR="#ff0000"> ] </FONT>means "an optional foo" or "0 or 1 copies of foo". 
+    <LI>foo bar ... means "you may repeat foo bar as often as you like here". 
+    </UL><br />
+    <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>D File</TT></strong><A NAME="D File"></A><A NAME="@default1"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>A <TT><A HREF="#D file">D file</A></TT> is a text file that contains a number of <TT><A HREF="#D
+     Actions">D
+     Actions</A></TT>. <TT><A HREF="#D File">D File</A></TT>s tell WeiDU how to create and modify Infinity
+     Engine <TT><A HREF="#DLG">DLG</A></TT> files.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> is</TD>
+    <TD VALIGN=top ALIGN=left><TT><A HREF="#D Action">D Action</A></TT> <FONT COLOR="#ff0000"> list </FONT></TD>
+    <TD VALIGN=top ALIGN=left>A <TT><A HREF="#D File">D File</A></TT> is a list of <TT><A HREF="#D Action">D Action</A></TT>s. Typically the first and
+     only one is <TT><A HREF="#BEGIN">BEGIN</A></TT>, which defines the content of a new dialogue.
+     Other <TT><A HREF="#D Action">D Action</A></TT>s can be used to modify existing dialogues.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>D Action</TT></strong><A NAME="D Action"></A><A NAME="@default2"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>A <TT><A HREF="#D Action">D Action</A></TT> tells WeiDU how to create or modify Infinity Engine
+     <TT><A HREF="#DLG">DLG</A></TT> files.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> is</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>BEGIN</TT></strong><A NAME="BEGIN"></A><A NAME="@default3"></A> filename <FONT COLOR="#ff0000"> [ </FONT><strong><TT>nonPausing</TT></strong><A NAME="nonPausing"></A><A NAME="@default4"></A> <FONT COLOR="#ff0000"> ] </FONT><TT><A HREF="#state">state</A></TT> <FONT COLOR="#ff0000"> list </FONT></TD>
+    <TD VALIGN=top ALIGN=left><TT><A HREF="#BEGIN">BEGIN</A></TT> tells WeiDU that you are creating a new DLG file from
+     scratch. Any existing DLG file with the same name will be overwriten. 
+     The new DLG file contains exactly the <TT><A HREF="#state">state</A></TT>s in the list. 
+     If you set <TT><A HREF="#nonPausing">nonPausing</A></TT> to a non-zero integer, the game will not
+     ``stop time'' while the conversation takes place. By default time stops
+     during conversations.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>APPEND</TT></strong><A NAME="APPEND"></A><A NAME="@default5"></A> filename <TT><A HREF="#state">state</A></TT> list <TT>END</TT></TD>
+    <TD VALIGN=top ALIGN=left>This tells WeiDU to place the given <TT><A HREF="#state">state</A></TT>s at the end of the
+     already-existing dialogue <TT>filename.<A HREF="#DLG">DLG</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>CHAIN</TT></strong><A NAME="CHAIN"></A><A NAME="@default6"></A> 
+     <FONT COLOR="#ff0000"> [ </FONT><TT>IF</TT> <FONT COLOR="#ff0000"> [ </FONT><TT>WEIGHT</TT> <TT>#</TT>weight <FONT COLOR="#ff0000"> ] </FONT><TT>stateTriggerString</TT> <FONT COLOR="#ff0000"> [ </FONT><TT>THEN</TT> <FONT COLOR="#ff0000"> ]  ] </FONT>entryFilename entryLabel <TT><A HREF="#chainText">chainText</A></TT> <FONT COLOR="#ff0000"> list </FONT><TT><A HREF="#chainEpilogue">chainEpilogue</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to make a long conversation in which the PC can say
+     nothing. This is useful when you want the NPCs to talk among themselves
+     for a long time. It and its friends, <TT><A HREF="#INTERJECT">INTERJECT</A></TT> and
+     <TT><A HREF="#INTERJECT_COPY_TRANS">INTERJECT_COPY_TRANS</A></TT> can incredible time-savers when you're
+     writing non-trivial dialogue. See the examples for ideas. <TT><A HREF="#CHAIN">CHAIN</A></TT>
+     will only append to existing dialogues. You cannot use <TT><A HREF="#CHAIN">CHAIN</A></TT> to
+     create a new DLG.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>INTERJECT</TT></strong><A NAME="INTERJECT"></A><A NAME="@default7"></A> entryFilename entryLabel <TT>globalVariable</TT>
+     <TT><A HREF="#chainText">chainText</A></TT> <FONT COLOR="#ff0000"> list </FONT>exitFilename exitLabel</TD>
+    <TD VALIGN=top ALIGN=left>Behaves like <TT><A HREF="#CHAIN">CHAIN</A></TT> except that all of the <TT><A HREF="#chainText">chainText</A></TT> is
+     additionally guarded by the <TT><A HREF="#transition">transition</A></TT> predicate <TT>Global("globalVariable","GLOBAL",0)</TT> and accompanied by the action <TT>SetGlobal("globalVariable","GLOBAL",1)</TT>. If you pick <TT>globalVariable </TT> to be unique, this will ensure that the <TT><A HREF="#chainText">chainText</A></TT> is only ever seen once per game. This is useful for making interjections.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>INTERJECT_COPY_TRANS</TT></strong><A NAME="INTERJECT_COPY_TRANS"></A><A NAME="@default8"></A> entryFilename entryLabel <TT>globalVariable</TT> <TT><A HREF="#chainText">chainText</A></TT> <FONT COLOR="#ff0000"> list </FONT></TD>
+    <TD VALIGN=top ALIGN=left>This behaves just like <TT><A HREF="#INTERJECT">INTERJECT</A></TT> except that the exitFilename and
+     exitLabel are not present. Instead, whenever the dialogue would pass out
+     of the <TT><A HREF="#chainText">chainText</A></TT> it follows a copy of the <TT><A HREF="#transition">transition</A></TT>s
+     that were at the <TT><A HREF="#state">state</A></TT> with <TT><A HREF="#stateLabel">stateLabel</A></TT> originally. This 
+     is convenient for making quick interjections from NPCs that do not actually
+     change the true flow of the conversation. See the <TT><A HREF="#transition">transition</A></TT>
+     <TT><A HREF="#COPY_TRANS">COPY_TRANS</A></TT> for more information about this idea.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>EXTEND_TOP</TT></strong><A NAME="EXTEND_TOP"></A><A NAME="@default9"></A>
+     filename <TT><A HREF="#stateLabel">stateLabel</A></TT> <FONT COLOR="#ff0000"> list  [ </FONT><TT>#positionNumber</TT> <FONT COLOR="#ff0000"> ] </FONT><TT><A HREF="#transition">transition</A></TT> <FONT COLOR="#ff0000"> list </FONT><TT>END</TT></TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to add the <TT><A HREF="#transition">transition</A></TT>s in list to the top of
+     the <TT><A HREF="#transition">transition</A></TT> list for the specified states in <TT>filename.<A HREF="#DLG">DLG</A></TT>
+     (which must already exist). <br />
+    If a <TT>positionNumber</TT> is given, WeiDU to insert the <TT><A HREF="#transition">transition</A></TT>s
+     just between already-existing transitions <TT>#positionNumber</TT> and
+     <TT>#positionNumber+1</TT> in the given states for the given file. The first
+     <TT><A HREF="#transition">transition</A></TT> is number 1.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>EXTEND_BOTTOM</TT></strong><A NAME="EXTEND_BOTTOM"></A><A NAME="@default10"></A> filename <TT><A HREF="#stateNumber">stateNumber</A></TT> <FONT COLOR="#ff0000"> list  [ </FONT><TT>#positionNumber</TT> <FONT COLOR="#ff0000"> ] </FONT><TT><A HREF="#transition">transition</A></TT> <FONT COLOR="#ff0000"> list </FONT><TT>END</TT></TD>
+    <TD VALIGN=top ALIGN=left>Behaves just like <TT><A HREF="#EXTEND_TOP">EXTEND_TOP</A></TT> but adds the transitions to the
+     bottom of the list instead.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>ADD_STATE_TRIGGER</TT></strong><A NAME="ADD_STATE_TRIGGER"></A><A NAME="@default11"></A> filename <TT><A HREF="#stateNumber">stateNumber</A></TT> 
+     <TT><A HREF="#stateTriggerString">stateTriggerString</A></TT> [ <TT><A HREF="#stateNumber">stateNumber</A></TT> <FONT COLOR="#ff0000"> list </FONT>]</TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to add the <TT><A HREF="#stateTriggerString">stateTriggerString</A></TT> to all
+     of the <TT><A HREF="#state">state</A></TT>s with the given <TT><A HREF="#stateNumber">stateNumber</A></TT>s in 
+     the file <TT>filename.<A HREF="#DLG">DLG</A></TT> (which must already exist). This is handy for
+     adding extra conditions to an existing dialogue <TT><A HREF="#state">state</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>ADD_TRANS_TRIGGER</TT></strong><A NAME="ADD_TRANS_TRIGGER"></A><A NAME="@default12"></A> filename <TT><A HREF="#stateNumber">stateNumber</A></TT> 
+     <TT><A HREF="#transTriggerString">transTriggerString</A></TT> <FONT COLOR="#ff0000"> [ </FONT><TT><A HREF="#stateNumber">stateNumber</A></TT> <FONT COLOR="#ff0000"> list  ] </FONT></TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to add the <TT><A HREF="#transTriggerString">transTriggerString</A></TT> to all
+     of the <TT><A HREF="#transition">transition</A></TT>s in all of the <TT><A HREF="#state">state</A></TT>s with the given
+     <TT><A HREF="#stateNumber">stateNumber</A></TT>s in the file <TT>filename.<A HREF="#DLG">DLG</A></TT> (which must already
+     exist). This is often used in conjunction with <TT><A HREF="#EXTEND_BOTTOM">EXTEND_BOTTOM</A></TT> to
+     make a new branch in an existing <TT><A HREF="#state">state</A></TT>. Use
+     <TT><A HREF="#ADD_TRANS_TRIGGER">ADD_TRANS_TRIGGER</A></TT> to add the negation of some predicate to all of
+     the existing <TT><A HREF="#transition">transition</A></TT>s, then use <TT><A HREF="#EXTEND_BOTTOM">EXTEND_BOTTOM</A></TT> to add a
+     <TT><A HREF="#transition">transition</A></TT> with that predicate to that <TT><A HREF="#state">state</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>REPLACE</TT></strong><A NAME="REPLACE"></A><A NAME="@default13"></A> filename <TT><A HREF="#state">state</A></TT> <FONT COLOR="#ff0000"> list </FONT><TT>END</TT></TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to load <TT>filename.<A HREF="#DLG">DLG</A></TT> and replace some of its 
+     <TT><A HREF="#state">state</A></TT>s with the new ones described in the <TT><A HREF="#state">state</A></TT> list.
+     All of the <TT><A HREF="#state">state</A></TT>s should have numeric stateLabels (e.g., "5" or
+     "67"). A new <TT><A HREF="#state">state</A></TT> with label <TT>X</TT> will replace the old 
+     <TT><A HREF="#state">state</A></TT> number <TT>X</TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>SET_WEIGHT</TT></strong><A NAME="SET_WEIGHT"></A><A NAME="@default14"></A> filename <TT><A HREF="#stateLabel">stateLabel</A></TT> <TT>#stateWeight</TT></TD>
+    <TD VALIGN=top ALIGN=left>This instructcs WeiDU to destructively change the <TT><A HREF="#WEIGHT">WEIGHT</A></TT> of the
+     given <TT><A HREF="#state">state</A></TT> in <TT>filename.<A HREF="#DLG">DLG</A></TT> (which must exist). This should only
+     be used to patch or workaround existing dialogues. Never use
+     <TT><A HREF="#SET_WEIGHT">SET_WEIGHT</A></TT> if you can help it.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>REPLACE_SAY</TT></strong><A NAME="REPLACE_SAY"></A><A NAME="@default15"></A> filename <TT><A HREF="#stateLabel">stateLabel</A></TT> <TT><A HREF="#sayString">sayString</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to destructively change the <TT><A HREF="#sayString">sayString</A></TT> of the
+     given <TT><A HREF="#state">state</A></TT> in <TT>filename.<A HREF="#DLG">DLG</A></TT> (which must exist). This should only
+     be used to patch or workaround existing dialogues. Never use
+     <TT><A HREF="#REPLACE_SAY">REPLACE_SAY</A></TT> if you can help it.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>REPLACE_STATE_TRIGGER</TT></strong><A NAME="REPLACE_STATE_TRIGGER"></A><A NAME="@default16"></A> filename <TT><A HREF="#stateNumber">stateNumber</A></TT> 
+     <TT><A HREF="#stateTriggerString">stateTriggerString</A></TT> <FONT COLOR="#ff0000"> [ </FONT><TT><A HREF="#stateNumber">stateNumber</A></TT> <FONT COLOR="#ff0000"> list  ] </FONT></TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to destructively set the
+     <TT><A HREF="#stateTriggerString">stateTriggerString</A></TT> of all of the <TT><A HREF="#state">state</A></TT>s with the given
+     <TT><A HREF="#stateNumber">stateNumber</A></TT>s in the file <TT>filename.<A HREF="#DLG">DLG</A></TT> (which must already
+     exist). It should be used with caution.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>REPLACE_TRIGGER_TEXT</TT></strong><A NAME="REPLACE_TRIGGER_TEXT"></A><A NAME="@default17"></A> filename oldText newText</TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to destructively replace every occurrence of oldText
+     (which may be a <TT><A HREF="#regexp">regexp</A></TT>) in the <TT><A HREF="#stateTriggerString">stateTriggerString</A></TT>s and
+     <TT><A HREF="#transTriggerString">transTriggerString</A></TT>s of <TT>filename.<A HREF="#DLG">DLG</A></TT> (which must exist). 
+     This should only be used to patch or workaround existing dialogues. Never
+     use this if you can help it.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>REPLACE_ACTION_TEXT</TT></strong><A NAME="REPLACE_ACTION_TEXT"></A><A NAME="@default18"></A> filename oldText newText</TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to destruveily replace every occurrence of oldText
+     (which may be a <TT><A HREF="#regexp">regexp</A></TT>) in the <TT><A HREF="#stateActionString">stateActionString</A></TT>s 
+     of <TT>filename.<A HREF="#DLG">DLG</A></TT> (which must exist). This should only be used
+     to patch or workaround existing dialogues. Never use this if you can help
+     it.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP> or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>REPLACE_ACTION_TEXT_PROCESS</TT></strong><A NAME="REPLACE_ACTION_TEXT_PROCESS"></A><A NAME="@default19"></A> filename oldText newText</TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to destruveily replace every occurrence of oldText
+     (which may be a <TT><A HREF="#regexp">regexp</A></TT>) in the <TT><A HREF="#stateActionString">stateActionString</A></TT>s 
+     of <TT>filename.<A HREF="#DLG">DLG</A></TT> (which must exist) with newText. However,
+     newText is first compiled as a <TT><A HREF="#BAF">BAF</A></TT> action list. In particular,
+     this means that replacing with commands like:
+     <PRE>
+      ~DisplayString(Myself,@123)~
+      </PRE>... will do what you expect. This should only be used to patch or
+     workaround existing dialogues. Never use this if you can help it.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>chainEpilogue</TT></strong><A NAME="chainEpilogue"></A><A NAME="@default20"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>Determines where the dialogue should flow at the
+    end of the <TT><A HREF="#CHAIN">CHAIN</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>is</TD>
+    <TD VALIGN=top ALIGN=left><TT>END</TT> filename stateNumber</TD>
+    <TD VALIGN=top ALIGN=left>Transfer to the given state in the given dialogue file.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><TT>EXTERN</TT> filename stateNumber</TD>
+    <TD VALIGN=top ALIGN=left>Transfer to the given state in the given dialogue file.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><TT>COPY_TRANS</TT> filename stateNumber</TD>
+    <TD VALIGN=top ALIGN=left>At the end of the
+    <TT><A HREF="#CHAIN">CHAIN</A></TT> text, copy all transitions from the given state in the
+    given file. This is useful for interjections (see <TT><A HREF="#INTERJECT">INTERJECT</A></TT>).</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><TT>EXIT</TT></TD>
+    <TD VALIGN=top ALIGN=left>At the end of the <TT><A HREF="#CHAIN">CHAIN</A></TT> text, exit the dialogue.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left>END <TT><A HREF="#transition">transition</A></TT> <FONT COLOR="#ff0000"> list </FONT></TD>
+    <TD VALIGN=top ALIGN=left>Execute the given <TT><A HREF="#transition">transition</A></TT>s
+    after the final state in the <TT><A HREF="#CHAIN">CHAIN</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>state</TT></strong><A NAME="state"></A><A NAME="@default21"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>In Infinity Engine games, this is the fundamental unit
+    of dialogue.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>is</TD>
+    <TD VALIGN=top ALIGN=left><TT>IF</TT> <FONT COLOR="#ff0000"> [ </FONT><strong><TT>WEIGHT</TT></strong><A NAME="WEIGHT"></A><A NAME="@default22"></A> <TT>#weightNumber</TT> <FONT COLOR="#ff0000"> ] </FONT><strong><TT>stateTriggerString</TT></strong><A NAME="stateTriggerString"></A><A NAME="@default23"></A> <FONT COLOR="#ff0000"> [ </FONT><TT>THEN</TT> <FONT COLOR="#ff0000"> ]  [ </FONT><TT>BEGIN</TT> <FONT COLOR="#ff0000"> ] </FONT><strong><TT>stateLabel</TT></strong><A NAME="stateLabel"></A><A NAME="@default24"></A> <TT>SAY</TT> <strong><TT>sayText</TT></strong><A NAME="sayText"></A><A NAME="@default25"></A> <FONT COLOR="#ff0000"> [ </FONT>=
+     <TT><A HREF="#SayText">SayText</A></TT> ... <FONT COLOR="#ff0000"> ] </FONT><TT><A HREF="#transition">transition</A></TT> list <TT>END</TT></TD>
+    <TD VALIGN=top ALIGN=left>When you start conversing with a creature that uses a <TT><A HREF="#DLG">DLG</A></TT> file, the
+     Infinity Engine searches through all of the <TT><A HREF="#state">state</A></TT>s in that file
+     in order of increasing <TT><A HREF="#WEIGHT">WEIGHT</A></TT> and selects the first one it finds
+     for which the <TT><A HREF="#stateTriggerString">stateTriggerString</A></TT> is both true and not empty. 
+     The creature then says all of the associated <TT><A HREF="#sayText">sayText</A></TT>. Finally,
+     the <TT><A HREF="#transitions">transitions</A></TT> are evaluted in bottom-up (i.e., reverse) order.
+     If a <TT><A HREF="#transition">transition</A></TT> is found with a <TT><A HREF="#transTriggerString">transTriggerString</A></TT> that
+     evaluates to True and no <TT><A HREF="#replyText">replyText</A></TT>, that <TT><A HREF="#transition">transition</A></TT> is
+     immediately executed. Otherwise, all of the <TT><A HREF="#transition">transition</A></TT>s are
+     presented as options to the PC. <br />
+     <br />
+    If a <TT><A HREF="#stateLabel">stateLabel</A></TT> is an integer it is called a
+     <strong><TT>stateNumber</TT></strong><A NAME="stateNumber"></A><A NAME="@default26"></A>. All of the states in the <TT><A HREF="#DLG">DLG</A></TT> files that
+     come with the original game use <TT><A HREF="#stateNumber">stateNumber</A></TT>s. Only <TT><A HREF="#D">D</A></TT>
+     files use symbolic strings for <TT><A HREF="#stateLabel">stateLabel</A></TT>s. <br />
+     <br />
+    Including more than one bit of <TT><A HREF="#sayText">sayText</A></TT> here is often called
+     <TT><A HREF="#Multisay">Multisay</A></TT>. <br />
+     <br />
+    Finally, once you are familiar with the syntax you may omit the <TT>THEN</TT>
+     and <TT>BEGIN</TT> keywords if you like.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>APPENDI</TT></strong><A NAME="APPENDI"></A><A NAME="@default27"></A> filename <TT><A HREF="#state">state</A></TT> <FONT COLOR="#ff0000"> list </FONT><TT>END</TT></TD>
+    <TD VALIGN=top ALIGN=left>This is legacy syntax that behaves just like the <TT><A HREF="#D Action">D Action</A></TT>
+     <TT><A HREF="#APPEND">APPEND</A></TT> but is considered a <TT><A HREF="#state">state</A></TT>. Avoid it.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>CHAIN2</TT></strong><A NAME="CHAIN2"></A><A NAME="@default28"></A> entryFilename entryLabel 
+     <TT>chain2Text</TT> <FONT COLOR="#ff0000"> list </FONT>exitFilename exitLabel</TD>
+    <TD VALIGN=top ALIGN=left>This is legacy syntax that behaves somewhat like the <TT><A HREF="#D Action">D Action</A></TT>
+     <TT><A HREF="#CHAIN">CHAIN</A></TT> but is considered a <TT><A HREF="#state">state</A></TT>. In addition, 
+     <TT>chain2Text</TT> is slightly different from <TT><A HREF="#chainText">chainText</A></TT>. Avoid
+     this construction.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>transition</TT></strong><A NAME="transition"></A><A NAME="@default29"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>Transitions determine how dialogue flows from one
+    state to another.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>is</TD>
+    <TD VALIGN=top ALIGN=left><TT>IF</TT> <strong><TT>transTriggerString</TT></strong><A NAME="transTriggerString"></A><A NAME="@default30"></A> <FONT COLOR="#ff0000"> [ </FONT><TT>THEN</TT> <FONT COLOR="#ff0000"> ] </FONT><TT><A HREF="#transFeature">transFeature</A></TT> <FONT COLOR="#ff0000"> list </FONT><TT><A HREF="#transNext">transNext</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>If the <TT><A HREF="#transTriggerString">transTriggerString</A></TT> evaluates to true or is empty, this
+     <TT><A HREF="#transition">transition</A></TT> is viable. If it contains no <TT><A HREF="#replyText">replyText</A></TT>
+     within its <TT><A HREF="#transFeature">transFeature</A></TT> list, it is immediately taken.
+     Otherwise, the <TT><A HREF="#replyText">replyText</A></TT> is presented as an option to the user. 
+     If the transition is taken, any actions in the <TT><A HREF="#transFeature">transFeature</A></TT>
+     list are performed and the dialogue flows to the point indicated by the
+     <TT><A HREF="#transNext">transNext</A></TT>. 
+     <TT><A HREF="#transition">transition</A></TT>s are evaluated in "reverse order". That is, the "bottom"
+     or "last" response for a <TT><A HREF="#state">state</A></TT> is checked first. If its
+     <TT><A HREF="#transTriggerString">transTriggerString</A></TT>
+     evaluates to true and it has no <TT><A HREF="#REPLY">REPLY</A></TT> text, that transition is
+     immediately taken. See <TT>SAREV25A</TT> <TT><A HREF="#state">state</A></TT> 1 for an example of a
+     <TT><A HREF="#state">state</A></TT> with all kinds of <TT><A HREF="#transition">transition</A></TT>s.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><TT>+</TT> <FONT COLOR="#ff0000"> [ </FONT><TT><A HREF="#transTriggerString">transTriggerString</A></TT> <FONT COLOR="#ff0000"> ] </FONT><TT>+</TT> <TT><A HREF="#replyText">replyText</A></TT>
+     <TT><A HREF="#transFeature">transFeature</A></TT> <FONT COLOR="#ff0000"> list </FONT><TT><A HREF="#transNext">transNext</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>This abbreviated syntax for transitions that would contain <TT><A HREF="#REPLY">REPLY</A></TT>
+     (which is by far the most common case) allows you to save yourself 
+     some time and typing. It behaves like the full form above.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>COPY_TRANS</TT></strong><A NAME="COPY_TRANS"></A><A NAME="@default31"></A> filename <TT><A HREF="#stateLabel">stateLabel</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>This instructs WeiDU to copy all of the <TT><A HREF="#transition">transition</A></TT>s from the
+     <TT><A HREF="#state">state</A></TT> with the given <TT><A HREF="#stateLabel">stateLabel</A></TT> in <TT>filename.<A HREF="#DLG">DLG</A></TT>. This
+     copying takes place before all other <TT><A HREF="#D Action">D Action</A></TT>s. For example,
+     this is a valid <TT><A HREF="#transition">transition</A></TT> list:
+    
+    <pre width="80"><font color="#3159D1">IF <font color="#868626">~Before()~</font> THEN GOTO</font> my_state
+    <font color="#3159D1">COPY_TRANS</font> PLAYER1 <font color="#0000FF">33</font>
+    <font color="#3159D1">IF <font color="#868626">~After()~</font> THEN EXTERN</font> SOLA <font color="#0000FF">55</font></pre></TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>transFeature</TT></strong><A NAME="transFeature"></A><A NAME="@default32"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>These are features or actions associated with
+    taking a transition.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>is</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>REPLY</TT><A NAME="REPLY"></A><A NAME="@default33"></A> <TT>replyText</TT></strong><A NAME="replyText"></A><A NAME="@default34"></A></TD>
+    <TD VALIGN=top ALIGN=left>If this <TT><A HREF="#transition">transition</A></TT> is taken, the PC says the <TT><A HREF="#replyText">replyText</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>DO</TT><A NAME="DO"></A><A NAME="@default35"></A> <TT>stateActionString</TT></strong><A NAME="stateActionString"></A><A NAME="@default36"></A></TD>
+    <TD VALIGN=top ALIGN=left>If this <TT><A HREF="#transition">transition</A></TT> is taken, the <TT><A HREF="#stateActionString">stateActionString</A></TT> is
+     executed.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>JOURNAL</TT></strong><A NAME="JOURNAL"></A><A NAME="@default37"></A> <TT><A HREF="#text">text</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>If this <TT><A HREF="#transition">transition</A></TT> is taken, the <TT><A HREF="#text">text</A></TT> is added to the
+     PC's journal.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>SOLVED_JOURNAL</TT></strong><A NAME="SOLVED_JOURNAL"></A><A NAME="@default38"></A> <TT><A HREF="#text">text</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>If this <TT><A HREF="#transition">transition</A></TT> is taken, the <TT><A HREF="#text">text</A></TT> is added to the
+     ``solved'' section of the PC's journal.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>UNSOLVED_JOURNAL</TT></strong><A NAME="UNSOLVED_JOURNAL"></A><A NAME="@default39"></A> <TT><A HREF="#text">text</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>If this <TT><A HREF="#transition">transition</A></TT> is taken, the <TT><A HREF="#text">text</A></TT> is added to the
+     ``unsolved'' section of the PC's journal.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>FLAGS</TT></strong><A NAME="FLAGS"></A><A NAME="@default40"></A> integer</TD>
+    <TD VALIGN=top ALIGN=left>This allows you to set the features associated with a transition directly
+     using the binary format of <TT><A HREF="#DLG">DLG</A></TT> files. Do not use this!</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>transNext</TT></strong><A NAME="transNext"></A><A NAME="@default41"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>This determines where dialogue flows after a
+    transition has been taken.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>is</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>GOTO</TT></strong><A NAME="GOTO"></A><A NAME="@default42"></A> <TT><A HREF="#stateLabel">stateLabel</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>The dialogue continues at the state with label <TT><A HREF="#stateLabel">stateLabel</A></TT> in the
+     same <TT><A HREF="#DLG">DLG</A></TT> file as the current <TT><A HREF="#state">state</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>EXTERN</TT></strong><A NAME="EXTERN"></A><A NAME="@default43"></A> filename <TT><A HREF="#stateLabel">stateLabel</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>The dialogue continues at the state with label <TT><A HREF="#stateLabel">stateLabel</A></TT> in the
+     file <TT>filename.<A HREF="#DLG">DLG</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><strong><TT>EXIT</TT></strong><A NAME="EXIT"></A><A NAME="@default44"></A></TD>
+    <TD VALIGN=top ALIGN=left>The conversation ends.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><TT>+</TT> <TT><A HREF="#stateLabel">stateLabel</A></TT></TD>
+    <TD VALIGN=top ALIGN=left>This is a synonym for <TT><A HREF="#GOTO">GOTO</A></TT>.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>chainText</TT></strong><A NAME="chainText"></A><A NAME="@default45"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>This is a rapid shorthand for chaining together many
+    little bits of dialogue when the PC is not saying anything.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>is</TD>
+    <TD VALIGN=top ALIGN=left><FONT COLOR="#ff0000"> [ </FONT><TT>IF</TT> <TT><A HREF="#transTriggerString">transTriggerString</A></TT> <TT>THEN</TT> <FONT COLOR="#ff0000"> ] </FONT><TT><A HREF="#sayText">sayText</A></TT> 
+     = <TT><A HREF="#sayText">sayText</A></TT> ...</TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>followed by</TD>
+    <TD VALIGN=top ALIGN=left><FONT COLOR="#ff0000"> [ </FONT>== fileName 
+     <FONT COLOR="#ff0000"> [ </FONT><TT>IF</TT> <TT><A HREF="#transTriggerString">transTriggerString</A></TT> <TT>THEN</TT> <FONT COLOR="#ff0000"> ] </FONT><TT><A HREF="#sayText">sayText</A></TT> 
+     = <TT><A HREF="#sayText">sayText</A></TT> ... <FONT COLOR="#ff0000"> ] </FONT></TD>
+    <TD VALIGN=top ALIGN=left>The == (that's two consecutive equal signs) marks the beginning of a
+     new speaker (indicated by fileName). If the
+     <TT><A HREF="#transTriggerString">transTriggerString</A></TT> is true or if it is not present, this new
+     speaker says all of its <TT><A HREF="#sayText">sayText</A></TT> in order.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>&nbsp;</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP><strong><TT>text</TT></strong><A NAME="text"></A><A NAME="@default46"></A></TD>
+    <TD VALIGN=top ALIGN=left>&nbsp;</TD>
+    <TD VALIGN=top ALIGN=left>This represents strings that are shown to the player,
+    rather than strings that the game uses internally for predicates and
+    actions.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>is</TD>
+    <TD VALIGN=top ALIGN=left>string <FONT COLOR="#ff0000"> [ </FONT><TT>[WAVEFILE]</TT> <FONT COLOR="#ff0000"> ] </FONT></TD>
+    <TD VALIGN=top ALIGN=left>The given string is used for both male and
+    female players. The optional <TT>[WAVEFILE]</TT> is the associated sound.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left>string <FONT COLOR="#ff0000"> [ </FONT><TT>[WAVEFILE]</TT> <FONT COLOR="#ff0000"> ] </FONT>string <FONT COLOR="#ff0000"> [ </FONT><TT>[WAVEFILE]</TT> <FONT COLOR="#ff0000"> ] </FONT></TD>
+    <TD VALIGN=top ALIGN=left>The first string and soudn file are used if the PC is male, the second
+    string and sound file are used if the PC is female. This is useful mainly
+    for international versions of Infinity Engine games.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><TT>#integer</TT></TD>
+    <TD VALIGN=top ALIGN=left>The string with reference number <TT>#integer</TT> from
+    <TT>DIALOG.<A HREF="#TLK">TLK</A></TT> should be used unchanged.</TD>
+    </TR>
+    <TR><TD VALIGN=top ALIGN=center NOWRAP>or</TD>
+    <TD VALIGN=top ALIGN=left><TT>@integer</TT></TD>
+    <TD VALIGN=top ALIGN=left>The last definition of the translation string
+    <TT>@integer</TT> given in any <TT><A HREF="#TRA">TRA</A></TT> file should be used.</TD>
+    </TR></TABLE><br />
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

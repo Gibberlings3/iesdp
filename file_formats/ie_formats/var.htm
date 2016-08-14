@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> VAR File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+
+    <div class="title_main">VAR file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">PST</div>
+    <br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      This file format is used to declare variables for use in scripting - it is the only way new variables can be added. Variables should be alphabetically ordered (within their appropriate scope section). Globals and Locals work as with other engines, the KAPUTZ scope acts as the SPRITE_ID_DEAD scope of the BG series. The var.var file is located the root folder of the game directory.<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+    <br />
+    <div class="fileHeader">Dead entry</div>
+    <br />
+    <table border="1" width="98%">
+      <colgroup>
+        <col width="5%" />
+        <col width="12%" />
+         <col width="*" />
+      </colgroup>
+      <thead>
+      <tr>
+        <th>Offset</th>
+        <th>Size (data type)</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0x0000</td>
+          <td>8 (char array)</td>
+          <td>Dead entry ('902&nbsp;&nbsp;&nbsp;&nbsp; ')</td>
+        </tr>
+        <tr>
+          <td>0x0008</td>
+          <td>32 (char array)</td>
+          <td>Dead entry ('No_Anarchy                        ')</td>
+        </tr>
+        <tr>
+          <td>0x00028</td>
+          <td>4 (dword)</td>
+          <td>Variable value (0x00000000)</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    
+    <div class="fileHeader">Variable definition sections</div>
+    <br />
+    <table border="1" width="98%">
+      <colgroup>
+        <col width="5%" />
+        <col width="12%" />
+         <col width="*" />
+      </colgroup>
+      <thead>
+      <tr>
+        <th>Offset</th>
+        <th>Size (data type)</th>
+        <th>Description></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>0x0000</td>
+        <td>8 (char array)</td>
+        <td>Variable scope (Global, Locals, etc.)</td>
+      </tr>
+      <tr>
+        <td>0x0008</td>
+        <td>32 (char array)</td>
+        <td>Variable name</td>
+      </tr>
+      <tr>
+        <td>0x0028</td>
+        <td>4 (dword)</td>
+        <td>Variable value</td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

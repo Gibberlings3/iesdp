@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> KFU File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> KFU File Format </div>
+
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">Winbiff</div><br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      This file format describes data to be added to chitin.key and dialog.tlk.<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Overall Structure:<br />
+        <ul>
+          <li><a href="#kfu_v1_Header">KFU V1 Header</a></li>
+          <li><a href="#kfu_v1_Biff_Entry">KFU V1 Biff Entry</a></li>
+          <li><a href="#kfu_v1_Resource_Entry">KFU V1 Resource Entry</a></li>
+          <li><a href="#kfu_v1_Stringref_Entry">KFU V1 Strref Entry</a></li>
+        </ul>
+      <br />
+    </div>
+    
+    <div class="fileHeader"><a name="kfu_v1_Header">KFU V1 Header</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <tr>
+          <th>Offset</th>
+          <th>Size (data type)</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>0x0000</td>
+          <td>4(char array)</td>
+          <td>Signature</td>
+        </tr>
+        <tr>
+          <td>0x0004</td>
+          <td>4(char array)</td>
+          <td>Version</td>
+        </tr>
+        <tr>
+          <td>0x0008</td>
+          <td>4(dword)</td>
+          <td>Count of BIFF entries</td>
+        </tr>
+        <tr>
+          <td>0x000c</td>
+          <td>4(dword)</td>
+          <td>Offset to BIFF entries</td>
+        </tr>
+        <tr>
+          <td>0x0010</td>
+          <td>4(dword)</td>
+          <td>Count of strrefs to add to dialog.tlk</td>
+        </tr>
+        <tr>
+          <td>0x0014</td>
+          <td>4(dword)</td>
+          <td>Offset to strref entries</td>
+        </tr>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="kfu_v1_Biff_Entry">KFU V1 Biff Entry</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <tr>
+          <th>Offset</th>
+          <th>Datatype</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>0x0000</td>
+          <td>4(dword)</td>
+          <td>Size of BIFF</td>
+        </tr>
+        <tr>
+          <td>0x0004</td>
+          <td>4(dword)</td>
+          <td>Length of filename</td>
+        </tr>
+        <tr>
+          <td>0x0008</td>
+          <td>4(dword)</td>
+          <td>Offset to filename</td>
+        </tr>
+        <tr>
+          <td>0x000c</td>
+          <td>4(dword)</td>
+          <td>Count of resources</td>
+        </tr>
+        <tr>
+          <td>0x0010</td>
+          <td>4(dword)</td>
+          <td>Offset to resources</td>
+        </tr>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="kfu_v1_Resource_Entry">KFU V1 Resource Entry</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+          <col width="*" />
+        </colgroup>
+        <tr>
+          <th>Offset</th>
+          <th>Datatype</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>0x0000</td>
+          <td>8(resref)</td>
+          <td>Resource name</td>
+        </tr>
+        <tr>
+          <td>0x0008</td>
+          <td>2(word)</td>
+          <td>Resource type</td>
+        </tr>
+      </table>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="kfu_v1_Stringref_Entry">KFU V1 Strref Entry</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <tr>
+          <th>Offset</th>
+          <th>Datatype</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>0x0000</td>
+          <td>4(dword)</td>
+          <td>Length of string</td>
+        </tr>
+        <tr>
+          <td>0x0004</td>
+          <td>4(dword)</td>
+          <td>Offset to string</td>
+        </tr>
+        <tr>
+          <td>0x0008</td>
+          <td>4(dword)</td>
+          <td>Offset in BIFF file to change to new strref</td>
+        </tr>
+        <tr>
+          <td>0x000c</td>
+          <td>4(dword)</td>
+          <td>Bif Index</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

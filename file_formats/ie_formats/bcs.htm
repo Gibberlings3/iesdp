@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> BCS File Format </title>
+<link rel="stylesheet" type="text/css" href="../../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+
+    <div class="title_main">BCS / BS file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div>
+    <br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">These files represent scripted actions. <code>.bcs</code> files are scripts attached to anything other than the player characters.&nbsp; <code>.bs</code> files are scripts which drive a characters actions automatically (AI scripts) based on criteria in the environment.<br />
+    Just as the files from which they are compiled, these script files make use of the concept of &quot;triggers&quot; and &quot;responses&quot;. A trigger is a condition which causes a response with a certain probability. A response is one or more calls to functions they have exposed to the script. I believe this to be the difference between <code>.bcs</code> and <code>.bs</code> files. (They are assigned different resource types in the resource management code, too.)<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <br />
+    <div class="indent1">
+    The format will be given in a top-down sense: i.e. I will describe the formatting of top-level blocks, and then I will describe the contents of the blocks. The process will proceed recursively until the whole format is described. The top-level block is the <a href="#pFILE">script file</a>.<br />
+    <br />
+    <div class="fileHeader"><a name="pPARAM">Parameters</a></div>
+    First, a brief word on &quot;function parameters&quot;. Both <a href="#pTRIGGER">triggers</a> and <a href="#pACTION">actions</a> are essentially calls to functions inside the Infinity Engine. Triggers can take up to 7 arguments, and actions can take up to 10 arguments. There are three allowable forms of arguments: strings, integers, and objects. The different function calls are defined in TRIGGER.IDS and ACTION.IDS. There are also functions defined in SVTRIOBJ.IDS, which are a {sub|super} set of of the function calls defined in TRIGGER.IDS. They are probably used for {insert spiel here}. String arguments are simply quoted strings (i.e. ASCII strings delimited by the double quote character &quot;). The format of these descriptions is given below, by way of an example (from BG's TRIGGER.IDS):<br />
+    <pre>0x401D Specifics(O:Object*,I:Specifics*Specific)</pre>
+    The first thing on the line is the ID (in hex. IDs in scripts are typically in decimal). Next is the name of the function. Inside the parentheses, similarly to C/C++, is a comma-delimited list of argument type and argument name. The argument types are:<br />
+    <div class="indent1">
+      <li>S: string
+      <li>O: <a href="#pOBJECT">object</a>
+      <li>I: integer
+      <li>P: point
+      <li>A: action</li>
+    </div>
+    
+    There is always a tag after the <code>:</code> and before the <code>*</code>. I believe the tag is used only for expository function -- i.e. simply an argument name to help discern the purpose. There is, however, one minor complication. Actions only have space for 2 string parameters. There are actions taking anywhere from 0 to 4 strings. Some of the actions which take strings (usually either 2 or 4 strings) actually concatenate the strings. In this case, it is always an &quot;Area&quot; and a &quot;Name&quot; parameter, (though the parameter names vary somewhat). The only surefire way to tell which is which is to hardcode the values of the actions which concatenate strings. When the strings are concatenated, the &quot;Area&quot; is always the first part of the resulting string, and always takes exactly 6 characters. It works, in most respects, just like a namespace qualifier in, for instance, <code>C++</code>. An aside: The functions which actually concatenate the strings are typically the ones which access &quot;global variables&quot;, i.e. Global, SetGlobal, IncrementGlobal, et cetera. I am not certain, at present, how &quot;action&quot; type parameters are stored. This will require some investigation.<br />
+    The final detail in the above example is the bit following the <code>*</code>. This occurs (I believe) only in integer arguments; the string following the asterisk is the name of an IDS file. The values in the IDS file are the only allowed values for that parameter; moreover, it is extremely probable that the parameter can be accessed using the symbolic names given in the IDS file, though  this is merely speculation. Each trigger can use up to 2 (3?) integer arguments, up to 2 string arguments, and one object argument. These seven arguments are always specified in each trigger, even if they are not all used. If an argument is not used, it is assigned a dummy value. Finally, the arguments are used in order when they are listed in the scripts. For instance, two integer parameters always occupy the first two &quot;integer parameter&quot; slots in the trigger or action. A trigger has an additional &quot;flags&quot; field, in which, for instance, a bit is either set or cleared to indicate whether the trigger is to be negated or not. (i.e. whether the success of the trigger should return true or false).<br />
+    <br />
+    
+    <div class="fileHeader"><a name="pFILE">Script file</a></div>
+    <div class="indent1">
+      <li><code>SC</code> (newline)
+      <li><a href="#pCONDRESP">Condition-response block</a>
+      <li><a href="#pCONDRESP">Condition-response block</a>
+      <li>...
+      <li><a href="#pCONDRESP">Condition-response block</a>
+      <li><code>SC</code> (newline)</li>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="pCONDRESP">Condition-response block</a></div>
+    <div class="indent1">
+    This can be interpreted as &quot;if condition, then response set&quot;. A response set is a set of actions, each of which is performed with a certain probability.<br />
+    <div class="indent1">
+      <li><code>CR</code> (newline)
+      <li><a href="#pCONDITION">Condition</a>
+      <li><a href="#pRESPSET">Response set</a>
+      <li><code>CR</code> (newline)</li>
+    </div>
+    </div>
+    
+    <div class="fileHeader"><a name="pCONDITION">Condition</a></div>
+    <div class="indent1">
+    This should be interpreted as the AND of all the &quot;trigger&quot; conditions. The condition is true iff all triggers inside are true.<br />
+    <ul>
+      <li><code>CO</code> (newline)
+      <li><a href="#pTRIGGER">Trigger</a>
+      <li><a href="#pTRIGGER">Trigger</a>
+      <li>...
+      <li><a href="#pTRIGGER">Trigger</a>
+      <li><code>CO</code> (newline)</li>
+    </ul>
+    </div>
+    
+    <div class="fileHeader"><a name="pTRIGGER">Trigger</a></div>
+    <div class="indent1">
+    This format is slightly hairier. First, it has a &quot;trigger ID&quot;, which is an ID in the TRIGGER.IDS file. Essentially, each trigger corresponds to a call to one of the functions listed in there. See the section on parameters for details.<br />
+    <div class="indent1">
+      <ul>
+        <li><code>TR</code> (newline)</li>
+        <li><strong>trigger ID</strong> from TRIGGER.IDS (no newline)</li>
+        <li>1 integer parameter (no newline)</li>
+        <li>1 flags dword (no newline):</li>
+        <ul>
+          <li>bit 0: negate condition flag (if true, this trigger is negated -- i.e. success=&gt;false, failure=&gt;true)</li>
+        </ul>
+        <li>1 integer parameter (no newline)</li>
+        <li>1 integer. Unknown purpose.</li>
+        <li>2 string parameters (no newline)</li>
+        <li>1 <a href="#pOBJECT">object</a> parameter (newline)</li>
+        <li><code>TR</code> (newline)</li>
+      </ul>
+    </div>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="pRESPSET">Response set</a></div>
+    <div class="indent1">
+    Each response in a reponse set has a certain weight associated with it. Usually, this is 100%, but if not, then the response is only played with a certain probability. To find the chance of a particular response being chosen, sum the probabilities of all the responses in the response set. Each response Rnhas a probability <code>Pn/Sum(P)</code> of being chosen, if the response set is to be played.<br />
+    <div class="indent1">
+      <li><code>RS</code> (newline)
+      <li><a href="#pRESPONSE">Response</a>
+      <li><a href="#pRESPONSE">Response</a>
+      <li>...
+      <li><a href="#pRESPONSE">Response</a></li>
+    </div>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="pRESPONSE">Response</a></div>
+    <div class="indent1">
+    A response is simply the concatenation of a probability and an <a href="#pACTION">ACTION</a>.<br />
+    <div class="indent1">
+      <li><code>RE</code> (newline)
+      <li>weight. i.e. how likely this response is to occur, given that the response set is to be run (no newline -- often no whitespace, though that may not be important).
+      <li><a href="#pACTION">action</a> (newline)
+      <li><code>RE</code> (newline)</li>
+    </div>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="pACTION">Action</a></div>
+    <div class="indent1">
+    This format is slightly hairier. First, it has a &quot;action ID&quot;, which is an ID in the action.IDS file. Essentially, each action corresponds to a call to one of the functions listed in there. See the section on <a href="#pPARAM">parameters</a>for details.<br />
+    <div class="indent1">
+      <li><code>AC</code> (newline)
+      <li><strong>action ID</strong> from ACTION.IDS (no newline)
+      <li>3 <a href="#pOBJECT">object</a> parameters (newlines after each)
+      <li>1 integer parameters (no newline)
+      <li>1 point parameter (formatted as two integers <code>x y</code>) (no newline)
+      <li>2 integer parameters (no newline)
+      <li>2 string parameters (no newline)
+      <li><code>AC</code> (newline)</li>
+    </div>
+    </div>
+    <br />
+    
+    <div class="fileHeader"><a name="pOBJECT">Object</a></div>
+    <div class="indent1">
+    Objects represent things (i.e. characters) in the game. An object has several parameters. These parameters have enumerated values which can be looked up in .IDS files. Planescape: Torment has more parameters than BG did.<br />
+    <dl>
+      <dt>TEAM (Planescape: Torment only)
+      <dd>Every object in Torment can have a TEAM. Most objects do <em>not</em> have a team specified.
+      <dt>FACTION (Planescape: Torment only)
+      <dd>Every object in Torment can belong to a FACTION. Most creatures do, in fact, belong to a faction.
+      <dt>EA (Enemy-Ally)
+      <dd>Whether the character is friendly to your party. Values include &quot;INANIMATE&quot; (=1), for inanimate objects, &quot;PC&quot; (=2) for characters belonging to the player, &quot;CHARMED&quot; (=6) for characters     who have been charmed, and hence are under friendly control, or     &quot;ENEMY&quot; (=255) for characters who are hostile towards the     character. Two special values of EA exist: &quot;GOODCUTOFF&quot; (=30) and     &quot;EVILCUTOFF&quot; (=200). Characters who are below the good cutoff are     always hostile towards characters over the evil cutoff, and vice versa. To     this end, you can use GOODCUTOFF and EVILCUTOFF as sort of     &quot;wildcards&quot;. EVILCUTOFF specifies all characters who are     &quot;evil&quot;, and GOODCUTOFF specifies all characters who are     &quot;good&quot;. Note that this has little to do with the alignment.
+      <dt>GENERAL
+      <dd>The general type of an object. This includes &quot;HUMANOID&quot;, &quot;UNDEAD&quot;, &quot;ANIMAL&quot; et cetera, but also &quot;HELMET&quot;, &quot;KEY&quot;, POTION&quot;, &quot;GLOVES&quot;, et cetera.
+      <dt>RACE
+      <dd>The race of an object. Creatures obviously have a race, but items also have &quot;race&quot;, which can include a slightly more specific description of the type of item than was given in the GENERAL field. For instance, for armor items, this includes the &quot;type&quot; of the armor -- leather, chain, plate, etc.
+      <dt>CLASS
+      <dd>The class of a creature or item. Again, the class notion makes more sense for creatures, but gives some information about the specific type of an item. For a &quot;sword&quot; or &quot;bow&quot;, for instance, the class can be &quot;LONG_SWORD&quot; or &quot;LONG_BOW&quot;. As another example, the different types of spiders (phase,wraith,etc) are differentiated by the class field.
+      <dt>SPECIFIC
+      <dd>The specific type of an item. BG only defines three specific types: NORMAL, MAGIC, and NO_MAGIC. Dunno. Torment uses this field much more extensively to differentiate precise individuals matching a description from everyone else.
+      <dt>GENDER
+      <dd>Gender field. There are, mind-boggling as it may seem, five possible values for this in BG, including the expected MALE and FEMALE. There's also &quot;NIETHER&quot; (sic), which I presume was meant as NEITHER. Finally, there are OTHER and BOTH.
+      <dt>ALIGNMENT
+      <dd>This field is fairly obvious. The high nybble is the Chaotic-Lawful axis, and the low nybble is the Good-Evil axis. The values for this are specified in ALIGNMEN.IDS. The only nuance to this is that there are several values MASK_CHAOTIC, MASK_LCNEUTRAL, MASK_LAWFUL, MASK_EVIL, MASK_GENEUTRAL, MASK_GOOD which are wildcards, meaning, respectively, all chaotic objects, all neutral (on the lawful-chaotic axis) objects, all lawful objects, all evil objects, all neutral (good-evil axis) objects, and all good objects.
+      <dt>IDENTIFIERS
+      <dd>The 5 identifiers for an object allow functional specification of an object (LastAttackedBy(Myself), etc.) These values are looked up in OBJECT.IDS. Any unused bytes are set to 0.
+      <dt>NAME
+      <dd>This is a string parameter, and is only used for characters who have specific names. Objects can be looked up by name, or referenced by name in scripts. That is the purpose of this field.</dd>
+    </dl>
+    The specific format of an object is as follows:<br />
+    <div class="indent1">
+      <li><code>OB</code> (newline)</li>
+      <li>integer: enemy-ally field (EA.IDS)</li>
+      <li>integer: (torment only) faction (FACTION.IDS)</li>
+      <li>integer: (torment only) team (TEAM.IDS)</li>
+      <li>integer: general (GENERAL.IDS)</li>
+      <li>integer: race (RACE.IDS)</li>
+      <li>integer: class (CLASS.IDS)</li>
+      <li>integer: specific (SPECIFIC.IDS)</li>
+      <li>integer: gender (GENDER.IDS)</li>
+      <li>integer: alignment (ALIGNMEN.IDS)</li>
+      <li>integer: identifiers (OBJECT.IDS)</li>
+      <li>(Not in BG1) object coordinates</li>
+      <li>string: name</li>
+      <li><code>OB</code> (newline)</li></li>
+    </div>
+    <br />
+    Object coordinates must be specified as a point. Coordinate values which are <code>-1</code> indicate that the specified part of the coordinate is not used.<br />
+    A point is represented as:<br />
+    <pre>[x.y]</pre>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

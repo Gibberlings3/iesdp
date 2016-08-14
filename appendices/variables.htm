@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title> Variable Types </title>
+<link rel="stylesheet" type="text/css" href="../css/general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div id="nonFooter">
+  <div id="content">
+    <hr />
+    <div id="buttonboxtop"> 
+      <div id="buttonstriptop"> 
+        <a href="../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../site_info/legal.htm">Legal</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <img src="../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+    </div>
+    
+    <div class="title_main"> Variable Types</div>
+
+    <br />
+    <br />
+      A variable is a way of assiging a variable number (i.e. one that can change) to a constant name. This allows the name to be used in place of the number and allows the number to be changed. Variables in the IE are limited to a length of 32 characters (or 18 characters for the death variable, due to the preprending of SPRITE_IS_DEAD). The IE has several different scopes a variable can be part of (i.e. a way of allowing the same name to have several different values at the same time).<br />
+    <br />
+    There are three types of variables:<br />
+    <br />
+    <strong>GLOBAL: SetGlobal(&quot;XXXXXX&quot;, &quot;GLOBAL&quot;, 1)</strong><br />
+    <div class="indent1">
+      The above command sets the XXXXXX variable to 1 in the global scope. This means the variable can be seen by any other script in the game. Globals are commonly used as a method of tracking progress, or passing information between creatures.<br />
+    </div>
+    <br />
+
+    <strong>LOCALS: SetGlobal(&quot;XXXXXX&quot;, &quot;LOCALS&quot;, 1)</strong><br />
+    <div class="indent1">
+      The above command sets the XXXXXX variable to 1 in the local scope. The local scope is only valid for creatures (as opposed to area scripts or baldur.bcs). Only the creature that has set a variable in the local scope can see it. This allows for several creatures to use the same script (with the same variable names) as the value assigned to variables are for each creature. Local scope variables are often used for tracking things that are unique to a particular creature (e.g. number of spells left, a specific one-shot dialog option has been chosen etc.). In BG1, local variables are not saved - they are temporary to the current game session.<br />
+    </div>
+    <br />
+
+    <strong>AREA: SetGlobal(&quot;XXXXXX&quot;, &quot;AR0500&quot;, 1)</strong><br />
+    <div class="indent1">
+    The above command sets the XXXXXX variable to 1 in an area scope (specifically AR0500). Area scope scripts can be seen by all other scripts (in the same way globals can) but each area can have its own copy of the variable (with its own number being tracked). Area variables are used when an action can be done a limited number of times in several areas.<br />
+    <br />
+    NB. The string MYAREA can be specified as the variable scope, except in BG1. When running a script with this reference, the engine substitutes the current area for the MYAREA text.<br />
+    NB. GLOBAL, LOCALS and MYAREA are case-sensitive.<br />
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="http://iesdp.gibberlings3.net/" />
+        <input type="hidden" name="sitesearch" value="http://iesdp.gibberlings3.net/" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+    
+</body>
+</html>

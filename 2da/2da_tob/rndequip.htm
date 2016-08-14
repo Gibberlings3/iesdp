@@ -1,0 +1,43 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<strong>rndequip.2da</strong><br />
+<br />
+This file defines what items are generated when a creature uses an item of filename RNDEQUx#.ITM, where x=any character (even letters and symbols, and has no bearing on how RNDEQUIP.2DA is read), and #=the row number of RNDEQUIP.2DA to use (can be 1-9).  RNDEQUx#.ITM is replaced by the generated item.  Therefore, this works like a random treasure table.<br />
+<br />
+The first column of RNDEQUIP.2DA specifies the name of the row, currently a simple generic name.  The rest of the 20 columns have headers 1, 2, 3, 4, 5, ..., 18, 19, 20.  Note that this is different from RNDTREAS.2DA and RNDMAGIC.2DA, which do not have the column labelled '1', but similar to RNDSCROL.2DA and RNDWEP.2DA.  Only 21 columns in total are supported, else the 2da file will fail to work entirely.  When this happens, all RNDEQUx#.ITMs are replaced by erroneous invisible items that cannot be removed.<br />
+<br />
+The BG2:ToB version of RNDEQUIP.2DA is shown below.  As an example of how RNDEQUIP.2DA is used, a creature has the item RNDEQU01.ITM.  As soon as the creature is created, row 1 of RNDEQUIP.2DA is read.  A D20 is rolled, and produces a value of 6.  Row 1, column 6 reads LEAT05.  Therefore, RNDEQU01.ITM on that creature is replaced by LEAT05.<br />
+<br />
+In BG2:ToB we have:<br />
+<pre>
+2DA V1.0
+*
+           1          2          3          4          5          6          7          8          9          10         11         12         13         14         15         16         17         18         19         20         
+1st        PLAT01     SHLD04     SHLD02     BOW06      BOW02      LEAT05     SCRL68     LEAT05     PLAT01     CHAN01     CHAN02     DAGG02     DAGG02     BLUN03     BLUN07     SW1H08     SW1H05     DAGG02     SPER05     SPER06     
+2nd        PLAT04     CHAN08     CHAN02     LEAT11     SW2H11     SHLD06     STAF02     HAMM02     SW1H44     SW1H47     SW1H05     SW1H04     HALB02     DAGG15     AX1H02     AX1H11     BLUN05     BOW04      BOW18      BOW17      
+3rd        PLAT14     PLAT10     CHAN05     LEAT15     LEAT12     SHLD19     STAF18     HAMM08     SW1H02     SW1H05     SW1H22     SPER02     SW2H02     SW1H09     SW1H42     SW1H41     BLUN21     XBOW07     XBOW09     BOW16      
+</pre>
+
+RNDEQUIP.2DA supports 9 functional rows of random treasure.  Rows 10 and above are completely ignored.  If RNDEQUx#.ITM references a non-existant or an ignored row number (or if #=0 under any circumstances), then RNDEQUx#.ITM is replaced by an erroneous invisible item that cannot be removed.  Note that the replacing item is NOT RNDEQUx#.ITM itself, in this case.<br />
+<br />
+Items that can be referenced:<br />
+<ul>
+<li>Specific items, such as LEAT05 in the above example (for stackable items, a *# suffix, that is, an asterisk followed by a number, can be added to the item ResRef to specify the amount of that item to create, e.g. BOLT04*4 generates a single stack of 4 BOLT04 items; for non-stackable items, a *# suffix does nothing; the limitations on the size of # are the same as that for gold pieces described below)</li>
+<li>#, that is, a number, refers to a gold value (e.g. #=016 replaces RNDEQUx#.ITM with a stack of 16 gold).  The maximum stack of gold allowable is 256 pieces.  More than that listed will max out at 231 (interestingly, this is the remainder when you divide 256 into 999; # need not be three digits, so if #=4 or #=04 or #-004, a stack of 4 gold will still be generated without error)-*, that is, a single asterisk, generates an erroneous item, i.e. an invisible item that cannot be removed.  This is useful if you want your creature not to drop anything, but you do not want to use this for containers and item piles</li>
+<li>RNDMAG##, which references RNDMAGIC.2DA, where ##=row number to use, allowing further randomisation; a D20 is rolled to determine which column of this file to use</li>
+<li>RNDSCR##, which references RNDSCROL.2DA, where ##=row number to use, allowing further randomisation; a D20 is rolled to determine which column of this file to use</li>
+<li>RNDTRE##, which references RNDTREAS.2DA, where ##=row number to use, allowing further randomisation; a D20 is rolled to determine which column of this file to use</li>
+<li>RNDWEP##, which references RNDWEP.2DA, where ##=row number to use, allowing a third level of randomisation; a D20 is rolled to determine which column of this file to use</li>
+</ul>
+<br />
+Items that cannot be referenced:<br />
+<ul>
+<li>RNDEQU##; using this will create RNDEQU##.ITM, exactly as it is (circular loops are not possible)</li>
+</ul>
+<br />
+Since RNDEQUIP.2DA can reference RNDTREAS.2DA, RNDMAGIC.2DA, RNDSCROL.2DA, and RNDWEP.2DA, this 2da file is the top of the random treasure table hierarchy.
+</body>
+</html>

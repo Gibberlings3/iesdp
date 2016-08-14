@@ -1,0 +1,1181 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+
+<body>
+<div class="title_main">ITM file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">PST</div>
+<br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+An ITM file describes any item that can appear in the inventory of any 
+creature. Some ITM files do not describe objects the user would typically 
+have in their inventory -- for instance, many monsters have attacks which 
+are special items that don't appear elsewhere in the game. In Torment, there 
+is the additional complication that objects can have associated dialog 
+resources; hence, it is possible to create items with which the character 
+can carry on conversations. The same thing is possible in BG2, 
+however it is done in easier way.<br />
+</div>
+<br />
+
+<div class="center"><img border="0" src="../images/itm.jpg" width="610" height="291"></div>
+<table align="center">
+  <tr>
+    <td><img src="../images/red.jpg" width="10" height="10"></td>
+    <td><strong>Header:</strong> <font size="-1">Size=114 Bytes</font></td>
+    <td><img src="../images/blue.jpg" width="10" height="10"></td>
+    <td><strong>Ext. Header:</strong> <font size="-1">Size= 40 Bytes</font></td>
+    <td><img src="../images/green.jpg" width="10" height="10"></td>
+    <td><strong>Feature Block:</strong> <font size="-1">Size=48 Bytes</font></td>
+  </table>
+<br />
+
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+In summary, itm files consist of a main header, none or more extended headers 
+(each containing none or more feature blocks), and none or more equipping feature 
+blocks.<br />
+All the feature blocks are stored as a continuos data segment, with each 
+extended header containing an offset into this data, and the main header 
+containing an offset into this data for the equipping feature blocks.<br />
+<br />
+Overall structure:<br />
+<div class="indent1">
+  <li>
+    <a href="#itmv1.1_Header">Header</a>
+  <li>
+    <a href="#itmv1.1_Extended_Header">Extended Headers</a>
+  <li>
+     <a href="#itmv1.1_Feature_Block">Equipping Feature Blocks</a>
+</div>
+</div>
+<br />
+</div>
+
+<div class="fileheader"><a name="itmv1.1_Header">Header</a></div><br />
+<div class="indent1">
+Every item file contains a header. It contains the basic properties of the 
+item represented by the file.<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (char array)</td>
+      <td>Signature ('ITM ')</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (char array)</td>
+      <td>Version ('V1.1')</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (strref)</td>
+      <td>Item name - generic (strref)</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (strref)</td>
+      <td>Item name - identified (strref)</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>8 (resref)</td>
+      <td>Drop sound (played when item dropped, in inventory).</td>
+    </tr>
+    <tr>
+      <td>0x0018</td>
+      <td>4 (dword)</td>
+      <td><a href="#Header_Flags"> Flags</a></td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>2 (word)</td>
+      <td><a href="#Header_ItemType"> Item Type</a></td>
+    </tr>
+    <tr>
+      <td>0x001e</td>
+      <td>1*4 (char)</td>
+      <td><a href="#Header_Usability"> Usability bitmask</a></td>
+    </tr>
+    <tr>
+      <td>0x0022</td>
+      <td>2 (chars)</td>
+      <td>Weapon animation (Nameless character only).
+        <div class="indent1">
+          AX = Axe<br />
+          CL = Club<br />
+          DD = Dagger<br />
+          WH = Warhammer<br />
+          Blank (0x2020) = Fist<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0024</td>
+      <td>2 (word)</td>
+      <td>Min Level</td>
+    </tr>
+    <tr>
+      <td>0x0026</td>
+      <td>2 (word)</td>
+      <td>Min Strength</td>
+    </tr>
+    <tr>
+      <td>0x0028</td>
+      <td>2 (word)</td>
+      <td>Min Strength Bonus</td>
+    </tr>
+    <tr>
+      <td>0x002a</td>
+      <td>2 (word)</td>
+      <td>Min Intelligence</td>
+    </tr>
+    <tr>
+      <td>0x002c</td>
+      <td>2 (word)</td>
+      <td>Min Dexterity</td>
+    </tr>
+    <tr>
+      <td>0x002e</td>
+      <td>2 (word)</td>
+      <td>Min Wisdom</td>
+    </tr>
+    <tr>
+      <td>0x0030</td>
+      <td>2 (word)</td>
+      <td>Min Constitution</td>
+    </tr>
+    <tr>
+      <td>0x0032</td>
+      <td>2 (word)</td>
+      <td>Min Charisma</td>
+    </tr>
+    <tr>
+      <td>0x0034</td>
+      <td>4 (dword)</td>
+      <td>Price</td>
+    </tr>
+    <tr>
+      <td>0x0038</td>
+      <td>2 (word)</td>
+      <td>Stack Amount</td>
+    </tr>
+    <tr>
+      <td>0x003a</td>
+      <td>8 (resref)</td>
+      <td>Item Icon</td>
+    </tr>
+    <tr>
+      <td>0x0042</td>
+      <td>2 (word)</td>
+      <td>Lore to ID</td>
+    </tr>
+    <tr>
+      <td>0x0044</td>
+      <td>8 (resref)</td>
+      <td>Ground Icon</td>
+    </tr>
+    <tr>
+      <td>0x004c</td>
+      <td>4 (dword)</td>
+      <td>Weight</td>
+    </tr>
+    <tr>
+      <td>0x0050</td>
+      <td>4 (strref)</td>
+      <td>Item description -generic (strref)</td>
+    </tr>
+    <tr>
+      <td>0x0054</td>
+      <td>4 (strref)</td>
+      <td>Item description - identified (strref)</td>
+    </tr>
+    <tr>
+      <td>0x0058</td>
+      <td>8 (resref)</td>
+      <td>Pickup sound (played when item picked up, in inventory).</td>
+    </tr>
+    <tr>
+      <td>0x0060</td>
+      <td>4 (dword)</td>
+      <td>Enchantment</td>
+    </tr>
+    <tr>
+      <td>0x0064</td>
+      <td>4 (dword)</td>
+      <td>Offset to Extended Headers</td>
+    </tr>
+    <tr>
+      <td>0x0068</td>
+      <td>2 (word)</td>
+      <td>Count of Extended Headers</td>
+    </tr>
+    <tr>
+      <td>0x006a</td>
+      <td>4 (dword)</td>
+      <td>Offset to Feature Blocks</td>
+    </tr>
+    <tr>
+      <td>0x006e</td>
+      <td>2 (word)</td>
+      <td>Offset to Equipping Feature Blocks</td>
+    </tr>
+    <tr>
+      <td>0x0070</td>
+      <td>2 (word)</td>
+      <td>Count of Equipping Feature Blocks</a></td>
+    </tr>
+    <tr>
+      <td>0x0072</td>
+      <td>8 (char)</td>
+      <td>Dialog (for conversing)</td>
+    </tr>
+    <tr>
+      <td>0x007a</td>
+      <td>4 (dword)</td>
+      <td>Strref (for conversable label)</td>
+    </tr>
+    <tr>
+      <td>0x0076</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+    <tr>
+      <td>0x007a</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+    <tr>
+      <td>0x007e</td>
+      <td>2 (dword)</td>
+      <td>Paperdoll animation colour</td>
+    </tr>
+    <tr>
+      <td>0x0080</td>
+      <td>2 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+    <tr>
+      <td>0x0082</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+    <tr>
+      <td>0x0086</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+    <tr>
+      <td>0x008a</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+    <tr>
+      <td>0x008e</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+    <tr>
+      <td>0x0092</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+    <tr>
+      <td>0x0096</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown.</div></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+<div class="fileheader"><a name="itmv1.1_Extended_Header">Extended Header</a></div>
+<br />
+<div class="indent1">
+Roughly speaking, each &quot;ability&quot; (I believe this to be the
+terminology used in the Bioware tools) corresponds to a different way to use the
+item. For instance, in BG, there is an item which can be either a melee
+(hand-to-hand) axe, or a throwing axe. Or the &quot;wand of fire&quot; which
+fires either fireballs or &quot;aganazzar's scorcher&quot;. To choose which, you
+click on the item while it is selected, and you are given a menu to choose the
+ammunition type -- the same procedure used for selecting different missile types
+for a missile weapon. (Note, also, that it is possible to get an info screen for
+a bow, for instance, in which all of the &quot;abilities&quot; of the bow are
+listed -- namely the different types of ammunition it fires. I suspect that it
+is no coincidence that the same interfaces are used to select
+&quot;abilities&quot; of an item, and differing ammunition types of a launcher;
+likely the game internally handles different ammunition types via the same
+interface it uses for abilities.).<br />
+<br />
+NB. For items to be stackable, they must contain at least one extension header, even if it is empty.<br />
+NB. For an attack type of projectile, if the projectile type is set to 1,2 or 3, the weapon will use the attack speed of the ammunition.<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>1 (char)</td>
+      <td>Attack Type <br />
+        <div class="indent1">
+          0 = None<br />
+          1 = Melee<br />
+          2 = Projectile<br />
+          3 = Magic<br />
+          4 = Launcher<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0001</td>
+      <td>1 (char)</td>
+      <td>ID Req.<br />
+        <div class="indent1">
+          0 = Either<br />
+          1 = ID Required<br />
+          2 = Non-ID Required<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0002</td>
+      <td>1 (char)</td>
+      <td>Location<br />
+        <div class="indent1">
+          0 = None<br />
+          1 = Weapon<br />
+          2 = Spell<br />
+          3 = Equipment<br />
+          4 = Innate<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0003</td>
+      <td>1 (char)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>8 (resref)</td>
+      <td>Use Icon</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>1 (char)</td>
+      <td>Target Type<br />
+        <div class="indent1">
+          0 = Invalid (cannot be selected)<br />
+          1 = Creature<br />
+          2 = Inventory<br />
+          3 = Dead char<br />
+          4 = Area<br />
+          5 = Self<br />
+          6 = Crash<br />
+          7 = None (Self, ignores game pause)<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x000d</td>
+      <td>1 (char)</td>
+      <td>Target Number</td>
+    </tr>
+    <tr>
+      <td>0x000e</td>
+      <td>2 (word)</td>
+      <td>Range</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>2 (word)</td>
+      <td>Projectile Type
+        <div class="indent1">
+          0 = None<br />
+          1 = Bow<br />
+          2 = Cossbow<br />
+          3 = Sling<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0012</td>
+      <td>2 (word)</td>
+      <td>Speed</td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>2 (word)</td>
+      <td>THAC0 Bonus</td>
+    </tr>
+    <tr>
+      <td>0x0016</td>
+      <td>2 (word)</td>
+      <td>Dice Sides</td>
+    </tr>
+    <tr>
+      <td>0x0018</td>
+      <td>2 (word)</td>
+      <td>Dice Thrown</td>
+    </tr>
+    <tr>
+      <td>0x001a</td>
+      <td>2 (word)</td>
+      <td>Damage Bonus</td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>2 (word)</td>
+      <td>Damage Type<br />
+        <div class="indent1">
+          0 = None<br />
+          1 = Piercing/Magic<br />
+          2 = Blunt<br />
+          3 = Slashing<br />
+          4 = Ranged<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x001e</td>
+      <td>2 (word)</td>
+      <td>Feating Block Count</td>
+    </tr>
+    <tr>
+      <td>0x0020</td>
+      <td>2 (word)</td>
+      <td>Feating Block Offset</td>
+    </tr>
+    <tr>
+      <td>0x0022</td>
+      <td>2 (word)</td>
+      <td>Charges</td>
+    </tr>
+    <tr>
+      <td>0x0024</td>
+      <td>2 (word)</td>
+      <td>Charge depletion behvaiour<br />
+        <div class="indent1">
+          0 = Dont vanish<br />
+          1 = Expended<br />
+          2 = Expended (w/o sound)<br />
+          3 = Recharge each day<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0026</td>
+      <td>1 (char)</td>
+      <td>Use Strength Bonus (0=No, !0=Yes)</td>
+    </tr>
+    <tr>
+      <td>0x0027</td>
+      <td>1 (char)</td>
+      <td>Recharge (0=No, 8=Yes)</td>
+    </tr>
+    <tr>
+      <td>0x0028</td>
+      <td>2 (word)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x002a</td>
+      <td>2 (word)</td>
+      <td>Projectile Animation</td>
+    </tr>
+    <tr>
+      <td>0x002c</td>
+      <td>2*3 (word)</td>
+      <td>Melee Animation</td>
+    </tr>
+    <tr>
+      <td>0x0032</td>
+      <td>2 (word)</td>
+      <td>Bow/Arrow Qualifier</td>
+    </tr>
+    <tr>
+      <td>0x0034</td>
+      <td>2 (word)</td>
+      <td>Crowssbow/Bolt Qualifier</td>
+    </tr>
+    <tr>
+      <td>0x0036</td>
+      <td>2 (word)</td>
+      <td>Misc. Projectile Quqlifier</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+<div class="fileheader"><a name="itmv1.1_Feature_Block">Feature Block</a></div><br />
+<div class="indent1">
+Items with magical capabilities, equipping effects, or any type of abilities 
+besides simple weapon damage contain one or more Feature Blocks. Every Feature 
+Block represents one special ability of an item.<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>2 (word)</td>
+      <td>Opcode Number</td>
+    </tr>
+    <tr>
+      <td>0x0002</td>
+      <td>1 (char)</td>
+      <td>Target:
+        <div class="indent1">
+          0=None<br />
+          1=Self<br />
+          2=Pre-Target<br />
+          3=Party<br />
+          4=Global<br />
+          5=Non-Party<br />
+          6=Non-evil<br />
+          7=<span class="unknown">Unknown</span><br />
+          8=Except Self<br />
+          9=Original Caster<br />
+          10=<span class="unknown">Unknown</span><br />
+          11=<span class="unknown">Unknown</span><br />
+          12=<span class="unknown">Unknown</span><br />
+          13=<span class="unknown">Unknown</span><br />
+        </div>
+      <td>
+    </tr>
+    <tr>
+      <td>0x0003</td>
+      <td>1 (char)</td>
+      <td>Power<td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td>Parameter 1</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td>Parameter 2<td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>1 (char)</td>
+      <td>Timing Mode:
+        <div class="indent1">
+          0=Duration<br />
+          1=Permanent<br />
+          2=While equipped<br />
+          3=Delayed Duration<br />
+          4=Delayed<br />
+          5=Delayed (transforms to 8)<br />
+          6=Duration?<br />
+          7=Permanent?<br />
+          8=Permanent (unsaved)<br />
+          9=Permanent (after Death)<br />
+          10=Trigger<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x000d</td>
+      <td>1 (char)</td>
+      <td>Resistance:
+        <div class="indent1">
+          0=Nonmagical<br />
+          1=Dispell/Not Bypass<br />
+          2=Not Dispell/NotBypass<br />
+          3=Dispell/Bypass<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x000e</td>
+      <td>4 (dword)</td>
+      <td>Duration</td>
+    </tr>
+    <tr>
+      <td>0x0012</td>
+      <td>1 (char)</td>
+      <td>Probability 1</td>
+    </tr>
+    <tr>
+      <td>0x0013</td>
+      <td>1 (char)</td>
+      <td>Probability 2</td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>8 (resref)</td>
+      <td>Resource</td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>4 (dword)</td>
+      <td>Dice Thrown</td>
+    </tr>
+    <tr>
+      <td>0x0020</td>
+      <td>2 (word)</td>
+      <td>Dice Sides</td>
+    </tr>
+    <tr>
+      <td>0x0024</td>
+      <td>4 (dword)</td>
+      <td>Saving Throw Type: <br />
+        <div class="indent1">
+          0=None<br />
+          1=Spells<br />
+          2=Breathe<br />
+          4=Death<br />
+          8=Wands<br />
+          16=Polymorph<br />
+          </div>
+         NB. If more than 1 saving throw type is specified, the target rolls against their best save.<br />
+      </td>
+    </tr>
+    <tr>
+      <td>0x0028</td>
+      <td>4 (dword)</td>
+      <td>Saving Throw Bonus</td>
+    </tr>
+    <tr>
+      <td>0x002c</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+<hr>
+<br />
+<a id="Header_Flags"><div class="actionheader"> Header Flags </div>
+<br />
+<div class="indent1">
+<table border="1" width="98%">
+  <colgroup>
+    <col width="20%">
+    <col width="20%">
+    <col width="20%">
+    <col class="col4" width="20%">
+    <col class="col4" width="20%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Bit </th>
+      <th>Byte 1</th>
+      <th>Byte 2</th>
+      <th>Byte 3</th>
+      <th>Byte 4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td> Unsellable (critical item)</td>
+      <td> Silver</td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td> Two-handed</td>
+      <td> Cold-Iron</td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td> Movable</td>
+      <td> Unsellable (stolen)</td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td> Displayable</td>
+      <td> Converable</td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td> Cursed</td>
+      <td> Pulsating</td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td> Copyable ?</td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td> Magical</td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td> Bow</td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+      <td> <span class="unknown"> Unknown </span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<br />
+<a id="Header_ItemType"><div class="actionheader"> Header Item Type</div>
+<br />
+<div class="indent1">
+<table border="1" width="98%">
+  <colgroup>
+    <col width="10%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Item type></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>Books/misc</td>
+    </tr>
+    <tr>
+      <td>0x0001</td>
+      <td>Amulets and necklaces</td>
+    </tr>
+    <tr>
+      <td>0x0002</td>
+      <td>Armor</td>
+    </tr>
+    <tr>
+      <td>0x0003</td>
+      <td>Belts and girdles</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>Boots</td>
+    </tr>
+    <tr>
+      <td>0x0005</td>
+      <td>Arrows</td>
+    </tr>
+    <tr>
+      <td>0x0006</td>
+      <td>Bracers and gauntlets</td>
+    </tr>
+    <tr>
+      <td>0x0007</td>
+      <td>Helms, hats, and other head-wear</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>Keys (not in Icewind Dale?)</td>
+    </tr>
+    <tr>
+      <td>0x0009</td>
+      <td>Potions</td>
+    </tr>
+    <tr>
+      <td>0x000a</td>
+      <td>Rings</td>
+    </tr>
+    <tr>
+      <td>0x000b</td>
+      <td>Scrolls</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>Shields (not in IWD)</td>
+    </tr>
+    <tr>
+      <td>0x000d</td>
+      <td>Food</td>
+    </tr>
+    <tr>
+      <td>0x000e</td>
+      <td>Bullets (for a sling)</td>
+    </tr>
+    <tr>
+      <td>0x000f</td>
+      <td>Bows</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>Daggers</td>
+    </tr>
+    <tr>
+      <td>0x0011</td>
+      <td>Maces (in BG, this includes clubs)</td>
+    </tr>
+    <tr>
+      <td>0x0012</td>
+      <td>Slings</td>
+    </tr>
+    <tr>
+      <td>0x0013</td>
+      <td>Short swords</td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>Long swords (in BG, this includes 2-handed and bastard swords)</td>
+    </tr>
+    <tr>
+      <td>0x0015</td>
+      <td>Hammers</td>
+    </tr>
+    <tr>
+      <td>0x0016</td>
+      <td>Morning stars</td>
+    </tr>
+    <tr>
+      <td>0x0017</td>
+      <td>Flails</td>
+    </tr>
+    <tr>
+      <td>0x0018</td>
+      <td>Darts</td>
+    </tr>
+    <tr>
+      <td>0x0019</td>
+      <td>Axes (specifically, 1-handed axes -- halberds and 2-handed polearms
+        not included)</td>
+    </tr>
+    <tr>
+      <td>0x001a</td>
+      <td>Quarterstaff</td>
+    </tr>
+    <tr>
+      <td>0x001b</td>
+      <td>Crossbow</td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>Hand-to-hand weapons (fist, fist irons, punch daggers, etc)</td>
+    </tr>
+    <tr>
+      <td>0x001d</td>
+      <td>Spears</td>
+    </tr>
+    <tr>
+      <td>0x001e</td>
+      <td>Halberds (2-handed polearms)</td>
+    </tr>
+    <tr>
+      <td>0x001f</td>
+      <td>Crossbow bolts</td>
+    </tr>
+    <tr>
+      <td>0x0020</td>
+      <td>Cloaks and robes</td>
+    </tr>
+    <tr>
+      <td>0x0021</td>
+      <td>Gold pieces (not an inventory item, but can appear as &quot;monster
+        dropped&quot; treasure)</td>
+    </tr>
+    <tr>
+      <td>0x0022</td>
+      <td>Gems</td>
+    </tr>
+    <tr>
+      <td>0x0023</td>
+      <td>Wands</td>
+    </tr>
+    <tr>
+      <td>0x0024</td>
+      <td>Bag/eye/broken armor</td>
+    </tr>
+    <tr>
+      <td>0x0025</td>
+      <td>Broken shield/bracelet</td>
+    </tr>
+    <tr>
+      <td>0x0026</td>
+      <td>Broken sword/earring</td>
+    </tr>
+    <tr>
+      <td>0x0027</td>
+      <td>Tattoos (PST)</td>
+    </tr>
+    <tr>
+      <td>0x0028</td>
+      <td>Lenses(PST)</td>
+    </tr>
+    <tr>
+      <td>0x0029</td>
+      <td>Buckler/teeth</td>
+    </tr>
+    <tr>
+      <td>0x002a</td>
+      <td>Candle</td>
+    </tr>
+    <tr>
+      <td>0x002b</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x002c</td>
+      <td>Clubs(IWD)</td>
+    </tr>
+    <tr>
+      <td>0x002d</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x002e</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x002f</td>
+      <td>Large Shield(IWD)</td>
+    </tr>
+    <tr>
+      <td>0x0030</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x0031</td>
+      <td>Medium Shield(IWD)</td>
+    </tr>
+    <tr>
+      <td>0x0032</td>
+      <td>Notes</td>
+    </tr>
+    <tr>
+      <td>0x0033</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x0034</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x0035</td>
+      <td>Small Shield(IWD)</td>
+    </tr>
+    <tr>
+      <td>0x0036</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x0037</td>
+      <td>Telescope(IWD)</td>
+    </tr>
+    <tr>
+      <td>0x0038</td>
+      <td>Drink(IWD)</td>
+    </tr>
+    <tr>
+      <td>0x0039</td>
+      <td>Great Sword(IWD)</td>
+    </tr>
+    <tr>
+      <td>0x003a</td>
+      <td>Container</td>
+    </tr>
+    <tr>
+      <td>0x003b</td>
+      <td>Fur/pelt</td>
+    </tr>
+    <tr>
+      <td>0x003c</td>
+      <td>Leather Armor</td>
+    </tr>
+    <tr>
+      <td>0x003d</td>
+      <td>Studded Leather Armor</td>
+    </tr>
+    <tr>
+      <td>0x003e</td>
+      <td>Chain Mail</td>
+    </tr>
+    <tr>
+      <td>0x003f</td>
+      <td>Splint Mail</td>
+    </tr>
+    <tr>
+      <td>0x0040</td>
+      <td>Half Plate</td>
+    </tr>
+    <tr>
+      <td>0x0041</td>
+      <td>Full Plate</td>
+    </tr>
+    <tr>
+      <td>0x0042</td>
+      <td>Hide Armor</td>
+    </tr>
+    <tr>
+      <td>0x0043</td>
+      <td>Robe</td>
+    </tr>
+    <tr>
+      <td>0x0044</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x0045</td>
+      <td>Bastard Sword</td>
+    </tr>
+    <tr>
+      <td>0x0046</td>
+      <td>Scarf</td>
+    </tr>
+    <tr>
+      <td>0x0047</td>
+      <td>Food(IWD2)</td>
+    </tr>
+    <tr>
+      <td>0x0048</td>
+      <td>Hat</td>
+    </tr>
+    <tr>
+      <td>0x0049</td>
+      <td>Gauntlet</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+<a id="Header_Usability"><div class="actionheader"> Header Usability </div>
+<br />
+<div class="indent1">
+<table border="1" width="98%">
+  <colgroup>
+    <col width="20%">
+    <col width="20%">
+    <col width="20%">
+    <col class="col4" width="20%">
+    <col class="col4" width="20%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Bit </th>
+      <th>Byte 1</th>
+      <th>Byte 2</th>
+      <th>Byte 3</th>
+      <th>Byte 4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td> Unusable by Chatoic</td>
+      <td> Unusable by Godsmen</td>
+      <td> Unusable by Indeps</td>
+      <td> Unusable by Ignus</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td> Unusable by Evil</td>
+      <td> <span class="unknown">Unknown</span></td>
+      <td> <span class="unknown">Unknown</span></td>
+      <td> Unusable by Morte</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td> Unusable by Good</td>
+      <td> Unusable by Chaosmen</td>
+      <td> Unusable by Mage</td>
+      <td> Unusable by Nordom</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td> Unusable by Good-Evil Neutral</td>
+      <td> Unusable by Fighter</td>
+      <td> <span class="unknown">Unknown</span></td>
+      <td> <span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td> Unusable by Lawful</td>
+      <td> No Faction</td>
+      <td> Unusable by Dak'kon</td>
+      <td> Unusable by Annah</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td> Unusable by Lawful-Chaotic Neutral</td>
+      <td> <span class="unknown">Unknown</span></td>
+      <td> Unusable by Fall-From-Grace</td>
+      <td> <span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td> Unusable by Sensates</td>
+      <td> Unusable by Dustmen</td>
+      <td> Unusable by Thief</td>
+      <td> Unusable by Nameless One</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td> Unusable by Priest</td>
+      <td> Unusable by Mercykillers</td>
+      <td> Unusable by Vhailor</td>
+      <td> <span class="unknown">Unknown</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+</body>
+</html>

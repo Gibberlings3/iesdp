@@ -1,0 +1,140 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main"> TBG File Format </div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div><br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+TBG formatted files allow a file for Infinity Engine games to be transferred
+between computers while keeping all Text References intact.<br />
+V2.0 - First format revision made to work better for two file types: 
+item (ITM) and spells (SPL).<br />
+</div>
+<br />
+
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+Overall Structure:<br />
+<div class="indent1">
+  <li><a href="#formTBGV2_0_Header">Header</a>
+  <li><a href="#formTBGV2_0_File">File</a>
+  <li><a href="#formTBGV2_0_TextEntries">Text Entries</a></li>
+</div>
+<br />
+</div>
+
+<div class="fileheader"><a name="formTBGV2_0_Header">TBG V2.0 Header</a></div>
+<br />
+<div class="indent1">
+<table border="1" width="98%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (dword)</td>
+      <td>File Offset</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td>File Length</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td>Unidentified Name Offset</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (dword)</td>
+      <td>Unidentified Name Length</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>4 (dword)</td>
+      <td>Identified Name Offset</td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>4 (dword)</td>
+      <td>Identified Name Length</td>
+    </tr>
+    <tr>
+      <td>0x0018</td>
+      <td>4 (dword)</td>
+      <td>Unidentified Description Offset</td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>4 (dword)</td>
+      <td>Unidentified Description Length</td>
+    </tr>
+    <tr>
+      <td>0x0020</td>
+      <td>4 (dword)</td>
+      <td>Identified Description Offset</td>
+    </tr>
+    <tr>
+      <td>0x0024</td>
+      <td>4 (dword)</td>
+      <td>Identified Description Length</td>
+    </tr>
+    <tr>
+      <td>0x0028</td>
+      <td>12 (char array)</td>
+      <td>Filename with Extension of file</td>
+    </tr>
+    <tr>
+      <td>0x0034</td>
+      <td>1 (byte)</td>
+      <td>Infinity Engine Game TBG is for:
+        <ul>
+          <li>value 0x01- Baldur's Gate
+          <li>value 0x02- Planescape: Torment
+          <li>value 0x03- Icewind Dale
+          <li>value 0x04- Baldur's Gate II: Shadows of Amn</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0035</td>
+      <td>-----</td>
+      <td>End of Structure</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+<div class="fileheader"><a name="formTBGV2_0_File">TBG V2.0 File</a></div>
+<br />
+<div class="indent1">
+This is simply the entire file itself that is to be transferred via this file
+format.<br />
+</div>
+<br />
+
+<div class="fileheader"><a name="formTBGV2_0_TextEntries">TBG V2.0 Text Entries</a></div>
+<br />
+<div class="indent1">
+This is all the actual text that will be actually imported into the Infinity
+Engine game.<br />
+</div>
+</body>
+</html>

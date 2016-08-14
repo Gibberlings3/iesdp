@@ -1,0 +1,115 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<strong>xl3000.2da</strong><br />
+<br />
+This file defines the links from additional areas on the <a href="../FilesFormats/wmapformat.htm">worldmap</a>.<br />
+It is used probably only in case of SoA <a href="../FilesFormats/wmapformat.htm">worldmap</a>
+in ToB. It is the substitute of area link entries in WMP files.<br />
+In BG2 ToB we have:<br />
+
+<pre>
+2DA V1.0
+*
+         AREA    FLAGS    ENTRY_POINT    DISTANCE_SCALE    ENCOUNTER_PROB    ENCOUNTER0    ENCOUNTER1    ENCOUNTER2    ENCOUNTER3    ENCOUNTER4    LINKTO_DIR
+1        AR0020  1        EXITNE         5                 0                 *             *             *             *             *             *
+2        AR2000  4        EXITNW         5                 0                 *             *             *             *             *             *
+3        AR1200  8        EXITW          6                 0                 *             *             *             *             *             *
+4        AR1100  4        EXITSE         6                 0                 *             *             *             *             *             *
+5        AR1300  4        EXITSE         5                 0                 *             *             *             *             *             *
+6        AR1200  4        EXITSW         6                 0                 *             *             *             *             *             2
+7        AR2000  4        EXITSW         5                 0                 *             *             *             *             *             2
+8        AR2000  4        EXITSW         5                 0                 *             *             *             *             *             1
+9        AR2000  4        EXITSW         5                 0                 *             *             *             *             *             3
+10       AR1100  4        EXITSW         6                 0                 *             *             *             *             *             2
+11       AR1100  4        EXITSW         6                 0                 *             *             *             *             *             3
+12       AR1300  4        EXITSW         5                 0                 *             *             *             *             *             2
+13       AR1300  4        EXITSW         5                 0                 *             *             *             *             *             3
+14       AR0020  4        EXITSW         5                 0                 *             *             *             *             *             2
+15       AR0020  4        EXITSW         5                 0                 *             *             *             *             *             0
+</pre>
+
+Where first column indicates simply the next number of link from given area and:<br />
+<br />
+<table border="1" class="tbl3" width="555">
+  <thead>
+    <tr>
+      <th width="73">offset in WMP file</th>
+      <th width="120">Name in 2DA</th>
+      <th width="340">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="upd">
+      <td width="73">N/A</td>
+      <td width="120">AREA</td>
+      <td width="340">name of destination area</td>
+    </tr>
+    <tr class="upd">
+      <td width="73">0x0004</td>
+      <td width="120">ENTRY_POINT</td>
+      <td width="340">Name of the entry point in the destination area</td>
+    </tr>
+    <tr class="upd">
+      <td width="73">0x0024</td>
+      <td width="120">DISTANCE_SCALE</td>
+      <td width="340"><div class="unknown">DISTANCE_SCALE - multipier of the flags. </div></td> 
+    </tr>
+    <tr>
+      <td width="73">0x0028</td>
+      <td width="120">Flags/</td>
+      <td width="340"><div class="unknown">Flags. Related with 
+        travel time.</div></td>
+    </tr>
+    <tr>
+      <td width="73">0x002c</td>
+      <td width="120">ENCOUNTER0</td>
+      <td width="340">area of random encounter resref (ENCOUNTER0)</td>
+    </tr>
+    <tr>
+      <td width="73">0x0034</td>
+      <td width="120">ENCOUNTER1</td>
+      <td width="340">area of random encounter resref (ENCOUNTER1)</td>
+    </tr>
+    <tr>
+      <td width="73">0x003c</td>
+      <td width="120">ENCOUNTER2</td>
+      <td width="340">area of random encounter resref (ENCOUNTER2)</td>
+    </tr>
+    <tr>
+      <td width="73">0x0044</td>
+      <td width="120">ENCOUNTER3</td>
+      <td width="340">area of random encounter resref (ENCOUNTER3)</td>
+    </tr>
+    <tr>
+      <td width="73">0x004c</td>
+      <td width="120">ENCOUNTER4</td>
+      <td width="340">area of random encounter resref (ENCOUNTER4)</td>
+    </tr>
+    <tr>
+      <td width="73">0x0054</td>
+      <td width="120">ENCOUNTER_PROB</td>
+      <td width="340">probability of random encounter</td>
+    </tr>
+    <tr>
+      <td width="73">0x0028</td>
+      <td width="120">128 (bytes)</td>
+      <td width="340"><div class="unknown">Unknown/reserved</div></td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+
+NB. Values in the Link_To column mean:<br />
+* : Link to the area defined in the AREA column<br />
+0 : Link from the area defined in the AREA column to add to the North group of the area<br />
+1 : Link to add to the East group<br />
+2 : Link to add to the South group<br />
+3 : Link to add to the West group<br />
+
+The links added to the area defined in the AREA column are added before existing links of the selected group.<br />
+</body>
+</html>

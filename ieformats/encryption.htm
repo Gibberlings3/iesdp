@@ -1,0 +1,42 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">Encryption</div>
+<br />
+<div class="fileheader">Text resource encryption</div>
+The encryption is a simple XOR encryption scheme with a 512 bit key. If you
+are not familiar with encryption, 512 bits is a very large key, but XOR is such
+an insecure encryption algorithm that it's scarcely worth encrypting. A
+determined attacker can find the key with a minimum of effort, particularly in a
+case such as this where there are several files encrypted with the same key. An
+encryption scheme of this type is typically used to prevent the casual snooper,
+i.e. to prevent a person from &quot;accidentally&quot; seeing something not
+meant for their eyes, but it fails miserably when the other party is somewhat
+motivated to retrieve the plaintext.<br />
+In case you aren't familiar with XOR encryption schemes, the way it works is
+that each byte of the plaintext is XOR'd with a byte of the key. The key is
+rotated cyclically. In this case, we have 64 bytes of key, so bytes 0-63 of
+plaintext are XOR'd with bytes 0-63 of key, bytes 64-127 are XOR'd with bytes
+0-63 of key, etc. Only slightly easier to implement than it is to break.<br />
+The key used in BG is:<br />
+<pre>
+    88 a8 8f ba 8a d3 b9 f5 ed b1 cf ea aa e4 b5 fb
+    eb 82 f9 90 ca c9 b5 e7 dc 8e b7 ac ee f7 e0 ca
+    8e ea ca 80 ce c5 ad b7 c4 d0 84 93 d5 f0 eb c8
+    b4 9d cc af a5 95 ba 99 87 d2 9d e3 91 ba 90 ca
+</pre>
+
+<div class="fileheader">Executable string encryption</div>
+Some strings in some executables have been encrypted using a simpler algorithm.
+These strings were primarily to do with the cheat codes, which were obscured to
+prevent their immediate discovery. The strings are encrypted via the simple algorithm:
+<pre>
+  char = (char + 8) &lt;&lt; 1 </pre>
+Apply the previous formula to each character to encrypt. Apply the following to each, to decrypt.
+<pre>
+  char = (char &gt;&gt; 1) - 8
+</pre>
+</body>
+</html>

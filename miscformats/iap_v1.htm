@@ -1,0 +1,173 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main"> IAP File Format</div><br />
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div><br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+IAP formatted files allow for multiple files, both TBG formatted and Other,
+to be placed together along with their paths inside the Infinity Engine game
+directory itself to allow importation, in the case of TBG formatted files, or
+simply file placement, in the case of Other files, for customizations. This
+makes it easier to have complete customs inserted into an Infinity Engine game
+with little manual work required on the installer's part.<br />
+</div>
+<br />
+
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+Overall Structure:<br />
+<div class="indent1">
+  <li><a href="#iapv1_Header">Header</a>
+  <li><a href="#iapv1_File_Header">File Header</a>
+  <li><a href="#iapv1_FileNames">File Names</a>
+  <li><a href="#iapv1_Files">Files</a></li>
+</div>
+<br />
+</div>
+
+<div class="fileheader"><a name="iapv1_Header">IAP V1.0 Header</a></div>
+<br />
+<div class="indent1">
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (Char Array)</td>
+      <td>IAP Identifier (&quot;IAP &quot;)</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td>Null</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td>TBG File Header Count</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (dword)</td>
+      <td>Other File Header Count</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>1 (Byte)</td>
+      <td>Infinity Engine Identification:
+        <div class="indent1">
+          <li>value 0x01- Baldur's Gate
+          <li>value 0x02- Planescape: Torment
+          <li>value 0x03- Icewind Dale
+          <li>value 0x04- Baldur's Gate II: Shadows of Amn</li>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0011</td>
+      <td>4 (dword)</td>
+      <td>Total IAP File Length</td>
+    </tr>
+    <tr>
+      <td>0x0015</td>
+      <td>-----</td>
+      <td>End of Structure</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+<div class="fileheader"><a name="iapv1_File_Header">IAP V1.0 File Header</a></div>
+<br />
+<div class="indent1">
+This header is used for both TBG and Other files present in the IAP. These
+header are in the order of all TBG files are first then all Other files are next
+and the numbers of each is defined by the parameters in the IAP V1.0 Header
+itself.<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (dword)</td>
+      <td>Offset to FileName (from beginning of File)</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td>Length of FileName</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td>File Launch on IAP Completion (TXT or RTF files only):
+        <div class="indent1">
+          <li>value 0x00- No
+          <li>value 0x01- Yes</li>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x000C</td>
+      <td>4 (dword)</td>
+      <td>Offset to File (from beginning of File)</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>4 (dword)</td>
+      <td>Length of File</td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>-----</td>
+      <td>End of Structure</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+<div class="fileheader"><a name="iapv1_FileNames">IAP V1.0 File Names</a></div>
+<br />
+<div class="indent1">
+This is the actual text for the file names of the individual files
+themselves.<br />
+</div>
+<br />
+
+<div class="fileheader"><a name="iapv1_Files">IAP V1.0 Files</a></div>
+<br />
+<div class="indent1">
+This is the actual files themselves.<br />
+</body>
+</html>

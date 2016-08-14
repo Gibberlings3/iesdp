@@ -1,0 +1,1864 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">CRE file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">IWD2</div>
+<br />
+<div class="fileheader">General Description</div>
+<div class="indent1">
+This file format describes a &quot;creature&quot; (i.e. for lack of a better
+description, any object you are capable of attacking. Not all objects you can
+open a dialog with are creatures. Doors, for instance, can have associated
+dialogs, and could even talk to you, if they were so programmed.) Interestingly
+enough, the same format for this file is used in Baldur's Gate 2 and Baldur's
+Gate. The additional capabilities (such as new weapons proficiencies) are
+attached to the creature as long-lived effects. I will attempt to document this
+at some point in the future, but essentially, they are attached in EFF V2.0
+formatted blocks (though with the header zeroed), and an effect type of 0xe9.
+The specific stats which are stored in the given structures are given by a
+mapping in one of the IDS or 2DA files. Details will be forthcoming when I get
+some more time.<br />
+</div>
+<br />
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+Overall Structure<br />
+<div class="indent1">
+  <li><a href="#CREV2_2_Header">Header</a>
+  <li><a href="#CREV2_2_KnownSpell">Known spells section</a>
+  <li><a href="#CREV2_2_MemSpellInfo">Spell memorization info</a>
+  <li><a href="#CREV2_2_MemSpell">Memorized spells section</a>
+  <li><a href="">Effects</a>
+  <li><a href="#CREV2_2_Item">Items section</a>
+  <li><a href="#CREV2_2_ItemSlots">&quot;Item slots&quot;</a></li>
+</div>
+</div>
+<br />
+<div class="fileheader"><a name="CREV2_2_Header">CRE V2.2 Header</a></div>
+<br />
+<div class="indent1">
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0x00000</td>
+    <td>4 (char array)</td>
+    <td>Signature ('CRE ')</td>
+  </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (char array)</td>
+      <td>Version ('V2.2')</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (strref)</td>
+      <td>Long Creature name</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (strref)</td>
+      <td>Short Creature name (used for tooltips)</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>4 (dword)</td>
+      <td>Creature flags
+        <div class="indent1">
+          <li><span class="unknown">bit 0 Damage don't stop casting </span></li>
+          <li>bit 1 No corpse</li>          
+          <li>bit 2 Keep corpse</li>
+          <li>bit 3 Original class was Fighter</li>
+          <li>bit 4 Original class was Mage</li>
+          <li>bit 5 Original class was Cleric</li>
+          <li>bit 6 Original class was Thief</li>
+          <li>bit 7 Original class was Druid</li>
+          <li>bit 8 Original class was Ranger</li>
+          <li>bit 9 Fallen Paladin</li>
+          <li>bit 10 Fallen Ranger</li>
+          <li>bit 11 Exportable</li>
+          <li><span class="unknown">bit 12 unused ?</span></li>
+          <li><span class="unknown">bit 13 unused ?</span></li>
+          <li><span class="unknown">bit 14 Can activate "Can not be used by NPC" triggers?</span></li>
+          <li>bit 15 Been in Party</li>
+        </div>
+        The way a multiclass char is indicated is by the absence of any of the
+        &quot;original class&quot; flags being set.<br />
+      </td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>4 (dword)</td>
+      <td>XP (gained for killing this creature)</td>
+    </tr>
+    <tr>
+      <td>0x0018</td>
+      <td>4 (dword)</td>
+      <td>Creature Power Level (for summoning spells) / XP of the creature (for party members)</td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>4 (dword)</td>
+      <td>Gold carried</td>
+    </tr>
+    <tr>
+      <td>0x0020</td>
+      <td>4 (dword)</td>
+      <td>Permanent status flags, as per STATE.IDS</td>
+    </tr>
+    <tr>
+      <td>0x0024</td>
+      <td>2 (word)</td>
+      <td>Current Hit Points</td>
+    </tr>
+    <tr>
+      <td>0x0026</td>
+      <td>2 (word)</td>
+      <td>Maximum Hit Points</td>
+    </tr>
+    <tr>
+      <td>0x0028</td>
+      <td>2 (word)</td>
+      <td>Animation ID, as per ANIMATE.IDS</td>
+    </tr>
+    <tr>
+      <td>0x002a</td>
+      <td>2 (word)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x002c</td>
+      <td>1 (byte)</td>
+      <td>Metal Colour Index (BG1 animations)</td>
+    </tr>
+    <tr>
+      <td>0x002d</td>
+      <td>1 (byte)</td>
+      <td>Minor Colour Index (BG1 animations)</td>
+    </tr>
+    <tr>
+      <td>0x002e</td>
+      <td>1 (byte)</td>
+      <td>Major Color Index (BG1 animations)</td>
+    </tr>
+    <tr>
+      <td>0x002f</td>
+      <td>1 (byte)</td>
+      <td>Skin Colour Index (BG1 animations)</td>
+    </tr>
+    <tr>
+      <td>0x0030</td>
+      <td>1 (byte)</td>
+      <td>Leather Colour Index (BG1 animations)</td>
+    </tr>
+    <tr>
+      <td>0x0031</td>
+      <td>1 (byte)</td>
+      <td>Armor Colour Index (BG1 animations)</td>
+    </tr>
+    <tr>
+      <td>0x0032</td>
+      <td>1 (byte)</td>
+      <td>Hair Colour Index (BG1 animations)</td>
+    </tr>
+    <tr>
+      <td>0x0033</td>
+      <td>1 (byte)</td>
+      <td><div class="unknown">
+        Eff structure version:
+        <div class="indent1">
+          0: Version 1 EFF<br />
+          1: Version 2 EFF<br />
+        </div>
+      </div>
+    </td>
+    </tr>
+    <tr>
+      <td>0x0034</td>
+      <td>8 (resref)</td>
+      <td>Small Portrait resource</td>
+    </tr>
+    <tr>
+      <td>0x003c</td>
+      <td>8 (resref)</td>
+      <td>Large Portrait resource</td>
+    </tr>
+    <tr>
+      <td>0x0044</td>
+      <td>1 (signed byte)</td>
+      <td>Reputation (minimum value: 0)</td>
+    </tr>
+    <tr>
+      <td>0x0045</td>
+      <td>1 (byte)</td>
+      <td><span class="unknown">Hide In Shadows (base)</span></td>
+    </tr>
+    <tr>
+      <td>0x0046</td>
+      <td>2 (signed word)</td>
+      <td>Armor Class</td>
+    </tr>
+    <tr>
+      <td>0x0048</td>
+      <td>2 (signed word)</td>
+      <td>Armor Class (Crushing Attacks Modifier)</td>
+    </tr>
+    <tr>
+      <td>0x004a</td>
+      <td>2 (signed word)</td>
+      <td>Armor Class (Missile Attacks Modifier)</td>
+    </tr>
+    <tr>
+      <td>0x004c</td>
+      <td>2 (signed word)</td>
+      <td>Armor Class (Piercing Attacks Modifier)</td>
+    </tr>
+    <tr>
+      <td>0x004e</td>
+      <td>2 (signed word)</td>
+      <td>Armor Class (Slashing Attacks Modifier)</td>
+    </tr>
+    <tr>
+      <td>0x0050</td>
+      <td>1 (byte)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x0051</td>
+      <td>1 (byte)</td>
+      <td>Number of attacks (0-10)</td>
+    </tr>
+    <tr>
+      <td>0x0052</td>
+      <td>1 (byte)</td>
+      <td>Save versus Fortitude (0-20)</td>
+    </tr>
+    <tr>
+      <td>0x0053</td>
+      <td>1 (byte)</td>
+      <td>Save versus Reflex (0-20)</td>
+    </tr>
+    <tr>
+      <td>0x0054</td>
+      <td>1 (byte)</td>
+      <td>Save versus Will (0-20)</td>
+    </tr>
+    <tr>
+      <td>0x0055</td>
+      <td>1 (byte)</td>
+      <td>Resist fire (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x0056</td>
+      <td>1 (byte)</td>
+      <td>Resist cold (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x0057</td>
+      <td>1 (byte)</td>
+      <td>Resist electricity (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x0058</td>
+      <td>1 (byte)</td>
+      <td>Resist acid (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x0059</td>
+      <td>1 (byte)</td>
+      <td>Resist magic (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x005a</td>
+      <td>1 (byte)</td>
+      <td>Resist magic fire (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x005b</td>
+      <td>1 (byte)</td>
+      <td>Resist magic cold (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x005c</td>
+      <td>1 (byte)</td>
+      <td>Resist slashing (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x005d</td>
+      <td>1 (byte)</td>
+      <td>Resist crushing (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x005e</td>
+      <td>1 (byte)</td>
+      <td>Resist piercing (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x005f</td>
+      <td>1 (byte)</td>
+      <td>Resist missile (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x0060</td>
+      <td>1 (byte)</td>
+      <td>Resist magic damage (0-100)</td>
+    </tr>
+    <tr>
+      <td>0x0061</td>
+      <td>6 (bytes)</td>
+      <td><span class="unknown">Unknown. Further resistances?</span></td>
+    </tr>
+    <tr>
+      <td>0x0067</td>
+      <td>1 (byte)</td>
+      <td>Luck</td>
+    </tr>
+    <tr>
+      <td>0x0068</td>
+      <td>34 (bytes)</td>
+      <td><span class="unknown">Unknown.</span></td>
+    </tr>
+    <tr>
+      <td>0x008a</td>
+      <td>1 (byte)</td>
+      <td>Total Levels</td>
+    </tr>
+    <tr>
+      <td>0x008b</td>
+      <td>1 (byte)</td>
+      <td>Barbarian Levels</td>
+    </tr>
+    <tr>
+      <td>0x008c</td>
+      <td>1 (byte)</td>
+      <td>Bard Levels</td>
+    </tr>
+    <tr>
+      <td>0x008d</td>
+      <td>1 (byte)</td>
+      <td>Cleric Levels</td>
+    </tr>
+    <tr>
+      <td>0x008e</td>
+      <td>1 (byte)</td>
+      <td>Druid Levels</td>
+    </tr>
+    <tr>
+      <td>0x008f</td>
+      <td>1 (byte)</td>
+      <td>Fighter Levels</td>
+    </tr>
+    <tr>
+      <td>0x0090</td>
+      <td>1 (byte)</td>
+      <td>Monk</td>
+    </tr>
+    <tr>
+      <td>0x0091</td>
+      <td>1 (byte)</td>
+      <td>Paladin Levels</td>
+    </tr>
+    <tr>
+      <td>0x0092</td>
+      <td>1 (byte)</td>
+      <td>Ranger Levels</td>
+    </tr>
+    <tr>
+      <td>0x0093</td>
+      <td>1 (byte)</td>
+      <td>Rogue Levels</td>
+    </tr>
+    <tr>
+      <td>0x0094</td>
+      <td>1 (byte)</td>
+      <td>Sorcerer Levels</td>
+    <tr>
+      <td>0x0095</td>
+      <td>1 (byte)</td>
+      <td>Wizard Levels</td>
+    </tr>
+    <tr>
+      <td>0x0096</td>
+      <td>22 (bytes)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x00ac</td>
+      <td>64 * 4 (dword)</td>
+      <td>Strref's - most are connected with the sound-set.</td></td>
+    </tr>
+    <tr>
+      <td>0x01ac</td>
+      <td>8 (resref)</td>
+      <td>Team Script</td>
+    </tr>
+    <tr>
+      <td>0x01b4</td>
+      <td>8 (resref)</td>
+      <td>Special Script 1</td>
+    </tr>
+    <tr>
+      <td>0x01bc</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x01c0</td>
+      <td>4 (dword)</td>
+      <td>Feats 1</td>
+    </tr>
+    <tr>
+      <td>0x01c4</td>
+      <td>4 (dword)</td>
+      <td>Feats 2</td>
+    </tr>
+    <tr>
+      <td>0x01c8</td>
+      <td>4 (dword)</td>
+      <td>Feats 3</td>
+    </tr>
+    <tr>
+      <td>0x01cc</td>
+      <td>3 * 4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x01d8</td>
+      <td>1 (byte)</td>
+      <td>MW: Bow</td>
+    </tr>
+    <tr>
+      <td>0x01d9</td>
+      <td>1 (bytes)</td>
+      <td>SW: Crossbow</td>
+    </tr>
+    <tr>
+      <td>0x01da</td>
+      <td>1 (byte)</td>
+      <td>SW: Missile</td>
+    </tr>
+    <tr>
+      <td>0x01db</td>
+      <td>1 (byte)</td>
+      <td>MW: Axe</td>
+    </tr>
+    <tr>
+      <td>0x01dc</td>
+      <td>1 (byte)</td>
+      <td>SW: Mace</td>
+    </tr>
+    <tr>
+      <td>0x01dd</td>
+      <td>1 (byte)</td>
+      <td>MW: Flail</td>
+    </tr>
+    <tr>
+      <td>0x01de</td>
+      <td>1 (byte)</td>
+      <td>MW: Polearm</td>
+    </tr>
+    <tr>
+      <td>0x01df</td>
+      <td>1 (byte)</td>
+      <td>MW: Hammer</td>
+    </tr>
+    <tr>
+      <td>0x01e0</td>
+      <td>1 (byte)</td>
+      <td>SW: Quarterstaff</td>
+    </tr>
+    <tr>
+      <td>0x01e1</td>
+      <td>1 (byte)</td>
+      <td>MW: Great Sword</td>
+    </tr>
+    <tr>
+      <td>0x01e2</td>
+      <td>1 (byte)</td>
+      <td>MW: Large Sword</td>
+    </tr>
+    <tr>
+      <td>0x01e3</td>
+      <td>1 (byte)</td>
+      <td>SW: Small Blade</td>
+    </tr>
+    <tr>
+      <td>0x01e4</td>
+      <td>1 (byte)</td>
+      <td>Toughness</td>
+    </tr>
+    <tr>
+      <td>0x01e5</td>
+      <td>1 (byte)</td>
+      <td>Armored Arcana</td>
+    </tr>
+    <tr>
+      <td>0x01e6</td>
+      <td>1 (byte)</td>
+      <td>Cleave</td>
+    </tr>
+    <tr>
+      <td>0x01e7</td>
+      <td>1 (byte)</td>
+      <td>Armor Proficiency</td>
+    </tr>
+    <tr>
+      <td>0x01e8</td>
+      <td>1 (byte)</td>
+      <td>SF: Enchantment</td>
+    </tr>
+    <tr>
+      <td>0x01e9</td>
+      <td>1 (byte)</td>
+      <td>SF: Evocation</td>
+    </tr>
+    <tr>
+      <td>0x01ea</td>
+      <td>1 (byte)</td>
+      <td>SF: Necromancy</td>
+    </tr>
+    <tr>
+      <td>0x01eb</td>
+      <td>1 (byte)</td>
+      <td>SF: Transmutation</td>
+    </tr>
+    <tr>
+      <td>0x01ec</td>
+      <td>1 (byte)</td>
+      <td>Spell Penetration</td>
+    </tr>
+    <tr>
+      <td>0x01ed</td>
+      <td>1 (byte)</td>
+      <td>Extra Rage</td>
+    </tr>
+    <tr>
+      <td>0x01ee</td>
+      <td>1 (byte)</td>
+      <td>Extra Wild Shape</td>
+    </tr>
+    <tr>
+      <td>0x01ef</td>
+      <td>1 (byte)</td>
+      <td>Extra Smiting</td>
+    </tr>
+    <tr>
+      <td>0x01f0</td>
+      <td>1 (byte)</td>
+      <td>Extra Turning</td>
+    </tr>
+    <tr>
+      <td>0x01f1</td>
+      <td>1 (byte)</td>
+      <td>EW: Bastard Sword</td>
+    </tr>
+    <tr>
+      <td>0x01f2</td>
+      <td>38 (bytes)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x0218</td>
+      <td>1 (byte)</td>
+      <td>Alchemy</td>
+    </tr>
+    <tr>
+      <td>0x0219</td>
+      <td>1 (byte)</td>
+      <td>Animal Empathy</td>
+    </tr>
+    <tr>
+      <td>0x021a</td>
+      <td>1 (byte)</td>
+      <td>Bluff</td>
+    </tr>
+    <tr>
+      <td>0x021b</td>
+      <td>1 (byte)</td>
+      <td>Concentration</td>
+    </tr>
+    <tr>
+      <td>0x021c</td>
+      <td>1 (byte)</td>
+      <td>Diplomacy</td>
+    </tr>
+    <tr>
+      <td>0x021d</td>
+      <td>1 (resref)</td>
+      <td>Disable Device</td>
+    </tr>
+    <tr>
+      <td>0x021e</td>
+      <td>1 (byte1)</td>
+      <td>Hide</td>
+    </tr>
+
+    <tr>
+      <td>0x021f</td>
+      <td>1 (byte)</td>
+      <td>Intimidate</td>
+    </tr>
+    <tr>
+      <td>0x0220</td>
+      <td>1 (byte)</td>
+      <td>Knowledge (Arcana)</td>
+    </tr>
+    <tr>
+      <td>0x0221</td>
+      <td>1 (byte)</td>
+      <td>Move Silently</td>
+    </tr>
+    <tr>
+      <td>0x0222</td>
+      <td>1 (byte)</td>
+      <td>Open Lock</td>
+    </tr>
+    <tr>
+      <td>0x0223</td>
+      <td>1 (byte)</td>
+      <td>Pick Pocket</td>
+    </tr>
+    <tr>
+      <td>0x0224</td>
+      <td>1 (byte)</td>
+      <td>Search</td>
+    </tr>
+    <tr>
+      <td>0x0225</td>
+      <td>1 (byte)</td>
+      <td>Spellcraft</td>
+    </tr>
+    <tr>
+      <td>0x0226</td>
+      <td>1 (byte)</td>
+      <td>Use Magic Device</td>
+    </tr>
+    <tr>
+      <td>0x0227</td>
+      <td>1 (byte)</td>
+      <td>Wilderness Law</td>
+    </tr>
+    <tr>
+      <td>0x0228</td>
+      <td>51 (bytes)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x025b</td>
+      <td>1 (byte)</td>
+      <td>Favoured Enemy 1</td>
+    </tr>
+    <tr>
+      <td>0x025c</td>
+      <td>1 (byte)</td>
+      <td>Favoured Enemy 2</td>
+    </tr>
+    <tr>
+      <td>0x025d</td>
+      <td>1 (byte)</td>
+      <td>Favoured Enemy 3</td>
+    </tr>
+    <tr>
+      <td>0x025e</td>
+      <td>1 (byte)</td>
+      <td>Favoured Enemy 4</td>
+    </tr>
+    <tr>
+      <td>0x025f</td>
+      <td>1 (byte)</td>
+      <td>Favoured Enemy 5</td>
+    </tr>
+    <tr>
+      <td>0x0260</td>
+      <td>1 (byte)</td>
+      <td>Favoured Enemy 6</td>
+    </tr>
+    <tr>
+      <td>0x0261</td>
+      <td>1 (byte)</td>
+      <td>Favoured Enemy 7</td>
+    </tr>
+    <tr>
+      <td>0x0262</td>
+      <td>1 (byte)</td>
+      <td>Favoured Enemy 8</td>
+    </tr>
+    <tr>
+      <td>0x0263</td>
+      <td>1 (byte)</td>
+      <td>Subrace (subrace.ids)</td>
+    </tr>
+    <tr>
+      <td>0x0264</td>
+      <td>2 (byte)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x0266</td>
+      <td>1 (byte)</td>
+      <td>Strength (1-25)</td>
+    </tr>
+    <tr>
+      <td>0x0267</td>
+      <td>1 (byte)</td>
+      <td>Intelligence (1-25)</td>
+    </tr>
+    <tr>
+      <td>0x0268</td>
+      <td>1 (byte)</td>
+      <td>Wisdom (1-25)</td>
+    </tr>
+    <tr>
+      <td>0x0269</td>
+      <td>1 (byte)</td>
+      <td>Dexterity (1-25)</td>
+    </tr>
+    <tr>
+      <td>0x026a</td>
+      <td>1 (byte)</td>
+      <td>Constitution (1-25)</td>
+    </tr>
+    <tr>
+      <td>0x026b</td>
+      <td>1 (byte)</td>
+      <td>Charisma (1-25)</td>
+    </tr>
+    <tr>
+      <td>0x026c</td>
+      <td>4 (byte)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x0270</td>
+      <td>4 (dword)</td>
+      <td>Kit</td>
+    </tr>
+    <tr>
+      <td>0x0274</td>
+      <td>8 (resref)</td>
+      <td>Creature <a href="bcs.htm">script</a> - Override</td>
+    </tr>
+    <tr>
+      <td>0x027c</td>
+      <td>8 (resref)</td>
+      <td>Creature <a href="bcs.htm">script</a> - Special Script 2</td>
+    </tr>
+    <tr>
+      <td>0x0284</td>
+      <td>8 (resref)</td>
+      <td>Creature <a href="bcs.htm">script</a> - Combat Script</td>
+    </tr>
+    <tr>
+      <td>0x0283</td>
+      <td>8 (resref)</td>
+      <td>Creature <a href="bcs.htm">script</a> - Special Script 3</td>
+    </tr>
+    <tr>
+      <td>0x0294</td>
+      <td>8 (resref)</td>
+      <td>Creature <a href="bcs.htm">script</a> - Movement Script</td>
+    </tr>
+    <tr>
+      <td>0x029c</td>
+      <td>4 (byte)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x02a0</td>
+      <td>42 (byte)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x02ca</td>
+      <td>32 (char array)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+
+    <tr>
+      <td>0x02a0</td>
+      <td>5x2 (word)</td>
+      <td>'Internals' - as used by SetInternal</td>
+    </tr>
+    <tr>
+      <td>0x02aa</td>
+      <td>32 (byte)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x02ca</td>
+      <td>32 (char array)</td>
+      <td>2nd Script Name</td>
+    </tr>
+    <tr>
+      <td>0x02ea</td>
+      <td>2 (word)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x02ec</td>
+      <td>2 (word)</td>
+      <td>Saved Location X coordinate</td>
+    </tr>
+    <tr>
+      <td>0x02ef</td>
+      <td>2 (word)</td>
+      <td>Saved Location Y coordinate</td>
+    </tr>
+    <tr>
+      <td>0x02f0</td>
+      <td>2 (word)</td>
+      <td>Saved Location orientation</td>
+    </tr>
+    <tr>
+      <td>0x02f2</td>
+      <td>146 (byte)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x0384</td>
+      <td>1 (byte)</td>
+      <td>Enemy-Ally (EA.IDS).<br />
+        Start of 'object identifier' fields.</td>
+    </tr>
+    <tr>
+      <td>0x0385</td>
+      <td>1 (byte)</td>
+      <td>General (GENERAL.IDS)</td>
+    </tr>
+    <tr>
+      <td>0x0386</td>
+      <td>1 (byte)</td>
+      <td>Race (RACE.IDS)</td>
+    </tr>
+    <tr>
+      <td>0x0387</td>
+      <td>1 (byte)</td>
+      <td>Class (CLASS.IDS)</td>
+    </tr>
+    <tr>
+      <td>0x0388</td>
+      <td>1 (byte)</td>
+      <td>Specific (SPECIFIC.IDS)</td>
+    </tr>
+    <tr>
+      <td>0x0389</td>
+      <td>1 (byte)</td>
+      <td>Gender (GENDER.IDS)</td>
+    </tr>
+    <tr>
+      <td>0x038a</td>
+      <td>5 (bytes)</td>
+      <td>OBJECT.IDS reference</td>
+    </tr>
+    <tr>
+      <td>0x038f</td>
+      <td>1 (byte)</td>
+      <td>Alignment (ALIGNMEN.IDS)</td>
+    </tr>
+    <tr>
+      <td>0x0390</td>
+      <td>2 (word)</td>
+      <td>Global actor enumeration value.</td>
+    </tr>
+    <tr>
+      <td>0x0392</td>
+      <td>2 (word)</td>
+      <td>Local (area) actor enumeration value.</td>
+    </tr>
+    <tr>
+      <td>0x0394</td>
+      <td>32 (char array)</td>
+      <td>Death Variable</td>
+    </tr>
+    <tr>
+      <td>0x03b4</td>
+      <td>6 (byte)</td>
+      <td><span class="unknown"> Unknown </span></td>
+    </tr>
+    <tr>
+      <td>0x03ba</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x03be</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x03c2</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x03c6</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x03c8</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x03ce</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x03d2</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x03d6</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x03da</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Offset (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x03de</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x03e2</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x03e6</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x03ea</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x03ee</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x03f2</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x03f6</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x03fa</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x03fe</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Offset (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x0402</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x0406</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x040a</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x040e</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x0412</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x0416</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x041a</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x041e</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x0422</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Offset (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x0426</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x042a</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x042e</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x0432</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x0436</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x043a</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x043e</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x0442</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x0446</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Offset (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x044a</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x044e</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x0452</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x0456</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x045a</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x045e</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x0462</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x0466</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x046a</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Offset (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x046e</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x0472</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x0476</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x047a</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x047e</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x0482</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x0486</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x048a</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x048e</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Offset (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x0492</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x0496</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x049a</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x049e</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x04a2</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x04a6</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x04aa</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x04ae</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x04b2</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Offset (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x04b6</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x04ba</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x04be</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x04c2</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x04c6</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x04ca</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x04ce</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x04d2</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x04d6</td>
+      <td>4 (dword)</td>
+      <td>Bard Spell Count (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x04da</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x04de</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x04e2</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x04e6</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x04ea</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x04ee</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x04f2</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x04f6</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x04fa</td>
+      <td>4 (dword)</td>
+      <td>Cleric Spell Count (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x04fe</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x0502</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x0506</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x050a</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x050e</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x0512</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x0516</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x051a</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x051e</td>
+      <td>4 (dword)</td>
+      <td>Druid Spell Count (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x0522</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x0526</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x052a</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x052e</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x0532</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x0536</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x053a</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x053e</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x0542</td>
+      <td>4 (dword)</td>
+      <td>Paladin Spell Count (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x0546</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x054a</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x054e</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x0552</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x0556</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x055a</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x055e</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x0562</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x0566</td>
+      <td>4 (dword)</td>
+      <td>Ranger Spell Count (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x056a</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x056e</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x0572</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x0576</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x057a</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x057e</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x0582</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x0586</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x058a</td>
+      <td>4 (dword)</td>
+      <td>Sorcerer Spell Count (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x058e</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 1)</td>
+    </tr>
+    <tr>
+      <td>0x0592</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 2)</td>
+    </tr>
+    <tr>
+      <td>0x0596</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 3)</td>
+    </tr>
+    <tr>
+      <td>0x059a</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 4)</td>
+    </tr>
+    <tr>
+      <td>0x059e</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 5)</td>
+    </tr>
+    <tr>
+      <td>0x05a2</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 6)</td>
+    </tr>
+    <tr>
+      <td>0x05a6</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 7)</td>
+    </tr>
+    <tr>
+      <td>0x05aa</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 8)</td>
+    </tr>
+    <tr>
+      <td>0x05ae</td>
+      <td>4 (dword)</td>
+      <td>Wizard Spell Count (Level 9)</td>
+    </tr>
+    <tr>
+      <td>0x05b2</td>
+      <td>4 (dword)</td>
+      <td>Domain1 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05b6</td>
+      <td>4 (dword)</td>
+      <td>Domain2 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05ba</td>
+      <td>4 (dword)</td>
+      <td>Domain3 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05be</td>
+      <td>4 (dword)</td>
+      <td>Domain4 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05c2</td>
+      <td>4 (dword)</td>
+      <td>Domain5 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05c6</td>
+      <td>4 (dword)</td>
+      <td>Domain6 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05ca</td>
+      <td>4 (dword)</td>
+      <td>Domain7 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05ce</td>
+      <td>4 (dword)</td>
+      <td>Domain8 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05d2</td>
+      <td>4 (dword)</td>
+      <td>Domain9 Spell Offset</td>
+    </tr>
+    <tr>
+      <td>0x05d6</td>
+      <td>4 (dword)</td>
+      <td>Domain1 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05da</td>
+      <td>4 (dword)</td>
+      <td>Domain2 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05de</td>
+      <td>4 (dword)</td>
+      <td>Domain3 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05e2</td>
+      <td>4 (dword)</td>
+      <td>Domain4 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05e6</td>
+      <td>4 (dword)</td>
+      <td>Domain5 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05ea</td>
+      <td>4 (dword)</td>
+      <td>Domain6 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05ee</td>
+      <td>4 (dword)</td>
+      <td>Domain7 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05f2</td>
+      <td>4 (dword)</td>
+      <td>Domain8 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05f6</td>
+      <td>4 (dword)</td>
+      <td>Domain9 Spell Count</td>
+    </tr>
+    <tr>
+      <td>0x05fa</td>
+      <td>4 (dword)</td>
+      <td>Abilities Offset</td>
+    </tr>
+    <tr>
+      <td>0x05fe</td>
+      <td>4 (dword)</td>
+      <td>Abilities Count</td>
+    </tr>
+    <tr>
+      <td>0x0602</td>
+      <td>4 (dword)</td>
+      <td>Song Offset</td>
+    </tr>
+    <tr>
+      <td>0x0606</td>
+      <td>4 (dword)</td>
+      <td>Song Count</td>
+    </tr>
+    <tr>
+      <td>0x060a</td>
+      <td>4 (dword)</td>
+      <td>Shapes Offset</td>
+    </tr>
+    <tr>
+      <td>0x060e</td>
+      <td>4 (dword)</td>
+      <td>Shapes Count</td>
+    </tr>
+    <tr>
+      <td>0x0612</td>
+      <td>4 (dword)</td>
+      <td>Item Slots Offset</td>
+    </tr>
+    <tr>
+      <td>0x0616</td>
+      <td>4 (dword)</td>
+      <td>Item Offset</td>
+    </tr>
+    <tr>
+      <td>0x061a</td>
+      <td>4 (dword)</td>
+      <td>Item Count</td>
+    </tr>
+    <tr>
+      <td>0x061e</td>
+      <td>4 (dword)</td>
+      <td>Effects Offset</td>
+    </tr>
+    <tr>
+      <td>0x0622</td>
+      <td>4 (dword)</td>
+      <td>Effects Count</td>
+    </tr>
+    <tr>
+      <td>0x0626</td>
+      <td>8 resref</td>
+      <td>Dialog</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+<div class="fileheader"><a name="CREV2_2_KnownSpell">CRE V2.2 Known Spells</a></div>
+<br />
+<div class="indent1">
+This section details which spells the creature knows, and it consists of an array of entries formatted as follows.<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (data type)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (dword)</td>
+      <td>Spell Index. Index into the relevant 2da file (listspll, listdomm, listinnt, listshap, listsong) </td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td>Amount Memorised</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td>Amount Remaining</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+<div class="fileheader"><a name="CREV2_2_MemSpellInfo">CRE V2.2 Spell Memorization Info</a></div>
+<br />
+<div class="indent1">
+This section details how many spells the creature can memorize, and how many
+it has memorized. It consists of an array of entries formatted as follows.<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (data type)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (dword)</td>
+      <td>Total Memorising slots</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td>Free Memorising slots</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+<div class="fileheader"><a name="CREV2_2_Item">CRE V2.2 Items Table</a></div>
+<br />
+<div class="indent1">
+This section details which items the character has. It consists of an array
+of entries formatted as follows:<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (data type)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>8 (resref)</td>
+      <td>Resource name of the <a href="ITMformat.htm">ITM file</a> holding the particular item</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>2 (word)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x000a</td>
+      <td>2 (word)</td>
+      <td>Usage1 - often the count of the item (stack), or the number of uses remaining.</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>2 (word)</td>
+      <td>Usage2</td>
+    </tr>
+    <tr>
+      <td>0x000e</td>
+      <td>2 (word)</td>
+      <td>Usage3</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>4 (dword)</td>
+      <td>Flags:
+        <div class="indent1">
+          bit 0: Identified<br />
+          bit 1: Unstealable<br />
+          bit 2: Stolen<br />
+          bit 3: Magical<br />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+<div class="fileheader"><a name="CREV2_2_ItemSlots">CRE V2.2 Item Slots</a></div>
+<br />
+<div class="indent1">
+This is an array keeping track of which items are located in each particular
+location in the CRE's inventory. There are 45 slots, and they are NOT the same
+as the order specified in specified in SLOTS.IDS. The actual order is: <br />
+<div class="indent1">
+  <li>Helmet</li>
+  <li>Armor</li>
+  <li>Shield</li>
+  <li>Gloves</li>
+  <li>L.Ring</li>
+  <li>R.Ring</li>
+  <li>Amulet</li>
+  <li>Belt</li>
+  <li>Boots</li>
+  <li>Weapon 1</li>
+  <li>Shield 1</li>
+  <li>Weapon 2</li>
+  <li>Shield 2</li>
+  <li>Weapon 3</li>
+  <li>Shield 3</li>  
+  <li>Weapon 4</li>
+  <li>Shield 4</li>
+  <li>Cloak</li>
+  <li>Quiver 1</li>
+  <li>Quiver 2</li>
+  <li>Quiver 3</li>
+  <li>?</li>
+  <li>Quick item 1</li>
+  <li>Quick item 2</li>
+  <li>Quick item 3</li>
+  <li>Inventory item (1 to 24)</li>
+  <li>Selected</li>
+</div>
+  Each entry in here will either be 0xffff, meaning &quot;empty&quot;, or it will be an index into the <a href="#CREV2_2_Item">Items table</a>. Selected is a dword indicating which weapon slot us currently selected. Values are: <br />
+<div class="indent1">
+<li>0 (Weapon 1)</li>
+<li>1 (Weapon 2)</li>
+<li>2 (Weapon 3)</li>
+<li>3 (Weapon 4)</li>
+<li>1000 (No slot)</li>
+<li>65512-Quiver 1</li>
+<li>65513-Quiver 2</li>
+<li>65514-Quiver 3</li>
+</div>
+</div>
+</div>
+</body>
+</html>

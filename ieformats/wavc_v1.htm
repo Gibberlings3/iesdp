@@ -1,0 +1,111 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">WAVC file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div><br />
+
+<div class="fileheader">General Description</div>
+  <div class="indent1">
+    WAVC files contain sounds used within the game.<br />
+    Unlike ACM files, they can be put in the override folder, or BIF files. All WAVC files are 22050 Hz, 16 bits and mono.<br />
+    Since the game only recognizes files with WAV extensions, they must be renamed to *.WAV before being used in the game.<br />
+  </div>
+
+  <br />
+
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+Wavc is the sound file format used in Infinity Engine. The file is an acm file with the following additional header attached.<br />
+<br />
+<table border="1" width="98%">
+  <tr>
+    <td>0000x00</td>
+    <td>5741</td>
+    <td>5643</td>
+    <td>5631</td>
+    <td>2e30</td>
+    <td>xxxx</td>
+    <td>xxxx</td>
+    <td>yyyy</td>
+    <td>yyyy</td>
+  </tr>
+  <tr>
+    <td>0000x10</td>
+    <td>1c00</td>
+    <td>0000</td>
+    <td>0100</td>
+    <td>1000</td>
+    <td>2256</td>
+    <td>e777</td>
+    <td>9728</td>
+    <td>0301</td>
+  </tr>
+</table>
+<br />
+where :<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <tr>
+    <td><strong>Offset</strong></td>
+    <td><strong>Size (Data Type)</strong></td>
+    <td><strong>Description</strong></td>
+  </tr>
+  <tr>
+    <td>0000x00</td>
+    <td>8 (ASCIIZ)</td>
+    <td>File identifier WAVCV1.0</td>
+  </tr>
+  <tr>
+    <td>0000x08</td>
+    <td>4 (dword)</td>
+    <td>Uncompressed size of file ( xxxx xxxx ) value</td>
+  </tr>
+  <tr>
+    <td>0000x0a</td>
+    <td>4 (dword)</td>
+    <td>Compressed size of file ( yyyy yyyy ) value</td>
+  </tr>
+  <tr>
+    <td>0000x10</td>
+    <td>12 (bytes)</td>
+    <td>Constant in all wavc files</td>
+  </tr>
+  <tr>
+    <td>0000x1c</td>
+    <td>4 (bytes)</td>
+    <td>There is the header of normal acm file ( 9728 0301 )</td>
+  </tr>
+</table>
+<br />
+
+To create WAVC files, the following programs are required::<br />
+<div class="indent1">
+snd2acm.exe<br />
+acm2wav.exe<br />
+wavc.exe<br />
+</div>
+<br />
+These files can be found at the Russian Fallout editing page: <br />
+<a href="http://www.fallout.ru/teamx/" target="_blank">http://www.fallout.ru/teamx/</a><br />
+<br />
+The process for creating a WAVC file is as follows:<br />
+<div class="indent1">
+Compress the file using snd2acm (NB. keep track of the output filesize)<br />
+Decompress the file using acm2wav (NB. keep trackof the output filesize)<br />
+Open the acm filein a hex editor, and add the header described above, entering the compressed / decompressed filesize values in hexadecimal.<br />
+Check the resultant file is valid using the wavc converter - if the output is the same as source wav file then we have succeeded.<br />
+<br />
+To such the files in-game, change the extension from .wavc to .wav, and place in the override directory.<br />
+</div>
+<br />
+NB. The IE plays WAVC files at twice the speed of the original WAV file.
+</body>
+</html>

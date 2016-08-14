@@ -1,0 +1,104 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">INI file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">PST, IWD, IWD:HoW, IWD:TotL, IWD2</div>
+<br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+This is basically the windows .ini file format. It is focused on storing 
+things like quest information and respawn information for areas. Of course 
+there are also INI files for general game configuration purposes.<br />
+In this section I will disregard the files in IE games responsible for game
+configuration and focus on INI files responsible for various actions/features
+connected with the game quests themselves.<br />
+They could be edited like other INIs - just using simple Wordpad in Windows
+or other text editing software.<br />
+</div>
+<br />
+
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+We have INI files attached to areas responsible for various actions generally
+for spawning creatures:<br />
+The INI files have the same name as ARE files that are modified by them.<br />
+There are the following sections in these files:<br />
+<br />
+<strong>[locals]</strong><br />
+<div class="indent1">
+Unknown. Left blank in all example files.<br />
+</div>
+<br />
+<strong>[spawn_main]</strong><br />
+<div class="indent1">
+Responsible for spawning creatures in area attaches identifiers of next
+sections to the certain actions/events.<br />
+<strong>enter=name_of_section1</strong><br />
+This feature of [spawn_main] assigns the identifier name_of_section1 (of
+course one could choose other name , and later use it to make his own section)
+to the action of entering area by player.
+<br />
+<strong>event=name_of_section2</strong><br />
+This feature of [spawn_main] assigns the identifier name_of_section2 (of
+course one could choose other name , and later use it to make his own section)
+to the action in general. It means that the appearance of this effect may be
+controlled either by variable identifier (if included in spawned creatures
+definitions) or by timer that is set in description of assigned
+identifier.<br />
+Later file contains of the identifiers definitions that were assigned in [spawn_main]
+section. According to our example (one could always make more references in [spawn_main]
+section, thus definitions later in INI ) we will consider identifiers named
+name_of_section1 and name_of_section2.<br />
+</div>
+<br />
+<strong>[name_of_section1]</strong><br />
+<div class="indent1">
+Section starts by its identifier<br />
+<strong>critters= cre1,cre2,.........(or other suitable identifiers)</strong><br />
+This assigns spawned creatures identifiers to the [name_of_section1] section.
+Creatures identifiers will be used later as the names of appropriate sections
+names.<br />
+<strong>interval= integer number</strong><br />
+Time interval before creatures from [name_of_section1] will be spawned. Time
+is counted in relation 1 minute (of real or game time ?) = 900.<br />
+The similar definition is given in case of [name_of_section2] or other
+sections defined by user in [spawn_main] section.<br />
+At last spawned creatures identifier definitions. Let's take name from
+example - cre1.<br />
+</div>
+<br />
+<strong>[cre1]</strong><br />
+<div class="indent1">
+Name of identifier used in&nbsp; previous events definitions is the name of
+section.<br />
+Then there are several options:<br />
+<span class="unknown">spec = [xxx.yyy.zzz.vvv.qqq]</span><br />
+<span class="unknown">xxx, yyy, zzz, vvv, qqq - integer numbers&nbsp; - I
+have no idea what do they mean</span><br />
+<span class="unknown">spec_qty = integer number&nbsp;</span><br />
+<span class="unknown">some number,&nbsp; I have seen only value 1, usage unknown,</span><br />
+<strong>spec_var = name_of_variable</strong><br />
+Name_of_variable is just global variable that may be used in area script to
+trigger the event occurrence (spawning creatures). <font color="#000099">I have
+no idea if it works only if variable is not zero or it have to be set to 1 ?</font><br />
+<strong>cre_file = CRE_file_name</strong><br />
+File name of CRE file without extension that is used for spawned creatures.<br />
+<strong>Script_default = script_name.</strong><br />
+Sets the default script for spawned creature named script_name (remember to
+put names without extension). The BCS file.<br />
+<strong><font color="#000099">ai_specifics = integer number</font></strong><br />
+<font color="#000099">usage unknown, uses values assigned by SPECIFIC.IDS</font><br />
+<strong>spawn_point = [xxxx.yyyy:z]</strong><br />
+xxxx - is x position on the area<br />
+yyyy - is y position on the area<br />
+z - is the face direction of spawned creature.<br />
+</div>
+<br />
+</div>
+</body>
+</html>

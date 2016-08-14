@@ -1,0 +1,186 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main"> CFB File Format</div><br />
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">DLTCEP</div><br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+The CFB format is a binary dump format, developed for the DLTC to transfer
+casting feature blocks between spells simply and easily. CFB files can be 
+created using DLTCEP.<br />
+</div>
+<br />
+
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+A CFB file, being a simple binary dump format, has no header, or any other 
+extraneous information. The file simply contains a series of feature block
+entries. The format supports several &quot;shortcuts&quot;, detailed below.
+The number of effects contained in a CFB can be found by dividing the CFB 
+filesize by the size of an effect (ie. 48 bytes).<br />
+Overall Structure:<br />
+<div class="indent1">
+  <li><a href="#cfb_v1_cfb">Casting Feature Block</a></li>
+</div>
+<br />
+</div>
+
+<div class="fileheader"><a name="cfb_v1_cfb">Casting Feature Block</a></div>
+<div class="indent1">
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>2 (word)</td>
+      <td>Opcode Number</td>
+    </tr>
+    <tr>
+      <td>0x0002</td>
+      <td>1 (char)</td>
+      <td>Target:
+        <div class="indent1">
+          0=None<br />
+          1=Self<br />
+          2=Pre-Target<br />
+          3=Party<br />
+          4=Global<br />
+          5=Non-Party<br />
+          6=Party?<br />
+          7=<span class="unknown">Unknown</span><br />
+          8=Except Self<br />
+          9=Original Caster<br />
+          10=<span class="unknown">Unknown</span><br />
+          11=<span class="unknown">Unknown</span><br />
+          12=<span class="unknown">Unknown</span><br />
+          13=<span class="unknown">Unknown</span><br />
+        </div>
+      <td>
+    </tr>
+    <tr>
+      <td>0x0003</td>
+      <td>1 (char)</td>
+      <td>Power<td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td>Parameter 1 <br />
+      (++++ = set to +ve spell level)<br />
+      (---- = set to -ve spell level)
+      </td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td>Parameter 2<td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>1 (char)</td>
+      <td>Timing Mode:
+        <div class="indent1">
+          0=Duration<br />
+          1=Permanent<br />
+          2=While equipped<br />
+          3=Delayed Duration<br />
+          4=Delayed<br />
+          5=Delayed?<br />
+          6=Duration?<br />
+          7=Permanent?<br />
+          8=Permanent?<br />
+          9=Permanent (after Death)<br />
+          10=Trigger<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x000d</td>
+      <td>1 (char)</td>
+      <td>Resistance:
+        <div class="indent1">
+          0=Nonmagical<br />
+          1=Dispell/Not Bypass<br />
+          2=Not Dispell/NotBypass<br />
+          3=Dispell/Bypass<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x000e</td>
+      <td>4 (dword)</td>
+      <td>Duration</td>
+    </tr>
+    <tr>
+      <td>0x0012</td>
+      <td>1 (char)</td>
+      <td>Probability 1</td>
+    </tr>
+    <tr>
+      <td>0x0013</td>
+      <td>1 (char)</td>
+      <td>Probability 2</td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>8 (resref)</td>
+      <td>Resource <br />
+      (******** = set to filename)
+      </td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>4 (dword)</td>
+      <td>Dice Thrown</td>
+    </tr>
+    <tr>
+      <td>0x0020</td>
+      <td>2 (word)</td>
+      <td>Dice Sides</td>
+    </tr>
+    <tr>
+      <td>0x0024</td>
+      <td>4 (dword)</td>
+      <td>Saving Throw Type: <br />
+        <div class="indent1">
+          0=None<br />
+          1=Spells<br />
+          2=Breathe<br />
+          4=Death<br />
+          8=Wands<br />
+          16=Polymorph<br />
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0028</td>
+      <td>4 (dword)</td>
+      <td>Saving Throw Bonus</td>
+    </tr>
+    <tr>
+      <td>0x002c</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</body>
+</html>

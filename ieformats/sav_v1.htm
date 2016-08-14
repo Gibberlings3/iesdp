@@ -1,0 +1,117 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">SAV file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div>
+<br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+This is another simple archive format; unlike BIFF files, though, this is a
+standalone format, and employs compression. Moreover, it is written in such a
+way as to make incremental additions easy and quick. It employs the compression
+of <a href="http://www.info-zip.org/pub/infozip/zlib"><code>zlib</code></a>,
+written by <em>Jean-loup Gailly</em> and <em>Mark Adler</em>.<br />
+</div>
+<br />
+
+<div class="fileheader">Detailed Description</a></div>
+<div class="indent1">
+Overall structure<br />
+<div class="indent1">
+  <li><a href="#savv1_Header">Header</a>
+  <li><a href="#savv1_File">Files</a></li>
+</div>
+</div>
+<br />
+
+<div class="fileheader"><a name="formsavv1_Header">Header</a></div>
+<div class="indent1">
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (data type)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (char array)</td>
+      <td>Signature ('SAV ')</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (char array)</td>
+      <td>Version ('V1 ')</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br />
+
+<div class="fileheader"><a name="savv1_File">Files</a></div>
+<br />
+<div class="indent1">
+The entries each represent one file, in its modified state, typically 
+<a href="are_v1.htm"> AREA</a> and <a href="sto_v1.htm"> STOR</a> files. 
+They are merely concatenated. In order to seek a particular file, you read the 
+header of the current section (i.e. all except the raw data in the below table). 
+If the filename is the one you are looking for, decompress the section. Otherwise, 
+skip the file stream ahead by &quot;compressed data length&quot; bytes and repeat.<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (data type)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (dword)</td>
+      <td>Length of filename</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>variable (ASCIIZ char array)</td>
+      <td>Filename (length specified by previous field)</td>
+    </tr>
+    <tr>
+      <td>sizeof(filename)+0x0004</td>
+      <td>4 (dword)</td>
+      <td>Uncompressed data length</td>
+    </tr>
+    <tr>
+      <td>sizeof(filename)+0x0008</td>
+      <td>4 (dword)</td>
+      <td>Compressed data length</td>
+    </tr>
+    <tr>
+      <td>sizeof(filename)+0x000c</td>
+      <td>variable (raw data)</td>
+      <td>Compressed data (length in bytes specified by previous field)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</body>
+</html>

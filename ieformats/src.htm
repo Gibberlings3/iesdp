@@ -1,0 +1,93 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">SRC file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">PST</div>
+<br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+SRC files contain Strrefs for things which are spoken by characters in
+Planescape: Torment outside of normal dialog. (i.e. on the main overhead
+screen). I believe these are triggered by scripts, usually, since some of these
+things are not spoken all the times. The ones which are spoken are typically
+spoken cyclically. (i.e. each one is spoken in turn with a delay in between). An
+example of this is the puzzled skeleton in the Dead Nations. Another, slightly
+different example, is Morte's taunts, which are stored in this type of file. If
+the strref has an associated string, the string usually appears over the head of
+the character who is speaking. If the strref has an associated sound, it is
+played when the line is spoken. The associated strings are not always spoken,
+however; in the case of Morte's taunts, the sound is played, but the associated
+text (&quot;Morte's Taunts 1&quot; ... &quot;Morte's Taunts 23&quot;) is not.<br />
+</div>
+<br />
+
+<div class="fileheader">Detailed Description</div>
+<br />
+<div class="indent1">
+A SRC file has as it's header the number of entries. Each entry is eight
+bytes and consists of a Strref and an undetermined dword, whose value is 1 in
+all available files.<br />
+<br />
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (data type)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (dword)</td>
+      <td>Entry count</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td>Strref (entry #0)</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (dword)</td>
+      <td>Strref (entry #1)</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+    <tr>
+      <td>..</td>
+      <td>4 (dword)</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>4*n+4</td>
+      <td>4 (dword)</td>
+      <td>Strref (entry #n)</td>
+    </tr>
+    <tr>
+      <td>4*n+8</td>
+      <td>4 (dword)</td>
+      <td><div class="unknown">Unknown</div></td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

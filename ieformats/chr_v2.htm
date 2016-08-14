@@ -1,0 +1,162 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">CHR file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1"> BG2, BG2: ToB</div>
+<br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+This file format describes a special kind of creature - the protagonist
+(probably also other members of party are saved in this format).
+The specific stats which are stored in the given structures are 
+given by a mapping in one of the IDS or 2DA files.<br />
+</div>
+<br />
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+Overall structure:<br />
+<div class="indent1">
+  <li><a href="#CHRV2_0_CHR_Header">CHR file header</a>
+  <li>Internal CRE v.2.0 file header
+  <li>Known spells section
+  <li>Spell memorization info
+  <li>Memorized spells section
+  <li>Effects
+  <li>Items section
+  <li>&quot;Item slots&quot;</li>
+</div>
+</div>
+<br />
+<div class="fileheader"><a name="CHRV2_0_CHR_Header">CHR V2.0 Header</a></div>
+<br />
+<div class="fileheader">Header is 100 (64h) bytes long.</div>
+<br />
+<div class="indent1">
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+  <tr>
+    <th>Offset</th>
+    <th>Size (data type)</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0x0000</td>
+    <td>4(char array)</td>
+    <td>Signature ('CHR ')</td>
+  </tr>
+  <tr>
+    <td>0x0004</td>
+    <td>4(char array)</td>
+    <td>Version ('V2.0')</td>
+  </tr>
+  <tr>
+    <td>0x0008</td>
+    <td>32(string)</td>
+    <td>Name of Protagonist/Player</td>
+  </tr>
+  <tr>
+    <td>0x0028</td>
+    <td>4 (dword)</td>
+    <td>Offset to CRE structure</td>
+  </tr>
+  <tr>
+    <td>0x002c</td>
+    <td>4 (dword)</td>
+    <td>Length of the CRE structure</td>
+  </tr>
+  <tr>
+    <td>0x0030</td>
+    <td>2 (word)</td>
+    <td>Index into slots.ids for Quick Weapon 1 (0xFFFF = none)</td>
+  </tr>
+  <tr>
+    <td>0x0032</td>
+    <td>2 (word)</td>
+    <td>Index into slots.ids for Quick Weapon 2 (0xFFFF = none)</td>
+  </tr>
+  <tr>
+    <td>0x0034</td>
+    <td>2 (word)</td>
+    <td>Index into slots.ids for Quick Weapon 3 (0xFFFF = none)</td>
+  </tr>
+  <tr>
+    <td>0x0036</td>
+    <td>2 (word)</td>
+    <td>Index into slots.ids for Quick Weapon 4 (0xFFFF = none)</td>
+  </tr>
+  <tr>
+    <td>0x0038</td>
+    <td>4 (dword)</td>
+    <td><span class="unknown">Unknown, usually 0000</span></td>
+  </tr>
+  <tr>
+    <td>0x003c</td>
+    <td>4 (dword)</td>
+    <td><span class="unknown">Unknown, usually FFFF</span></td>
+  </tr>
+  <tr>
+    <td>0x0040</td>
+    <td>8 (resref)</td>
+    <td>Quick Spell 1 resource</td>
+  </tr>
+  <tr>
+    <td>0x0048</td>
+    <td>8 (resref)</td>
+    <td>Quick Spell 2 resource</td>
+  </tr>
+  <tr>
+    <td>0x0050</td>
+    <td>8 (resref)</td>
+    <td>Quick Spell 3 resource</td>
+  </tr>
+  <tr>
+    <td>0x0058</td>
+    <td>2 (word)</td>
+    <td>Index into slot.ids for Quick Item 1</td>
+  </tr>
+  <tr>
+    <td>0x005a</td>
+    <td>2 (word)</td>
+    <td>Index into slot.ids for Quick Item 2</td>
+  </tr>
+  <tr>
+    <td>0x005c</td>
+    <td>2 (word)</td>
+    <td>Index into slot.ids for Quick Item 3</td>
+  </tr>
+  <tr>
+    <td>0x005e</td>
+    <td>2 (word)</td>
+    <td>Related to Quick Item 1</td>
+  </tr>
+  <tr>
+    <td>0x0060</td>
+    <td>2 (word)</td>
+    <td>Related to Quick Item 2</td>
+  </tr>
+  <tr>
+    <td>0x0062</td>
+    <td>2 (word)</td>
+    <td>Related to Quick Item 3</td>
+  </tr>
+  </tbody>
+</table>
+<br />
+</div>
+
+<div class="fileheader"><a name="CHRV2_0_Header"><a href="cre_v22.htm"></a>CRE V2.2 File</a></div> 
+<br />
+</body>
+</html>

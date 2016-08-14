@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title> Variable Types </title>
+<link rel="stylesheet" type="text/css" href="general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div class="title_main">Variable Types</div>
+
+<div>
+  <br />
+  <br />
+  Variables can have almost any name you can imagine, however a few things need to be thought of first.<br />
+  Two variables of the same name and scope can (and will) overwrite one another.<br />
+  There is a limit of 32 characters for variable names (or 18 characters for the scripting name/death variable, due to the appending of SPRITE_IS_DEAD).<br />
+  <br />
+  There are three types of variables:<br />
+  <br />
+  <strong>GLOBAL: SetGlobal(&quot;XXXXXX&quot;, &quot;GLOBAL&quot;, 1)</strong><br />
+  <div class="indent1">
+  The above command sets the XXXXXX global to 1, and this global can be seen by any other script in the game once it is set. Another creature script can
+  see it and call on it, as can an area script, dialogue script, whichever.<br />
+  A common use of this in dialogue is when an NPC has given the player a piece of information that is used in other scripts elsewhere...the game as a whole must know that this information has been given, so the variable is set as a global.<br />
+  </div>
+  <br />
+  <strong>LOCALS: SetGlobal(&quot;XXXXXX&quot;, &quot;LOCALS&quot;, 1)</strong><br />
+  <div class="indent1">
+  The above command sets the XXXXXX global to 1...but it is local only to the creature it is set for. If you set a local variable for an NPC, then only
+  that NPC can check later to see what their local is. Other scripts cannot see local variables that are not their own. The benefit to using a Local is that the global can be the same name as locals being used by other creatures...it does not matter if they have the same name, so long as the
+  creature, itself, isn't duplicating its own locals.<br />
+  A common use of this in dialogue is to mark off dialogues that are only supposed to be said once. The dialogue checks to see if the variable is 0 and then starts the dialogue...and in its first link sets that variable to 1. The romance NPC's also use local variables to track their 'LoveTalk' setting...this tells the NPC which dialogue they should currently be giving to the player.<br />
+  </div>
+  <br />
+  <strong>AREA: SetGlobal(&quot;XXXXXX&quot;, &quot;AR0500&quot;, 1)</strong><br />
+  <div class="indent1">
+  The above command sets the XXXXXX global to 1...but only for area 0500. This is used mainly in area scripts...or in other scripts where you are positive that it will only occur in that area. Other scripts can see this variable the same as a global, but different areas can use the same name for the area global and not supercede each other.<br />
+  Area scripts are not used often in dialogue unless the scripter is sure that it will only occur in a specific area.<br />
+  <br />
+  NB. The string MYAREA can be specified as the variable scope. When running a script with this reference, the engine substitutes the current area for the MYAREA text.<br />
+  NB. GLOBAL, LOCALS and MYAREA are case-sensitive.<br />
+  </div>
+</div>
+
+</body>
+</html>

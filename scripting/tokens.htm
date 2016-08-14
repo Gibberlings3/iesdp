@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title> Strings and Tokens </title>
+<link rel="stylesheet" type="text/css" href="general.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<body>
+<div class="title_main"> Strings and Tokens </div>
+<div>
+  <br />
+  
+  <div class="fileheader">Strings:</div><br />
+  Actions:<br />
+  These are the actions which take string references as arguments:<br />
+  <div class="indent1">
+  151 DisplayString(O:Object*,I:StrRef*)<br />
+  235 SetQuestDone(I:STRREF*)<br />
+  247 SetToken(S:Token*,I:STRREF*)<br />
+  262 DisplayStringNoName(O:Object*,I:StrRef*)<br />
+  263 EraseJournalEntry(I:STRREF*)<br />
+  269 DisplayStringHead(O:Object*,I:StrRef*)<br />
+  288 SetName(I:STRREF*)<br />
+  292 DisplayStringHeadOwner(S:Item*,I:STRREF*)<br />
+  308 AddMapNote(P:Position*,I:StringRef*)<br />
+  311 DisplayStringWait(O:Object*,I:StrRef*)<br />
+  320 SetPlayerSound(O:Object*,I:STRREF*,I:SlotNum*SNDSLOT)<br />
+  (Also IncrementChapter(I:STRREF*) which might be a typo as it is listed as IncrementChapter(S:RESREF*) in another file.)<br />
+  </div>
+  <br />
+  DisplayString() displays a string in the chat window, prefixed by the object specified. <br />
+  <div class="indent1">
+    eg. If Minsc's script has "DisplayString(Myself,3875)" then "Minsc: By Valkur's strapping buttocks." will be displayed.<br />
+  </div>
+  <br />
+  DisplayStringWait() does the same thing. I haven't paid close enough attention to tell if there is any kind of delay.<br />
+  <br />
+  DisplayStringHead() does the same thing except that the text appears over the character's head instead of in the chat box. It also doesn't have the "Minsc: " attribution prepended to the string.<br />
+  <br />
+  DisplayStringNoName() is just like DisplayString() but without the attribution.<br />
+  <br />
+  DisplayStringHeadOwner() is just like DisplayStringHead() except that the text appears over the head of any party member(s) who are carrying the item specified.<br />
+  I haven't checked to see if this works with non-party members.<br />
+  <br />
+  SetToken() stores the string in a variable (discussed below).<br />
+  <br />
+  I haven't been able to get AddMapNote() to work, though my understanding of how to specify points on the map is probably inadequate.<br />
+  <br />
+  I haven't tried using SetQuestDone(), EraseJournalEntry(), SetName(), or SetPlayerSound().<br />
+  SetName() might be handy if it does what I think it does. Can we name our summoned pets and then identify them with CharName()?<br />
+  Perhaps it sets the script name (which could be checked with Name()).<br />
+  <br />
+  Strings.ids:<br />
+  I converted bg2_dialog_text.h (from the files section) into a strings.ids file.  I'd be happy to upload it if anyone is interested.<br />
+  Excerpts:<br />
+  3875  BY_VALKUR_S_STRAPPING      // By Valkur's strapping buttocks.<br />
+  11293 CLASS_LEVEL_LEVEL          // &lt;CLASS>: Level &lt;LEVEL><br />
+  44191 GABBER_IS_MY_NAME          // &lt;GABBER> is my name.<br />
+  5251  OOPS_1                     // Oops!<br />
+  3866  TIS_BUT_A_FLESH_WOUN_1     // 'Tis but a flesh wound.<br />
+  <br />
+  It works fine, as long as you modify the function prototypes like so:<br />
+  151 DisplayString(O:Object*,I:StrRef*Strings)<br />
+  <br />
+  I find it quite convenient to be able to refer to "OOPS_1" rather than "5251". There is a serious performance hit at compile time, however. I've only tried it with small test scripts and haven't done any precise timing, but my guess is that the (huge) strings.ids file is reloaded every time the compiler encounters a string!  This problem can be avoided by trimming down the file so that it only contains your favorite strings.  The problem might also be lessened by using a 3rd party compiler, but I haven't tried that yet.<br />
+  <br />
+  Custom strings:<br />
+  There are no commands which display arbitrary strings. The only way to incorporate custom strings in a 
+  script is to add new string references to the game using IEEP.<br />
+  <br />
+  <br />
+  <div class="fileheader">Tokens:</div><br />
+  Tokens are special variables which are used to customize some of the strings in the game. For example, CLASS, LEVEL, and GABBER are tokens in the above excerpts from strings.ids. There are three actions I am aware of which set tokens:<br />
+  <br />
+  &nbsp;&nbsp; 247 SetToken(S:Token*,I:STRREF*)<br />
+  &nbsp;&nbsp; 248 SetTokenObject(S:Token*,O:Object)<br />
+  &nbsp;&nbsp; 249 SetGabber(O:Object)<br />
+  <br />
+  Example:<br />
+  1) Minsc: <span class="code">DisplayString(Myself,CLASS_LEVEL_LEVEL)</span> results in the text &quot;Ranger: Level 7&quot;.<br />
+  2) <span class="code">SetToken(&quot;CLASS&quot;,OOPS_1)</span><br />
+  3) Minsc: <span class="code">DisplayString(Myself,CLASS_LEVEL_LEVEL)</span> results in the text &quot;Oops!: Level 7&quot;.<br />
+  4) Jaheira: <span class="code">SetTokenObject(&quot;CLASS&quot;,Myself)</span> Minsc's DisplayString &nbsp;resulted in &quot;Druid: Level 7&quot;.<br />
+  <br />
+  SetGabber() (and the trigger IsGabber()) are the only functions I've found which deal with specific tokens.<br />
+  My guess is that this token is automatically updated during dialogues.<br />
+  SetGabber() worked just like SetTokenObject(&quot;GABBER&quot;,O:Object) in my testing.<br />
+</div>
+
+</body>
+</html>

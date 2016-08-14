@@ -1,0 +1,107 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">TOH file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">BG2, BG2: ToB, IWD, IWD:HoW, IWD:TotL</div><br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+The files are contained in the <a href="sav_v1.htm"> SAV files </a> in the savegame folders.<br />
+TOH of files are similar in structure to TLK files and may be used to override text from the Dialog.tlk file.<br />
+<br />
+<strong> IWD: </strong>
+TOH files are used to edit the character biographies during the game (when the characters are not exported).<br />
+<br />
+<strong> BG2: </strong>
+TOH files are used to store all custom players comments inside game - eg. custom waypoints on the area map, custom notes in journal as well as the biography  that is stored in these files during game (when the character is not exported).<br />
+<br />
+TOH files are used as a &quot;map&quot; for the <a href="tot.htm"> TOT file</a> consisting of string references. It is likely TOH files also define the sophisticated features of string entries, (eg. sound references), but this is unconfirmed.<br />
+</div>
+<br />
+
+<div class="fileheader">Detailed Description</div>
+<div class="indent1">
+<div class="fileheader">Header</div>
+This section is 14h bytes long.<br />
+<br />
+<table border="1" width="98%">
+    <tr>
+      <th>Offset</th>
+      <th>Size (data type)</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (char array)</td>
+      <td>Signature ('TLK ')</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (char array)</td>
+      <td>Empty (probably place for version)</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (dword)</td>
+      <td>Number of Strref entries in
+        TOH file.</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+</table>
+<br />
+<div class="fileheader">Strref Entries</div>
+These sections have 1Ch bytes.<br />
+<br />
+<table border="1" width="98%">
+    <tr>
+      <th>Offset</th>
+      <th>Size (data type)</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (dword)</td>
+      <td>String reference number. In TOH files it has values greater than 3000000 (2DC6C0h) starting from this number. Smaller values can be used to override existing <a href="tlk_v1.htm">Dialog.tlk </a>entries.</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr> 
+      <td>0x000c</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown</span></td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>8 (resref?)</td>
+      <td><span class="unknown">WAV/WAVC reference ?</span></td>
+    </tr>
+    <tr>
+      <td>0x0018</td>
+      <td>4 (dword)</td>
+      <td>Offset to string data inside <a href="tot.htm">TOT file</a></td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

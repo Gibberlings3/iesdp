@@ -1,0 +1,79 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="general.css" />
+</head>
+<body>
+<div class="title_main">WFX file format</div>
+<br />
+<div class="fileheader">Applies to:</div>
+<div class="indent1">BG2, BG2: ToB</div>
+<br />
+
+<div class="fileheader">General Description</div>
+<div class="indent1">
+
+</div>
+WFX files determine variation for playback of wave sounds. A WFX controls the variation for the similarly named WAV file (e.g. mySound.wfx controls the variation for mySound.wav).<br />
+<br />
+</div>
+
+<div class="fileheader">Detailed Description</div>
+<br />
+WFX files consist of only a header. Each WFX file has a constant length of 108h (264) bytes.<br />
+<br />
+<div class="indent1">
+<table border="1" width="98%">
+  <colgroup>
+    <col width="5%">
+    <col width="12%">
+    <col width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size (datatype)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (char array)</td>
+      <td>Signature ('WFX ')</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (char array)</td>
+      <td>Version ('V1.0')</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td><span class="unknown">Unknown, always 0</span></td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (dword)</td>
+      <td>Flags:
+        <div class="indent1">
+          <span class="unknown">bit 0: Unknown</span><br />
+          <span class="unknown">bit 1: Unknown</span><br />
+          bit 2: Enabled<br />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>4 (dword)</td>
+      <td>Deviation.</td>
+    </tr>
+    <tr>
+      <td>0x002c</td>
+      <td>244 (bytes)</td>
+      <td><span class="unknown">Unknown, unused? Always 0.</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</body>
+</html>

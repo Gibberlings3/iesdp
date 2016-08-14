@@ -9,6 +9,7 @@ base IESDP with partial history
 - index page date display is automatically refreshed on each change
 - fixed logo overlaying text, making the FAQ inaccessible
 - added quickjump menu to opcode lists
+- added quickjump button to all pages (hidden by default)
 
 # content changes
 - fixed chargen title

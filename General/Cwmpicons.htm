@@ -1,0 +1,231 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="../ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Totorials and Descriptions</title>
+</head>
+
+<body>
+
+<p align="center"><font size="6">How to make your own worldmap icon ?</font></p>
+<p align="center">&nbsp;</p>
+<p align="left">Disclaimer : this tutorial should be regarded as developer notes
+more than as &quot;tutorial&quot; - it is just remainder of known stuff - Thie
+may require from reader some wisdom about hex editing, IESDP file formats
+descriptions interpretation ability, so don't be surprised if you don't
+understand something.</p>
+<p align="left">First of all you should start by finding out what is the name of
+the worldmap file that you want to modify : <a href="../FilesFormats/wmapformat.htm"><font color="#FF0000">worldmap.wmp
+or wmap25.wmp</font></a></p>
+<p align="left">When you have it you either have possibility to check the
+Worldmap Icons resource in the Infinity Explorer or Near Infinity or in the Hex
+editor as it is described in <a href="../FilesFormats/wmapformat.htm"><font color="#FF0000">WMP
+file format. </font></a></p>
+<p align="left">As for the the details : if you use hex editor check the name in
+offset 0x0030 of Worldmap section - this is name of needed BAM resource with
+icons.</p>
+<p align="left">It may be found in GUIBAM.BIF (or 25GUIBAM.BIF in case of ToB)</p>
+<p align="left">Then we use BAMWorkshop to modify worldmap resource. We either
+add new sequence that wil be our new Icon place or modify existing one.</p>
+<p align="left">BG2 Icons usually have the following frames in the Icon sequence
+:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="19%">Frame number</td>
+    <td width="48%">Contents</td>
+  </tr>
+  <tr>
+    <td width="19%">1</td>
+    <td width="48%">Blue boundary of not visited, visible area</td>
+  </tr>
+  <tr>
+    <td width="19%">2</td>
+    <td width="48%">Without boundary for visited, visible area</td>
+  </tr>
+  <tr>
+    <td width="19%">3</td>
+    <td width="48%">Not accessible icon - mono 8bit frame</td>
+  </tr>
+  <tr>
+    <td width="19%">4</td>
+    <td width="48%">With white boundary frame</td>
+  </tr>
+  <tr>
+    <td width="19%">5</td>
+    <td width="48%">Icon darker +9</td>
+  </tr>
+  <tr>
+    <td width="19%">6</td>
+    <td width="48%">Icon darker +9</td>
+  </tr>
+  <tr>
+    <td width="19%">7</td>
+    <td width="48%">Icon darker +8</td>
+  </tr>
+  <tr>
+    <td width="19%">8</td>
+    <td width="48%">Icon darker +8</td>
+  </tr>
+  <tr>
+    <td width="19%">9</td>
+    <td width="48%">Icon darker +7</td>
+  </tr>
+  <tr>
+    <td width="19%">10</td>
+    <td width="48%">Icon darker +7</td>
+  </tr>
+  <tr>
+    <td width="19%">11</td>
+    <td width="48%">Icon darker +6</td>
+  </tr>
+  <tr>
+    <td width="19%">12</td>
+    <td width="48%">Icon darker +6</td>
+  </tr>
+  <tr>
+    <td width="19%">13</td>
+    <td width="48%">Icon darker +5</td>
+  </tr>
+  <tr>
+    <td width="19%">14</td>
+    <td width="48%">Icon darker +5</td>
+  </tr>
+  <tr>
+    <td width="19%">15</td>
+    <td width="48%">Icon darker +4</td>
+  </tr>
+  <tr>
+    <td width="19%">16</td>
+    <td width="48%">Icon darker +4</td>
+  </tr>
+  <tr>
+    <td width="19%">17</td>
+    <td width="48%">Icon darker +3</td>
+  </tr>
+  <tr>
+    <td width="19%">18</td>
+    <td width="48%">Icon darker +3</td>
+  </tr>
+  <tr>
+    <td width="19%">19</td>
+    <td width="48%">Icon darker +2</td>
+  </tr>
+  <tr>
+    <td width="19%">20</td>
+    <td width="48%">Icon darker +2</td>
+  </tr>
+  <tr>
+    <td width="19%">21</td>
+    <td width="48%">Icon darker +1</td>
+  </tr>
+  <tr>
+    <td width="19%">22</td>
+    <td width="48%">Icon darker +1</td>
+  </tr>
+  <tr>
+    <td width="19%">23</td>
+    <td width="48%">The normal view of the icon</td>
+  </tr>
+  <tr>
+    <td width="19%">24</td>
+    <td width="48%">The normal view of the icon</td>
+  </tr>
+  <tr>
+    <td width="19%">25</td>
+    <td width="48%">The normal view of the icon</td>
+  </tr>
+  <tr>
+    <td width="19%">26</td>
+    <td width="48%">The normal view of the icon</td>
+  </tr>
+  <tr>
+    <td width="19%">27</td>
+    <td width="48%">Icon darker +1</td>
+  </tr>
+  <tr>
+    <td width="19%">28</td>
+    <td width="48%">Icon darker +1</td>
+  </tr>
+  <tr>
+    <td width="19%">29</td>
+    <td width="48%">Icon darker +2</td>
+  </tr>
+  <tr>
+    <td width="19%">30</td>
+    <td width="48%">Icon darker +2</td>
+  </tr>
+  <tr>
+    <td width="19%">31</td>
+    <td width="48%">Icon darker +3</td>
+  </tr>
+  <tr>
+    <td width="19%">32</td>
+    <td width="48%">Icon darker +3</td>
+  </tr>
+  <tr>
+    <td width="19%">33</td>
+    <td width="48%">Icon darker +4</td>
+  </tr>
+  <tr>
+    <td width="19%">34</td>
+    <td width="48%">Icon darker +4</td>
+  </tr>
+  <tr>
+    <td width="19%">35</td>
+    <td width="48%">Icon darker +5</td>
+  </tr>
+  <tr>
+    <td width="19%">36</td>
+    <td width="48%">Icon darker +5</td>
+  </tr>
+  <tr>
+    <td width="19%">37</td>
+    <td width="48%">Icon darker +6</td>
+  </tr>
+  <tr>
+    <td width="19%">38</td>
+    <td width="48%">Icon darker +6</td>
+  </tr>
+  <tr>
+    <td width="19%">39</td>
+    <td width="48%">Icon darker +7</td>
+  </tr>
+  <tr>
+    <td width="19%">40</td>
+    <td width="48%">Icon darker +7</td>
+  </tr>
+  <tr>
+    <td width="19%">41</td>
+    <td width="48%">Icon darker +8</td>
+  </tr>
+  <tr>
+    <td width="19%">42</td>
+    <td width="48%">Icon darker +8</td>
+  </tr>
+</table>
+<p align="left">After putting all needed icons in Sequence just remember
+sequence number and later, after putting new area on the map using ICM you have
+to hex into the number of sequence in hexadecimal system in the offset&nbsp;
+0x0034 of area entry of your chosen area ( Just look for your area name within
+WMP file that is start of area section of it.</p>
+<p align="left">And that's all , remember to put your BAM either in override or
+in some bif file so game will know where to look for the BAM icon resources.</p>
+
+<p align="left"><b>Check also :</b></p>
+<ul>
+  <li>
+    <p align="left"><a href="../FilesFormats/wmapformat.htm"><font color="#FF0000">WMAP
+    files description</font></a></li>
+  <li>
+    <p align="left"><a href="../FilesFormats/BAMformat.htm"><font color="#FF0000">BAM file format</font></a></li>
+</ul>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

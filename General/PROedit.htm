@@ -1,0 +1,58 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="../ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Totorials and Descriptions</title>
+</head>
+
+<body>
+
+<p>&nbsp;</p>
+<p align="center"><font size="4">PRO files editing on some example</font></p>
+<p>by Maltanar<br>
+<br>
+<br>
+Q : Let's say I want to use an existing animation the stoneskin thingy (that rock rises from the ground and shatters when the stoneskin spell is cast - I think it's also used for some petrify spell..not sure)...let's say I
+don't want&nbsp; to make an Earth themed elemental spell..let's call it Earth
+Strike (could also be a monk innate ability) I want the rock animation to travel in a line toward the target and end with another graphic on impact...just how hard would it be to pull this off?<br>
+<br>
+And what exactly are the steps to take?&nbsp;<br>
+<br>
+A : Well, VVC files simply put positioned graphics and sound effects together, so they won't be much use for you. The "Earth Strike" graphic, as I understand, is a ball of earth/ a rock traveling in the air, then striking the target with another impact graphic, right? If so, you need a new PRO file for the projectile graphic, meaning this post will soon go into the Other File Type Editing . I am assuming you don't want it to cause wide area of effect.<br>
+<br>
+Take these steps:<br>
+-Create a BAM of rock or earth swirling or spinning in place, the BAM which will be display upon impact, and if you wish, its shadow in another BAM.&nbsp;<br>
+-Use Infinity Projectile Utility to create a projectile with these parameters:<br>
+Projectile Type: Single Target<br>
+Projectile Speed: (whatever you want)<br>
+Sound Resource: (again, you may leave it blank or assign a WAVC name)<br>
+Graphic Resource: The name of the BAM you have created<br>
+Shadow Resource: If you have, the name of the shadow BAM you created.<br>
+Display: Original BAM<br>
+Color: (blank)<br>
+Click on Create Projectile, then name the new projectile EARTHBL<br>
+-Make the spell with your damage/etc. parameters in IEEP, set type to Projectile, leave the Graphic blank, and add a Play 3D Effect, with the BAM resource as the impact BAM you have created.<br>
+-Reopen IPU, click on Change Item/Spell animation, open the spell file you have created, select Extension Header 1, scroll down in the projectile list on the right, select EARTHBL, and click on Change...it's done.<br>
+<br>
+Q : For the play 3d effect, do I choose pre-target or self?&nbsp;<br>
+<br>
+A : Pre-Target, as it's going to be played on the target upon impact.
+</p>
+
+<p><b>For more information check :</b>
+</p>
+
+<ul>
+  <li><font color="#FF0000"><a href="../FilesFormats/PROformat.htm">PRO file format</a> <br>
+    </font></li>
+</ul>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

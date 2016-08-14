@@ -1,0 +1,1963 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+<h1 align="center">ARE file format</h1>
+<table border="1" width="100%" height="76">
+  <tr>
+    <td width="28%" height="20">FileExtension :</td>
+    <td width="72%" height="20">ARE</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19">Content :</td>
+    <td width="72%" height="19">Description of area contents format ARE V.1</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19">History :</td>
+    <td width="72%" height="19">File done by IEFFHP</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19">Update :</td>
+    <td width="72%" height="19">Manveru Telcontar, major updates (last one
+      15.10.2001)</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19"></td>
+    <td width="72%" height="19">Gorin (ambient sounds section, 30.06.2001)</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19"></td>
+    <td width="72%" height="19">Vungoctan (verified and corrected by Manveru,
+      12.07.2001)</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19"></td>
+    <td width="72%" height="19">TheoTeamBG (15.10.2001)</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19"></td>
+    <td width="72%" height="19">To An (09.03.2002)</td>
+  </tr>
+</table>
+<h2>Description</h2>
+<p>This file format describes the content of an area, rather than its visual
+representation. It contains the list of actors, items, entrances and exits,
+spawn points, and other area-associated info. Essentially, this format
+is all about how the characters interact with the area and how the area
+responds, whereas the <a href="WEDformat.htm"><font color="#FF0000">WED</font></a>
+file is all about how the area appears graphically.</p>
+<h2><a name>AREA file versions</a></h2>
+<ul>
+  <li><a href="#formAREAV1_0">V1.0: Baldur's Gate, Planescape: Torment, Icewind
+    Dale, BG2 SoA</a>&nbsp;</li>
+</ul>
+<h2 class="frmhead"><a name="formAREAV1_0">AREA V1.0</a></h2>
+<p>Overall structure</p>
+<p>Note: The order of the sections in an AREA file do actually vary. In many
+files the sections are always found in a particular order. In AREA files, the
+same resource in its normal state and in its &quot;post-save&quot; state will
+have the different sections in different orders. The sections here, then, are
+stored in the order in which they are referenced in the header.</p>
+<ul>
+  <li><a href="#formAREAV1_0_Header">File header</a>
+  <li><a href="#formAREAV1_0_Actor">Actors</a>
+  <li><a href="#formAREAV1_0_Info">Info points (and trigger points and exits)</a>
+  <li><a href="#formAREAV1_0_Spawn">Spawn points</a>
+  <li><a href="#formAREAV1_0_Entrance">Entrances</a>
+  <li><a href="#formAREAV1_0_Container">Containers</a>
+  <li><a href="#formAREAV1_0_Item">Items</a>
+  <li><a href="#formAREAV1_0_Vertices">Vertices</a>
+  <li><a href="#formAREAV1_0_Ambient">Ambients</a>
+  <li><a href="#formAREAV1_0_Variable">Variables</a>
+  <li><a href="#formAREAV1_0_Explored">&quot;Explored&quot; bitmask</a>
+  <li><a href="#formAREAV1_0_Door">Doors</a>
+  <li><a href="#formAREAV1_0_Anim">Animations</a>
+  <li><a href="#formAREAV1_0_Automap">Automap notes</a>
+  <li><a href="#formAREAV1_0_TiledObj">Tiled objects</a>
+  <li><a href="#Songs entries">Songs entries</a></li>
+  <li><a href="#RestOptionSpawn">Sleep option interruption by appearing
+    creatures</a></li>
+</ul>
+<h4 class="reshead"><a name="formAREAV1_0_Header">V1.0 File header</a></h4>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">4 (char array)</td>
+      <td width="375">Signature ('AREA')</td>
+    </tr>
+    <tr>
+      <td width="48">0x0004</td>
+      <td width="103">4 (char array)</td>
+      <td width="375">Version ('V1.0')</td>
+    </tr>
+    <tr>
+      <td width="48">0x0008</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">The resref of the
+        WED file corresponding to this file.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0010</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">This field is called <code>m_lastSaved</code> in the
+        BG source. There is always 0 value for original areas and diffetrent
+        values for savegames output areas. It is just counter of the time when
+        the area was saved in seconds of real time.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0014</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Area flag - according to the ToB IDS file <a href="../Scripting/IDSareaflag.htm"><font color="#FF0000"> AREAFLAG.IDS</font></a>&nbsp;
+        (values valid also for BG1/ToTSC/IWD/HoW/ToTL&nbsp; however except value 2).
+        <ul>
+          <li>0 - normal state</li>
+          <li>1 - save option not available</li>
+          <li>2 - tutorial&nbsp;</li>
+        </ul>
+        <p>In PS:T we may find there some strange values that obviously have
+        different function than in BG/BG2 or IWD - I have no idea what is this
+        used for in this game: examples :</p>
+        <ul>
+          <li>02 in AR0104C</li>
+          <li>04 in AR0200</li>
+          <li>06 in AR1500</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x0018</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of the area to the North of this area. Not used in BG2/IWD</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0020</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">(usually 3, sometimes 1) and in BG2/IWD usually 0</td>
+    </tr>
+    <tr>
+      <td width="48">0x0024</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of the area to the West of this area. Not used in BG2/IWD</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x002c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">(usually 3, sometimes 1) and in BG2/IWD usually 0</td>
+    </tr>
+    <tr>
+      <td width="48">0x0030</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of the area to the South of this area. Not used in BG2/IWD</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0038</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">(usually 3, sometimes 1) and in BG2/IWD usually 0</td>
+    </tr>
+    <tr>
+      <td width="48">0x003c</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of the area to the East of this area. Not used in BG2/IWD</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0044</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">(usually 3, sometimes 1) and in BG2/IWD usually 0</td>
+    </tr>
+    <tr>
+      <td width="48">0x0048</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Flags: according to the <a href="../Scripting/IDSareatype.htm"><font color="#FF0000"> AREATYPE.IDS</font></a> in ToB
+        <ul>
+          <li>bit 0: Outdoor
+          <li>bit 1: day/night
+          <li>bit 2: weather
+          <li>bit 3: city
+          <li>bit 4: forest
+          <li>bit 5: dungeon
+          <li>bit 6: extended night</li>
+          <li><font color="#000099">bit 7: usage unknown, called CANRESTOTHER in
+            AREATYPE.IDS - I will probably know more about it after looking into
+            ToB aARE files</font></li>
+        </ul>
+        <p><font color="#000099">Also here I have noticed some weird values in
+        PS:T - for example in city areas - value 0104 here - I have no idea why
+        it is like this.</font>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x004a</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Rain probability</td>
+    </tr>
+    <tr>
+      <td width="48">0x004c</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Snow probability</td>
+    </tr>
+    <tr>
+      <td width="48">0x004e</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Fog probability</td>
+    </tr>
+    <tr>
+      <td width="48">0x0050</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Lightning probability</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0052</td>
+      <td width="103">2 (word)</td>
+      <td width="375"><font color="#000099">Unknown, however I noticed that in
+        all games other than BG1/ToTSC this value is always zero. In case of BG1
+        in the outdoors areas there are numbers other than zero - maybe flags of
+        some sort ? Maybe it is used to control the weather somehow ?</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x0054</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Actor">actors</a> (i.e. creatures and
+        NPCs).</td>
+    </tr>
+    <tr>
+      <td width="48">0x0058</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Actor">actors</a> in this area (i.e.
+        creatures and NPCs).</td>
+    </tr>
+    <tr>
+      <td width="48">0x005a</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Info">info points, trigger points, and
+        exits</a> in this area.</td>
+    </tr>
+    <tr>
+      <td width="48">0x005c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Info">info points, trigger points,
+        and exits</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0060</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Spawn">spawn points</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0064</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Spawn">spawn points</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0068</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Entrance">entrances</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x006c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Entrance">entrances</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0070</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Container">containers</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0074</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Container">containers</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0076</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Item">items</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0078</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Item">items</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x007c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Vertices">vertices</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0080</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Vertices">vertices</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0082</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Ambient">ambients</a> (i.e. ambient
+        sounds).</td>
+    </tr>
+    <tr>
+      <td width="48">0x0084</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Ambient">ambients</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0088</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset of <a href="#formAREAV1_0_Variable">variables</a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x008c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Variable">variables</a>.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0090</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown, unused ? Set to zero in
+        BG1/ToTSC/BG2/IWD/PST</font></td>
+    </tr>
+    <tr class="upd">
+      <td width="48">0x0094</td>
+      <td width="103">8 (resref)</td>
+      <td width="375"><a href="BCSformat.htm"><font color="#FF0000">Script file</font></a> corresponding to this area</td>
+    </tr>
+    <tr>
+      <td width="48">0x009c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><a href="#formAREAV1_0_Explored">&quot;Explored&quot; bitmask</a> size</td>
+    </tr>
+    <tr>
+      <td width="48">0x00a0</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset to <a href="#formAREAV1_0_Explored">&quot;explored&quot;
+        bitmask</a></td>
+    </tr>
+    <tr>
+      <td width="48">0x00a4</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Door">doors</a> in this area</td>
+    </tr>
+    <tr>
+      <td width="48">0x00a8</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset to <a href="#formAREAV1_0_Door">doors</a> structures.</td>
+    </tr>
+    <tr>
+      <td width="48">0x00ac</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Anim">animations</a> in this area.</td>
+    </tr>
+    <tr>
+      <td width="48">0x00b0</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset to <a href="#formAREAV1_0_Anim">animation</a> structures.</td>
+    </tr>
+    <tr>
+      <td width="48">0x00b4</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><a href="#formAREAV1_0_TiledObj">Tiled object</a> count</td>
+    </tr>
+    <tr>
+      <td width="48">0x00b8</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><a href="#formAREAV1_0_TiledObj">Tiled objects</a> offset</td>
+    </tr>
+    <tr>
+      <td width="48">0x00bc</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset to <a href="#Songs entries">Songs entries</a> of the area</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x00c0</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset to&nbsp; <a href="#Unknown">Interruption of rest
+        party option</a> section 
+        <font color="#000099">  </font> )</td>
+    </tr>
+    <tr>
+      <td width="48">0x00c4</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">offset of the <a href="#formAREAV1_0_Automap">automap note</a>
+        section, if any</td>
+    </tr>
+    <tr>
+      <td width="48">0x00c8</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">number of entries in the <a href="#formAREAV1_0_Automap">automap note</a>
+        section</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x00cc</td>
+      <td width="103">4*20 (dword)</td>
+      <td width="375"><font color="#000099">Unknown,unused</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Actor">V1.0 Actors</a></h4>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">32 (char array)</td>
+      <td width="375">Name of this actor (for editors purposes only)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0020</td>
+      <td width="103">4 (point)</td>
+      <td width="375">Current position of this actor within the area.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0024</td>
+      <td width="103">4 (point)</td>
+      <td width="375">Current destination of this actor within the area.</td>
+    </tr>
+    <tr class="upd">
+      <td width="48"><font color="#000099">0x0028</font></td>
+      <td width="103"><font color="#000099">4 (dword)</font></td>
+      <td width="375"><font color="#000099">Unknown, it was supposed to be
+        visible flag , but when I have checked it didn't work</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x002c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown (usually 0), unused (no
+        effects in game) ?</font></td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x0030</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown (actor type?) No apparent effect in game.</font></td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x0034</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">It's
+the orientation of the actor<font color="#000099"> </font> (values between 0-15 , 0 for the NPC looking south
+and clockwise as the scriptcompiler.doc tell us)</td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x0038</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown (usually FFFF FFFF, I have
+        noticed only that if this value is set to 0 or other small ?! value then actor is not present)</font></td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x003c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown (usually 0), unused (no
+        effects in game) ?</font></td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x0040</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Determines the presence or not of
+the actor in the cycle of day / night&nbsp; (it's not the visible flag).&nbsp;
+        <p> There is
+        probably some system that describes all possible time intervals
+        when&nbsp; creatures are spawned - for now I know only that when 2nd
+        offset is set to 00 and 4th offset is set to FF we have the effect that
+        takes place at night in time interval defined probably in 1st and 3rd
+        offset. The analogical situation for day is when 2nd offset is set to FF
+        and 4th to 00. However I have no idea how to define correctly for
+        example that creatures are spawned from 8 hour of day to , say
+        11.&nbsp;&nbsp;
+        <p>Known values :</p>
+        <ul>
+          <li>F0FF 0F00 - day</li>
+          <li>E0FF 0100 - dawn</li>
+          <li>0F00 F0FF - night</li>
+          <li>1F00 FEFF- dusk</li>
+          <li><font color="#000099">FF00 FFFF - unknown</font></li>
+          <li><font color="#000099">3F00 E0FF - unknown</font></li>
+          <li>FFFF FFFF - always</li>
+        </ul>
+      </td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x0044</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown (usually 0), probably
+        unused, no visible effects in game</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x0048</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of a dialog file associated with this creature. Presumably this
+        is so that a creature can have their own dialog overridden in specific
+        areas.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0050</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of a <a href="BCSformat.htm"><font color="#FF0000"> script file</font></a> (&quot;override&quot;
+        script). As in the
+        <a href="CREformat.htm"> CRE</a>&nbsp; file, there appear to be 5 slots for scripts, not all of which need be
+        occupied.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0058</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of a <a href="BCSformat.htm"><font color="#FF0000"> script file</font></a> (&quot;class&quot;
+        script)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0060</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of a <a href="BCSformat.htm"><font color="#FF0000"> script file</font></a> (&quot;race&quot;
+        script)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0068</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of a <a href="BCSformat.htm"><font color="#FF0000"> script file</font></a> (&quot;general&quot;
+        script)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0070</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of a <a href="BCSformat.htm"><font color="#FF0000"> script file</font></a> (&quot;default&quot;
+        script)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0078</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of a <a href="BCSformat.htm"><font color="#FF0000"> script file</font></a> (&quot;specific&quot;
+        script)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0080</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of the <a href="CREformat.htm"><font color="#FF0000"> CRE</font></a> file for this actor</td>
+    </tr>
+    <tr>
+      <td width="48">0x0088</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Offset to <a href="CREformat.htm"><font color="#FF0000"> CRE</font></a> structure (stored if the status of this creature is
+        changed from its original status in the <a href="CREformat.htm"><font color="#FF0000"> CRE</font></a> file)</td>
+    </tr>
+    <tr>
+      <td width="48">0x008c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Size of stored <a href="CREformat.htm"><font color="#FF0000"> CRE</font></a> structure</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0090</td>
+      <td width="103">128 (bytes)</td>
+      <td width="375">Unknown. Unused. Most of these bytes are <em>probably</em> placeholders for
+        fields which are used in-memory by either the game or the editor, since
+        many of them contain what appears to be garbage of the sort which is
+        left by not initializing a block of memory.</td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Info">V1.0 Info points, trigger
+points, and exits</a></h4>
+<p><strong>Note:</strong> These are referred to as info points. A more
+appropriate name might be &quot;active regions&quot;; the name &quot;Info
+point&quot; comes from the names seen in the file as assigned to the various
+objects. Likely, the Bioware editors automatically name these as &quot;Info
+point 1&quot;, &quot;Info point 2&quot;, ..., and &quot;Trigger point 1&quot;,
+&quot;Trigger point 2&quot;, ..., and &quot;toXXXX&quot;, where XXXX is replaced
+with the 4-digit area specifier (i.e. AR2600 == 2600, etc). This can be seen in
+that many of the names will appear as &quot;Name1\0oint 3&quot; -- i.e. the old
+name can be seen, only having been partially overwritten. Anyway, some of the
+objects are, in fact, info points, but many of them are exits or &quot;trigger
+points&quot; (e.g. traps and other special regions). This section has C4h bytes.</p>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">32 (char array)</td>
+      <td width="375">Name of this info point (this is the full name, probably used only in
+        the editor?)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0020</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Type of this &quot;trigger point&quot;:
+        <ul>
+          <li>00: proximity trigger
+          <li>01: info trigger (sign, point of notice, etc)
+          <li>02: travel trigger</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x0022</td>
+      <td width="103">8 (rect)</td>
+      <td width="375">Minimum bounding box of this point.</td>
+    </tr>
+    <tr>
+      <td width="48">0x002a</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Vertices">vertices</a> composing the
+        perimeter of this info point.</td>
+    </tr>
+    <tr>
+      <td width="48">0x002c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Index of first <a href="#formAREAV1_0_Vertices">vertex</a> for this
+        info point.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0030</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown. (usually 0)</font></td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x0034</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Index of cursor to use for this region (i.e. usually '22' for info
+        point, '28' for inside exits, '30' for outside exits). This resource
+        taken from cursors.bam&nbsp; that is the part of GUIbam.bif&nbsp; file.
+        The frame number to
+        use for the cursor.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0038</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of the destination area, if this is an exit. Unused for other
+        object types.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0040</td>
+      <td width="103">32 (char array)</td>
+      <td width="375">Name of the <a href="#formAREAV1_0_Entrance">entrance</a> within the
+        destination area where we will appear if we pass through this door. Only
+        used for &quot;exit&quot; objects.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0060</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Flags:
+        <ul>
+          <li>bit 0
+          <li>bit 1: Reset trap flag (for proximity triggers)
+          <li>bit 2: Party Required flag (for travel triggers). Responsible for
+            the &quot;You must gather your party before venturing forth&quot;
+            message</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x0064</td>
+      <td width="103">4 (strref)</td>
+      <td width="375">The text associated with this &quot;info point&quot;, if this is
+        actually an &quot;info point&quot; (i.e. if type==01).</td>
+    </tr>
+    <tr>
+      <td width="48">0x0068</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trap detection difficulty (%)</td>
+    </tr>
+    <tr>
+      <td width="48">0x006a</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trap removal difficulty (%)</td>
+    </tr>
+    <tr>
+      <td width="48">0x006c</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trapped flag :
+        <ul>
+          <li>Bit 0: Whether there is a trap (value 1) or not (value 0)&nbsp;</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x006e</td>
+      <td width="103">2 (word)</td>
+      <td width="375">trap detected flag</td>
+    </tr>
+    <tr>
+      <td width="48">0x0070</td>
+      <td width="103">4 (point)</td>
+      <td width="375">&quot;trap launch&quot; location.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0074</td>
+      <td width="103">8 (bytes)</td>
+      <td width="375"><font color="#000099">Key type (usage unknown)</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x007c</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">The script associated with this region, if it is a &quot;trigger
+        point&quot;. This script is activated when a member of your party passes
+        over one of the edges of the polygon defining this region.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0084</td>
+      <td width="103">48 (bytes)</td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x00b4</td>
+      <td width="103">4 (point)</td>
+      <td width="375"><font color="#000099">Unknown.</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x00b8</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown.</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x00bc</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Dialog file to be activated when this trigger is activated. Associated
+        with proximity triggers.<font color="#000099"> Whether it is used for other types is unknown.</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Spawn">V1.0 Spawn points</a></h4>
+<p class="reshead">This section has C8 (200) bytes.</p>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="118"><font color="#000000">Size (data type)</font></th>
+      <th width="360"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="118">32 (char array)</td>
+      <td width="360">Name of this spawn point (this is the full name)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0020</td>
+      <td width="118">4 (point)</td>
+      <td width="360">The &quot;location&quot; of this spawn point</td>
+    </tr>
+    <tr>
+      <td width="48">0x0024</td>
+      <td width="118">8*10 (resref array)</td>
+      <td width="360">Resref of up to 10 creature types that could be put in the
+        area</td>
+    </tr>
+    <tr>
+      <td width="48">0x0074</td>
+      <td width="118">2 (word)</td>
+      <td width="360">Number of creature types in this spawn point section.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0076</td>
+      <td width="118">2 (word)</td>
+      <td width="360"><font color="#000099">Flag of some sort ?! , has some
+        influence on respawn frequency (i.e. player sleeps in the area and the
+        creatures appears again, or player comes back to the area and creatures
+        appears). I have noticed only that there appears only one given creature
+        if it is set to 0. In other case there appear as many creatures as
+        defined in offset 0x0084, usually value 2 or 1.&nbsp;&nbsp;&nbsp;&nbsp;</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x0078</td>
+      <td width="118">2 (word)</td>
+      <td width="360">Time intervals (in seconds) between creatures spawn.</td>
+    </tr>
+    <tr>
+      <td width="48">0x007a</td>
+      <td width="118">2 (word)</td>
+      <td width="360"><font color="#000099">Unknown, probably could have some
+        influence on respawn frequency</font></td>
+    </tr>
+    <tr>
+      <td><font color="#000099">0x007c</font></td>
+      <td><font color="#000099">4 (dword)</font></td>
+      <td><font color="#000099">Unknown, no effect on game noticed</font></td>
+    </tr>
+    <tr>
+      <td><font color="#000099">0x0080</font></td>
+      <td><font color="#000099">2 (word)</font></td>
+      <td><font color="#000099">Unknown, no effect on game noticed</font></td>
+    </tr>
+    <tr>
+      <td><font color="#000099">0x0082</font></td>
+      <td><font color="#000099">2 (word)</font></td>
+      <td><font color="#000099">Unknown, the same value as in offset 0x0080, no
+        effect on game noticed.</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x0084</td>
+      <td width="118">2 (word)</td>
+      <td width="360">The maximal number of spawned creatures.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0086</td>
+      <td width="118">2 (word)</td>
+      <td width="360"><font color="#000099">Unknown, usually value 1</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x0088</td>
+      <td width="118">4 (dword)</td>
+      <td width="360">Time of spawning creatures in day/night cycle. There is
+        probably some system that describes all possible time intervals
+        when&nbsp; creatures are spawned - for now I know only that when 2nd
+        offset is set to 00 and 4th offset is set to FF we have the effect that
+        takes place at night in time interval defined probably in 1st and 3rd
+        offset. The analogical situation for day is when 2nd offset is set to FF
+        and 4th to 00. However I have no idea how to define correctly for
+        example that creatures are spawned from 8 hour of day to , say
+        11.&nbsp;&nbsp;
+        <p>Known values :</p>
+        <ul>
+          <li>F0FF 0F00 - day</li>
+          <li>E0FF 0100 - dawn</li>
+          <li>0F00 F0FF - night</li>
+          <li>1F00 FEFF- dusk</li>
+          <li><font color="#000099">FF00 FFFF - unknown</font></li>
+          <li><font color="#000099">3F00 E0FF - unknown</font></li>
+          <li>FFFF FFFF - always</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x008c</td>
+      <td width="118">2 (word)</td>
+      <td width="360"><font color="#000099">unknown, usually value 64h (100)</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x008e</td>
+      <td width="118">2 (word)</td>
+      <td width="360"><font color="#000099">unknown, usually value 64h (100)</font></td>
+    </tr>
+    <tr class="upd">
+      <td width="48">0x0090</td>
+      <td width="118">56 (word)</td>
+      <td width="360"><font color="#000099">unknown, unused, sometimes there are
+        some remains from Bioware's computers memory..</font></td>
+    </tr>
+    <!-- TODO -->
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Entrance">V1.0 Entrances</a></h4>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">32 (char array)</td>
+      <td width="375">Name of this entrance -- as referenced by exits which lead to this
+        entrance (specified in the source area's <a href="#formAREAV1_0_Info">Info
+        points, trigger points, and exits</a> section.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0020</td>
+      <td width="103">4 (point)</td>
+      <td width="375">The &quot;location&quot; of this entrance -- when you enter the area
+        via this entrance, where does your party actually appear?</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0024</td>
+      <td width="103">68 (bytes)</td>
+      <td width="375"><font color="#000099">Unknown, unused</font>.</td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Container">V1.0 Containers</a></h4>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">32 (char array)</td>
+      <td width="375">Name of this container -- Probably only used by the editor, since the
+        name makes it fairly obvious which containers are trapped.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0020</td>
+      <td width="103">4 (point)</td>
+      <td width="375">Location of this container.&nbsp; It's the destination
+where the character go to open or disarm a container.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0024</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Container type:
+        <ul>
+          <li>00: &lt;n/a&gt;
+          <li>01: BAG
+          <li>02: CHEST
+          <li>03: DRAWER
+          <li>04: PILE
+          <li>05: TABLE
+          <li>06: SHELF
+          <li>07: ALTAR
+          <li>08: NONVISIBLE
+          <li>09: SPELLBOOK
+          <li>0a: BODY
+          <li>0b: BARREL
+          <li>0c: CRATE</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x0026</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Lock difficulty</td>
+    </tr>
+    <tr>
+      <td width="48">0x0028</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Is locked? (1 if locked, 0 otherwise)</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x002a</td>
+      <td width="103">2 (word)</td>
+      <td width="375"><font color="#000099">Unknown, always 0 ?</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x002c</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trap detection difficulty</td>
+    </tr>
+    <tr>
+      <td width="48">0x002e</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trap removal difficulty</td>
+    </tr>
+    <tr>
+      <td width="48">0x0030</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Container is trapped (0 if not , 1 otherwise)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0032</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trap has been detected (trap is visible 1, 0 otherwise)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0034</td>
+      <td width="103">4 (point)</td>
+      <td width="375">Trap launch target</td>
+    </tr>
+    <tr>
+      <td width="48">0x0038</td>
+      <td width="103">8 (rect)</td>
+      <td width="375">Minimum bounding box of container polygon</td>
+    </tr>
+    <tr>
+      <td width="48">0x0040</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Index of first <a href="#formAREAV1_0_Item">item</a> in this
+        container.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0044</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Item">items</a> in this container.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0048</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of script to trigger if container trap is set off.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0050</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Index of first <a href="#formAREAV1_0_Vertices">vertex</a> making up
+        the outline of this container.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0054</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Vertices">vertices</a> making up the
+        outline of this container.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0058</td>
+      <td width="103">32 (bytes)</td>
+      <td width="375"><font color="#000099">Unknown, probably name of trap
+        trigger that could be used in scripts ? in IWD, there are some
+        containers that have a resref to a cre file.Take a look at AR1008.ARE
+        for example but i haven't find yet any function for this. Maybe a
+        &quot;awaken&quot; function linking a container to a particular NPC that
+        was never use because of scripting ?</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x0078</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of a &quot;key&quot; <a href="ITMformat.htm"><font color="#FF0000">item</font></a>,
+        which, if possessed allows this chest to be opened.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0080</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown, unused</font>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0084</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">TLK ref that is displayed when a lockpicking is attempted
+        upon a container that couldn't be unlock (lock strength set to 100 or
+        item needed). Only tested in BG II</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0080</td>
+      <td width="103">56 (bytes)</td>
+      <td width="375"><font color="#000099">Unknown, unused</font>.</td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Item">V1.0 Items</a></h4>
+<p>For those of you that have been paying attention, you may recognize this
+struct as being used in both the CRE file and the STO file.</p>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of the <a href="ITMformat.htm"><font color="#FF0000"> ITM</font></a> resource for this particular item.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0008</td>
+      <td width="103">2 (word)</td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x000a</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Usage 1 (typically the number of stacked items or the number of uses
+        of the primary facility of a magical item)</td>
+    </tr>
+    <tr>
+      <td width="48">0x000c</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Usage 2 (typically the number of uses of the secondary facility of a
+        magical item)</td>
+    </tr>
+    <tr>
+      <td width="48">0x000e</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Usage 3 (typically the number of uses of the tertiary facility of a
+        magical item)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0010</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Flags:
+        <ul>
+          <li>bit 0: identified
+          <li>bit 2: stolen</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Vertices">V1.0 Vertices</a></h4>
+<p>This is an array of points which are used to create the outlines of
+trigger/info/exit regions and for containers. Not much else to say. Lots of
+16-bit words stored x0, y0, x1, y1...</p>
+<h4 class="reshead"><a name="formAREAV1_0_Ambient">V1.0 Ambients</a></h4>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="115"><font color="#000000">Size (data type)</font></th>
+      <th width="363"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="115">32 (char array)</td>
+      <td width="363">Name of this particular ambient. Typically a descriptive name, like
+        &quot;Tavern&quot;, &quot;Dogs&quot;, or &quot;Kids&quot;. Sometimes a
+        not-so-descriptive name, like &quot;ambi&quot;. Could be used by scripts
+        to switch on/off ambient</td>
+    </tr>
+    <tr>
+      <td width="48">0x0020</td>
+      <td width="115">4 (point)</td>
+      <td width="363">&quot;Origin&quot; (center) of this particular sound</td>
+    </tr>
+    <tr>
+      <td width="48">0x0024</td>
+      <td width="115">2 (word)</td>
+      <td width="363">The radius of the sounds.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0026</td>
+      <td width="115">2 (bytes)</td>
+      <td width="363"><font color="#000099">Appears to be the ?height? of the sound. &nbsp;At
+        least it only appears for birds or in one case a tree</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0028</td>
+      <td width="115">6 (bytes)</td>
+      <td width="363"><font color="#000099">Unknown, usually zero.</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x002e</td>
+      <td width="115">2 (word)</td>
+      <td width="363">Volume of this sound (i.e. as a percentage of the maximum)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0030</td>
+      <td width="115">8*10 (resref array)</td>
+      <td width="363">Resref of up to 10 sounds. The noise for this ambient sound is chosen
+        at random from the (up to) 10 available sounds.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0080</td>
+      <td width="115">2 (word)</td>
+      <td width="363">Number of sounds in the array of sound resource at 0x30</td>
+    </tr>
+    <tr class="upd">
+      <td width="48">0x0082</td>
+      <td width="115">2 (word)</td>
+      <td width="363"><font color="#000099">Number of sounds in the array of sound resource at 0x30
+        or zero, exact purpose unknown.</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0084</td>
+      <td width="115">4 (dword)</td>
+      <td width="363">This offset determines time intervals (in seconds) between sounds from
+        this ambient list</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0088</td>
+      <td width="115">4 (dword)</td>
+      <td width="363">Number of sounds to use per set ( can be more than total number of
+        sounds in the list).</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x008c</td>
+      <td width="115">4 (dword)</td>
+      <td width="363">Time of playing sounds in day/night cycle. There is
+        probably some system that describes all possible time intervals when
+        sound is played - for now I know only that when 2nd offset is set to 00
+        and 4th offset is set to FF we have the effect that takes place at night
+        in time interval defined probably in 1st and 3rd offset. The analogical
+        situation for day is when 2nd offset is set to FF and 4th to 00. However
+        I have no idea how to define correctly for example that ambient is
+        played from 8 hour of day to , say 11.&nbsp;
+        <p>Known values :</p>
+        <ul>
+          <li>F0FF 0F00 - day</li>
+          <li> E0FF 0100 - dawn</li>
+          <li>0F00 F0FF - night</li>
+          <li> 1F00 FEFF- dusk</li>
+          <li><font color="#000099">FF00 FFFF - unknown</font></li>
+          <li><font color="#000099">3F00 E0FF - unknown</font></li>
+          <li>FFFF FFFF - always</li>
+        </ul>
+        <p>&nbsp;</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0090</td>
+      <td width="115">4 (dword)</td>
+      <td width="363">Flag that controls if it is main ambient (for the whole area) or local
+        (only for the part indicated by radius of the sound)
+        <p>Known values :</p>
+        <ul>
+          <li>Bit 0 - Enables/disables ambient sounds of current
+            section.</li>
+          <li>Bit 1 - Point sound, i.e. volume decreases away from central
+            point.</li>
+          <li>Bit 2 - switches between local ambient (set to 0) where radius is
+            taken into account and main ambient (set to 1) where radius is
+            ignored and sound is played on the whole area.</li>
+          <li>Bit 3 - Area Sound, same volume throughout area.</li>
+          <li><font color="#000099">Bit 4 - Unknown</font></li>
+          <li><font color="#000099">Bit 5 - Unknown</font></li>
+          <li><font color="#000099">Bit 6 - Unknown</font></li>
+          <li><font color="#000099">Bit 7 - Unknown&nbsp;</font></li>
+        </ul>
+      </td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0094</td>
+      <td width="115">64 (bytes)</td>
+      <td width="363"><font color="#000099">Unknown, not used.</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Variable">V1.0 Variables</a></h4>
+<p>Each area can have associated variables. Variables not associated with an
+area are associated with either &quot;GLOBAL&quot; for global variables, or
+&quot;LOCALS&quot; for local variables. This stores variables associated with
+this particular area (this is keyed on the resref of this area, which is assumed
+to be a 6 character code, even though a resref is 8 characters long). For
+instance, the variable accessed via 'Global(&quot;AR2600&quot;,&quot;FooBarDead&quot;)'
+would be stored in the ARE file for AR2600. Typically these blocks are found
+only in saved ARE files (i.e. extracted from .SAV files.). The structure, as
+much as is known, is:</p>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="91"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="332"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="91">0x0000</td>
+      <td width="103">32 (char array)</td>
+      <td width="332">Name of this variable.</td>
+    </tr>
+    <tr class="unk">
+      <td width="91">0x0020</td>
+      <td width="103">8 (bytes)</td>
+      <td width="332"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr>
+      <td width="91">0x0028</td>
+      <td width="103">4 (dword)</td>
+      <td width="332">Variable value</td>
+    </tr>
+    <tr class="unk">
+      <td width="91">0x002c</td>
+      <td width="103">40 (bytes)</td>
+      <td width="332"><font color="#000099">Unknown</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Explored">V1.0 Explored bitmask</a></h4>
+<p>The explored bitmask is an array of bits, one bit for each 16x16 pixel cell
+on the map. If a bit is 1, then the cell has been explored. Otherwise, it has
+not.</p>
+<h4 class="reshead"><a name="formAREAV1_0_Door">V1.0 Doors</a></h4>
+<p>Doors in an AREA file are the &quot;door&quot; objects that the user
+interacts with, to be distinguished from the &quot;door&quot; objects in the <a href="WEDformat.htm"><font color="#FF0000">WED</font></a>
+file. The <a href="WEDformat.htm"><font color="#FF0000"> WED file</font></a> deals with how the opening and closing of a door changes the
+appearance of the world. A door in an AREA file details what happens when the
+user tries to open the door, what polygon the mouse must be inside of in order
+for mouse clicks to affect the door in question. The two types of door objects
+are linked through the id field in each -- the 8-byte character array which
+contains an identifier for the door. If the names in the two files match, the
+doors are the same, and toggling the state of the AREA door will toggle the
+state of the <a href="WEDformat.htm"><font color="#FF0000"> WED</font></a> door.
+The name &quot;doors&quot; includes also all possible &quot;secret doors&quot;
+that appear on the wall after longer examination of it or using &quot;detect
+trap&quot; ability.</p>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">32 (char array)</td>
+      <td width="375">A long name for this door. Could be used by scripts.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0020</td>
+      <td width="103">8 (char array)</td>
+      <td width="375">A short identifier for this door. Probably used to establish a mapping
+        between doors in the AREA file and <a href="WEDformat.htm"><font color="#FF0000">doors</font></a>
+        in the <a href="WEDformat.htm"><font color="#FF0000">WED</font></a>
+        file.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0028</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Flags related to this door. It probably controlls if door
+        is open or closed (since the value is changed in case of opened door)
+        <p>But also :</p>
+        <ul>
+          <li><font color="#000000">Bit 0 : if set to 1 then door is open</font></li>
+          <li>Bit 1 : defines whether door is locked or not</li>
+          <li><font color="#000099">Bit 2 : unknown</font></li>
+          <li><font color="#000099">Bit 3 : unknown</font></li>
+          <li><font color="#000099">Bit 4 : unknown</font></li>
+          <li><font color="#000099">Bit 5 : seem to be intern doors.</font></li>
+          <li><font color="#000099">Bit 6 : seem to lead to another area.&nbsp; the
+            doors have a reference to a trigger after 0x0098 like TranXXXX (where XXXX it's the corresponding area number)</font></li>
+          <li>Bit 7 : door is secret, detect trap ability may be used to detect
+            them , also the sound of opening/closing is different,&nbsp;</li>
+        </ul>
+        <p><font color="#000099">Usually values 40, 4a, 42, 4001, 4a01, 4201 for normal
+        doors are used .&nbsp;</font></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x002c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Index of first <a href="#formAREAV1_0_Vertices">vertex</a> comprising
+        the outline of this door while the door is open.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0030</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Vertices">vertices</a> comprising the
+        outline of this door while the door is open.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0032</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Vertices">vertices</a> comprising the
+        outline of this door while the door is closed.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0034</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Index of first <a href="#formAREAV1_0_Vertices">vertex</a> comprising
+        the outline of this door while the door is closed.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0038</td>
+      <td width="103">8 (rect)</td>
+      <td width="375">Minimum bounding box of the door polygon when it is open.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0040</td>
+      <td width="103">8 (rect)</td>
+      <td width="375">Minimum bounding box of the door polygon when it is closed.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0048</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Index of first <a href="#formAREAV1_0_Vertices">&quot;vertex&quot;</a>
+        in &quot;impeded cell block&quot; for &quot;door open&quot; state.
+        These vertices are not actually vertices, but instead, cell coordinates
+        (each cell corresponding to one tile in the <a href="WEDformat.htm"><font color="#FF0000">WED
+        file's</font></a> <a href="file:///D:/old%20bg2/infinity%20hacking%20project/baldur_WED.html#formWEDV1_3_TileMap"><font color="#FF0000">Tilemap</font></a>
+        structures. When the door is closed, these cells cannot be entered by
+        any object.</td>
+    </tr>
+    <tr>
+      <td width="48">0x004c</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Vertices">&quot;vertices&quot;</a> in
+        &quot;impeded cell block&quot; for &quot;door open&quot; state. See
+        note at offset 0x48 in this structure for details.</td>
+    </tr>
+    <tr>
+      <td width="48">0x004e</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Count of <a href="#formAREAV1_0_Vertices">&quot;vertices&quot;</a> in
+        &quot;impeded cell block&quot; for &quot;door closed&quot; state. This is
+        the same as the above field, except it is used when the door is open,
+        instead of when the door is closed.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0050</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Index of first <a href="#formAREAV1_0_Vertices">&quot;vertex&quot;</a>
+        in &quot;impeded cell block&quot; for &quot;door closed&quot; state. This
+        is the same as the field at 0x48, except it is used when the door is
+        open, instead of when the door is closed.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0054</td>
+      <td width="103">2 (word)</td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0056</td>
+      <td width="103">2 (word)</td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0058</td>
+      <td width="103">2x8 (char array)</td>
+      <td width="375">Two resref to sound files (Often the same duplicated
+        reference) - only the first seem to be play when the player open the
+        door (no sound when he close it even if a second sound reference is
+        given). See Waste Doors in AR0602.ARE for example.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0068</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">It is an index into cursors.bam frame - it's the cursor
+        that's shown when hovering over the door.</td>
+    </tr>
+    <tr>
+      <td width="48">0x006c</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trap detection difficulty</td>
+    </tr>
+    <tr>
+      <td width="48">0x006e</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trap removal difficulty</td>
+    </tr>
+    <tr>
+      <td width="48">0x0070</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trapped flag</td>
+    </tr>
+    <tr>
+      <td width="48">0x0072</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Trap detected flag</td>
+    </tr>
+    <tr>
+      <td width="48">0x0074</td>
+      <td width="103">4 (point)</td>
+      <td width="375">Trap launch target point</td>
+    </tr>
+    <tr>
+      <td width="48">0x0078</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of key <a href="ITMformat.htm"><font color="#FF0000">item</font></a>
+        needed to unlock door.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0080</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of <a href="BCSformat.htm"><font color="#FF0000">script</font></a>
+        for this item. (Script is activated when &quot;open&quot; attempt is
+        made on item.)</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0088</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown, almost always 5a value or 0</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x008c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Lock difficulty (0-100)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0090</td>
+      <td width="103">8 (rect)</td>
+      <td width="375">Bounding box where the player must be in to open the door.</td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x0098</font></td>
+      <td width="103"><font color="#000099">4 (dword)</font></td>
+      <td width="375"><font color="#000099">StrRef from dialog.tlk that appear when a thief attempt to unlock a door that couldn't be unlock (see the jail's door in AR1000.ARE and the shadow doors in AR1401.ARE for example).&nbsp;</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x009c</td>
+      <td width="103">28 (bytes)</td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x00b4</td>
+      <td width="103">4 (strref)</td>
+      <td width="375">Name of this door, if it has one. Name is used if the door initiates
+        dialog with the user.</td>
+    </tr>
+    <tr>
+      <td width="48">0x00b8</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">Resref of the <a href="DLGformat.htm"><font color="#FF0000">dialog</font></a>
+        resource associated with this door, if any. This dialog will be used if
+        the door initiates dialog with the user in its associated script.</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x00c0</td>
+      <td width="103">8 (bytes)</td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Anim">V1.0 Animations</a></h4>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">32 (char array)</td>
+      <td width="375">A long name for this animation. Used by editors and
+        probably by scripts</td>
+    </tr>
+    <tr>
+      <td width="48">0x0020</td>
+      <td width="103">4 (point)</td>
+      <td width="375">The point at which the &quot;center&quot; of the animation is to be
+        played -- i.e. each frame in the <a href="BAMformat.htm"><font color="#FF0000"> BAM file</font></a> has its center placed at this
+        precise coordinate.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0024</td>
+      <td width="115">4 (dword)</td>
+      <td width="363">Time of playing animation in day/night cycle.&nbsp;
+        <p>There is probably some system that describes all possible time
+        intervals when animation is played - for now I know only that when 2nd
+        offset is set to 00 and 4th offset is set to FF we have the effect that
+        takes place at night in time interval defined probably in 1st and 3rd
+        offset. The analogical situation for day is when 2nd offset is set to FF
+        and 4th to 00. However I have no idea how to define correctly for
+        example that ambient is played from 8 hour of day to , say 11.&nbsp;</p>
+        <p> Known values :</p>
+        <ul>
+          <li>F0FF 0F00 - day</li>
+          <li> E0FF 0100 - dawn</li>
+          <li>0F00 F0FF - night</li>
+          <li> 1F00 FEFF- dusk</li>
+          <li><font color="#000099">FF00 FFFF - unknown</font></li>
+          <li><font color="#000099">3F00 E0FF - unknown</font></li>
+          <li>FFFF FFFF - always</li>
+        </ul>
+        <p>&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="48">0x0028</td>
+      <td width="103">8 (resref)</td>
+      <td width="375">The resref of the <a href="BAMformat.htm"><font color="#FF0000">BAM</font></a>
+        file to be played for this animation.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0030</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Sequence number (number of animation) within the <a href="BAMformat.htm"><font color="#FF0000">BAM
+        resource</font></a><font color="#FF0000">&nbsp;</font></td>
+    </tr>
+    <tr class="upd">
+      <td width="48">0x0032</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Number of frame within current animation/sequence in the <a href="BAMformat.htm"><font color="#FF0000">BAM
+        resource</font></a><font color="#FF0000">&nbsp;</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0034</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Flag, so far there is known the following :
+        <ul>
+          <li>Bit 0 : Determines whether animation is shown (set to 1) or not
+            (set to 0)</li>
+          <li>Bit 1 : Turns on (value 0) the shades (i.e. smoke of fire)&nbsp;
+            or turns off (value 1)</li>
+          <li>Bit 2 : If set to 1 then the whole animation is shaded (harder to
+            notice) during night and normal during day.</li>
+          <li>Bit 3 : If set to 1 then animation is stopped on frame specified
+            in offset 0x0032. If set to 0 then the animation is played
+            normally.&nbsp;</li>
+          <li><font color="#000099">Bit 4 : unknown</font></li>
+          <li><font color="#000099">Bit 5 : unknown</font></li>
+          <li><font color="#000099">Bit 6 : unknown</font></li>
+          <li><font color="#000099">Bit 7 : unknown</font></li>
+        </ul>
+      </td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0038</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown, I haven't noticed any
+        effect on game.</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x003c</td>
+      <td width="103">16 (bytes)</td>
+      <td width="375"><font color="#000099">Unknown, unused</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_Automap">V1.0 Automap notes</a></h4>
+<p>These are textual notes which either you can add to your map, or which, in
+Torment, are automatically added to your map.&nbsp;Section size : 34h bytes.</p>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="101"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="322"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="upd">
+      <td width="101">0x0000</td>
+      <td width="103">2 (word)</td>
+      <td width="322">X coordinate</td>
+    </tr>
+    <tr class="upd">
+      <td width="101">0x0002</td>
+      <td width="103">2 (word)</td>
+      <td width="322">Y coordinate</td>
+    </tr>
+    <tr class="upd">
+      <td width="101">0x0004</td>
+      <td width="103">4 (dword)</td>
+      <td width="322">strref to dialog.tlk or TOH/TOT files</td>
+    </tr>
+    <tr>
+      <td width="101">0x0008</td>
+      <td width="103">2 (word)</td>
+      <td width="322"><font color="#000099">unknown, I haven't noticed any
+        differences after changing this offset. I have always seen value 1 or 0 here.&nbsp;</font></td>
+    </tr>
+    <tr>
+      <td width="101">0x000a</td>
+      <td width="103">2 (word)</td>
+      <td width="322">For Baldur's Gate 2 this field specify the color of
+        internal side of mark on worldmap :
+        <ul>
+          <li>0 - Gray (default value)</li>
+          <li>1 - Violet</li>
+          <li>2 - Green</li>
+          <li>3 - Orange</li>
+          <li>4 - Red</li>
+          <li>5 - Blue</li>
+          <li>6 - Dark Blue</li>
+          <li>7 - Light Gray&nbsp;</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="101">0x000c</td>
+      <td width="103">4 (dword)</td>
+      <td width="322"><font color="#000099">Unknown, in BG2 at least it is
+        probably some kind of Automaps counter ?! purpose unknown.</font></td>
+    </tr>
+    <tr>
+      <td width="101">0x0010</td>
+      <td width="103">36 (bytes)</td>
+      <td width="322"><font color="#000099">Unknown, unused</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formAREAV1_0_TiledObj">V1.0 Tiled objects</a></h4>
+<p>This information comes from Dmitry Jemerov. Neither of us have seen any
+instances of areas which include objects of this type, but he has managed to
+determine the format of these objects, nonetheless. Since there are no examples,
+we don't know precisely what they are used for. If more information becomes
+available, this space will be updated.</p>
+<table border="1" class="tbl3" width="100%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">32 (char array)</td>
+      <td width="375">Name</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0020</td>
+      <td width="103">8 (resref)</td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0028</td>
+      <td width="103">4 (dword)</td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x002c</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Primary search squares start. The primary search squares are the
+        squares which are impeded when the object is in one state (i.e. the
+        search squares through which a creature cannot travel).</td>
+    </tr>
+    <tr>
+      <td width="48">0x0030</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Primary search squares count</td>
+    </tr>
+    <tr>
+      <td width="48">0x0034</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Secondary search squares start. The secondary search squares are like
+        the primary search squares, except for when the object is in an
+        alternate state of some sort.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0038</td>
+      <td width="103">4 (dword)</td>
+      <td width="375">Secondary search squares count</td>
+    </tr>
+    <tr>
+      <td width="48">0x003c</td>
+      <td width="103">48 (bytes)</td>
+      <td width="375"><font color="#000099">Unknown (unused?)</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4>V1.0 <a name="Songs entries">Songs entries</a></h4>
+<p>This sections determines which *.acm files are played in the some situations.
+The length of this section is 90h&nbsp; bytes. The first 10 dwords seems to be
+numbers of the songs listed in proper files for each game (like <a href="../2das/songlist2da.htm"><font color="#FF0000"> SongList.2da&nbsp;</font></a>
+for BG2 and <a href="../2das/music2da.htm"><font color="#FF0000">MUSIC.2DA</font></a>
+for IWD and SONGS.IDS for PS:T), however there are known only three entries to this list - the rest is
+probably unused.</p>
+<table border="1" class="tbl3" width="100%">
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="107"><font color="#000000">Size (data type)</font></th>
+      <th width="371"><font color="#000000">Description</font></th>
+    </tr>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="107">4 (dword)</td>
+      <td width="371">Day song reference number</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0004</td>
+      <td width="107">4 (dword)</td>
+      <td width="371">Night song reference number</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0008</td>
+      <td width="107">4 (dword)</td>
+      <td width="371"><font color="#000099">Unknown, usually set to 0000 0000 in BG2 and FFFF FFFF in BG1.</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x000c</td>
+      <td width="107">4 (dword)</td>
+      <td width="371">Battle song reference number</td>
+    </tr>
+    <tr>
+      <td width="48">0x0010</td>
+      <td width="107">4 (dword)</td>
+      <td width="371"><font color="#000099">Unknown, usually set to 0000 0000 in BG2 and FFFF FFFF in BG1.</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x0014</td>
+      <td width="107">4x5 (dword)</td>
+      <td width="371"><font color="#000099">Unknown, set to FFFF FFFF</font></td>
+    </tr>
+  <tr>
+      <td width="48">0x0028</td>
+      <td width="107">16 (ASCII string)</td>
+      <td width="371"><font color="#000099">in bg1 there were some names that reminded me ambient filenames (in ar2300 this section contains of AMB_M13NAMB_M13N ASCII string).</font></td>
+  </tr>
+  <tr>
+      <td width="48">0x0038</td>
+      <td width="107">4 (dword)</td>
+      <td width="371"><font color="#000099">Unknown, usually value 6400 0000 or sometimes 5000 0000
+        - I haven't noticed any influence of this offset on game (BG2, however
+        the same values are also in BG/ToTSC/IWD).&nbsp;&nbsp;.&nbsp;</font></td>
+  </tr>
+    <tr>
+      <td width="48">0x003c</td>
+      <td width="107">16 (ASCII string)</td>
+      <td width="371"><font color="#000099">in BG1/BG2 there were some names that reminded me ambient filenames (in ar2300 this section contains of AMB_M13NAMB_M13N ASCII string).</font></td>
+    </tr>
+  <tr>
+      <td width="48">0x004c</td>
+      <td width="107">4 (dword)</td>
+      <td width="371"><font color="#000099">Unknown, constant value 6400 0000&nbsp;or sometimes 5000 0000
+        - I haven't noticed any influence of this offset on game (BG2, however
+        the same values are also in BG/ToTSC/IWD).&nbsp;</font></td>
+  </tr>
+    <tr>
+      <td width="48">0x0050</td>
+      <td width="107">4 (dword)</td>
+      <td width="371"><font color="#000099">Probably used only in PS: T - I
+        suspect it has the meaning as described in SongFlag.IDS in this game</font>
+        <p><font color="#000099">For more details check this file and AR1363 ,
+        AR1700 ARE files of PST as examples of different values in this offset.</font></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="48">0x0054</td>
+      <td width="107">60 (bytes)</td>
+      <td width="371"><font color="#000099">Unknown, always 00</font></td>
+    </tr>
+</table>
+<p class="toindex">&nbsp;</p>
+<h4>V1.0 <a name="RestOptionSpawn">Creatures appearance that interrupts party rest</a>&nbsp;</h4>
+<p>This section determines whether the sleep of the party is interrupted by some
+creatures spawn or not (i.e. Aminsh soldiers in Athkatla that interrupts Party's
+sleep inside the city, or monsters that appear during the sleep) , The length of this section is
+E4h bytes.</p>
+<table border="1" class="tbl3" width="100%">
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="375"><font color="#000000">Description</font></th>
+    </tr>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">32 (bytes)</td>
+      <td width="375">Name of this section. For editors</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0020</td>
+      <td width="103">4x10 (dword)</td>
+      <td width="375">Ten strrefs from <a href="TLKformat.htm"><font color="#FF0000">Dialog.tlk</font></a>
+        corresponding to the resrefs in next parts that appears when sleep is
+        interrupted (i.e. 9627 0000 stands for &quot;You are awakened from your rest.&quot;
+        )</td>
+    </tr>
+    <tr class="unk">
+      <td width="48">0x0048</td>
+      <td width="103">8x10 (resref)</td>
+      <td width="375">The 10 resref table that contains of the references to the <a href="CREformat.htm"><font color="#FF0000">cre
+        files</font></a>.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0098</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Number of <a href="CREformat.htm"><font color="#FF0000">cre</font></a>
+        entries in the references table</td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x009a</font></td>
+      <td width="103"><font color="#000099">2 (word)</font></td>
+      <td width="375"><font color="#000099">Unknown, I have noticed only that there appears
+        only one given creature if it is set to 0. In other case there appear as
+        many creatures as defined in offset 0x00a4, usually value 2 or 1. There
+        may be some bit flags.&nbsp;&nbsp;&nbsp;&nbsp;</font></td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x009c</font></td>
+      <td width="103"><font color="#000099">4 (dword)</font></td>
+      <td width="375"><font color="#000099">Unknown, no effect on game noticed</font></td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x00a0</font></td>
+      <td width="103"><font color="#000099">2 (word)</font></td>
+      <td width="375"><font color="#000099">Unknown, no effect on game noticed</font></td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x00a2</font></td>
+      <td width="103"><font color="#000099">2 (word)</font></td>
+      <td width="375"><font color="#000099">Unknown, the same value as in offset 0x00a0, no
+        effect on game noticed.</font></td>
+    </tr>
+    <tr>
+      <td width="48">0x00a4</td>
+      <td width="103">2 (word)</td>
+      <td width="375">Maximal number of spawned creatures.</td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x00a6</font></td>
+      <td width="103"><font color="#000099">2 (word)</font></td>
+      <td width="375"><font color="#000099">Unknown, usually value 1.</font></td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x00a8</font></td>
+      <td width="103"><font color="#000099">2 (word)</font></td>
+      <td width="375"><font color="#000099">Unknown</font></td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x00aa</font></td>
+      <td width="103"><font color="#000099">2 (word)</font></td>
+      <td width="375"><font color="#000099">Unknown, the same value as in offset 0x00a8</font></td>
+    </tr>
+    <tr>
+      <td width="48"><font color="#000099">0x00ac</font></td>
+      <td width="103"><font color="#000099">56 (bytes)</font></td>
+      <td width="375"><font color="#000099">Set to zero. Unused , unknown.</font></td>
+    </tr>
+</table>
+<p class="toindex">&nbsp;</p>
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

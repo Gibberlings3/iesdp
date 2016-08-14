@@ -1,0 +1,303 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+
+<p align="center">&nbsp;
+<p align="center"><font size="6">MUS Format description</font></p>
+<table border="1" width="610">
+  <tr>
+    <td width="28%">FileExtension :</td>
+    <td width="72%">MUS</td>
+  </tr>
+  <tr>
+    <td width="28%">Content :</td>
+    <td width="72%">Description of playlists MUS files&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="28%">History :</td>
+    <td width="72%">File done by Manveru Telcontar (and updated) on basis of <b>jhauglid's
+      post on TeamBG (08.07.2001)</b></td>
+  </tr>
+  <tr>
+    <td width="28%"> :</td>
+    <td width="72%">MaltanarTeamBG (25.11.2001)</td>
+  </tr>
+</table>
+<p>Actually MUS files are simply ASCII files that could be edited by any text
+editor - These files are always localized in the MUSIC folder in main folder of
+the IE game. All references that are put in these files require to have the
+respect folder inside MUSIC folder. This format is valid for BG1/BG2/IWD (I
+haven't got PT so I cannot check it, however these files are probably the same
+as in case of other IE games)</p>
+<font size="2">
+<hr align="left">
+<br>
+</font>Let's use BC1.mus as an example of how MUS-files work:
+<p><br>
+<font class="code" face="Courier New">BC1<br>
+10<br>
+A1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZA<br>
+B1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZA<br>
+C1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZA<br>
+D1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZD<br>
+E1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZD<br>
+E2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZD<br>
+F1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZD<br>
+G1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZG<br>
+H1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZH<br>
+J1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;B1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZJ<br>
+# B1B is loop<br>
+</font><br>
+The first line indicates the subdirectory within MUSIC folder where the acm-files
+used, are found (in this case BC1). The second line is the number of acm-files.
+The remainder of lines are the play list.<br>
+<br>
+<font class="code" face="Courier New">A1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZA</font><br>
+<br>
+This means &quot;Play BC1A1.acm&quot;. If the music should be stopped while this
+sound clip is playing, play &quot;BC1ZA.acm&quot; after &quot;BC1A1.acm&quot;
+has finished and then stop. (Typically this is because the combat has ended). If
+the music should continue, go to the next line of the play list.<br>
+<br>
+<font class="code" face="Courier New">J1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;B1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;@TAG ZJ</font><br>
+<br>
+This line indicates that the music should loop to &quot;BC1B1.acm&quot; (the
+second sound clip in this playlist) after &quot;BC1J1.acm&quot; has finished or
+finish using BC1ZJ.acm if the conditions in game are satisfied ( end of battle
+typically)<br>
+<br>
+In IWD and BG2 there is also used one special acm file (SPC1.acm). This file is
+actually empty acm file that doesn't contain any sound - it has 62,23 seconds
+length and is used as the silence separator in play lists, like in the following
+example of file Tav1.MUS :</p>
+<p>TAV1<br>
+6<br>
+SPC1<br>
+A<br>
+SPC1<br>
+SPC1<br>
+SPC1<br>
+SPC1&nbsp;&nbsp;&nbsp; TAV1 A </p>
+<p>So this file says : play 62 seconds of silence, then our sound and later 4
+silence files ( 248,92 s) after that come back to the song Tav1a.acm.</p>
+<p><font size="4">Some additional remarks :</font></p>
+<p><a href="2DAformat.htm"><font color="#FF0000">Songlist.2da</font></a> in case
+of BG2/ToB is the reference table for the <a href="AreFormat.htm"><font color="#FF0000">ARE
+files</font></a> and <a href="BCSformat.htm"><font color="#FF0000">scripts</font></a>
+to the proper playlist MUS file :</p>
+<p>2DA V1.0<br>
+****<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+RESOURCE<br>
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+No_music&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+****<br>
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Area0011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+MX0011.MUS<br>
+</p>
+<p>In aim to use play lists defined in MUS files we have to add entry to this
+file where :</p>
+<p>first number is the number of playlist file that is used by proper section in
+ARE file (songs section) or used by PlaySong(number) scripting command.</p>
+<p>The rest is as described in original part of Songlist.2da - Name is just the
+identifier and Resource is the name of playlist MUS file.&nbsp;&nbsp;</p>
+<p>Unfortunately I haven't been able to find the corresponding file for BG1/ToTSC
+- probably sound references could be hard coded into exe file.</p>
+<p>For IWD the reference table is in the file MUSIC.2da.&nbsp;</p>
+<p>MaltanarTeamBG's Informations</p>
+<p><font size="2">MUS files act as playlist for ACM files, determining loops and
+&quot;interrupt state&quot; effects. An &quot;interrupt state effect&quot; means
+the music (usually, a fadeout effect) to play when another ACM file is
+interrupted by a special condition (end of combat, start of romance music,
+etc.).<br>
+Below is a MUS file example, BC1.mus from Baldur's Gate II:<br>
+--------------------------------------------------------<br>
+BC1<br>
+10<br>
+A1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZA<br>
+B1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZA<br>
+C1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZA<br>
+D1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZD<br>
+E1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZD<br>
+E2
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZD<br>
+F1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZD<br>
+G1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZG<br>
+H1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZH<br>
+J1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;B1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;@TAG
+ZJ<br>
+# B1B is loop<br>
+-------------------------------------------------------<br>
+We shall examine each line and line component in this file.<br>
+<br>
+Line 1-BC1<br>
+This line indicates the /music subfolder the files in this MUS can be found. In
+this instance, it is &quot;BC1&quot;.<br>
+<br>
+Line 2-10<br>
+This line reports the amount of ACM files in the main playlist. Interrupt state
+ACMs don't count. So the ten files in BC1.mus are: A1, B1, C1, D1, E1, E2, F1,
+G1, H1 and J1.<br>
+<br>
+Line 3-A1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;@TAG ZA<br>
+<br>
+This line, the first line of playlist, consists of the characters A1, 18 spaces
+and a @TAG ZA character.<br>
+The first part, A1, means play the file BC1A1.acm under the BC1 subdirectory of
+the /music main folder in the game.<br>
+The spaces are just that, spaces, used to seperate the playlist ACM and the
+interrupt state ACM. The amount of spaces is determined as:<br>
+AmountOfSpaces=20-AmountOfCharactersInMainPlaylistEntry<br>
+which equals:<br>
+18=20-2 in this case.<br>
+The third part, @TAG ZA, determines the interrupt state ACM. This entry is
+composed of a @TAG, a single space, and the name of interrupt state ACM,
+BC1ZA.acm in this case.<br>
+<br>
+Similarly, the other entries in the playlist are composed this way.<br>
+<br>
+Line 12-J1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;B1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;@TAG ZJ<br>
+<br>
+The last entry in the playlist, in addition to normal ACM entry and interrupt
+state ACM entry, also includes a End of File Loop entry.<br>
+This line consists of a J1, 8 spaces, a B1, 8 spaces, and a @TAG ZJ. The first
+J1 is the usual playlist entry (BC1J1.ACM). The amount of spaces following is
+calculated as 10-AmountOfCharsInPlaylistEntry.<br>
+The next part, BC1, is the End of File Loop entry. Normally, any playlist entry
+may contain it, but due to the fact it'll block any following playlist entries
+after it, it's used at the end of the file. Its purpose is, when the playlist
+entry of that line is completely played, to switch to another ACM, BC1B1.acm in
+this case.<br>
+The following spaces are calculated as 10-AmountOfCharsInEndOfFileLoopEntry.<br>
+The last part is the usual interrupt state part.<br>
+************************<br>
+All MUS files are normally located in the main game /music folder. These MUS
+files are attached/linked to areas or romances, and also given an index number
+for use in sciripts, due to a special 2da file. This file is SONGLIST.2da in
+BGII, and Music.2da in IWD. BGI may have it hardcoded in the EXE. PS:T's music
+index is also unknown.<br>
+<br>
+<b><u>Music Subfolders in BGII</u></b><br>
+<br>
+<b>Folder BC1</b><br>
+Standard combat music. MUS entry BC1.mus. Index Number 46.<br>
+<br>
+<b>Folder BC2</b><br>
+Standard combat music. MUS entry BC2.mus. Index Number 47.<br>
+<br>
+<b>Folder BD1</b><br>
+Combat music for Irenicus' Dungeon. MUS entry BD1.mus. Index Number 48.<br>
+<br>
+<b>Folder BD2</b><br>
+Combat Music. MUS entry BD2.mus. Index Number 49.<br>
+<br>
+<b>Folder BD3</b><br>
+Dungeon combat music. MUS entry BD3.mus. Index Number 50.<br>
+<br>
+<b>Folder BF1</b><br>
+Combat music. MUS entry BF1.mus. Index Number 51.<br>
+<br>
+<b>Folder BF2</b><br>
+Combat music. MUS entry BF2.mus. Index Number 52.<br>
+<br>
+<b>Folder BJR</b><br>
+Dragons' combat music. MUS entry BJR.mus. Index Number 53.<br>
+<br>
+<b>Folder BM1</b><br>
+Combat music. MUS entry BM1.mus. Index Number 54.<br>
+<br>
+<b>Folder BM2</b><br>
+Combat music. MUS entry BM2.mus. Index Number 55.<br>
+<br>
+<b>Folder BP1</b><br>
+Dungeon combat music. MUS entry BP1.mus. Index Number 56.<br>
+<br>
+<b>Folder BP2</b><br>
+Vampire/Shadow Thief combat music. MUS entry BP2.mus. Index Number 57.<br>
+<br>
+<b>Folder BRD</b><br>
+Dragons' combat music. MUS entry BRD.mus. Index Number 58.<br>
+<br>
+<b>Folder BSD</b><br>
+Combat Music. MUS entry BSD. Index Number 59.<br>
+<br>
+<b>Folder BST</b><br>
+Combat Music. MUS entry BST.Index Number 60.<br>
+<br>
+<b>Folder harp_v2</b><br>
+Harp melody. MUS entry HARP_V2.mus. Index Number 62.<br>
+<br>
+<b>Folder harp_v6</b><br>
+Harp melody. MUS entry HARP_v6.mus. Index Number 63.<br>
+<br>
+<b>Folder MX0011</b><br>
+Dreams' &nbsp;music. MUS entry MX0011.mus. Index Number 1.<br>
+<br>
+<b>Folder MX0012</b><br>
+Dreams' music. MUS entry MX0012.mus. Index Number 2.<br>
+<br>
+<b>Folder MX0013</b><br>
+Dreams' music. MUS entry MX0013.mus. Index Number 3.<br>
+<br>
+<b>Folder MX0015</b><br>
+Noble houses' music. MUS entry MX0015.mus. Index Number 4.<br>
+<br>
+<b>Folder MX0020</b><br>
+City Gates'music. MUS entry MX0020.mus. Index number 5.</font></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><br>
+<br>
+</p>
+<p><br>
+<br>
+</p>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

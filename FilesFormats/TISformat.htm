@@ -1,0 +1,172 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+
+<h1 align="center">TIS file format</h1>
+<table border="1" width="610">
+  <tr>
+    <td width="28%">FileExtension :</td>
+    <td width="72%">TIS</td>
+  </tr>
+  <tr>
+    <td width="28%">Content :</td>
+    <td width="72%">Description of TIS files</td>
+  </tr>
+  <tr>
+    <td width="28%">History :</td>
+    <td width="72%">File done by IEFFHP</td>
+  </tr>
+  <tr>
+    <td width="28%">Update :</td>
+    <td width="72%">Manveru (17.10.01)</td>
+  </tr>
+</table>
+<h2>Description</h2>
+<p>TIS is, no doubt, short for tileset, since that is what these files
+essentially are. TIS files are comprised of a (typically) large number of tiles,
+which are, themselves, composed of a palette and a rectangular block of pixels,
+which are indices into the associated palette. Each tile has its own palette and
+a block of pixels. The pixel data is not at all compressed.</p>
+<h2>TIS files: Baldur's Gate, Planescape: Torment, Icewind Dale, Baldur's Gate 2</h2>
+<p>A tileset doesn't mean much on its own, since the tile locations are
+specified in another file (the .WED file). The layout of a tile is as follows.
+First, there is a 256-color palette. Each palette entry is a Windows RGBQUAD
+structure, which means that each palette entry is 4-bytes long, and that the
+layout in memory is <code>B</code>, <code>G</code>, <code>R</code>, <code>a</code>.
+The <code>a</code> is probably flags, since that is what the extra byte is used
+for in the Win32 API. It could be alpha, but alpha transparency is not used in
+BG. In either case, it is immaterial, since it doesn't appear to be used
+anywhere. Immediately following that, there are 8-bit pixel values, which are
+indices into this palette. The pixel values come one after another, row by row,
+from left to right and top to bottom. Index 0 is hardcoded to be the transparent
+index. (I think; however, I had previously believed this to be true of the BAM
+file format, and found myself to be quite mistaken, so...)&nbsp;</p>
+
+<p>Several more comments on TIS :</p>
+
+<p><font size="6">Header :</font><br>
+<br>
+Header length &nbsp;- 18h</p>
+<table border="1" width="538" height="219">
+  <tr>
+    <td width="64" height="33"><b>Offset</b></td>
+    <td width="77" height="33"><b>Data type</b></td>
+    <td width="375" height="33"><b>Description</b></td>
+  </tr>
+  <tr>
+    <td width="64" height="18">
+
+<p>0x0000&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="77" height="18">
+
+<p>(4 char )&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="375" height="18">
+
+<p>the name 'TIS '</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="64" height="18">
+
+<p>0x0004&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="77" height="18">
+
+<p>(4 char)&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="375" height="18">
+
+<p>the version 'V1 &nbsp;'</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="64" height="18">
+
+<p>0x0008&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="77" height="18">
+
+<p>(4 dword)&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="375" height="18">
+
+<p>the number of tiles within this tileset</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="64" height="36">
+
+<p>0x000c&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="77" height="36">
+
+<p>(4 dword)&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="375" height="36">
+
+<p>the length of Tiles sections in bytes (there was noticed only value 1400h=
+5120 )</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="64" height="18">
+
+<p><font color="#000080">0x0010&nbsp;&nbsp;&nbsp;</font></p>
+    </td>
+    <td width="77" height="18">
+
+<p><font color="#000080">(4 dword)&nbsp;&nbsp;&nbsp;</font></p>
+    </td>
+    <td width="375" height="18">
+
+<p><font color="#000080">doesn't seem to have any function, unknown so far.</font></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="64" height="36">
+
+<p>0x0014&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="77" height="36">
+
+<p>(4 dword)&nbsp;&nbsp;&nbsp;</p>
+    </td>
+    <td width="375" height="36">
+
+<p>Dimension of 1 tile in pixels (actually everywhere 64x64).</p>
+    </td>
+  </tr>
+</table>
+
+<p>The offset 18h seems to be fixed beginning of Tiles sections that have length
+specified in offset 0x000c and the number of them withing this file is specified
+in 0x0008 offset.</p>
+<ul>
+  <li>One tile inside TIS files is 0x000c offset value&nbsp; bytes long.</li>
+  <li>All tiles are composed of 0x0014 offset value pixels</li>
+  <li>Usually in areas that contain doors/ overlays areas there are several more
+    tiles than it may be visible on main area .&nbsp;</li>
+  <li>Such a tile has size :&nbsp;&nbsp; (Width(in tiles)*Height(in tiles) +
+    DoorsTilesClosedState + OverlayShapesTiles) *(offset 0x000c value) bytes</li>
+  <li>The special &quot;green&quot; colour is used to mark overlay areas in
+    OverlayShapesTiles.</li>
+  <li>DoorTilesClosedState and OverlayShapesTiles are also referenced from WED
+    files but as the alternative tiles from Tilemap structure and their
+    appearance is defined by offset 0x0006 of this structure.&nbsp;&nbsp;</li>
+</ul>
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

@@ -1,0 +1,4745 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+
+<p align="center"><font size="6">ITM file format</font></p>
+<p><font size="5">Description</font></p>
+<p>An ITM file describes any item that can appear in the inventory of any <a href="CREformat.htm"><font color="#FF0000">creature</font></a>.
+Some ITM files do not describe objects the user would typically have in their
+inventory -- for instance, many monsters have attacks which are special items
+that don't appear elsewhere in the game. In Torment, there is the additional
+complication that objects can have associated <a href="DLGformat.htm"><font color="#FF0000">dialog
+resources</font></a>; hence, it is possible to create items with which the character
+can carry on conversations. The same thing is possible in BG2, however it is
+done in easier way.</p>
+<p><a name="formITM_Versions"><font size="5">ITM file versions</font></a></p>
+<ul>
+  <li><a href="#formITMV1_0">V1: Baldur's Gate, Icewind Dale</a>
+  <li><a href="#formITMV1_1">V1.1: Planescape: Torment</a></li>
+</ul>
+<p><a name="formITMV1_0"><font size="5">ITM V1</font></a></p>
+<table border="1" width="610">
+  <tr>
+    <td width="28%">FileExtension :</td>
+    <td width="72%">ITM</td>
+  </tr>
+  <tr>
+    <td width="28%">Content :</td>
+    <td width="72%">Item Definitions (Version 1 or 1.0 ONLY)</td>
+  </tr>
+  <tr>
+    <td width="28%">History :</td>
+    <td width="72%">File done by GMan 6/20/2000</td>
+  </tr>
+  <tr>
+    <td width="28%">&nbsp;</td>
+    <td width="72%">File Updated by TL on 5/16/2001</td>
+  </tr>
+  <tr>
+    <td width="28%">&nbsp;</td>
+    <td width="72%">File Updated by M on 25/01/2002</td>
+  </tr>
+  <tr>
+    <td width="28%">&nbsp;</td>
+    <td width="72%">File Updated by Avenger on 08/03/2002</td>
+  </tr>
+</table>
+<p><img src="../images/ITM.jpg" width="610" height="278"></p>
+<table>
+  <tr>
+    <td width="20"><center><img src="../images/red.jpg" width="10" height="10"></center></td>
+    <td width="180"><b>Header:</b> <font size="-1">Size=114 Bytes</font></td>
+    <td width="20"><center><img src="../images/blue.jpg" width="10" height="10"></center></td>
+    <td width="180"><b>Ext. Header:</b> <font size="-1">Size= 40 Bytes</font></td>
+    <td width="20"><center><img src="../images/green.jpg" width="10" height="10"></center></td>
+    <td width="190"><b>Feature Block:</b> <font size="-1">Size=48 Bytes</font></td>
+  </table>
+<p><font size="5">Overall structure</font></p>
+<ul>
+  <li><a href="#formITMV1_Header">Header</a>
+  <li><a href="#Extended Header:">Extended header</a>
+  <li><a href="#Feature Block:">Feature block</a></li>
+</ul>
+<p><a name="formITMV1_Header"><b>ITM V1 Header</b></a></p>
+  <p><font color="red">NOTE: The following symbols as they pertain to the
+  information that follows:<br>
+  * Icewind Dale only.<br>
+  # Baldur's Gate II: Shadows of Amn only.<br>
+  </font></p>
+  <p>Every item file contains a header. It contains the basic properties of the
+  item represented by the file.<br>
+  &nbsp;</p>
+  <center>
+  <table border="1" width="610">
+    <tbody>
+      <tr>
+        <td width="14%"><b>Offset</b></td>
+        <td width="15%"><b>Size</b></td>
+        <td width="71%"><b>Description</b></td>
+      </tr>
+      <tr>
+        <td width="14%">0000h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#FileType">FileType</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0004h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#FileRevision">FileRevision</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0008h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#ItemNameReferenceUnID">ItemNameReference(UnIdentfied)</a></td>
+      </tr>
+      <tr>
+        <td width="14%">000Ch</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#ItemNameReferenceID">ItemNameReference(Identified)</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0010h</td>
+        <td width="15%">0008h</td>
+        <td width="71%"><a href="#UsedUpItemFile">UsedUpItemFile</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0018h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#ItemAttributes">ItemAttributes</a></td>
+      </tr>
+      <tr height="21">
+        <td height="21" width="14%">001Ch</td>
+        <td height="21" width="15%">0002h</td>
+        <td height="21" width="71%"><a href="#ItemType">ItemType</a></td>
+      </tr>
+      <tr>
+        <td width="14%">001Eh</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#Useability">Useability</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0022h</td>
+        <td width="15%">0002h</td>
+        <td width="71%"><a href="#ItemAnimation">ItemAnimation</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0024h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#MinimumLevel">MinimumLevel</a> #*</td>
+      </tr>
+      <tr>
+        <td width="14%">0025h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><font color="#000099">UNKNOWN</font></td>
+      </tr>
+      <tr>
+        <td width="14%">0026h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#MinimumStrength">MinimumStrength</a> #*</td>
+      </tr>
+      <tr>
+        <td width="14%">0027h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><font color="#000099">UNKNOWN</font></td>
+      </tr>
+      <tr>
+        <td width="14%">0028h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#MinimumStrengthBonus">MinimumStengthBonus</a>
+          #*</td>
+      </tr>
+      <tr>
+        <td width="14%">0029h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#KitRestrictions">KitRestrictions(Byte 1)</a> #</td>
+      </tr>
+      <tr>
+        <td width="14%">002Ah</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#MinimumIntelligence">MinimumIntelligence</a>
+          #*</td>
+      </tr>
+      <tr>
+        <td width="14%">002Bh</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#KitRestrictions">KitRestrictions(Byte 2)</a> #</td>
+      </tr>
+      <tr>
+        <td width="14%">002Ch</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#MinimumDexterity">MinimumDexterity</a> #*</td>
+      </tr>
+      <tr>
+        <td width="14%">002Dh</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#KitRestrictions">KitRestrictions(Byte 3)</a> #</td>
+      </tr>
+      <tr>
+        <td width="14%">002Eh</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#MinimumWisdom">MinimumWisdom</a> #*</td>
+      </tr>
+      <tr>
+        <td width="14%">002Fh</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#KitRestrictions">KitRestrictions(Byte 4)</a> #</td>
+      </tr>
+      <tr>
+        <td width="14%">0030h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#MinimumConstitution">MinimumConstitution</a>
+          #*</td>
+      </tr>
+      <tr>
+        <td width="14%">0031h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#WeaponProfs">WeaponProficiency</a> #</td>
+      </tr>
+      <tr>
+        <td width="14%">0032h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><a href="#MinimumCharisma">MinimumCharisma</a> #*</td>
+      </tr>
+      <tr>
+        <td width="14%">0033h</td>
+        <td width="15%">0001h</td>
+        <td width="71%"><font color="#000099">UNKNOWN</font></td>
+      </tr>
+      <tr>
+        <td width="14%">0034h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#ItemPrice">ItemPrice</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0038h</td>
+        <td width="15%">0002h</td>
+        <td width="71%"><a href="#ItemStack">ItemStack</a></td>
+      </tr>
+      <tr>
+        <td width="14%">003Ah</td>
+        <td width="15%">0008h</td>
+        <td width="71%"><a href="#InventoryIcon">InventoryIcon</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0042h</td>
+        <td width="15%">0002h</td>
+        <td width="71%"><a href="#LoreToIdentify">LoreToIdentify</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0044h</td>
+        <td width="15%">0008h</td>
+        <td width="71%"><a href="#GroundIcon">GroundIcon</a></td>
+      </tr>
+      <tr>
+        <td width="14%">004Ch</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#ItemWeight">ItemWeight</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0050h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#DescriptionReferenceUnID">DescriptionReference(UnIdentified)</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0054h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#DescriptionReferenceID">DescriptionReference(Identified)</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0058h</td>
+        <td width="15%">0008h</td>
+        <td width="71%"><a href="#DescriptionIcon">DescriptionIcon</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0060h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#ItemMagicalPlus">ItemMagicalPlusToAffectCreatures</a>
+          #*</td>
+      </tr>
+      <tr>
+        <td width="14%">0064h</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#ExtendedHeaderOffset">ExtendedHeaderOffset</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0068h</td>
+        <td width="15%">0002h</td>
+        <td width="71%"><a href="#ExtendedHeaderCount">ExtendedHeaderCount</a></td>
+      </tr>
+      <tr>
+        <td width="14%">006Ah</td>
+        <td width="15%">0004h</td>
+        <td width="71%"><a href="#FeatureTableOffset">FeatureTableOffset</a></td>
+      </tr>
+      <tr>
+        <td width="14%">006Eh</td>
+        <td width="15%">0002h</td>
+        <td width="71%"><a href="#EquiptFeatureBlockOffset">EquiptFeatureBlockOffset</a></td>
+      </tr>
+      <tr>
+        <td width="14%">0070h</td>
+        <td width="15%">0002h</td>
+        <td width="71%"><a href="#EquiptFeatureBlockCount">EquiptFeatureBlockCount</a></td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><b><a name="Extended Header:">Extended Header:</a></b></p>
+  <p>If an item affects other creatures (like a weapon), casts a spell (like a
+  wand), or has any other effects besides equipping effects then the item file
+  contains an extended header. One Extended Header is required for each ability
+  of an item.<br>
+  &nbsp;<br>
+  Roughly speaking, each &quot;ability&quot; (I believe this to be the
+terminology used in the Bioware tools) corresponds to a different way to use the
+item. For instance, in BG, there is an item which can be either a melee
+(hand-to-hand) axe, or a throwing axe. Or the &quot;wand of fire&quot; which
+fires either fireballs or &quot;aganazzar's scorcher&quot;. To choose which, you
+click on the item while it is selected, and you are given a menu to choose the
+ammunition type -- the same procedure used for selecting different missile types
+for a missile weapon. (Note, also, that it is possible to get an info screen for
+a bow, for instance, in which all of the &quot;abilities&quot; of the bow are
+listed -- namely the different types of ammunition it fires. I suspect that it
+is no coincidence that the same interfaces are used to select
+&quot;abilities&quot; of an item, and differing ammunition types of a launcher;
+likely the game internally handles different ammunition types via the same
+interface it uses for abilities.).</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr>
+        <td width="13%"><b>Offset</b></td>
+        <td width="15%"><b>Size</b></td>
+        <td width="72%"><b>Description</b></td>
+      </tr>
+      <tr>
+        <td width="13%">0000h</td>
+        <td width="15%">0001h</td>
+        <td width="72%"><a href="#AttackType">AttackType</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0001h</td>
+        <td width="15%">0001h</td>
+        <td width="72%"><a href="#ForceID">ForceIdentify</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0002h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#AbilityUseLocation">AbilityUseLocation</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0004h</td>
+        <td width="15%">0008h</td>
+        <td width="72%"><a href="#UseIcon">UseIcon</a></td>
+      </tr>
+      <tr>
+        <td width="13%">000Ch</td>
+        <td width="15%">0001h</td>
+        <td width="72%"><a href="#Target">Target</a></td>
+      </tr>
+      <tr>
+        <td width="13%">000Dh</td>
+        <td width="15%">0001h</td>
+        <td width="72%"><a href="#TargetNumber">TargetNumber</a> #</td>
+      </tr>
+      <tr>
+        <td width="13%">000Eh</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#EffectRadius">EffectRadius / AttackRange
+          (feet)</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0010h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#ProjectileType">ProjectileType</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0012h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#SpeedFactor">SpeedFactor</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0014h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#THAC0Bonus">THAC0 Bonus</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0016h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#DamageDice">DamageDice</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0018h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#DamageThrows">DamageThrows</a></td>
+      </tr>
+      <tr>
+        <td width="13%">001Ah</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#DamageBonus">DamageBonus</a></td>
+      </tr>
+      <tr>
+        <td width="13%">001Ch</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#DamageType">DamageType</a></td>
+      </tr>
+      <tr>
+        <td width="13%">001Eh</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#ExtHeaderFeatureBlockCount">ExtHeaderFeatureBlockCount</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0020h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#ExtHeaderFeatureBlockOffset">ExtHeaderFeatureBlockOffset</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0022h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#Charges">Charges</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0024h</td>
+        <td width="15%">0001h</td>
+        <td width="72%"><a href="#ItemDrainability">ItemDrainability</a> #*</td>
+      <tr>
+        <td width="13%">0025h</td>
+        <td width="15%">0001h</td>
+        <td width="72%"><font color="#000099">UNKNOWN</font></td>
+      </tr>
+      <tr>
+        <td width="13%">0026h</td>
+        <td width="15%">0001h</td>
+        <td width="72%"><a href="#AllowStrBonus">AllowStrengthBonus</a> #*?</td>
+      <tr>
+        <td width="13%">0027h</td>
+        <td width="15%">0001h</td>
+        <td width="72%"><a href="#ItemRecharability">ItemRecharability</a> #*</td>
+      </tr>
+      <tr>
+        <td width="13%">0028h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><font color="#000099">UNKNOWN</font></td>
+      </tr>
+      <tr>
+        <td width="13%">002Ah</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#EffectAnimation">EffectAnimation</a> (not only
+          graphic!!!)</td>
+      </tr>
+      <tr>
+        <td width="13%">002Ch</td>
+        <td width="15%">0006h</td>
+        <td width="72%"><a href="#MeleeAnimation">MeleeAnimation</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0032h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#BowArrowQualifier">BowArrowQualifier</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0034h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#CrossBowBoltQualifier">CrossBowBoltQualifier</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0036h</td>
+        <td width="15%">0002h</td>
+        <td width="72%"><a href="#MiscMissileQualifier">MiscMissileQualifier</a></td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><b><a name="Feature Block:">Feature Block:</a></b></p>
+  <p>Items with magical capabilities, equipping effects, or any type of
+  abilities besides simple weapon damage contain one or more Feature Blocks.
+  Every Feature Block represents one special ability of an item.<br>
+  &nbsp;</p>
+  <center>
+  <table border="1" width="610">
+    <tbody>
+      <tr>
+        <td width="13%"><b>Offset</b></td>
+        <td width="14%"><b>Size</b></td>
+        <td width="73%"><b>Description</b></td>
+      </tr>
+      <tr>
+        <td width="13%">0000h</td>
+        <td width="14%">0002h</td>
+        <td width="73%"><a href="#Feature">Feature/Effect</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0002h</td>
+        <td width="14%">0001h</td>
+        <td width="73%"><a href="#TargetIdentifier">TargetIdentifier</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0003h</td>
+        <td width="14%">0001h</td>
+        <td width="73%"><a href="#Power">Power</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0004h</td>
+        <td width="14%">0004h</td>
+        <td width="73%"><a href="#Parameter1">Parameter 1</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0008h</td>
+        <td width="14%">0004h</td>
+        <td width="73%"><a href="#Parameter2">Parameter 2</a></td>
+      </tr>
+      <tr>
+        <td width="13%">000Ch</td>
+        <td width="14%">0001h</td>
+        <td width="73%"><a href="#EffectTimeMode">EffectTimeMode</a></td>
+      </tr>
+      <tr>
+        <td width="13%">000Dh</td>
+        <td width="14%">0001h</td>
+        <td width="73%"><a href="#Resistance_Dispellability">Resistance &amp;
+          Dispellability</a></td>
+      </tr>
+      <tr>
+        <td width="13%">000Eh</td>
+        <td width="14%">0004h</td>
+        <td width="73%"><a href="#EffectTime">EffectTime</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0012h</td>
+        <td width="14%">0002h</td>
+        <td width="73%"><a href="#Probability">Probability</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0014h</td>
+        <td width="14%">0008h</td>
+        <td width="73%"><a href="#ResourceKey">ResourceKey</a></td>
+      </tr>
+      <tr>
+        <td width="13%">001Ch</td>
+        <td width="14%">0004h</td>
+        <td width="73%"><a href="#Throws">DiceThrows</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0020h</td>
+        <td width="14%">0004h</td>
+        <td width="73%"><a href="#DiceSides">DiceSides</a></td>
+      </tr>
+      <tr height="25">
+        <td height="25" width="13%">0024h</td>
+        <td height="25" width="14%">0004h</td>
+        <td height="25" width="73%"><a href="#SavingThrowType">SavingThrowType</a></td>
+      </tr>
+      <tr>
+        <td width="13%">0028h</td>
+        <td width="14%">0004h</td>
+        <td width="73%"><a href="#SavingThrowBonus">SavingThrowBonus</a></td>
+      </tr>
+      <tr>
+        <td width="13%">002Ch</td>
+        <td width="14%">0004h</td>
+        <td width="73%"><font color="#000099">UNKNOWN</font></td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+<p>&nbsp;</p>
+<hr>
+  <p>Header:</p>
+  <p><a name="FileType"></a></p>
+  <p><b>FileType:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="13%"><b>Offset</b></td>
+        <td height="22" width="14%"><b>Size</b></td>
+        <td height="22" width="24%"><b>Data</b></td>
+        <td height="22" width="27%"><b>Type</b></td>
+        <td height="22" width="22%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="13%">0x0000</td>
+        <td height="22" width="14%">4</td>
+        <td height="22" width="24%">FileType</td>
+        <td height="22" width="27%">Array[0..3] Of Char</td>
+        <td height="22" width="22%">'ITM '</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field contains the type of the data file. It usually is the same as
+  the file extension.<br>
+  &nbsp;</p>
+  <p><a name="FileRevision"></a></p>
+  <p><b>FileRevision:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="13%"><b>Offset</b></td>
+        <td height="22" width="14%"><b>Size</b></td>
+        <td height="22" width="23%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="13%">0x0004</td>
+        <td height="22" width="14%">4</td>
+        <td height="22" width="23%">FileRevision</td>
+        <td height="22" width="26%">Array[0..3] Of Char</td>
+        <td height="22" width="24%">'V1 ' or 'V1.0'</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Revision of the data file.<br>
+  &nbsp;</p>
+  <p><a name="ItemNameReferenceUnID"></a></p>
+  <p><b>ItemNameReference(UnIdentified):</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0008</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">ItemNameReference</td>
+        <td height="22" width="26%">Longint</td>
+        <td height="22" width="24%">FFFFh for none</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This is the StrRef to the name of the (Unidentified) item. The StrRef is
+  the index to the string contained in <i><a href="TLKformat.htm"><font color="#FF0000">Dialog.tlk</font></a></i>
+  file for the specific game.<br>
+  &nbsp;</p>
+  <p><a name="ItemNameReferenceID"></a></p>
+  <p><b>ItemNameReference(Identified):</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x000C</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">ItemNameReference</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">FFFFh for none</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This is the StrRef to the name of the (Identified) item. The StrRef is the
+  index to the string contained in <i><a href="TLKformat.htm"><font color="#FF0000">Dialog.tlk</font></a></i>
+  file for the specific game.<br>
+  &nbsp;</p>
+  <p><a name="UsedUpItemFile"></a></p>
+  <p><b>UsedUpItemFile:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0010</td>
+        <td height="22" width="13%">8</td>
+        <td height="22" width="25%">UsedUpItemFile</td>
+        <td height="22" width="26%">Array[0..7] Of Char</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field contains the filename of an Item file. If the item gets
+  destroyed (Used Up), it will get replaced by the item specified in this field.<br>
+  &nbsp;</p>
+  <p><a name="ItemAttributes"></a></p>
+  <p><b>ItemAttributes:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0018</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">ItemAttributes</td>
+        <td height="22" width="26%">(Array Of?) Boolean</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>The Item Attributes field is a set of bitmasked bytes holding information
+  about the attributes of the item. If the bit is set on then the corresponding
+  attribute is set to on:</p>
+  <center>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 01</td>
+        <td width="59%">Offset 0018h</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="9%">0</td>
+        <td height="22" width="28%">Unsellable</td>
+        <td height="22" width="63%">Item cannot be sold</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">TwoHanded</td>
+        <td width="63%">Item Requires Two Hands To Use</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Movable</td>
+        <td width="63%">Item Is Able To Be Moved From Slot To Slot</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%"><font color="#000099">Displayable ?</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Cursed</td>
+        <td width="63%">The Item Is Cursed And Cannot Be Removed Without A
+          Remove Curse Spell.</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%"><font color="#000099">Copyable ?</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">Magical</td>
+        <td width="63%">Item Is A Magical Item, And Thus Indestructable</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Bow</td>
+        <td width="63%">Item Is A Bow</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 02</td>
+        <td width="59%">Offset 0019h</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="9%">0</td>
+        <td height="22" width="28%">Silver?&nbsp;</td>
+        <td height="22" width="63%">Item Is Made From Silver?</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Cold Iron?</td>
+        <td width="63%">Item Is Made From Cold Iron?</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Conversable</td>
+        <td width="63%">Item Is Conversable On Item Information Screen</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 03</td>
+        <td width="59%">Offset 001Ah</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="9%">0</td>
+        <td height="22" width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td height="22" width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 04</td>
+        <td width="59%">Offset 001Bh</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="9%">0</td>
+        <td height="22" width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td height="22" width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%"><font color="#000099">UNKNOWN</font></td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Bit 0 is the LSB, Bit 7 the MSB<br>
+  &nbsp;</p>
+  <p><a name="ItemType"></a></p>
+  <p><b>ItemType:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x001C</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">ItemType</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field specifies what category the item falls into. Note that anything
+  listed in brackets is what what that value means for the specified game:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr>
+        <td width="12%"><i>Value</i></td>
+        <td width="57%"><i>Item Type</i></td>
+        <td width="31%"><i>Inventory</i></td>
+      </tr>
+      <tr>
+        <td width="12%">0000h</td>
+        <td width="57%">Book</td>
+        <td width="31%">{Inventory)</td>
+      </tr>
+      <tr>
+        <td width="12%">0001h</td>
+        <td width="57%">Amulet/Necklace</td>
+        <td width="31%">(Amulet)</td>
+      </tr>
+      <tr>
+        <td width="12%">0002h</td>
+        <td width="57%">Armor</td>
+        <td width="31%">(Armor)</td>
+      </tr>
+      <tr>
+        <td width="12%">0003h</td>
+        <td width="57%">Belt/Girdle</td>
+        <td width="31%">(Belt)</td>
+      </tr>
+      <tr>
+        <td width="12%">0004h</td>
+        <td width="57%">Boots</td>
+        <td width="31%">(Boots)</td>
+      </tr>
+      <tr>
+        <td width="12%">0005h</td>
+        <td width="57%">Arrow</td>
+        <td width="31%">(Quiver)</td>
+      </tr>
+      <tr>
+        <td width="12%">0006h</td>
+        <td width="57%">Bracer/Gauntlet</td>
+        <td width="31%">(Bracer)</td>
+      </tr>
+      <tr>
+        <td width="12%">0007h</td>
+        <td width="57%">Helmet</td>
+        <td width="31%">(Helmet)</td>
+      </tr>
+      <tr>
+        <td width="12%">0008h</td>
+        <td width="57%">Key</td>
+        <td width="31%">(Inventory Item)</td>
+      </tr>
+      <tr>
+        <td width="12%">0009h</td>
+        <td width="57%">Potion</td>
+        <td width="31%">(Quick Item)</td>
+      </tr>
+      <tr>
+        <td width="12%">000Ah</td>
+        <td width="57%">Ring</td>
+        <td width="31%">(Ring)</td>
+      </tr>
+      <tr>
+        <td width="12%">000Bh</td>
+        <td width="57%">Scroll</td>
+        <td width="31%">(Quick Item)</td>
+      </tr>
+      <tr>
+        <td width="12%">000Ch</td>
+        <td width="57%">Shield</td>
+        <td width="31%">(Shield)</td>
+      </tr>
+      <tr>
+        <td width="12%">000Eh</td>
+        <td width="57%">Bullet</td>
+        <td width="31%">(Quiver)</td>
+      </tr>
+      <tr>
+        <td width="12%">000Fh</td>
+        <td width="57%">Bow</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0010h</td>
+        <td width="57%">Dagger</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0011h</td>
+        <td width="57%">Club/Mace [Mace *#]</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0012h</td>
+        <td width="57%">Sling</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0013h</td>
+        <td width="57%">Short Sword [Short Sword/Wakizashi #]</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0014h</td>
+        <td width="57%">Bastard, Long, 2-Handed Sword [Long Sword *]</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0015h</td>
+        <td width="57%">Warhammer</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0016h</td>
+        <td width="57%">Morning Star</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0017h</td>
+        <td width="57%">Flail</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0018h</td>
+        <td width="57%">Dart</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0019h</td>
+        <td width="57%">Axe 1-Handed</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">001Ah</td>
+        <td width="57%">Staff</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">001Bh</td>
+        <td width="57%">Crossbow</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">001Ch</td>
+        <td width="57%">Hand-to-Hand</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">001Dh</td>
+        <td width="57%">Spear</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">001Eh</td>
+        <td width="57%">Halberd, 2-Handed Polearm</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">001Fh</td>
+        <td width="57%">Bolt</td>
+        <td width="31%">(Quiver)</td>
+      </tr>
+      <tr>
+        <td width="12%">0020h</td>
+        <td width="57%">Cloak</td>
+        <td width="31%">(Cloak)</td>
+      </tr>
+      <tr>
+        <td width="12%">0021h</td>
+        <td width="57%">Gold Piece(s)</td>
+        <td width="31%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="12%">0022h</td>
+        <td width="57%">Misc (Gems....)</td>
+        <td width="31%">(Quick Item)</td>
+      </tr>
+      <tr>
+        <td width="12%">0023h</td>
+        <td width="57%">Wand</td>
+        <td width="31%">(Quick Item)</td>
+      </tr>
+      <tr>
+        <td width="12%">0024h</td>
+        <td width="57%">Key *#</td>
+        <td width="31%">(Inventory)</td>
+      </tr>
+      <tr>
+        <td width="12%">0025h</td>
+        <td width="57%">Broken Shield *#</td>
+        <td width="31%">(Shield)</td>
+      </tr>
+      <tr>
+        <td width="12%">0026h</td>
+        <td width="57%">Broken Sword *#</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">0029h</td>
+        <td width="57%">Buckler *</td>
+        <td width="31%">(Shield)</td>
+      </tr>
+      <tr>
+        <td width="12%">002Ah</td>
+        <td width="57%">Candle *#</td>
+        <td width="31%">(Inventory)</td>
+      </tr>
+      <tr>
+        <td width="12%">002Ch</td>
+        <td width="57%">Club *#</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+      <tr>
+        <td width="12%">002Fh</td>
+        <td width="57%">Large Shield *</td>
+        <td width="31%">(Shield)</td>
+      </tr>
+      <tr>
+        <td width="12%">0031h</td>
+        <td width="57%">Medium Shield *</td>
+        <td width="31%">(Shield)</td>
+      </tr>
+      <tr>
+        <td width="12%">0035h</td>
+        <td width="57%">Small Shield *</td>
+        <td width="31%">(Shield)</td>
+      </tr>
+      <tr>
+        <td width="12%">0037h</td>
+        <td width="57%">Telescope *#</td>
+        <td width="31%">(Inventory)</td>
+      </tr>
+      <tr>
+        <td width="12%">0038h</td>
+        <td width="57%">Bottle of Wine/Container of Razorvine Extract *#</td>
+        <td width="31%">(Quick Item)</td>
+      </tr>
+      <tr>
+        <td width="12%">0039h</td>
+        <td width="57%">Great Sword *</td>
+        <td width="31%">(Weapon)</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="Useability"></a></p>
+  <p><b>Useability:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x001E</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">Useability</td>
+        <td height="22" width="26%">4*Array Of Boolean</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>The Usability field is a set of bitmasked bytes holding information about
+  setting who can use the item. If the bit is set on then the corresponding type
+  can not use the item:</p>
+  <center>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 01</td>
+        <td width="59%">Offset 001Eh</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="28%">Chaotic</td>
+        <td width="63%">Chaotic.. (..Good/..Neutral/..Evil)</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Evil</td>
+        <td width="63%">..Evil</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Good</td>
+        <td width="63%">..Good</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Neutral</td>
+        <td width="63%">..Neutral</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Lawful</td>
+        <td width="63%">Lawful.. (..Good/..Neutral/..Evil)</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%">Neutral</td>
+        <td width="63%">Neutral..(..Good/..Evil) / True..(..Neutral)</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">Bard</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Cleric</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 02</td>
+        <td width="59%">Offset 001Fh</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="28%">Cleric/Mage</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Cleric/Thief</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Cleric/Ranger</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Fighter</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Fighter/Druid</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%">Fighter/Mage</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">Fighter/Cleric</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Fighter/Mage/Cleric</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 03</td>
+        <td width="59%">Offset 0020h</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="28%">Fighter/Mage/Thief</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Fighter/Thief</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Mage</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Mage/Thief</td>
+        <td width="63%">(Multiclass)</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Paladin</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%">Ranger</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">Thief</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Elf</td>
+        <td width="63%">(Race)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 04</td>
+        <td width="59%">Offset 0021h</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="28%">Dwarf</td>
+        <td width="63%">(Race)</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Half-Elf</td>
+        <td width="63%">(Race)</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Halfling</td>
+        <td width="63%">(Race)</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Human</td>
+        <td width="63%">(Race)</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Gnome</td>
+        <td width="63%">(Race)</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%">Monk #</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">Druid</td>
+        <td width="63%">(Single Class)</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Half-Orc #</td>
+        <td width="63%">(Race)</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Bit 0 is the LSB, Bit 7 the MSB<br>
+  &nbsp;</p>
+  <p><a name="ItemAnimation"></a></p>
+  <p><b>ItemAnimation:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0022</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">PaperdollItem</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field specifies the item animation and the item appearance on the
+  paperdoll:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr>
+        <td width="18%"><i>Value(ASCII)</i></td>
+        <td width="19%"><i>Value(Hex)</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="18%">&quot; &quot;</td>
+        <td width="19%">2020h</td>
+        <td width="63%">&lt;none&gt;</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;2A&quot;</td>
+        <td width="19%">3241h</td>
+        <td width="63%">Leather Armor</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;3A&quot;</td>
+        <td width="19%">3341h</td>
+        <td width="63%">Chainmail</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;4A&quot;</td>
+        <td width="19%">3441h</td>
+        <td width="63%">Plate Mail</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;2W&quot;</td>
+        <td width="19%">3257h</td>
+        <td width="63%">Robe</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;3W&quot;</td>
+        <td width="19%">3357h</td>
+        <td width="63%">Robe</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;4W&quot;</td>
+        <td width="19%">3457h</td>
+        <td width="63%">Robe</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;AX&quot;</td>
+        <td width="19%">4158h</td>
+        <td width="63%">Axe</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;BW&quot;</td>
+        <td width="19%">4257h</td>
+        <td width="63%">Bow</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;CB&quot;</td>
+        <td width="19%">4342h</td>
+        <td width="63%">Crossbow</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;CL&quot;</td>
+        <td width="19%">434Ch</td>
+        <td width="63%">Club</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;D1&quot;</td>
+        <td width="19%">4431h</td>
+        <td width="63%">Buckler</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;D2&quot;</td>
+        <td width="19%">4432h</td>
+        <td width="63%">Shield (Small)</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;D3&quot;</td>
+        <td width="19%">4433h</td>
+        <td width="63%">Shield (Medium)</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;D4&quot;</td>
+        <td width="19%">4434h</td>
+        <td width="63%">Shield (Large)</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;DD&quot;</td>
+        <td width="19%">4444h</td>
+        <td width="63%">Dagger</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;FL&quot;</td>
+        <td width="19%">464Ch</td>
+        <td width="63%">Flail</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;FS&quot;</td>
+        <td width="19%">4653h</td>
+        <td width="63%">Flame Sword</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;H0&quot;</td>
+        <td width="19%">4830h</td>
+        <td width="63%">Helm #1 (Standard)</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;H1&quot;</td>
+        <td width="19%">4831h</td>
+        <td width="63%">Helm #2</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;H2&quot;</td>
+        <td width="19%">4832h</td>
+        <td width="63%">Helm #3 (Bronze Winged)</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;H3&quot;</td>
+        <td width="19%">4833h</td>
+        <td width="63%">Helm #4 (Gold Winged)</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;H4&quot;</td>
+        <td width="19%">4834h</td>
+        <td width="63%">Helm #5</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;H5&quot;</td>
+        <td width="19%">4835h</td>
+        <td width="63%">Helm #6 (Red Feathers?)</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;H6&quot;</td>
+        <td width="19%">4836h</td>
+        <td width="63%">Helm #7</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;HB&quot;</td>
+        <td width="19%">4842h</td>
+        <td width="63%">Halberd</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;MC&quot;</td>
+        <td width="19%">4D43h</td>
+        <td width="63%">Mace</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;MS&quot;</td>
+        <td width="19%">4D53h</td>
+        <td width="63%">Morning Star</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;QS&quot;</td>
+        <td width="19%">5153h</td>
+        <td width="63%">Quarter Staff (Metal)</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;S1&quot;</td>
+        <td width="19%">5331h</td>
+        <td width="63%">Sword 1-Handed</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;S2&quot;</td>
+        <td width="19%">5332h</td>
+        <td width="63%">Sword 2-Handed</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;SL&quot;</td>
+        <td width="19%">534Ch</td>
+        <td width="63%">Sling</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;SP&quot;</td>
+        <td width="19%">5350h</td>
+        <td width="63%">Spear</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;SS&quot;</td>
+        <td width="19%">5353h</td>
+        <td width="63%">Short Sword</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;WH&quot;</td>
+        <td width="19%">5748h</td>
+        <td width="63%">War Hammer</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;S3&quot;</td>
+        <td width="19%">5333h</td>
+        <td width="63%">Katana #</td>
+      </tr>
+      <tr>
+        <td width="18%">&quot;SC&quot;</td>
+        <td width="19%">5343h</td>
+        <td width="63%">Scimitar #</td>
+      </tr>
+    </tbody>
+  </table>
+  </center><a name="MinimumLevel"></a>
+  <p><b>MinimumLevel:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0024</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">MinimumLevel</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the minimum level needed to be able to use this item.<br>
+  &nbsp;</p>
+  <a name="MinimumStrength"></a>
+  <p><b>MinimumStrength:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0026</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">MinimumStr</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the minimum strength needed to be able to use this item.<br>
+  &nbsp;</p>
+  <a name="MinimumStrengthBonus"></a>
+  <p><b>MinimumStrengthBonus:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0028</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">MinimumStrBonus</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the minimum strength bonus (i.e. 50 for 18/50) needed to be
+  able to use this item.<br>
+  &nbsp;</p>
+  <a name="MinimumIntelligence"></a>
+  <p><b>MinimumIntelligence:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x002A</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">MinimumInt</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the minimum intelligence needed to be able to use this
+  item.<br>
+  &nbsp;</p>
+  <a name="MinimumDexterity"></a>
+  <p><b>MinimumDexterity:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x002C</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">MinimumDex</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the minimum dexterity needed to be able to use this item.<br>
+  &nbsp;</p>
+  <a name="MinimumWisdom"></a>
+  <p><b>MinimumWisdom:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610" height="51">
+    <tbody>
+      <tr height="22">
+        <td height="20" width="12%"><b>Offset</b></td>
+        <td height="20" width="13%"><b>Size</b></td>
+        <td height="20" width="25%"><b>Data</b></td>
+        <td height="20" width="26%"><b>Type</b></td>
+        <td height="20" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="19" width="12%">0x002E</td>
+        <td height="19" width="13%">1</td>
+        <td height="19" width="25%">MinimumWis</td>
+        <td height="19" width="26%">Byte</td>
+        <td height="19" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the minimum wisdom needed to be able to use this item.<br>
+  &nbsp;</p>
+  <a name="MinimumConstitution"></a>
+  <p><b>MinimumConstitution:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0030</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">MinimumCon</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the minimum constitution needed to be able to use this
+  item.<br>
+  &nbsp;</p>
+  <a name="MinimumCharisma"></a>
+  <p><b>MinimumCharisma:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0032</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">MinimumCha</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the minimum charisma needed to be able to use this item.<br>
+  &nbsp;</p>
+  <p><a name="KitRestrictions"></a></p>
+  <p><b>KitRestrictions:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">Various</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">KitRestrictions</td>
+        <td height="22" width="26%">Array Of Bitmasks</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>The Kit Restriction fields are a set of bitmasked bytes holding information
+  about setting which kits can use the item. If the bit is set on then the
+  corresponding kit can not use the item:</p>
+  <center>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 01</td>
+        <td width="59%">Offset 0029h</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="28%">Cleric of Talos</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Cleric of Helm</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Cleric of Lathander</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Totemic Druid</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Shapeshifter Druid</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%">Beast Friend (Avenger) Druid</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">Barbarian</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Wildmage</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 02</td>
+        <td width="59%">Offset 002Bh</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="28%">Stalker Ranger</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Beastmaster Ranger</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Assassin Thief</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Bounty Hunter Thief</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Swashbuckler Thief</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%">Blade Bard</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">Jester Bard</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Skald Bard</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 03</td>
+        <td width="59%">Offset 002Dh</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="28%">Diviner</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Enchanter</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Illusionist</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Invoker</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Necromancer</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%">Transmuter</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">All (no kit)</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Ferlain</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="200">
+    <tbody>
+      <tr>
+        <td width="41%">Byte 04</td>
+        <td width="59%">Offset 002Fh</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Bit</i></td>
+        <td width="28%"><i>Data</i></td>
+        <td width="63%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="28%">Beserker Fighter</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="28%">Wizardslayer Fighter</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="28%">Kensai Fighter</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">3</td>
+        <td width="28%">Cavalier Paladin</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="28%">Inquisitor Paladin</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">5</td>
+        <td width="28%">Undead Hunter Paladin</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">6</td>
+        <td width="28%">Abjurer</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9%">7</td>
+        <td width="28%">Conjurer</td>
+        <td width="63%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Bit 0 is the LSB, Bit 7 the MSB<br>
+  &nbsp;</p>
+  <p><a name="WeaponProfs"></a></p>
+  <p><b>WeaponProdiciency:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0031</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">WeaponProficiency</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field specifies the weapon proficiency used by the item:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value(Hex)</i></td>
+        <td width="75%"><i>Description</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">None</td>
+      </tr>
+      <tr>
+        <td width="25%">59h</td>
+        <td width="75%">Bastard Sword</td>
+      </tr>
+      <tr>
+        <td width="25%">5Ah</td>
+        <td width="75%">Long Sword</td>
+      </tr>
+      <tr>
+        <td width="25%">5Bh</td>
+        <td width="75%">Short Sword</td>
+      </tr>
+      <tr>
+        <td width="25%">5Ch</td>
+        <td width="75%">Axe</td>
+      </tr>
+      <tr>
+        <td width="25%">5Dh</td>
+        <td width="75%">Two-Handed Sword</td>
+      </tr>
+      <tr>
+        <td width="25%">5Eh</td>
+        <td width="75%">Katana</td>
+      </tr>
+      <tr>
+        <td width="25%">5Fh</td>
+        <td width="75%">Scimitar/Wakizashi/Ninja-To</td>
+      </tr>
+      <tr>
+        <td width="25%">60h</td>
+        <td width="75%">Dagger</td>
+      </tr>
+      <tr>
+        <td width="25%">61h</td>
+        <td width="75%">War Hammer</td>
+      </tr>
+      <tr>
+        <td width="25%">62h</td>
+        <td width="75%">Spear</td>
+      </tr>
+      <tr>
+        <td width="25%">63h</td>
+        <td width="75%">Halberd</td>
+      </tr>
+      <tr>
+        <td width="25%">64h</td>
+        <td width="75%">Flail/Morningstar</td>
+      </tr>
+      <tr>
+        <td width="25%">65h</td>
+        <td width="75%">Mace</td>
+      </tr>
+      <tr>
+        <td width="25%">66h</td>
+        <td width="75%">Quarterstaff</td>
+      </tr>
+      <tr>
+        <td width="25%">67h</td>
+        <td width="75%">Crossbow</td>
+      </tr>
+      <tr>
+        <td width="25%">68h</td>
+        <td width="75%">Long Bow</td>
+      </tr>
+      <tr>
+        <td width="25%">69h</td>
+        <td width="75%">Short Bow</td>
+      </tr>
+      <tr>
+        <td width="25%">6Ah</td>
+        <td width="75%">Darts</td>
+      </tr>
+      <tr>
+        <td width="25%">6Bh</td>
+        <td width="75%">Sling</td>
+      </tr>
+      <tr>
+        <td width="25%">6Ch</td>
+        <td width="75%">Blackjack</td>
+      </tr>
+      <tr>
+        <td width="25%">6Dh</td>
+        <td width="75%">Gun</td>
+      </tr>
+      <tr>
+        <td width="25%">6Eh</td>
+        <td width="75%">Martial Arts</td>
+      </tr>
+      <tr>
+        <td width="25%">6Fh</td>
+        <td width="75%">Two-Handed Weapon Skill</td>
+      </tr>
+      <tr>
+        <td width="25%">70h</td>
+        <td width="75%">Sword and Shield Skill</td>
+      </tr>
+      <tr>
+        <td width="25%">71h</td>
+        <td width="75%">Single Weapon Skill</td>
+      </tr>
+      <tr>
+        <td width="25%">72h</td>
+        <td width="75%">Two Weapon skill</td>
+      </tr>
+      <tr>
+        <td width="25%">73h</td>
+        <td width="75%">Club</td>
+      </tr>
+      <tr>
+        <td width="25%">74h</td>
+        <td width="75%">Extra Proficiency 2</td>
+      </tr>
+      <tr>
+        <td width="25%">75h</td>
+        <td width="75%">Extra Proficiency 3</td>
+      </tr>
+      <tr>
+        <td width="25%">76h</td>
+        <td width="75%">Extra Proficiency 4</td>
+      </tr>
+      <tr>
+        <td width="25%">77h</td>
+        <td width="75%">Extra Proficiency 5</td>
+      </tr>
+      <tr>
+        <td width="25%">78h</td>
+        <td width="75%">Extra Proficiency 6</td>
+      </tr>
+      <tr>
+        <td width="25%">79h</td>
+        <td width="75%">Extra Proficiency 7</td>
+      </tr>
+      <tr>
+        <td width="25%">7Ah</td>
+        <td width="75%">Extra Proficiency 8</td>
+      </tr>
+      <tr>
+        <td width="25%">7Bh</td>
+        <td width="75%">Extra Proficiency 9</td>
+      </tr>
+      <tr>
+        <td width="25%">7Ch</td>
+        <td width="75%">Extra Proficiency 10</td>
+      </tr>
+      <tr>
+        <td width="25%">7Dh</td>
+        <td width="75%">Extra Proficiency 11</td>
+      </tr>
+      <tr>
+        <td width="25%">7Eh</td>
+        <td width="75%">Extra Proficiency 12</td>
+      </tr>
+      <tr>
+        <td width="25%">7Fh</td>
+        <td width="75%">Extra Proficiency 13</td>
+      </tr>
+      <tr>
+        <td width="25%">80h</td>
+        <td width="75%">Extra Proficiency 14</td>
+      </tr>
+      <tr>
+        <td width="25%">81h</td>
+        <td width="75%">Extra Proficiency 15</td>
+      </tr>
+      <tr>
+        <td width="25%">82h</td>
+        <td width="75%">Extra Proficiency 16</td>
+      </tr>
+      <tr>
+        <td width="25%">83h</td>
+        <td width="75%">Extra Proficiency 17</td>
+      </tr>
+      <tr>
+        <td width="25%">84h</td>
+        <td width="75%">Extra Proficiency 18</td>
+      </tr>
+      <tr>
+        <td width="25%">85h</td>
+        <td width="75%">Extra Proficiency 19</td>
+      </tr>
+      <tr>
+        <td width="25%">86h</td>
+        <td width="75%">Extra Proficiency 20</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="ItemPrice"></a></p>
+  <p><b>ItemPrice:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0034</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">ItemPrice</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Contains the base price of the item in gold pieces. A price of one GP has
+  to be written as a 0. If it is written as a 1 then it might get rounded down
+  to 0 after the multiplication from the reputation factor.<br>
+  &nbsp;</p>
+  <p><a name="ItemStack"></a></p>
+  <p><b>ItemStack:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0038</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">ItemStack</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Contains the number of items that are allowed to be stacked by the player
+  in one inventory slot. Any number greater than 0 will display the
+  StackedItemsCountNumber in the game. The system may stack more items than this
+  field allows. For example to avoid the display of the StackedItemsCountNumber
+  on wands (Charges Of A Wand = Stacked Wands) set this value to 0.<br>
+  &nbsp;</p>
+  <p><a name="InventoryIcon"></a></p>
+  <p><b>InventoryIcon:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x003A</td>
+        <td height="22" width="13%">8</td>
+        <td height="22" width="25%">InventoryIcon</td>
+        <td height="22" width="26%">Array[0..7] Of Char</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Filename of the <a href="BAMformat.htm"><font color="#FF0000">BAM file</font></a>
+  that contains the graphics shown to represent this item in inventory.<br>
+  &nbsp;</p>
+  <p><a name="LoreToIdentify"></a></p>
+  <p><b>LoreToIdentify:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0042</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">LoreToIdentify</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Lore needed to Identify this item.<br>
+  &nbsp;</p>
+  <p><a name="GroundIcon"></a></p>
+  <p><b>GroundIcon:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0044</td>
+        <td height="22" width="13%">8</td>
+        <td height="22" width="25%">GroundIcon</td>
+        <td height="22" width="26%">Array[0..7] Of Char</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Filename of the <a href="BAMformat.htm"><font color="#FF0000">BAM file</font></a>
+  that contains the graphics to use for this item when on the ground.<br>
+  &nbsp;</p>
+  <p><a name="ItemWeight"></a></p>
+  <p><b>ItemWeight:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x004C</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">ItemWeight</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Weight of the item.<br>
+  &nbsp;</p>
+  <p><a name="DescriptionReferenceUnID"></a></p>
+  <p><b>DescriptionReference(UnIdentified):</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0050</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">DescriptionReference</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">FFFFh for none</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This is the StrRef to the description of the (Unidentified) item. The
+  StrRef is the index to the string contained in <i><a href="TLKformat.htm"><font color="#FF0000">Dialog.tlk</font></a></i>
+  file for the specific game.<br>
+  &nbsp;</p>
+  <p><a name="DescriptionReferenceID"></a></p>
+  <p><b>DescriptionReference(Identified):</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0054</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">DescriptionReference</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">FFFFh for none</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This is the StrRef to the description of the (Identified) item. The StrRef
+  is the index to the string contained in <i><a href="TLKformat.htm"><font color="#FF0000">Dialog.tlk</font></a></i>
+  file for the specific game.<br>
+  &nbsp;</p>
+  <p><a name="DescriptionIcon"></a></p>
+  <p><b>DescriptionIcon:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0058</td>
+        <td height="22" width="13%">8</td>
+        <td height="22" width="25%">DescriptionIcon</td>
+        <td height="22" width="26%">Array[0..7] Of Char</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Filename of the <a href="BAMformat.htm"><font color="#FF0000">BAM file</font></a>
+  that contains the graphics used on the description screen for the item..<br>
+  &nbsp;</p>
+  <p><a name="ItemMagicalPlus"></a></p>
+  <p><b>ItemMagicalPlusToAffectCreatures:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0060</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">ItemMagicalPlus</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">0 for normal items</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the magical plus of the item for its ability to affect
+  individuals. This means that if the individual is immune to +3 or lower
+  weapons, then this field would need to be 4 or greater to affect them.<br>
+  &nbsp;</p>
+  <p><a name="ExtendedHeaderOffset"></a></p>
+  <p><b>ExtendedHeaderOffset:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0064</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">ExtendedHeaderOffset</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Offset in the item file itself to the first Extended Header.<br>
+  &nbsp;</p>
+  <p><a name="ExtendedHeaderCount"></a></p>
+  <p><b>ExtendedHeaderCount:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0068</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">ExtdendedHeaderCount</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Number of Extended Headers in this item.<br>
+  &nbsp;</p>
+  <p><a name="FeatureTableOffset"></a></p>
+  <p><b>FeatureTableOffset:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x006A</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">FeatureTableOffset</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Offset in the item file itself to the first Feature Block. If there is no
+  Features Blocks at all in the item, this still points to where they would
+  begin which is after the last Extended Header.<br>
+  &nbsp;</p>
+  <p><a name="EquiptFeatureBlockOffset"></a></p>
+  <p><b>EquiptFeatureBlockOffset:</b></p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x006E</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">EquiptFeatureBlockOffset</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field contains the beginning offset of the Feature Blocks that affect
+  the user of the item upon it being equipped.<br>
+  &nbsp;</p>
+  <p><a name="EquiptFeatureBlockCount"></a></p>
+  <p><b>EquiptFeatureBlockCount:</b></p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0070</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">EquiptFeatureBlockCount</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field contains the number of Feature Blocks that affect the user of
+  the item upon it being equipped.<br>
+  &nbsp;</p>
+<hr>
+  <h2>Extended Header:<a name="AttackType"></a></h2>
+  <p><b>AttackType:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0000</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">AttackType</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field determines the type af the ability contained in the
+  ExtendedHeader:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">-</td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Melee Attack(Sword,Axe.....)</td>
+      </tr>
+      <tr>
+        <td width="25%">02h</td>
+        <td width="75%">Projectile Attack(Arrow, Bolt, Bullet)</td>
+      </tr>
+      <tr>
+        <td width="25%">03h</td>
+        <td width="75%">Magic Attack / Magic / Default (Wand, Potion, Gem....)</td>
+      </tr>
+      <tr>
+        <td width="25%">04h</td>
+        <td width="75%">Launcher (Bow, Sling, X-Bow)</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="ForceID"></a></p>
+  <p><b>ForceIdentify:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0001</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">ForceIdentify</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Set whether an item has to be identified before the ability can be used.</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">No identification required</td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Identification required</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>&nbsp;
+  <p>&nbsp;</p>
+  <a name="AbilityUseLocation"></a>
+  <p><b>AbilityUseLocation:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0002</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">UseLocation</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field determines the location of the icon to use the ability contained
+  in the Extended Header:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Melee Location (weapon slots)</td>
+      </tr>
+      <tr>
+        <td width="25%">03h</td>
+        <td width="75%">Item Location (item use slot)</td>
+      </tr>
+      <tr>
+        <td width="25%">04h</td>
+        <td width="75%">Gem/Scalp (Gems and Bandit Scaps)</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="UseIcon"></a></p>
+  <p><b>UseIcon:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0004</td>
+        <td height="22" width="13%">8</td>
+        <td height="22" width="25%">UseIcon</td>
+        <td height="22" width="26%">Array[0..7] Of Char</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Filename of the <a href="BAMformat.htm"><font color="#FF0000">BAM file</font></a>
+  that contains the graphics shown to represent this item in its use location.<br>
+  &nbsp;</p>
+  <p><a name="Target"></a></p>
+  <p><b>Target:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x000C</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">Target</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the target of this Extension Header:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Creature</td>
+      </tr>
+      <tr>
+        <td width="25%">02h</td>
+        <td width="75%">Inventory</td>
+      </tr>
+      <tr>
+        <td width="25%">03h</td>
+        <td width="75%">Dead Character</td>
+      </tr>
+      <tr>
+        <td width="25%">04h</td>
+        <td width="75%">Area</td>
+      </tr>
+      <tr>
+        <td width="25%">05h</td>
+        <td width="75%">Self</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="TargetNumber"></a></p>
+  <p><b>TargetNumber:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x000D</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">TargetNumber</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the number of specific targets of this Extended Header.<br>
+  &nbsp;</p>
+  <p><a name="EffectRadius"></a></p>
+  <p><b>EffectRadius/AttackRange:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x000E</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">EffectRadius/AttackRange</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the effect radius or the attack range of this Extended Header.<br>
+  &nbsp;</p>
+  <p><a name="ProjectileType"></a></p>
+  <p><b>ProjectileType:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x002A</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">ProjectileType</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>If the item is a projectile, this field specifies it's type:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">none (melee)</td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Arrow</td>
+      </tr>
+      <tr>
+        <td width="25%">02h</td>
+        <td width="75%">Bolt</td>
+      </tr>
+      <tr>
+        <td width="25%">03h</td>
+        <td width="75%">Bullet</td>
+      </tr>
+      <tr>
+        <td width="25%">28h</td>
+        <td width="75%">Spear</td>
+      </tr>
+      <tr>
+        <td width="25%">64h</td>
+        <td width="75%">Throwing Axe</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="SpeedFactor"></a></p>
+  <p><b>SpeedFactor:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0012</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">SpeedFactor</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the speed factor, i.e. how long it takes to activate, of this
+  Extended Header.<br>
+  &nbsp;</p>
+  <p><a name="THAC0Bonus"></a></p>
+  <p><b>THAC0 Bonus:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0014</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">THAC0 Bonus</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the bonus to the user's THAC0 for this Extended Header.<br>
+  &nbsp;</p>
+  <p><a name="DamageDice"></a></p>
+  <p><b>DamageDice:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0016</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">DamageDice</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the number of sides of the damage dice for this Extended Header.
+  For example set to 6 for d6 or 1-6 damage per dice, 12 for d12 or 1-12 damage
+  per dice, etc.<br>
+  &nbsp;</p>
+  <p><a name="DamageThrows"></a></p>
+  <p><b>DamageThrows:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0018</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">DamageThrows</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the number of dice to use for the damage for this Extended
+  Header. For example set to 2 for two dice thrown, 4 for four dice thrown, etc.<br>
+  &nbsp;</p>
+  <p><a name="DamageBonus"></a></p>
+  <p><b>DamageBonus:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x001A</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">DamageBonus</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the the bonus to the damage dice and throws for this Extended
+  Header. For example set to 2 to add two points to the dice damage and throws,
+  4 to add four points, etc.<br>
+  &nbsp;</p>
+  <p><a name="DamageType"></a></p>
+  <p><b>DamageType:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x001C</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">DamageType</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field specifies the type of the damage done:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">none</td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Piercing (Default for Magic)</td>
+      </tr>
+      <tr>
+        <td width="25%">02h</td>
+        <td width="75%">Blunt</td>
+      </tr>
+      <tr>
+        <td width="25%">03h</td>
+        <td width="75%">Slashing</td>
+      </tr>
+      <tr>
+        <td width="25%">04h</td>
+        <td width="75%">Ranged</td>
+      </tr>
+      <tr>
+        <td width="25%">05h</td>
+        <td width="75%">Fists</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="ExtHeaderFeatureBlockCount"></a></p>
+  <p><b>ExtHeaderFeatureBlockCount:</b></p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x001E</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">ExtHeaderFeatureBlockCount</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field contains the number of Feature Blocks that this Extension Header
+  uses.<br>
+  &nbsp;</p>
+  <p><a name="ExtHeaderFeatureBlockOffset"></a></p>
+  <p><b>ExtHeaderFeatureBlockOffset:</b></p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0020</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">ExtHeaderFeatureBlockOffset</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field contains the beginning offset of the Feature Blocks that this
+  Extension Header uses.<br>
+  &nbsp;</p>
+  <p><a name="Charges"></a></p>
+  <p><b>Charges:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0022</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">Charges</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies the default number of charges this Extension Header has.<br>
+  &nbsp;</p>
+  <p><a name="ItemDrainability"></a></p>
+  <p><b>ItemDrainability:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0024</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">ItemDrainability</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies whether the charges of this Extension Header is per day or just
+  total charges:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">0001h</td>
+        <td width="75%">Item Disappears When Drained</td>
+      </tr>
+      <tr>
+        <td width="25%">0003h</td>
+        <td width="75%">Item Remains When Drained</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="AllowStrBonus"></a></p>
+  <p><b>AllowStrengthBonus:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0026</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">AllowStrBonus</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies whether the user's Strength Damage Bonus is used or not with this
+  Extension Header:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">0000h</td>
+        <td width="75%">No Strength Bonus Added to Damage</td>
+      </tr>
+      <tr>
+        <td width="25%">0001h</td>
+        <td width="75%">Strength Bonus Added to Damage</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="ItemRecharability"></a></p>
+  <p><b>ItemRecharability:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0027</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">ItemRecharability</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Specifies whether the charges of this Extension Header is per day or just
+  total charges:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">0001h</td>
+        <td width="75%">Item Doesn't Recharge After Resting</td>
+      </tr>
+      <tr>
+        <td width="25%">0008h</td>
+        <td width="75%">Item Recharges After Resting</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="EffectAnimation"></a></p>
+  <p><b>EffectAnimation:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x002A</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">EffectAnimation</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>EffectAnimation is the animation that will start when this Extension Header
+  is used and is dependent on the specific game: <a href="../Appendices/GraphicsEffects.htm"><font color="#FF0000">Graphics Effects</font></a></p>
+  <p>&nbsp;</p>
+  <p><b>MeleeAnimation:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x002C</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">MeleeAnimation</td>
+        <td height="22" width="26%">3 sets of Words</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>The exact meaning of these three sets of numbers are not exactly known, but
+  it seems they deal with the melee attack animation for a weapon. The three
+  values must add up to 64h(100d) for all items except missile weapons to work
+  correctly. Here is the general known values for various items:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="600">
+    <tbody>
+      <tr>
+        <td width="10%"><i>Value Word 1</i></td>
+        <td width="10%"><i>Value Word 2</i></td>
+        <td width="10%"><i>Value Word 3</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="10%">00h</td>
+        <td width="10%">14h</td>
+        <td width="10%">50h</td>
+        <td width="70%">Dagger</td>
+      </tr>
+      <tr>
+        <td width="10%">0Ah</td>
+        <td width="10%">19h</td>
+        <td width="10%">41h</td>
+        <td width="70%">Short Sword</td>
+      </tr>
+      <tr>
+        <td width="10%">32h</td>
+        <td width="10%">32h</td>
+        <td width="10%">00h</td>
+        <td width="70%">Long Sword, Bastard Sword, Scimitar, Battle Axe,
+          Warhammer, Club, Mace, Flail, Morning Star</td>
+      </tr>
+      <tr>
+        <td width="10%">3Ch</td>
+        <td width="10%">28h</td>
+        <td width="10%">00h</td>
+        <td width="70%">Two-Handed Sword</td>
+      </tr>
+      <tr>
+        <td width="10%">00h</td>
+        <td width="10%">23h</td>
+        <td width="10%">41h</td>
+        <td width="70%">Halberd</td>
+      </tr>
+      <tr>
+        <td width="10%">00h</td>
+        <td width="10%">00h</td>
+        <td width="10%">64h</td>
+        <td width="70%">Spear</td>
+      </tr>
+      <tr>
+        <td width="10%">0Ah</td>
+        <td width="10%">46h</td>
+        <td width="10%">14h</td>
+        <td width="70%">Staff</td>
+      </tr>
+      <tr>
+        <td width="10%">00h</td>
+        <td width="10%">00h</td>
+        <td width="10%">00h</td>
+        <td width="70%">Any Missile Weapon (Bow, Arrow, CrossBow, Bolt, Sling,
+          Bullet, Throwing Axe, Dart, Throwing Dagger, etc.)</td>
+      </tr>
+      <tr>
+        <td width="10%">22h</td>
+        <td width="10%">21h</td>
+        <td width="10%">21h</td>
+        <td width="70%">Any Non-Weapon Item (Amulets, Rings, Wands, etc.)</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="BowArrowQualifier"></a></p>
+  <p><b>BowArrowQualifier:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0032</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">BowArrowQualifier</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">Not a Bow or an Arrow</td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Is a Bow or an Arrow</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Sets whether an item is a Bow or an Arrow.<br>
+  &nbsp;</p>
+  <p><a name="CrossBowBoltQualifier"></a></p>
+  <p><b>CrossBowBoltQualifier:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0034</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">CrossBowBoltQualifier</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">Not a CrossBow or a Bolt</td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Is a CrossBow or a Bolt</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Sets whether an item is a CrossBow or a Bolt.<br>
+  &nbsp;</p>
+  <p><a name="MiscMissileQualifier"></a></p>
+  <p><b>MiscMissileQualifier:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0036</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">MiscMissileQualifier</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">Not a Miscellaneous Missile Item</td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Is a Miscellaneous Missile Item</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Sets whether an item is a Miscellaneous Missile Item such as a Sling,
+  Bullet, Throwing Axe, Throwing Dagger, or a Throwing Hammer.<br>
+  &nbsp;</p>
+<hr>
+  <p>&nbsp;</p>
+  <h2>Feature Block:</h2>
+  <p><a name="Feature"></a></p>
+  <p><b>Feature/Effect:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0000</td>
+        <td height="22" width="13%">2</td>
+        <td height="22" width="25%">Feature/Effect</td>
+        <td height="22" width="26%">Word</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the specific effect of this feature block and is dependent
+  on the specific game: <a href="../Appendices/FeatureEffects.htm"><font color="#FF0000">Effects in feature sections</font></a><br>
+  &nbsp;</p>
+  <p><b>TargetIdentifier:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0002</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">TargetIdentifier</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>TargetIdentifier determines the target of this effect:<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Self</td>
+      </tr>
+      <tr>
+        <td width="25%">02h</td>
+        <td width="75%">Pre-Target</td>
+      </tr>
+      <tr>
+        <td width="25%">03h</td>
+        <td width="75%">Party</td>
+      </tr>
+      <tr>
+        <td width="25%">04h</td>
+        <td width="75%">Global</td>
+      </tr>
+      <tr>
+        <td width="25%">05h</td>
+        <td width="75%">Global without Party</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="Power"></a><br>
+  <b>Power:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0003</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">Power</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Power sets the strength of the effect for purposes of dispelling and
+  similiar.<br>
+  &nbsp;</p>
+  <p><a name="Parameter1"></a></p>
+  <p><b>Parameter 1:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0004</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">Parameter 1</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Parameter 1 is the first parameter passed to the Feature/Effect. Alot of
+  the time it contains the Modification Value for the Feature/Effect, however
+  the exact functioning of this Parameter changes with the Feature/Effect and
+  the Struct List itself should be checked for specifics.<br>
+  &nbsp;</p>
+  <p><a name="Parameter2"></a></p>
+  <p><b>Parameter 2:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0008</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">Parameter 2</td>
+        <td height="22" width="26%">dword/Bitfield</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Parameter 2 is the second parameter passed to the Feature/Effect. The exact
+  functioning of this Parameter changes with the Feature/Effect and the Struct
+  List itself should be checked for specifics.<br>
+  &nbsp;</p>
+  <p><a name="EffectTimeMode"></a></p>
+  <p><b>EffectTimeMode:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x000C</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">EffectTimeMode</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets the timemode of the item and the EffectTimeField<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="9%"><i>Value</i></td>
+        <td width="41%"><i>Start of Effect</i></td>
+        <td width="50%"><i>Duration</i></td>
+      </tr>
+      <tr>
+        <td width="9%">0</td>
+        <td width="41%">Instantly</td>
+        <td width="50%">For [EffecTime] Seconds</td>
+      </tr>
+      <tr>
+        <td width="9%">1</td>
+        <td width="41%">Instantly</td>
+        <td width="50%">Permanent</td>
+      </tr>
+      <tr>
+        <td width="9%">2</td>
+        <td width="41%">Instantly</td>
+        <td width="50%">While equiped</td>
+      </tr>
+      <tr>
+        <td width="9%">4</td>
+        <td width="41%">After [EffecTime] Seconds</td>
+        <td width="50%">Permanent</td>
+      </tr>
+      <tr>
+        <td width="9%">9</td>
+        <td width="41%">Instantly</td>
+        <td width="50%">Permanent After Bonuses</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="Resistance_Dispellability"></a></p>
+  <p><b>Resistance &amp; Dispellability:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x000D</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">Resistance &amp; Dispellability</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field sets whether the effect is dispellable and if it can bypass the
+  proper resistance or not.<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Meaning</i></td>
+      </tr>
+      <tr>
+        <td width="25%">0</td>
+        <td width="75%">Not Dispellable &amp; Will Bypass Resistance</td>
+      </tr>
+      <tr>
+        <td width="25%">1</td>
+        <td width="75%">Dispellable &amp; Will not Bypass Resistance</td>
+      </tr>
+      <tr>
+        <td width="25%">2</td>
+        <td width="75%"><font color="#000099">Unknown</font></td>
+      </tr>
+      <tr>
+        <td width="25%">3</td>
+        <td width="75%">Dispellable &amp; Will Bypass Resistence</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="EffectTime"></a></p>
+  <p><b>EffectTime:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x000E</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">EffectTime</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>EffectTime contains a time value for this effect.</p>
+  <p>Game Time In Rounds = EffectTime / 60<br>
+  &nbsp;</p>
+  <p><a name="Probability"></a></p>
+  <p><b>Probability:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0012</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">High Probability</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0013</td>
+        <td height="22" width="13%">1</td>
+        <td height="22" width="25%">Low Probability</td>
+        <td height="22" width="26%">Byte</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>These two fields contain the Probability this Effect will happen. Values
+  can go from 0 to 100 on each setting. When the Extension Header is called to
+  be used a random value from 1 to 100 will be chosen. If this number is with in
+  the range set by the Low to High Probability then it will occur. Therefore if
+  you set the Low to 0 and the High to 100 then it will occur 100% of the time,
+  and likewise Low to 0 and High to 0 will occur 0% of the time.<br>
+  &nbsp;</p>
+  <p><a name="ResourceKey"></a></p>
+  <p><b>Resource Key:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0014</td>
+        <td height="22" width="13%">8</td>
+        <td height="22" width="25%">ResourceKey</td>
+        <td height="22" width="26%">Array[0..7] Of Char</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>Resource Key is another Paremeter passed to the Effect/Feature. Some
+  functions use it to specify a filename of some type (i.e. <a href="BAMformat.htm"><font color="#FF0000">BAM</font></a>,
+  <a href="CREformat.htm"><font color="#FF0000">CRE</font></a>, <a href="EFFformat.htm"><font color="#FF0000">EFF</font></a>,
+  etc.).<br>
+  &nbsp;</p>
+  <p><a name="Throws"></a></p>
+  <p><b>Throws:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x001C</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">Throws</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field only matters for dice based Effects and sets the number of dice
+  to use.<br>
+  &nbsp;</p>
+  <p><a name="DiceSides"></a></p>
+  <p><b>DiceSides:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0020</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">DiceSides</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field only matters for dice based Effects and sets the number of sides
+  on each die.<br>
+  &nbsp;</p>
+  <p><a name="SavingThrowType"></a></p>
+  <p><b>SavingThrowType:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0024</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">SavingThrowType</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field determines the type of saving throw that must be made to avoid
+  the Effect.<br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="400">
+    <tbody>
+      <tr>
+        <td width="25%"><i>Value</i></td>
+        <td width="75%"><i>Data</i></td>
+      </tr>
+      <tr>
+        <td width="25%">00h</td>
+        <td width="75%">No Saving Throw</td>
+      </tr>
+      <tr>
+        <td width="25%">01h</td>
+        <td width="75%">Save vs. Spells</td>
+      </tr>
+      <tr>
+        <td width="25%">02h</td>
+        <td width="75%">Save vs. Breath Weapon</td>
+      </tr>
+      <tr>
+        <td width="25%">04h</td>
+        <td width="75%">Save vs. Death/Poison</td>
+      </tr>
+      <tr>
+        <td width="25%">08h</td>
+        <td width="75%">Save vs. Wands</td>
+      </tr>
+      <tr>
+        <td width="25%">16h</td>
+        <td width="75%">Save vs. Petrification/Polymorph</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p><a name="SavingThrowBonus"></a></p>
+  <p><b>SavingThrowBonus:</b><br>
+  &nbsp;</p>
+  <center>
+  <p>&nbsp;<table border="1" width="610">
+    <tbody>
+      <tr height="22">
+        <td height="22" width="12%"><b>Offset</b></td>
+        <td height="22" width="13%"><b>Size</b></td>
+        <td height="22" width="25%"><b>Data</b></td>
+        <td height="22" width="26%"><b>Type</b></td>
+        <td height="22" width="24%"><b>Default Data&nbsp;</b></td>
+      </tr>
+      <tr height="22">
+        <td height="22" width="12%">0x0028</td>
+        <td height="22" width="13%">4</td>
+        <td height="22" width="25%">SavingThrowBonus</td>
+        <td height="22" width="26%">dword</td>
+        <td height="22" width="24%">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+  <p>This field determines the bonus to the saving throw that must be made to
+  avoid the Effect</p>
+<p>&nbsp;</p>
+<p><a name="formITMV1_1"><font size="5">ITM V1.1</font></a></p>
+<table border="1" width="610">
+    <tr>
+      <td width="28%">FileExtension :</td>
+      <td width="72%">ITM</td>
+    </tr>
+    <tr>
+      <td width="28%">Content :</td>
+      <td width="72%">Item Definitions (Version 1.1 ONLY)</td>
+    </tr>
+    <tr>
+      <td width="28%">History :</td>
+      <td width="72%">File done by IEFFHP</td>
+    </tr>
+  </table>
+<p><strong>Note:</strong> This structure is mostly the same as the V1.0
+structure. There may still be a few more changes which need to be made.</p>
+<p>Overall structure</p>
+<ul>
+  <li><a href="#formITMV1_1_Header">Header</a>
+  <li><a href="#formITMV1_1_Ability">Abilities</a>
+  <li><a href="../Effects/effects.htm"><font color="#FF0000">Effects</font></a></li>
+</ul>
+<p><a name="formITMV1_1_Header">ITM V1.1 Header</a></p>
+<table border="1" class="tbl3" width="98%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th><font color="#000000">Offset</font></th>
+      <th><font color="#000000">Size (datatype)</font></th>
+      <th><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (char array)</td>
+      <td>Signature ('ITM ')</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (char array)</td>
+      <td>Version ('V1.1')</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (strref)</td>
+      <td>Item name (generic)</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>4 (strref)</td>
+      <td>Item name (identified)</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>8 (resref)</td>
+      <td>&quot;Used Up Item&quot; -- (i.e. what does this become when it breaks
+        or is used up?)</td>
+    </tr>
+    <tr>
+      <td>0x0018</td>
+      <td>4 (dword)</td>
+      <td>Flags:
+        <ul>
+          <li>bit 0: indestructible
+          <li>bit 1: two-handed
+          <li>bit 2: droppable
+          <li>bit 3: displayable
+          <li>bit 4: cursed
+          <li>bit 5: copyable (scroll)
+          <li>bit 6: magical
+          <li>bit 7: (set iff item is a bow?)
+          <li>bit 8: silver
+          <li>bit 9: cold iron</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>2 (word)</td>
+      <td>Item category index, as specified in this <a href="STOformat.htm#tableItemType"><font color="#FF0000">table</font></a></td>
+    </tr>
+    <tr class="upd">
+      <td>0x001e</td>
+      <td>4 (dword)</td>
+      <td>Item usability bitmap:
+        <ul>
+          <li>bit 0: Unusable by Chaotic
+          <li>bit 1: Unusable by Evil
+          <li>bit 2: Unusable by Good
+          <li>bit 3: Unusable by Good-Evil Neutral
+          <li>bit 4: Unusable by Lawful
+          <li>bit 5: Unusable by Lawful-Chaotic Neutral
+          <li>bit 6: Unusable by Sensates
+          <li>bit 7: Unusable by Priest
+          <li>bit 8: Unusable by Godsmen
+          <li>bit 9: ???
+          <li>bit 10: Unusable by Chaosmen
+          <li>bit 11: Unusable by Fighter
+          <li>bit 12: ???
+          <li>bit 13: Unusable by ???
+          <li>bit 14: Unusable by Dustmen
+          <li>bit 15: ???
+          <li>bit 16: Unusable by Indeps
+          <li>bit 17: ???
+          <li>bit 18: Unusable by Mage
+          <li>bit 19: Unusable by ???
+          <li>bit 20: Unusable by Dak'kon
+          <li>bit 21: Unusable by Fall-From-Grace
+          <li>bit 22: Unusable by Thief
+          <li>bit 23: Unusable by Vhailor
+          <li>bit 24: Unusable by Ignus
+          <li>bit 25: Unusable by Morte
+          <li>bit 26: Unusable by Nordom
+          <li>bit 27: ???
+          <li>bit 28: Unusable by Annah
+          <li>bit 29: ???
+          <li>bit 30: Unusable by Nameless One
+          <li>&nbsp;
+          <li>bit 31: ???</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0022</td>
+      <td>2 (chars)</td>
+      <td>Chars for inventory portrait <a href="BAMformat.htm"><font color="#FF0000"> BAM</font></a> resource index. The
+        <a href="BAMformat.htm"><font color="#FF0000"> BAM</font></a> resource used
+        on the inventory screen is determined as follows: If these characters
+        are spaces, no resource is used. Otherwise, depending on whether the
+        character is <em>S</em>mall, <em>M</em>edium, or <em>L</em>arge, <code>WPS</code>,
+        <code>WPM</code>, or <code>WPL</code> is prepended to the characters.
+        This is then used as a <a href="BAMformat.htm"><font color="#FF0000"> BAM</font></a> resource name for graphics which are
+        superposed on top of the character portrait. To accommodate hands and the
+        like, empty spaces are left in these graphics. Similar procedures are
+        used to choose animation resources for other graphics and animations
+        which need to be specific to particular equipment types and/or character
+        types.</td>
+    </tr>
+    <tr>
+      <td>0x0024</td>
+      <td>2 (word)</td>
+      <td>Minimum level requirement</td>
+    </tr>
+    <tr>
+      <td>0x0026</td>
+      <td>2 (word)</td>
+      <td>Minimum strength requirement</td>
+    </tr>
+    <tr>
+      <td>0x0028</td>
+      <td>2 (word)</td>
+      <td>Minimum strength bonus requirement</td>
+    </tr>
+    <tr>
+      <td>0x002a</td>
+      <td>2 (word)</td>
+      <td>Minimum intelligence requirement</td>
+    </tr>
+    <tr>
+      <td>0x002c</td>
+      <td>2 (word)</td>
+      <td>Minimum dexterity requirement</td>
+    </tr>
+    <tr>
+      <td>0x002e</td>
+      <td>2 (word)</td>
+      <td>Minimum wisdom requirement</td>
+    </tr>
+    <tr>
+      <td>0x0030</td>
+      <td>2 (word)</td>
+      <td>Minimum constitution requirement</td>
+    </tr>
+    <tr>
+      <td>0x0032</td>
+      <td>2 (word)</td>
+      <td>Minimum charisma requirement</td>
+    </tr>
+    <tr>
+      <td>0x0034</td>
+      <td>4 (dword)</td>
+      <td>Base value (i.e. before modification, this is the market value of a
+        single unit of this item)</td>
+    </tr>
+    <tr>
+      <td>0x0038</td>
+      <td>2 (word)</td>
+      <td>Max stackable</td>
+    </tr>
+    <tr>
+      <td>0x003a</td>
+      <td>8 (resref)</td>
+      <td>Item Icon</td>
+    </tr>
+    <tr>
+      <td>0x0042</td>
+      <td>2 (word)</td>
+      <td>Lore (i.e. Lore skill required to identify this item)</td>
+    </tr>
+    <tr>
+      <td>0x0044</td>
+      <td>8 (resref)</td>
+      <td>Ground Icon</td>
+    </tr>
+    <tr>
+      <td>0x004c</td>
+      <td>4 (dword)</td>
+      <td>Base weight (i.e. weight for a single unit of this item)</td>
+    </tr>
+    <tr>
+      <td>0x0050</td>
+      <td>4 (strref)</td>
+      <td>Item description (generic)</td>
+    </tr>
+    <tr>
+      <td>0x0054</td>
+      <td>4 (strref)</td>
+      <td>Item description (identified)</td>
+    </tr>
+    <tr>
+      <td>0x0058</td>
+      <td>8 (resref)</td>
+      <td>Carried Icon (i.e. graphic as it appears in your hand when you are
+        walking).</td>
+    </tr>
+    <tr>
+      <td>0x0060</td>
+      <td>4 (dword)</td>
+      <td>&quot;Enchantment&quot;</td>
+    </tr>
+    <tr>
+      <td>0x0064</td>
+      <td>4 (dword)</td>
+      <td><a href="#formITMV1_1_Ability">Ability structs</a> offset</td>
+    </tr>
+    <tr>
+      <td>0x0068</td>
+      <td>2 (word)</td>
+      <td><a href="#formITMV1_1_Ability">Ability structs</a> count</td>
+    </tr>
+    <tr>
+      <td>0x006a</td>
+      <td>4 (dword)</td>
+      <td><a href="../Effects/effects.htm"><font color="#FF0000">Effect
+        structs</font></a> offset</td>
+    </tr>
+    <tr class="unc">
+      <td>0x006e</td>
+      <td>2 (word)</td>
+      <td><font color="#000099">Unknown</font>. Could be index of first &quot;global&quot; (i.e. not attached
+        to a specific ability) <a href="../Effects/effects.htm"><font color="#FF0000">effect
+        structs</font></a></td>
+    </tr>
+    <tr>
+      <td>0x0070</td>
+      <td>2 (word)</td>
+      <td>Count of &quot;global&quot; (i.e. not attached to a specific ability) <a href="../Effects/effects.htm"><font color="#FF0000">effect
+        structs</font></a></td>
+    </tr>
+    <tr class="unk">
+      <td>0x0072</td>
+      <td>4 (dword)</td>
+      <td><font color="#000099">These appear to be more flags, similar to the flags appearing earlier
+        in the header. It is unclear what their function may be; they appear to
+        be highly correlated with the earlier flags. Notably, many
+        &quot;important&quot; items, like &quot;Celestial Fire&quot; have
+        different flags here.</font></td>
+    </tr>
+    <tr class="unk">
+      <td>0x0076</td>
+      <td>4*6 (dword array)</td>
+      <td><font color="#000099">These are still completely mysterious. (There are only a few data
+        points which have these set to a non-zero value, which means that it is
+        very difficult to establish any real meaning behind these fields; I'm
+        looking into the purpose of these fields.</font></td>
+    </tr>
+  </tbody>
+</table>
+<p><a name="formITMV1_1_Ability">ITM V1.1 Abilities</a></p>
+<p>Roughly speaking, each &quot;ability&quot; (I believe this to be the
+terminology used in the Bioware tools) corresponds to a different way to use the
+item. For instance, in BG, there is an item which can be either a melee
+(hand-to-hand) axe, or a throwing axe. Or the &quot;wand of fire&quot; which
+fires either fireballs or &quot;aganazzar's scorcher&quot;. To choose which, you
+click on the item while it is selected, and you are given a menu to choose the
+ammunition type -- the same procedure used for selecting different missile types
+for a missile weapon. (Note, also, that it is possible to get an info screen for
+a bow, for instance, in which all of the &quot;abilities&quot; of the bow are
+listed -- namely the different types of ammunition it fires. I suspect that it
+is no coincidence that the same interfaces are used to select
+&quot;abilities&quot; of an item, and differing ammunition types of a launcher;
+likely the game internally handles different ammunition types via the same
+interface it uses for abilities.).</p>
+<table border="1" class="tbl3" width="98%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th><font color="#000000">Offset</font></th>
+      <th><font color="#000000">Size (datatype)</font></th>
+      <th><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>1 (byte)</td>
+      <td>Ability &quot;type&quot;:
+        <ul>
+          <li>0: default type? (mostly potions and miscellaneous items)
+          <li>1: melee attack (non-ranged attacks)
+          <li>2: ranged attack (both for ammunition and for throw weapon types)
+          <li>3: magical effect?
+          <li>4: launcher -- enables use of some &quot;ranged attack&quot; items
+            which require a launcher</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0001</td>
+      <td>1 (byte)</td>
+      <td>1 if item must be identified before this ability can be used, 0
+        otherwise</td>
+    </tr>
+    <tr class="unk">
+      <td>0x0002</td>
+      <td>2 (word)</td>
+      <td><font color="#000099">Unknown</font>!</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>8 (resref)</td>
+      <td>icon to represent this ability wherever it needs to be displayed in
+        the GUI</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>2 (word)</td>
+      <td>Selectable target type for this ability:
+        <ul>
+          <li>1: living actor
+          <li>2: inventory
+          <li>3: dead actor
+          <li>4: any point within range
+          <li>5: caster
+          <li>other values?</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>0x000e</td>
+      <td>2 (word)</td>
+      <td>Range for this ability</td>
+    </tr>
+    <tr>
+      <td>0x0010</td>
+      <td>2 (word)</td>
+      <td>Launcher type required for this ability:
+        <ul>
+          <li>0: None
+          <li>1: bow
+          <li>2: crossbow
+          <li>3: sling</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>0x0012</td>
+      <td>2 (word)</td>
+      <td>Speed factor for this ability</td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>2 (word)</td>
+      <td>To-hit bonus when using this ability</td>
+    </tr>
+    <tr>
+      <td>0x0016</td>
+      <td>2 (word)</td>
+      <td>Number of sides on damage dice to be rolled for this ability</td>
+    </tr>
+    <tr>
+      <td>0x0018</td>
+      <td>2 (word)</td>
+      <td>Number of damage dice to be rolled for this ability</td>
+    </tr>
+    <tr>
+      <td>0x001a</td>
+      <td>2 (word)</td>
+      <td>&quot;Enchanted&quot; (i.e. bonus to damage -- constant bonus added to
+        hit dice)</td>
+    </tr>
+    <tr>
+      <td>0x001c</td>
+      <td>2 (word)</td>
+      <td>Damage type:
+        <ul>
+          <li>0: none?
+          <li>1: piercing (also appears to be set for some magical attacks,
+            though it is likely ignored in these cases -- i.e. damage specified
+            as 0d6+0)
+          <li>2: crushing
+          <li>3: slashing
+          <li>4: missile</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>0x001e</td>
+      <td>2 (word)</td>
+      <td>Number of attached <a href="../Effects/effects.htm"><font color="#FF0000">Effect
+        structs</font></a> for this ability. Note that not all abilities are designed
+        in terms of effects. For instance, standard weapon damage doesn't
+        require any effects, since it is just a to-hit bonus, a die
+        specification, a damage bonus, and a damage type.</td>
+    </tr>
+    <tr>
+      <td>0x0020</td>
+      <td>2 (word)</td>
+      <td>Index of first attached <a href="../Effects/effects.htm"><font color="#FF0000">Effect
+        structs</font></a> for this ability.</td>
+    </tr>
+    <tr>
+      <td>0x0022</td>
+      <td>2 (word)</td>
+      <td>Number of times this ability can be used before it is exhausted</td>
+    </tr>
+    <tr class="unk">
+      <td>0x0024</td>
+      <td>2 (word)</td>
+      <td><font color="#000099">Unknown. Appears that it might be related to the previous field...</font></td>
+    </tr>
+    <tr class="unk">
+      <td>0x0026</td>
+      <td>2 (word)</td>
+      <td><font color="#000099">Unknown.</font></td>
+    </tr>
+    <tr class="unk">
+      <td>0x0028</td>
+      <td>2 (word)</td>
+      <td><font color="#000099">Unknown.</font></td>
+    </tr>
+    <tr class="unk">
+      <td>0x002a</td>
+      <td>2 (word)</td>
+      <td><font color="#000099">Unknown.</font></td>
+    </tr>
+    <tr class="unk">
+      <td>0x002c</td>
+      <td>2*3 (word array)</td>
+      <td><font color="#000099">Unknown. This appears to be three percentages, though. For missile
+        weapons they are all 0, and for all other types of items, they add up to
+        exactly 100, each being in the range 0-100. It is unknown what these
+        code for.</font></td>
+    </tr>
+    <tr>
+      <td>0x0032</td>
+      <td>2 (word)</td>
+      <td>1 if this is an &quot;arrow&quot; type projectile, 0 else</td>
+    </tr>
+    <tr>
+      <td>0x0034</td>
+      <td>2 (word)</td>
+      <td>1 if this is an &quot;bolt&quot; type projectile, 0 else</td>
+    </tr>
+    <tr>
+      <td>0x0036</td>
+      <td>2 (word)</td>
+      <td>1 if this is a miscellaneous missile weapon (thrown, or launched from
+        a sling). 0 else</td>
+    </tr>
+  </tbody>
+</table></body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

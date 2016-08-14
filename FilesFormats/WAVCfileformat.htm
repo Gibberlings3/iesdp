@@ -1,0 +1,139 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+
+<p>&nbsp;</p>
+<p align="center"><font size="6">CONVERSION from WAV to WAVC</font></p>
+<table border="1" width="610">
+  <tr>
+    <td width="28%">FileExtension :</td>
+    <td width="72%">WAVC , WAV , WAC (Only files with WAV extension are
+      recognized by game)</td>
+  </tr>
+  <tr>
+    <td width="28%">Content :</td>
+    <td width="72%">Desription of WAVC (sound files) V.1.0</td>
+  </tr>
+  <tr>
+    <td width="28%">History :</td>
+    <td width="72%">File done by Manveru Telcontar</td>
+  </tr>
+  <tr>
+    <td width="28%">History :</td>
+    <td width="72%">Small addition of MaltanarTeamBG</td>
+  </tr>
+</table>
+<p>Unlike ACM files, they can be put in the override folder, or BIF files. All
+WAVC files are 22050 Hz, 16 bits and mono.<br>
+Since the game only recognizes files with WAV extensions, they must be renamed
+to *.WAV before being used in the game.<br>
+</p>
+<p><b>Wavc</b> is the sounds file format used in IE games. Actually it is an acm
+file with the additional header attached.<br>
+It has the following header :<br>
+</p>
+<table border="1" width="73%">
+  <tr>
+    <td width="12%">0000x00</td>
+    <td width="10%">5741</td>
+    <td width="10%">4643</td>
+    <td width="11%">5631</td>
+    <td width="12%">2e30</td>
+    <td width="12%">xxxx</td>
+    <td width="12%">xxxx</td>
+    <td width="13%">yyyy</td>
+    <td width="21%">yyyy</td>
+  </tr>
+  <tr>
+    <td width="12%">0000x10</td>
+    <td width="10%">1c00</td>
+    <td width="10%">0000</td>
+    <td width="11%">0100</td>
+    <td width="12%">1000</td>
+    <td width="12%">2256</td>
+    <td width="12%">e777</td>
+    <td width="13%">9728</td>
+    <td width="21%">0301</td>
+  </tr>
+</table>
+<p><br>
+where :<br>
+</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="21%"><b>Offset</b></td>
+    <td width="24%"><b>Size (Data Type)</b></td>
+    <td width="55%"><b>&nbsp;Description</b></td>
+  </tr>
+  <tr>
+    <td width="21%">0000x00</td>
+    <td width="24%">8 (ASCIIZ)</td>
+    <td width="55%">File identifier WAVCV1.0</td>
+  </tr>
+  <tr>
+    <td width="21%">0000x08</td>
+    <td width="24%">4 (dword)</td>
+    <td width="55%">uncompressed size of file ( xxxx xxxx ) value</td>
+  </tr>
+  <tr>
+    <td width="21%">0000x0a</td>
+    <td width="24%">4 (dword)</td>
+    <td width="55%">compressed size of file ( yyyy yyyy ) value</td>
+  </tr>
+  <tr>
+    <td width="21%">0000x10</td>
+    <td width="24%">12 (bytes)</td>
+    <td width="55%">constant in all wavc files</td>
+  </tr>
+  <tr>
+    <td width="21%">0000x1c</td>
+    <td width="24%">4 (bytes)</td>
+    <td width="55%">there is the header of normal acm file ( 9728 0301 )</td>
+  </tr>
+</table>
+<p>In aim to make Wac &nbsp;file we need the following utilities :<br>
+snd2acm.exe<br>
+acm2wav.exe<br>
+wavc.exe<br>
+<br>
+I suppose that you could find these utilities on Potencius page or you could try
+on Russian Fallout customization sites (Fallout engine also uses acm format, so
+these guys have all needed utilities)</p>
+<p><a href="http://potenciusnet.teambg.net/" target="_blank"><font color="#0000FF">http://potenciusnet.teambg.net/</font></a><font color="#FF0000"><br>
+<br>
+</font><a href="http://www.fallout.ru/teamx/" target="_blank"><font color="#0000FF">http://www.fallout.ru/teamx/</font></a><font color="#FF0000"><br>
+</font><br>
+<br>
+Firstly we have to increase the speed of chosen wav sound by 100% (all wac
+sounds have increased speed)<br>
+Then we have to compress it using snd2acm to acm file (in the same time we note
+somewhere the output file size - this is our compressed acm file size)<br>
+Then we decompress it again using acm2wav in aim to determine the decompressed
+file size (amount of written bytes).<br>
+<br>
+When we have these two numbers we can edit our acm file in hex editor : we add
+the header as described above and translate compressed and decompressed sizes to
+hexadecimal numbers and enter it as indicated in header description.<br>
+We can check if our file is valid using wavc converter - if the output is the
+same as source wav file then we have succeeded.<br>
+<br>
+Then if you want to use these files in IE game you have to change extension of
+your wavc file to wav and put into override. and voila ! we have wavc compressed
+files.<br>
+Make sound reference in <a href="TLKformat.htm"><font color="#FF0000"> dialog.tlk</font></a> if your wavc file serves as dialogue / speech
+sound.</p>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

@@ -1,0 +1,165 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="../ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Totorials and Descriptions</title>
+</head>
+
+<body>
+
+<p><font size="5">Dialogue making interpersonal</font></p>
+
+<p><font size="3">By CatTeamBG</font></p>
+<p>&nbsp;</p>
+<p>
+Say you add 2 new NPCs in an area, and you want to have them in a multiperson
+dialog. Say, for example, you wanted the following to happen when you started
+talking to NPC 1 for the first time. For simplicity, assume NPC2 can't be
+directly talked to.<br>
+<br>
+I'll number the lines so I can refer to them by number:<br>
+<br>
+[1] NPC 1: Well, you're new in town. It's been a while since we've seen a
+stranger, isn't that right?<br>
+[2] NPC 2: Yeah, it's been a long time, all right. Almost 20 years, I'd say.<br>
+[3] NPC 1: Yeah, I remember, Bill was still alive back then, wasn't he?<br>
+[4] NPC 2: Yes, he was.<br>
+[5] NPC 1: Well, what can I do for you, stranger? (Dialog starts here after the
+first time, continues with only NPC 1 talking)<br>
+<br>
+To design this, it is important that you have the outline written like it is
+here, and that you know the full dialogs before you do the linking. Then, you'd
+do the following:<br>
+<br>
+-Start a new dialog file. This will be NPC1's dialog.<br>
+-Add a new top level text. This will be line [1]. Condition should be
+NumTimesTalkedTo(0).<br>
+-Add an option block below this top level text (this will be added automatically
+if you forget). There should be NO text and NO condition, but if you want
+actions or journal entries at this point, feel free to add them. We'll refer to
+this dialog option as [1b]. Do NOT add a text or link below this option.<br>
+-Add a new top level text. This will be line [3]. Condition should be False() as
+you never want it to be the first line he says to you. Conditions are ignored
+when you link directly to the text in question, so don't worry about that.<br>
+-Add an option block(which we'll call [3b]) below this text, following the same
+guidelines as with option [1b].<br>
+-Add a new top level text. This is line [5]. Condition will be
+!NumTimesTalkedTo(0); you want the dialog to start here after the first time.<br>
+-Add any dialog you want below this one.<br>
+-Save this dialog as NPC1.dlg<br>
+<br>
+-Start a new dialog file. This is NPC2's dialog.<br>
+-Add a new top level text. This will be line [2]. Condition should be False().<br>
+-Add an option following the same guidelines you did for [1b] and [3b]. Not
+surprisingly, we'll refer to this dialog option as [2b].<br>
+-Add a new top level text. This will be line [4]. Condition should be False().<br>
+-Add option [4b] just like [1b],[2b], and [3b].<br>
+-Save this dialog as NPC2.dlg<br>
+<br>
+Now, use IDU's &quot;analyze dialog file&quot; option to get text files
+(NPC1.txt, NPC2.txt) telling you the structure of the NPC1 and NPC2 dialogs.<br>
+<br>
+From this, look in the very first section, the text blocks section, and you
+should find that:<br>
+<br>
+line [1] is NPC1 text #0 (this is not really important)<br>
+line [2] is NPC2 text #0<br>
+line [3] is NPC1 text #1<br>
+line [4] is NPC2 text #1<br>
+line [5] is NPC1 text #2<br>
+<br>
+Anything else is irrelevant to the linking, so forget about the rest.<br>
+<br>
+Now, you can link the files together.<br>
+<br>
+Open NPC1.dlg. Find option [1b]. Add an external link underneath it. We want
+this to link to line [2], so we set the file to NPC2 and the number to 0.<br>
+<br>
+Still in NPC1.dlg, find option [3b]. Add an external link to NPC2 number 1,
+which is what the analyze dialog file told us line [4] was stored as.<br>
+<br>
+Save NPC1.dlg. It is now finished.<br>
+<br>
+Open NPC2.dlg. Find option [2b] and add an external link to NPC1 number 1. Find
+option [4b] and add an external link to NPC1 number 2. Save this file.<br>
+<br>
+Now, to make it all work, you need to make 2 NPCs, in close physical proximity
+on the main gameplay screen. Set the dialog of one to NPC1, the other to NPC2,
+and you should be able to have the dialog happen just as was originally scripted.<br>
+<br>
+Be aware, though, that if you edit NPC1 or NPC2 you may have to redo the linking,
+depending on what changes you make, and where in the file the changes are. This
+will change for IDU 2.<br>
+<br>
+<br>
+Basically, the general strategy that works for multiperson dialogs is:<br>
+<br>
+1) Create all of the files, in their entirety.<br>
+2) Ananlyze each one, and make note of the filename and number of each text
+block you want to link TO.<br>
+3) Edit each file, and, for every option you want to link FROM, external link to
+the filename and number you want to link TO.<br>
+<br>
+This is really the strategy. Note you CAN have conditions or text in the options
+before the links, or even have a set of options which go to different links.<br>
+<br>
+<br>
+===========IF YOU REALLY REALLY MUST EDIT THAT DIALOG, AND DON'T WANT TO RELINK,
+READ ON==============<br>
+<br>
+If you want to edit a multiperson dialog, and don't want to relink, you can do
+this. Note that ONLY IF YOU MADE EACH DIALOG WITH IDU DO THESE RULES APPLY.
+These rules are NOT guaranteed to hold (and probably WON'T) if you are editing
+preexisting files.<br>
+<br>
+If this is an IDU-made file, the following editing CAN be done without messing
+up IDU-made multiperson dialogs:<br>
+<br>
+1) Editing existing blocks of any type<br>
+2) Adding or deleting options or links<br>
+3) Adding new top-level texts<br>
+<br>
+If you do only these, you can get away without redoing the linking. And in fact,
+you can make ANY change desired by only doing these 3. For example, instead of
+deleting a text block (which can't be done w/o probs) if it's not top level,
+make the option that precedes it have text but have condition False() -- this
+makes that option no longer reachable; add another option like it if you wanted
+that option present. Making a top level text unreachable is simply a matter of
+making its condition False() and removing any links to it.<br>
+<br>
+Adding a new non-top level text is also not permitted, but you can work around
+by adding the new text as top level, condition False(), and where you wanted to
+put the text, put an internal link to that new top-level text</p>
+<p>&nbsp;</p>
+<p>The reason multiple person dialogs can get screwed up is that IDU will not
+preserve the position or order of the text blocks when it saves to disk, and, as
+you see from the above mini-tutorial, it is these numbers that tell the infinity
+engine how to link dialogs together.<br>
+<br>
+Everytime the dialog file is saved in IDU, the text block order is generated
+again. If you are using an IDU file, and follow those rules, the new order will
+be identical to the old (there will be new additions to the end but no changes
+beforehand, and that's what's important). However those rules hold only if the
+text blocks were already in a specific order before the linking was done (the
+order you get from a specific way you traverse the tree). I know for absolute
+fact that if my util made the dialog, the blocks will be in this order to begin
+with. However it is perfectly legal, from an infinity engine standpoint, not to
+use the order scheme I use. So hence I recommend against using this utility on a
+file whose blocks may not be in this order, because after the first save (even
+if you edited nothing) you'd lose the order the blocks were in, and any external
+file that linked to this one would be linking to the wrong place.<br>
+<br>
+Oh, and as a note on those rules, you also cannot delete any option block that
+has a text block as a child, because that is also deleting the text node and as
+such is illegal under the rules</p>
+<p>&nbsp;</p>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

@@ -1,0 +1,579 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+
+<h1 align="center">PRO file format</h1>
+<table border="1" width="610">
+  <tr>
+    <td width="28%">FileExtension :</td>
+    <td width="72%">PRO</td>
+  </tr>
+  <tr>
+    <td width="28%">Content :</td>
+    <td width="72%">Description of projectiles V.1.0</td>
+  </tr>
+  <tr>
+    <td width="28%">History :</td>
+    <td width="72%">Format breakdown by Maltanar (22.06.2001)</td>
+  </tr>
+  <tr>
+    <td width="28%">Update :</td>
+    <td width="72%">Manveru (24.10.2001)</td>
+  </tr>
+  <tr>
+    <td width="28%">&nbsp;</td>
+    <td width="72%">Malnefein (18.07.2001)</td>
+  </tr>
+  <tr>
+    <td width="28%">&nbsp;</td>
+    <td width="72%">Maltanar (09.09.2001)</td>
+  </tr>
+</table>
+<h2>Description</h2>
+<p>There is not one single PRO file in BG, TotSC, PST, IWD, and HoW, thus they
+are available only in BG2 SoA and ToB. The other games have this setting in the
+executable.<br>
+</p>
+<p><font size="3">Extension: *.pro<br>
+File size: 512 bytes (single target) or 768 bytes (area of effect) byte</font></p>
+<p><font size="3"><a href="IDSformat.htm"><font color="#FF0000">IDS file</font></a>
+entry: PROJECTL.ids</font></p>
+<p><font size="3"><br>
+*.pro files are used for &quot;projectiles&quot; in game. They have no effect as
+a standalone file, .pro filenames are given a number in PROJECTL.ids. This
+number plus one (zero entry) is used as the animation reference in items or
+spells, which must be corrected using a hex editor. Projectile files can
+control:<br>
+-Projectile graphics<br>
+-Projectile speed<br>
+-Projectile area of effect<br>
+-Projectile sound</font></p>
+<p>a little tip: NEVER add colors to an already colored graphic... It makes it
+look like the old Game Boy graphs... (BG2 only, the BG1 fireball and some other
+works)<br>
+</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="14%"><b>Offset</b></td>
+    <td width="23%"><b>Size (Data type)</b></td>
+    <td width="63%"><b>Description</b></td>
+  </tr>
+  <tr>
+    <td width="14%">0x00000</td>
+    <td width="23%">4 (ASCIIZ string)</td>
+    <td width="63%">Signature 'PRO '</td>
+  </tr>
+  <tr>
+    <td width="14%">0x00004</td>
+    <td width="23%">4 (ASCIIZ string)</td>
+    <td width="63%">Version 'V1.0'</td>
+  </tr>
+  <tr>
+    <td width="14%">0x00008</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">Specifies projectile type. 03 is area of
+      effect. 02 might be one target, check MAGICMIS.2da for value</td>
+  </tr>
+  <tr>
+    <td width="14%">0x0000a</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">Speed of the projectile (01 is the slowest, FF is the
+      fastest)</td>
+  </tr>
+  <tr>
+    <td width="14%">0x0000c</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">Show or not the little sparks (03 is Show, others are all Do
+      Not Show)</td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x0000e</font></td>
+    <td width="23%"><font color="#000099">2 (word)</font></td>
+    <td width="63%"><font color="#000099">unknown</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x00010</td>
+    <td width="23%">8 (resref)</td>
+    <td width="63%"><a href="WAVCfileformat.htm"><font color="#FF0000">Wavc file</font></a>
+      resource to the sound attached to the projectile</td>
+  </tr>
+  <tr>
+    <td width="14%">0x00018</td>
+    <td width="23%">8 (resref)</td>
+    <td width="63%"><a href="WAVCfileformat.htm"><font color="#FF0000">Wavc file</font></a>
+      resource to the sound attached to the projectile</td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00020</font></td>
+    <td width="23%"><font color="#000099">8 (resref)</font></td>
+    <td width="63%"><font color="#000099">Another </font><a href="WAVCfileformat.htm"><font color="#FF0000">Wavc
+      file</font></a><font color="#000099"> resource to the sound attached to
+      the projectile ? I haven't seen this field to be filled by anything</font></td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00028</font></td>
+    <td width="23%"><font color="#000099">4 (dword)</font></td>
+    <td width="63%">Controls the color of the sparks (0x000C set to 03).
+      <ul>
+        <li>00= WARNING: CRASH COMPUTER!!</li>
+        <li>01= Black</li>
+        <li>02= Blue</li>
+        <li>03= Purple and amber</li>
+        <li>04= Amber</li>
+        <li>05= Pale green</li>
+        <li>06= Purple</li>
+        <li>07= Pink</li>
+        <li>08= Grey</li>
+        <li>09= Pale blue (aqua)</li>
+        <li>0A= White</li>
+        <li>0B= Pale pink</li>
+        <li>0C= Gold</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x0002c</font></td>
+    <td width="23%"><font color="#000099">212 (byte)</font></td>
+    <td width="63%"><font color="#000099">unknown, unused ?</font></td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00100</font></td>
+    <td width="23%"><font color="#000099">4 (dword)</font></td>
+    <td width="63%"><font color="#000099">some sort of flags,&nbsp;not decoded
+      values (not rewritten in bit flags form) :</font>
+      <ul>
+        <li>80 the game seems to ignore the BAM coloring
+          offset (0x0124 and the rest). Ignores smoke and light spot settings, even if they are not set to zero, disabled BAM coloring and singlely displays the original BAM file.</li>
+        <li>47 Enables BAM coloring, and uses light spot and smoke.</li>
+        <li>
+      C8 display the light spot on the ground, ignore colors&nbsp;</li>
+        <li>
+      1F display the smoke that follows the missile and do not ignore the colors</li>
+        <li>
+      20 crash computer, disables all</li>
+        <li>45= do not ignore the colors but display nothing</li>
+        <li>1D= same as 45<br>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%">0x00104</td>
+    <td width="23%">8 (resref)</td>
+    <td width="63%">&nbsp;<a href="BAMformat.htm"><font color="#FF0000">BAM</font></a> 
+      name for projectile going. (ie, the fireball itself in fireball)</td>
+  </tr>
+  <tr>
+    <td width="14%">0x0010c</td>
+    <td width="23%">8 (resref)</td>
+    <td width="63%">&nbsp;<a href="BAMformat.htm"><font color="#FF0000">BAM</font></a> 
+      name for the shadow</td>
+  </tr>
+  <tr>
+    <td width="14%">0x00114</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Sequence of the BAM to display as the main projectile (00 is
+      the first, etc...)*</td>
+  </tr>
+  <tr>
+    <td width="14%">0x00115</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Sequence of the BAM to display as the shadow of the
+      projectile (00 is the first, etc...)*</td>
+  </tr>
+  <tr>
+    <td width="14%">0x00116</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">80 shows the light spot on the ground (under the missile)</td>
+  </tr>
+  <tr>
+    <td width="14%">0x00118</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Controls the size of the light spot (on the ground, under
+      the projectile). X axis</td>
+  </tr>
+  <tr>
+    <td width="14%">0x00119</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">If set to any other value than 00, it makes the projectile
+      invisible. Only the smoke and/or the sparks are visible.</td>
+  </tr>
+  <tr>
+    <td width="14%">0x0011a</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">Controls the size of the light spot (on the ground, under
+      the projectile). Y axis</td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x0011c</font></td>
+    <td width="23%"><font color="#000099">8 (resref)</font></td>
+    <td width="63%">This is the reference
+      to the <a href="BMPformat.htm"><font color="#FF0000">BMP files</font></a>
+      ( for example in Spklaror file there is reference to the STTRAVL8.bmp..
+      <p>It is used in TRAVEL type BAMs (hold, etc...) and dragon's breath BAMs.&nbsp;</p>
+      <p>Color of a TRAVEL type projectile:&nbsp;</p>
+      <ul>
+        <li>STTRAVL1= Blue</li>
+        <li>STTRAVL2= Yellow</li>
+        <li>STTRAVL3= Green</li>
+        <li>STTRAVL4= Purple</li>
+        <li>STTRAVL5= Pale purple</li>
+        <li>STTRAVL6= Pink</li>
+        <li>STTRAVL7= Blue (ice, like Necromancy spells)</li>
+        <li>STTRAVL8= Gold</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%">0x00124</td>
+    <td width="23%">6 (bytes)</td>
+    <td width="63%">Colors to cover that going<font color="#000099"> </font> <a href="BAMformat.htm"><font color="#FF0000">BAM</font></a><font color="#000099">.</font> Indexed from
+      the color gradients given with IEEP.&nbsp;It does not control the color
+      from the outline to the inner edges, but it seems to have something to do
+      with the color gradient of the graphic - if a color is pale or dark.
+      <p>This offset adds "coloring" to the BAM file. Usually, all those six bytes are set to same value (0x100 is h47) or only the first byte is set (0x100 is h09).</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x0012a</font></td>
+    <td width="23%"><font color="#000099">1 (byte)</font></td>
+    <td width="63%"><font color="#000099">Unknown</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x0012b</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Set the amount of time between each smoke puff behind the
+      missile</td>
+  </tr>
+  <tr>
+    <td width="14%">0x0012c</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Set the color of the &quot;smoke&quot;.</td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x0012d</font></td>
+    <td width="23%"><font color="#000099">6 (bytes)</font></td>
+    <td width="63%"><font color="#000099">probably, they are color gradients as
+      well (perhaps, they control the smoke's colors as well?)</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x00133</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">If the projectile will aim in the direction of its target
+      (as an arrow) or not (as a Stinking Cloud). 01 is Not and 05 is Aim.</td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00134</font></td>
+    <td width="23%"><font color="#000099">1 (byte)</font></td>
+    <td width="63%"><font color="#000099">Unknown&nbsp;</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x00135</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Set the type of &quot;smoke&quot; that follow the
+      projectile.<br>
+      <ul>
+        <li>00= Fireball Ring effect of BG1</li>
+        <li>01= Kind of little bubbles</li>
+        <li>02= Pieces of...flesh?</li>
+        <li>03= Smoke</li>
+        <li>04= Skull Trap pieces</li>
+        <li>05= Cloudkill Ring effect of BG1</li>
+        <li>06= Cloudkill Ring effect of BG1</li>
+        <li>07= Grease blotch</li>
+        <li>08= Web</li>
+        <li>09= Cloudkill Ring effect of BG1</li>
+        <li>0A= Abi-Dalzim puff</li>
+        <li>0B= Color Spray balls</li>
+        <li>0C= Storm of Vengence clouds (ToB only)<br>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%">0x00136</td>
+    <td width="23%">8 (resref)</td>
+    <td width="63%">Name of the BAM file that follows the main missile (if
+      0x0014e is set to something other than 00)
+      <ul>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x0013e</font></td>
+    <td width="23%"><font color="#000099">16 (bytes)</font></td>
+    <td width="63%"><font color="#000099">Unknown&nbsp;</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x0014e</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">If a graphic follow the main missile, and how it follows:
+      <ul>
+        <li>
+      00= no graphic</li>
+        <li>
+      01= chain graphic (8)</li>
+        <li>
+      02= medium chain graphic (5)</li>
+        <li>
+      03= small chain graphic (3)</li>
+        <li>
+      04= little chain graphic (2)</li>
+        <li>
+      05= only one</li>
+        <li>
+      06= alternance (sometimes 1, sometimes 2)</li>
+        <li>
+      07= same as 05, more time and space between each graphic</li>
+        <li>
+      08= same as 07, more time and space between each graphic</li>
+        <li>
+      09= same as 08, more time and space between each graphic</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00150</font></td>
+    <td width="23%"><font color="#000099">176 (bytes)</font></td>
+    <td width="63%"><font color="#000099">Unknown, unused ?&nbsp;</font></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>In case if projectile is area affecting then there is additional section in
+this file. It has 100h (256) bytes.</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="14%">0x00200</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Who the AOE will affect (enemies, allies,
+      enemies/allies).&nbsp;
+      <ul>
+        <li>50 is Enemies Only</li>
+        <li>00 is Affect Allies/Enemies</li>
+        <li>01 is Fire spell on Targets Until Deads (Allies/Enemies)</li>
+        <li>49 is Do Nothing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;</li>
+        <li>80 is Affect Allies Only</li>
+        <li>2D is &quot;Stay at Position Until Someone Comes Too Close&quot;<br>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%">0x00201</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Type of AOE:<br>
+      <ul>
+        <li>00= round (like Fireball), hit everyone in the AOE</li>
+        <li>01= strange version (do multiple hits) of 00</li>
+        <li>02= same as 00, but with a bigger AOE (possibility)</li>
+        <li>08= cone-shaped (as Color Spray)</li>
+        <li>09= same as 01, but cone-shaped</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00202</font></td>
+    <td width="23%"><font color="#000099">2 (word)</font></td>
+    <td width="63%"><font color="#000099">Unknown</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x00204</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">Tells how the trap (0x00200 set to 2D) works:<br>
+      <ul>
+        <li>96= explode and destroyed</li>
+        <li>00= explode but stay and no longer works (if someone comes too
+          close, it does nothing. Seems to work only once.)</li>
+        <li>01= stay and do nothing (just uselessly float in the air...)</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%">0x00206</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">Area of Effect. 256 is 30' radius.</td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00208</font></td>
+    <td width="23%"><font color="#000099">8 (resref)</font></td>
+    <td width="63%"><font color="#000099">Seems to be the name of the sound file
+      when the projectile explode (perhaps only if 0x00200 is set to 2D ?)</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x00210</td>
+    <td width="23%">2 (word)</td>
+    <td width="63%">Tells how far someone has to be to set off a trap (0x00200
+      set to 2D). 01 is the smallest and FF is the biggest.</td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00212</font></td>
+    <td width="23%"><font color="#000099">1 (byte)</font></td>
+    <td width="63%"><font color="#000099">has something to do with the graphic
+      explosion</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x00213</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Explosion graphics :<br>
+      <ul>
+        <li>00= Fireball Ring effect of BG1</li>
+        <li>01= Kind of little bubbles</li>
+        <li>02= Pieces of...flesh?</li>
+        <li>03= Smoke</li>
+        <li>04= Skull Trap pieces</li>
+        <li>05= Cloudkill Ring effect of BG1</li>
+        <li>06= Cloudkill Ring effect of BG1</li>
+        <li>07= Grease blotch</li>
+        <li>08= Web</li>
+        <li>09= Cloudkill Ring effect of BG1</li>
+        <li>0A= Abi-Dalzim puff</li>
+        <li>0B= Color Spray balls</li>
+        <li>0C= Storm of Vengence clouds (ToB only)</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%"><font color="#000099">0x00214</font></td>
+    <td width="23%"><font color="#000099">2 (word)</font></td>
+    <td width="63%"><font color="#000099">Unknown</font></td>
+  </tr>
+  <tr>
+    <td width="14%">0x00216</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">Duration (01 is the shortest, FF is the longest).
+      <p>If 0x00200 is set to 2D, tells how many times the trap will explode.
+      (Yes, multiple explosions!)</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%">0x00217</td>
+    <td width="23%">1 (byte)</td>
+    <td width="63%">1st explosion projectile. (ie, flame circle
+      for fireball). Known values are :
+      <ul>
+        <li>00 Fireball</li>
+        <li>01 Stinking C.</li>
+        <li>02 Cloudkill</li>
+        <li>03 Ice Storm</li>
+        <li>04 Grease</li>
+        <li>05 Web</li>
+        <li>06 Meteor</li>
+        <li>07 Abi-Dalzim's Horrid Wilting</li>
+        <li>08 Teleport Field</li>
+        <li>09 Entangle</li>
+        <li>0A Color spray 360'</li>
+        <li>0B Cone of Cold 360'</li>
+        <li>0C Holy Smite</li>
+        <li>0D Unholy Blight</li>
+        <li>0E Prismatic Spray</li>
+        <li>0F Big flame</li>
+      </ul>
+      <p>For Throne of Bhaal only :</p>
+      <ul>
+        <li>10= Storm of Vengence</li>
+        <li>11= Purple fireball blast</li>
+        <li>12= Green dragon breath blast (almost same as 0F)<br>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="14%"><font size="3">0x000218</font></td>
+    <td width="23%"><font size="3">1 (byte)</font></td>
+    <td width="63%"><font size="3">Color of explosion animation 1st. Not all of the explosion graphics are affected by this offset.</font></td>
+  </tr>
+  <tr>
+    <td width="14%"><font size="3" color="#000099">0x000219</font></td>
+    <td width="23%"><font size="3" color="#000099">1 (byte)</font></td>
+    <td width="63%"><font size="3" color="#000099">Unknown</font></td>
+  </tr>
+  <tr>
+    <td width="14%"><font size="3">0x00021a</font></td>
+    <td width="23%"><font size="3">2 (bytes)</font></td>
+    <td width="63%"><font size="3">OK; this is difficult to explain. Think of
+      this: A fireball explodes, and all caught in area of effect is being
+      effected by a Sunray graphic. Cool. Here are the known values:</font>
+      <ul>
+        <li><font size="3">FF Sunlight
+          </font></li>
+        <li><font size="3">FE (Crashes)
+          </font></li>
+        <li><font size="3">FD Prismatic Spray
+          </font></li>
+        <li><font size="3">FC Unholy Blight
+          </font></li>
+        <li><font size="3">FB Holy Smite
+          </font></li>
+        <li><font size="3">FA Cone of Cold
+          </font></li>
+        <li><font size="3">F9 Color Spray
+          </font></li>
+        <li><font size="3">F8 Silver Dragon Breath
+          </font></li>
+        <li><font size="3">F7 Green Dragon Breath
+          </font></li>
+        <li><font size="3">F6 Red Dragon Breath
+          </font></li>
+        <li><font size="3">F5 Shooting Knives?
+          </font></li>
+        <li><font size="3">F4 Fireball secondary! Both projectile and AOE (yes,
+          chain effect!)
+          </font></li>
+        <li><font size="3">F3 Entangle. Same situation as above.
+          </font></li>
+        <li><font size="3">F2 Blue light
+          </font></li>
+        <li><font size="3">F1 Chain Lightning
+          </font></li>
+        <li><font size="3">F0 Skull trap. Secondary area of effect.
+          </font></li>
+        <li><font size="3">EF Another fireball. Secondary area of effect.
+          </font></li>
+        <li><font size="3">EE Teleport field. Secondary area of effect.
+          </font></li>
+        <li><font size="3">ED Abi-Dalzim's. Secondary area of effect.
+          </font></li>
+        <li><font size="3">EC Purple miniature meteor.
+          </font></li>
+        <li>4F nothing</li>
+        <li><font size="3">03 exploding arrow,&nbsp;
+          </font></li>
+        <li><font size="3">02 arrow<br>
+          </font></li>
+      </ul>
+      <p>This offset determines the effect of the explosion upon the targets. It can accept the values in the Missle.ids file, though not all of them seem to work (i.e., firewall).</td>
+  </tr>
+  <tr>
+    <td width="14%"><font size="3" color="#000099">0x00021c</font></td>
+    <td width="23%"><font size="3" color="#000099">8 (bytes)</font></td>
+    <td width="63%"><font color="#000099">Unknown,</font></td>
+  </tr>
+  <tr>
+    <td width="14%"><font size="3">0x000224</font></td>
+    <td width="23%"><font size="3">2 (word)</font></td>
+    <td width="63%">Width of the cone (if 0x00201 is set to 08 or 09). 00 is the
+      smallest, ff is the largest (round).</td>
+  </tr>
+  <tr>
+    <td width="14%"><font size="3" color="#000099">0x000226</font></td>
+    <td width="23%"><font size="3" color="#000099">218 (bytes)</font></td>
+    <td width="63%"><font color="#000099">Unknown, unused ?</font></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

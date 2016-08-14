@@ -1,0 +1,381 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>BG1Effects</title>
+</head>
+
+<body>
+
+<p align="center"><font size="5">Baldur's Gate / Tales of The Sword Coast</font></p>
+
+<font FACE="Courier New" SIZE="2">
+<p>&nbsp;</p>
+</font>
+<p><b><font size="2">0 (0h) ,Bonus AC vs. Weapon Type,</font></b></p>
+<blockquote>
+<p style="margin-left: 0"><font size="2">Parameter 1 :AC Bonus/Setting</font></p>
+<p style="margin-left: 0"><font size="2">Parameter 2 :Weapon Type&nbsp;</font></p>
+<p style="margin-left: 0"><font size="2">Set the AC Bonus/Setting parameter to the AC Bonus against the
+weapon type set in Weapon Type parameter. If Weapon Type parameter is set to
+Base AC Setting then AC Bonus/Setting parameter is the base AC setting of the
+item like as in a Bracers of Defense. Possible values of the Weapon Type
+parameter are 0 for All Weapons, 1 for Blunt, 2 for Missile, 4 for Piercing, 8
+for Slashing, and 16 for Base AC Setting.</font></p>
+</blockquote>
+<p><b><font size="2">1 (1h) ,Attacks per 2 round Bonus</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<font size="2">
+&quot;Attacks per 2 rounds&quot; is a misnomer. &nbsp;The number of attacks is
+stored in a lookup table:<br>
+<br>
+<br>
+<font class="code" face="Courier New" size="1" color="#000000">index&nbsp;&nbsp;
+value<br>
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1<br>
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2<br>
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3<br>
+4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4<br>
+5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5<br>
+6&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;1/2<br>
+7&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;3/2<br>
+8&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;5/2<br>
+9&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;7/2<br>
+10&nbsp;&nbsp;&nbsp;&nbsp; 9/2</font><br>
+</font>
+<p><font size="2">When you modify the statistic using this effect, you are modifying the <i>index
+of the lookup table</i>, you are not modifying the number of attacks. &nbsp;With
+a modifier type of 00, you are incrementing the index by the value of the
+modifier. &nbsp;With a modifier type of 01, you are setting the index to the
+value of the modifier. &nbsp;A modifier type of 02 seems to be ignored.</font></p>
+<p><font size="2">&nbsp;</font></p>
+</blockquote>
+<p><b><font size="2">2 (2h) ,(Awaken),</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Undefined,</font></p>
+<p><font size="2">Parameter 2 :Undefined,</font></p>
+<p><font size="2">The exact definitions of these parameter and exact functions are
+undefined at this time.</font></p>
+</blockquote>
+<p><b><font size="2">3 (3h) ,Beserking,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">Leave both parameters at all zeros for this Effect to work.</font></p>
+</blockquote>
+<p><b><font size="2">4 (4h) ,(Calm)</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Undefined,</font></p>
+<p><font size="2">Parameter 2 :Undefined,</font></p>
+<p><font size="2">The exact definitions of these parameter and exact functions are
+undefined at this time.</font></p>
+</blockquote>
+<p><b><font size="2">5 (5h) ,Charm Specific Creature,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Specific Creature Type,</font></p>
+<p><font size="2">Parameter 2 :Undefined,</font></p>
+<p><font size="2">Set the Specific Creature Type parameter to the name of the creature
+type to charm. The known values of the Specific Creature Type parameter are 00
+is Any, 01 is HUMANOID, 02 is ANIMAL, 03 is DEAD, 04 is UNDEAD, 05 is
+GIANTHUMANOID, 06 is FROZEN, and 255 is MONSTER.</font></p>
+</blockquote>
+<p><b><font size="2">6 (6h) ,Charisma Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">7 (7h) ,Set Item Colors,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Gradient Number,</font></p>
+<p><font size="2">Parameter 2 :Location,</font></p>
+<p><font size="2">The part changed is specified in the Location parameter and will be
+changed to the color set assigned by the Gradient Number parameter. The known
+values of the Location parameter are 00 is belt buckle (when on armor) or
+amulets (on robes), 01 is minor color, 02 is major color, 03 is skin color, 04
+is strap color (on armor) or minor triming (on robes - the center strip down a
+robe and the hem on some robes), 05 is armor color (and major triming on robe -
+cross trim and cape trim on robe of archmagi), 06 is hair color, 16 is quillons
+or crossguard, 20 is grip (usually not seeable as it's in the charcter's hand),
+21 is blade or major portion of weapon, 32 is shield hub, 34 is shield panelling,
+37 is shield rim, 48 is helm ornamentation - i.e. wings, 49 is helm
+ornamentation - i.e. feathers/horsehair, 52 is unknown but listed in helm01, and
+53 is helm - the main covering.</font></p>
+</blockquote>
+<p><b><font size="2">8 (8h) ,Change Colors by RGB,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :RGB Color,</font></p>
+<p><font size="2">Parameter 2 :Location,</font></p>
+<p><font size="2">Set the RGB Color parameter to the color value you want to use with the
+second byte being the Red portion (0-255), the third byte the Green portion
+(0-255), and the fourth byte being the Blue portion (0-255) and the part
+specified in the Location parameter will change to that color. The known values
+of the Location parameter are 00 is belt buckle (when on armor) or amulets (on
+robes), 01 is minor color, 02 is major color, 03 is skin color, 04 is strap
+color (on armor) or minor triming (on robes - the center strip down a robe and
+the hem on some robes), 05 is armor color (and major triming on robe - cross
+trim and cape trim on robe of archmagi), 06 is hair color, 16 is quillons or
+crossguard, 20 is grip (usually not seeable as it's in the charcter's hand), 21
+is blade or major portion of weapon, 32 is shield hub, 34 is shield panelling,
+37 is shield rim, 48 is helm ornamentation - i.e. wings, 49 is helm
+ornamentation - i.e. feathers/horsehair, 52 is unknown but listed in helm01, and
+53 is helm - the main covering.</font></p>
+</blockquote>
+<p><b><font size="2">9 (9h) ,Shining Colors by RGB,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :RGB Color,</font></p>
+<p><font size="2">Parameter 2 :Location and Speed,</font></p>
+<p><font size="2">Set the RGB Color parameter to the color value you want to use with the
+second byte being the Red portion (0-255), the third byte the Green portion
+(0-255), and the fourth byte being the Blue portion (0-255) and the part
+specified by the first 2 bytes of the Location and Speed parameter will flash
+that color with the third byte of the Location and Speed parameter determining
+the speed of the flashing with 01 the fastest and 255 the slowest. The known
+values of the Location part of the Location and Speed parameter are 00 is belt
+buckle (when on armor) or amulets (on robes), 01 is minor color, 02 is major
+color, 03 is skin color, 04 is strap color (on armor) or minor triming (on robes
+- the center strip down a robe and the hem on some robes), 05 is armor color
+(and major triming on robe - cross trim and cape trim on robe of archmagi), 06
+is hair color, 16 is quillons or crossguard, 20 is grip (usually not seeable as
+it's in the charcter's hand), 21 is blade or major portion of weapon, 32 is
+shield hub, 34 is shield panelling, 37 is shield rim, 48 is helm ornamentation -
+i.e. wings, 49 is helm ornamentation - i.e. feathers/horsehair, 52 is unknown
+but listed in helm01, and 53 is helm - the main covering.</font></p>
+</blockquote>
+<p><b><font size="2">10 (Ah) ,Constitution Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">11 (Bh) ,Neutralize Poison,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">Leave both parameters at all zeros for this Effect to work.</font></p>
+</blockquote>
+<p><b><font size="2">12 (Ch) ,Fixed/Random Damage,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Fixed Damage,</font></p>
+<p><font size="2">Parameter 2 :Damage Type,</font></p>
+<p><font size="2">If the Fixed Damage parameter is set to an actual value then that is
+how much damage of the type specified in the Damage Type parameter that is done.
+If the Fixed Damage parameter is set to zero then it will do the random damage
+assigned by the Die Throws in the effect. The known values for the Damage Type
+parameter are 0 is CRUSHING, 16777216 (00 00 00 01) is SLASHING, 33554432 (00 00
+00 02) is MAGICFIRE, 67108864 (00 00 00 04) is MAGICCOLD, 134217728 (00 00 00
+08) is STUNNING, 65536 (00 00 01 00) is ACID, 131072 (00 00 02 00) is COLD,
+262144 (00 00 04 00) is ELECTRICITY, 524288 (00 00 08 00) is FIRE, 1048576 (00
+00 16 00) is PIERCING, 2097152 (00 00 32 00) is POISON, 4194304 (00 00 64 00) is
+MAGIC, 8388608 (00 00 128 00) is MISSILE, 2 (02 00 00 00) is Lower HP to Fixed
+Percent set by Fixed Damage value, and 1 (01 00 00 00) is Lower HP to Fixed
+Damage value.</font></p>
+</blockquote>
+<p><b><font size="2">13 (Dh) ,Death,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Death Type,</font></p>
+<p><font size="2">This effect will instantly kill a creature. The Death Type parameter
+sets which type of death occurs. Known values for the Death Type parameter are 0
+for a normal death , 8 for a chunked death, 32 for freezing death, and 64 for
+exploding stoned death.</font></p>
+</blockquote>
+<p><b><font size="2">14 (Eh) ,(Defrost),</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Undefined,</font></p>
+<p><font size="2">Parameter 2 :Undefined,</font></p>
+<p><font size="2">The exact definitions of these parameter and exact functions are
+undefined at this time.</font></p>
+</blockquote>
+<p><b><font size="2">15 (Fh) ,Dexterity Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">16 (10h) ,Haste,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">Leave both parameters at all zeros for this Effect to work.</font></p>
+</blockquote>
+<p><b><font size="2">17 (11h),Current HP Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">18 (12h) ,Maximum HP Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">19 (13h) ,Intelligence Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">20 (14h) ,Invisibility,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Invisibility type,</font></p>
+<p><font size="2">Leave 1 parameter at all zeros for this Effect to work.&nbsp;</font></p>
+<p><font size="2">Invisibility type - 0 is normal invisibility. &nbsp;Invisibility type 1 is
+improved invisibilty.</font></p>
+</blockquote>
+<p><b><font size="2">21 (15h) ,Lore Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">22 (16h) ,(Old Lore Bonus),</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Undetermined,</font></p>
+<p><font size="2">Parameter 2 :Undetermined,</font></p>
+<p><font size="2">This effect is undetermined at this time.</font></p>
+</blockquote>
+<p><b><font size="2">23 (17h) ,Remove Fear,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">Leave both parameters at all zeros for this Effect to work.</font></p>
+</blockquote>
+<p><b><font size="2">24 (18h) ,Horror,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">Leave both parameters at all zeros for this Effect to work.</font></p>
+</blockquote>
+<p><b><font size="2">25 (19h) ,Poison,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Damage Amount,</font></p>
+<p><font size="2">Parameter 2 :Damage Determination,</font></p>
+<p><font size="2">The Damage Amount parameter is the amount of damage done by the poison
+as set by the Damage Determination parameter. If the Damage Determination
+parameter is 01 then then Damage Amount is Hit Point percentile of total damage
+done by the end of the poison run, 02 sets the Damage Amount to be the Hit Point
+damage per second, and 03 sets the Damage Amount to be the Hit Point damage per
+round.</font></p>
+</blockquote>
+<p><b><font size="2">26 (1Ah) ,Remove Curse,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">Leave both parameters at all zeros for this Effect to work.</font></p>
+</blockquote>
+<p><b><font size="2">27 (1Bh) ,Acid Resistance Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">28 (1Ch) ,Cold Resistance Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">29 (1Dh) ,Lightning Resistance Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">30 (1Eh) ,Fire Resistance Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">31 (1Fh) ,Magic Damage Resistance Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If
+it it a 00 then it makes the Modifier a flat point modifier (i.e. statistic plus
+the modifier number), if it is 01 the Modifier is a straight stat change (i.e.
+the statistic becomes what ever value the Modifier is), and if it is a 02 then
+the Modifier is a percentile modifier (i.e. the ability is multiplied by the
+Modifier value in percent so 10 is 10% making the ability 10% of its value).</font></p>
+</blockquote>
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

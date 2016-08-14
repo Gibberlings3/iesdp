@@ -1,0 +1,122 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="../ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Totorials and Descriptions</title>
+</head>
+
+<body>
+
+<p align="center"><font size="5">How to create random maze ?</font></p>
+<p align="center">(like Modron Maze in PS:T )</p>
+<p>&nbsp;</p>
+<p>Q : Is it possible to make it so an area can be renewed through dialogue. I checked how they do it in the Modron Maze in Planescape Torment and it just says as effect CreateMordomMaze. I want it to do this for my area in BG2 but as far as i can tell it's hard coded only into Torment. Anyone know if theres a way to do it in BG2?&nbsp;<br>
+<br>
+<b>Rashamon :</b> Yeah you could probably script it using a random choice of which area to go to next, eg:<br>
+<br>
+Code:</p>
+<table border="1" width="100%">
+  <tr>
+    <td>IF<br>
+ ...<br>
+      THEN<br>
+      RESPONSE #100<br>
+  EscapeAreaMove(AR4501, 50, 50, 15)<br>
+      RESPONSE #100<br>
+  EscapeAreaMove(AR4502, 50, 50, 15)<br>
+      RESPONSE #100<br>
+  EscapeAreaMove(AR4503, 50, 50, 15)<br>
+      RESPONSE #100<br>
+  EscapeAreaMove(AR4504, 50, 50, 15)<br>
+      END&nbsp;</td>
+  </tr>
+</table>
+<p><br>
+Well if you remember, the modron maze was randomized when you were in the control room. Once you where in the maze, it was static until you went back to the control room again. That means that there were a lot of similar looking areas, so if you want your thing to be like the modron maze, you need more than one area.<br>
+<br>
+An easy way of using one room only though, is through a script and item editing. Make all of the creatures, and items you want the creatures to have, but make sure EVERY item is destroyable, even gold and such. That way, you can, on exiting the room, have your script disintegrate any remaining creatures. Then make a random choice of creatures appear at random spawn points, via your area script.&nbsp;<br>
+<br>
+So when you're leaving the room, put a wait command, move the pc's to a random place in the room, unexplore the area, disintegrate all the creatures, then respawn some new random creatures. It'll be a large script, but pretty easy if you really want to do it like that. Hope this gives you a few ideas<br>
+<br>
+</p>
+<hr>
+<p><font size="5">Cat's advice&nbsp;&nbsp;</font></p>
+<p> The modron maze wasn't randonly shaped -- it was an 8x8 grid, and all that changed were exits were blocked.  Scripting can easily create creatures in every room (each room's contents were in fact generated only when you entered it for the first time after any reset).<br>
+<br>
+The script command in PST just randomized the maze; it put random blocks in the grid; I never figured out if there was simply a large number of preprogrammed patterns, or if it generated a maze, given certain parameters (like each room must be accessible, all rooms must connect to all other rooms, few rooms have 4 exits, etc.<br>
+<br>
+It is very very easy to spawn creatures with a script.  Each area has an area script, so, whenever you want to "reset" a room, do the following:<br>
+<br>
+* Assume your area is named MZ1001.  Then, to reset this, you use the following:<br>
+<br>
+</p>
+<table border="1" width="100%">
+  <tr>
+    <td>SetGlobal(&quot;MZ1001_created&quot;,&quot;GLOBAL&quot;,0)</td>
+  </tr>
+</table>
+<p><br>
+* In the script for MZ1001:</p>
+<table border="1" width="100%">
+  <tr>
+    <td>IF<br>
+     Global("MZ1001_created","GLOBAL",0)<br>
+      THEN<br>
+     RESPONSE #100<br>
+           SetGlobal("MZ1001_created","GLOBAL",0)<br>
+           UndoExplore()<br>
+                 //put one set of monster/loot spawning here<br>
+     RESPONSE #100<br>
+           SetGlobal("MZ1001_created","GLOBAL",0)<br>
+           UndoExplore()<br>
+                 //put the second set of monster/loot spawning here<br>
+      <br>
+      etc...<br>
+      END</td>
+  </tr>
+</table>
+<p><br>
+This is one way of doing things.  The other (more random) way is something like this for each event you want to randomize (treasure, spawn, etc.):<br>
+<br>
+</p>
+<table border="1" width="100%">
+  <tr>
+    <td>IF<br>
+     Global("MZ1001_created","GLOBAL",0)<br>
+      THEN<br>
+     RESPONSE #100<br>
+           //random event option 1<br>
+           Continue()<br>
+     RESPONSE #100<br>
+           //random event option 2<br>
+           Continue()<br>
+      <br>
+      etc.<br>
+      END</td>
+  </tr>
+</table>
+<p><br>
+You can put as many of these IF..THEN...END blocks as you feel like, each with many responses, to get your area really random.  Each block could randomize one particular thing.  Remember that each RESPONSE, though *must* end with Continue() or you will never reach the next IF block!<br>
+<br>
+Finally, when you're done randomizing:</p>
+<table border="1" width="100%">
+  <tr>
+    <td>IF<br>
+     Global("MZ1001_created","GLOBAL",0)<br>
+      THEN<br>
+     RESPONSE #100<br>
+           SetGlobal("MZ1001_created","GLOBAL",1)<br>
+           UndoExplore()<br>
+      END </td>
+  </tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

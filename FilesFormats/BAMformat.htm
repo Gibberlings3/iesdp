@@ -1,0 +1,298 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+
+<h1 align="center">BAM file format</h1>
+<table border="1" width="610" height="76">
+  <tr>
+    <td width="28%" height="20">FileExtension :</td>
+    <td width="72%" height="20">BAM</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19">Content :</td>
+    <td width="72%" height="19">Description of animations format BAM V.1/BAMC V1</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19">History :</td>
+    <td width="72%" height="19">File done by IEFFHP</td>
+  </tr>
+  <tr>
+    <td width="28%" height="19"></td>
+    <td width="72%" height="19">Devarrah 25.11.2001</td>
+  </tr>
+</table>
+<h2>Description</h2>
+<p>These files primarily hold animations. However, they also hold some other
+static images which are not meant to be animated, but are, rather, simply need
+to be packaged together. For instance, fonts in Infinity Engine games are
+typically packaged in these files. As another example, most GUI controls have
+all of their supporting graphics packaged in BAM files, with, for instance, one
+frame representing the unpressed state of a button, one representing the pressed
+state, one for the selected state, and one for the disabled state. Note that a
+maximum of 255 cycles (animations) are supported. Since the fonts are stored
+with each character being a 'cycle', there are a maximum of 255 displayable
+chars in an infinity engine font. (i.e. the character 0xff does not have a
+representative in the font.</p>
+<h2><a name="formBAM_Versions">BAM file versions</a></h2>
+<ul>
+  <li><a href="#formBAMV1">V1: Baldur's Gate, Planescape: Torment, Icewind Dale,
+    Baldur's Gate 2</a>
+  <li><a href="#formBAMCV1">BAMC V1: Baldur's Gate 2</a></li>
+</ul>
+<h2 class="specverhead"><a name="formBAMV1">BAM V1</a></h2>
+<p>Overall structure</p>
+<ul>
+  <li><a href="#formBAMV1_Header">Header</a>
+  <li><a href="#formBAMV1_FrameEntry">Frame entries</a>
+  <li><a href="#formBAMV1_CycleEntry">Cycle entries</a>
+  <li><a href="#formBAMV1_Palette">Palette</a>
+  <li><a href="#formBAMV1_FrameLUT">Frame Lookup Table</a>
+  <li><a href="#formBAMV1_Data">Frame data</a></li>
+</ul>
+<h4 class="reshead"><a name="formBAMV1_Header">BAM V1 Header</a></h4>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="104"><font color="#000000">Size (data type)</font></th>
+      <th width="335"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="104">4 (char array)</td>
+      <td width="335">Signature ('BAM ')</td>
+    </tr>
+    <tr>
+      <td width="48">0x0004</td>
+      <td width="104">4 (char array)</td>
+      <td width="335">Version ('V1 ')</td>
+    </tr>
+    <tr>
+      <td width="48">0x0008</td>
+      <td width="104">2 (word)</td>
+      <td width="335">Number of <a href="#formBAMV1_FrameEntry">frames</a> in this file</td>
+    </tr>
+    <tr>
+      <td width="48">0x000a</td>
+      <td width="104">1 (unsigned byte)</td>
+      <td width="335">Number of <a href="#formBAMV1_CycleEntry">cycles</a> in this file</td>
+    </tr>
+    <tr>
+      <td width="48">0x000b</td>
+      <td width="104">1 (unsigned byte)</td>
+      <td width="335">It is the compressed color index for RLE encoded bams...
+        IE this is the color that is compressed and it isn't the color that
+        represents transparency.<br>
+        <br>
+        The transparency index is calculated thus: it's the first occurence of
+        &nbsp;rgb(0,255,0) (it can occur twice) and if that color isn't present
+        in the palette than the color at index 0 is the transparency color</td>
+    </tr>
+    <tr>
+      <td width="48">0x000c</td>
+      <td width="104">4 (dword)</td>
+      <td width="335">Offset from start of file to <a href="#formBAMV1_FrameEntry">frame
+        entries</a> (which are immediately followed by <a href="#formBAMV1_CycleEntry">cycle
+        entries</a>)</td>
+    </tr>
+    <tr>
+      <td width="48">0x0010</td>
+      <td width="104">4 (dword)</td>
+      <td width="335">Offset from start of file to <a href="#formBAMV1_Palette">palette</a></td>
+    </tr>
+    <tr>
+      <td width="48">0x0014</td>
+      <td width="104">4 (dword)</td>
+      <td width="335">Offset from start of file to <a href="#formBAMV1_FrameLUT">frame
+        lookup table</a></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formBAMV1_FrameEntry">BAM V1 Frame Entries</a></h4>
+<p>Several cycles may share the same frame. This is done by adding a layer of
+indirection. Instead of specifying which frames belong to a given cycle, each
+cycle has a list of frame indices.</p>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="336"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">2 (word)</td>
+      <td width="336">Width of frame</td>
+    </tr>
+    <tr>
+      <td width="48">0x0002</td>
+      <td width="103">2 (word)</td>
+      <td width="336">Height of frame</td>
+    </tr>
+    <tr>
+      <td width="48">0x0004</td>
+      <td width="103">2 (word)</td>
+      <td width="336">X coordinate of center of frame</td>
+    </tr>
+    <tr>
+      <td width="48">0x0006</td>
+      <td width="103">2 (word)</td>
+      <td width="336">Y coordinate of center of frame</td>
+    </tr>
+    <tr>
+      <td width="48">0x0008</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">
+        <ul>
+          <li>bits 30-0: Offset to <a href="#formBAMV1_Data">frame data</a>
+          <li>bit 31: if set, frame is not compressed, else frame is RLE
+            compressed</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formBAMV1_CycleEntry">BAM V1 Cycle Entries</a></h4>
+<p>These entries refer to a range of indices in the <a href="#formBAMV1_FrameLUT">frame
+lookup table</a>, which in turn points to the actual frames. Note that entries
+in the <a href="#formBAMV1_FrameLUT">frame lookup table</a> can also be shared
+between cycles.</p>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="336"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">2 (word)</td>
+      <td width="336">Number of <a href="#formBAMV1_FrameLUT">frame indices</a> in this
+        cycle</td>
+    </tr>
+    <tr>
+      <td width="48">0x0002</td>
+      <td width="103">2 (word)</td>
+      <td width="336">Index into <a href="#formBAMV1_FrameLUT">frame lookup table</a> of
+        first frame index in this cycle</td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formBAMV1_Palette">BAM V1 Palette</a></h4>
+<p>The palette is a standard array of 'RGBQUAD' structures, which means that the
+layout looks like:</p>
+<pre>	BB GG RR 00
+	BB GG RR 00
+	BB GG RR 00
+	...
+	BB GG RR 00
+</pre>
+<p>Two possibilities for the purpose of the extra byte ('00') are that it is
+either the alpha component, always set to 0, or that, as is frequently the case
+with Windows programming via GDI, the extra byte could hold flags. (i.e. There
+is a flag that can be set in such entries under Windows to force it to treat the
+palette entry as a palette index instead of an RGB value.) In practice, it
+doesn't matter too much, since BG always runs in 16-bit or higher color mode,
+and doesn't use alpha transparency in its animations.</p>
+<h4 class="reshead"><a name="formBAMV1_FrameLUT">BAM V1 Frame Lookup Table</a></h4>
+<p>This is an array of frame indices. A cycle specifies a sequence of entries in
+this table. For instance, an animation might start at the 0th element in this
+array, and travel over 6 frames. (The next animation, then, would typically
+start at the 6th element and run over some number of indices.) If the first 6
+entries in this table were { 0, 1, 1, 2, 3, 4 }, the animation would display
+frame #0, followed by frame #1 for two time periods, followed by frames 2, 3, 4
+in order. To find the number of entries in this lookup table, all you need to do
+is find the largest value of <code>start+count</code> in the cycle entries
+table.</p>
+<h4 class="reshead"><a name="formBAMV1_Data">BAM V1 Frame Data</a></h4>
+<p>If this is not a compressed frame, then this is simply <code>width*height</code>
+bytes, which are pixel values using the palette specified earlier.</p>
+<p>If this <b>is</b> a compressed frame, then a simple run-length-encoding
+scheme applies. The scheme is as follows:</p>
+<ul>
+  <li>Any byte which is not the transparent index from the header represents
+    itself.
+  <li>The transparent index followed by a byte <code>x</code> represents <code>(x+1)</code>
+    copies of the transparent index</li>
+</ul>
+<p>If you are not familiar with run length encoding, it is a big win because
+most pixels in this type of image are transparent, and up to 256 transparent
+pixels in a row can by compressed down to 2 bytes. Most of the time transparent
+pixels appear in groups of 2 or more, so this compression scheme gains a lot.</p>
+<h2 class="specverhead"><a name="formBAMCV1">BAMC V1</a></h2>
+<p>Overall structure</p>
+<ul>
+  <li><a href="#formBAMCV1_Header">Header</a>
+  <li><em>zlib compressed data</em></li>
+</ul>
+<h4 class="reshead"><a name="formBAMCV1_Header">BAMC V1 Header</a></h4>
+<p>The BAMC V1 data is an entire BAM V1 resource compressed with zlib and with a
+12-byte header prepended, as seen below.</p>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="76"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="308"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="76">0x0000</td>
+      <td width="103">4 (char array)</td>
+      <td width="308">Signature ('BAMC')</td>
+    </tr>
+    <tr>
+      <td width="76">0x0004</td>
+      <td width="103">4 (char array)</td>
+      <td width="308">Version ('V1 ')</td>
+    </tr>
+    <tr>
+      <td width="76">0x0008</td>
+      <td width="103">4 (dword)</td>
+      <td width="308">Uncompressed data length</td>
+    </tr>
+  </tbody>
+</table>
+<p class="toindex">&nbsp;</p>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

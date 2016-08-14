@@ -1,0 +1,627 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Area Editing</title>
+</head>
+
+<body>
+<p>&nbsp;</p>
+<p align="center"><font size="6">Area editing - Manveru's wisdom</font></p>
+<p align="center"><font size="6">version 1.11 (26.10.2001)</font></p>
+<p>Many people think that it is the most sophisticated thing that could be done
+in Infinity Engine. It could be true, but not at all. The main problem with area
+editing is that there are too many things that could be changed - actors,
+triggers, traps, doors, exits, ambient editing - these all things could really
+confuse some people.&nbsp;</p>
+<p>All these things become much easier when we use ICM and Gorin's Area Editor,
+however for some things the hex editor is also essential.</p>
+<p>So, let's get started....;)<br>
+Note : some things could be different for PT - so far I have made successful
+area transfers from BG1 / IWD to BG2.&nbsp;</p>
+<hr>
+<p align="center"><font size="5">Contents<a name="TOP"></a></font></p>
+<table border="1" width="100%">
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Necessary tools and documentation">Necessary tools and documentation</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#How to start ?">How to start</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Existing area modifications (either original or custom):">Existing
+area modification</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Editing area on basis of existing background (using game areas backgrounds)">Editing
+area on basis of existing background</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Using area from other IE game.">Using area from other IE game</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Making your own area (with your own background)">Making your own
+area (with custom background)</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Testing">Testing</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Known problems and solutions:">Known problems and solutions</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#World Map modification :">World map modification</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Scripting">Scripting</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Area songs modification">Area songs modification</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Remarks about area attributes">Remarks about area attributes</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Other 2DA files that may be used in Areas customization :">Other
+2DA files that may be helpful in area editing</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'">
+<p><a href="areaedit.htm#Thanks">Thanks</a></p>
+    </td>
+  </tr>
+</table>
+<hr>
+<p>&nbsp;</p>
+<ol>
+  <li><a name="Necessary tools and documentation"><font size="5">Necessary tools and documentation</font></a></li>
+</ol>
+<p><a href="http://www.teambg.com/">www.teambg.com</a> -&nbsp; In developers
+section topic of this page you will find some important tools for area resources
+edition : <font color="#000099">IEEP</font> is essential (dialog.tlk editing and
+many more). You could also find there <font color="#000099">Scripting Suite</font>
+to write your area scripts, <font color="#000099">Dialog.tlk conventer </font>to
+modify dialog.tlk, <font color="#000099">IDU</font> -<font color="#000099">
+Infinity Dialogue Utility</font> - all these tools are not directly connected
+with area editing, however are useful to modify and make all these elements that
+make your areas unique.</p>
+<p><font color="#000099">ICM
+</font>website - you may found it on <a href="http://www.teambg.net/icm">www.teambg.net/icm</a>&nbsp;
+actually the best utility to area edition, check also their
+tutorials page as well as the Forums.<br>
+<br>
+<a href="http://infexp.sourceforge.net/">infexp.sourceforge.net/</a> - there you
+could find <font color="#000099">Infinity Explorer</font> - it is great tool to
+finding needed resources / testing your add-ons.<font size="2"><span style="font-family:Tahoma"></o:p>
+</span></font></p>
+<p style="margin-left:18.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo1; 
+tab-stops:list 18.0pt"><span lang="EN-US"><font size="2"><span style="font-family: Tahoma"><a href="http://www.hexworkshop.com/"><span style="font-family:Tahoma">www.hexworkshop.com</span></a><span style="font-family:Tahoma">&nbsp;
+- There you will find <font color="#000099">Hex-editor</font> that is useful in
+some cases. <o:p>
+ </o:p>
+ <o:p>
+ </o:p></span></span></font></span><span style="font-family:Tahoma" lang="EN-US"><o:p>
+</span></p>
+<p>Infinity Engine Game Script Compiler (to compile your scripts - in BG2
+attached to Game I highly recommend using Scripting Suite from TeamBG)<br>
+</p>
+<p><a href="http://www.teambg.net/iesdp">www.teambg.net/iesdp</a>&nbsp; - the page where you are now probably either online or offline.<br>
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<ol start="2">
+  <li><a name="How to start ?"><font size="5">How to start ?</font></a></li>
+</ol>
+<p>After completing needed tools one should think what actually he/she wants to do.<br>
+Actually making new areas without any plan has no sense : it is good to have any storyline/scenario for needed add-on written down with specified requirements for the beginning. Sometimes one may use
+<font color="#0000FF"> Infinity Explorer</font> area browser to check how areas look like from original game to modify storyline according to this or even write new one. But one may then note the areas identifiers that will be used in further work, either only as copy of existing area or as basis for totally new area with new background, etc.<br>
+<br>
+It is good to use then some organizing tool - actually old good pen and paper are usually the best solution to think about structure of areas, their appearance and also any links between may areas that will be included in new Add-on.<br>
+<br>
+One may also use <font color="#0000FF"> MS Excel, Access </font> or whatever to write for himself descriptions of these areas, what is their purpose, etc.. to have any order in the editing work.<br>
+<br>
+It is good to choose some kind of specific area naming convention to make areas with different names than the original ones or if one is working with other people then to not cause the situation where the same identifiers were used many times by other MOD team members.&nbsp;<br>
+<br>
+For example ARM*** where AR is necessary and the rest is just jour convention
+name.<br>
+<br>
+<br>
+After some planning one may start to practice part of project :<br>
+<br>
+As I said at the beginning : we use <font color="#000099"> Infinity Explorer (or Near Infinity)
+</font> to find all needed areas that we want to edit - even making areas from the scratch requires using existing area as the basis (with current
+<font color="#000099">ICMv1.1</font>). <br>
+<br>
+Firstly we will start by setting up our own campaign in <font color="#000099"> ICM</font> : after installing this program we choose it in Start menu or wherever it is installed and then we choose option
+<font color="#0000FF"> New</font> from <font color="#0000FF"> Campaign menu</font>. Then we fill all needed fields :<br>
+<br>
+<font color="#800080">Campaign Folder </font><font color="#008080"> -</font> This is where your basic folder will be made for your campaign. It contains your Campaign.icm
+field and Campaign.cfg file so you can load this campaign whenever you want. It also has the backups, music and areas folder.&nbsp;<br>
+Ex. C:\Program Files\Campaign Main Folder<br>
+<br>
+<font color="#800080">Resources Folder</font> - This is where all the folders will go for Characters, Creatures, Items, Spells etc... will be made. You can look in these folders with the Resources Browser.&nbsp;<br>
+Ex. C:\Program Files\Campaign Resources Folder<br>
+<br>
+<font color="#800080">Game Install </font> - This is the folder that contains the install of the game.&nbsp;<br>
+Ex. C:\Program Files\Black Isle\BGII - SoA<br>
+<br>
+<font color="#800080">CD/game data </font> - This is where it will read off of your CDs.&nbsp;<br>
+Ex. G:\&nbsp;<br>
+<br>
+In the CD spot you could also put name of main directory of IE game...<br>
+<br>
+ex. C:\Program Files\Black Isle\BGII - SoA<br>
+<br>
+...if you have a full install, because the previous directory has subfolders named CD2, CD3, CD4, CD5.<br>
+<br>
+That means you won't have to swap CDs all the time<br>
+<br>
+<font color="#800080">IEEP</font> - This is the location of Infinity Engine Editor Pro.&nbsp;<br>
+Ex. C:\Program Files\Infinity Engine Editor Pro<br>
+<br>
+<font color="#800080">IDU</font> - This is the location of Infinity Dialog Utility.&nbsp;<br>
+Ex. C:\Program Files\idu</p>
+<p><font color="#FF0000">Note :&nbsp; If we are going to use areas from other IE
+game then it is good to make the campaigns for these games as well.&nbsp;</font></p>
+<p>After that we could start customization.</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<ol start="3">
+  <li><a name="Existing area modifications (either original or custom):"><font size="5">Existing area modifications (either original or
+    custom)</font></a></li>
+</ol>
+<p>We use <font color="#000099">ICM</font> :</p>
+<p>In aim to modify area's contents it should be imported to campaign (<font color="#0000FF">IE game</font>  ---->
+<font color="#0000FF">Areas</font>, we choose area and click &quot;<font color="#0000FF">Add area to
+campaign</font>&quot; option). Then in main window, in <font color="#0000FF"> Campaign Areas</font> section new area should appear - we click two times on it's name and next window will show up: it will be entitled by edited area name.<br>
+<br>
+Then we can edit area: just click on one of &quot;<font color="#0000FF">Area
+Information</font>&quot; elements and then click the right mouse button on the part of map where the edition is needed - enlarged part of area should appear, then you could place all needed things (depending on what features were highlighted by user in
+&quot;<font color="#0000FF">Area information</font>&quot; window).<br>
+We put our modifications simply by clicking on the icon of the needed area feature and clicking the left button on the enlarged area background.&nbsp;<br>
+<br>
+If you click on existing feature then you will have the possibility to modify it for your purposes.<br>
+<br>
+<font color="#FF0000">One important remark:</font> The wall groups could be modified - walls mean all obstacles that couldn't be passed
+or put a shade on creature when it is passing from the back of it&nbsp; (for example
+chairs, tables, trees, walls) and also all kinds of roofs that are visible on
+area and NPC may go under this without changing current area file. They are put by using option &quot;<font color="#0000FF">walls</font>&quot; in area edition window of
+<font color="#000099">ICM</font>. Walls are written to wed file.&nbsp;<br>
+The same thing about search auxiliary map that is modified by using terrain regions option
+There is also option to modify illumination map and height map.<br>
+<br>
+Check also <a href="Wallgroups.htm">wallgroups editing rules</a> for more information.</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<ol start="4">
+  <li><a name="Editing area on basis of existing background (using game areas backgrounds)"><font size="5">Editing area on basis of existing background (using game areas backgrounds)</font></a></li>
+</ol>
+<p>
+It is the easiest method of area making - it requires only to change *.are file with reference to given *.wed file.<br>
+<br>
+For example we use Ar0313.are in BG2 (Inn in the docks district in BG2) as basis of our area - just use
+<font color="#000099"> Infinity explorer </font> to export *.are file (in our example Ar0313.are)<br>
+Then we have to change name for another that will be our area's identifier. By convention it is good to name it ar****.are where **** are for you use.<br>
+<br>
+We could also use <font color="#000099"> ICM</font> to do it: After making new campaign folders (menu
+<font color="#0000FF">Campaign</font>, <font color="#0000FF">New</font>) we go to
+<font color="#0000FF"> IE Game</font> menu and choose <font color="#0000FF"> Areas</font> option - we choose desired area and in actions menu we click on
+<font color="#0000FF"> Copy as new area</font>. option - then new window will appear - there we choose whether our area will be copied with all files (wed/biff) or only *.are file (in our case we select
+&quot;<font color="#0000FF">Share file with source area</font>&quot;).<br>
+Then we choose name for our area and <font color="#000099"> ICM</font> copies all required files to your campaign folder\areas folder.
+<font color="#000099"> ICM</font> also modify Chitin.key so you can quickly determine if your further changes do not mess up your area files by using for example
+<font color="#000099"> Infinity Explorer</font> instead of checking everything in game. In aim to use area made by
+<font color="#000099"> ICM</font> we have to copy *.are files from your campaign folder\areas folder to override.<br>
+<br>
+So we have new area file but now we could change almost all things there - we use
+<font color="#000099"> Gorin's Area editor </font> to do it or <font color="#000099"> ICM</font> 
+(much better, since I have heard about many problems with Gorin's utility) (- we add new containers, actors (NPCs/monsters), triggers (traps for example), exits, animations, ambient sounds etc.&nbsp;<br>
+</p>
+<p>
+We change also area script name for our area (e.g. from Ar0313 to Ar****) then ar****.bcs will be our new area script that could be compiled by IE game script compiler.<br>
+<br>
+If we don't want to do it in ICM we just use hex editor and find the line with the former area name (offset 0x94) and we enter there our area script name.<br>
+<br>
+How to check our area in game?<br>
+If you haven't modified any existing area to make link with your areas then use CLUAConsole: (in BG1/BG2)<br>
+<font color="#0000FF">CLUAConsole:MoveToArea("areaname")</font><br>
+<br>
+Remember that even if you have modified existing area to make the link between it and your custom area but you have visited this area earlier in all your saved games then you need to start new game in aim to notice your changes.&nbsp;</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p>
+&nbsp;</p>
+<ol start="5">
+  <li><font size="5"><a name="Using area from other IE game.">Using area from other IE game.</a></font></li>
+</ol>
+<p>
+We have to use <font color="#000099"> ICM</font> in aim to do it. We open this program, create new campaign for game from which we want to import given area, them we choose from
+<font color="#0000FF"> IE game,</font> <font color="#0000FF"> Areas</font> option - we select desired area and in actions menu we click on
+<font color="#0000FF"> Export Area</font> option.<br>
+<br>
+Then we open campaign of the destination IE game. After that we choose from <font color="#0000FF"> IE Game</font> menu
+<font color="#0000FF"> Areas</font> option - then we click on <font color="#0000FF"> Import
+Area</font> option and we look for our source campaign resources folder (this first campaign that was assigned to the game that was used as the source of your area). In particular we look for Export folder where our exported area is located.<br>
+When we find it we just click on desired area name and click on "done". Area is imported to your areas list in destination campaign.<br>
+Then we could add this area to our campaign to make further modifications or make some copies as new areas (are files), etc..<br>
+</p>
+<p><b>But in aim to use such an area some additional things should be done:<br>
+</b><br>
+Sometimes ICM "forgets" to replace its own temporary identifiers inside WED and ARE files by identifiers defined by user during importing area. And also has some problems with Chitin.key references for auxiliary map.&nbsp;<br>
+<br>
+The result is that new area crushes game during loading.<br>
+<br>
+<b>Solutions :<br>
+</b><br>
+1) Edit in hex editor *.wed *.bif files and replace former area references by my own ref. it means:<br>
+In wed file: from offset 0x24 we enter new area filename replacing the old one (if ICM haven't changed that).<br>
+<br>
+In bif file: we use find function in aim to find old area filename (are or wed file name) if there are no matches then we change nothing. In other case we enter our area file name.<br>
+<br>
+2) From IE we import auxiliary maps and give them new names according to identifiers in wed/bif files:<br>
+<br>
+For example if area is named Arm001 then our auxiliary maps should be named as follows:<br>
+<br>
+ARM001sr.bmp - search map - determines whether some area is passable or not and determines what kind of walking sound is made when party goes through the area - it could be changed by using proper colors on the map - we receive them from ICM's "Terrains region" from "Area information". Then we could put our regions on enlarged parts of area (one icon before walls icon in "gaming scale window - use it on some parts of area , use "save" option from Search map window that appear after each change of search map - you could use also graphics editor and fill needed areas with required colors)<br>
+<br>
+Note : ICM earlier versions than v1.1 saves edited Search map as 24bit BMP when
+it should be 16 colors BMP - use graphics program to save this file again as 16 color BMP if ICM has modified it by changing it to 24bit or 16bit BMP - it could be even simple Windows Paint.<br>
+<br>
+ARM001lm.bmp - illumination map - determines what color is reflected on NPCs in the area. May be also modified either by ICM
+illumination regions option or in graphics editor.<br>
+<br>
+ARM001ht.bmp - height map - May be modified in ICM , I have no idea about exact results on game play..&nbsp;<br>
+<br>
+3) We modify are file (monsters, ambient sounds, triggers, etc.).<br>
+<br>
+But in aim to use such an area some additional things should be done:<br>
+1) Edit in hex editor *.wed *.bif files and replace former area references by my own ref. it means:<br>
+In wed file: from offset 0x24 we enter new area filename replacing the old one (if
+<font color="#000099"> ICM</font> haven't changed that).</p>
+<p>In bif file: we use find function in aim to find old area filename (are or wed file name) if there are no matches then we change nothing. In other case we enter our area file name.</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<ol start="6">
+  <li><font size="5"><a name="Making your own area (with your own background)">Making your own area (with your own background)</a></font></li>
+</ol>
+<p>
+The most advanced level in area making as I suppose.<br>
+<br>
+But the first part of this process is actually the same as in case of using areas from other IE games - copy some area as new area with all files (are/bif/wed) it is described in part
+5 of my tutorial.</p>
+<p>
+The second thing is that you have to obtain information how big is your area in tiles units. Where one tile = 64x64 pixels square. So if you have area 80x60 tiles its BMP should have dimensions : 5120x3840 pixels. This bitmap should be saved as 24bit BMP file. There are some more remarks later about this .<br>
+<br>
+Modifications of background/walls structure: use enlarged parts of existing background (import it by using
+&quot;<font color="#0000FF">save to bmp</font>&quot; option in <font color="#000099"> ICM</font> - the first icon from the left and modify the bmp file that is located in area folder of your campaign folder) to modify them for your purposes (where
+<font color="#000099"> ICM</font> names files as Areanamebck-number i-number - j.bmp, where i and j are tiles numbers in left upper corner of this map
+part (for example ARM100bck-1-1.bmp).</p>
+<p>In aim to enter your corrections /changes to map you should use &quot;<font color="#0000FF">Background</font>&quot; option from area window (it will change only edited part -
+<font color="#000099"> ICM</font> has the info which one in the filename - these strange numbers)</p>
+<p><font color="#FF0000">Note :&nbsp; for minimap modification in old versions of ICM we use the same method as for main map, however the filename is different : </font></p>
+<p><font color="#FF0000">areanamebckmm-number i-number j.bmp (for example
+ARM100bckmm-1-1.bmp )- In ICM v1.1 the program changes minimap by itself, so there is no need to do it manually.</font></p>
+<p>There is also one more important thing during our modifications : before
+importing modified area background it is good to do the following :</p>
+<p>Decrease the number of area colors in graphics editor to 8bit (256 colors)
+with chosen options : <font color="#0000FF">Palette type - optimized , Type of
+color simulation - errors diffusion&nbsp;</font>&nbsp;</p>
+<p>Then we have to change colors again to 24bit. All these actions are necessary
+to prevent loosing colors when <font color="#000099">ICM</font>
+imports picture into area .&nbsp;<br>
+<br>
+Use "walls" feature in "Area information" window - choose part of map to edit, click the right button of mouse on it and edit walls by using
+<font color="#0000FF"> walls</font> icon (in current version of <font color="#000099"> ICM</font> it is the last icon) and filling the polygons that will bound your walls - don't forget about adding these walls to the nearest group wall.&nbsp;</p>
+<p>Exact explanation of Wallgroups editing is HERE.<br>
+<br>
+Modify search, height, light maps in your graphics editor (<font color="#000099">ICM</font>,
+<font color="#000099">Corel Photo Paint</font> or other) - take into account my
+earlier remarks about auxiliary maps.</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<ol start="7">
+  <li><font size="5"><a name="Testing">Testing</a></font></li>
+</ol>
+<p>Firstly you will have to copy all needed files: are (maps)/ wed (maps) /mos (minimaps) / bmp (auxiliary maps named as it is stated in section D) / cre (creatures/NPCs) / dlg (dialogues) / bcs (scripts) / itm (items) / spl (spells)
+/bam (animations) into override directory.<br>
+<br>
+Bif files should be copied into data directory of IE game.
+</p>
+<p>
+<br>
+In case if you used <font color="#000099"> ICM</font> the situation is easy: all your added areas were entered to chittin.key file, so they can be checked in Infinity Explorer.<br>
+<br>
+In <font color="#000099"> ICM</font> use the Area Editor Menu<br>
+<br>
+<font color="#0000FF">AREA->EXPORT AREA DATA TO IE GAME</font><br>
+<br>
+This window will show you all resources that need to be exported to the IE game in order to play your area. If you select one or more only those resources will be exported, if you do not select any all the needed resources will be
+exported.
+</p>
+<p>
+In game we just move to the tested area: <font color="#0000FF"> CLUAConsole("Areaname")</font> and check if everything is ok.
+</p>
+<p>Or if you have added area to the worldmap you may test it making new game or another possibility is that you have made link with other earlier existing area - load savegame where you haven't visited this area and go to new
+area.
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p><br>
+</p>
+<ol start="8">
+  <li><font size="5"><a name="Known problems and solutions:">Known problems and solutions:</a></font></li>
+</ol>
+<p>
+<font color="#FF0000">1) Problems with "rest party" option,</font> sometimes I have heard about these problems , so if you encounter the problem that game crushes when you choose the rest party option in new area then check this solution:&nbsp;<br>
+<br>
+We have to modify *.are file in hex editor - we change value in offset 0x48 and 0x49 to 00 (it causes that if someone tries to rest then appears message: "You may not rest here....") - this is the easiest
+solution. <br>
+<br>
+However in some cases we want to have the possibility to rest party in some area - unfortunately it is much more complicated :<br>
+<br>
+<font color="#800080">On offset 0x00C0 of ARE file header</font> you have to put the starting offset (from the file beginning) of "rest party interrupt section" that is usually located at the end of the ARE file - the structure of this section is given in ARE file format description. This value in 0x00C0 must be written in little endian standard (check Hex glossary for definition).&nbsp;<br>
+<br>
+<font color="#FF0000">Very Important Remark : </font> Earlier ICM versions (than 1.1) had some problems with proper reference numbers in header section - for now the best thing that could be done is checking if all numbers in header are valid using my are file description as the map. In situation if any of the reference numbers is set inside other section or in invalid place (like values that are higher than are file length) it should be changed manually to the proper value. <br>
+<br>
+2) Problems with door making: not solved - <font color="#000099"> Gorin's Area Editor</font> changed all doors in the given area, causing mess (ar0700 in BG2) during my tests, In
+<font color="#000099"> ICM</font> there is not implemented doors function.
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p>
+<br>
+</p>
+<ol start="9">
+  <li><font size="5"><a name="World Map modification :">World Map modification :</a></font></li>
+</ol>
+<p>It could be done in <font color="#000099">ICM</font>, however it causes some errors that should be eliminated in Hex editor (improper length of area entries, some problems with area link entries).&nbsp;<br>
+<br>
+Some remarks :&nbsp;<br>
+<br>
+Area links sections - starting offset in respect worldmap entry (look into IESDP
+<a href="../FilesFormats/wmapformat.htm"><font color="#FF0000"> WMPfile format</font></a> for description of worldmap
+entry).<br>
+</p>
+<p>Area link segments :
+</p>
+<p>Length of one area link segment - D8 bytes<br>
+<br>
+Areas entries :<br>
+most important remarks - length of one area entry ALWAYS F0.<br>
+</p>
+<p>After placing area on the world map in aim to test it you should start new game.<br>
+I have checked what is going with all saved games - each such a save game has its own worldmap.wmp file . I have compared some of them and I found that difference between them is that they have set different flags in area entries what results in game by that some areas are visible, accessible when other are hidden, because quest required to visit them wasn't started (modified in scripts by commands RevealAreaOnMap, HideAreaOMap ) or player simply didn't visit them.&nbsp;<br>
+<br>
+In aim to convert save games to make them compatible with add-on map one should write installer that would write respectively area and area link entries to worldmap.wmp in each saved game folder. I'm not the best programmer, so maybe other people will do it.  &nbsp;<br>
+<br>
+As for testing one may also add his modified worldmap.wmp to existing savegame folder, so it will be accessible in this
+savegame.
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p>&nbsp;
+</p>
+<ol start="10">
+  <li><font size="5"><a name="Scripting">Scripting</a></font></li>
+</ol>
+<p>
+In aim to write area scripts there should be included reference to this script
+in are file :
+</p>
+<p>
+Either in ICM or using hex editor we change the area script. In the first case
+it is easy : we choose area from &quot;Campaign areas&quot; and from menu
+&quot;Area&quot; we choose &quot;general info&quot;. There is the field where we
+change the script used by area (it should be put in scripts folder of your
+campaign resources).
+</p>
+<p>
+We could always do it using hex editor - starting from 0x94 offset we enter the
+filename of our script (8 characters) without file extension.
+</p>
+<p>
+In aim to compile script we use compiler attached to game (BG2 for example) or
+we download it from Internet (it should be somewhere on the official Bioware/Interplay
+pages and on many other customization sites)&nbsp;&nbsp;
+</p>
+<p>
+The following actions are used in Area scripting (not all so far are listed here) :
+</p>
+<p>
+Revealing map on worldmap : RevealAreaOnMap(S:areaname) (map with attributes 0)<br>
+Hiding area on worldmap : HideAreaOnMap(S:areaname)&nbsp;<br>
+<br>
+so, respectively replacing one area by another is done in the following manner -<br>
+in script or dialogue :<br>
+<br>
+HideAreaOnMap(earlier area)<br>
+RevealAreaOnMap(wanted area)<br>
+<br>
+other<br>
+<br>
+TriggerActivation(S:triggername,boolean) - activate and deactivate triggers in the given area
+(for example entry points)
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p>
+&nbsp;
+</p>
+<ol start="11">
+  <li><font size="5"><a name="Area songs modification">Area songs modification</a></font></li>
+</ol>
+<p>Songlist.2da<br>
+In case of BG2 area music is determined by SONGLIST.2DA and in IWD this file is
+called music.2da&nbsp; Let's consider only BG2 case :.<br>
+<br>
+We just open songlist.2da in notepad (after importing using IE) and add next line to the file with contents:<br>
+<br>
+Next number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Identifier&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+******.MUS&nbsp;<br>
+<br>
+Where:</p>
+<p>Next number is the next number on the list.<br>
+Identifier - some name for desription purposes , maybe it could be also used in scripting , I didn't check that.<br>
+******.MUS file that contains of the reference to proper *.acm file<br>
+<br>
+Modification of Are files :<br>
+<br>
+Reference to the songs is in the header of are file - look here : <a href="../FilesFormats/AreFormat.htm">AREA file format</a><br>
+<br>
+The song section should be modified according to the format information - <a href="../FilesFormats/AreFormat.htm#Songs entries">Songs
+entries</a><br>
+<br>
+the role of other offsets is unknown. If you have any information then I would
+be grateful if you could share it with me.<br>
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p><a name="Remarks about area attributes">12.&nbsp; <font size="5">Remarks about area attributes</font><br>
+</a><br>
+In offset 0x48 there are written area attributes (the area is outdoor or it is dungeon, etc..)<br>
+<br>
+They may be easily modified by ICM in area general info option.<br>
+<br>
+It is marked by using bit flags that are as follows: <br>
+(Remark for people that don't know what the bit is - the smallest unit of information - could have only two states - 1 or 0)<br>
+<br>
+Bit 0: Outdoor<br>
+Bit 1: day/night<br>
+Bit 2: weather<br>
+Bit 3: city<br>
+Bit 4: forest<br>
+Bit 5: dungeon<br>
+Bit 6: extended night<br>
+<br>
+If bits 3 or 4 or 5 are set to zero then "normal" area type is set as default - I think that only one of these bits can be set to 1 - if two of them are set to 1 then it could cause some strange results (game crushes)<br>
+<br>
+Normal area type means that player will receive message "you may not rest here...." if he tries to rest party in such an area.<br>
+Bit 3: City - NPCs use their "city" speech, rest in forest movie is used when party is resting<br>
+Bit 4: Forest - NPCs use their "forest" speech, rest in forest movie is used when party is resting<br>
+Bit 5: Dungeon - NPCs use their "dungeon" speech, rest in dungeon movie is used when party is resting, echo is added.<br>
+<br>
+Bit 6: extended night - requires additional auxiliary map (light map for night) - if map is not available in override folder (or bif as default in case of original areas) then game crushes in any probe of loading such an area.<br>
+<br>
+If we want to make the hex number then we construct firstly number in binary system. <br>
+For example we have an area with attributes: outdoors, day/night, weather, forest.<br>
+We have the following binary representation: 00010111 (where 0 bit is on the left side of number)<br>
+When we have constructed 8bit number as shown in example we have to convert it to hexadecimal system. <br>
+In our example we received value $17 and we enter this value to offset 0x48.
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p><br>
+<br>
+<a name="Other 2DA files that may be used in Areas customization :">13. <font size="5"> Other 2DA files that may be used in Areas customization :</font></a>
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+<p><br>
+<br>
+<a name="Thanks">14. <font size="5"> Thanks</font></a><br>
+<br>
+To Gaelion and Patternstorm for your ICM (it is indeed powerful tool)<br>
+To Gorin (area editor)<br>
+To TeamBG programmers (Ken, Cat, Todd) for their great utilities (IEEP,IDU, etc..)<br>
+<br>
+If you have any comments/suggestions then email me at:&nbsp; <a href="mailto:manveru@poczta.onet.pl">manveru@poczta.onet.pl</a>
+</p>
+<hr>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#TOP">Top</a></td>
+  </tr>
+</table>
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

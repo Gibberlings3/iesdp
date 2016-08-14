@@ -1,0 +1,2597 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Scripting</title>
+</head>
+
+<body>
+
+<p align="left">By Kensai Ryu</p>
+<p><font size="5"><a name="0 NoAction()">0 NoAction()</a> </font>is used sometimes as an alternate to doing
+something. As an example to make characters walk around randomly or stand in one
+place doing nothing:<br>
+<br>
+IF<br>
+&nbsp;True()<br>
+THEN<br>
+&nbsp;RESPONSE #50<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RandomWalk()<br>
+&nbsp;RESPONSE #50<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NoAction()<br>
+END<br>
+</p>
+<p>This command can also be used to stop something from happening.<br>
+<br>
+For example, I used it to stop Bard Song in a kit.<br>
+<br>
+IF<br>
+&nbsp; &nbsp;ModalState(BATTLESONG)<br>
+THEN<br>
+&nbsp;RESPONSE#100<br>
+&nbsp; &nbsp;NoAction()<br>
+END<br>
+<br>
+</p>
+<p><font size="5"><a name="1 ActionOverride(O:Actor*,A:Action*)">1
+ActionOverride(O:Actor*,A:Action*)</a></font> <a name="1 ActionOverride(O:Actor*,A:Action*)">
+</a> is used to tell an
+actor to do something overriding his own actions. It is mostly used in cutscenes,
+but it can be used for anything. The following is from the Irenicus cut scene
+after leaving his abode in chapter 1. It shows a good example of using this
+command.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CutSceneId(Player1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FadeToColor([20.0],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;JumpToPoint([869.340])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;MoveViewPoint([909.346],INSTANT)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player2,JumpToPoint([825.370]))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player3,JumpToPoint([886.384]))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player4,JumpToPoint([952.386]))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player5,JumpToPoint([987.362]))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player6,JumpToPoint([1005.404]))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Face(10)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player2,Face(10))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player3,Face(10))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player4,Face(8))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player5,Face(6))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player6,Face(6))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Anomen&quot;,JumpToPoint([909.346]))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Anomen&quot;,Face(10))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;FadeFromColor([20.0],0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Wait(2)<br>
+&nbsp; ActionOverride(&quot;Anomen&quot;,StartDialogueNoSet(Player1))<br>
+END<br>
+<br>
+<br>
+<font size="5"><a name="2 AddWayPoint(P:WayPoint*)">2 AddWayPoint(P:WayPoint*)</a></font> Is used to set waypoints for a
+cre to move from one location to another. Examples of this are barmaids and
+anyone moving in a set pattern.<br>
+<br>
+This is how you would script to make the way points, a good place to add this is
+in the area scripts. With the (Number.Number) being the X and Y coordinates.<br>
+<br>
+IF<br>
+&nbsp; &nbsp;Global(&quot;KRNEWWAY&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;KRNEWWAY&quot;,&quot;GLOBAL&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddWayPoint(100.200)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddWayPoint(200.300)<br>
+END<br>
+<br>
+<br>
+The following Script is taken from the barmaid at the Copper Coronet the way
+points are already set in the Area file as triggers this is an example of how to
+move to the waypoints:<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Detect([PC])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Allegiance(Myself,NEUTRAL)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;quest1&quot;,&quot;LOCALS&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;MoveToObject(&quot;Way3&quot;)<br>
+&nbsp;ActionOverride(&quot;DRUNK2&quot;,DisplayStringHead(Myself,4592)<br>
+&nbsp;Wait(1)<br>
+&nbsp;DisplayStringHead(Myself,4604)<br>
+&nbsp;Wait(2)<br>
+&nbsp;MoveToObject(&quot;Way4&quot;)<br>
+&nbsp;Wait(1)<br>
+&nbsp;MoveToObject(&quot;Way3&quot;)<br>
+&nbsp;DisplayStringHead(Myself,4611)<br>
+&nbsp;Wait(2)<br>
+&nbsp;SetGlobal(&quot;quest1&quot;,&quot;LOCALS&quot;,1)<br>
+END<br>
+<br>
+<br>
+<font size="5"><a name="3 Attack(O:Target*)">3 Attack(O:Target*)</a></font> is used to Attack something until it
+dies. It is used in place of attack reevaluate if you dont want to reevaluate,
+just want to continue attacking the same target. I use it to insure high
+priority creatures are dead before moving on to lower priority targets in my
+scripts. I would use the following to attack mages with tanks until they are
+dead. I check for slimes and wyverns because those are also listed as MAGE_ALL).<br>
+<br>
+<br>
+IF<br>
+See([EVILCUTOFF]) // if i see enemies<br>
+&nbsp; Class(LastSeenBy(),MAGE_ALL)// mages<br>
+&nbsp; !Race(LastSeenBy(),SLIME)//not slimes though<br>
+&nbsp; !Race(LastSeenBy(),WYVERN)// or wyverns<br>
+&nbsp; !InParty(LastSeenBy())// and not in party<br>
+&nbsp;THEN<br>
+&nbsp;&nbsp;&nbsp; RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Attack(LastSeenBy())<br>
+END<br>
+<br>
+<font size="5"><a name="5 BackStab(O:Target*)">5 BackStab(O:Target*)</a></font> is used to backstab the
+target.However some enemies like Dragons and Golems are immune to backstab so it
+wont work on them. I rarely see this command in a script because any of the
+attack actions work as a backstab if you are a thief and hidden and you attack
+with a valid backstab weapon (like dagger, shortsword, katana,etc...) from
+behind.<br>
+<br>
+(Note it was pointed out to me by the moderator of another scripting group that
+this command is broken and does not work, and has been confirmed by Bioware to
+crash the game thats why I rarely see it in a script he he)<br>
+<br>
+So if you want to Backstab, dont script it as backstab, just make sure you are
+invisible and behind the target with a backstab weapon and you dont miss the
+first swing.<br>
+<br>
+IF<br>
+&nbsp;See(NearestEnemyOf())// see enemy<br>
+&nbsp;Range(NearestEnemyOf(),4)<br>
+&nbsp;!Race(NearestEnemyOf(),DRAGON)//not dragon<br>
+&nbsp;!Race(NearestEnemyOf(),GOLEM)// not golem<br>
+&nbsp;!InParty(NearestEnemyOf(Myself))//not in party<br>
+&nbsp;OR(2)<br>
+&nbsp; &nbsp;StateCheck(Myself,STATE_INVISIBLE) // im invisible<br>
+&nbsp; &nbsp;StateCheck(Myself,STATE_IMPROVEDINVISIBLITY)<br>
+THEN &nbsp;//
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;or improved invisibilty<br>
+&nbsp;&nbsp;&nbsp; RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Attack(NearestEnemyOf())<br>
+END<br>
+<br>
+<font size="5"><a name="7 CreateCreature(S:NewObject*,P:Location*,I:Face*)">7
+CreateCreature(S:NewObject*,P:Location*,I:Face*)</a></font> is used
+to create anything from creature files (.cre like Orc01.cre) to NPC's (.cre as
+in Aerie.cre). With NewObject being the creature name, Location being [x.y] and
+direction being which way they are facing (from 0-14 if I remember right) .<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[2338.412],14)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+CreateCreature (&quot;CRENAME&quot;,[X.Y],D)<br>
+<br>
+<br>
+An example of this command is spawning additional guards in the Copper Coronet
+via the area script (AR0406) when the Player Characters are discovered in the
+back room (where they are not supposed to be).<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;CopperGuards&quot;,&quot;GLOBAL&quot;,1)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[2338.412],14)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard2&quot;,[2318.457],14)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[2749.793],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard2&quot;,[2791.831],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[1981.762],14)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;ccguard1&quot;,[1286.1500],14)<br>
+END<br>
+<br>
+Another use for this command is spawning creatures near the protagonist. Heres
+an example of failed thieving:<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Opened([ANYONE])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See([NOTGOOD])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!StateCheck(LastTrigger,STATE_INVISIBLE)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!StateCheck(LastTrigger,STATE_IMPROVEDINVISIBILITY)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DisplayString(LastTrigger,9896)<br>
+//Someone has noticed you! You hear the guards being<br>
+// summoned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;WATCHN&quot;,[-1.-1],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;WATCHN2&quot;,[-1.-1],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;WATCHN2&quot;,[-1.-1],0)<br>
+END<br>
+<br>
+<br>
+<br>
+<font size="5"><a name="8 Dialogue(O:Object*) 8 Dialog(O:Object*)">8
+Dialogue(O:Object*)<br>
+8 Dialog(O:Object*)</a></font><br>
+&nbsp;<br>
+Because these 2 actions have the same # (8) they both have the same function. To
+start a dialog file with the listed object.<br>
+Dialog files are found in Dialog.talk and use the same language as scripting
+commands.<br>
+<br>
+In the example Yeslick will start a conversation if both of the following are
+true: the global timer &quot;Yeslick&quot; is expired and the Global Variable
+&quot;FLOODED&quot; is at 0.<br>
+<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;GlobalTimerExpired(&quot;Yeslick&quot;,&quot;GLOBAL&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;FLOODED&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Dialogue([PC])<br>
+END<br>
+<br>
+<font size="5"><a name="9 DropItem(S:Object*,P:Location*)">9
+DropItem(S:Object*,P:Location*)</a></font> is used to drop an
+object to the [x.y] coordinates. An Examples I created is dropping a scroll on
+the ground after the PC's rotate a wheel by clicking on it. Note the object
+running the script must be carrying the object to drop it.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Clicked([ANYONE])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Range(LastTrigger,12)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;Global(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp; DisplayStringHead(Myself,48334)// you may rotate the<br>
+// wheel if you want<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,1)<br>
+END<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Clicked([ANYONE])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Range(LastTrigger,12)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;Global(&quot;KRFreeItem&quot;,&quot;GLOBAL&quot;,1)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+DropItem(&quot;SCRL1B&quot;,345.1210)<br>
+END<br>
+<br>
+You can also use this command to drop items the player is carrying by changing
+the X Y locations to [-1.-1]<br>
+<br>
+One use for this could be scripting your characters to automatically drop any
+cursed items found.<br>
+<br>
+IF<br>
+HasItem(&quot;Sw1h01&quot;,Myself)<br>
+THEN<br>
+RESPONSE #100<br>
+DropItem(&quot;Sw1h01&quot;,[-1.-1])<br>
+END<br>
+</p>
+
+<p>When used from a character's or creatures script, the Location is relative to
+that actor's position on the map.<br>
+<br>
+For example, using ActionOverride(&quot;Minsc&quot;,DropItem(&quot;POTN52&quot;,[0.0]))
+would make the item drop right below Minsc's feet.<br>
+<br>
+</p>
+
+<p><br>
+<font size="5"><a name="10 Enemy()">10 Enemy()</a></font> is used to Set the Enemy/Ally Allegiance to
+Enemy of Player Characters. An example of this is if a peasant is attacked his
+allegiance will change from Neutral to Enemy.<br>
+<br>
+IF<br>
+AttackedBy([GOODCUTOFF],Myself)<br>
+Allegiance(Myself,NEUTRAL )<br>
+THEN<br>
+RESPONSE #100<br>
+Enemy()<br>
+END<br>
+&nbsp; &nbsp;<br>
+<font size="5"><a name="11 EquipItem(S:Object*)">11 EquipItem(S:Object*)</a></font> should equip the item, however I
+have not tried this action yet. I will test it in a script and update if it does
+not work.It is probably not a good idea to script this as it might destroy
+whatever else is presently equipped I will find out tonight and .<br>
+<br>
+IF<br>
+&nbsp;HasItem(&quot;Sw1h01&quot;,Myself)<br>
+&nbsp;!HasItemEquipedReal(&quot;Sw1h01&quot;,Myself)<br>
+THEN<br>
+&nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp; Equip(&quot;Sw1h01&quot;,Myself)<br>
+END<br>
+<br>
+After testing I believe the Equip action is broken the above script does not
+work, I have also tried about 4 other scripts with no effect. I will test some
+more on this and post results if anyone else has more info please post.<br>
+<br>
+UPDATE ON THE ACTION EQUIPITEM : It does work for weapons, you just need to have
+them in the quickslot to be equipped.<br>
+<br>
+<br>
+<font size="5"><a name="13 FindTraps()">13 FindTraps()</a></font> <a name="13 FindTraps()">
+</a> is used to do just that. You can script any
+character to try and find traps, however if they dont have any points in the
+ability it will be futile. This command is often used in scripts for Thieves.<br>
+<br>
+IF<br>
+ActionListEmpty()<br>
+!Exists([EVILCUTOFF])<br>
+!ModalState( Myself,DETECTTRAPS)<br>
+OR(2)<br>
+!StateCheck(Myself,STATE_INVISIBLE)<br>
+!StateChe ck(Myself,STATE_IMPROVEDINVISIBILITY)<br>
+THEN<br>
+RESPONSE #100<br>
+FindTraps()<br>
+END<br>
+<br>
+<font size="5"><a name="14 GetItem(S:Object*,O:Target*)">14
+GetItem(S:Object*,O:Target*)</a></font> suggest's that this
+command can be used to get an Item however I have<br>
+been unable to get it to work. I have tried the following script with no effect:<br>
+<br>
+IF<br>
+See([ANYONE])<br>
+!HasItem(&quot;Sw1h01&quot;,Myself)<br>
+HasItem(&quot;Sw1h01&quot;,LastSeenBy ())<br>
+THEN<br>
+RESPONSE #100<br>
+MoveToObject(LastSeenBy())<br>
+GetItem(&quot;Sw1h01&quot;,LastSeenBy())END<br>
+<br>
+<font size="5"><a name="15 GiveItem(S:Object*,O:Target*)">15
+GiveItem(S:Object*,O:Target*)</a> </font>will allow you to pass
+items back and forth. However you must have the item to pass it back and forth.
+&nbsp;Examples of this are rings of regeneration swapped between players as
+needed and giving potions to characters that don't have any if no cleric is
+present. Note that the command global shout requires modified Action, Instant,
+trigger, and svtriobj, ids files. If you need these files I can send you the
+modified ones. They need to be put in the scriptcompiler directory, not the
+override folder.<br>
+<br>
+IF<br>
+HPPercentLT(Myself,40)// if my hitpoints are at 40%<br>
+!HasItem(&quot;potn52&quot;,Myself)// and I dont have a potion of extra healing<br>
+THEN<br>
+RESPONSE #100<br>
+GlobalShout(3015)// shout so everyone in the area hears<br>
+SetGlobal(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,1)<br>
+END<br>
+<br>
+IF<br>
+Heard([GOODCUTOFF],3015)// i hear the shout<br>
+HasItem(&quot;potn52&quot;,Myself)// and have the potion<br>
+HPPercentGT(Myself,40)// and if my hitpoints are better than 40%<br>
+Global(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,1)<br>
+THEN<br>
+RESPONSE #100<br>
+MoveToObject(LastHeardBy())// move to whoever shouted<br>
+GiveItem(&quot;potn52&quot;,LastHeardBy()) and give them the potion<br>
+SetGlobal(&quot;KRNEEDITEM&quot;,&quot;GLOBAL&quot;,0)<br>
+END<br>
+<br>
+<font size="5"><a name="16 GiveOrder(O:Object*,I:Order*)">16
+GiveOrder(O:Object*,I:Order*)</a></font> is used to issue an order
+(numeric) and is used in conjunction with ReceivedOrder(O:Object*,I:Order ID*),
+found in TRIGGER.ids. This is similiar to global shout. I am not sure of the
+range for this command though or how long it stays in effect. Global shout is
+heard throughout the area and lasts about 1 round. The script I created for an
+example is used to give an order to the thief player characters if the
+fighter/ranger/paladin running the script sees an enemy. I would use this to
+keep my weak or low hp's thief alive.<br>
+<br>
+IF<br>
+See([EVILCUTOFF])<br>
+OR(3)<br>
+Class(Myself,FIGHTER_ALL)<br>
+Class(Myself,RANGER_ALL)<br>
+Class(Myse lf,PALADIN_ALL)<br>
+THEN<br>
+RESPONSE #100<br>
+GiveOrder([PC.0.0.THIEF_ALL],100)<br>
+END<br>
+<br>
+IF<br>
+ReceivedOrder(Myself,100)<br>
+Class(Myself,THIEF_ALL)<br>
+THEN<br>
+RESPONSE #100<br>
+RunAwayFrom([EVILCUTOFF],120)<br>
+Hide()&nbsp;&nbsp; &nbsp;<br>
+END<br>
+<br>
+<br>
+<font size="5"><a name="17 Help()">17 Help()</a> </font>is used to call for help. It is used mostly by
+the enemies found in groups, but anyone can use it.<br>
+The example is from the Gibberlings script (gibber.bcs).<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HitBy([ANYONE],CRUSHING)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #50<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Help()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Attack(NearestEnemyOf(Myself))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #50<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RunAwayFrom(NearestEnemyOf(Myself),75)<br>
+END<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Help([0.0.GIBBERLING])<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Attack(NearestEnemyOf(LastHelp(Myself)))<br>
+END<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Help()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AttackReevaluate(NearestEnemyOf(Myself),30)<br>
+END<br>
+<br>
+<font size="5"><a name="18 Hide()">18 Hide()</a></font><font size="3"> is used for thieves or anyone
+with stealth. It can be scripted for anyone to use it, however if the creature
+has no points in Hide in shadows then it will not be able to.Heres an example
+script for a thief to hide.Note that Hide in shadows enables the creature to
+hide and move silently allows the creature to stay hidden when moving.<br>
+</font>
+</p>
+
+<p><font size="3">IF<br>
+&nbsp; &nbsp;!See([EVILCUTOFF])<br>
+&nbsp; &nbsp;OR(2)<br>
+&nbsp; &nbsp;!StateCheck(Myself,STATE_INVISIBLE) //If I'm not invisible<br>
+&nbsp; &nbsp;!StateCheck(Myself,STATE_IMPROVEDINVISIBLITY) //If I'm not<br>
+//invisible (again)<br>
+THEN<br>
+&nbsp;RESPONSE #100<br>
+&nbsp; &nbsp;Hide()<br>
+END<br>
+<br>
+</font><font size="5"><a name="19 JoinParty()">19 JoinParty()</a></font><font size="3"> is used to attach
+NPCs to the party, though you can use this command to attach anyone into the
+party.It is more often used in dialogs than scripts, but its the same command
+irregardless.<br>
+<br>
+IF<br>
+See([PC])<br>
+Global(&quot;KRJOINPARTY&quot;,&quot;GLO BAL&quot;,0)<br>
+THEN<br>
+RESPONSE #100<br>
+JoinParty()<br>
+END<br>
+<br>
+</font><font size="5"><a name="20 LayHands(O:Target*)">20 LayHands(O:Target*)</a></font><font size="3"> is probably
+left over from BG1.It does not seem to work In BG2. In bg1 the spell (INNATE_LAY_ON_HANDS)
+was used for this by paladins, in BG2 paladins use the spell (PALADIN_LAY_ON_HANDS).
+I will do more testing on this. &nbsp;<br>
+<br>
+Heres an example Paladin script using the bg2 paladin spell:<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;ActionListEmpty()<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HPPercentLT(MostDamagedOf(Myself),50)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!StateCheck(MostDamagedOf(Myself),STATE_INVISIBLE)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HaveSpell(PALADIN_LAY_ON_HANDS)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Spell(MostDamagedOf(Myself),PALADIN_LAY_ON_HANDS)<br>
+END<br>
+<br>
+</font><font size="5"><a name="21 LeaveParty()">21 LeaveParty()</a></font><font size="3"> <a name="21 LeaveParty()">
+</a> does just that. It
+is the command to remove NPCs from the party. Many NPC scripts use this command
+when the happiness level drops below a certain point.<br>
+<br>
+IF<br>
+&nbsp; HappinessLT(Myself,-299)<br>
+THEN<br>
+&nbsp;RESPONSE #100<br>
+&nbsp; &nbsp;ChangeAIScript(&quot;&quot;,DEFAULT)<br>
+&nbsp; &nbsp;SetLeavePartyDialogFile()<br>
+&nbsp; &nbsp;LeaveParty()<br>
+&nbsp; &nbsp;EscapeArea()<br>
+END<br>
+<br>
+</font><font size="5"><a name="22 MoveToObject(O:Target*)">22
+MoveToObject(O:Target*)</a> </font><font size="3">enables
+the user of the script to move to any object. This command may be difficult to
+understand at first. You can use either an object's creature death variable
+names like ORC01 or objects from Objects.ids. (LastSeenBy, NearestEnemyOf,
+etc...). If you use MoveToObject(NearestEnemyOf()) this will not work unless you
+can see the nearest enemy of &nbsp;yourself, however if you use a cre file name,
+you can move to it irregardless if you can see it or not.An example script is a
+hostile enemy moving to the nearest enemy.<br>
+IF<br>
+&nbsp; See(NearestEnemyOf())<br>
+&nbsp; !Range(NearestEnemyOf(),4)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MoveToObject(NearestEnemyOf())<br>
+END<br>
+<br>
+</font><font size="5"><a name="23 MoveToPoint(P:Point*)">23
+MoveToPoint(P:Point*)</a></font><font size="3"> is used to
+a specified [X.Y] position on the map. The coordinates correspond to the X and Y
+postion of the area. This is used to give the appearance of moving around
+without having to create waypoints. An example script using this is a peasant
+moving to a specified point in the Copper Coronet, this script will keep them
+near that point.<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+MoveToPoint([526.1193])<br>
+Wait(3)<br>
+RandomWalk()<br>
+Wait(5)<br>
+RandomW alk()<br>
+END<br>
+<br>
+Every 8 second they will return to the specified spot.<br>
+<br>
+</font><font size="5"><a name="24 Panic()">24 Panic()</a></font><font size="3"> I believe is one of the
+commands used to install the panic state. This command when scripted by itself
+only makes the target move randomly around the screen.I dont think this would be
+good to script for player characters as you lose a lot of control over them.<br>
+<br>
+IF<br>
+HPPercentLT(Myself,15)<br>
+THEN<br>
+RESPONSE #100<br>
+Panic()<br>
+END<br>
+<br>
+</font><font size="5"><a name="25 PickPockets(O:Target*)">25
+PickPockets(O:Target*)</a></font><font size="3"> is used to
+attempt to pick the pockets of the specified target. It can be scripted for
+anyone to use, but they will fail the attempt unless they have adequate skill in
+this proficency.<br>
+<br>
+IF<br>
+See([ANYONE])<br>
+&nbsp;OR(2)<br>
+&nbsp; Class(Myself,THIEF_ALL)<br>
+&nbsp; Class(Myself,BARD_ALL)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100 &nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PickPocket([ANYONE])<br>
+END<br>
+<br>
+</font><font size="5"><a name="26 PlaySound(S:Sound*)">26 PlaySound(S:Sound*)</a></font><font size="3"> will play a
+sound. This is used for spells or effects that make noise. The sounds can be any
+of the in game sounds used for anything from casting to soundeffects, you could
+also use any custom sounds I believe if they were the recognized format and in
+the override directory. I dont know what format the sounds are (.wavc?) in as I
+rarely use this in a script. But it does work.<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+PlaySound(&quot;CAS_M06&quot;)<br>
+END<br>
+<br>
+<br>
+<br>
+<br>
+</font><font size="5"><a name="27 ProtectPoint(P:Target*,I:Range*)">27
+ProtectPoint(P:Target*,I:Range*)</a> </font><font size="3">I
+believe is the same as the command used to guard a certain area found in the GUI
+(the shield Icon) , it is pretty unscriptable unless you know the exact [X.Y]
+needed.One script that I can think of which uses something like this is the
+golems in the egg room of Ust Natha, however they dont use this command they use
+a check for a range of 20 from the eggs to keep them near the eggs.<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+&nbsp; RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ProtectPoint([1738.543],10)<br>
+END<br>
+<br>
+</font><font size="5"><a name="28 RemoveTraps(O:Trap*)">28 RemoveTraps(O:Trap*)</a></font><font size="3"> is probably
+what the game uses when a thief disarms or attempts to disarm a trap. I have
+scripted this one for generic trap names (most trap names are generic
+Trap01-100), but so far have not seen my thief use it to disarm any .Another one
+for the More tests category...<br>
+<br>
+IF<br>
+See(&quot;Trap01&quot;)<br>
+Class(Myself,THIEF_ALL)<br>
+T HEN<br>
+RESPONSE #100<br>
+RemoveTraps(&quot;Trap01&quot;)<br>
+END<br>
+<br>
+</font><font size="5"><a name="29 RunAwayFrom(O:Creature*,I:Time*)">29
+RunAwayFrom(O:Creature*,I:Time*)</a></font><font size="3">
+is a very nice command to use to escape your enemies when your hitpoints get
+low, provided there is somewhere to run to. The time is in fractions of a second
+so use a big number like 120 or more.<br>
+<br>
+IF<br>
+HPPercentLT(Myself,30)<br>
+THEN<br>
+RESPONSE #100<br>
+RunAwayFrom(LastAttackerOf(Myself),180)<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="30 SetGlobal(S:Name*,S:Area*,I:Value*)">30
+SetGlobal(S:Name*,S:Area*,I:Value*)</a></font><font size="3">
+this action is the cornerstone of the entire infinity engine game. &nbsp;It is
+used to set a value for the three types of &nbsp;global variables. The three
+types of global variables are:<br>
+<br>
+&nbsp;Global(&quot;NAME&quot;,&quot;AREANAME&quot;)<br>
+&nbsp;Global(&quot;NAME&quot;,&quot;LOCALS&quot;)<br>
+&nbsp;Global(&quot;NAME&quot;,&quot;GLOBAL&quot;)<br>
+<br>
+With name being the corresponding name of the global variable. &quot;AREANAME&quot;
+corresponds to a gv that is only valid in that area (area like AR0700.are which
+is Waukeens Promenade). &quot;LOCALS&quot; corresponds to a gv that is only
+valid for the creature running the script. &quot;GLOBAL&quot; sets a gv that is
+valid anywhere in the game. For instance you want a flag saying something has
+been done in an area do not repeat again anywhere, use a global variable,
+instead of a local or area. Note that the name can be up to 32 characters long.
+If you are using your own global variables always put your initials in the start
+to avoid potentially overwriting an in-game gv (which could have disatrous
+results).<br>
+<br>
+Heres an example of all three gv's in use:<br>
+<br>
+IF<br>
+Global(&quot;KRINAREA&quot;,&quot;AR0400&quot;,0)// if this variable is at 0
+(default value)<br>
+THEN<br>
+RESPONSE #100<br>
+CreateCreature(&quot;ORC01&quot;,[1738.543],0)<br>
+SetGlobal(&quot;KRINAR EA&quot;,&quot;AR0400&quot;,1) set the variable to 1 so
+it dont repeat the action<br>
+END<br>
+<br>
+IF<br>
+Global(&quot;KRCASTSTONE&quot;,&quot;LOCALS&quot;,0)// if this variable is at 0
+(default value)<br>
+HaveSpell(WIZARD_STONE_SKIN)<br>
+!CheckStatGT(Myself,1,STONESKIN)<br>
+TH EN<br>
+RESPONSE #100<br>
+Spell(Myself,WIZARD_STONE_SKIN)<br>
+SetGlobal(&quot;KRCASTSTONE&quot;,&amp;qu ot;AR0400&quot;,1) set the variable to
+1 so it dont repeat the action<br>
+END<br>
+<br>
+IF<br>
+Global(&quot;KRCREATENPC&quot;,&quot;GLOBAL&quot;,0)// if this variable is at 0
+(default value)<br>
+THEN<br>
+RESPONSE #100<br>
+CreateCreature(&quot;Minsc&quot;,[308.1623],0)<br>
+SetGlobal(&quot;KRCREA TENPC&quot;,&quot;GLOBAL&quot;,1) set the variable to 1
+so it dont repeat the action<br>
+END<br>
+<br>
+</font><font size="5"><a name="31 Spell(O:Target*,I:Spell*Spell)">31
+Spell(O:Target*,I:Spell*Spell)</a> </font><font size="3">is
+used to cast a spell. With target being the person you want to cast the spell on
+and spell from spell.ids.<br>
+<br>
+IF<br>
+See([EVILCUTOFF])<br>
+!InParty([EVILCUTOFF])<br>
+!HasBounceEffects([ EVILCUTOFF])//like cloak of mirroring or spell deflection<br>
+!HasImmunityEffects([EVILCUTOFF])//<br>
+HaveSpell(WIZARD_MAGIC_MISSILE)<br>
+&nbsp;OR(2)<br>
+&nbsp;&nbsp;&nbsp; !StateCheck([EVILCUTOFF],STATE_INVISIBLE)<br>
+&nbsp;&nbsp;&nbsp; !StateCheck([EVILCUTOFF],STATE_IMPROVEDINVISIBLITY)<br>
+CheckStatLT([EVILCUTOFF], 30,RESISTMAGIC)<br>
+!Race([EVILCUTOFF],LICH)<br>
+!Race([EVILCUTOFF],RAKSHASA)<br>
+T HEN<br>
+RESPONSE #100<br>
+Spell([EVILCUTOFF],WIZARD_MAGIC_MISSILE)<br>
+END<br>
+<br>
+(there is no 32 in action.ids)<br>
+</font><font size="5"><a name="33 Turn()">33 Turn()</a></font><font size="3"> is used to turn undead
+(make them run or explode). Anyone can attempt to turn undead but only clerics
+or paladins will succeed. The chance to turn them is based on creatures level
+and class. Paladins turn at 2 levels less than clerics of the same level. Evil
+clerics do not turn the undead they control them.<br>
+This is a very useful ability for mid to high level clerics and paladins (13+
+up).<br>
+<br>
+IF<br>
+See([EVILCUTOFF])<br>
+General([EVILCUTOFF],UNDEAD)<br>
+LevelGT(Mysel f,12)<br>
+&nbsp;OR(2)<br>
+&nbsp;&nbsp;&nbsp; Class(Myself,PALADIN_ALL)<br>
+&nbsp;&nbsp;&nbsp; Class(Myself,CLERIC_ALL)<br>
+THEN<br>
+&nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp; Turn() &nbsp;<br>
+END<br>
+<br>
+</font><font size="5"><a name="34 UseItem(S:Object*,O:Target*)">34
+UseItem(S:Object*,O:Target*)</a></font><font size="3">
+enables creatures (or anyone) to use Items. Many of the ingame scripts use this
+command to use potions and wands. Their is a master script in bg2 for item usage
+which most enemy scripts refer to called USEITEM.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HPPercentLT(Myself,50)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HasItem(&quot;potn52&quot;,Myself)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DisplayStringHead(Myself,46150)//quaffs
+a potion<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;UseItem(&quot;potn52&quot;,Myself)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Continue()<br>
+END<br>
+<br>
+</font><font size="5"><a name="36 Continue()">36 Continue()</a> </font><font size="3">is used to tell the
+creature running the script to continue looking for actions for the Action List.<br>
+<br>
+IF<br>
+See(NearestEnemyOf())// if I see the nearest enemy of myself<br>
+!InParty(NearestEnemyOf())// they are not in my party<br>
+THEN<br>
+RESPONSE #100<br>
+AttackOneRound(NearestEnemyOf())// attack for one round<br>
+Continue()// continue looking for actions to be added to the action list<br>
+END<br>
+<br>
+</font><font size="5"><a name="37 FollowPath()">37 FollowPath()</a></font><font size="3"> Not sure what this
+one does...It might be used with the waypoints but that is just
+speculation...Anyone else know? Will test further...<br>
+<br>
+</font><font size="5"><a name="38 Swing()">38 Swing()</a></font><font size="3"> plays the swing weapon
+animation for the object.Note that some objects do not have this animation.Not
+very scriptable unless used in cut scenes in my opinion.<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+Swing()<br>
+END<br>
+<br>
+</font><font size="5"><a name="39 Recoil()">39 Recoil()</a></font><font size="3"> <a name="39 Recoil()">
+</a> plays the recoiling
+animation for the object. Note that some objects do not have this animation.Also
+good for cut scenes IMO.<br>
+IF<br>
+TookDamage()//if I took any damage<br>
+THEN<br>
+RESPONSE #100<br>
+Recoil()<br>
+END<br>
+<br>
+</font><font size="5"><a name="40 PlayDead(I:Time*)">40 PlayDead(I:Time*)</a></font><font size="3"> is used to make
+the character lay down and appear as if they are dead. Also good for cut scenes.
+The time is in fractions of a second so use a big number.<br>
+<br>
+IF<br>
+HPPercentLT(Myself,30)//my hitpoints are less than 30%<br>
+THEN<br>
+RESPONSE #100<br>
+PlayDead(250)// pretend like im dead<br>
+END<br>
+<br>
+</font><font size="5"><a name="47 Formation(O:Leader*,P:Offset*)">47
+Formation(O:Leader*,P:Offset*)</a> </font><font size="3">is
+a very useful action. You can use it to make all your PC's follow the leader
+without clicking on them by adding it to their scripts. You can also use it to
+assign marching order for anyone. I wrote a script for the slums which uses this
+command to move a party of slavers around the slums looking for the PCs that
+killed Lehtinan, as a continuation of the slavers plot.<br>
+The offset repersents the distance from the leader.The leader can be any object
+(from object.ids) or script name (like ORC01 or Minsc or Player1).<br>
+<br>
+On one creature I use this script:<br>
+<br>
+IF<br>
+CombatCounter(0)// not in combat<br>
+Allegiance(Myself,NEUTRAL)// im still neutral<br>
+THEN<br>
+RESPONSE #100<br>
+Formation(&quot;QSLMAGE1&quot;,[-2.-5])// get in formation<br>
+END<br>
+<br>
+On another I use this:<br>
+IF<br>
+CombatCounter(0)// not in combat<br>
+Allegiance(Myself,NEUTRAL))//im still neutral<br>
+THEN<br>
+RESPONSE #100<br>
+Formation(&quot;QSLMAGE1&quot;,[-3.-7]// get in formation<br>
+END<br>
+<br>
+To form a formation.<br>
+<br>
+&quot;QSLMAGE1&quot; is my custom slaver mage which is the leader of the group
+loooking for the PCs he uses a series of MoveToPoint[X.Y] to walk around the
+entire slums. Once he sees the PC's his allegiance changes to Enemy and he
+attacks. The other Characters using the above scripts are high level Slaver
+guard fighters.<br>
+I wrote 2 to show the different formations. Definately one of my favorite
+scripting commands to use.<br>
+<br>
+<br>
+</font><font size="5"><a name="48 JumpToPoint(P:Target*)">48
+JumpToPoint(P:Target*)</a></font><font size="3"> allows a
+character to 'teleport' to the target [X.Y] location on the map. Useful for
+cutscenes.Note for cutscenes you always need at least 2 scripts, one to start
+the cut scene and another to run in cutscene mode.<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+StartCutScene(&quot;KRCUT&quot;)<br>
+END<br>
+<br>
+And in the cut scene KRCUT:<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+CutSceneId(Player1)<br>
+ClearAllActions()<br>
+FadeToColor([20.0],0)<br>
+Mov eViewPoint([1738.543],INSTANT)<br>
+JumpToPoint([1738.543])<br>
+Wait(1)<br>
+CreateVi sualEffectObject(&quot;SPCLOUD1&quot;,Player1)<br>
+Wait(1)<br>
+CreateVisualEffectO bject(&quot;SPFLESHS&quot;,Player1)<br>
+Wait(1)<br>
+EndCutSceneMode()<br>
+END</font>
+</p>
+
+<p><font size="3"><br>
+</font><font size="5"><a name="49 MoveViewPoint(P:Target*,I:ScrollSpeed*Scroll)">49
+MoveViewPoint(P:Target*,I:ScrollSpeed*Scroll)</a></font><font size="3">
+does just that it is used to move the viewing point to the targets coordinates
+([X.Y]). It is used mostly in cut scenes. For an example of this command in use
+see the script above. Scroll speed if from scroll.ids and has five selections 0
+INSTANT,1 SLOW, 2 STANDARD, 3 FAST, 4 VERY_FAST.<br>
+<br>
+</font><font size="5"><a name="50 MoveViewObject(O:Target*,I:ScrollSpeed*Scroll)">50
+MoveViewObject(O:Target*,I:ScrollSpeed*Scroll)</a> </font><font size="3">is
+also used in cutscenes and is used to move the viewpoint for a cut scene ID (or
+object). This is from the cutscene CUT03C.bcs.<br>
+<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CutSceneId(Player1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FadeToColor([20.0],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;SPY406&quot;,DestroySelf())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;MoveViewObject(Myself,INSTANT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FadeFromColor([20.0],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;cpchick1&quot;,DestroySelf())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;cpchick2&quot;,DestroySelf())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Surly&quot;,StartDialogueNoSet(Player1))<br>
+END</font>
+</p>
+
+<p><font size="3"><br>
+</font><font size="5"><a name="51 ClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)">51
+ClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)</a></font><font size="3">
+is not used in the in-game scripts. It would seem that using this command acts
+as if you have clicked the Left mouse button on the target's (X.Y) point,
+however I have tried using this command to no effect. Perhaps this command was
+never fully implemented.<br>
+<br>
+</font><font size="5"><a name="52 ClickLButtonObject(O:Target*,I:ScrollSpeed*Scroll)">52
+ClickLButtonObject(O:Target*,I:ScrollSpeed*Scroll)</a></font><font size="3">
+is similiar to the above, with the main difference being instead of a point, the
+target is an object (script name or object from Object.ids).Again not found in
+any scripts in the game, and I have been unsuccessful in getting it to work,
+another comand that might be unfinished.<br>
+<br>
+</font><font size="5"><a name="53 ClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)">53
+ClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)</a>&nbsp;</font><font size="3">
+I assume this is the same as 51 with the difference being the right button is
+utilitized, however I have had no success in using this command. Another one not
+found in any in-game scripts.<br>
+<br>
+</font><font size="5"><a name="54 ClickRButtonObject(O:Target*,I:ScrollSpeed*Scroll)">54
+ClickRButtonObject(O:Target*,I:ScrollSpeed*Scroll)</a></font><font size="3">
+is similiar to the above, with the main difference being instead of a point, the
+target is an object (script name or object from Object.ids).Again not found in
+any scripts in the game, and I have been unsuccessful in getting it to work,
+another comand that might be unfinished.<br>
+<br>
+</font><font size="5"><a name="55 DoubleClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)">55
+DoubleClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)</a></font><font size="3">
+sounds as if using this action causes the same effect as double clicking the
+left button at a certain target's (X.Y) point. However I have been unsuccessful
+utilizing this command. Not found in any in-game scripts.<br>
+<br>
+</font><font size="5"><a name="56 DoubleClickLButtonObject(O:Target*,I:ScrollSpeed*Scroll)">56
+DoubleClickLButtonObject(O:Target*,I:ScrollSpeed*Scroll)</a></font><font size="3">
+sounds as if using this action causes the same effect as double clicking the
+left button at a certain target object. However I have been unsuccessful
+utilizing this command. Not found in any in-game scripts.<br>
+<br>
+</font><font size="5"><a name="57 DoubleClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)">57
+DoubleClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)</a> </font><font size="3">sounds
+as if using this action causes the same effect as double clicking the right
+button at a certain target's (X.Y) point. However I have been unsuccessful
+utilizing this command. Not found in any in-game scripts.<br>
+<br>
+</font><font size="5"><a name="58 DoubleClickRButtonObject(O:Target*,I:ScrollSpeed*Scroll)">58
+DoubleClickRButtonObject(O:Target*,I:ScrollSpeed*Scroll)</a>
+</font><font size="3">sounds as if using this action causes the same effect as
+double clicking the right button at a certain target object. However I have been
+unsuccessful utilizing this command. Not found in any in-game scripts.<br>
+<br>
+Note that I tested the click actions with the following script:<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+DoubleClickLButtonPoint([665.737],INSTANT)<br>
+END<br>
+<br>
+Substituting the action for others, using the slums as a test ground. The X and
+Y correspond to a door, which should have caused characters to move to that door
+but did nothing.<br>
+<br>
+I tested the objects using &quot;minsc&quot; to no effect...<br>
+</font>
+</p>
+
+<p><font size="5"><a name="59 MoveCursorPoint(P:Target*,I:ScrollSpeed*Scroll)">59
+MoveCursorPoint(P:Target*,I:ScrollSpeed*Scroll)</a></font><font size="3">
+suggests that this command is used to move the mouse cursor to a specified point
+(X.Y) however I have been unsuccessful in implementing this as well.<br>
+<br>
+</font><font size="5"><a name="60 ChangeAIScript(S:ScriptFile*,I:Level*Scrlev)">60
+ChangeAIScript(S:ScriptFile*,I:Level*Scrlev)</a></font><font size="3">
+is used to change to the script specified &nbsp;(from SCLEVEL.ids: 0 OVERRIDE,1
+AREA, 2 SPECIFICS,4 CLASS,5 RACE,6 GENERAL, 7 DEFAULT) on the object running the
+script. ScriptFile is set to the name of the script and can be any script up to
+8 characters in length and having the .bcs extension.(example USEITEM.bcs), you
+can use custom scripts with this but they must be in the override directory and
+.bcs format. You can rename .bs format to .bcs, or compile from baf to bcs or .bs.<br>
+<br>
+IF<br>
+See([EVILCUTOFF.0.DOG])<br>
+THEN<br>
+RESPONSE #100<br>
+ChangeAIScript(&quot;DOGFIGHT&quot;,DEFAULT)<br>
+END<br>
+<br>
+</font><font size="5"><a name="61 StartTimer(I:ID*,I:Time*)">61
+StartTimer(I:ID*,I:Time*)</a></font><font size="3"> is used
+to start a timer that is timer specific an instance of a creature. It does not
+get saved in the savegame.The time is in seconds. It is used in conjunction with
+TimerExpired(I:ID*).<br>
+<br>
+IF<br>
+Global(&quot;KRDEAD&quot;,&quot;LOCALS&quot;,0 )<br>
+Dead(&quot;Shadra01&quot;)<br>
+THEN<br>
+RESPONSE #100<br>
+StartTimer(&quot;SPAWNMON&quot;,12)<br>
+SetGlobal(&quot;KRDEAD&quot;,&quot;LOCALS&quot;,1)<br>
+END<br>
+<br>
+IF<br>
+Timer Expired(&quot;SPAWNMON&quot;)<br>
+Global(&quot;KRDEAD&quot;,&quot;LOCALS&quot;,1)<br>
+THEN<br>
+RESPONSE #100<br>
+CreateCreature(&quot;Grothgar&quot;,[700.700],0)<br>
+END<br>
+<br>
+</font><font size="5"><a name="62 SendTrigger(O:Target*,I:TriggerNum*)">62
+SendTrigger(O:Target*,I:TriggerNum*)</a></font><font size="3">...?
+not sure what this action is used for, it is found in none of the in-game
+scripts...My initial thoughs were you could use this to send a trigger from
+trigger.ids to a target, however with testing I have not been able to utilize
+this command...It might possibly be used with TriggerActivation(O:Object*,I:State*Boolean),
+however that is merely speculation.Will attempt more testing...<br>
+<br>
+</font><font size="5"><a name="63 Wait(I:Time*)">63 Wait(I:Time*)</a></font><font size="3"> is used to create a
+delay into the object runnng the script. The time is in seconds.<br>
+<br>
+IF<br>
+See(Player1)<br>
+See(Player6)<br>
+THEN<br>
+RESPONSE #100<br>
+MoveToObject(Player1)<br>
+Wait(2)<br>
+MoveToObject(Player6)<br>
+Wait(4)<br>
+END<br>
+<br>
+</font><font size="5"><a name="64 UndoExplore()">64 UndoExplore()</a></font><font size="3"> is the opposite if
+Explore() and makes the area black as if you have not explored it. Not a good
+command to use for player scripts, as it makes it very hard to see...<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+UndoExplore()<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="65 Explore()">65 Explore()</a></font><font size="3"> clears all the black
+from the area as if you have explored it.<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+Explore()<br>
+END<br>
+<br>
+</font><font size="5"><a name="66 DayNight(I:TimeOfDay*Time)">66
+DayNight(I:TimeOfDay*Time)</a></font><font size="3"> is
+used to change the time of day.Time is from TIME.ids and has six options (0
+MIDNIGHT,12 NOON,6 DAWN_START,7 DAWN_END, 21 DUSK_START, 22 DUSK_END) . The
+example is from the cutscene Irenicus uses leaving his dungeon.<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AmaWaukeen&quot;,&quot;GLOBAL&quot;,1)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DayNight(MIDNIGHT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;AmaWaukeen&quot;,&quot;GLOBAL&quot;,2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FadeToColor([20.0],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;shthass1&quot;,[877.898],7)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutSceneMode()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutScene(&quot;cut24a&quot;)<br>
+END<br>
+<br>
+</font><font size="5"><a name="67 Weather(I:Weather*Weather)">67
+Weather(I:Weather*Weather)</a></font><font size="3"> is
+used to change the weather. Not sure if this action works in dungeons or
+not...It takes about five seconds or so to take effect...The weather is from
+weather.ids and has 4 choices: 0 NOWEATHER, 1 RAIN, 2 SNOW, 3 FOG.<br>
+<br>
+Note if you want to check if a certain weather conditon (like rain) is present
+you will need to set a GV (to 1) when you start the weather, then check to make
+sure the GV is at 1. Also u need to determine how long the weather lasts and set
+the GV back to 0 when the weather is done, using a timer.<br>
+<br>
+IF<br>
+Global(&quot;KRSTORM&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+RESPON SE #100<br>
+Weather(RAIN)<br>
+SetGlobal(&quot;KRSTORM&quot;,&quot;GLOBAL&quot;,1)<br>
+END<br>
+<br>
+</font><font size="5"><a name="68 CallLightning(O:Target*)">68
+CallLightning(O:Target*)</a></font><font size="3"> command
+&nbsp;does not use the same graphic as the druid spell at least for me, (it
+makes a blue arcing line come down from the sky which i think must be defined in
+the .exe) also it results in immediate death when used in bg2 so is very useful
+for cutscenes<br>
+<br>
+IF<br>
+True()<br>
+THEN<br>
+RESPONSE #100<br>
+CutSceneId(&quot;DRUID12a&quot;)<br>
+CallLightning(&quot;Orc05&quot;)<br>
+CallLightning(&quot;Orc06&quot;)<br>
+END<br>
+<br>
+</font><font size="5"><a name="69 VEquip(I:item*)">69 VEquip(I:item*)</a></font><font size="3"> does nothing and
+is confirmed broken by Bioware.<br>
+<br>
+</font><font size="5"><a name="70 NIDSpecial1()-81 NIDSpecial12()">70 NIDSpecial1()-81 NIDSpecial12()</a></font><font size="3">
+No clue what these are for however they are not used in any in game scripts...<br>
+<br>
+</font><font size="5"><a name="82 CreateItem(S:ResRef*,I:Usage1*,I:Usage2*,I:Usage3*)">82
+CreateItem(S:ResRef*,I:Usage1*,I:Usage2*,I:Usage3*)</a></font><font size="3">
+a very useful command. Creates an Item as the RESREF. Usage 1 is the number of
+charges the item has, or if its a scroll the number of scrolls. This a script
+from AR0602 (Irenicus Dungeon) that recreates the pantaloons in a container (the
+picture) if the pantaloons are imported.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;BG1Pantaloons&quot;,&quot;GLOBAL&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;PartyHasItem(&quot;MISC47&quot;)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;BG1Pantaloons&quot;,&quot;GLOBAL&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Picture1&quot;,CreateItem(&quot;MISC47&quot;,0,0,0))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Continue()<br>
+END<br>
+</font>
+</p>
+
+Usages 1, 2, and 3 are similar to how the CLUAConsole works... If a weapon has
+multiple extended headers (abilities), then you can set the number of charges
+for those abilities with usages 2 and 3.<br>
+<br>
+Or, if you wanted to create a stack of arrows, you could use...<br>
+<br>
+<br>
+<b>Code:</b>
+<p><font class="code" face="Courier New" size="1">IF<br>
+&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;RESPONSE#100<br>
+&nbsp; &nbsp;CreateItem(&quot;AROW01&quot;,Myself,20,0,0)<br>
+END</font><font size="3"><br>
+<br>
+</font><font size="5"><a name="83 SmallWait(I:Time*)">83 SmallWait(I:Time*)</a></font><font size="3"> makes th
+object running the script wiat for a time that is in 15ths of a second.<br>
+<br>
+IF<br>
+See(NearestEnemyOf())<br>
+THEN<br>
+RESPONSE #100<br>
+DisplayStingHead(Myself,50712)// Attack!! Attack!!<br>
+SmallWait(120)<br>
+Attack(NearestEnemyOf())<br>
+END<br>
+<br>
+</font><font size="5"><a name="84 Face(I:Direction*)">84 Face(I:Direction*)</a></font><font size="3">causes the
+object running the script to face a direction from 0-15 with 0 being south and
+moving clockwise. The beholders use this one...this is from BEHOLD.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;BeholderBehavior&quot;,&quot;LOCALS&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See([PC])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HPGT(Myself,65)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FaceObject([PC])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpell([PC],BEHOLDER_CHARM_PERSON)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Continue()<br>
+END<br>
+<br>
+</font><font size="5"><a name="85 RandomWalk()">85 RandomWalk()</a></font><font size="3"> is used to ake the
+object running the script walk randomly. it is used for townsfolk, creatures,
+pretty much anything that walks crawls slides or moves around.(not eagles
+though). The following script is from the bears (BLBEAR.bcs) and it makes them
+walk instead of fighting if the nearest enemy is druid.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Delay(5)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Class(NearestEnemyOf(Myself),DRUID)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;NumCreatureGT([ENEMY],1)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RandomWalk()<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="86 SetInterrupt(I:State*Boolean)">86
+SetInterrupt(I:State*Boolean)</a> </font><font size="3">another
+good command to use though you must be careful in its use. It sets whether a
+creature can be interrupted while it is doing something. For example, if I
+wanted to be fairly sure my mage carried out some simple commands like walking
+across the map and back I would set the Interrupt to FALSE first.For those of
+you unfamiliar with Boolean logic, its simple it has 2 states, TRUE or FALSE.<br>
+<br>
+<br>
+IF<br>
+See(Player2)<br>
+!Range(Player2,4)<br>
+THEN<br>
+RESPONSE #100<br>
+SetInterrupt(FALSE)<br>
+MoveToObject(&quot;Player2&quot;)<br>
+SetInterrupt (TRUE)<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="87 ProtectObject(O:Target*,I:Range*)">87
+ProtectObject(O:Target*,I:Range*)</a></font><font size="3">  is
+used to do just that. Objects running this script will attack any enemy of their
+target. The example used is from IWD, the script for the zombies guarding Presio.(4003BSG.bcs).<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ProtectObject(&quot;Presio&quot;,100)<br>
+END<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="88 Leader(P:Point*)">88 Leader(P:Point*)</a> </font><font size="3">Not used in bg1 or bg2
+or IWD that I can tell, also doesnt seem to do anything?
+</font>
+</p>
+
+<p><font size="3"><br>
+</font>
+<font size="5"><a name="89 Follow(P:Point*)">89 Follow(P:Point*)</a> </font><font size="3">See above.<br>
+<br>
+</font>
+<font size="5"><a name="90 MoveToPointNoRecticle(P:Point*)">90
+MoveToPointNoRecticle(P:Point*)</a></font><font size="3">  <a name="90 MoveToPointNoRecticle(P:Point*)">
+</a>  Should
+move the object running the script to a location without showing the reticle (thats
+the little green flashing intersectting lines that appear when you have a
+character selected and left click a point.<br>
+<br>
+(Never tested this one)<br>
+<br>
+</font>
+<font size="5"><a name="91 LeaveArea(S:Area*,P:Point*,I:Face*)">91
+LeaveArea(S:Area*,P:Point*,I:Face*)</a></font><font size="3"> 
+Instead of this command most scripts use the LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3048.831],4))
+action. This action does not seem to be in any in-game scripts.<br>
+<br>
+(Never tested this one)<br>
+<br>
+</font>
+<font size="5"><a name="92 SelectWeaponAbility(I:WeaponNum*Slots,I:AbilityNum*)">92
+SelectWeaponAbility(I:WeaponNum*Slots,I:AbilityNum*)</a></font><font size="3"> 
+is used to select different weapon ability slots.The example used is from
+ANKHEG.bcs and as you can see, it selects 2 different weapon slots to vary the
+attack type.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Range(NearestEnemyOf(Myself),5)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Delay(12)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #40<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SelectWeaponAbility(SLOT_WEAPON,0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RunAwayFrom(NearestEnemyOf(Myself),45)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AttackReevaluate(NearestEnemyOf(Myself),15)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #60<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SelectWeaponAbility(SLOT_WEAPON1,0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AttackReevaluate(NearestEnemyOf(Myself),15)<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="94 GroupAttack(O:Target*)">94 GroupAttack(O:Target*)</a></font><font size="3">  not used in any
+in game scripts...Not sure exactly what this does.<br>
+<br>
+(Never tested this one)<br>
+<br>
+</font>
+<font size="5"><a name="95 SpellPoint(P:Target*,I:Spell*Spell)">95
+SpellPoint(P:Target*,I:Spell*Spell)</a> </font><font size="3">casts
+a memorized spell at the specified X.Y location. The downside of this action is
+that you must know the exact X.Y location to cast the spell at, useful if the
+object is going to be in one spot, but hard to implement for Players. The
+example used is from Andris.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,1)<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="96 Rest()">96 Rest()</a></font><font size="3">  is used to rest anything.
+Creatures can use this to restore spells and Innate abilities.The example is
+from a cutscene (CUT28A.bcs).<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CutSceneId(Player1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StorePartyLocations()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FadeToColor([30.0],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Rest()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player2,Rest())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player3,Rest())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player4,Rest())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player5,Rest())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player6,Rest())<br>
+(Cut short for brevity)<br>
+<br>
+</font>
+<font size="5"><a name="97 UseItemPoint(S:Item,P:Target*,I:Ability*)">97
+UseItemPoint(S:Item,P:Target*,I:Ability*)</a></font><font size="3"> 
+New for TOB and doesn't appear to be used in any in-game scripts?<br>
+<br>
+(Never tested this one)<br>
+<br>
+</font>
+<font size="5"><a name="97 UseItemPointSlot(P:Target*,I:Slot*)">97
+UseItemPointSlot(P:Target*,I:Slot*)</a> </font><font size="3"> see
+above.?<br>
+<br>
+(Never tested this one)<br>
+<br>
+</font>
+<font size="5"><a name="98 AttackNoSound(O:Target*)">98 AttackNoSound(O:Target*)</a></font><font size="3">  Not used in
+any in game scripts. Logic says it would do what it says but i have not tested
+it...yet.<br>
+<br>
+(Never tested this one)<br>
+<br>
+</font>
+<font size="5"><a name="100 RandomFly()">100 RandomFly()</a></font><font size="3">  is used to give the
+appearance of flying, the example is from RANDFLY.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RandomFly()<br>
+END<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="102 MoraleSet(O:Target*,I:Morale*)">102
+MoraleSet(O:Target*,I:Morale*)</a></font><font size="3">  Should
+set the morale of the target object to the specified amount. Never tried it
+though.<br>
+<br>
+(Never tested this one)<br>
+<br>
+</font>
+<font size="5"><a name="103 MoraleInc(O:Target*,I:Morale*)">103
+MoraleInc(O:Target*,I:Morale*) </a> </font><font size="3"> increases
+the morale of the target object by the specified amount.The example is from
+BARDSH.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;AttackedBy([GOODCUTOFF],DEFAULT)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Allegiance(Myself,NEUTRAL)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;PlayerAttackedActors&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;PlayerAttackedActors&quot;,&quot;GLOBAL&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;MoraleInc(Myself,-5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Enemy()<br>
+END<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="104 MoraleDec(O:Target*,I:Morale*)">104
+MoraleDec(O:Target*,I:Morale*)</a> </font><font size="3"> Should
+decreases the morale of the target object by the specified amount, but it is not
+used in any in-game scripts, instead they use the above script with negative
+numbers (*SHRUGS* go figure).<br>
+<br>
+</font>
+<font size="5"><a name="105 AttackOneRound(O:Target*)">105
+AttackOneRound(O:Target*)</a> </font><font size="3">Attacks the
+target object for 1 round.<br>
+<br>
+IF<br>
+&nbsp;See(NearestEnemyOf())<br>
+THEN<br>
+&nbsp; RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp; AttackOneRound(NearestEnemyOf())<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="106 Shout(I:ID*SHOUTIDS)">106 Shout(I:ID*SHOUTIDS)</a></font><font size="3">  Is used to shout
+something from Shoutids.If you dont have TOB there is no SHOUTIDS, however you
+can use any number you want for the shout ID. Note if a character is magically
+silenced they cannot shout. It is used in conjuction with Heard(O:Object*,I:ID*)
+a trigger.<br>
+<br>
+IF<br>
+&nbsp; &nbsp;StateCheck(Myself,STATE_POISONED)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Shout(4010)<br>
+END<br>
+<br>
+IF<br>
+&nbsp; &nbsp;Heard([GOODCUTOFF],4010)<br>
+&nbsp; &nbsp;HaveSpell(CLERIC_SLOW_POISON)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Spell(LastHeardBy(),CLERIC_SLOW_POISON)<br>
+END<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="107 MoveToOffset(P:Offset*)">107 MoveToOffset(P:Offset*)</a></font><font size="3"> <br>
+<br>
+This is simply used to make a creature move a certain distance from its current
+location without having to know its current coo-ordinates<br>
+<br>
+MoveToOffset([5.5])<br>
+So this would add 5 onto current x coordinate and 5 onto the current y
+coordinate and the creature would move to this new location.<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="108 EscapeArea()">108 EscapeArea()</a></font><font size="3">Causes the object running
+the script to leave the area, either by walking, or if the path is blocked, they
+simply disappear.<br>
+IF<br>
+HPPercentLT(Myself,35)<br>
+THEN<br>
+RESPONSE #100<br>
+EscapeArea()<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="109 IncrementGlobal(S:Name*,S:Area*,I:Value*)">109
+IncrementGlobal(S:Name*,S:Area*,I:Value*)</a> </font><font size="3">Increases
+a global by the value indicated. A great way to keep track of how many times
+something has occured. My example is from a monster counter I use in TOB.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See([EVILCUTOFF]<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Specifics(LastSeenBy(),4000)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Inparty(LastSeenBy())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Allegiance(LastSeenBy([GOODCUTOFF])<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ChangeSpecifics(LastSeenBy(),4000)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;IncrementGlobal(&quot;KR_MONSTER_COUNTER_ALIVE&quot;,&quot;GLOBAL&quot;,1)<br>
+END<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="110 LeaveAreaLUA(S:Area*,S:Parchment*,P:Point*,I:Face*)">110
+LeaveAreaLUA(S:Area*,S:Parchment*,P:Point*,I:Face*)</a></font><font size="3"> 
+is used to change areas, mostly during cut scenes.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;MissionPackSave&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;TextScreen(&quot;toscst&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player1,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3048.
+831],4))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player2,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3055.
+917],4))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player3,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[2990.
+913],4))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player4,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[2992.
+812],4))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player5,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3079.
+737],4))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player6,LeaveAreaLUA(&quot;AR1000&quot;,&quot;&quot;,[3005.
+742],4))<br>
+END<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="111 DestroySelf()">111 DestroySelf()</a> </font><font size="3"> Removes the object
+running the script from the game completely and does not set a sprite is dead
+(death) variable. The example is from the Irenicus cut scene at the beginning of
+the game, and is used to remove the cowled wizards at the end of the cut scene.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CutSceneId(&quot;CSCowl7&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpell(&quot;CSIren&quot;,0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DestroySelf()<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="112 UseContainer()">112 UseContainer()</a></font><font size="3"> <br>
+<br>
+(not tested yet)<br>
+<br>
+</font>
+<font size="5"><a name="113 ForceSpell(O:Target,I:Spell*Spell)">113
+ForceSpell(O:Target,I:Spell*Spell)</a> </font><font size="3">Foces
+the object to cast the specified spell. The spell cannot be interrupted and the
+object does not need to have the spell memorized or even have the spell. Used by
+traps a lot to create the trap damage. Example is from Andris.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,1)<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="114 ForceSpellPoint(P:Target,I:Spell*Spell)">114
+ForceSpellPoint(P:Target,I:Spell*Spell)</a></font><font size="3"> 
+same as above only the target is an X.Y location.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;AndrisBehavior&quot;,&quot;AR1009&quot;,1)<br>
+END<br>
+<br>
+</font>
+<font size="5"><a name="115 SetGlobalTimer(S:Name*,S:Area*,I:Time*GTimes)">115
+SetGlobalTimer(S:Name*,S:Area*,I:Time*GTimes)</a></font><font size="3"> 
+Sets a global timer that can be checked by anyone. It must be a global variable
+cannot be a local. It can be used to tell other characters you are doing
+something , like healing a party member, or as a timer for an event that will
+occur when the timer expires. It is used in conjunction with GlobalTimerExpired
+or GlobalTimerNotExpired, a trigger.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;GlobalTimerExpired(&quot;Areana&quot;,&quot;GLOBAL&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Exists(&quot;TorLobo&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;TorLobo&quot;)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Areana&quot;,DestroySelf())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;TORLOB&quot;,[349.474],0)<br>
+END<br>
+<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="116 TakePartyItem(S:Item*)">116 TakePartyItem(S:Item*)</a></font><font size="3">  Takes one of
+the specified party items. Note that this spell will transfer objects to the
+creature running the<br>
+script. Useful for thieves imo. The example is from AR0516.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;ThrallOrb&quot;,&quot;GLOBAL&quot;,2)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;PartyHasItem(&quot;MISC7Y&quot;)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;TakePartyItem(&quot;MISC7Y&quot;)<br>
+END<br>
+<br>
+<br>
+</font>
+<font size="5"><a name="117 TakePartyGold(I:Amount*)">117
+TakePartyGold(I:Amount*)</a> </font><font size="3">The same as
+above only for gold instead of an item.The example script is from AR0602.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;TakeImportItems&quot;,&quot;AR0602&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;TakeImportItems&quot;,&quot;AR0602&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;Chapter&quot;,&quot;GLOBAL&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Malaaq&quot;,MoveBetweenAreas(&quot;AR0601&quot;,[345
+.591],14))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;DuegarClanChief&quot;,TakeItemListPartyNum(&quot;IMPO
+RT01&quot;,1))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Shelf1&quot;,TakeItemListPartyNum(&quot;IMPORT03&quot;
+;,1))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SmallWait(4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;TakePartyGold(2147483647)<br>
+(Cut short for Brevity)<br>
+</font>
+</p>
+
+<p><font size="5"><a name="118 GivePartyGold(I:Amount*)">118
+GivePartyGold(I:Amount*)</a> </font>Gives the amount of gold
+specified to the party.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;G(&quot;KRGIVEGOLD&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GivePartyGold(500)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SG(&quot;KRGIVEGOLD&quot;,1)<br>
+END<br>
+<br>
+<font size="5"><a name="119 DropInventory()">119 DropInventory()</a></font> Causes the object running the script
+to drop everything in inventory. The example is from the cutscene with Mazzy
+fighting the ogre.(CUT16a.BCS)<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CutSceneId(Player1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FadeToColor([20.0],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;mazzy&quot;,DropInventory())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(2)<br>
+(cut short for brevity)<br>
+<br>
+<font size="5"><a name="120 StartCutScene(S:CutScene*)">120
+StartCutScene(S:CutScene*)</a></font> One of two commands that
+can be used to start cut scene mode. A cutscene is a cinematic that removes GUI
+and allows the player only to watch or maybe talk. With this action you specify
+the cut scene name (Script) and it automatically starts that script. (script
+needs a bcs extension) Very useful indeed. Here's one of the cutscenes from the
+Irenicus Cut scene.CUT01.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CutSceneId(Player1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;LeaveAreaLUAPanic(&quot;AR0700&quot;,&quot;&quot;,[2753.868],4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2753.868],4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player2,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2805.
+882],4))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player3,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2791.
+820],4))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player4,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2764.
+788],2))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player5,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2781.
+716],0))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(Player6,LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2763.
+668],0))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Explore()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;MultiPlayerSync()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;EnteredWaukeen&quot;,&quot;AR0700&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;TextScreen(&quot;SCENE01&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Imoen&quot;,SetDialog(&quot;None&quot;))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Imoen&quot;,LeaveParty())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Imoen&quot;,GivePartyAllEquipment())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Imoen&quot;,DestroySelf())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;CSIMOEN&quot;,[2732.831],2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;CSIREN&quot;,[2557.935],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;CSTHIEF1&quot;,[2740.1009],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;CSTHIEF2&quot;,[2678.1043],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;CSTHIEF3&quot;,[2579.1075],8)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;CSTHIEF4&quot;,[2488.1078],10)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;CSGAYL&quot;,[2671.1101],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;AMNG1&quot;,[2736.1260],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SmallWait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;MoveViewPoint([2576.908],INSTANT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DayNight(DAWN_END)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FadeFromColor([40.0],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutScene(&quot;Cut01a&quot;)<br>
+END<br>
+<br>
+<br>
+<font size="5"><a name="121 StartCutSceneMode()">121 StartCutSceneMode()</a> </font>One of two commands that can be
+used to start cut scene mode. This way is used to start a cut scene inside a
+bigger script that is running, like an objects script for example. Example from
+AR0507.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AmsiHouse&quot;,&quot;GLOBAL&quot;,3)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;amsi&quot;)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearAllActions()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutSceneMode()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;amsi&quot;,StartDialogueNoSet(Player1))<br>
+END<br>
+<br>
+<br>
+<br>
+<br>
+<font size="5"><a name="122 EndCutSceneMode()">122 EndCutSceneMode()</a></font> Restores the GUI and exits
+cutscenemode. Example from AR0800.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;GlobalGT(&quot;BodhiJob&quot;,&quot;GLOBAL&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;Movie02&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearAllActions()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;Movie02&quot;,&quot;GLOBAL&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutSceneMode()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;FadeToColor([30.0],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;EndCutSceneMode()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;TextScreen(&quot;SCENE04&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SmallWait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutSceneMode()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutScene(&quot;Movie02a&quot;)<br>
+END<br>
+<br>
+<br>
+<font size="5"><a name="123 ClearAllActions()">123 ClearAllActions()</a></font> <a name="123 ClearAllActions()">
+</a> Clears all the actions of everything
+in the area.<br>
+Usually used before the start of a cutscene to insure the objects Action Lists
+are empty. Example is from AR0507.bcs.<br>
+<br>
+IF<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;AmsiHouse&quot;,&quot;GLOBAL&quot;,3)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;amsi&quot;)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearAllActions()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutSceneMode()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;amsi&quot;,StartDialogueNoSet(Player1))<br>
+END<br>
+<br>
+<font size="5"><a name="124 Berserk()">124 Berserk()</a> </font>is probably the action used in that state,
+though undoubtedly it is only one of many things occurring while berserk. Not
+found in any in game scripts...<br>
+<br>
+(seems to do nothing when used by itself in a script...)<br>
+<br>
+<font size="5"><a name="125 Deactivate(O:Object*)">125 Deactivate(O:Object*)</a></font> Is used to deactivate...something...not
+sure exactly what it is. In bg1 this action is used in AR00800.bcs, and
+deactivates something called redlight (maybe a visual effect?). In bg2 it is
+found in a script called ALORA.bcs which seems to be for a CRE but I'm not sure.<br>
+<br>
+(seems to do nothing when used by itelf in a script on a player character...)<br>
+<br>
+<font size="5"><a name="126 Activate(O:Object*)">126 Activate(O:Object*)</a></font> see above.<br>
+<br>
+(see above)<br>
+<br>
+<font size="5"><a name="127 CutSceneId(O:Object*)">127 CutSceneId(O:Object*)</a></font> Used internally in a cut scene
+to make the Object with that script name perform actions. The script name is
+also known as the death variable. Example is from CUT01.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CutSceneId(Player1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;LeaveAreaLUAPanic(&quot;AR0700&quot;,&quot;&quot;,[2753.868],4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;LeaveAreaLUA(&quot;AR0700&quot;,&quot;&quot;,[2753.868],4)<br>
+<br>
+(cut short for brevity)<br>
+<br>
+<br>
+<font size="5"><a name="128 AnkhegEmerge()">128 AnkhegEmerge()</a></font> used by ankegs (big surprise there hehe)
+to give the appearance of emerging from the ground. But it is not used in their
+scripts. I think these 2 actions are called from the exe.<br>
+<br>
+(these both seem to do nothing in a script for PCs.)<br>
+<br>
+<font size="5"><a name="129 AnkhegHide()">129 AnkhegHide()</a></font> used by ankegs (another big surprise) to
+give the appearance of hiding in the ground. But it is not used in their
+scripts.<br>
+<br>
+(these both seem to do nothing in a script for PCs.)<br>
+<br>
+<font size="5"><a name="130 RandomTurn()">130 RandomTurn()</a></font> does just that. It is used in bg2 in a
+script called WAITTURN.bcs...<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;True()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RandomTurn()<br>
+END<br>
+<br>
+<font size="5"><a name="131 Kill(O:Object*)">131 Kill(O:Object*)</a></font> causes the object to die, dropping
+loot if he has<br>
+any.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;KillArntra04&quot;,&quot;AR0307&quot;,1)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;KillArntra04&quot;,&quot;AR0307&quot;,2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;arntra04&quot;,Face(10))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ForceSpell(&quot;arntra04&quot;,CLERIC_FLAME_STRIKE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Kill(&quot;arntra04&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;Arntra05&quot;,[3213.485],0)<br>
+END<br>
+<br>
+<br>
+<br>
+<font size="5"><a name="132 VerbalConstant(O:Object*,I:Constant*soundOff)">132
+VerbalConstant(O:Object*,I:Constant*soundOff)</a></font> Plays a
+sound file that is linked to the object.Only example of this I have seen is from
+JC's Teamwork scripts from bg1. It is not used in bg2. And in bg1 it is used in
+Gorions script once.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HotKey(H)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;VerbalConstant(Myself,HURT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Help()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Continue()<br>
+END<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Delay(2)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HPPercentLT(Myself,35)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #95<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Shout(HURT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Continue()<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;VerbalConstant(Myself,HURT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Shout(HURT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Continue()<br>
+END<br>
+<br>
+// if someone else is hurt heal them<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Heard([PC],HURT)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HaveSpell(INNATE_LAY_ON_HANDS)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Spell(LastHeardBy(Myself),INNATE_LAY_ON_HANDS)<br>
+END<br>
+<br>
+<font size="5"><a name="133 ClearActions(O:Object*)">133 ClearActions(O:Object*)</a></font> Clears the actions on that
+object only. Example from AR2400.bcs.Usually used before cutscenes to avoid any
+ActionLists from interfering with the cutscene.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;GlobalTimerExpired(&quot;udWaitOgreDoor&quot;,&quot;GLOBAL&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;HaveOgreOpenDoor&quot;,&quot;AR2400&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;udGithDead&quot;,&quot;AR2400&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Global(&quot;udMind&quot;,&quot;GLOBAL&quot;,30)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetInterrupt(FALSE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;HaveOgreOpenDoor&quot;,&quot;AR2400&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearActions(Player1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearActions(Player2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearActions(Player3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearActions(Player4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearActions(Player5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ClearActions(Player6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetInterrupt(TRUE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutSceneMode()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartCutScene(&quot;Cut44i&quot;)<br>
+END<br>
+<br>
+<br>
+<font size="5"><a name="134 AttackReevaluate(O:Target*,I:ReevaluationPeriod*)">134
+AttackReevaluate(O:Target*,I:ReevaluationPeriod*)</a></font>
+Attacks and reevaluates the situation after the time specified, I belive the
+time is in 15ths of a second. Reevaluate meaning run through the script to see
+if any other conditions are true.<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See([EVILCUTOFF])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Range(LastSeenBy(),4)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!InParty(LastSeenBy())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Allegiance(LastSeenBy(Myself),GOODCUTOFF)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Class(LastSeenBy(Myself),INNOCENT)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;InWeaponRange(LastSeenBy())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HasWeaponEquiped()<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AttackReevaluate(LastSeenBy(),30)<br>
+END<br>
+<br>
+<font size="5"><a name="135 LockScroll()">135 LockScroll()</a></font> not used in any scripts in bg2. However
+testing shows this action locks the screen from moving on the selected Object,
+maybe useful if you don't like moving the screen yourself.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;CombatCounter(0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;LockScroll()<br>
+END<br>
+<br>
+<br>
+<font size="5"><a name="136 UnlockScroll()">136 UnlockScroll()</a> </font>not used in any scripts in bg2, however
+this command simply unlocks the screen so it can be scrolled again.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;OR(2)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HotKey(H)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!CombatCounter(0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;UnlockScroll()<br>
+END<br>
+<br>
+<font size="5"><a name="137 StartDialog(S:DialogFile*,O:Target*)">137
+StartDialog(S:DialogFile*,O:Target*)</a></font> Starts a dialog
+with the target object. The dialog can be any associated ********.dlg
+file.Unlike the other action, Dialog(), StartDialog() will start a dialog from a
+distance.<br>
+<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See([PC])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;NumTimesTalkedTo(0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartDialog(&quot;andris&quot;,[PC])<br>
+END<br>
+<br>
+<font size="5"><a name="137 StartDialogue(S:DialogFile*,O:Target*)">137
+StartDialogue(S:DialogFile*,O:Target*)</a></font> same as above.<br>
+<br>
+<font size="5"><a name="138 SetDialog(S:DialogFile*)">138
+SetDialog(S:DialogFile*)</a> </font>see below.<br>
+<br>
+<font size="5"><a name="138 SetDialogue(S:DialogFile*)">138
+SetDialogue(S:DialogFile*)</a></font> Sets the dialog file
+associated with the object running the script to the dialog file (********.DLG)
+specified.SetDialogue(&quot;&quot;) will set the dialog file to none.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;AttackedBy([GOODCUTOFF],DEFAULT)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;KR_CHANGE_DIALOG&quot;,&quot;LOCALS&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetDialogue(&quot;&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;KR_CHANGE_DIALOG&quot;,&quot;LOCALS&quot;,1)<br>
+END<br>
+<br>
+<font size="5"><a name="139 PlayerDialog(O:Target*)">139 PlayerDialog(O:Target*)</a> </font><font size="3">Not used in
+bg2/SOA or TOB.<br>
+<br>
+(never been tested)<br>
+<br>
+</font><font size="5"><a name="139 PlayerDialogue(O:Target*)">139
+PlayerDialogue(O:Target*)</a></font><font size="3"> <a name="139 PlayerDialogue(O:Target*)">
+</a> Not
+used in bg2/SOA or TOB.<br>
+<br>
+(never been tested)<br>
+<br>
+</font><font size="5"><a name="140 GiveItemCreate(S:ResRef*,O:Object*,I:Usage1*,I:Usage2*,I:Usage3*)">140
+GiveItemCreate(S:ResRef*,O:Object*,I:Usage1*,I:Usage2*,I:Usage3*) </a></font><font size="3">Gives
+the item specified ((RESREF) and also creates it) to the specified object.
+Parameter 1 is the number, parameter 2 is the amount of charges (or
+quantity if its stackable), parameter 3 is charges on a secondary spell or
+effect.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;GlobalTimerExpired(&quot;dwVith&quot;,&quot;GLOBAL&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;dwVithal&quot;,&quot;GLOBAL&quot;,3)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateVisualEffectObject(&quot;SPPLANAR&quot;,&quot;udvith&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Wait(2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Activate(&quot;udvith&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GiveItemCreate(&quot;scrl8z&quot;,&quot;udvith&quot;,1,1,0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GiveItemCreate(&quot;scrl9g&quot;,&quot;udvith&quot;,1,1,0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GiveItemCreate(&quot;scrl9e&quot;,&quot;udvith&quot;,1,1,0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GiveItemCreate(&quot;scrl9v&quot;,&quot;udvith&quot;,1,1,0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GiveItemCreate(&quot;scrl9r&quot;,&quot;udvith&quot;,1,1,0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;dwVithal&quot;,&quot;GLOBAL&quot;,4)<br>
+END<br>
+<br>
+<br>
+<br>
+</font><font size="5"><a name="141 GivePartyGoldGlobal(S:Name*,S:Area*)">141
+GivePartyGoldGlobal(S:Name*,S:Area*)</a> </font><font size="3">not
+used in bg2...<br>
+<br>
+(Not sure what it does, tried using names and script names for the name...)<br>
+<br>
+</font><font size="5"><a name="142 UseDoor()">142 UseDoor()</a></font><font size="3"> Not needed see
+below...<br>
+<br>
+</font><font size="5"><a name="143 OpenDoor(O:Object*)">143 OpenDoor(O:Object*)</a></font><font size="3"> will open
+the specified door, but will not work if the door is locked unless the object
+has high str.Also some specially lock doors cannot be picked or forced open,
+doors that are plot specific for example.Also if a door is locked and you use
+this action on a creature the creature may continue attempting to open the door
+even after other actions are issued, since it gets stuck on the first action. I
+tried unsuccessfully to implement door opening before TOB came out, without
+success. Heres an older script I was using that checked each door name:<br>
+<br>
+IF<br>
+See(&quot;Door01&quot;<br>
+OpenState(&quot;Door01&quot;,FALSE)<br>
+!See([GOODCUTOFF])<br>
+!TargetUnreachable(&quot;Door01&quot;)<br>
+THEN<br>
+RESP ONSE #100<br>
+MoveToObjectNoInterrupt(&quot;Door01&quot;)<br>
+Unlock(&quot;Door01&quot; )<br>
+OpenDoor(&quot;Door01&quot;)<br>
+END<br>
+<br>
+(Note that you would need to do this for every door in the game (alot of door
+names) and then you would ruin plot locked doors. If you tried to open them
+without unlocking them, it could cause weird behavior in cres when they get
+'stuck' opening doors that cant be opened.)<br>
+In tob it might be possible to use the new door objects found in objects.ids
+instead to open the doors, but if 'Disarmed' and 'unlocked' triggers still dont
+work for doors then it wont be much help. Heres a url to why door opening is
+problematic (towards the bottom of the post) <a href="http://www.gamebanshee.com/cgi-bin/ubb/ultimatebb.cgi?ubb=get_topic&amp;f=2&amp;t=006288." target="_blank">http://www.gamebanshee.com/cgi-bin/ubb/ultimatebb.cgi?ubb=get_to
+pic&amp;f=2&amp;t=006288.</a><br>
+<br>
+In TOB using this script:<br>
+<br>
+IF<br>
+See(NearestDoor(Myself))<br>
+OpenState(NearestDoor(Myself),F ALSE)<br>
+THEN<br>
+RESPONSE #100<br>
+MoveToObjectNoInterrupt(NearestDoor(Myself))<br>
+OpenDoor(NearestDoor(Mys elf))<br>
+END<br>
+<br>
+Seems to lock up the game or boot me out of the game...<br>
+<br>
+</font><font size="5"><a name="144 CloseDoor(O:Object*)">144
+CloseDoor(O:Object*)</a></font><font size="3"> Closes the
+specfied door. With TOB It might be possible to use CloseDoor(NearestDoor()) as
+an action. Prior to TOB you need the door name.<br>
+<br>
+Example is from AR0300.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;OR(2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;LyrosJob&quot;,&quot;GLOBAL&quot;,3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Dead(&quot;lyros&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Exists(&quot;Rylock&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;RylockLeavesHarperDoor&quot;,&quot;AR0300&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;RylockLeavesHarperDoor&quot;,&quot;AR0300&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CloseDoor(&quot;DOOR0308&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Lock(&quot;DOOR0308&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Rylock&quot;,EscapeArea())<br>
+END<br>
+<br>
+</font><font size="5"><a name="145 PickLock(O:Object*)">145 PickLock(O:Object*)</a></font><font size="3"> must be the
+action the thief uses to do just that.<br>
+<br>
+(Never tested)<br>
+<br>
+</font><font size="5"><a name="146 Polymorph(I:AnimationType*Animate)">146
+Polymorph(I:AnimationType*Animate)</a></font><font size="3">
+causes the object running the script to change animation to the specifed
+animation. The animation is from Animate.ids. Note: this is one of the actions
+used to change characters into other things like mindflayers or fire elementals.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!InPartyAllowDead(&quot;Aerie&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;Aerie&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!GlobalGT(&quot;AerieTransform&quot;,&quot;GLOBAL&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;Aerie&quot;,&quot;AR0607&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;KalahI&quot;,&quot;AR0607&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;MoveGlobal(&quot;Ar0607&quot;,&quot;Aerie&quot;,[318.378])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ChangeEnemyAlly(&quot;Aerie&quot;,NEUTRAL)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;Aerie&quot;,&quot;AR0607&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Aerie&quot;,Polymorph(MAGE_FEMALE_ELF))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Aerie&quot;,SetBeenInPartyFlags())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;AerieTransform&quot;,&quot;GLOBAL&quot;,2)<br>
+END<br>
+<br>
+</font><font size="5"><a name="147 RemoveSpell(I:Spell*Spell)">147
+RemoveSpell(I:Spell*Spell)</a> </font><font size="3">Removes
+the selected spell from the object running the script. The spell can be innate,
+priest, wizard, anything, as long as its listed in spell.ids.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;KR_ANTI_PALADIN_CHANGE&quot;,&quot;LOCALS&quot;,1)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RemoveSpell(PALADIN_LAY_ON_HANDS)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RemoveSpell(PALADIN_DETECT_EVIL)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RemoveSpell(PALADIN_PROTECTION_FROM_EVIL)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;KR_ANTI_PALADIN_CHANGE&quot;,&quot;LOCALS&quot;,2)<br>
+END&lt; br&gt;<br>
+<br>
+148 BashDoor(0:Object)is broken due to the improper coding of 0 (it should be
+O). Never tried it after fixing it...However the opendoor command will check str
+and force the door if the door is locked and the object trying to open it has
+sufficient strength. So this action is not needed.<br>
+<br>
+</font><font size="5"><a name="149 EquipMostDamagingMelee()">149
+EquipMostDamagingMelee()</a> </font><font size="3">equips
+the most damaging melee from the quickslots. The most damaging is selected from
+its TO HIT value and damage. Special bonuses versus creature types are not
+checked, neither are added elemental damages.<br>
+<br>
+IF<br>
+&nbsp;See([EVILCUTOFF])<br>
+THEN<br>
+&nbsp; RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp; EquipMostDamagingMelee()<br>
+&nbsp;&nbsp;&nbsp; Attack([EVILCUTOFF])<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="150 StartStore(S:Store*,O:Target*)">150
+StartStore(S:Store*,O:Target*)</a></font><font size="3">
+starts the specified store (********.STO) with the specified object. Useful for
+custom merchants. And mostly used in dialogues instead of scripts, though the
+actions are the same for both.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;KRSTART_STORE&quot;,&quot;LOCALS&quot;,1)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartStore(&quot;Tem4802&quot;,LastTalkedToBy())<br>
+END<br>
+<br>
+</font><font size="5"><a name="151 DisplayString(O:Object*,I:StrRef*)">151
+DisplayString(O:Object*,I:StrRef*)</a></font><font size="3">
+displays a dialog tlk reference &nbsp;number in the messae window on the object
+specified. SO if I wanted my character to display 'quaffs a potion' in the
+message window when he drinks a potion of extra healing, I would use:<br>
+<br>
+IF<br>
+HasItem(&quot;potn52&quot;,())<br>
+HPPercentLT((),50)<br>
+THENRESPONSE #100<br>
+UseItem(&quot;potn52&quot;,())<br>
+DisplayString((),46150)<br>
+END<br>
+<br>
+(Note this action is different than the DisplayStringHead(OBJECT,STRING) action
+which displays text over their head instead.<br>
+<br>
+</font><font size="5"><a name="152 ChangeAIType(O:Object*)">152
+ChangeAIType(O:Object*)</a> </font><font size="3">is not
+used in bg2, however it is used in IWD/HOW I believe, for what I have no clue...<br>
+<br>
+(never been tested)<br>
+<br>
+</font><font size="5"><a name="153 ChangeEnemyAlly(O:Object*,I:Value*EA)">153
+ChangeEnemyAlly(O:Object*,I:Value*EA)</a></font><font size="3">
+is used to change the enemy/ally parameter of a creature. This parameter
+determines if the creature is friendly to you (blue or green circle) or hostile
+(Red circle). The values are from EA.ids.<br>
+<br>
+IF<br>
+Global&quot;KR_ENEMYALLY_CHANGE&quot;,&quot;LOCALS&quot;,0)<br>
+THE N<br>
+RESPONSE #100<br>
+SetGlobal&quot;KR_ENEMYALLY_CHANGE&quot;,&quot;LOCALS&quot;,1)<br>
+Change EnemyAlly((),NEUTRAL)<br>
+END<br>
+<br>
+Note: Another way of doing this is simply using Enemy() or Ally() in the
+response if you want to change the object running the scripts' Enemy/Ally
+parameter.<br>
+<br>
+</font><font size="5"><a name="154 ChangeGeneral(O:Object*,I:Value*General)">154
+ChangeGeneral(O:Object*,I:Value*General)</a> </font><font size="3">changes
+the general classification of the object to the value specified. The General
+values are found in General.ids.<br>
+<br>
+IF<br>
+Global&quot;KR_GENERAL_CHANGE&quot;,&quot;LOCALS&quot; ,0)<br>
+THEN<br>
+RESPONSE #100<br>
+SetGlobal&quot;KR_GENERAL_CHANGE&quot;,&quot;LOCALS&quot;,1)<br>
+ChangeGe neral((),UNDEAD)<br>
+END<br>
+<br>
+</font><font size="5"><a name="155 ChangeRace(O:Object*,I:Value*Race)">155
+ChangeRace(O:Object*,I:Value*Race)</a></font><font size="3">
+changes the race classification of the object to the value specified. The race
+values are found in Race.ids.<br>
+<br>
+IF<br>
+Global&quot;KR_RACE_CHANGE&quot;,&quot;LOCALS&quot;,0)<br>
+THEN<br>
+RESPONSE #100<br>
+SetGlobal&quot;KR_RACE_CHANGE&quot;,&quot;LOCALS&quot;,1)<br>
+ChangeRace( (),DRAGON)<br>
+END<br>
+<br>
+</font><font size="5"><a name="156 ChangeClass(O:Object*,I:Value*Class)">156
+ChangeClass(O:Object*,I:Value*Class)</a></font><font size="3">
+changes the class classification of the object to the value specified. The class
+values are found in Class.ids.<br>
+<br>
+IF<br>
+Global&quot;KR_CLASS_CHANGE&quot;,&quot;LOCALS&quot;,0)&lt; br&gt;THEN<br>
+RESPONSE #100<br>
+SetGlobal&quot;KR_CLASS_CHANGE&quot;,&quot;LOCALS&quot;,1)<br>
+ChangeClas s((),FIGHTER)<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="157 ChangeSpecifics(O:Object*,I:Value*Specific)">157
+ChangeSpecifics(O:Object*,I:Value*Specific)</a></font><font size="3">
+is used for specific information about NPCs. This is a weird parameter not fully
+understood, since the Specifics can store either a script or a String. In the
+example script, Sarkyn uses the specifics to insure something is not repeated in
+his excellent Bg2 player scripts. Go to bw scripts and check out his player
+scripts for the best ones currently.The script below assigns the simulacrum
+created via the spell a script called 'gbSim' so they don't just stand there.
+Note that you could adapt this below snippet to your own use by creating a
+script for your simulacrum then compiling it to a bcs and placing it in your
+override folder, then using its name in place of gbsim. </font></p>
+<p><font size="3">Does not work correctly in multiplayer games when set on
+player characters. I am not sure about creatures, but I have learned to avoid it
+all together when scripting for multiplayer.<br>
+<br>
+<br>
+<br>
+// Simulacrum AI Change<br>
+IF<br>
+See([ALLY])<br>
+!InParty(LastSeenBy(Myself))<br>
+!Gender(LastSeenB y(Myself),SUMMONED)<br>
+!General(LastSeenBy(Myself),ANIMAL)<br>
+!General(LastSeenB y(Myself),MONSTER)<br>
+!General(LastSeenBy(Myself),UNDEAD)<br>
+!General(LastSeenBy (Myself),GIANTHUMANOID)<br>
+!Race(LastSeenBy(Myself),ELEMENTAL)<br>
+!Race(LastSeen By(Myself),MEPHIT)<br>
+!Race(LastSeenBy(Myself),IMP)<br>
+!HasItem(&quot;IMOENHP1&amp;q uot;,LastSeenBy(Myself))<br>
+!HasItem(&quot;MINHP1&quot;,LastSeenBy(Myself))<br>
+! Specifics(LastSeenBy(Myself),2001)<br>
+THEN<br>
+RESPONSE #100<br>
+DisplayStringHead(LastSeenBy(Myself),26234) // 'Simulacrum'<br>
+ActionOverride(LastSeenBy(Myself),ChangeAIScript(&quot;gbSim&amp;quo t;,DEFAULT))<br>
+ChangeSpecifics(LastSeenBy(Myself),2001)<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="158 ChangeGender(O:Object*,I:Value*Gender)">158
+ChangeGender(O:Object*,I:Value*Gender)</a></font><font size="3">
+<a name="158 ChangeGender(O:Object*,I:Value*Gender)"> </a>
+changes the gender classification of the object to the value specified. The
+gender values are found in Gender.ids. Note that by changing the gender of
+summoned creatures to NEITHER, you can defeat the Bioware imposed 5 critter
+summoning limit. Heres an example script to do that based off Sarkyns above
+script.<br>
+<br>
+IF<br>
+See([ALLY])<br>
+!InParty(LastSeenBy(Myself))<br>
+Gender(LastS eenBy(Myself),SUMMONED)<br>
+!Specifics(LastSeenBy(Myself),3001)<br>
+THEN<br>
+RESPON SE #100<br>
+ChangeGender(LastSeenBy(),NEITHER)<br>
+ChangeSpecifics(LastSeenBy(Myself) ,3001)<br>
+END<br>
+</font></p>
+<p><font size="5"><a name="159 ChangeAlignment(O:Object*,I:Value*Align)">159
+ChangeAlignment(O:Object*,I:Value*Align)</a></font><font size="3">
+changes the alignment classification of the object to the value specified. The
+alignment values are found in Align.ids.<br>
+<br>
+IF<br>
+Global&quot;KR_ALIGN_CHANGE&quot;,&quot;LOCALS&quot;,0)&lt; br&gt;THEN<br>
+RESPONSE #100<br>
+SetGlobal&quot;KR_ALIGN_CHANGE&quot;,&quot;LOCALS&quot;,1)<br>
+ChangeAlig nment((),CHAOTIC_GOOD)<br>
+END<br>
+<br>
+</font><font size="5"><a name="160 ApplySpell(O:Target,I:Spell*Spell)">160
+ApplySpell(O:Target,I:Spell*Spell)</a></font><font size="3">
+instantly (1/4 of a second or less usually.) Does not play the casting
+animations. Used to mimic contingencies for enemy spell casters.Also pell cannot
+be interrupted and area effect spells that target multiple objects will only
+affect the specified (single) object.Example is used to mimic a contigency from
+MAGE18Y.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See(NearestEnemyOf(Myself))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;Prep&quot;,&quot;LOCALS&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ApplySpell(Myself,WIZARD_STONE_SKIN)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ApplySpell(Myself,WIZARD_SPELL_TRAP)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ApplySpell(Myself,WIZARD_MIRROR_IMAGE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ApplySpell(Myself,WIZARD_SPELL_TURNING)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ApplySpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ApplySpell(SixthNearestEnemyOf(Myself),WIZARD_MONSTER_SUMMONING_4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;Prep&quot;,&quot;LOCALS&quot;,1)<br>
+END<br>
+<br>
+</font><font size="5"><a name="161 IncrementChapter(S:RESREF*)">161
+IncrementChapter(S:RESREF*)</a></font><font size="3"> is
+used to display two strings from a 2da file called CHTXT**.2da, with ** being
+the chapter 1-10.The first string from the 2da corresponds to the current chaper,
+and the second is the text displayed about that chapter.For example here is
+CHTEXT5.2da's top lines:<br>
+<br>
+2DA V1.0<br>
+NONE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1<br>
+SWITCH
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;DEFAULT &nbsp;&nbsp;&nbsp; DEFAULT<br>
+DEFAULT
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+16207 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15839<br>
+DWARF
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0<br>
+<br>
+Now heres the two strings' meanings:<br>
+<br>
+16207<br>
+<br>
+Text:<br>
+<br>
+Chapter 5<br>
+<br>
+15839<br>
+<br>
+Text: You have dealt a great blow to the organization known as the Iron Throne;
+a defeat that you are certain will not be ignored. &nbsp;Now you must travel to
+the great city of Baldur's Gate, where you are certain to find the truth behind
+the strange plot that plagues the citizens of the Sword Coast.<br>
+<br>
+And finally heres an example script that runs the action.(From AR1803.bcs)<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Dead(&quot;Davaeorn&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;Chapter&quot;,&quot;GLOBAL&quot;,4)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RevealAreaOnMap(&quot;AR0900&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;IncrementChapter(&quot;Chptxt5&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddJournalEntry(15839,USER)<br>
+END<br>
+<br>
+</font><font size="5"><a name="162 ReputationSet(I:Reputation*)">162
+ReputationSet(I:Reputation*)</a> </font><font size="3">not
+used in any in-game scripts. As the name suggests this action is used to set the
+reputation of the player characters to a set value.<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;KRGOODDEED&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetReputation(20)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SG(&quot;KRGOODDEED&quot;,1<br>
+END<br>
+<br>
+</font><font size="5"><a name="163 ReputationInc(I:Reputation*)">163
+ReputationInc(I:Reputation*)</a> </font><font size="3">increases
+the reputation of the player characters by the specified amount.The example is
+from Baldur.bcs. Even though this is an increase you can use a negative number
+to lower rep.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;InParty(&quot;Viconia&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;ViconiaJoinedParty&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ReputationInc(-2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;ViconiaJoinedParty&quot;,&quot;GLOBAL&quot;,1)<br>
+END<br>
+<br>
+</font><font size="5"><a name="164 AddexperienceParty(I:XP*)">164
+AddexperienceParty(I:XP*)</a></font><font size="3"> adds
+the amount of XP specified to the party. The example is from AR1300.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;OpenState(&quot;Bridge01&quot;,TRUE)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;BridgeOpen&quot;,&quot;GLOBAL&quot;,0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;Torgal&quot;)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;BridgeOpen&quot;,&quot;GLOBAL&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DisplayString(Myself,'The
+drawbridge has been lowered.')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPCAPT03&quot;,[2400.1592],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPSOLD03&quot;,[2425.1676],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPSOLD04&quot;,[2371.1754],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPSOLD05&quot;,[2315.1805],6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;TROLGI01&quot;,[2391.1592],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;TROLGI02&quot;,[2282.1742],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;KPYUAN01&quot;,[2251.1731],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddexperienceParty(29750)<br>
+(Cut short for brevity)<br>
+<br>
+</font><font size="5"><a name="165 AddexperiencePartyGlobal(S:Name*,S:Area*)">165
+AddexperiencePartyGlobal(S:Name*,S:Area*)</a> </font><font size="3">not
+used in any in game scripts...never used this myself. Global is a place that can
+be accessesed by anything in the game, but im not sure how that corresponds to
+this action.<br>
+<br>
+(tested but unsure how this works...)<br>
+<br>
+</font><font size="5"><a name="166 SetNumTimesTalkedTo(I:Num*)">166
+SetNumTimesTalkedTo(I:Num*)</a></font><font size="3"> Sets
+the number of times the object running the script has been talked to by player
+characters. The example is from AR0103.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;BrielbaraMove&quot;,&quot;GLOBAL&quot;,1)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Exists(&quot;Brielbara&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;Brielbara&quot;)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;CreateCreature(&quot;BRIELB&quot;,[418.376],0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ActionOverride(&quot;Brielbara&quot;,SetNumTimesTalkedTo(1))<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="167 StartMovie(S:ResRef*)">167
+StartMovie(S:ResRef*)</a></font><font size="3"> is used to
+play a movie (.mve format). The example is from AR108.bcs. &nbsp;<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;EnteredPalace&quot;,&quot;GLOBAL&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;StartMovie(&quot;PALACE&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;EnteredPalace&quot;,&quot;GLOBAL&quot;,1)<br>
+END<br>
+<br>
+</font><font size="5"><a name="168 Interact(O:Object*)">168 Interact(O:Object*)</a></font><font size="3"> is used for
+initiating interparty banter betweeen NPCs. The Example used is from Edwin.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;InParty(Myself)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Gender(Myself,FEMALE)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;InParty(&quot;Aerie&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See(&quot;Aerie&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Dead(&quot;Aerie&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!StateCheck(&quot;Aerie&quot;,STATE_SLEEPING)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Range(&quot;Aerie&quot;,10)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;CombatCounter(0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Range(SecondNearest([PC]),10)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;EdwinW1&quot;,&quot;LOCALS&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Interact(&quot;Aerie&quot;)<br>
+END<br>
+<br>
+</font><font size="5"><a name="169 DestroyItem(S:ResRef*)">169
+DestroyItem(S:ResRef*)</a> </font><font size="3">completly
+destroys the selected item from the objects inventory running the script. The
+example is from AR1000.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;CerndBaby&quot;,&quot;GLOBAL&quot;,1)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;CerndBabyTake&quot;,&quot;AR1000&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;CerndBabyTake&quot;,&quot;AR1000&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;TakePartyItem(&quot;misc8t&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;DestroyItem(&quot;misc8t&quot;)<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="170 RevealAreaOnMap(S:ResRef*)">170
+RevealAreaOnMap(S:ResRef*)</a></font><font size="3"> adds
+an ARE file to the WMP to enable traveling to it via world map.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Dead(&quot;Davaeorn&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;Chapter&quot;,&quot;GLOBAL&quot;,4)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;RevealAreaOnMap(&quot;AR0900&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;IncrementChapter(&quot;Chptxt5&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddJournalEntry(15839,USER)<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="171 GiveGoldForce(I:Amount*)">171
+GiveGoldForce(I:Amount*)</a></font><font size="3"> <a name="171 GiveGoldForce(I:Amount*)">
+</a> Forces
+the amount of gold.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;NumTimesTalkedTo(30)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetNumTimesTalkedTo(31)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GiveGoldForce(300)<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="172 ChangeTileState(O:Tile*,I:State*Boolean)">172
+ChangeTileState(O:Tile*,I:State*Boolean)</a></font><font size="3">
+not used in any in game scripts...<br>
+<br>
+(never been tested)<br>
+<br>
+</font><font size="5"><a name="173 AddJournalEntry(I:Entry*,I:Type*JourType)">173
+AddJournalEntry(I:Entry*,I:Type*JourType)</a></font><font size="3">
+adds a dialog tlk reference number into your journal. Example is from
+AR0511.bcs.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Dead(&quot;JanGith1&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Dead(&quot;JanGith2&quot;)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;ThumbSeeker&quot;,&quot;GLOBAL&quot;,2)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;Global(&quot;HiddenJournal&quot;,&quot;AR0511&quot;,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetGlobal(&quot;HiddenJournal&quot;,&quot;AR0511&quot;,1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AddJournalEntry(34726,QUEST)<br>
+END<br>
+<br>
+<br>
+</font><font size="5"><a name="174 EquipRanged()">174 EquipRanged()</a></font><font size="3"> equips a ranged
+weapon if one is in a quickslot.<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;See([EVILCUTOFF])<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!Range([EVILCUTOFF],4)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;OR(28)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquiped(&quot;Bow01&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquiped(&quot;Bow02&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquiped(&quot;Bow03&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquiped(&quot;Bow04&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow05&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow06&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow07&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow08&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow09&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow10&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow11&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow12&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow13&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow14&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow15&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow16&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow17&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow18&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow19&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow20&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow21&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow22&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow23&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow24&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow25&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow26&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow98&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!HasItemEquipedReal(&quot;Bow99&quot;,())<br>
+&nbsp;&nbsp;&nbsp; &nbsp;THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;EquipRanged()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;AttackReevaluate([EVILCUTOFF],30)<br>
+END<br>
+<br>
+</font><font size="5"><a name="175 SetLeavePartyDialogFile()">175 SetLeavePartyDialogFile()</a></font><font size="3"> is
+used to set the associated NPC party leave dialog, usually a couple questions
+like you want me to stay here or go to the Copper Coronet?<br>
+<br>
+IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;!InParty(Myself)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;HPGT(Myself,0)<br>
+THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;RESPONSE #100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;SetLeavePartyDialogFile()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Dialogue(Player1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ChangeAIScript(&quot;&quot;,DEFAULT)<br>
+END<br>
+<br>
+Something I want add: The triggers used in the game do not ever exceed 31. So I
+believe that is the limit for them. Triggers are the conditons that determine if
+the script actions occur, like InParty() or HPPercentLT.<br>
+<br>
+<br>
+</font></p>
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

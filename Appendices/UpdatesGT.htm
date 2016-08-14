@@ -1,0 +1,109 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Appendices</title>
+</head>
+
+
+<body>
+
+<p>update for IESDP later than 040202.....................data to verification<br>
+------------------------------------------------------------------<br>
+ITM files update :<br>
+<br>
+Effects/.............<br>
+<br>
+i was just trying to make a halberd that casted contagion on dragons upon hit and i figured out some more unknowns in the item maker(v 1.2.2)! this new information affects the effmaker(v1.1) as well!&nbsp;<br>
+<br>
+to view what i am currently talking about open up sw1h32.itm and go to the other info screen. go to the item effect number 1. "Use EFF File". now go to "Click to edit parameters."<br>
+<br>
+you are now viewing what i am talking about. those two parameters are ids and ids reference.  those two in particular are 146 (dragon reference number) and 4 (the race ids). this is part of the scheme used to cause this sword to do double damage to dragons. this particular effect causes fixed/random damage to dragons while the other Use eff on the sword causes damage vs creature type (dragon type), but this effect has parameters of 0 (nothing reference) and 2 (object.ids). i dont understand why they separated these effects though. they both only work on dragons, but why couldn't they just make effect that did 2d8 instead of two effects that did 1d8?<br>
+<br>
+to further support my hypothesis, i submit the daystar(sw1h31). it is the other weapon used to cause double damage. it has 4 effects (two of which are relevant here). one is a use eff with parameters 0 and 2, the other is a use eff with paramaters of 4 and 3. as with peridan (sw1h32) the use eff with 0 and 2 parameters is a damage vs creature type effect (undead type). the use eff with parameters 4 (undead reference) and 3 (general.ids) is a fixed/double damage effect. (on a side note bioware put 1d8 in this parameter, which in my opinion was an error as following the example set by peridan the correct entry should have been 1d8+2 in order to correctly double the damage to undead).<br>
+<br>
+what i'm trying to say is that "Use EFF" has the same parameter types as "Damage vs. Create Type."<br>
+<br>
+---------------------------------------------------------------------<br>
+Effects update :<br>
+I thought I'd update the older effects that don't have all the parameters listed. I think I posted these a while ago but I don't think you saw them:<br>
+<br>
+5) (NOT TESTED). As I'm going through the effects to see whats listed it also looks as if 'slay creature' works as protect from creature type does as well.<br>
+<br>
+P.S does IEEP export strings specified in the 'Protection from Spell' effect? &lt;Rysunek&gt;LoggedM<br>
+<br>
+-----------------------------------------------------------------<br>
+BAM update :<br>
+<br>
+by Devarrah :<br>
+<br>
+bah! i was all wrong... i think i have it figured out now:<br>
+offset 0x0b is the compressed color index (and it's not always 0, items.bam is a good example) and this is for certain<br>
+<br>
+Now transparency is a bit more experimental. The transparent color is 0,255,0 but if the palette doesn't contain 0,255,0, index 0 becomes the transparent color by default<br>
+There's still two bams that i find a bit problematic but if you use the above rules you'll be guaranteed a proper looking bam and if you decode by these rules you'll display all but 2 bams correctly (at least in bg) (i'll examine the two bams perhaps tomorrow and see if i can't come up with the what's going on)&nbsp;<br>
+<br>
+------------------------------------------------------------------<br>
+ITM and CRE by devarrah<br>
+<br>
+as far as item slots go ... there appears to be 40 bytes alloted to it, though only 38 appear to be used (the last two appear to be always 0000 0000)<br>
+i checked this in a normal .cre and the .cre embedded in the .chr and both seem to suggest a 40 byte field<br>
+</p>
+
+<hr>
+<p>Ken's 3D renedering Links</p>
+<p><font color="#eeeeee" face="arial" size="2"><a href="http://www.povray.org/" target="_blank">http://www.povray.org/</a><br>
+<br>
+<a href="http://www.blender.nl/" target="_blank">http://www.blender.nl/</a>
+&nbsp;(though Blender crashes my machine.)<br>
+<br>
+<a href="http://www.3dtotal.com/" target="_blank">http://www.3dtotal.com/</a><br>
+<br>
+<a href="http://www.3dtotal.com/ffa/tutorials/tutorials.htm" target="_blank">http://www.3dtotal.com/ffa/tutorials/tutorials.htm</a><br>
+<br>
+<a href="http://www.3dtotal.com/ffa/meshes/meshhuman.htm" target="_blank">http://www.3dtotal.com/ffa/meshes/meshhuman.htm</a><br>
+<br>
+<a href="http://www.3dcafe.com/" target="_blank">http://www.3dcafe.com/</a><br>
+<br>
+<a href="http://www.3dcafe.com/asp/freestuff.asp" target="_blank">http://www.3dcafe.com/asp/freestuff.asp</a><br>
+<br>
+<a href="http://3dmodelworld.com/" target="_blank">http://3dmodelworld.com/</a><br>
+<br>
+<a href="http://www.google.com/search?q=free+3d+model" target="_blank">http://www.google.com/search?q=free+3d+model</a><br>
+<br>
+<a href="http://www.ookami-enterprises.com/top25/default.asp" target="_blank">http://www.ookami-enterprises.com/top25/default.asp</a><br>
+<br>
+<a href="http://www.computerarts.co.uk/downloads/3d/apps.asp" target="_blank">http://www.computerarts.co.uk/downloads/3d/apps.asp</a><br>
+<br>
+<a href="http://www.planet-3d.com/" target="_blank">http://www.planet-3d.com/</a><br>
+<br>
+<a href="http://www.anim8or.com/" target="_blank">http://www.anim8or.com/</a><br>
+<br>
+<a href="http://www.kettering.edu/~jsinger/free3dmodels.htm" target="_blank">http://www.kettering.edu/~jsinger/free3dmodels.htm</a><br>
+<br>
+<a href="http://www.maxunderground.com/mu/" target="_blank">http://www.maxunderground.com/mu/</a><br>
+<br>
+<a href="http://www.maxunderground.com/mu/news.php3?mode=read&amp;key=1143" target="_blank">http://www.maxunderground.com/mu/news.php3?mode=read&amp;key=1143</a><br>
+<br>
+<a href="http://www.3dark.com/" target="_blank">http://www.3dark.com/</a><br>
+<br>
+<a href="http://www.3dark.com/resources/software/" target="_blank">http://www.3dark.com/resources/software/</a><br>
+<br>
+</font></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<p>&nbsp;
+</p>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

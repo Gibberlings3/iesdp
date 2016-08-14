@@ -1,0 +1,349 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Effects</title>
+</head>
+
+<body>
+
+<p align="center"><font size="5"><a name="Baldur's Gate 2 Shadows of Amn">Baldur's
+Gate 2 Shadows of Amn</a></font></p>
+<p><b><font size="2" color="#FF0000">256 (100h) ,Display a spell sequence
+activated - need more test,</font></b></p>
+<blockquote>
+  <p><font size="2" color="#FF0000">Parameter 1 :,</font></p>
+  <p><font size="2" color="#FF0000">Parameter 2 :,</font></p>
+</blockquote>
+<p><b><font size="2">257 (101h) Spell Sequencer Creation,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Maximum Level Usable,</font></p>
+<p><font size="2">Parameter 2 :Number to Use,</font></p>
+<p><font size="2">This effect will create the spells
+to cast in sequence. The Maximum Level Usable parameter sets the highest level
+the spells to use can be, and the Number to Use parameter sets the number of
+spells to put in the sequencer.</font></p>
+</blockquote>
+<p><b><font size="2">258 (102h) Spell Sequencer Activation,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">For
+this effect to work the Resource Key needs to be set to the Spell file name
+which contains the Spell Sequencer Creation effect. This effect must be in
+innate ability. This is important to anyone who wants to create spell sequencer,
+it seem that in BG2 the spell file naming is important and because the spell
+sequencer creation effect itself creates innate ability naming must be correct.
+So the spell file what contains the Spell Sequencer Creation effect can only be
+7 letters long (including numbers) and that file what have Spell Sequencer
+Activation effect must have same file name ending in D (ie. spell sequencer
+creation file name SPSS101 and spell sequencer activation SPSS101D).</font></p>
+</blockquote>
+<p><b><font size="2">259 (103h) Spell Trap,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Amount Protected Against,</font></p>
+<p><font size="2">Parameter 2 :Level
+Protected Against,</font></p>
+<p><font size="2">This effect will absorb spells cast against the
+affected individual then allow a previously cast spell to be recalled. The Level
+Protected Against parameter sets the level of the spells protected against, and
+the Amount Protected Against parameter sets the number of spells of the level
+set with the Level Protected Against parameter to work against.</font></p>
+</blockquote>
+<p><b><font size="2" color="#FF0000">260 (104h) ,UNKNOWN,</font></b></p>
+<blockquote>
+  <p><font size="2" color="#FF0000">Parameter 1 :,</font></p>
+  <p><font size="2" color="#FF0000">Parameter 2 :,</font></p>
+  <p><font size="2" color="#FF0000">Crashes the game when set to while equipped,
+  Self</font></p>
+</blockquote>
+<p><b><font size="2">261 (105h) Spell Restore,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Spell Level,</font></p>
+<p><font size="2">Parameter 2 :Spell Type,</font></p>
+<p><font size="2">This effect will restore one spell to memory. The Spell Level
+parameter sets which level spell to restore, and the Spell Type parameter sets
+the type of the spell to restore. If the level to restore a spell from is not
+possible it should restore the next lowest level possible. Known values of the
+Spell Type parameter are 0 for Wizard or Bard, and 1 for Cleric or Druid.</font></p>
+</blockquote>
+<p><b><font size="2" color="#FF0000">262 (106h) ,UNKNOWN,</font></b></p>
+<blockquote>
+  <p><font size="2" color="#FF0000">Parameter 1 :,</font></p>
+  <p><font size="2" color="#FF0000">Parameter 2 :,</font></p>
+</blockquote>
+<p><b><font size="2">263 (107h) Backstab,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If it it a 00 then it makes the Modifier a flat point modifier (i.e.
+statistic plus the modifier number), if it is 01 the Modifier is a straight stat
+change (i.e. the statistic becomes what ever value the Modifier is), and if it
+is a 02 then the Modifier is a percentile modifier (i.e. the ability is
+multiplied by the Modifier value in percent so 10 is 10% making the ability 10%
+of its value).</font></p>
+</blockquote>
+<p><b><font size="2">264 (108h) Drop Weapons in Panic,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Constant Value,</font></p>
+<p><font size="2">This
+effect will cause the target to drop its weapon. Set the Constant Value
+parameter to 1 for this effect to work.</font></p>
+</blockquote>
+<p><b><font size="2">265 (109h) Set Global Variable,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Value,</font></p>
+<p><font size="2">Parameter 2 : When Param#2 is set to 1, the effect becomes Increment Global Variable, where param#1 is the number to increment by.,</font></p>
+<p><font size="2">This Effect
+will set a Global Variable to the value you specify. The Value parameter is set
+to the number value you wish the Global Variable to be set to. The Resource Key
+must be set to the name of the Global Variable you wish to set via this Effect.
+NOTE: Since the Resource Key can only be 8 characters long maximum, you can not
+set a Global Variable with this Effect this has a name longer than this amount.</font></p>
+</blockquote>
+<p><b><font size="2" color="#FF0000">266 (10Ah) ,UNKNOWN,</font></b></p>
+<blockquote>
+  <p><font size="2" color="#FF0000">Parameter 1 :,</font></p>
+  <p><font size="2" color="#FF0000">Parameter 2 :,</font></p>
+</blockquote>
+<p><b><font size="2">267 (10Bh) Disable Display String,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Text Reference,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">The Text Reference parameter
+sets what reference in the Dialok.tlk file that is disabled from being displayed.</font></p>
+</blockquote>
+<p><b><font size="2">268 (10Ch) Clear Fog of
+War,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">This
+effect allows a creature to clear the Fog of War on an area, i.e. allows it to
+explore like a PC does. Leave both parameters set to zero for this effect to
+work.</font></p>
+</blockquote>
+<p><b><font size="2">269 (10Dh) Shake Window,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Strength,</font></p>
+<p><font size="2">Parameter 2 :Undetermined,</font></p>
+<p><font size="2">This effect
+will shake the screen window. The Strength parameter sets how strong the shaking
+is.</font></p>
+</blockquote>
+<p><b><font size="2">270 (10Eh) Unpause Caster,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Constant Value,</font></p>
+<p><font size="2">This effect will unpause the caster from the pausing effects
+of things like summoning elementals. The Constant Value parameter needs to be
+set to 3 for this effect to function.</font></p>
+</blockquote>
+<p><b><font size="2">271 (10Fh) Animation Removal,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Non-meaningful,</font></p>
+<p><font size="2">Leave
+both parameters at all zeroes for this Effect to work. This effect will cause
+the animations of the affected thing to disappear and make it essentially
+completely invisible with no ring even. Scripting commands still apply to the
+thing affected but any that involve animations will not work (i.e. attacking,
+casting spells, walking, etc.). Essentially this can be useful for making items
+that need a script to run by having a creature summoned and then this cast on it
+thus making it not seen or anything and able to run the script.</font></p>
+</blockquote>
+<p><b><font size="2">272 (110h) Use EFF on condition,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 : (always set to 2 - I haven't the time to test
+more value, sorry),</font></p>
+<p><font size="2">Parameter 2 :</font></p>
+<ul>
+  <li><font size="2">set to 0 - the EFF is use each second upon the target.</font></li>
+  <li><font size="2">set to 1 (crash my game if I remember well)&nbsp;</font></li>
+  <li><font size="2">set to 2 - the EFF is use each second the number of time
+    specified in Param #1</font></li>
+  <li><font size="2">set to 3 - the EFF is use each X seconds where X=int found
+    in Param #1.</font></li>
+  <li><font size="2">set to 5 crash the game for me.</font></li>
+</ul>
+<p><font size="2">found with all priest spells that summon insect. In IEEP, the resources
+field of the CastingFeature Block link to an EFF File (ipdam1 and ipdam2). Same
+effect found in BOOT08.ITM (the cursed boots that teleport the wearer near the
+closest enemy). From what has been determined this effect seem to use some combinations
+:<br>
+* Param #2 set to 0 - the EFF is use each second upon the target.<br>
+* Param #2 set to 1 (crash my game if I remember well)<br>
+* Param #2 set to 2 - the EFF is use each second the number of time specified in
+Param #1<br>
+* Param #2 set to 3 - the EFF is use each X seconds where X=int found in Param
+#1.<br>
+* Param #2 set to 5 crash the game for me.<br>
+It's not enough, tough, to pretend to have found a something new.</font></p>
+</blockquote>
+<p><b><font size="2">273 (111h) Zone of Sweet Air,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Undetermined,</font></p>
+<p><font size="2">Parameter 2 :Undetermined,</font></p>
+<p><font size="2">This effect
+will absorb spells cast against the affected individual then allow a previously
+cast spell to be recalled. The Level Protected Against parameter sets the level
+of the spells protected against, and the Amount Protected Against parameter sets
+the number of spells of the level set with the Level Protected Against parameter
+to work against.</font></p>
+</blockquote>
+<p><b><font size="2">274 (112h) Un-Zone of Sweet Air,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Undetermined,</font></p>
+<p><font size="2">Parameter 2 :Undetermined,</font></p>
+<p><font size="2">Exact use of
+this effect is undetermined at this time.</font></p>
+</blockquote>
+<p><b><font size="2">275 (113h) Hide in Shadow Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets
+how the Statistic Modifier works. If it it a 00 then it makes the Modifier a
+flat point modifier (i.e. statistic plus the modifier number), if it is 01 the
+Modifier is a straight stat change (i.e. the statistic becomes what ever value
+the Modifier is), and if it is a 02 then the Modifier is a percentile modifier (i.e. the ability is multiplied by the Modifier value in percent so 10 is 10%
+making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">276 (114h) Detect Illusion Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets
+how the Statistic Modifier works. If it it a 00 then it makes the Modifier a
+flat point modifier (i.e. statistic plus the modifier number), if it is 01 the
+Modifier is a straight stat change (i.e. the statistic becomes what ever value
+the Modifier is), and if it is a 02 then the Modifier is a percentile modifier (i.e. the ability is multiplied by the Modifier value in percent so 10 is 10%
+making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">277 (115h) Set Traps Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets
+how the Statistic Modifier works. If it it a 00 then it makes the Modifier a
+flat point modifier (i.e. statistic plus the modifier number), if it is 01 the
+Modifier is a straight stat change (i.e. the statistic becomes what ever value
+the Modifier is), and if it is a 02 then the Modifier is a percentile modifier (i.e. the ability is multiplied by the Modifier value in percent so 10 is 10%
+making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">278 (116h) To Hit Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets how the Statistic Modifier
+works. If it it a 00 then it makes the Modifier a flat point modifier (i.e.
+statistic plus the modifier number), if it is 01 the Modifier is a straight stat
+change (i.e. the statistic becomes what ever value the Modifier is), and if it
+is a 02 then the Modifier is a percentile modifier (i.e. the ability is
+multiplied by the Modifier value in percent so 10 is 10% making the ability 10%
+of its value).</font></p>
+</blockquote>
+<p><b><font size="2">279 (117h) Renable Button,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Button Type,</font></p>
+<p><font size="2">This effect will renable the button specified by the Button
+Type parameter that was disabled previously. The known values of the Button Type
+parameter are 0 is Stealth Skill, 1 is Thieving Skill, 2 is Cast Spell, 3 is
+Quick Spell #1, 4 is Quick Spell #2, 5 is Quick Spell #3, 7 is Talk, 8 is Use
+Item, 9 is Quick Item #1, 11 is Quick Item #2, 12 is Quick Item #3, and 13 is
+Use Innate Ability.</font></p>
+</blockquote>
+<p><b><font size="2">280 (118h) Wild Magic,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :How to Work,</font></p>
+<p><font size="2">This effect will cause other spells to become wild magic and
+have the possibility to do other things. Set the How to Work parameter to either
+1 to affect the next spell cast, or 2 to affect every spell cast for the
+duration of this effect.</font></p>
+</blockquote>
+<p><b><font size="2">281 (119h) Restore Normal Spell Casting Ability,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Undetermined,</font></p>
+<p><font size="2">Parameter 2 :Undetermined,</font></p>
+<p><font size="2">Exact use
+of this effect is undetermined at this time.</font></p>
+</blockquote>
+<p><b><font size="2">282 (11Ah) Scripting State Modify,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Undetermined,</font></p>
+<p><font size="2">Parameter 2 :Undetermined,</font></p>
+<p><font size="2">Exact use
+of this effect is undetermined at this time.</font></p>
+</blockquote>
+<p><b><font size="2">283 (11Bh) Use EFF File (III),</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Unused,</font></p>
+<p><font size="2">Parameter 2 : 2, 3, or 4 (I've only tested 0 to 4, 0 and 1 yield no
+result),</font></p>
+<p><font size="2">Resref: EFF File<br>
+<br>
+This is a much "better" version of Use EFF File because this overrides all resistances as well as other effects that grant protection from this spell (that is, if no saving throw made of course).<br>
+<br>
+This is used in the Deck of Many Things effects:<br>
+<br>
+Fool<br>
+Talons<br>
+Strength Curse<br>
+High Priestess<br>
+Strife<br>
+Plague&nbsp;</font></p>
+</blockquote>
+<p><b><font size="2">284 (11Ch) Modified THAC0 Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Amount/Number,</font></p>
+<p><font size="2">Parameter 2 :See list below,</font></p>
+<p><font size="2"><b>Number and Type</b></font></p>
+<p><font size="2"><b>0</b> Increase/Decrease by Amount</font></p>
+<p><font size="2"><b>1</b> Set as being +/- the Amount</font></p>
+<p><font size="2"><b>2</b> Revert Settings (regardless of Param#1)</font></p>
+<p><font size="2">This is used in SPIN676.SPL (Invoke Courage).<br>
+</font></p>
+</blockquote>
+<p><b><font size="2">285 (11Dh) Melee Weapon Damage Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets
+how the Statistic Modifier works. If it it a 00 then it makes the Modifier a
+flat point modifier (i.e. statistic plus the modifier number), if it is 01 the
+Modifier is a straight stat change (i.e. the statistic becomes what ever value
+the Modifier is), and if it is a 02 then the Modifier is a percentile modifier (i.e. the ability is multiplied by the Modifier value in percent so 10 is 10%
+making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">286 (11Eh) Missile Weapon Damage Bonus,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Statistic Modifier,</font></p>
+<p><font size="2">Parameter 2 :Modifier Type,</font></p>
+<p><font size="2">The Modifier Type parameter sets
+how the Statistic Modifier works. If it it a 00 then it makes the Modifier a
+flat point modifier (i.e. statistic plus the modifier number), if it is 01 the
+Modifier is a straight stat change (i.e. the statistic becomes what ever value
+the Modifier is), and if it is a 02 then the Modifier is a percentile modifier (i.e. the ability is multiplied by the Modifier value in percent so 10 is 10%
+making the ability 10% of its value).</font></p>
+</blockquote>
+<p><b><font size="2">287 (11Fh) Feet Circle Removal,</font></b></p>
+<blockquote>
+<p><font size="2">Parameter 1 :Non-meaningful,</font></p>
+<p><font size="2">Parameter 2 :Constant Value,</font></p>
+<p><font size="2">This
+effect will remove the circle from around the feet of the target. Set the
+Constant Value parameter to 2 for this effect to work.</font></p>
+</blockquote>
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

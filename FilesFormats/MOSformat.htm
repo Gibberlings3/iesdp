@@ -1,0 +1,237 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+
+<h1 align="center">MOS file format</h1>
+<table border="1" width="610">
+  <tr>
+    <td width="28%">FileExtension :</td>
+    <td width="72%">MOS</td>
+  </tr>
+  <tr>
+    <td width="28%">Content :</td>
+    <td width="72%">Description of MOS graphics format V.1.0 and MOSC V1.0</td>
+  </tr>
+  <tr>
+    <td width="28%">History :</td>
+    <td width="72%">File done by IEFFHP</td>
+  </tr>
+</table>
+<h2>Description</h2>
+<p>Most of the time, when a static graphic, such as a mini-map, or gui
+backgrounds need to be stored, they are stored as MOS files. MOS files are tiled
+bitmapped files. These files are probably stored as tiled files because of the
+compression advantage it gives. Since MOS files are usually not larger than the
+screen, no real logistical advantage is gained by breaking them into tiles. But,
+the difference between storing them as full-on 24-bit bitmaps is fairly large.
+Consider that a 24-bit or 32-bit bitmap with 640x480 pixels would be 921600 or
+1228800 bytes, respectively, whereas the same file, in tiled form, using 64x64
+tiles, would be 389120 bytes, and is still quite fast to load, since it can be
+loaded in blocks, unlike with most (stream-based) compression algorithms
+(notably, RLE). It does, however, rely on colors being clustered to some extent
+(i.e. a forest with a lake and a building has a lot of green in one area, a lot
+of blue in another, and a lot of brown in another, but the colors tend to be
+clustered, so there isn't too much image degradation by using this palette
+reduction.</p>
+<h2><a name="formMOS_Versions">MOS file versions</a></h2>
+<ul>
+  <li><a href="#formMOSV1">V1: Baldur's Gate, Planescape: Torment, Icewind Dale,
+    Baldur's Gate 2</a>
+  <li><a href="#formMOSCV1">MOSC V1: Baldur's Gate 2</a>
+    <h4>&nbsp;</h4>
+  </li>
+</ul>
+<h2 class="specverhead"><a name="formMOSV1">MOS V1</a></h2>
+<p>Overall structure</p>
+<ul>
+  <li><a href="#formMOSV1_Header">Header</a>
+  <li><a href="#formMOSV1_Palette">Palettes</a>
+  <li><a href="#formMOSV1_TileOs">Tile offsets</a>
+  <li><a href="#formMOSV1_Tiles">Tile data</a></li>
+</ul>
+<h4 class="reshead"><a name="formMOSV1_Header">MOS V1 Header</a></h4>
+<table border="1" class="tbl3" width="98%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th><font color="#000000">Offset</font></th>
+      <th><font color="#000000">Size (data type)</font></th>
+      <th><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (char array)</td>
+      <td>Signature ('MOS ')</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (char array)</td>
+      <td>Version ('V1 ')</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>2 (word)</td>
+      <td>width (pixels)</td>
+    </tr>
+    <tr>
+      <td>0x000a</td>
+      <td>2 (word)</td>
+      <td>height (pixels)</td>
+    </tr>
+    <tr>
+      <td>0x000c</td>
+      <td>2 (word)</td>
+      <td>columns (blocks)</td>
+    </tr>
+    <tr>
+      <td>0x000e</td>
+      <td>2 (word)</td>
+      <td>rows (blocks)</td>
+    </tr>
+    <tr class="unc">
+      <td>0x0010</td>
+      <td>4 (dword)</td>
+      <td>block size (in pixels)</td>
+    </tr>
+    <tr>
+      <td>0x0014</td>
+      <td>4 (dword)</td>
+      <td>offset of <a href="#formMOSV1_Palette">palettes</a> from start of file</td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formMOSV1_Palette">MOS V1 Palettes</a></h4>
+<p>As in all of the BG files which contain palettes, these palettes are arrays
+of 256 RGBQUAD structures, which means they take 4 bytes per color. The first
+three are the ones of interest, though, because they code for blue, green, and
+red components respectively. The palette blocks are found in the same order as
+the pixel blocks they correspond to (i.e. by increasing column number, then by
+increasing row number).</p>
+<h4 class="reshead"><a name="formMOSV1_TileOs">MOS V1 Tile offsets</a></h4>
+<p>This section immediately follows the <a href="#formMOSV1_Palette">palettes</a>.
+This is just an array of <code>columns*rows</code> dwords, which are the offsets
+from the beginning of the file to each tile's pixel data. These pointers are in
+the same order as the <a href="#formMOSV1_Palette">palette</a> data.</p>
+<h4 class="reshead"><a name="formMOSV1_TileData">MOS V1 Tile data</a></h4>
+<p>These tiles are ordered in a left-to-right, top-to-bottom order, just as the
+palettes. The blocks on the right side and the bottom row are only as large as
+they need to be (i.e. <code>width modulo 64</code> and <code>height modulo 64</code>)
+based on the width in pixels and the blocksize of 64 pixels. In general, the
+block layout looks like:</p>
+<div align="center">
+  <center>
+  <table border="1" class="tblidx" height="47">
+    <tbody>
+      <tr height="10%">
+        <th align="middle" colSpan="6"><font color="#000000">Image</font></th>
+      </tr>
+      <tr height="26%">
+        <td align="middle" height="20%" width="15%">Block 0,0<br>
+          64*64 pixels</td>
+        <td align="middle" height="20%" width="15%">Block 1,0<br>
+          64*64 pixels</td>
+        <td align="middle" height="20%" width="15%">Block 2,0<br>
+          64x64 pixels</td>
+        <td align="middle" height="20%" width="15%">...</td>
+        <td align="middle" height="20%" width="15%">Block (n-1),0<br>
+          64*64 pixel</td>
+        <td align="middle" height="20%" width="10%">Block n,0<br>
+          x*64 pixels</td>
+      </tr>
+      <tr height="26%">
+        <td align="middle" height="20%" width="15%">Block 0,1<br>
+          64*64 pixels</td>
+        <td align="middle" height="20%" width="15%">Block 1,1<br>
+          64*64 pixels</td>
+        <td align="middle" height="20%" width="15%">Block 2,1<br>
+          64x64 pixels</td>
+        <td align="middle" height="20%" width="15%">...</td>
+        <td align="middle" height="20%" width="15%">Block (n-1),1<br>
+          64*64 pixel</td>
+        <td align="middle" height="20%" width="10%">Block n,1<br>
+          x*64 pixels</td>
+      </tr>
+      <tr height="26%">
+        <td align="middle" height="20%" width="15%">...</td>
+        <td align="middle" height="20%" width="15%">...</td>
+        <td align="middle" height="20%" width="15%">...</td>
+        <td align="middle" height="20%" width="15%">...</td>
+        <td align="middle" height="20%" width="15%">...</td>
+        <td align="middle" height="20%" width="10%">...</td>
+      </tr>
+      <tr height="12%">
+        <td align="middle" width="15%">Block 0,m<br>
+          64*y pixels</td>
+        <td align="middle" width="15%">Block 1,m<br>
+          64*y pixels</td>
+        <td align="middle" width="15%">Block 2,m<br>
+          64*y pixels</td>
+        <td align="middle" height="20%" width="15%">...</td>
+        <td align="middle" width="15%">Block (n-1),m<br>
+          64*y pixels</td>
+        <td align="middle" width="10%">Block n,m<br>
+          x*y pixels</td>
+      </tr>
+    </tbody>
+  </table>
+  </center>
+</div>
+<h2 class="specverhead"><a name="formMOSCV1">MOSC V1</a></h2>
+<p>Overall structure</p>
+<ul>
+  <li><a href="#formMOSCV1_Header">Header</a>
+  <li><em>zlib compressed data</em></li>
+</ul>
+<h4 class="reshead"><a name="formMOSCV1_Header">MOSC V1 Header</a></h4>
+<p>The MOSC V1 data is an entire MOS V1 resource compressed with zlib and with a
+12-byte header prepended, as seen below.</p>
+<table border="1" class="tbl3" width="98%">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th><font color="#000000">Offset</font></th>
+      <th><font color="#000000">Size (data type)</font></th>
+      <th><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x0000</td>
+      <td>4 (char array)</td>
+      <td>Signature ('MOSC')</td>
+    </tr>
+    <tr>
+      <td>0x0004</td>
+      <td>4 (char array)</td>
+      <td>Version ('V1 ')</td>
+    </tr>
+    <tr>
+      <td>0x0008</td>
+      <td>4 (dword)</td>
+      <td>Uncompressed data length</td>
+    </tr>
+  </tbody>
+</table></body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

@@ -1,0 +1,412 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="../ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Totorials and Descriptions</title>
+</head>
+
+<body>
+
+<p align="center"><b><font size="5">How to create new Kits for BG2 - Shadows of Amn / Throne of Bhaal<br>
+</font></b></p>
+<p>-By Daxziz-<br>
+<br>
+<a href="../Kits2Das.zip">Files to Edit</a> are all the necessary files to create a kit for BG2!<br>
+You should start with take a look at them!!!<br>
+<br>
+EXPLANATION OF FILES:<br>
+<br>
+<a href="../2das/abclasrq2da.htm">ABCLASRQ.2DA</a> - This is the file which control the minimum stats of your kit, under the creation!<br>
+<br>
+<a href="../2das/abdcdsrq2da.htm">ABDCDSRQ.2DA </a> - This is the file which control the minimum stats requirements you have to have in<br>
+order to DUAL-CLASS to your kit. (Since you not are able to dual class to a kit in BG2, then is<br>
+pretty much worthless!)<br>
+<br>
+<a href="../2das/abdcscrq2da.htm">ABDCSCRQ.2DA</a> - This one controls the minimum stats for DUAL CLASSING from our kit into another!<br>
+<br>
+<a href="../2das/alignment2da.htm">ALIGNMNT.2DA</a> - This is the file which control the
+alignment of your kit.<br>
+<br>
+<a href="../2das/clasweap2da.htm">CLASWEAP.2DA</a> - This file control which kind of weapons your kit can use.<br>
+<br>
+KITLIST.2DA - Now, This is an important file, this file control allot of in game
+stuff<br>
+such as Class Description, Alias to innate abilities files etc.<br>
+<br>
+<a href="../2das/kittable.htm">KITTABLE.2DA</a> - This file control which races, which can play your kit!<br>
+<br>
+<a href="../2das/layhands2da.htm">LAYHANDS.2DA</a> - This file control the Lay on Hands abilities! (Tricky)<br>
+<br>
+<a href="../2das/weaprof2da.htm">WEAPPROF.2DA</a> - This file control the masteries that your kit will be allowed.<br>
+<br>
+Note by Manveru : Check 2DAs section for more 2DA files description to edit more
+sophisticated kits features.<br>
+<br>
+Now when you know a little about the files, can we start the creation of your Kit!<br>
+<br>
+Step 1:<br>
+<br>
+Open ABCLASRQ.2DA in notepad or if you prefer word pad.<br>
+Scroll down until you reach Barbarian. Now under him, write the name at your kit!!!<br>
+/REMEMBER THAT IF THERE IS SPACES IN YOUR KIT USE _ (UNDERSCORE) INSTEAD OF EMPTY SPACE/<br>
+<br>
+It will look something like this:<br>
+<br>
+</p>
+<pre>LATHANDER               0       0       0       0       9       0
+SORCERER                0       0       0       9       0       9
+MONK                    0       9       9       0       9       0
+BARBARIAN               9       0       0       0       0       0
+MY_KIT                  0       10      15      0       0       10</pre>
+<p><br>
+-When you are done, then copy the line, that you just have created-<br>
+Close the file, and save it!<br>
+<br>
+Step 2:<br>
+<br>
+Open ABDCDSRQ.2DA, and scroll down to LATHANDER, under him paste the line that you copied<br>
+from ABCLASRQ.2DA<br>
+<br>
+It will look something like this:<br>
+</p>
+<pre>BEAST_FRIEND            0       0       0       0       17      17
+TALOS                   0       0       0       0       17      0
+HELM                    0       0       0       0       17      0
+LATHANDER               0       0       0       0       17      0
+MY_KIT                  0       10      15      0       0       10</pre>
+<p><br>
+-Close the file, and save it.<br>
+<br>
+Step 3:<br>
+<br>
+Open ABDCSCRQ.2DA, and scroll down to LATHANDER, under him paste the line that you copied<br>
+from ABCLASRQ.2DA<br>
+<br>
+It will look something like this:<br>
+</p>
+<pre>BEAST_FRIEND            0       0       0       0       15      15
+TALOS                   0       0       0       0       15      0
+HELM                    0       0       0       0       15      0
+LATHANDER               0       0       0       0       15      0
+MY_KIT                  0       10      15      0       0       10</pre>
+<p><br>
+-Close the file, and save it.<br>
+<br>
+Step 4:<br>
+<br>
+Open ALIGNMNT.2DA and scroll down to WILDMAGE, under him, write the name at your Kit!<br>
+<br>
+Now, at the top of the document can you see this:<br>
+<br>
+</p>
+<pre>                        L_G     L_N     L_E     N_G     N_N     N_E     C_G     C_N     C_E
+MAGE                    1       1       1       1       1       1       1       1       1
+FIGHTER                 1       1       1       1       1       1       1       1       1</pre>
+<p><br>
+L_G: Lawful Good , L_N: Lawful Neutral , L_E: Lawful Evil<br>
+N_G: Neutral Good , N_N: True Neutral    , N_E: Neutral Evil<br>
+C_G: Chaotic Good , C_N: Chaotic Neutral , C_E: Chaotic Evil<br>
+<br>
+( 1 Means: ALLOWED / 0 Means NOT ALLOWED )<br>
+<br>
+Now, the button at the document will look something like this:<br>
+<br>
+</p>
+<pre>BARBARIAN               1       1       1       1       1       1       1       1       1
+WILDMAGE                1       1       1       1       1       1       1       1       1
+MY_KIT</pre>
+<p><br>
+It's now time to give your kit the Alignments it can choose among.<br>
+If he only may play Lawful Good (Like Paladins) will you have to write this:<br>
+<br>
+</p>
+<pre>BARBARIAN               1       1       1       1       1       1       1       1       1
+WILDMAGE                1       1       1       1       1       1       1       1       1
+MY_KIT                  1       0       0       0       0       0       0       0       0</pre>
+<p><br>
+-When you are done, close and save the file.<br>
+<br>
+Step 5:<br>
+<br>
+Open CLASWEAP.2DA, and scroll down to LATHANDER, and write the name at your kit under it.<br>
+<br>
+It will look something like this:<br>
+<br>
+</p>
+<pre>BEAST_FRIEND            1           0           1           1           0           0           0           1
+TALOS                   1           1           1           1           1           1           1           1
+HELM                    0           0           1           1           0           1           0           0
+LATHANDER               0           0           1           1           0           1           0           0
+MY_KIT</pre>
+<p><br>
+Now is it time to choose which kind of weapons your kit may use.<br>
+If your kit may use ALL kind of weapons, then you will have to write this:<br>
+<br>
+</p>
+<pre>BEAST_FRIEND            1           0           1           1           0           0           0           1
+TALOS                   1           1           1           1           1           1           1           1
+HELM                    0           0           1           1           0           1           0           0
+LATHANDER               0           0           1           1           0           1           0           0
+MY_KIT                  1           1           1           1           1           1           1           1</pre>
+<p><br>
+-When you are done, close and save the file.<br>
+<br>
+Step 6:<br>
+Now this is a VERY important step, be sure to follow it CORRECTLY!<br>
+Open KITLIST.2DA, and scroll down to BARBARIAN<br>
+<br>
+It will look like this:<br>
+<br>
+</p>
+<pre>30   WILDMAGE       54893 54894 54892 CLABMA01  52           0x80000000	1
+31   BARBARIAN      45855 45859 45869 CLABFI05  51           0x40000000	2</pre>
+<p><br>
+Under 31 write 32. Space to the beginning of BARBARIAN, and write the name at your kit.<br>
+Now it will look something like this:<br>
+<br>
+</p>
+<pre>30   WILDMAGE       54893 54894 54892 CLABMA01  52           0x80000000	1
+31   BARBARIAN      45855 45859 45869 CLABFI05  51           0x40000000	2
+32   MY_KIT</pre>
+<p><br>
+Now scroll up, and find the words: LOWER MIXED HELP&nbsp;<br>
+This is REALLY REALLY important!!! Under those 3 words, can you see a whole lot of numbers!<br>
+Open your Infinity Engine Editor (Pro)<br>
+/if you don't got this one, can you download it at www.teambg.com , until then can we not continue!/<br>
+<br>
+Click at Dialog.tlk editor<br>
+<br>
+When the program open, can you see 3 small round buttons, push at Write (The TextCursor witch to another cell)!<br>
+Now write the name at your kit (with small letters, also exchange spaces with _ (underscore)<br>
+<br>
+Push the "Write to Dialog" button<br>
+<br>
+An box appears with some text an a number, write down this number, at a piece of paper.<br>
+<br>
+Now go to the box, where you wrote your kit name.<br>
+Erase it, and write the name again! This time with the first letter Big or if it's
+2 words, then write the letter,<br>
+that both words begin with Big, AND this time also with a normal space instead of an _ (underscore)<br>
+<br>
+See if the small button still is standing at Write, if not, chance it to it.<br>
+<br>
+Push the "Write to Dialog" button<br>
+<br>
+Again do the box appear, BUT this time with a new number. Write that at a piece of paper to.<br>
+<br>
+Now it's time to make up the story about your kit! Lets say that it's a Dragon Slayer Kit, that you have created,<br>
+then you should write something like this (IN THE SAME BOX IN THE EDITOR):<br>
+<br>
+Dragon Slayer<br>
+The Dragon Slayer is one of the most skilled fighters,&nbsp;<br>
+there ever have been trained. They..... and so on<br>
+<br>
+When you are done, see if the small button, should have moved from Write, if it have change it back to Write.<br>
+<br>
+Push the "Write to Dialog" button<br>
+<br>
+Again you receive a number, write it down.<br>
+Close the editor, and turn back into Notepad or whatever program you opened the .2DA files in.&nbsp;<br>
+<br>
+It should still look like this:<br>
+<br>
+</p>
+<pre>30   WILDMAGE       54893 54894 54892 CLABMA01  52           0x80000000	1
+31   BARBARIAN      45855 45859 45869 CLABFI05  51           0x40000000	2
+32   MY_KIT</pre>
+<p><br>
+Now write the first number you got from the editor under 45855. I got 62334.<br>
+Under 45859 write the next number. I got 62335.<br>
+Under 45869 write the next number. I got 62336.<br>
+<br>
+Now should it look something like this:<br>
+<br>
+</p>
+<pre>30   WILDMAGE       54893 54894 54892 CLABMA01  52           0x80000000	1
+31   BARBARIAN      45855 45859 45869 CLABFI05  51           0x40000000	2
+32   MY_KIT         62334 62335 62336</pre>
+<p><br>
+Now, again take a look at KITLIST.2DA, under abilities can you see a long colorn where the first 4 letters is CLAB.<br>
+You can also see a colorn where the headline is PROFICIENCY, then come UNUSABLE and CLASS.<br>
+/The easiest way to figure out, how this work, is to let you gain the necessary experiences/<br>
+<br>
+But to make this easy, will he get just the same as the BARBARIAN. Copy: CLABFI05  51           0x40000000	2<br>
+and paste it just after the last number you wrote.<br>
+Now will your file look something like this:<br>
+<br>
+</p>
+<pre>30   WILDMAGE       54893 54894 54892 CLABMA01  52           0x80000000	1
+31   BARBARIAN      45855 45859 45869 CLABFI05  51           0x40000000	2
+32   MY_KIT         62334 62335 62336 CLABFI05  51           0x40000000	2</pre>
+<p><br>
+<br>
+-Close the file, and save it.<br>
+/The only way to learn this right is to try it a couple of times, and whoops is it just as easy as making pancakes./<br>
+<br>
+Hold it, do we want to create our very own CLAB files? Sure we do... we are editors
+after all, right?<br>
+If you have chosen to do as I wrote above, then go straight to Step 7! If you want to learn more about CLAB-files,<br>
+then continue reading!<br>
+<br>
+The clab-files control the abilities your new kit gets through his level ups.<br>
+Try take a look at the monk, he gains a lot of special attacks, as abilities, this is written in the CLAB-files.<br>
+<br>
+Here is an example:<br>
+<br>
+</p>
+<pre>2DA V1.0
+****
+            1              2               3
+ABILITY1    GA_MYTHING     ****            **** 
+ABILITY2    ****           GA_MYTHING2     **** 
+ABILITY3    ****           ****            GA_MYTHING3 </pre>
+<p><br>
+Here can you see an example of how the CLAB-file functions... Ability 1 is gained as level 1, Ability 2 at level 2 etc.&nbsp;<br>
+Of course can they be mixed, but you'll figure out later on, it's not difficult, but
+you'll find out soon, as I said.<br>
+<br>
+MYTHINGx refers to spells, made as Innate ( abilities ) in the Spell Maker ( found in IEEP ). BUT they refers to the NAMES&nbsp;<br>
+of the files ( in windows ), which shall be in the override folder.<br>
+<br>
+Now am I sure that you wonder why it says GA_ in front of the filenames, this is also a thing
+you'll have to know, for being able to understand it. And I guess that you'll be even more confused when I say, that you also can write AP_ in front of the
+original filename. But here is the key: GA means Gain Ability, gives much more sense now, but if you still are
+doubling why it's there, then imagine that it's a command, saying that when you becomes Level 2 then do you get ability 6, ( look it DOES
+NOT have to be the same level and ability ). Well GA is a ability which you'll be the one to
+decide when to use, but AP is<br>
+quite different, it activates the ability, and you'll not be able to decide when you want to use it or not. So this is why,
+AP only should be used in cases where you get a item ( yes a item, you are able to give your kit a new item, when it becomes
+level x ). But it can of course be used in other cases, but you'll find out, when
+you'll need it.<br>
+<br>
+So this is actually how a CLAB file functions, it's pretty easy when first you have found the logic, so here I
+recommend you to remember the differences between GA_ and AP_, and do also always
+remember the _ (underscore) after GA and AP, it won't work otherwise. Do also remember that the item or spells name ( in widows ), not may
+exceed 8 letters. Do also remember to extract the spell you want to use, and modify it in Spell Maker to a ability,
+forgetting this, will just result in a non-working thing.<br>
+<br>
+<br>
+Step 7:<br>
+<br>
+In the folder "Files to Edit, is another folder called K_x_x Files.<br>
+You have to open one of those files to determine wich race, there will be allowed to play with your Kit.<br>
+Now, let´s say that you only will let humans and elfs play your kit, and they HAVE yo be fighters.<br>
+<br>
+Then open the folder K_x_x , and find the file K_F_H (this stand for Kit_Fighter_Human)<br>
+It should look like this:<br>
+<br>
+</p>
+<pre>      KIT
+1	0
+2	1
+3	2
+4	3</pre>
+<p><br>
+<br>
+Now write 5, under 4, and 32 under 3. (You have to do this because: First you have to tell BG2 that there is 5 Kits,
+and Kit number 5 is number 32 as you wrote in KITLIST.2DA&nbsp; /REMEMBER: 32   MY_KIT (just under 31 BARBARIAN)/<br>
+<br>
+Now it should look like this:<br>
+<br>
+</p>
+<pre>      KIT
+1	0
+2	1
+3	2
+4	3
+5       32</pre>
+<p><br>
+-When you are done, close and save the file.<br>
+Now do just the same to the file called: K_F_E (stand for Kit_Fighter_Elf / Simple right?/)<br>
+<br>
+Step 8:<br>
+<br>
+This class does NOT use the Lay on Hands, so there is no need to edit that. An advice could be to experiment a little
+with that your self, cause as I have wrote earlier in this document, is it a little
+tricky.<br>
+<br>
+The last file we have to edit is WEAPPROF.2DA.&nbsp;<br>
+Open it, and scroll all the way to the side, until you reach WILDMAGE. Make 2 spaces after WILDMAGE, and write the name at your Kit.
+Now is it time to set the masteries, that your kit can get in the different weapons, but lets make it easy and say,&nbsp;
+that he can become Grant Master at everything.<br>
+Then it will look something like this:<br>
+<br>
+</p>
+<pre>WILDMAGE  MY_KIT
+0         5
+1         5
+0         5
+0         5
+1         5
+0         5
+0         5
+1         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+1         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+1         5
+0         5
+0         5
+0         5
+1         5
+1         5
+0         5
+0         3 * NOTICE * / SWORDANDSHIELD
+0         3 * NOTICE * / SINGLEWEAPON 
+0         3 * NOTICE * / 2WEAPON
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5
+0         5</pre>
+<p><br>
+ * NOTICE * = You can't become Grant Master in these, the highest is 3.<br>
+-When you are done, close and save the file.<br>
+<br>
+<br>
+NOW YOU ARE DONE! CONGRATULATIONS YOU HAVE CREATED A KIT!!!!<br>
+<br>
+But before you can play do you have to put all the files you have edited into the Override folder in the BG2 Directory.<br>
+Now launch BG2, and have fun!<br>
+<br>
+<br>
+-Created by Daxziz<br>
+-22th of February 2001<br>
+UPDATED: 12th of August 2001</p>
+<p>Please check our site at:&nbsp; <a href="http://www.adventurers.subnet.dk/"> http://www.adventurers.subnet.dk</a> for more guides or other BGx related stuff!</p>
+<p>Note : Corrected by Manveru 1st of November 2001</p>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

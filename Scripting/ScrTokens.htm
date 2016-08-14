@@ -1,0 +1,226 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Scripting</title>
+</head>
+
+<body>
+
+<p><font size="7">Strings and Tokens</font>
+</p>
+
+<p><font size="5">Tokens description by Vulgar Zildrah:</font><br>
+<br>
+&nbsp;Tokens are special variables which are used to customize<br>
+&nbsp;some of the strings in the game. &nbsp;For example, CLASS,<br>
+&nbsp;LEVEL, and GABBER are tokens in the above excerpts from<br>
+&nbsp;strings.ids. &nbsp;There are three actions I am aware of which<br>
+&nbsp;set tokens:<br>
+<br>
+&nbsp; &nbsp;247 SetToken(S:Token*,I:STRREF*)<br>
+&nbsp; &nbsp;248 SetTokenObject(S:Token*,O:Object)<br>
+&nbsp; &nbsp;249 SetGabber(O:Object)<br>
+<br>
+&nbsp;Having Minsc do a DisplayString(Myself,CLASS_LEVEL_LEVEL)<br>
+&nbsp;results in the text &quot;Ranger: Level 7&quot;. &nbsp;After a<br>
+&nbsp;SetToken(&quot;CLASS&quot;,OOPS_1), the same command results in<br>
+&nbsp;&quot;Oops!: Level 7&quot;. &nbsp;After having Jaheira do a<br>
+&nbsp;SetTokenObject(&quot;CLASS&quot;,Myself), Minsc's DisplayString<br>
+&nbsp;resulted in &quot;Druid: Level 7&quot;.<br>
+<br>
+&nbsp;SetGabber() (and the trigger IsGabber()) are the only<br>
+&nbsp;functions I've found which deal with specific tokens. &nbsp;My<br>
+&nbsp;guess is that this token is automatically updated during<br>
+&nbsp;dialogues. &nbsp;SetGabber() worked just like<br>
+&nbsp;SetTokenObject(&quot;GABBER&quot;,O:Object) in my testing.<br>
+<br>
+&nbsp;<font size="5">A complete list of tokens found in bg2_dialog_text.h:</font><br>
+<br>
+   &lt;AMOUNT><br>
+                            &lt;BROTHERSISTER><br>
+                            &lt;CHARNAME><br>
+                            &lt;CLASS><br>
+                            &lt;CurrentChapter><br>
+                            &lt;DAMAGEE><br>
+                            &lt;DAMAGER><br>
+                            &lt;DAY><br>
+                            &lt;DAYANDMONTH><br>
+                            &lt;DAYNIGHT><br>
+                            &lt;DURATION><br>
+                            &lt;DURATIONNOAND><br>
+                            &lt;EXPERIENCE><br>
+                            &lt;FIGHTERTYPE><br>
+                            &lt;GABBER><br>
+                            &lt;GAMEDAYS><br>
+                            &lt;GIRLBOY><br>
+                            &lt;HESHE><br>
+                            &lt;HOUR><br>
+                            &lt;ITEMCOST><br>
+                            &lt;ITEMNAME><br>
+                            &lt;LADYLORD><br>
+                            &lt;LEVEL><br>
+                            &lt;MAGESCHOOL><br>
+                            &lt;MALEFEMALE><br>
+                            &lt;MANWOMAN><br>
+                            &lt;MONTHNAME><br>
+                            &lt;NO TEXT> (this is string 0, it is empty)<br>
+                            &lt;PLAYER2><br>
+                            &lt;PLAYER3><br>
+                            &lt;PLAYER4><br>
+                            &lt;PLAYER5><br>
+                            &lt;PLAYER6><br>
+                            &lt;PRO_BROTHERSISTER><br>
+                            &lt;PRO_GIRLBOY><br>
+                            &lt;PRO_HESHE><br>
+                            &lt;PRO_HIMHER><br>
+                            &lt;PRO_HISHER><br>
+                            &lt;PRO_LADYLORD><br>
+                            &lt;PRO_MANWOMAN><br>
+                            &lt;PRO_RACE><br>
+                            &lt;PRO_SIRMAAM><br>
+                            &lt;RACE><br>
+                            &lt;script><br>
+                            &lt;SIRMAAM><br>
+                            &lt;SPECIALABILITYNAME><br>
+                            &lt;SPELLLEVEL><br>
+                            &lt;WEAPONNAME><br>
+                            &lt;YEAR>
+</p>
+
+<p><font size="6">Strings by Trouvere</font><br>
+<br>
+<b>                                Actions:<br>
+</b><br>
+                                 These are the actions which take string&nbsp;<br>
+                                references as<br>
+                                 arguments:<br>
+<br>
+                                   151 DisplayString(O:Object*,I:StrRef*)<br>
+                                   235 SetQuestDone(I:STRREF*)<br>
+                                   247 SetToken(S:Token*,I:STRREF*)<br>
+                                   262 DisplayStringNoName(O:Object*,I:StrRef*)<br>
+                                   263 EraseJournalEntry(I:STRREF*)<br>
+                                   269 DisplayStringHead(O:Object*,I:StrRef*)<br>
+                                   288 SetName(I:STRREF*)<br>
+                                   292 DisplayStringHeadOwner(S:Item*,I:STRREF*)<br>
+                                   308 AddMapNote(P:Position*,I:StringRef*)<br>
+                                   311 DisplayStringWait(O:Object*,I:StrRef*)<br>
+                                   320&nbsp;<br>
+                                SetPlayerSound(O:Object*,I:STRREF*,I:SlotNum*SNDSLOT)<br>
+<br>
+                                   (Also IncrementChapter(I:STRREF*) which might&nbsp;<br>
+                                be a typo<br>
+                                   as it is listed as&nbsp;<br>
+                                IncrementChapter(S:RESREF*) in<br>
+                                   another file.)<br>
+<br>
+                                 DisplayString() displays a string in the chat&nbsp;<br>
+                                window<br>
+                                 attributed to the object specified, so if&nbsp;<br>
+                                Minsc's script has<br>
+                                 "DisplayString(Myself,3875)" then "Minsc: By&nbsp;<br>
+                                Valkur's<br>
+                                 strapping buttocks." will be displayed.<br>
+<br>
+                                 DisplayStringWait() does the same thing.  I&nbsp;<br>
+                                haven't paid<br>
+                                 close enough attention to tell if there is any&nbsp;<br>
+                                kind of<br>
+                                 delay.<br>
+<br>
+                                 DisplayStringHead() does the same thing except&nbsp;<br>
+                                that the text<br>
+                                 appears over the character's head instead of in&nbsp;<br>
+                                the chat<br>
+                                 box.  It also doesn't have the "Minsc: "&nbsp;<br>
+                                attribution<br>
+                                 prepended to the string.<br>
+<br>
+                                 DisplayStringNoName() is just like&nbsp;<br>
+                                DisplayString() but<br>
+                                 without the attribution.<br>
+<br>
+                                 DisplayStringHeadOwner() is just like&nbsp;<br>
+                                DisplayStringHead()<br>
+                                 except that the text appears over the head of&nbsp;<br>
+                                any party<br>
+                                 member(s) who are carrying the item specified.&nbsp;<br>
+                                I haven't<br>
+                                 checked to see if this works with non-party&nbsp;<br>
+                                members.<br>
+<br>
+                                 SetToken() stores the string in a variable&nbsp;<br>
+                                (discussed<br>
+                                 below).<br>
+<br>
+                                 I haven't been able to get AddMapNote() to&nbsp;<br>
+                                work, though my<br>
+                                 understanding of how to specify points on the&nbsp;<br>
+                                map is<br>
+                                 probably inadequate.<br>
+<br>
+                                 I haven't tried using SetQuestDone(),&nbsp;<br>
+                                EraseJournalEntry(),<br>
+                                 SetName(), or SetPlayerSound().  SetName()&nbsp;<br>
+                                might be handy if<br>
+                                 it does what I think it does.  Can we name our&nbsp;<br>
+                                summoned<br>
+                                 pets and then identify them with CharName()?&nbsp;<br>
+                                Perhaps it<br>
+                                 sets the script name (which could be checked&nbsp;<br>
+                                with Name()).<br>
+<br>
+<b>                                Strings.ids:<br>
+</b><br>
+                                 I converted bg2_dialog_text.h (from the files&nbsp;<br>
+                                section)<br>
+                                 into a strings.ids file.  I'd be happy to&nbsp;<br>
+                                upload it if<br>
+                                 anyone is interested.  Excerpts:<br>
+<br>
+                                   3875  BY_VALKUR_S_STRAPPING      // By&nbsp;<br>
+                                Valkur's strapping buttocks.<br>
+                                   11293 CLASS_LEVEL_LEVEL          // &lt;CLASS>:&nbsp;<br>
+                                Level &lt;LEVEL><br>
+                                   44191 GABBER_IS_MY_NAME          // &lt;GABBER>&nbsp;<br>
+                                is my name.<br>
+                                   5251  OOPS_1                     // Oops!<br>
+                                   3866  TIS_BUT_A_FLESH_WOUN_1     // 'Tis but&nbsp;<br>
+                                a flesh wound.<br>
+<br>
+                                 It works fine, as long as you modify the&nbsp;<br>
+                                function<br>
+                                 prototypes like so:<br>
+<br>
+                                   151 DisplayString(O:Object*,I:StrRef*Strings)<br>
+                                   269&nbsp;<br>
+                                DisplayStringHead(O:Object*,I:StrRef*Strings)<br>
+                                   etc.<br>
+<br>
+                                 I find it quite convenient to be able to refer&nbsp;<br>
+                                to "OOPS_1" rather than "5251".  There is a serious&nbsp;<br>
+                                performance hit at compile time, however.  I've only tried it with&nbsp;<br>
+                                small test scripts and haven't done any precise timing,&nbsp;<br>
+                                but my guess is that the (huge) strings.ids file is reloaded&nbsp;<br>
+                                every time the compiler encounters a string!  This problem&nbsp;<br>
+                                can be avoided by trimming down the file so that it&nbsp;<br>
+                                only contains your favorite strings.  The problem might also&nbsp;<br>
+                                be lessened by using a 3rd party compiler, but I haven't&nbsp;<br>
+                                tried that yet.<br>
+<br>
+<b>                                Custom strings:<br>
+</b><br>
+                                 There are no commands which display arbitrary&nbsp;<br>
+                                strings. The only way to incorporate custom strings in a&nbsp;<br>
+                                script is to add new string references to the
+game using IEEP.</p>
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

@@ -1,0 +1,362 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="ManverusStyle.css" type=text/css rel=stylesheet>
+<title>IE File Formats</title>
+</head>
+
+<body>
+
+<h1 align="center">BIFF file format</h1>
+<table border="1" width="610">
+  <tr>
+    <td width="28%">FileExtension :</td>
+    <td width="72%">BIF/CBF</td>
+  </tr>
+  <tr>
+    <td width="28%">Content :</td>
+    <td width="72%">Description of archive format BIF V.1/CBF V1/BIFC V1.0</td>
+  </tr>
+  <tr>
+    <td width="28%">History :</td>
+    <td width="72%">File done by IEFFHP</td>
+  </tr>
+</table>
+<h2>Description</h2>
+<p>This is a simple archive format, used both to simplify organization of the
+files, as well as to group together entire areas. Some BIF files are grouped
+together because of common functionality; for instance, all the <a href="DLGformat.htm"><font color="#FF0000">.dlg</font></a>
+files are gathered together into a single BIF file in Planescape: Torment. Other
+bif files, such as AR4800.BIF represent the entirety of an area's terrain (i.e.
+not its containers, actors, or items). These BIF files contain, typically:</p>
+<ul>
+  <li>at least one <a href="WEDformat.htm"><font color="#FF0000">.wed</font></a>
+    file, detailing how the tiles are to be drawn to the screen (i.e. which are
+    animated, which are linked to the opening of which door, etc.) and where
+    walls are (for clipping of actor graphics)
+  <li>at least one <a href="TISformat.htm"><font color="#FF0000">.tis</font></a>
+    file, which contains all the tile data for the area
+  <li>a <a href="MOSformat.htm"><font color="#FF0000">.mos</font></a>
+    file which is the overhead map of the region
+  <li>3 or 4 small bitmap files which contain one pixel for each tile needed to
+    cover the region.</li>
+</ul>
+<p>The three (or four) bitmaps, are named xxxxxxHT.BMP, xxxxxxLM.BMP,
+xxxxxxSR.BMP, and (when there are four bitmaps) xxxxxxLN.BMP.</p>
+<ul>
+  <li>xxxxxxHT.BMP: Height-map, which gives the altitude of each tile cell in
+    the associated <a href="file:///D:/old%20bg2/infinity%20hacking%20project/baldur_WED.html">wed</a>
+    file
+  <li>xxxxxxLM.BMP: Light-map, giving the level of illumination (or shadow) of
+    each tile cell on the map. (Called a LUM-map by the developers.)
+  <li>xxxxxxLN.BMP: When present, this is the same as xxxxxxLM.BMP, but for
+    night-time only. When present, there will also be a second <a href="file:///D:/old%20bg2/infinity%20hacking%20project/baldur_WED.html">wed</a>
+    file to be used only at night.
+  <li>xxxxxxSR.BMP: This file has been confirmed to be a &quot;search map&quot;,
+    used in the path-finding algorithms</li>
+</ul>
+<h2><a name="formBIFF_Versions">BIFF file versions</a></h2>
+<ul>
+  <li><a href="#formBIFFV1">V1: Baldur's Gate, Planescape: Torment, Icewind
+    Dale, Baldur's Gate 2</a>
+  <li><a href="#formBIFFV1Cmp">V1 (compressed): Icewind Dale only</a>
+  <li><a href="#formBIFCV1_0">BIFC V1.0 (compressed): Baldur's Gate 2 only</a></li>
+</ul>
+<h2 class="frmhead"><a name="formBIFFV1">BIFF V1</a></h2>
+<p>Overall structure</p>
+<ul>
+  <li><a href="#formBIFFV1_Header">Header</a>
+  <li><a href="#formBIFFV1_FileEntry">File entries</a>
+  <li><a href="#formBIFFV1_TilesetEntry">Tileset entries</a>
+  <li><em>Data for the contained files</em></li>
+</ul>
+<h4 class="reshead"><a name="formBIFFV1_Header">BIFF V1 Header</a></h4>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="336"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">4 (char array)</td>
+      <td width="336">Signature ('BIFF')</td>
+    </tr>
+    <tr>
+      <td width="48">0x0004</td>
+      <td width="103">4 (char array)</td>
+      <td width="336">Version ('V1 ')</td>
+    </tr>
+    <tr>
+      <td width="48">0x0008</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Number of <a href="#formBIFFV1_FileEntry">file entries</a></td>
+    </tr>
+    <tr>
+      <td width="48">0x000c</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Number of <a href="#formBIFFV1_TilesetEntry">tileset entries</a></td>
+    </tr>
+    <tr>
+      <td width="48">0x0010</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Offset of <a href="#formBIFFV1_FileEntry">file entries</a> (from start
+        of file). <a href="#formBIFFV1_TilesetEntry">Tileset entries</a>, if
+        any, immediately follow the <a href="#formBIFFV1_FileEntry">file entries</a>.</td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formBIFFV1_FileEntry">BIFF V1 File Entries</a></h4>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="336"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Resource locator (<strong>Note:</strong> On disk, only bits 0-13 are
+        matched upon. They are matched against the file index in the
+        &quot;resource locator&quot; field from the <a href="KEYformat.htm#formKEYV1_BifIndices">KEY
+        file resource entries</a> which claim to exist in this BIFF.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0004</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Offset to resource data from start of file</td>
+    </tr>
+    <tr>
+      <td width="48">0x0008</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Size (in bytes) of this resource (file).</td>
+    </tr>
+    <tr>
+      <td width="48">0x000c</td>
+      <td width="103">2 (word)</td>
+      <td width="336">Type of this resource. (See the table of <a href="introDesc.htm#FileFormats">resTypes</a>
+        for a list of which values are applicable to this field</td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x000e</td>
+      <td width="103">2 (word)</td>
+      <td width="336"><font color="#000099">Unknown. Part of the previous field? (Or only used in the memory
+        image?)</font></td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formBIFFV1_TilesetEntry">BIFF V1 Tileset Entries</a></h4>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="48"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="336"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="48">0x0000</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Resource locator (<strong>Note:</strong> On disk, only bits 14-19 are
+        matched upon. They are matched against the tileset index in the
+        &quot;resource locator&quot; field from the <a href="file:///D:/old%20bg2/infinity%20hacking%20project/baldur_KEY.html#formKEYV1_ResIndices">KEY
+        file resource entries</a> which claim to exist in this BIFF.</td>
+    </tr>
+    <tr>
+      <td width="48">0x0004</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Offset to resource data from start of file</td>
+    </tr>
+    <tr>
+      <td width="48">0x0008</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Number of tiles in this resource (file).</td>
+    </tr>
+    <tr>
+      <td width="48">0x000c</td>
+      <td width="103">4 (dword)</td>
+      <td width="336">Size (in bytes) of each tile in this resource (file).</td>
+    </tr>
+    <tr>
+      <td width="48">0x0010</td>
+      <td width="103">2 (word)</td>
+      <td width="336">Type of this resource. (These resources are always type <code>0x3eb</code>
+        -- .tis files, but see the table of <a href="file:///D:/old%20bg2/infinity%20hacking%20project/baldur.html#FileTypes">resTypes</a>
+        for a list of which values are applicable to this field</td>
+    </tr>
+    <tr class="unc">
+      <td width="48">0x0012</td>
+      <td width="103">2 (word)</td>
+      <td width="336"><font color="#000099">Unknown. Part of the previous field? (Or only used in the memory
+        image?)</font></td>
+    </tr>
+  </tbody>
+</table>
+<h2 class="frmhead"><a name="formBIFFV1Cmp">BIFF V1 (compressed)</a></h2>
+<p>Overall structure</p>
+<ul>
+  <li><a href="#formCBFV1_Header">Header</a>
+  <li><em>Compressed file data</em></li>
+</ul>
+<p>This format is idential to the <a href="SAVformat.htm"><font color="#FF0000">SAV</font></a>
+file format, except for the first 8 bytes, which are 'BIF V1.0' for these files,
+and 'SAV V1.0' for SAV files. The data, once uncompressed, is formatted as a
+normal BIF file, as seen above. Note that the SAV files can hold more than one
+compressed file. It is unknown whether this occurs also in CBF files. The
+compressed format is as follows:</p>
+<h4 class="reshead"><a name="formCBFV1_Header">Compressed BIFF V1</a></h4>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="150"><font color="#000000">Offset</font></th>
+      <th width="176"><font color="#000000">Size (data type)</font></th>
+      <th width="161"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="150">0x0000</td>
+      <td width="176">4 (char array)</td>
+      <td width="161">Signature ('BIF ')</td>
+    </tr>
+    <tr>
+      <td width="150">0x0004</td>
+      <td width="176">4 (char array)</td>
+      <td width="161">Version ('V1.0')</td>
+    </tr>
+    <tr>
+      <td width="150">0x0008</td>
+      <td width="176">4 (dword)</td>
+      <td width="161">Length of filename</td>
+    </tr>
+    <tr>
+      <td width="150">0x000c</td>
+      <td width="176">variable (ASCIIZ char array)</td>
+      <td width="161">Filename (length specified by previous field)</td>
+    </tr>
+    <tr>
+      <td width="150">sizeof(filename)+0x0010</td>
+      <td width="176">4 (dword)</td>
+      <td width="161">uncompressed data length</td>
+    </tr>
+    <tr>
+      <td width="150">sizeof(filename)+0x0014</td>
+      <td width="176">4 (dword)</td>
+      <td width="161">compressed data length</td>
+    </tr>
+    <tr>
+      <td width="150">sizeof(filename)+0x0018</td>
+      <td width="176">variable (raw data)</td>
+      <td width="161">compressed data (length in bytes specified by previous field)</td>
+    </tr>
+  </tbody>
+</table>
+<h2 class="frmhead"><a name="formBIFCV1_0">BIFC V1.0 (compressed)</a></h2>
+<p>Overall structure</p>
+<ul>
+  <li><a href="#formBIFCV1_0_Header">Header</a>
+  <li><a href="#formBIFCV1_0_Blocks">zlib-compressed blocks</a></li>
+</ul>
+<p>The file is broken up into blocks (typically 8192 bytes apiece), which are
+compressed separately. The blocks are stored one right after another,
+immediately after the header. Each block consists of an uncompressed size and a
+compressed size, and then the data, compressed by zlib.</p>
+<h4 class="reshead"><a name="formBIFCV1_0_Header">BIFC V1.0 header</a></h4>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="80"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="304"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="80">0x0000</td>
+      <td width="103">4 (char array)</td>
+      <td width="304">Signature ('BIFC')</td>
+    </tr>
+    <tr>
+      <td width="80">0x0004</td>
+      <td width="103">4 (char array)</td>
+      <td width="304">Version ('V1.0')</td>
+    </tr>
+    <tr>
+      <td width="80">0x0008</td>
+      <td width="103">4 (dword)</td>
+      <td width="304">Uncompressed BIF size</td>
+    </tr>
+  </tbody>
+</table>
+<h4 class="reshead"><a name="formBIFCV1_0_Blocks">BIFC V1.0 compressed blocks</a></h4>
+<table border="1" class="tbl3" width="509">
+  <colgroup>
+    <col class="col1" width="5%">
+    <col class="col2" width="12%">
+    <col class="col3" width="*">
+  </colgroup>
+  <thead>
+    <tr>
+      <th width="88"><font color="#000000">Offset</font></th>
+      <th width="103"><font color="#000000">Size (data type)</font></th>
+      <th width="296"><font color="#000000">Description</font></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="88">0x0000</td>
+      <td width="103">4 (dword)</td>
+      <td width="296">Decompressed size</td>
+    </tr>
+    <tr>
+      <td width="88">0x0004</td>
+      <td width="103">4 (dword)</td>
+      <td width="296">Compressed size</td>
+    </tr>
+    <tr>
+      <td width="88">0x0008</td>
+      <td width="103">varies (bytes)</td>
+      <td width="296">Compressed data</td>
+    </tr>
+  </tbody>
+</table></body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

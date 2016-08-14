@@ -1,0 +1,510 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="../ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Totorials and Descriptions</title>
+</head>
+
+<body>
+
+<p>Written by Night Stalker<br>
+</p>
+<p align="center"><b><font size="5">How to create Familiar ?</font></b></p>
+<p><br>
+Tools needed to create custom familiar are: Hex Editor (i.e. Hex Workshop, AXE), Infinity Engine Editor Pro (IEEP),&nbsp;<br>
+Near Infinity, Infinity Dialog Utility (IDU) and TeamBG's IE Scripting Suite.<br>
+<br>
+REMEMBER TO TAKE BACKUPS.<br>
+<br>
+This tutorial was made for Baldur's Gate 2: Shadow of Amn, this hasn't been tested on Throne of Bhaal yet but it should work. I assume that you have some knowledge how those programs what was mentioned earlier works, so I don't have to explain how they work.&nbsp;<br>
+<br>
+Creation of custom familiar is six step project, the steps are:<br>
+<br>
+<a name="top"></a></p>
+<table border="1" width="100%">
+  <tr>
+    <td width="396" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f6">1. Editing baldur.gam</a></td>
+  </tr>
+  <tr>
+    <td width="396" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f6">2. Editing familiar .dlg file</a></td>
+  </tr>
+  <tr>
+    <td width="396" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f6">3. Editing familiar .cre file</a></td>
+  </tr>
+  <tr>
+    <td width="396" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f6">4. Editing familiar .itm file</a></td>
+  </tr>
+  <tr>
+    <td width="396" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f6">5. Editing baldur.bcs</a></td>
+  </tr>
+  <tr>
+    <td width="396" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f6">6. Creating or editing familiar summon .itm or .spl file</a></td>
+  </tr>
+</table>
+<p><a href="#f6"><br>
+</a><br>
+Lets start from the beginning.<br>
+<br>
+<a name="f1"><b>1. Editing baldur.gam</b>
+</a>
+</p>
+<p>
+<a name="f1"><b><br>
+</b>
+</a>Tools: Hex Editor and/or Near Infinity<br>
+This can be done by two ways:<br>
+Way 1:<br>
+Load baldur.gam into hex editor from latest save game folder. In offset 0x0068 is address where the familiar list is located.&nbsp;<br>
+Address is in Little Endian, meaning that i.e. address 682D0100 turns to 00012D68 and in that offset the familiar list can be found. NOTE: This address changes when baldur.gam file grows in size. Save this file in that same folder where you open it as baldur.gam.<br>
+<br>
+Way 2:<br>
+Export baldur.gam with Near Infinity. Open it with hex editor. In offset 0x0068 is address where the familiar list is located.&nbsp;<br>
+Address is in Little Endian, meaning that the address C4260000 turns to 000026C4 and in that offset the familiar list can be found. NOTE: This offset should be same in every "clean" baldur.gam file. Save this file in the override folder.&nbsp;<br>
+<br>
+This information is for both ways what was mentioned in above. When looking that offset, there can be seen a list of&nbsp;<br>
+familiar .cre files, sorted by alignment. Here is what .cre file goes to what alignment starting from the top:<br>
+<br>
+</p>
+<table border="1" width="346">
+  <tr>
+    <td width="91"><b>CRE file&nbsp;&nbsp;&nbsp;</b></td>
+    <td width="133"><b>Familiar name&nbsp;&nbsp;&nbsp;</b></td>
+    <td width="100"><b>Alignment</b></td>
+  </tr>
+  <tr>
+    <td width="91">FAMPSD&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Pseudo Dragon&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Lawful Good&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="91">FAMFER&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Ferret&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Lawful Neutral</td>
+  </tr>
+  <tr>
+    <td width="91">FAMIMP&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Imp&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Lawful Evil</td>
+  </tr>
+  <tr>
+    <td width="91">FAMPSD&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Pseudo Dragon&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Neutral Good</td>
+  </tr>
+  <tr>
+    <td width="91">FAMRAB&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Rabbit&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Neutral</td>
+  </tr>
+  <tr>
+    <td width="91">FAMDUST&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Dust Mephit&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Neutral Evil</td>
+  </tr>
+  <tr>
+    <td width="91">FAMFAIR&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Fairy Dragon&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Chaotic Good</td>
+  </tr>
+  <tr>
+    <td width="91">FAMCAT&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Cat&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Chaotic Neutral</td>
+  </tr>
+  <tr>
+    <td width="91">FAMQUAS&nbsp;&nbsp;&nbsp;</td>
+    <td width="133">&nbsp; Quasit&nbsp;&nbsp;&nbsp;</td>
+    <td width="100"> Chaotic Evil</td>
+  </tr>
+</table>
+<p><br>
+<br>
+In this tutorial I'm going to replace fairy dragon with panther, meaning that all chaotic good characters gets panther instead fairy dragon as familiar. So change famfair to fampant. Also when creating familiar for another alignment just replace that particular familiar .cre file reference with new one. NOTE: maximum length of .cre file name in this instance is 7. It crashed my game when I tried with 8.&nbsp;
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<p><br>
+<br>
+<a name="f2"><b>2. Creating .dlg file</b>
+</a>
+</p>
+<p>
+<a name="f2"><br>
+</a>Tools: IDU<br>
+This example dialog is made for both mage and non-mage classes. Here is how it looks and all conditions and actions are listed.<br>
+<br>
++TEXT: Panther looks you and growls. It don't want to have anything to do with you.&nbsp;<br>
+  |  CONDITION: !InPartySlot(LastTalkedToBy,0)<br>
+  +OPTION: &lt;NO TEXT> ACTION: MoveToObject(Player1)<br>
++TEXT: Your panther stares you lovingly and waits your attention.&nbsp;<br>
+ |  CONDITION: InPartySlot(LastTalkedToBy,0)<br>
+ +OPTION: &lt;NO TEXT>&nbsp;<br>
+ |   |     CONDITION:  Class(Player1,MAGE)&nbsp;<br>
+ |   |&nbsp;<br>
+ |   +TEXT: You wish something?<br>
+ |    |<br>
+ |    +OPTION: Come here.  I want to pick you up and put you in my pack where it's a bit safer.&nbsp;<br>
+ |    |  |                 CONDITION: !InventoryFull(Player1)&nbsp;<br>
+ |    |  |                 OR(2)&nbsp;<br>
+ |    |  |                 Alignment(Player1,MASK_CHAOTIC)<br>
+ |    |  |                 Alignment(Player1,MASK_GOOD)<br>
+ |    |  +TEXT: Its eyes brighten, and it practically leaps into your arms, ready to be stowed&nbsp;<br>
+ |    |     |  amongst your belongings  where it can sleep and occasionally poke its head out.<br>
+ |    |     +OPTION: &lt;NO TEXT>&nbsp;<br>
+ |    |            ACTION: GiveItemCreate("FAMPANT",Player1,0,0,0)<br>
+ |    |                        DestroySelf()<br>
+ |    +OPTION: (pet and play)<br>
+ |    |   |<br>
+ |    |  +TEXT: The panther purrs with delight, it's eyes looking you lovingly as you pat its warm,&nbsp;<br>
+ |    |   |  furry hide.  "You are very kind to me, my &lt;PRO_LADYLORD>."<br>
+ |    |   +OPTION: Come here.  I want to pick you up and put you in my pack where it's a bit&nbsp;<br>
+ |    |   |  |   safer.   CONDITION: !InventoryFull(Player1)<br>
+ |    |   |  |                               OR(2)<br>
+ |    |   |  |                               Alignment(Player1,MASK_CHAOTIC)<br>
+ |    |   |  |                               Alignment(Player1,MASK_GOOD)<br>
+ |    |   |  +TEXT: Its eyes brighten, and it practically leaps into your arms, ready to be stowed&nbsp;<br>
+ |    |   |  |     amongst your belongings where it can sleep and occasionally poke its head out.<br>
+ |    |   |  +OPTION: &lt;NO TEXT> ACTION: GiveItemCreate("FAMPANT",Player1,0,0,0)<br>
+ |    |   |                                             DestroySelf()<br>
+ |    |   +OPTION: Come, let's keep going<br>
+ |    |      |<br>
+ |    |      +TEXT: As you wish my &lt;PRO_LADYLORD><br>
+ |    |      |<br>
+ |    |      +OPTION: &lt;NO TEXT> ACTION: MoveGlobalObject("fampant",Player1)<br>
+ |    +OPTION: Come, let's keep going<br>
+ |     |<br>
+ |     +TEXT: As you wish my &lt;PRO_LADYLORD><br>
+ |      |<br>
+ |      +OPTION: &lt;NO TEXT> ACTION: MoveGlobalObject("fampant",Player1)<br>
+ |&nbsp;<br>
+ +OPTION: &lt;NO TEXT> CONDITION: !Class(Player1,MAGE)<br>
+  |<br>
+  +TEXT: Panther looks directly on your eyes and waits what you have to say.<br>
+   |<br>
+   +OPTION: Come here.  I want to pick you up and put you in my pack where it's a bit safer.<br>
+   |  |<br>
+   |  +TEXT: Panther looks you like asking "Are you serious?"&nbsp;<br>
+   |   |<br>
+   |   +OPTION: &lt;NO TEXT>&nbsp;<br>
+   +OPTION: (pet and play)<br>
+   |  |<br>
+   |  +TEXT:The panther purrs with delight, it's eyes looking you lovingly as you pat its warm,&nbsp;<br>
+   |    | furry hide<br>
+   |    +OPTION: Come here.  I want to pick you up and put you in my pack where it's a bit safer.<br>
+   |    |  |<br>
+   |    |  +TEXT: Panther looks you like asking "Are you serious?"&nbsp;<br>
+   |    |    |<br>
+   |    |    +OPTION: &lt;NO TEXT>&nbsp;<br>
+   |    +OPTION: Come, lets keep going.<br>
+   |      |<br>
+   |      +TEXT: Panther starts to walk with you<br>
+   |        |<br>
+   |        +OPTION: &lt;NO TEXT> ACTION: MoveGlobalObject("fampant",Player1)<br>
+   +OPTION: Come, lets keep going.<br>
+     |<br>
+     +TEXT: Panther starts to walk with you<br>
+     |<br>
+     +OPTION: &lt;NO TEXT> ACTION: MoveGlobalObject("fampant",Player1)<br>
+<br>
+Save this dialog as fampant in to override folder.&nbsp;
+</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<p><br>
+<br>
+<a name="f3"><b>3. Editing .cre file</b>
+</a>
+</p>
+<p>
+<a name="f3"><b><br>
+</b>
+</a>Tools: Near Infinity<br>
+I would recommend that for this you use file what is already in game i.e. famcat.cre. You can Export it with Near Infinity as fampant.cre to override folder, don't save it or you must rename it to fampant.cre. Next open the fampant.cre with Near Infinity (located in section override). Here is some things what is needed to changes when creating different familiars, these changes are made for the panther what is used as example.<br>
+<br>
+</p>
+<table border="1" width="497">
+  <tr>
+    <td width="129"><b>Attribute&nbsp;&nbsp;&nbsp;</b></td>
+    <td width="165"><b>Original Value&nbsp;&nbsp;&nbsp;</b></td>
+    <td width="181"><b>New Value</b></td>
+  </tr>
+  <tr>
+    <td width="129">Name&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Cat (StringRef:12793)&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Panther (StringRef: 3116)&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="129">Short Name&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Cat (StringRef:1586)&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Panther (StringRef: 3117)&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="129">Current HP&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">24&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">33</td>
+  </tr>
+  <tr>
+    <td width="129">Max. HP&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">24&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">33</td>
+  </tr>
+  <tr>
+    <td width="129">Animation ID&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">CAT&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">GREATCAT_PANTHER</td>
+  </tr>
+  <tr>
+    <td width="129">Metal Color&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Color Index 64&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Color Index 0</td>
+  </tr>
+  <tr>
+    <td width="129">Minor Color&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Color Index 6&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Color Index 0</td>
+  </tr>
+  <tr>
+    <td width="129">Major Color&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Color Index 63&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Color Index 0</td>
+  </tr>
+  <tr>
+    <td width="129">Skin Color&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Color Index 14&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Color Index 0</td>
+  </tr>
+  <tr>
+    <td width="129">Leather Color&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Color Index 63&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Color Index 0</td>
+  </tr>
+  <tr>
+    <td width="129">Armor Color&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Color Index 64&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Color Index 0</td>
+  </tr>
+  <tr>
+    <td width="129">Hair Color&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Color Index 5&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Color Index 0</td>
+  </tr>
+  <tr>
+    <td width="129">Hide In Shadows&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">99&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">99</td>
+  </tr>
+  <tr>
+    <td width="129">Natural AC&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">0&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">6</td>
+  </tr>
+  <tr>
+    <td width="129">Effective AC&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">0&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">6</td>
+  </tr>
+  <tr>
+    <td width="129"># attacks&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">2&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">3</td>
+  </tr>
+  <tr>
+    <td width="129">Resist magic&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">50&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">0</td>
+  </tr>
+  <tr>
+    <td width="129">Move silently&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">99&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">99</td>
+  </tr>
+  <tr>
+    <td width="129">Strength&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">15&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">18</td>
+  </tr>
+  <tr>
+    <td width="129">Strength Bonus&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">0&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">0</td>
+  </tr>
+  <tr>
+    <td width="129">Intelligence&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">9&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">9</td>
+  </tr>
+  <tr>
+    <td width="129">Wisdom&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">9&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">9</td>
+  </tr>
+  <tr>
+    <td width="129">Dexterity&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">18&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">18</td>
+  </tr>
+  <tr>
+    <td width="129">Constitution&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">9&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">9</td>
+  </tr>
+  <tr>
+    <td width="129">Charisma&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">9&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">9</td>
+  </tr>
+  <tr>
+    <td width="129">General&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">ANIMAL&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">ANIMAL</td>
+  </tr>
+  <tr>
+    <td width="129">Race&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Cat&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Cat</td>
+  </tr>
+  <tr>
+    <td width="129">Class&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">Thief&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">Thief</td>
+  </tr>
+  <tr>
+    <td width="129">Gender&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">NEITHER&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">NEITHER</td>
+  </tr>
+  <tr>
+    <td width="129">Alignment&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">CHAOTIC_NEUTRAL&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">CHAOTIC_GOOD</td>
+  </tr>
+  <tr>
+    <td width="129">Death Variable&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">famcat&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">fampant</td>
+  </tr>
+  <tr>
+    <td width="129">Dialog&nbsp;&nbsp;&nbsp;</td>
+    <td width="165">famil3&nbsp;&nbsp;&nbsp;</td>
+    <td width="181">fampant</td>
+  </tr>
+</table>
+<p><br>
+Also you can change attributes to your liking and there are other attributes what I didn't mention here what you can edit. But that ain't required, not in this example. When you change the dialog file and in that list ain't mentioned fampant (or the name of your custom dialog), then a hex editor must be used to get it right. Here is how: open fampant.cre with hex editor and look offset 0x02CC, there you can find text famil3 (or something else depending on .cre file) change this to fampant.&nbsp;</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<p><br>
+<br>
+<a name="f4"><b>4. Editing familiar.itm file</b>
+</a></p>
+<p>
+<a name="f4"><b><br>
+</b>
+</a>Tools: IEEP and Near Infinity<br>
+Like in step 2 I would recommend that you use item what is already in game i.e. famcat.itm. You can export this file with Near Infinity directly in override folder. Remember to change the name as fampant.itm. Open fampant.itm with IEEP's item maker. Only things to do are: change image files, if appropriate .bam files are available. Item description needs to be changed, since it won't fit for your custom familiar, you can use this "This is miniature version of your familiar panther, currently curled up and safe within your backpack.", and Set Global Variable effects Resource Key must be changed to fampant.</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<p><br>
+<br>
+<a name="f5"><b>5. Editing baldur.bcs</b>
+</a></p>
+<p>
+<a name="f5"><b><br>
+</b>
+</a>Tools: TeamBG's IE Scripting Suite and Near Infinity<br>
+Save baldur.bcs source with Near Infinity as baldur.baf. Open the baldur.baf with Scripting suite, and add this script snippet in end of
+baldur.baf.</p>
+<table border="1" width="273">
+  <tr>
+    <td width="265">IF<br>
+      Global("fampant","GLOBAL",1)<br>
+      THEN<br>
+      RESPONSE #100<br>
+ SetGlobal("fampant","GLOBAL",0)<br>
+ MoveGlobalObject("fampant",Player1)<br>
+      END</td>
+  </tr>
+</table>
+<p><br>
+Save the baldur.baf and compile it. Move compiled baldur.bcs to override folder.</p>
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<p><br>
+<br>
+<a name="f6"><b>6.Editing or creating familiar summoning .itm and/or spl file</b>
+</a></p>
+<p>
+<a name="f6"><b><br>
+</b>
+</a>Tools: IEEP and Near Infinity<br>
+There is a couple of ways to do this:<br>
+<br>
+1. Edit scr6d.itm so that it can be used by all classes and its texts, edit spwi123.spl text references to match the new familiar<br>
+2. Create summoning item and edit text references in spwi123.spl and scrl6d.itm.<br>
+<br>
+These both ways is suitable for non-mage and mage characters.<br>
+<br>
+Here is how the Find Familiar effect needs to be set for that summoning item (way 2)<br>
+<br>
+Find Familiar&nbsp;</p>
+<table border="1" width="343">
+  <tr>
+    <td width="333">Timing Mode: Permanent<br>
+      Effect Time: 0<br>
+      Probability: 100%<br>
+      Target: Self<br>
+      Resource Key:<br>
+      Power: 0<br>
+      Dice Throws: 0d0<br>
+      Saving Throws: No Saving Throw<br>
+      Saving Throw Bonus: 0<br>
+      Attributes: Not Dispellable &amp; Bypass Resistance<br>
+      Parameters:<br>
+ Parameter 1: 0<br>
+ Parameter 2: 0</td>
+  </tr>
+</table>
+<p><br>
+Save them item and then editing is done, only thing left is testing. So load game or start new one (depends what way it was done) and use console to get the summoning item in game.<br>
+Command is:<br>
+CLUAConsole:CreateItem("xxxx",1)&nbsp;<br>
+where xxxx is that item name what was edited or created in step 6.<br>
+<br>
+Use the item and see did it summon correct familiar. </p>
+
+<table border="1" width="8%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

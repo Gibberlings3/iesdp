@@ -1,0 +1,333 @@
+<html>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<meta http-equiv="Content-Language" content="en-us">
+<link href="../ManverusStyle.css" type=text/css rel=stylesheet>
+<title>Totorials and Descriptions</title>
+</head>
+
+<body>
+
+<p>&nbsp;</p>
+<p align="center"><font size="4">Infinity Engine Editing Frequently Asked
+Questions<a name="top"></a></font></p>
+<table border="1" width="209">
+  <tr>
+    <td width="199" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f1">Music and Audio</a></td>
+  </tr>
+  <tr>
+    <td width="199" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f2">Graphics and Avatars issues</a></td>
+  </tr>
+  <tr>
+    <td width="199" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f4">IE scripting</a></td>
+  </tr>
+  <tr>
+    <td width="199" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f5">IE spells
+      editing</a></td>
+  </tr>
+  <tr>
+    <td width="199" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="#f3">General IE editing problems</a></td>
+  </tr>
+</table>
+<p><font size="4">Music and Audio<a name="f1"></a><br>
+</font><br>
+Q: Where to place custom songs?<br>
+<br>
+A : ACMs are put only in IEgame\Music\FolderName folder<br>
+<br>
+Where FolderName is defined by MUS file that is located in IEGame\MUSIC folder.<br>
+<br>
+For game speeches and other FX sounds WAVCs or WAVs are used , not ACMs.&nbsp;<br>
+<br>
+<br>
+A : If you think about sound files then you use WAV and WAVC files for speeches, spells effect sounds, other fx (put this in OVERRIDE folder) or ordinary WAVs in SOUND folder with proper naming convention for making PCs soundsets (there is readme file attached to game what names)<br>
+<br>
+or finally area/other music - in  MUSIC folder there are used ACM files with their playlists (MUS files)<br>
+<br>
+Description of all these things you should find either in game readme (players soundsets) or in
+appropriate formats description (speeches/fx WAVC/WAV sounds and ACM music)</p>
+<p>Check also:</p>
+<table border="1" width="281">
+  <tr>
+    <td width="271" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="../FilesFormats/introDesc.htm">Introductory remarks
+      about file formats</a></td>
+  </tr>
+  <tr>
+    <td width="271" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="../FilesFormats/2DAformat.htm">2DA file format</a></td>
+  </tr>
+  <tr>
+    <td width="271" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="../FilesFormats/MUSformat.htm">MUS format description</a></td>
+  </tr>
+  <tr>
+    <td width="271" onMouseover="this.style.backgroundColor='000000';"
+ onMouseout="this.style.backgroundColor='F6F7EB'"><a href="../FilesFormats/WAVCfileformat.htm">CONVERSION from WAV to WAVC</a></td>
+  </tr>
+</table>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<p><br>
+<font size="4">Graphics and Avatars issues<a name="f2"></a><br>
+</font><br>
+Q : Can i make a new weapon paperdoll?&nbsp;<br>
+<br>
+A : Weapon paperdolls are a part of the hard coded avatars and paperdolls, and thus cannot be added in any way yet. But each avatar and paperdoll has its own weapon picture. So if you change the club animation (or anything else that no character, PC or NPC, of your race would use) to a double sword for your race only (like if your character, and only him, has been trained with that or has made this weapon) and then change the animations of a two-handed weapon attack with one that you
+specially made for this weapon, it *could* work... Or, another suggestion, you could hope that my avatar request (kind of drow with a double long sword and a Darth Maul attitude) will be made.&nbsp;</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><br>
+Q : How to set creature anims to use the weapon anims? Can anyone tell me how the game decides which animations will use the weapon ones and which won't? For example, if you are a human fighter using the animation FIGHTER_MALE_HUMAN and u equip a sword, you will see the sword paperdoll, equip a mace and you;ll see the mace one etc.&nbsp;<br>
+<br>
+However some animations, like Lich, no matter what you eqip, never show the weapon animation. Also, for example Lizardmen, using IC_LIZARDCASTER1 id carry halberds and their attack animation looks like they are swinging halberds but the halberd animation is not actually there so it just looks like they are punching  .....does anyone know how to tell the game to use weapon animations with Liches or Lizardmen for example?&nbsp;<br>
+<br>
+A : lizards, fish men, skeletons/ gnolls etc have special shadow animations that have several weapons
+possibilities. I assume that what weapon = what animation is hardcoded. A lich has no shadow/weapon animation so I assume he has no data like they do and he
+doesn't have any weapon animation.&nbsp;</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><br>
+Q : Where can you find the animation sequences that BG2 uses for spell casting (the buildup sequence).<br>
+<br>
+A : in "spelanim.bif"<br>
+<br>
+they are in the format "CGxxxxxx" where the x's represent the first six letters of the school.  examples: CGCONJUR, CGDIVINA</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p>Q : How can I use animation of monk's kicking / punching in my kit ?<br>
+<br>
+A : To use the monk avatar's kung-fu fighting animation, you must make a two-handed fist. The martial art kicking and punching sequences match with the two-handed sequences of the other avatars. That the monk's fist is two-handed explain why a monk can't use a shield or a second weapon, and the fact that the two-handed weapon animation is used for the kung-fu explain why a monk can't use two-handed weapons, and that a fighter with a staff (or a two-handed sword) and a monk avatar will kick and punch. So that means that only the specific moments when the fists are given is hardcoded</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<p><font size="4">IE scripting<a name="f4"></a></font></p>
+<p>Q :&nbsp; What is the difference between the .bs and .baf files.</p>
+<p>A : Baf is the uncompiled rough file, bs is the compiled format. You can
+rename bs extensions bcs to use in the game</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p>Q : How to learn scripting ?</p>
+<p>A : <font face="arial">An excellent way to learn scripting (the way I learned
+the most) is to use Infinity Explorer to look at the scripts the games itself is
+using and see what is doing what. Most of the scripts are labeled by the name of
+the creature that uses them or the area. So for example Korgan's script is
+called Korgan.Bcs. I still have a lot to learn about scripting because the game
+itself only takes it so far. And alot of the commands (Triggers, actions,etc)
+are rarely used so its hard to see an example of them in use to learn how to do
+it.<br>
+<br>
+I recommend going to bg scripts and using the search button to check the
+archives for topics pertaining to what you want to learn (For example Enter
+'Specifics' to find all messages pertaining to specifics).<br>
+<br>
+Also join one or both of the scripting groups listed in <a href="Links.htm">Links
+section</a> and you can set your emails to receive any topics discussed, so you
+can simply listen to people talk about scripting.</font></p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><font size="4">IE spells editing<a name="f5"></a></font></p>
+<p>Q : I've seen a couple instances where people have created spells like a
+multiple magic missile and fire arrow spells where it can target separate
+individuals for each missile. Does BG1 support this?</p>
+<p>A : <font face="arial">well actually only BG2 supports it.</font></p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><font face="arial">Q : Without changing the graphics, how do you get a spell
+to NOT affect your party? (ie. bad guys only)</font></p>
+<p><font face="arial">A : To have it not affect your party, you must a have a
+trigger protection from spell (or effect), and the spell resource name (or
+effect) you want to protect against, and have the target set to party.</font></p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><font face="arial">Q : Using IE I have found numerous files in the spell list
+that have no name or description only the file # such as SPPR609D. Does any one
+have a clue what these files would be or a way of finding out?</font></p>
+<p><font face="arial">A : Some of that stuff ends up being like spell versions
+of spells made for specific CRE files or stuff that was started but never
+finished or sometimes it is the other parts of a spell itself that is used from
+the original spell.&nbsp;</font></p>
+<p><font face="arial">Certain files... like for Blade Barrier have 2 files. One
+is for the Blade Barrier effect and the other is for the damage it does. So,
+usually if you have something like SPPR598 (made it up) and SPPR598a , then the
+first will be for the Blade Barrier effect and the second for the damage.<br>
+<br>
+Many other spell files are also used for applying effects to kits.</font></p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><font face="arial">Q : How do I target spells at specific creature types? I
+have made a Banishment-type spell that I have put in my Demon Summoning ring,
+but it will work against anything.
+</font>
+</p>
+<p><font face="arial">A : In general there are only three ways to target
+specific things, alignment, class, and race. &nbsp;Anything in the corresponding
+*.ids files is targetable. So in this case, you can target them by class
+CLASS.IDS - 160 (tanari) or by race&nbsp; RACE.IDS - 121 (demonic).<br>
+I cant really recommend a specific struct to use, but I suspect you will have to
+make a custom eff file to use to get the effect you are looking for, since the
+information above is pretty much only of use if you are looking &nbsp;to modify
+an existing effect (like an arrow of slaying ogre mages to slaying demons, etc).</font>
+</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<p><font size="4">General IE editing problems<a name="f3"></a></font></p>
+<p><br>
+Q : Is this possible to create your own races ?<br>
+<br>
+A : Not using standard methods. The creation of actual race would require modification in EXE file and that is case for all IE games actually. Now , one may "simulate" anyway playing certain race by making kit in BG2 that will give similar advantages/disadvantage as the desired race (via spells and scripts there may be even introduced different animation for such character)</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><br>
+Q : Is this possible to create your own class ?<br>
+<br>
+A : The answer is the same as in case of race.</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><br>
+Q : How can I make Monk's, Sorcerer's or Mage kits in BG2 ?<br>
+<br>
+A : You cannot. They may be simulated by advanced scripting and making kit of bard for example.</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><br>
+Q : Using the information I can download from this site, and as well as bg1, bg2, SoC, IwD. Would it be possible to Create you're own game.. say for example Waterdeep &amp; the undermountain ?<br>
+<br>
+A : Yes, the IESDP has enough information required to create Total Conversion. It provides data and tutorials about scripting, area, creatures, items , spells making and many more.&nbsp;</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><br>
+Q : How to use areas from one IE game in another ? (like BG1 areas in BG2 ?)<br>
+<br>
+A : Check <a href="AreaEdit.htm"> Area making tutorial.</a></p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><br>
+Q : What are vertices ? I know it is associated with areas but what is it?&nbsp;<br>
+<br>
+A : Vertices are used to make the shapes of triggers, containers, etc...<br>
+<br>
+Basically it draws an outline like on a graph. Draw line from point [1.1] to [1.2] to [2.2] to [2.1] and you get a square.&nbsp;<br>
+<br>
+In general, a vertex (pl. vertices) is a term used in geometry to mean corner. Eg. a square has 4 vertices. Simple innit?&nbsp;<br>
+It is also used in terminology for graphs where each vertex is a point of data on the graph.</p>
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+<hr>
+<p><br>
+Q : How do I find out a certain point on a area Like when a script spawns a creature on a
+certain spot how do I find out the numeric spot on that area like this 498.456 How is this determined or found is there a tool to do this?<br>
+<br>
+A : Just press X in game over the area you want and it will tell you x and y locations, as well as area name.
+<br>
+</p>
+
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+
+<hr>
+
+<p>
+Q : I've done an area and everything works fine. Except for one thing, I cannot
+travel from the area. It is accessible from other areas. I saw in another topic
+that to get the cursor to change to the travel cursor when you go to the edge of
+the map, you had to have blue lines around the search map. I have seen those
+blue lines on maps extracted from the game. But in all maps I start to do from
+scratch those blue lines never show up. And I can for my life not figure out how
+to get them there. I'm using IETME and I have read the tutorial that comes with
+it. What am I missing?<br>
+<br>
+A : Open the area's search map, xxxxxSR.bmp, with a paint program, (e.g. pbrush,
+psp,...). Draw a 2 pixel wide border around the edge of the bitmap using an RGB
+value of&nbsp; 0,255,255.&nbsp; This should allow you to travel out of the area
+on the world map.
+<br>
+</p>
+
+<table border="1" width="7%">
+  <tr>
+    <td width="100%"><a href="#top">Top</a></td>
+  </tr>
+</table>
+
+<hr>
+
+</body>
+
+
+<!-- Mirrored from www25.brinkster.com by HTTrack Website Copier/3.x [XR,YP'2001] -->
+</html>

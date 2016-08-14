@@ -110,7 +110,7 @@ N.B. Does not remove the state_helpless flag.</div><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Applies the berserk effect to the targeted creature(s).<br />
-Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.</div><br />
+Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. This effect only affects party members.</div><br />
         <hr />
         <br />
       </div>
@@ -496,9 +496,9 @@ NB. 'Statistic Modifier' can be positive or negative.</div><br />
         <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br />
 <br />
 Known values for 'Type' are:<br />
-0 &nbsp;&nbsp;Cumulative Modifier -> HP = HP + 'Statistic Modifier' value<br />
-1 &nbsp;&nbsp;Flat Value Modifier -> HP = 'Statistic Modifier' value<br />
-2 &nbsp;&nbsp;Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100<br />
+0 &nbsp;&nbsp;Cumulative Modifier -> HP = HP + 'Statistic Modifier' value (affects current and max HP)<br />
+1 &nbsp;&nbsp;Flat Value Modifier -> HP = 'Statistic Modifier' value (affects current and max HP)<br />
+2 &nbsp;&nbsp;Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)<br />
 <br />
 3 &nbsp;&nbsp;As 0 (does not affect current HP)<br />
 4 &nbsp;&nbsp;As 1 (does not affect current HP)<br />
@@ -629,6 +629,7 @@ Known values for 'Type' are:<br />
         <div class="descriptiondata">Damages the target by the 'Damage Amount' value, in the style specified by the 'Type' field.<br />
 <br />
 Known values for 'Type' are:<br />
+0 &nbsp;&nbsp;Inflict 'Damange Amount' per second<br />
 1 &nbsp;&nbsp;Inflict 'Damage Amount' as a percentage of total HP<br />
 2 &nbsp;&nbsp;Inflict 'Damage Amount' per second<br />
 3 &nbsp;&nbsp;Inflict 'Damage Amount' per round<br />
@@ -1448,7 +1449,7 @@ Known values for 'Text Notification' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the non-detection effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the non-detection effect to the targeted creature(s), setting STATE_NONDETECTION while active. This effect is negated by effect <a href="#op70">#70</a> Cure: Non-Detection. While in the non-detection state, the creature is immune to effects <a href="#op47">#47</a>: Cure Invisibility and <a href="#op116">#116</a>: Remove invisibilty, though they are affected by effects that remove illusionary protections by school or secondary type.</div><br />
         <hr />
         <br />
       </div>
@@ -1932,6 +1933,7 @@ Known values for 'Type' are:<br />
         <div class="descriptiondata">Restores HP to the value of 'Regeneration Amount' in the style specified by the 'Type' field, to the targeted creature(s).<br />
 <br />
 Known values for 'Type' are:<br />
+0 &nbsp;&nbsp;Restore 'Regeneration Amount' per second<br />
 1 &nbsp;&nbsp;Restore 'Regeneration Amount' as a percentage of total HP<br />
 2 &nbsp;&nbsp;Restore x HP every second<br />
 3 &nbsp;&nbsp;Restore 1HP every x seconds<br />
@@ -2593,11 +2595,15 @@ Known values for 'Type' are:<br />
      <div id="op141" class="opcode">
         <span class="opnumberdata">#141 (0x08D)</span>
         <span class="opnamedata">Graphics: Lighting Effects [141]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Target</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Shows the lighting effect (a .bam file) specified by the 'Type' value. These effects are usually used for spell hits based on the spell school.<br />
+        <div class="descriptiondata">Shows the lighting effect (a .bam file) specified by the 'Type' value at the location specified by 'Target'. These effects are usually used for spell hits based on the spell school.<br />
+<br />
+Known values for 'Target' are:<br />
+0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Current Location<br />
+Non-0 &nbsp;Target Location<br />
 <br />
 Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;aqua SHAIR<br />
@@ -3259,7 +3265,7 @@ Known values for 'Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook. Only affects spells with the SPPR/SPWI/SPCL/SPIN naming conventions.</div><br />
+        <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook.</div><br />
         <hr />
         <br />
       </div>

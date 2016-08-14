@@ -36,7 +36,7 @@
     
     <div class="fileHeader">General Description</div>
     <div class="indent1">
-      WAVC files contain sounds used within the game. Unlike ACM files, WAVC can be played from either the override folder or BIF files. WAVC files are 22050 Hz, 16 bits and mono, and must be renamed to *.WAV before being used in the game. The IE plays WAVC files at twice the speed of the original WAV file.  
+      WAVC files contain sounds used within the game. Unlike ACM files, WAVC can be played from either the override folder or BIF files. WAVC files are 22050 Hz, 16 bits, and must be renamed to *.WAV before being used in the game. The IE plays WAVC files at twice the speed of the original WAV file.  
     </div>
     <br />
     
@@ -79,8 +79,28 @@
         </tr>
         <tr>
           <td>0x0010</td>
-          <td>12 (bytes)</td>
-          <td>Constant value (0x1c000000010010002256e777)</td>
+          <td>4 (dword)</td>
+          <td>Pointer to ACM data (usu. 0x1c)</td>
+        </tr>
+        <tr>
+          <td>0x0014</td>
+          <td>2 (word)</td>
+          <td>Number of sound channels (usu. 1)</td>
+        </tr>
+        <tr>
+          <td>0x0016</td>
+          <td>2 (word)</td>
+          <td>Number of bits per sample (usu. 16-bit)</td>
+        </tr>
+        <tr>
+          <td>0x0018</td>
+          <td>2 (word)</td>
+          <td>Sample rate (usu. 22050 Hz)</td>
+        </tr>
+        <tr>
+          <td>0x001a</td>
+          <td>2 (word)</td>
+          <td>Unused (usu. 0x777e)</td>
         </tr>
         <tr>
           <td>0x001c</td>

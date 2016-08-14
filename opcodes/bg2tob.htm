@@ -109,7 +109,7 @@ NB. Does not remove the state_helpless flag.</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the berserk effect to the targeted creature(s). Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.</div><br />
+        <div class="descriptiondata">Applies the berserk effect to the targeted creature(s). Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag. This opcode only affects party members.</div><br />
         <hr />
         <br />
       </div>
@@ -530,14 +530,15 @@ Known values for the upper word of'Type' are:<br />
         <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br />
 <br />
 Known values for 'Type' are:<br />
-0 &nbsp;&nbsp;Cumulative Modifier -> HP = HP + 'Statistic Modifier' value<br />
-1 &nbsp;&nbsp;Flat Value Modifier -> HP = 'Statistic Modifier' value<br />
-2 &nbsp;&nbsp;Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100<br />
+0 &nbsp;&nbsp;Cumulative Modifier -> HP = HP + 'Statistic Modifier' value (affects current and max HP)<br />
+1 &nbsp;&nbsp;Flat Value Modifier -> HP = 'Statistic Modifier' value (affects current and max HP)<br />
+2 &nbsp;&nbsp;Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)<br />
 <br />
 3 &nbsp;&nbsp;As 0 (does not affect current HP)<br />
 4 &nbsp;&nbsp;As 1 (does not affect current HP)<br />
 5 &nbsp;&nbsp;As 2 (does not affect current HP)<br />
 <br />
+NB. For non-permanent timing modes of 'Type' 2 or 5 use the base maximum HP value, and therefor override other 'Type' 2 or 5 modifiers.<br />
 NB. If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.<br />
 NB. 'Statistic Modifier' can be positive or negative.</div><br />
         <hr />
@@ -579,7 +580,6 @@ With all other Timing Modes, the statistic will alter and be shown in red text.<
 Known values for 'Type' are :<br />
 0 &nbsp;&nbsp;Normal Invisibility &nbsp;&nbsp;-> affected creature makes the first attack with +4<br />
 1 &nbsp;&nbsp;Improved Invisibility -> affected creature stays invisible after attack<br />
-2 &nbsp;&nbsp;Unknown Invisibility &nbsp;-> does something...<br />
 <br />
 Improved Invisibility does not provide saving throw bonuses.<br />
 Improved Invisibility lingers after the duration is spent and works very permanent if used as a While Equipped effect.</div><br />
@@ -614,7 +614,7 @@ NB. This effect does not work with Timing Mode 1.</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers), The effect does not set STATE_LUCK.<br />
+        <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect does not set STATE_LUCK.<br />
 <br />
 Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;Cumulative Modifier -> Luck = Luck + 'Statistic Modifier' value<br />
@@ -659,7 +659,7 @@ Known values for 'Type' are:<br />
 <br />
 Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;Inflict 1HP per second (only if 'Damage Amount' is non-zero)<br />
-1 &nbsp;&nbsp;Inflict 1HP per second (only if 'Damage Amount' is greate than 1)<br />
+1 &nbsp;&nbsp;Inflict 1HP per second (only if 'Damage Amount' is greater than 1)<br />
 2 &nbsp;&nbsp;Inflict 'Damage Amount' per second<br />
 3 &nbsp;&nbsp;Inflict 1HP every 'Damage Amount' seconds<br />
 4 &nbsp;&nbsp;Inflict Param 3 Damage every Param 1 seconds<br />
@@ -1444,7 +1444,9 @@ NB. This will not remove racial infravision.</div><br />
 Known values for 'Fade Amount' are:<br />
 1 &nbsp;&nbsp;Fully visible<br />
 ..<br />
-255 Almost invisible</div><br />
+255 Almost invisible<br />
+<br />
+This effect sets stat <a href="#op60">#60</a> (TRANSLUCENT) to param <a href="#op1">#1</a>.</div><br />
         <hr />
         <br />
       </div>
@@ -1484,7 +1486,7 @@ If effect's target is set as 'Original Caster' then the 'Control' parameter cove
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Unsummons a creature, with feedback controlled by 'Text Notification'.<br />
+        <div class="descriptiondata">Unsummons a creature, with feedback controlled by 'Text Notification'. The Resource key should be set to the filename of the animation to play when unsummoning the creature, and defaults to SPGFLSH1 if left empty.<br />
 <br />
 Known values for 'Text Notification' are:<br />
 0 &nbsp;&nbsp;No text notification<br />
@@ -1500,7 +1502,7 @@ Known values for 'Text Notification' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the non-detection effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the non-detection effect to the targeted creature(s), setting STATE_NONDETECTION while active. This effect is negated by effect <a href="#op70">#70</a> Cure: Non-Detection. While in the non-detection state, the creature is immune to effects <a href="#op47">#47</a>: Cure Invisibility and <a href="#op116">#116</a>: Remove invisibilty, though they are affected by effects that remove illusionary protections by school or secondary type.</div><br />
         <hr />
         <br />
       </div>
@@ -1978,7 +1980,7 @@ Known values for 'Type' are:<br />
         <div class="descriptiondata">Restores HP to the value of 'Regeneration Amount' in the style specified by the 'Type' field, to the targeted creature(s).<br />
 <br />
 Known values for 'Type' are:<br />
-0 &nbsp;&nbsp;Restore 1 HP per second<br />
+0 &nbsp;&nbsp;Restore 'Regeneration Amount' per second<br />
 1 &nbsp;&nbsp;Restore 'Regeneration Amount' as a percentage of total HP<br />
 2 &nbsp;&nbsp;Restore 'Regeneration Amount' HP every second<br />
 3 &nbsp;&nbsp;Restore 1HP every 'Regeneration Amount' seconds<br />
@@ -2178,7 +2180,11 @@ Known values for 'IDS File' are:<br />
 5 &nbsp;&nbsp;Class.ids<br />
 6 &nbsp;&nbsp;Specific.ids<br />
 7 &nbsp;&nbsp;Gender.ids<br />
-8 &nbsp;&nbsp;Align.ids</div><br />
+8 &nbsp;&nbsp;Align.ids<br />
+<br />
+The affected creature becomes immobile and its AI scripts stop running.<br />
+<br />
+This effect sets stat <a href="#op58">#58</a> (HELD) to 1. It also sets the STATE_HELPLESS flag.</div><br />
         <hr />
         <br />
       </div>
@@ -2476,7 +2482,7 @@ If used from an external effect (.eff), the vvc field controls the bam file play
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Modifies the THAC0 and morale of the target creature(s) by the amount specified by the 'Modifier' parameter.</div><br />
+        <div class="descriptiondata">Modifies the THAC0, damage and morale of the target creature(s) by the amount specified by the 'Modifier' parameter.</div><br />
         <hr />
         <br />
       </div>
@@ -2543,7 +2549,9 @@ Multiple chant effects are not cumulative.</div><br />
 <br />
 Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;Gain Resistances/statistics (spell-casting disabled)<br />
-1 &nbsp;&nbsp;Appearance only</div><br />
+1 &nbsp;&nbsp;Appearance only<br />
+<br />
+This effect sets stat <a href="#op59">#59</a> (POLYMORPHED) to 1 but only if param <a href="#op2">#2</a> is 0.</div><br />
         <hr />
         <br />
       </div>
@@ -2555,7 +2563,7 @@ Known values for 'Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Renders the targeted creature(s) partially visible (does not remove the invisibility state, but the targeted is visible and attackable, but not targetable by spells).<br />
+        <div class="descriptiondata">Renders the targeted creature(s) partially visible (does not remove improved invisibility, but the targeted is visible and attackable, but not targetable by spells).<br />
 The effect has no meaning on visible targets.<br />
 This effect has no duration.</div><br />
         <hr />
@@ -2645,11 +2653,15 @@ Known values for 'Type' are:<br />
      <div id="op141" class="opcode">
         <span class="opnumberdata">#141 (0x08D)</span>
         <span class="opnamedata">Graphics: Lighting Effects [141]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Target</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Shows the lighting effect (a .bam file) specified by the 'Type' value. These effects are usually used for spell hits based on the spell school.<br />
+        <div class="descriptiondata">Shows the lighting effect (a .bam file) specified by the 'Type' value at the location specified by 'Target'. These effects are usually used for spell hits based on the spell school.<br />
+<br />
+Known values for 'Target' are:<br />
+0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Current Location<br />
+Non-0 &nbsp;Target Location<br />
 <br />
 Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;aqua SHAIR<br />
@@ -2944,7 +2956,7 @@ Known values for 'Slot' (from slots.ids) are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Button</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Disabled the button specified by the 'Button' field.<br />
+        <div class="descriptiondata">Disabled the button specified by the 'Button' field. The resource field acts as a matching key to the resource field of the Enable Button, allowing separate enable/disable reasons.<br />
 <br />
 Known values for 'Button' are:<br />
 0 &nbsp;&nbsp;Stealth Button<br />
@@ -3005,7 +3017,9 @@ Known values for 'Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The targeted creature(s) learns the spell specified by the resource key.</div><br />
+        <div class="descriptiondata">The targeted creature(s) tries to learn the spell specified by the resource key.<br />
+Learning is successful when 1D100 <= the INT-dependent LEARN_SPELL value in INTBON.2DA.<br />
+The LEARN_SPELL value is modified for mage specialists, with +15 for same school spells, and -15 for non-same school spells.</div><br />
         <hr />
         <br />
       </div>
@@ -3114,7 +3128,9 @@ TOB-<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the sanctuary effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the sanctuary effect to the targeted creature(s).<br />
+<br />
+This effect sets stat <a href="#op63">#63</a> (SANCTUARY) to 1.</div><br />
         <hr />
         <br />
       </div>
@@ -3126,7 +3142,9 @@ TOB-<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the entangle effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the entangle visual effect to the targeted creature(s). Does not actually prevent the target from moving.<br />
+<br />
+This effect sets stat <a href="#op62">#62</a> (ENTANGLE) to 1.</div><br />
         <hr />
         <br />
       </div>
@@ -3138,7 +3156,9 @@ TOB-<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the minor globe effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the minor globe visual effect to the targeted creature(s).<br />
+<br />
+This effect sets stat <a href="#op64">#64</a> (MINORGLOBE) to 1.</div><br />
         <hr />
         <br />
       </div>
@@ -3150,7 +3170,9 @@ TOB-<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the protection from normal missiles cylinder effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the protection from normal missiles cylinder visual effect to the targeted creature(s).<br />
+<br />
+This effect sets stat <a href="#op65">#65</a> (SHIELDGLOBE) to 1.</div><br />
         <hr />
         <br />
       </div>
@@ -3162,7 +3184,9 @@ TOB-<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the web effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the web effect to the targeted creature(s). The affected creature becomes immobile and its AI scripts stop running.<br />
+<br />
+This effect sets stats <a href="#op58">#58</a> (HELD) and <a href="#op67">#67</a> (WEB) to 1. It also sets the STATE_HELPLESS flag.</div><br />
         <hr />
         <br />
       </div>
@@ -3174,7 +3198,9 @@ TOB-<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the grease effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the grease visual effect to the targeted creature(s). Does not actually affect the target's movement rate.<br />
+<br />
+This effect sets stat <a href="#op66">#66</a> (GREASE) to 1.</div><br />
         <hr />
         <br />
       </div>
@@ -3261,7 +3287,9 @@ This effect should be used with an instant timing mode.</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the pause effect to the targeted creature(s). This effect is similar to stun, except the targeted creature(s) scripts continue to run. Characters are still selectable.</div><br />
+        <div class="descriptiondata">Applies the pause effect to the targeted creature(s). Characters are still selectable.<br />
+<br />
+This effect sets stat <a href="#op70">#70</a> (CasterHold) to 1.</div><br />
         <hr />
         <br />
       </div>
@@ -3536,7 +3564,7 @@ Known values for 'Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised). Only affects spells with the SPPR/SPWI/SPCL/SPIN naming convention.<br />
+        <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised).<br />
 Both parameters should be 0 (zero).</div><br />
         <hr />
         <br />
@@ -3546,7 +3574,7 @@ Both parameters should be 0 (zero).</div><br />
         <span class="opnumberdata">#173 (0x0AD)</span>
         <span class="opnamedata">Stat: Set Poison Resistance [173]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Statistic Modifier</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Sets the Poison Resistance of the target creature(s) to the value specified by 'Statistic Modifier'.</div><br />
@@ -3700,7 +3728,7 @@ EFF_P117 &nbsp;&nbsp;Conjure Deva/Planetar</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'.<br />
+        <div class="descriptiondata">Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.<br />
 <br />
 Known values for 'IDS File' are:<br />
 2 &nbsp;&nbsp;EA.ids<br />
@@ -3709,7 +3737,9 @@ Known values for 'IDS File' are:<br />
 5 &nbsp;&nbsp;Class.ids<br />
 6 &nbsp;&nbsp;Specific.ids<br />
 7 &nbsp;&nbsp;Gender.ids<br />
-8 &nbsp;&nbsp;Align.ids</div><br />
+8 &nbsp;&nbsp;Align.ids<br />
+<br />
+This effect sets stat <a href="#op58">#58</a> (HELD) to 1. It also sets the STATE_HELPLESS flag.</div><br />
         <hr />
         <br />
       </div>
@@ -3803,7 +3833,7 @@ Known values for 'IDS File' are:<br />
         <span class="opnumberdata">#180 (0x0B4)</span>
         <span class="opnamedata">Item: Can't Use Item [180]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> String Reference</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">The targeted creatures(s) cannot use the item specified by the resource key. The strref specified by the 'String Reference' field is displayed when an attempt to use the item is made.</div><br />
@@ -3820,7 +3850,7 @@ Known values for 'IDS File' are:<br />
 
         <div class="descriptiondata">The targeted creature(s) cannot use the item type specified by the 'Type' field. The strref specified by the 'String Reference' field is displayed when at attempt to use such an item is made.<br />
 <br />
-***This effect has never been seen to work.***</div><br />
+This effect only works with 'Type' set to 0.</div><br />
         <hr />
         <br />
       </div>
@@ -3874,7 +3904,7 @@ Known values for 'Jump' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'.<br />
+        <div class="descriptiondata">Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.<br />
 This effect is not removed by effect 162.<br />
 <br />
 Known values for 'IDS File' are:<br />
@@ -3884,7 +3914,9 @@ Known values for 'IDS File' are:<br />
 5 &nbsp;&nbsp;Class.ids<br />
 6 &nbsp;&nbsp;Specific.ids<br />
 7 &nbsp;&nbsp;Gender.ids<br />
-8 &nbsp;&nbsp;Align.ids</div><br />
+8 &nbsp;&nbsp;Align.ids<br />
+<br />
+This effect sets stat <a href="#op58">#58</a> (HELD) to 1. It also sets the STATE_HELPLESS flag.</div><br />
         <hr />
         <br />
       </div>
@@ -3908,7 +3940,15 @@ Known values for 'IDS File' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">This effect stores a local variable, specified by the 'variable' field. This effect can only be used in an external effect (ie. an eff file).</div><br />
+        <div class="descriptiondata">This effect stores a various data types, usually a variable in the 'variable' field.<br />
+<br />
+Resistance.param3: Point<br />
+Param4: Float<br />
+Param1: Int <br />
+Param2: Any<br />
+Resource1+2+3: String<br />
+<br />
+This effect can only be used in an external effect (ie. an eff file).</div><br />
         <hr />
         <br />
       </div>
@@ -3920,7 +3960,9 @@ Known values for 'IDS File' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Constant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Set the 'Constant' field to 1 if you want no time needed between spells.</div><br />
+        <div class="descriptiondata">Set the 'Constant' field to 1 if you want no time needed between spells.<br />
+<br />
+This effect sets stat <a href="#op76">#76</a> (AURACLEANSING) to param <a href="#op2">#2</a>.</div><br />
         <hr />
         <br />
       </div>
@@ -3932,7 +3974,9 @@ Known values for 'IDS File' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Alters the casting time of spells by the value specified by the 'Speed Modifier' field. This effect is cummulative. Positive values decrease the casting time, negative values increase the casting time.</div><br />
+        <div class="descriptiondata">Alters the casting time of spells by the value specified by the 'Speed Modifier' field. This effect is cummulative. Positive values decrease the casting time, negative values increase the casting time.<br />
+<br />
+This effect sets stat <a href="#op77">#77</a> (MENTALSPEED) to param <a href="#op1">#1</a>.</div><br />
         <hr />
         <br />
       </div>
@@ -3944,7 +3988,9 @@ Known values for 'IDS File' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Alters the weapon's attack speed by the value specified by the 'Speed Modifier' field. This effect is not cumulative. Attack speed ranges from 0 (good) to 10 (bad). This effect acts as a bonus, so a high 'Speed Modifier' is good.</div><br />
+        <div class="descriptiondata">Alters the weapon's attack speed by the value specified by the 'Speed Modifier' field. This effect is not cumulative. Attack speed ranges from 0 (good) to 10 (bad). This effect acts as a bonus, so a high 'Speed Modifier' is good.<br />
+<br />
+This effect sets stat <a href="#op78">#78</a> (PHYSICALSPEED) to param <a href="#op1">#1</a>.</div><br />
         <hr />
         <br />
       </div>
@@ -3952,11 +3998,19 @@ Known values for 'IDS File' are:<br />
      <div id="op191" class="opcode">
         <span class="opnumberdata">#191 (0x0BF)</span>
         <span class="opnamedata">Spell: Casting Level Modifier [191]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Undefined</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Modifier</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The use of this effect is unknown, and effect of its parameters are undefined.</div><br />
+        <div class="descriptiondata">Applies the value specified by the 'Modifier' field as a bonus to casting spell levels, of a type specified by the 'Type' field.<br />
+<br />
+Known values for 'Type' are:<br />
+0 &nbsp;Mage<br />
+1 &nbsp;Cleric<br />
+<br />
+Note: This effect changes the casting level stat, but has no actual affect in-game.<br />
+<br />
+This effect modifies stats <a href="#op79">#79</a> (CASTINGLEVELBONUSMAGE) or <a href="#op80">#80</a> (CASTINGLEVELBONUSCLERIC) depending on param <a href="#op2">#2</a>.</div><br />
         <hr />
         <br />
       </div>
@@ -3965,10 +4019,12 @@ Known values for 'IDS File' are:<br />
         <span class="opnumberdata">#192 (0x0C0)</span>
         <span class="opnamedata">Spell Effect: Find Familiar [192]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Upgrade Marker</span><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Summons a familiar for the Protagonist player. The familiar summoned is based on the alignment of the Protagonist, and values stored in the GAM file.<br />
+<br />
+The 'Upgrade Marker' field is used internally to indicate the familiar has received the ToB upgrades.<br />
 <br />
 Default creatures for familiars are:<br />
 Lawful Good &nbsp;&nbsp;&nbsp;&nbsp;Pseudo Dragon (FAMPSD)<br />
@@ -3991,8 +4047,9 @@ Chaotic Evil &nbsp;&nbsp;&nbsp;Quasit (FAMQUAS)</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Constant Value</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Allows invisible creatures to be attacked (via scripts).<br />
-The Constant Value parameter should be set to 1 or 2.</div><br />
+        <div class="descriptiondata">Allows invisible creatures to be attacked (via scripts) and makes it possible to target improved invisible creatures with spells. The Constant Value parameter should be set to 1 or 2.<br />
+<br />
+This effect sets stat <a href="#op81">#81</a> (SEEINVISIBLE) to param <a href="#op2">#2</a>.</div><br />
         <hr />
         <br />
       </div>
@@ -4000,7 +4057,7 @@ The Constant Value parameter should be set to 1 or 2.</div><br />
      <div id="op194" class="opcode">
         <span class="opnumberdata">#194 (0x0C2)</span>
         <span class="opnamedata">Ignore Dialog Pause [194]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Undefined</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Constant Value</span><br />
         <span class="descriptionheading">Description:</span><br />
 
@@ -4061,7 +4118,7 @@ Values for 'Reflected Projectile' are taken from projectl.ids.</div><br />
 
         <div class="descriptiondata">The targeted creature(s) will reflect attacks containing the opcode specified by the 'Opcode' field.<br />
 <br />
-NN. This can cause a crash if two creatures end up reflecting to each other.</div><br />
+NB. This can cause a crash if two creatures end up reflecting to each other.</div><br />
         <hr />
         <br />
       </div>
@@ -4069,12 +4126,23 @@ NN. This can cause a crash if two creatures end up reflecting to each other.</di
      <div id="op199" class="opcode">
         <span class="opnumberdata">#199 (0x0C7)</span>
         <span class="opnamedata">Spell: Bounce Spell Level [199]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Reflected Level", "Irrelevant</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> The targeted creature(s) will reflect spells from the spell level specified in the 'Reflected Level' field."
-200,1,"Spell: Decrementing Bounce Spells [200]</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Reflected Level</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Amount</div><br />
+        <div class="descriptiondata">The targeted creature(s) will reflect spells from the spell level specified in the 'Reflected Level' field.</div><br />
+        <hr />
+        <br />
+      </div>
+
+     <div id="op200" class="opcode">
+        <span class="opnumberdata">#200 (0x0C8)</span>
+        <span class="opnamedata">Spell: Decrementing Bounce Spells [200]</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Amount</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Level</span><br />
+        <span class="descriptionheading">Description:</span><br />
+
+        <div class="descriptiondata">The targeted creature(s) will reflect a number of spells (specified by the 'Amount' field), from the spell level specified in the 'Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Level' parameter in the extended header that is being called.</div><br />
         <hr />
         <br />
       </div>
@@ -4094,7 +4162,7 @@ NN. This can cause a crash if two creatures end up reflecting to each other.</di
      <div id="op202" class="opcode">
         <span class="opnumberdata">#202 (0x0CA)</span>
         <span class="opnamedata">Spell: Bounce Spell School [202]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Undetermined</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Spell School</span><br />
         <span class="descriptionheading">Description:</span><br />
 
@@ -4116,7 +4184,7 @@ Known values for 'Spell School' are:<br />
      <div id="op203" class="opcode">
         <span class="opnumberdata">#203 (0x0CB)</span>
         <span class="opnamedata">Spell: Bounce Secondary Type [203]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Undetermined</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Secondary Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
@@ -4143,7 +4211,7 @@ Known values for 'Secondary Type' are:<br />
      <div id="op204" class="opcode">
         <span class="opnumberdata">#204 (0x0CC)</span>
         <span class="opnamedata">Spell: Protection from Spell (School) [204]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Undetermined</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Spell School</span><br />
         <span class="descriptionheading">Description:</span><br />
 
@@ -4165,7 +4233,7 @@ Known values for 'Spell School' are:<br />
      <div id="op205" class="opcode">
         <span class="opnumberdata">#205 (0x0CD)</span>
         <span class="opnamedata">Spell: Protection from Spell (Secondary Type) [205]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Undetermined</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
@@ -4220,7 +4288,9 @@ Known values for 'Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The targeted creature(s) HP value will not drop below the value specified by the 'Minimum Value' field.</div><br />
+        <div class="descriptiondata">The targeted creature(s) HP value will not drop below the value specified by the 'Minimum Value' field.<br />
+<br />
+This effect sets stat <a href="#op83">#83</a> (MINHITPOINTS) to param <a href="#op1">#1</a>.</div><br />
         <hr />
         <br />
       </div>
@@ -4261,7 +4331,9 @@ The duration of the effect is:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the imprisonment effect to the targeted creature(s).</div><br />
+        <div class="descriptiondata">Applies the imprisonment effect to the targeted creature(s).<br />
+<br />
+The field at 0xcc can be used to prevent death related effects (e.g. removal from party) running on the targetted creature(s).</div><br />
         <hr />
         <br />
       </div>
@@ -4282,11 +4354,15 @@ The freedom effect frees creatures trapped by the imprisonment effect.</div><br 
      <div id="op213" class="opcode">
         <span class="opnumberdata">#213 (0x0D5)</span>
         <span class="opnamedata">Spell Effect: Maze [213]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Type</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Applies the maze effect to the targeted creature(s).<br />
+<br />
+Known values for 'Type' are:<br />
+0 &nbsp;&nbsp;Use intelligence based duration (via intmod.2da)<br />
+1 &nbsp;&nbsp;Use duration field<br />
 <br />
 The duration of the effect is set in intmod.2da, default values are:<br />
 0 to 2 int &nbsp;&nbsp;-> 2d4 rounds<br />
@@ -4604,7 +4680,12 @@ webentt &nbsp;Travelling ball of shining web</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Drains levels from the targeted creature(s) as specified by the 'Amount' field. 'Amount' can be positive or negative, negative values will alter level and spellbook slots, but not experience.</div><br />
+        <div class="descriptiondata">Drains levels from the targeted creature(s) as specified by the 'Amount' field. 'Amount' can be positive or negative, negative values will alter level and spellbook slots, but not experience.<br />
+<br />
+Param3 is used internally to store recalculated max hp.<br />
+Param4 is used internally to store recalculated max xp.<br />
+<br />
+This effect sets stat <a href="#op200">#200</a> (LEVELDRAIN) to param <a href="#op1">#1</a>.</div><br />
         <hr />
         <br />
       </div>
@@ -4641,7 +4722,6 @@ webentt &nbsp;Travelling ball of shining web</div><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Gives the targeted creature(s) a 2 point bonus AC against the creature type specified by the 'IDS Entry' in the IDS file specified by the 'IDS File' field.<br />
-A 2 point bonus is also given to saving throws if the specified creatures attack requires a saving throw.<br />
 <br />
 Known values for 'IDS File' are:<br />
 2 &nbsp;&nbsp;EA.IDS<br />
@@ -4848,7 +4928,7 @@ Known values for 'Secondary Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> School Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Removes spell effects of the school specified by the 'School Type' field up to the 'Max Level' value, from the targeted creature(s).<br />
+        <div class="descriptiondata">Removes a single spell effect of the school specified by the 'School Type' field up to the 'Max Level' value, from the targeted creature(s).<br />
 <br />
 Known values for 'School Type' are:<br />
 1 &nbsp;&nbsp;Abjurer<br />
@@ -4871,7 +4951,7 @@ Known values for 'School Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Secondary Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Removes spell effects of the school specified by the 'School Type' field up to the 'Max Level' value, from the targeted creature(s).<br />
+        <div class="descriptiondata">Removes one spell effect of the school specified by the 'School Type' field up to the 'Max Level' value, from the targeted creature(s).<br />
 <br />
 Known values for 'Secondary Type' are:<br />
 1 &nbsp;&nbsp;Spell Protections<br />
@@ -4914,7 +4994,7 @@ The timestop effect lasts half as long as the Duration specified for the effect.
         <div class="descriptiondata">Casts the spell specified by the resource field on the target specified by the 'Target' field, when the condition from the 'Condition' field is true. The conditions are akin to various triggers.<br />
 <br />
 Known values for 'Target' are:<br />
-0 &nbsp;&nbsp;Myself<br />
+0 &nbsp;&nbsp;Effect Target<br />
 1 &nbsp;&nbsp;LastHitter<br />
 2 &nbsp;&nbsp;NearestEnemyOf<br />
 3 &nbsp;&nbsp;Nearest<br />
@@ -4931,7 +5011,9 @@ Known values for 'Condition' are:<br />
 8 &nbsp;&nbsp;PersonalSpaceDistance('Target',4)<br />
 9 &nbsp;&nbsp;PersonalSpaceDistance('Target',10)<br />
 10 &nbsp;Unknown - every round<br />
-11 &nbsp;TookDamage()</div><br />
+11 &nbsp;TookDamage()<br />
+<br />
+Parameter 3 (EFF) activates the portrait icon and immediately triggers the HitBy() trigger</div><br />
         <hr />
         <br />
       </div>
@@ -5022,20 +5104,21 @@ Second word: Amount</div><br />
      <div id="op235" class="opcode">
         <span class="opnumberdata">#235 (0x0EB)</span>
         <span class="opnamedata">Spell Effect: Wing Buffet [235]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Distance</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Speed</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Direction</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the wing buffet effect centred on the casting creature(s), buffeting the targeted creature(s) the distance specified by the 'Distance' field, in the direction specified by the 'Direction' field.<br />
+        <div class="descriptiondata">Applies the wing buffet effect centred on the casting creature(s), buffeting the targeted creature(s) at the speed specified by the 'Speed' field, in the direction specified by the 'Direction' field.<br />
 <br />
 Known values for 'Direction' are:<br />
-0 &nbsp;&nbsp;Fidget (upon moving)<br />
-1 &nbsp;&nbsp;Fidget (upon moving)<br />
+0 &nbsp;&nbsp;As 1<br />
+1 &nbsp;&nbsp;Away from the destination point (specified in EFF file)<br />
 2 &nbsp;&nbsp;Away from the source<br />
-3 &nbsp;&nbsp;No effect<br />
-4 &nbsp;&nbsp;Sliding towards source<br />
+3 &nbsp;&nbsp;Towards the destination point (specified in EFF file)<br />
+4 &nbsp;&nbsp;Towards source<br />
 <br />
-NB. If used on creatures with the passwall effect applied, creatures can cross points marked as light obstacles on the search map.</div><br />
+NB. If used on creatures with the passwall effect applied, creatures can cross points marked as light obstacles on the search map.<br />
+NB. Some animations are immune to this effect.</div><br />
         <hr />
         <br />
       </div>
@@ -5357,7 +5440,7 @@ NB. This effect works in SoA but not ToB</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The use of this effect is unknown, and effect of its parameters are undefined.</div><br />
+        <div class="descriptiondata">This effect enables a 1% chance of the targetted creature(s) going berserk on each attack it makes. This affect sets the berserk stat changes and then attaches affect 246.</div><br />
         <hr />
         <br />
       </div>
@@ -5369,7 +5452,7 @@ NB. This effect works in SoA but not ToB</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undetermined</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">This effect appears to be a combination of opcode <a href="#op3">#3</a> and the berserking portrait icon.</div><br />
+        <div class="descriptiondata">This effect appears to be a combination of opcode <a href="#op3">#3</a> and the berserking portrait icon. This affect attaches affect 247.</div><br />
         <hr />
         <br />
       </div>
@@ -5382,8 +5465,10 @@ NB. This effect works in SoA but not ToB</div><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Applies the attack nearest creature effect on the targeted creature(s).<br />
-This effect causes the targeted creature(s) to attack the nearest creature.<br />
-The 'Constant Value' parameter should be non-zero.</div><br />
+This effect causes the targeted creature(s) to attack the nearest creature. The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. Unlike opcode <a href="#op3">#3</a>, this one can affect enemies as well.<br />
+The 'Constant Value' parameter should be non-zero.<br />
+<br />
+This effect sets stat <a href="#op144">#144</a> (BERSERKSTAGE2) to param <a href="#op2">#2</a>. It also sets the STATE_BERSERK flag.</div><br />
         <hr />
         <br />
       </div>
@@ -5648,7 +5733,7 @@ Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;Set Global (to 'Value')<br />
 1 &nbsp;&nbsp;Increment Global (by 'Value')<br />
 <br />
-NB. Since the Resource Key can only be 8 characters long maximum, you can not set a Local Variable with this Effect this has a name longer than this amount.<br />
+NB. Since the Resource Key can only be 8 characters long maximum, you can not set a Local Variable with this effect this has a name longer than this amount.<br />
 NB. You can use the VVC field of external EFF files for an additional 8 characters of variable name.<br />
 NB. You can use the 3rd resource field of EFF files for an additional 8 characters.<br />
 <br />
@@ -5689,7 +5774,9 @@ NB. All timing modes act as permanent for this effect.</div><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Applies the clear fog of war effect on the targeted creature(s).<br />
-The targeted creature(s) will be able to explore like a PC does.</div><br />
+The targeted creature(s) will be able to explore like a PC does.<br />
+<br />
+This effect sets stat <a href="#op148">#148</a> (EXPLORE) to 1.</div><br />
         <hr />
         <br />
       </div>
@@ -5854,7 +5941,7 @@ NB. This effect adjusts modified THAC0, rather than the base stat.</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Button</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Enables the button specified by the 'Button Type' field.<br />
+        <div class="descriptiondata">Enables the button specified by the 'Button Type' field. The resource field acts as a matching key to the resource field of the Enable Button, allowing separate enable/disable reasons.<br />
 <br />
 Known values for 'Button' are:<br />
 0 &nbsp;&nbsp;Stealth Button<br />
@@ -6110,11 +6197,16 @@ The effect modifies stat 183 to param2.</div><br />
         <span class="opnumberdata">#294 (0x126)</span>
         <span class="opnamedata">Spell Effect: Existance Delay Override [294]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Undefined</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Constant Value</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The use of this effect is unknown, and effect of its parameters are undefined. The effect modifies stat 184, unless param2 is set to 1.<br />
-The effect modifies stat 184 to param1.</div><br />
+        <div class="descriptiondata">Existance is the verbal constant group from 69 to 74 (or 70-74). These sounds are randomly played (for non global, alive characters, when not in cutscene or dialog). This stat tunes the frequency of these random strings.<br />
+<br />
+Known values for 'Constant Value' are:<br />
+-1 - no existance sounds<br />
+0 &nbsp;- standard existance sound frequency<br />
+Other values - random existance sound frequency (the higher the rarer)<br />
+ The effect modifies stat 184, unless param2 is set to 1.</div><br />
         <hr />
         <br />
       </div>
@@ -6175,7 +6267,7 @@ The Constant Value parameter should be set to 1.</div><br />
      <div id="op299" class="opcode">
         <span class="opnumberdata">#299 (0x12B)</span>
         <span class="opnamedata">Spell Effect: Chaos Shield [299]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Percentile modifier</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Shield Amount</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Icon</span><br />
         <span class="descriptionheading">Description:</span><br />
 
@@ -6184,6 +6276,7 @@ The Constant Value parameter should be set to 1.</div><br />
 Known values for 'Icon' are:<br />
 0 &nbsp;Normal Chaos Shield<br />
 1 &nbsp;Improved Chaos Shield<br />
+<br />
 The effect modifies stat 189.</div><br />
         <hr />
         <br />
@@ -6193,11 +6286,12 @@ The effect modifies stat 189.</div><br />
         <span class="opnumberdata">#300 (0x12C)</span>
         <span class="opnamedata">Spell Effect: NPCBump [300]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Constant Value</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The use of this effect is unknown, and effect of its parameters are undefined.<br />
-The effect modifies stat 190.</div><br />
+        <div class="descriptiondata">This effect allows the targetted creature(s) to push other creatures out of the way while moving.<br />
+Constant Value should be set to 1.<br />
+The effect modifies stat 190 to param 2.</div><br />
         <hr />
         <br />
       </div>
@@ -6264,7 +6358,7 @@ The effect modifies stat 192.</div><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br />
-/<br />
+<br />
 Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;Cumulative Modifier -> THAC0 = THAC0 + 'Statistic Modifier' value<br />
 1 &nbsp;&nbsp;Flat Value Modifier -> THAC0 = 'Statistic Modifier' value<br />
@@ -6308,26 +6402,28 @@ NB: The file 'tracking.2da' lists the string reference that shows what informati
      <div id="op308" class="opcode">
         <span class="opnumberdata">#308 (0x134)</span>
         <span class="opnamedata">Protection: From Tracking [308]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Unknown</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unknown</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Constant value</span><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Protects the targetted creature(s) from the Tracking arrows effect (has no affect on the area string displayed).<br />
-The effect modifies stat 195.</div><br />
+The effect modifies stat 195 to the value of param type.</div><br />
         <hr />
         <br />
       </div>
 
      <div id="op309" class="opcode">
         <span class="opnumberdata">#309 (0x135)</span>
-        <span class="opnamedata">Script: Set/Modify Variable [309]</span><br />
+        <span class="opnamedata">Script: Modify Local Variable [309]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Value</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Modifier Type</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Set both the local and global variable specified by the resource key to the value specified by the 'Value' field.<br />
+        <div class="descriptiondata">Set both the local variable specified by the resource key to the value specified by the 'Value' field.<br />
 <br />
-If the Modifier Type is set to 1, then this effect will be a Modify Local Variable effect.<br />
+Known values for 'Type' are:<br />
+0 &nbsp;&nbsp;Set Local (to 'Value')<br />
+1 &nbsp;&nbsp;Increment Local (by 'Value')<br />
 <br />
 NB: Since the Resource Key can only be 8 characters long maximum, you can not set a variable with this Effect this has a name longer than this amount.<br />
 You can use the VVC field of external EFF files for an additional 8 characters of variable name.<br />
@@ -6357,7 +6453,34 @@ The effect modifies stat 197.</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">This effect casts a random wish spell (SPWISH01 - SPWISH25).</div><br />
+        <div class="descriptiondata">This effect casts a wish spell (SPWISH01 - SPWISH25), selected based on the casting creatures Wisdom attribute, as outlined below.<br />
+<br />
+SPWISHxx &nbsp;&nbsp;&nbsp;MinWis &nbsp;&nbsp;&nbsp;MaxWis<br />
+01 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+02 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+03 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+04 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+05 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+06 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+07 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+08 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+09 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+11 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+13 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+14 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+15 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+16 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+17 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25<br />
+18 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;17<br />
+19 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9<br />
+20 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;17<br />
+21 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;17<br />
+22 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9<br />
+23 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9<br />
+24 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9<br />
+25 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25</div><br />
         <hr />
         <br />
       </div>

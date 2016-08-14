@@ -430,7 +430,7 @@
         </tr>
         <tr>
           <td>0x00e4</td>
-          <td>38 (byte)</td>
+          <td>56 (byte)</td>
           <td><span class="unknown">Unknown</span></td>
         </tr>
       </tbody>
@@ -496,8 +496,18 @@
           </tr>
           <tr>
             <td>0x002c</td>
-            <td>4 (dword)</td>
+            <td>2 (word)</td>
             <td>Has been spawned (0=no, 1=yes)</td>
+          </tr>
+          <tr>
+            <td>0x002e</td>
+            <td>1 (word)</td>
+            <td>First letter of CRE resref (changed to *)</td>
+          </tr>
+          <tr>
+            <td>0x002f</td>
+            <td>1 (byte)</td>
+            <td><span class="unknown">Unknown</span></td>
           </tr>
           <tr>
             <td>0x0030</td>
@@ -512,12 +522,17 @@
           <tr>
             <td>0x0038</td>
             <td>4 (dword)</td>
-            <td>Actor removal timer (absolute ticks) (usu. -1 to avoid removal)</td>
+            <td>Actor removal timer (seconds) (usu. -1 to avoid removal)</td>
           </tr>
           <tr>
             <td>0x003c</td>
-            <td>4 (dword)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>2 (word)</td>
+            <td>Movement restriction distance</td>
+          </tr>
+          <tr>
+            <td>0x003e</td>
+            <td>2 (word)</td>
+            <td>Movement restriction distance (move to object)</td>
           </tr>
           <tr>
             <td>0x0040</td>
@@ -775,18 +790,23 @@
           </tr>
           <tr>
             <td>0x008c</td>
-            <td>44 (bytes)</td>
+            <td>32 (bytes)</td>
             <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td>0x00ac</td>
+            <td>8 (resref)</td>
+            <td>Sound (PST)</td>
           </tr>
           <tr>
             <td>0x00b4</td>
-            <td>4 (point)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>4 (dword)</td>
+            <td>Talk location point</td>
           </tr>
           <tr>
             <td>0x00b8</td>
-            <td>4 (dword)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>4 (strref)</td>
+            <td>Name</td>
           </tr>
           <tr>
             <td>0x00bc</td>
@@ -892,7 +912,7 @@
             <td>2 (word)</td>
             <td>Base creature number to spawn. The actual number to spawn is given by:<br />
               <div class="indent1">
-                (Frequency * Player Level) / Creature Power<br />
+                (Frequency * Average Party Level) / Creature Power<br />
               </div>
             With results rounded down.
             </td>
@@ -900,27 +920,36 @@
           <tr>
             <td>0x0078</td>
             <td>2 (word)</td>
-            <td>Seconds between spawning</td>
+            <td>Frequency - i.e. seconds between spawning</td>
           </tr>
           <tr>
             <td>0x007a</td>
             <td>2 (word)</td>
-            <td>Spawn method (1=Rest, 2=Revealed)</td>
+            <td>Spawn method<br />
+              <ul>
+                <li>Bit 0: If Bit 2 is set, don't spawn</li>
+                <li>Bit 1: One-time-spawnpoint (checked for after the spawning, and disables the spawn point if set)</li>
+                <li>Bit 2: Used internally to disable the spawn point temporarily<br />
+                  &nbsp;&nbsp;&nbsp;Set after a spawning and cleared in two situations:<br />
+                  &nbsp;&nbsp;&nbsp;(1) after the CompressTime() method for the spawn point is called with a time amount of at least 16 hours<br />
+                  &nbsp;&nbsp;&nbsp;(2) if Bit 0 is not set and there are no living spawns in the area</li>
+              </ul>
+            </td>
           </tr>
           <tr>
             <td>0x007c</td>
             <td>4 (dword)</td>
-            <td><span class="unknown">Unknown</td>
+            <td>Actor removal timer (seconds) (usu. -1 to avoid removal)</td>
           </tr>
           <tr>
             <td>0x0080</td>
             <td>2 (word)</td>
-            <td><span class="unknown">Unknown. Usually matches 0x0082</span></td>
+            <td>Movement restriction distance</td>
           </tr>
           <tr>
             <td>0x0082</td>
             <td>2 (word)</td>
-            <td><span class="unknown">Unknown. Usually matches 0x0080</span></td>
+            <td>Movement restriction distance (move to object)</td>
           </tr>
           <tr>
             <td>0x0084</td>
@@ -1057,7 +1086,9 @@
           <tr>
             <td>0x0000</td>
             <td>32 (char array)</td>
-            <td>Name</td>
+            <td>Name<br />
+              Note: If the name starts with <i>T2</i> a 2da file with the same name is loaded and all the items in there are added to the container.
+            </td>
           </tr>
           <tr>
             <td>0x0020</td>
@@ -1166,12 +1197,12 @@
           </tr>
           <tr>
             <td>0x0054</td>
-            <td>4 (dword)</td>
+            <td>2 (word)</td>
             <td>Count of <a href="#formAREAV9_1_Vertices">vertices</a> making up the outline of this container</td>
           </tr>
           <tr>
-            <td>0x0058</td>
-            <td>32 (bytes)</td>
+            <td>0x0056</td>
+            <td>34 (bytes)</td>
             <td><span class="unknown">Unknown</span></td>
           </tr>
           <tr>
@@ -1433,7 +1464,7 @@
                 <li>bit 1: (0) Enable environmental effects / (1) Disable environmental effects</li>
                 <li>bit 2: (0) Local (uses radius) / (1) Global (ignores radius)</li>
                 <li>bit 3: (0) Sequential ambient selection / (1) Random ambient selection</li>
-                <li><span class="unknown">bit 4: Unknown</span></li>
+                <li><span class="unknown">bit 4: Affected by 'Low Mem Sounds 1'</span></li>
                 <li><span class="unknown">bit 5: Unknown</span></li>
                 <li><span class="unknown">bit 6: Unknown</span></li>
                 <li><span class="unknown">bit 7: Unknown</span></li>
@@ -1539,7 +1570,7 @@
                 <li>bit 1: Door locked</li>
                 <li>bit 2: Reset trap</li>
                 <li>bit 3: Trap detectable</li>
-                <li><span class="unknown">bit 4: Broken</span></li>
+                <li><span class="unknown">bit 4: Door has been bashed</span></li>
                 <li><span class="unknown">bit 5: Can't close</span></li>
                 <li>bit 6: Linked</li>
                 <li>bit 7: Door Hidden</li>
@@ -1583,32 +1614,27 @@
           <tr>
             <td>0x0048</td>
             <td>4 (dword)</td>
-            <td>Index of first <a href="#formAREAV1_0_Vertices">&quot;vertex&quot;</a> in the impeded cell block (when closed). These are not actually vertices, they are instead cell coordinates (each cell corresponding to one tile in the WED file's tilemap structures. When the door is closed, these cells cannot be entered by any object.</td>
+            <td>Index of first <a href="#formAREAV1_0_Vertices">&quot;vertex&quot;</a> in the impeded cell block (when open). These entries are x.y coordinates in the area search map. When the door is open, these cells cannot be entered by any object.</td>
           </tr>
           <tr>
             <td>0x004c</td>
             <td>2 (word)</td>
-            <td>Count of <a href="#formAREAV1_0_Vertices">&quot;vertices&quot;</a> in impeded cell block (when closed)</td>
+            <td>Count of <a href="#formAREAV1_0_Vertices">&quot;vertices&quot;</a> in impeded cell block (when open)</td>
           </tr>
           <tr>
             <td>0x004e</td>
             <td>2 (word)</td>
-            <td>Count of <a href="#formAREAV1_0_Vertices">&quot;vertices&quot;</a> in impeded cell block (when open)</td>
+            <td>Count of <a href="#formAREAV1_0_Vertices">&quot;vertices&quot;</a> in impeded cell block (when closed)</td>
           </tr>
           <tr>
             <td>0x0050</td>
             <td>4 (dword)</td>
-            <td>Index of first <a href="#formAREAV1_0_Vertices">&quot;vertex&quot;</a> in the impeded cell block (when open). These are not actually vertices, they are instead cell coordinates (each cell corresponding to one tile in the WED file's tilemap structures. When the door is closed, these cells cannot be entered by any object.</td>
+            <td>Index of first <a href="#formAREAV1_0_Vertices">&quot;vertex&quot;</a> in the impeded cell block (when closed). These entries are x.y coordinates in the area search map. When the door is closed, these cells cannot be entered by any object.</td>
           </tr>
           <tr>
             <td>0x0054</td>
-            <td>2 (word)</td>
-            <td><span class="unknown">Unknown</span></td>
-          </tr>
-          <tr>
-            <td>0x0056</td>
-            <td>2 (word)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>4 (dword)</td>
+            <td>Unused</td>
           </tr>
           <tr>
             <td>0x0058</td>
@@ -1687,18 +1713,23 @@
           </tr>
           <tr>
             <td>0x009c</td>
-            <td>32 (bytes)</td>
-            <td>Region link</td>
+            <td>24 (bytes)</td>
+            <td>Travel trigger name</td>
           </tr>
           <tr>
-            <td>0x00bc</td>
+            <td>0x00b4</td>
             <td>4 (strref)</td>
-            <td><span class="unknown">Dialog name</span></td>
+            <td>Dialog speaker name</td>
+          </tr>
+          <tr>
+            <td>0x00b8</td>
+            <td>8 (resref)</td>
+            <td>Dialog resref</td>
           </tr>
           <tr>
             <td>0x00c0</td>
-            <td>8 (resref)</td>
-            <td><span class="unknown">Dialog resref</span></td>
+            <td>8 (bytes)</td>
+            <td><span class="unknown">Unknown</span></td>
           </tr>
         </tbody>
       </table>
@@ -2072,8 +2103,13 @@
           </tr>
           <tr>
             <td>0x0010</td>
-            <td>4 (dword)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>2 (word)</td>
+            <td>Ticks until next trigger check</td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>2 (word)</td>
+            <td>Triggers remaining (i.e explosion count)</td>
           </tr>
           <tr>
             <td>0x0014</td>
@@ -2088,17 +2124,17 @@
           <tr>
             <td>0x0018</td>
             <td>2 (word)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>Z coordinate</td>
           </tr>
           <tr>
             <td>0x001A</td>
             <td>1 (byte)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>Enemy-ally targetting</td>
           </tr>
           <tr>
-            <td>0x001C</td>
+            <td>0x001B</td>
             <td>1 (byte)</td>
-            <td>Caster ID (reset on game-load)</td>
+            <td>Party member index that created this projectile (0-5)</td>
           </tr>
       </table>
     </div>
@@ -2242,22 +2278,24 @@
           <tr>
             <td>0x009a</td>
             <td>2 (word)</td>
-            <td><span class="unknown">Unknown. Frequency? Difficulty?</span></td>
+            <td>Difficulty<br />
+              If Party Level * Difficulty > Totalled Creature Power then spawn
+            </td>
           </tr>
           <tr>
             <td>0x009c</td>
             <td>4 (dword)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>Removal time</td>
           </tr>
           <tr>
             <td>0x00a0</td>
             <td>2 (word)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>Movement restriction distance</td>
           </tr>
           <tr>
             <td>0x00a2</td>
             <td>2 (word)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>Movement restriction distance (move to object)</td>
           </tr>
           <tr>
             <td>0x00a4</td>
@@ -2267,7 +2305,7 @@
           <tr>
             <td>0x00a6</td>
             <td>2 (word)</td>
-            <td><div class="unknown">Unknown</div></td>
+            <td>Interruption point enabled (0=Inactive, 1=Active)</td>
           </tr>
           <tr>
             <td>0x00a8</td>

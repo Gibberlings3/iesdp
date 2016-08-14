@@ -109,7 +109,7 @@ N.B. Does not remove the state_helpless flag.</div><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Applies the berserk effect to the targeted creature(s).<br />
-Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.</div><br />
+Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. This effect only affects party members.</div><br />
         <hr />
         <br />
       </div>
@@ -280,6 +280,16 @@ The following values are valid for Damage Type:<br />
 67108864 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is Magic Cold Damage<br />
 134217728 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is Stunning Damage<br />
 <br />
+The opcode uses the 'variable' field at 0x2c to determine which (if any) custom critical damage visual to play. Known values are:<br />
+ 0x01 - The Nameless One<br />
+ 0x02 - Annah<br />
+ 0x04 - Grace<br />
+ 0x08 - Nordom<br />
+ 0x10 - Vhailor<br />
+ 0x20 - Morte<br />
+ 0x40 - Dakkon<br />
+ 0x80 - Ignus<br />
+<br />
 Keep in mind that if a character makes a save for damage type 1 or 2 without the NEG Resource Key, the Fixed Damage will be cut in half, which will cause MORE HP loss!<br />
 <br />
 NB. 'Stunning' damage does not stun the target. Stunning damage cannot kill a creature, creatures are reduced to 1 HP and are knocked unconscious.</div><br />
@@ -311,7 +321,7 @@ Any other-Target simply killed.</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Leaving both parameters at zero. &nbsp;When cast upon targets afflicted with frozen death from 'Set Status Effect(s)' though, the target will still be immobilized.</div><br />
+        <div class="descriptiondata">Removes the frozen_death state.</div><br />
         <hr />
         <br />
       </div>
@@ -365,9 +375,9 @@ NB. 'Statistic Modifier' can be positive or negative.</div><br />
         <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br />
 <br />
 Known values for 'Type' are:<br />
-0 &nbsp;&nbsp;Cumulative Modifier -> HP = HP + 'Statistic Modifier' value<br />
-1 &nbsp;&nbsp;Flat Value Modifier -> HP = 'Statistic Modifier' value<br />
-2 &nbsp;&nbsp;Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100<br />
+0 &nbsp;&nbsp;Cumulative Modifier -> HP = HP + 'Statistic Modifier' value (affects current and max HP)<br />
+1 &nbsp;&nbsp;Flat Value Modifier -> HP = 'Statistic Modifier' value (affects current and max HP)<br />
+2 &nbsp;&nbsp;Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)<br />
 <br />
 3 &nbsp;&nbsp;As 0 (does not affect current HP)<br />
 4 &nbsp;&nbsp;As 1 (does not affect current HP)<br />
@@ -434,12 +444,17 @@ NB. This effect does not work with Timing Mode 1.</div><br />
 
      <div id="op22" class="opcode">
         <span class="opnumberdata">#22 (0x016)</span>
-        <span class="opnamedata">Luck</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="opnamedata">Stat: Luck Bonus [22]</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Statistic Modifier</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Leave both parameters at zero for this effect to work. The Dice Size and Dice Throws determine the ammount of luck granted to the character. The effect does not set STATE_LUCK.</div><br />
+        <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect set STATE_LUCK, and is only applied if STATE_LUCK is not already set.<br />
+<br />
+Known values for 'Type' are:<br />
+0 &nbsp;&nbsp;Cumulative Modifier -> Luck = Luck + 'Statistic Modifier' value<br />
+1 &nbsp;&nbsp;Flat Value Modifier -> Luck = 'Statistic Modifier' value<br />
+2 &nbsp;&nbsp;Percentage Modifier -> Luck = (Luck * 'Statistic Modifier' value) / 100</div><br />
         <hr />
         <br />
       </div>
@@ -482,10 +497,13 @@ Note that any Morale-based effects (i.e. Panic) may be added or removed by this 
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Poison Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The Poison Type determines what the effect properly does. The Timing Mode must be set to either 'Duration' or 'Delay with Duration' (Timing Mode 3) for this effect to work.<br />
-1 1 HP per Second: The Variable parameter must be set to 1 for this to work.<br />
-2 Hit Points Per Second: The Variable parameter defines how much hit point damage is done each second<br />
-3 Seconds Per Hit Points: The Variable parameter defines how long it takes to do 1 HP of damage</div><br />
+        <div class="descriptiondata">The Poison Type determines the damage. The Timing Mode must be set to either 'Duration' or 'Delay with Duration' (Timing Mode 3) for this effect to work.<br />
+<br />
+Known values for 'Poison Type' &nbsp;are:<br />
+0 &nbsp;&nbsp;Inflict 'Variable' per second<br />
+1 &nbsp;&nbsp;Percentage Damage: The Variable parameter defines the percentage damage to inflict<br />
+2 &nbsp;&nbsp;Hit Points Per Second: The Variable parameter defines how much hit point damage is done each second<br />
+3 &nbsp;&nbsp;Seconds Per Hit Points: The Variable parameter defines how long it takes to do 1 HP of damage</div><br />
         <hr />
         <br />
       </div>
@@ -1316,12 +1334,12 @@ Known values for 'Text Notification' are:<br />
 
      <div id="op69" class="opcode">
         <span class="opnumberdata">#69 (0x045)</span>
-        <span class="opnamedata">Non-Detection</span><br />
+        <span class="opnamedata">Protection: From Detection (Non-Detection) [69]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Leave both parameters at all zeros for this Effect to work.</div><br />
+        <div class="descriptiondata">Applies the non-detection effect to the targeted creature(s), setting STATE_NONDETECTION while active. This effect is negated by effect <a href="#op70">#70</a> Cure: Non-Detection. While in the non-detection state, the creature is immune to effects <a href="#op47">#47</a>: Cure Invisibility and <a href="#op116">#116</a>: Remove invisibilty, though they are affected by effects that remove illusionary protections by school or secondary type.</div><br />
         <hr />
         <br />
       </div>
@@ -1444,18 +1462,26 @@ NB. A creatures scripts do not while the creature is feebleminded.</div><br />
 
      <div id="op78" class="opcode">
         <span class="opnumberdata">#78 (0x04E)</span>
-        <span class="opnamedata">Disease Target</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Time/Damage</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Disease Type</span><br />
+        <span class="opnamedata">State: Disease [78]</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Damage</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The Disease Type determines what the effect properly does. The Timing Mode must be set to either 'Duration' or 'Delay with Duration' (Timing Mode 3) for this effect to work.<br />
+        <div class="descriptiondata">Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.<br />
 <br />
-A value of 00 and 01 simply does 1 damage each second. &nbsp;The Time/Damage parameter must be set to a value other than zero in order for this effect to work, but otherwise has no bearing on the effect.<br />
+Known values for 'Type' are:<br />
+0 &nbsp;&nbsp;1 HP per second<br />
+1 &nbsp;&nbsp;1 HP per second<br />
+2 &nbsp;&nbsp;'Damage' per Second<br />
+3 &nbsp;&nbsp;Cause 1HP every 'Damage' seconds<br />
+4 &nbsp;&nbsp;Strength Penalty<br />
+5 &nbsp;&nbsp;Dexterity Penalty<br />
+6 &nbsp;&nbsp;Constitution Penalty<br />
+7 &nbsp;&nbsp;Intelligence Penalty<br />
+8 &nbsp;&nbsp;Wisdom Penalty<br />
+9 &nbsp;&nbsp;Charisma Penalty<br />
 <br />
-A value of 02 uses the Time/Damage Parameter to determine how much damage is done each second for the duration of the effect.<br />
-<br />
-A value of 03 uses the Time/Damage Parameter value to set the time between damage.<br />
+'Damage' can be positive (penalty) or negative (bonus).<br />
 <br />
 Permanent timing modes require a duration for this effect to work.</div><br />
         <hr />
@@ -1476,23 +1502,12 @@ Permanent timing modes require a duration for this effect to work.</div><br />
 
      <div id="op82" class="opcode">
         <span class="opnumberdata">#82 (0x052)</span>
-        <span class="opnamedata">Set AI Script [82]</span><br />
+        <span class="opnamedata">Incite Berserk Attack [82]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Sets the script type specified by the 'Type' value to the contents of the resource key.<br />
-<br />
-Known values for 'Type' are:<br />
-0 &nbsp;&nbsp;OVERRIDE<br />
-1 &nbsp;&nbsp;AREA<br />
-2 &nbsp;&nbsp;SPECIFICS<br />
-4 &nbsp;&nbsp;CLASS<br />
-5 &nbsp;&nbsp;RACE<br />
-6 &nbsp;&nbsp;GENERAL<br />
-7 &nbsp;&nbsp;DEFAULT<br />
-<br />
-NB. This effect can unset scripts from a creature, which can break the game.</div><br />
+        <div class="descriptiondata">This effect incites a repeating RunningAttack action on the target creature(s). The chosen target is always male/undead.</div><br />
         <hr />
         <br />
       </div>
@@ -2461,12 +2476,18 @@ Known values for 'Type' are:<br />
 
      <div id="op141" class="opcode">
         <span class="opnumberdata">#141 (0x08D)</span>
-        <span class="opnamedata">Visual Spell Hit</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="opnamedata">Graphics: Lighting Effects [141]</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Target</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The Type parameter shows the casting graphic associated with the value. &nbsp;All that require Baldur's Gate 1 graphics files are listed with a (*):<br />
+        <div class="descriptiondata">Shows the lighting effect (a .bam file) specified by the 'Type' value at the location specified by 'Target'. These effects are usually used for spell hits based on the spell school.<br />
+<br />
+Known values for 'Target' are:<br />
+0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Current Location<br />
+Non-0 &nbsp;Target Location<br />
+<br />
+Known values for 'Type' are (animations requiring BG1 graphics files are listed with a *):<br />
 0	*Whisps of smoke float from the head<br />
 1	*Droplets of water fall on the ground<br />
 2	*Whisps of smoke travel to the ground<br />
@@ -2879,7 +2900,7 @@ Note that the abilities characters can have depend on the creature death variabl
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised). Only affects spells with the SPPR/SPWI/SPCL/SPIN naming convention.<br />
+        <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised).<br />
 Both parameters should be 0 (zero).</div><br />
         <hr />
         <br />
@@ -3052,44 +3073,50 @@ Known values for 'IDS File' are:<br />
 
      <div id="op186" class="opcode">
         <span class="opnumberdata">#186 (0x0BA)</span>
-        <span class="opnamedata">Set Status Effect(s) (Non-Dispellable)</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Set to 1</span><br />
+        <span class="opnamedata">Set Status Effect(s)</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Set Type</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Effect Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Adds effects to any the target may have already had. &nbsp;Note that none of these are dispellable by other effects. Enoll Eva's Duplication and Zerthimon's Focus use this effect to work. The first byte Must be set to 1 to use this effect. &nbsp;The following effects can be done in this manner: <br />
-Sleeping(1) (01 00 00 00)--Sets the 'Asleep' status in target(s)<br />
-Berserk(2) &nbsp;(02 00 00 00)--Sets the 'Berserk' status in target(s)<br />
-Panic(4) &nbsp;&nbsp;&nbsp;(04 00 00 00)--Sets the 'Panic' status in target(s)<br />
-Stunned(8) &nbsp;(08 00 00 00)--Sets the 'Stunned' status in target(s). &nbsp;Works on the protagonist.<br />
-Curse(16) &nbsp;&nbsp;(16 00 00 00)--Sets the 'Cursed' status. No penalties towards stats.<br />
-Helpless(32) (32 00 00 00)--Sets the 'Helpless' status. &nbsp;No portrait change.<br />
-Frozen Death(64) (64 00 00 00)--Immobilizes.<br />
-Petrified Death(128)<br />
-Mirror Image(256)<br />
-Flaming Death(512)<br />
-Acid Death(1024)<br />
-Death(2048)<br />
-Silenced(4096)<br />
-Charmed(8192)<br />
-Poisoned(16384)<br />
-Protection from Critical Hits(32768)<br />
-Bonus Critical Hits(65536)<br />
-Infravision(131072)<br />
-Blind(262144)<br />
-Disease(524288)<br />
-Feeblemind(1048576)<br />
-Non-detection(2097152)<br />
-Duplicated(4194304)<br />
-Blessed(8388608)<br />
-Detect Evil(16777216)<br />
-Invisible(33554432)<br />
-Luck Bonus(67108864)<br />
-Aid(124217728)<br />
-Antimagic(268435456)<br />
-Blur(536870912)<br />
-Embalming(1073741824)<br />
-Confused(217483648)<br />
+        <div class="descriptiondata">Adds effects to any the target may have already had. Enoll Eva's Duplication and Zerthimon's Focus use this effect to work. The first byte Must be set to 1 to use this effect.<br />
+<br />
+Known values of 'Set Type' are:<br />
+ &nbsp;0 Clear effect<br />
+ &nbsp;1 Set effect<br />
+<br />
+Known values of 'Effect Type' are:<br />
+ &nbsp;Sleeping(1) (01 00 00 00)--Sets the 'Asleep' status in target(s)<br />
+ &nbsp;Berserk(2) &nbsp;(02 00 00 00)--Sets the 'Berserk' status in target(s)<br />
+ &nbsp;Panic(4) &nbsp;&nbsp;&nbsp;(04 00 00 00)--Sets the 'Panic' status in target(s)<br />
+ &nbsp;Stunned(8) &nbsp;(08 00 00 00)--Sets the 'Stunned' status in target(s). &nbsp;Works on the protagonist.<br />
+ &nbsp;Curse(16) &nbsp;&nbsp;(16 00 00 00)--Sets the 'Cursed' status. No penalties towards stats.<br />
+ &nbsp;Helpless(32) (32 00 00 00)--Sets the 'Helpless' status. &nbsp;No portrait change.<br />
+ &nbsp;Frozen Death(64) (64 00 00 00)--Immobilizes.<br />
+ &nbsp;Petrified Death(128)<br />
+ &nbsp;Mirror Image(256)<br />
+ &nbsp;Flaming Death(512)<br />
+ &nbsp;Acid Death(1024)<br />
+ &nbsp;Death(2048)<br />
+ &nbsp;Silenced(4096)<br />
+ &nbsp;Charmed(8192)<br />
+ &nbsp;Poisoned(16384)<br />
+ &nbsp;Protection from Critical Hits(32768)<br />
+ &nbsp;Bonus Critical Hits(65536)<br />
+ &nbsp;Infravision(131072)<br />
+ &nbsp;Blind(262144)<br />
+ &nbsp;Disease(524288)<br />
+ &nbsp;Feeblemind(1048576)<br />
+ &nbsp;Non-detection(2097152)<br />
+ &nbsp;Duplicated(4194304)<br />
+ &nbsp;Blessed(8388608)<br />
+ &nbsp;Detect Evil(16777216)<br />
+ &nbsp;Invisible(33554432)<br />
+ &nbsp;Luck Bonus(67108864)<br />
+ &nbsp;Aid(124217728)<br />
+ &nbsp;Antimagic(268435456)<br />
+ &nbsp;Blur(536870912)<br />
+ &nbsp;Embalming(1073741824)<br />
+ &nbsp;Confused(217483648)<br />
 <br />
 Note that all the death effects are in name only, with the exception of regular 'death', and will not fuction exactly like the regular effects, though they are dispelable by the same manner. The only way to remove frozen death is to kill the target or some other means, otherwise they will be permanately immobilized. Acid and Flaming Death seem to have no effect here. The same is true for Mirror Image. &nbsp;All values between the values listed here are combinations of the effects.</div><br />
         <hr />
@@ -3205,12 +3232,10 @@ Known values for 'Drain Type' are:<br />
         <span class="opnumberdata">#194 (0x0C2)</span>
         <span class="opnamedata">Flash Playing Screen</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> RGB Ratio</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Flash Type</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Unused</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">This effects flashes the screen a certain way set by the Flash Type, using the bytes of the RGB parameter for the colour. &nbsp;The first byte of the RGB parameter is red brightness amount(0-255), the second is the green brightness amount (0-255), and the third byte is the blue brightness amount (0-255). The following values are available for the Flash Type:<br />
-0 &nbsp;&nbsp;&nbsp;Delayed Flash<br />
-1 &nbsp;&nbsp;&nbsp;Instant Flash</div><br />
+        <div class="descriptiondata">This effects flashes the screen using the bytes of the RGB parameter for the colour. &nbsp;The first byte of the RGB parameter is red brightness amount(0-255), the second is the green brightness amount (0-255), and the third byte is the blue brightness amount (0-255).</div><br />
         <hr />
         <br />
       </div>
@@ -3235,10 +3260,14 @@ Know values for 'Type' are:<br />
 4,5,6,7 &nbsp;Fade from light to dark, goes for duration of effect, then fade to light<br />
 8 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No Effect<br />
 9 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Very fast light to black shift and back<br />
-10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instant black for the duration of the effect, then instant light<br />
+10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instant black for the duration of the effect, then instant light<br />
+100 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unknown<br />
+200 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unknown<br />
 The duration only applies to 4,5,6,7, and 10.<br />
 <br />
 The dice values control the fading speed.<br />
+<br />
+The resource field contains a wav resref.<br />
 <br />
 NB. Character colour will not be affected by this effect.</div><br />
         <hr />

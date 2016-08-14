@@ -39,22 +39,22 @@
     <br />
     <strong>GLOBAL: SetGlobal(&quot;XXXXXX&quot;, &quot;GLOBAL&quot;, 1)</strong><br />
     <div class="indent1">
-      The above command sets the XXXXXX variable to 1 in the global scope. This means the variable can be seen by any other script in the game. Globals are commonly used as a method of tracking progress, or passing information between creatures.<br />
+      The above command sets the XXXXXX variable to 1 in the global scope. This means the variable can be seen by any other script in the game. Globals are commonly used as a method of tracking progress, or passing information between creatures. Global variables are stored in the GAM file.<br />
     </div>
     <br />
 
     <strong>LOCALS: SetGlobal(&quot;XXXXXX&quot;, &quot;LOCALS&quot;, 1)</strong><br />
     <div class="indent1">
-      The above command sets the XXXXXX variable to 1 in the local scope. The local scope is only valid for creatures (as opposed to area scripts or baldur.bcs). Only the creature that has set a variable in the local scope can see it. This allows for several creatures to use the same script (with the same variable names) as the value assigned to variables are for each creature. Local scope variables are often used for tracking things that are unique to a particular creature (e.g. number of spells left, a specific one-shot dialog option has been chosen etc.). In BG1, local variables are not saved - they are temporary to the current game session.<br />
+      The above command sets the XXXXXX variable to 1 in the local scope. The local scope is only valid for creatures (as opposed to area scripts or baldur.bcs). Only the creature that has set a variable in the local scope can see it. This allows for several creatures to use the same script (with the same variable names) as the value assigned to variables are for each creature. Local scope variables are often used for tracking things that are unique to a particular creature (e.g. number of spells left, a specific one-shot dialog option has been chosen etc.). In BG1, local variables are not saved - they are temporary to the current game session. Local variables are stored as attached effects on CRE files.<br />
     </div>
     <br />
 
     <strong>AREA: SetGlobal(&quot;XXXXXX&quot;, &quot;AR0500&quot;, 1)</strong><br />
     <div class="indent1">
-    The above command sets the XXXXXX variable to 1 in an area scope (specifically AR0500). Area scope scripts can be seen by all other scripts (in the same way globals can) but each area can have its own copy of the variable (with its own number being tracked). Area variables are used when an action can be done a limited number of times in several areas.<br />
+    The above command sets the XXXXXX variable to 1 in an area scope (specifically AR0500). Area scope scripts can be seen by all other scripts (in the same way globals can) but each area can have its own copy of the variable (with its own number being tracked). Area variables are used when an action can be done a limited number of times in several areas. Area variables are stored in ARE files, archived in a SAV file.<br />
     <br />
     NB. The string MYAREA can be specified as the variable scope, except in BG1. When running a script with this reference, the engine substitutes the current area for the MYAREA text.<br />
-    NB. GLOBAL, LOCALS and MYAREA are case-sensitive.<br />
+    NB. THe GLOBAL, LOCALS and MYAREA strings are case-sensitive (though the variable name itself is case-insensitive).<br />
     </div>
   </div>
 </div>

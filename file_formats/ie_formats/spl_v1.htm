@@ -131,19 +131,8 @@
         </tr>
         <tr>
           <td>0x001e</td>
-          <td>2 (word)</td>
+          <td>4 (word)</td>
           <td><a href="#Exclusion_Flags"> Exclusion Flags</a></td>
-        </tr>
-        <tr>
-          <td>0x0020</td>
-          <td>2 (word)</td>
-          <td>Priest Type. Grant spell to divine magic users of type
-            <div class="indent1">
-              0x0000=Any<br />
-              0x4000=Any (except Cleric/Paladin)<br />
-              0x8000=Any (except Druid/Ranger)<br />
-            </div>
-          </td>
         </tr>
         <tr>
           <td>0x0022</td>
@@ -258,7 +247,7 @@
         <tr>
           <td>0x006e</td>
           <td>2 (word)</td>
-          <td>Casting Feature Block offset (must have target self)</td>
+          <td>Casting Feature Block offset (these feature blocks may not use target type 2)</td>
         </tr>
         <tr>
           <td>0x0070</td>
@@ -301,7 +290,11 @@
           <tr>
             <td>0x0001</td>
             <td>1 (char)</td>
-            <td><span class="unknown">Unknown</span></td>
+            <td>
+              <ul>
+                <li>bit 2: 'Friendly' ability</li>
+              </ul>
+            </td>
           </tr>
           <tr>
             <td>0x0002</td>
@@ -326,7 +319,7 @@
                 0 = Invalid (target cannot be selected)<br />
                 1 = Creature<br />
                 2 = Crash<br />
-                3 = Dead char<br />
+                3 = Character potrait (ignores range, uses projectile #1)<br />
                 4 = Area<br />
                 5 = Self<br />
                 6 = Crash<br />
@@ -660,7 +653,9 @@
     bit 12: Exclude Necromancers<br />
     bit 13: Exclude Transmuters<br />
     bit 14: Wild Magic (exclude Generalists) (BG2)<br />
-    bit 15: Unused<br />
+    bit 15 - 29: Unused<br />
+    bit 30: Exclude Cleric/Paladin<br />
+    bit 31: Exclude Druid/Ranger<br />
     <br />
     NB.Alignment and School exclusion bits cannot be combined.<br />
     </div>

@@ -665,9 +665,10 @@
   </div>
     
   <div class="actionHeader"><a name="34">34 UseItem(S:Object*,O:Target*)</a></div><br />
+  <div class="actionHeader">34 UseItemSlotAbility(O:Target*, I:Slot*, I:Ability*)</a></div><br />
   <div class="actionHeader">34 UseItemSlot(O:Target*, I:Slot*)</div>
   <div class="indent1">
-  This action instructs the active creature to use the specified item (object) on the specified target (target). This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (though it need not be equipped).<br />
+  This action instructs the active creature to use the specified item (object) on the specified target (target). The ability number (i.e. extended header index) to use may be specified. This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (though it need not be equipped).<br />
   <br />
   <pre class="code">
   IF
@@ -685,7 +686,7 @@
     
   <div class="actionHeader"><a name="36">36 Continue()</a></div>
   <div class="indent1">
-  This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle.<br />
+  This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly.<br />
   <br />
   <pre class="code">
   IF
@@ -876,7 +877,7 @@
     
   <div class="actionHeader"><a name="60">60 ChangeAIScript(S:ScriptFile*,I:Level*Scrlev)</a></div>
   <div class="indent1">
-  This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from <a href="../../files/ids/pst/scrlev.htm">scrlev.ids</a><br />
+  This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from <a href="../../files/ids/pst/scrlev.htm">scrlev.ids</a>. Scripts can be set for any scriptable object (container, creature, door etc.), but are not persisted.<br />
   <br />
   <pre class="code">
   IF
@@ -1184,10 +1185,16 @@
   </pre>
   <br />
   </div>
+
+  <div class="actionHeader"><a name="93">93 LeaveAreaName(I:Target*)</a></div>
+  <div class="indent1">
+  The signature of this action is not listed in the action.ids file provided with the game. This action causes the active creature to leave the area using the trigger region identified by the specified parameter. The parameter is the internal global ID of the region.<br />
+  <br />
+  </div>
   
   <div class="actionHeader"><a name="94">94 GroupAttack(O:Target*)</a></div>
   <div class="indent1">
-  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  This action instructs the active creature to attack creatures with the same specific value as the target creature.<br />
   <br />
   </div>
     
@@ -1262,6 +1269,12 @@
   <br />
   </div>
     
+  <div class="actionHeader"><a name="101">101 FlyToPoint(P:Point*, I:time*)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action is used internally by action 100 (RandomFly); it moves the active creature towards the given point for the specified amount of time.</span><br />
+  <br />
+  </div>
+
   <div class="actionHeader"><a name="102">102 MoraleSet(O:Target*,I:Morale*)</a></div>
   <div class="indent1">
   <span class="unknown">This action sets the morale of the active creature.</span><br />
@@ -1343,6 +1356,8 @@
   <div class="actionHeader">108 EscapeAreaMove(S:Area*,I:X*,I:Y*,I:Face*)</div>
   <div class="indent1">
   This action, in its first form, instructs the active creature to leave the current area, either by walking, or, if the path is blocked, by simply disappearing. In the actions second form the action functions as a combination of EscapeAreaDestroy() and MoveBetweenAreas(). The parameters are similar to MoveBetweenAreas(), in that it takes in all the same information, but unlike MoveBetweenAras(), the character will search for the nearest travel trigger, move to that, then execute his movement to the specified area. If he cannot find a travel trigger, he will execute the movement.<br />
+<br />
+The action is uninterruptable; actions listed this one in a script may not execute as intended.<br />
   <br />
   <pre class="code">
   IF
@@ -1693,13 +1708,13 @@ The example is from AR0516.bcs.<br />
   
   <div class="actionHeader"><a name="128">128 AnkhegEmerge()</a></div>
   <div class="indent1">
-  This action is likely called directly by the engine, and is used to give ankegs give the appearance of emerging from the ground. Calling the action from script has no effect.<br />
+  This action has no effect.<br />
   <br />
   </div>
   
   <div class="actionHeader"><a name="129">129 AnkhegHide()</a></div>
   <div class="indent1">
-  This action is likely called directly by the engine, and is used to give ankegs give the appearance of burrowing into the ground. Calling the action from script has no effect.<br />
+  This action has no effect.<br />
   <br />
   </div>
     
@@ -1999,7 +2014,7 @@ The example is from AR0516.bcs.<br />
 
   <div class="actionHeader"><a name="147">147 RemoveSpell(I:Spell*Spell)</a></div>
   <div class="indent1">
-  This action removes the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in <a href="../../files/ids/pst/spell.htm">spell.ids</a>. Any memorised copies of the spell will not be removed.<br />
+  This action removes one memorised indtance of the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in <a href="../../files/ids/pst/spell.htm">spell.ids</a>.<br />
   <br />
   <pre class="code">
   IF
@@ -2412,7 +2427,12 @@ The example is from AR0516.bcs.<br />
   <br />
   </div>
   
-    
+  <div class="actionHeader"><a name="172">172 ChangeTileState(O:Tile*,I:State*Boolean)</a></div>
+  <div class="indent1">
+  This action sets the open/closed graphic of a tile in a WED file.<br />
+  <br />
+  </div>
+   
   <div class="actionHeader"><a name="173">173 AddJournalEntry(I:Entry*,I:Type*JourType)</a></div>
   <div class="indent1">
   This action adds an entry into the journal. The entry parameter is the strref to add, the JourType parameter is ignored by the engine (it should specify the type of entry with values are from <a href="../../files/ids/pst/jourtype.htm">jourtype.ids</a>). The action must be added to action.ids before it can be used. The example script is from ar0511.bcs.<br />
@@ -2447,7 +2467,7 @@ The example is from AR0516.bcs.<br />
 <div class="actionHeader"><a name="181">181 ReallyForceSpell(O:Target,I:Spell*Spell)</a></div>
   <div class="actionHeader"><a name="181">181 ReallyForceSpellRES(S:RES*, O:TargetI:Spell*Spell)</a></div>
   <div class="indent1">
-  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span> The action must be added to action.ids before it can be used. The example script is from suelfw9.bcs.<br />
+  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. The action must be added to action.ids before it can be used. The example script is from suelfw9.bcs.<br />
   <br />
   </div>
     
@@ -2471,13 +2491,13 @@ The example is from AR0516.bcs.<br />
     
     <div class="actionHeader"><a name="200">200</a> SetAnimState(O:Object*,I:Anim*AnimStat)</div>
     <div class="indent1">
-    N/T<br />
+    This action sets the animation state of the specified creature to the specified animation (from animate.ids).<br />
     <br />
     </div>
     
     <div class="actionHeader"><a name="201">201</a> SetGlobalTint(I:Red*,I:Green*,I:Blue*)</div>
     <div class="indent1">
-    N/T<br />
+    N/T. Only works when run from creature scripts.<br />
     <br />
     </div>
     
@@ -2489,7 +2509,7 @@ The example is from AR0516.bcs.<br />
     
     <div class="actionHeader"><a name="203">203</a> IncrementKillStat(I:StatID*Killstat)</div>
     <div class="indent1">
-    N/T<br />
+    This action increments the specified kill stat (1 through 49) by one.<br />
     <br />
     </div>
     
@@ -2507,19 +2527,19 @@ The example is from AR0516.bcs.<br />
     
     <div class="actionHeader"><a name="206">206</a> Plunder(O:Target*)</div>
     <div class="indent1">
-    N/T<br />
+    This action has no effect.<br />
     <br />
     </div>
     
     <div class="actionHeader"><a name="207">207</a> SavePlace()</div>
     <div class="indent1">
-    N/T<br />
+    This action stores the current position and orientation of the active creature (into the actor structure).<br />
     <br />
     </div>
     
     <div class="actionHeader"><a name="208">208</a> ReturnToSavedPlace()</div>
     <div class="indent1">
-    N/T<br />
+    This action makes the active creature return to their stored position (the actor structure) - set via SavePlace().<br />
     <br />
     </div>
     
@@ -2579,7 +2599,7 @@ The example is from AR0516.bcs.<br />
     
     <div class="actionHeader"><a name="218">218</a> PlaySequence(I:Anim*AnimStat)</div>
     <div class="indent1">
-    N/T<br />
+    This action plays the specified animation sequence (from animstat.ids).<br />
     <br />
     </div>
     
@@ -2621,7 +2641,7 @@ The example is from AR0516.bcs.<br />
     
     <div class="actionHeader"><a name="225">225</a> FollowCreature(O:Target*)</div>
     <div class="indent1">
-    N/T<br />
+    This action has no effect.<br />
     <br />
     </div>
     
@@ -2905,7 +2925,7 @@ The example is from AR0516.bcs.<br />
     
     <div class="actionHeader"><a name="275">275</a> PlaySequenceGlobal(S:Label*,S:Scope*,I:Anim*AnimStat,I:EndAnim*AnimStat)</div>
     <div class="indent1">
-    N/T<br />
+    This action has no effect.<br />
     <br />
     </div>
     

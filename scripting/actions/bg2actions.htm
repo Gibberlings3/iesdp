@@ -656,10 +656,11 @@ This action instructs the active creature to attempt to Hide in Shadows. This ac
   <br />
   </div>
   
-  <div class="actionHeader"><a name="34">34 UseItem(S:Object*,O:Target*)</a><br />
-  34 UseItemSlot(O:Target*, I:Slot*)</div>
+  <div class="actionHeader"><a name="34">34 UseItem(S:Object*,O:Target*)</a></div><br />
+  <div class="actionHeader">34 UseItemSlotAbility(O:Target*, I:Slot*, I:Ability*)</a></div><br />
+  <div class="actionHeader">34 UseItemSlot(O:Target*, I:Slot*)</div>
   <div class="indent1">
-  This action instructs the active creature to use the specified item (object) on the specified target (target). This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (though it need not be equipped).<br />
+  This action instructs the active creature to use the specified item (object) on the specified target (target). The ability number (i.e. extended header index) to use may be specified. This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (though it need not be equipped).<br />
   <br />
   <pre class="code">
   IF
@@ -677,7 +678,7 @@ This action instructs the active creature to attempt to Hide in Shadows. This ac
   
   <div class="actionHeader"><a name="36">36 Continue()</a></div>
   <div class="indent1">
-This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle.<br />
+This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly.<br />
   <br />
   <pre class="code">
   IF
@@ -868,7 +869,7 @@ This action instructs the script parser to continue looking for actions in the a
   
   <div class="actionHeader"><a name="60">60 ChangeAIScript(S:ScriptFile*,I:Level*Scrlev)</a></div>
   <div class="indent1">
-  This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from <a href="../../files/ids/bg2/scrlev.htm">scrlev.ids</a><br />
+  This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from <a href="../../files/ids/bg2/scrlev.htm">scrlev.ids</a>. Scripts can be set for any scriptable object (container, creature, door etc.), but are not persisted.<br />
   <br />
   <pre class="code">
   IF
@@ -1188,10 +1189,16 @@ This action instructs the active creature to face the specified direction. Direc
   </pre>
   <br />
   </div>
+
+  <div class="actionHeader"><a name="93">93 LeaveAreaName(I:Target*)</a></div>
+  <div class="indent1">
+  The signature of this action is not listed in the action.ids file provided with the game. This action causes the active creature to leave the area using the trigger region identified by the specified parameter. The parameter is the internal global ID of the region.<br />
+  <br />
+  </div>
   
   <div class="actionHeader"><a name="94">94 GroupAttack(O:Target*)</a></div>
   <div class="indent1">
-  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  This action instructs the active creature to attack creatures with the same specific value as the target creature.<br />
   <br />
   </div>
   
@@ -1267,6 +1274,12 @@ This action instructs the active creature to face the specified direction. Direc
   <br />
   </div>
   
+  <div class="actionHeader"><a name="101">101 FlyToPoint(P:Point*, I:time*)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action is used internally by action 100 (RandomFly); it moves the active creature towards the given point for the specified amount of time.</span><br />
+  <br />
+  </div>
+
   <div class="actionHeader"><a name="102">102 MoraleSet(O:Target*,I:Morale*)</a></div>
   <div class="indent1">
   <span class="unknown">This action sets the morale of the active creature.</span><br />
@@ -1348,6 +1361,8 @@ This action instructs the active creature to face the specified direction. Direc
   <div class="actionHeader">108 EscapeAreaMove(S:Area*,I:X*,I:Y*,I:Face*)</div>
   <div class="indent1">
   This action, in its first form, instructs the active creature to leave the current area, either by walking, or, if the path is blocked, by simply disappearing. In the actions second form the action functions as a combination of EscapeAreaDestroy() and MoveBetweenAreas(). The parameters are similar to MoveBetweenAreas(), in that it takes in all the same information, but unlike MoveBetweenAreas(), the character will search for the nearest enabled travel trigger, move to that, then execute his movement to the specified area. If no travel trigger is found, the creature will just execute the movement.<br />
+<br />
+The action is uninterruptable; actions listed this one in a script may not execute as intended.<br />
   <br />
   <pre class="code">
   IF
@@ -1426,6 +1441,7 @@ This action alters the specified variable, in the specified scope, by the amount
   
   <div class="actionHeader"><a name="113">113 ForceSpell(O:Target,I:Spell*Spell)</a></div>
   <div class="actionHeader">113 ForceSpellRES(S:RES*, O:Target)</div>
+  <div class="actionHeader">113 ForceSpellRES(S:RES*, O:Target,I:CastingLevel)</div>
   <div class="indent1">
   This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span> The example script is from suelfw9.bcs.<br />
   <br />
@@ -1445,6 +1461,7 @@ This action alters the specified variable, in the specified scope, by the amount
   
   <div class="actionHeader"><a name="114">114 ForceSpellPoint(P:Target,I:Spell*Spell)</a></div>
   <div class="actionHeader">114 ForceSpellPointRES(S:RES*, P:Target)</div>
+  <div class="actionHeader">114 ForceSpellPointRES(S:RES*, P:Target,I:CastingLevel)</div>
   <div class="indent1">
   This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long.<br />
   <br />
@@ -2012,7 +2029,7 @@ This action creates the item specified by the resref parameter on the creature s
   <div class="actionHeader"><a name="147">147 RemoveSpell(I:Spell*Spell)</a></div>
   <div class="actionHeader"><a name="147">147 RemoveSpellRES(S:RES*)</a></div>
   <div class="indent1">
-  This action removes the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in <a href="../../files/ids/bg2/spell.htm">spell.ids</a>. Any memorised copies of the spell will not be removed.<br />
+  This action removes one memorised indtance of the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in <a href="../../files/ids/bg2/spell.htm">spell.ids</a>. <br />
   <br />
   <pre class="code">
   IF
@@ -2219,7 +2236,7 @@ This action creates the item specified by the resref parameter on the creature s
   <div class="actionHeader"><a name="160">160 ApplySpell(O:Target,I:Spell*Spell)</a></div>
   <div class="actionHeader"><a name="160">160 ApplySpellRES(S:RES*, O:Target)</a></div>
   <div class="indent1">
-  This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by ApplySpell use a single dice value. The example script is used to mimic a contingency from mage18y.bcs.<br />
+  This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The RES action applies the spell at the lowest casting level - the casting level of the originating creature is ignored. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by ApplySpell use a single dice value. The example script is used to mimic a contingency from mage18y.bcs.<br />
   <br />
   <pre class="code">
   IF
@@ -2564,7 +2581,7 @@ This action creates the item specified by the resref parameter on the creature s
   <div class="actionHeader"><a name="181">181 ReallyForceSpell(O:Target,I:Spell*Spell)</a></div>
   <div class="actionHeader"><a name="181">181 ReallyForceSpellRES(S:RES*, O:TargetI:Spell*Spell)</a></div>
   <div class="indent1">
-  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span> This action does not work in the script round where the active creature has died.<br />
+  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell.  This action does not work in the script round where the active creature has died.<br />
 
   <br />
   </div>
@@ -2892,6 +2909,12 @@ This action creates the item specified by the resref parameter on the creature s
   This action will move the active creature to the specified point in the indicated area, facing the appropriate direction.<br />
   <br />
   </div>
+
+  <div class="actionHeader"><a name="225">225</a> MoveBetweenAreasEffect(S:Area*,S:Graphic*,P:Location*,I:Face*)</div>
+  <div class="indent1">
+  This action will move the active creature to the specified point in the indicated area, facing the appropriate direction, and plays the specified graphics when the creature disappears.<br />
+  <br />
+  </div>
   
   <div class="actionHeader"><a name="226">226</a> TakeItemListPartyNum(S:ResRef*,I:Num*)</div>
   <div class="indent1">
@@ -2925,13 +2948,13 @@ This action creates the item specified by the resref parameter on the creature s
   
   <div class="actionHeader"><a name="231">231</a> CreateCreatureDoor(S:NewObject*,P:Location*,I:Face*)</div>
   <div class="indent1">
-  This action creates the specified creature at the specified location, and plays the dimension door graphic.<br />
+  This action creates the specified creature at the specified location, and plays the dimension door graphic. The creature appears after approximately 100 AI cycles (~3.5 seconds at the default of 30 frame/second).<br />
   <br />
   </div>
   
   <div class="actionHeader"><a name="232">232</a> CreateCreatureObjectDoor(S:ResRef*,O:Object*,I:Usage1*,I:Usage2*,I:Usage3*)</div>
   <div class="indent1">
-  This action will create the specified creature next to the specified object, and plays the dimension door graphic. The facing of the creature is controlled by the Usage1 parameter.<br />
+  This action will create the specified creature next to the specified object, and plays the dimension door graphic. The facing of the creature is controlled by the Usage1 parameter. The creature appears after approximately 100 AI cycles (~3.5 seconds at the default of 30 frame/second).<br />
   <br />
   </div>
   
@@ -3055,7 +3078,7 @@ This action creates the item specified by the resref parameter on the creature s
   
   <div class="actionHeader"><a name="249">249</a> SetGabber(O:Object)</div>
   <div class="indent1">
-  This action changes the current speaker in the party.<br />
+  This action updates various tokens based on the specified object.<br />
   <br />
   </div>
   
@@ -3234,13 +3257,7 @@ This action creates the item specified by the resref parameter on the creature s
   This action removes the active creature's current kit and adds the specified kit. Abilities from any previous kit are removed. AddKit(0) can be used to remove a creatures current kit without adding a new one. Class restrictions apply for kits. When attempting adding an invalid kit, the existing kit (if any) will be replied.<br />
   <br />
   </div>
-  
-  <div class="actionHeader"><a name="225">225</a> MoveBetweenAreasEffect(S:Area*,S:Graphic*,P:Location*,I:Face*)</div>
-  <div class="indent1">
-  This action will move the active creature to the specified point in the indicated area, facing the appropriate direction, and plays the specified graphics when the creature disappears.<br />
-  <br />
-  </div>
-  
+    
   <div class="actionHeader"><a name="275">275</a> StartCombatCounter()</div>
   <div class="indent1">
   This action can be used to manually start the combat counter.<br />

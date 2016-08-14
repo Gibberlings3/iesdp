@@ -156,7 +156,18 @@
         <tr>
           <td>0x0030</td>
           <td>4 (dword)</td>
-          <td>Determine if a dialog pauses all action in the game. There are 3 separate flags, and all of them unset (i.e. 0) apparently makes the game always pause. Legal values for this DWORD should be 0 through 7. This field does not exist in DLG files used in BG1.</td>
+          <td>
+            Flags specifying what the creature does when the dialog is interrupted by a hostile action from a EA &lt; GOODCUTOFF creature.<br /><br />
+            <ul>
+            <li>Bit 0: Enemy()</li>
+            <li>Bit 1: EscapeArea()</li>
+            <li>Bit 2: nothing (but since the action was hostile, it behaves similar to bit 0)</li>
+            </ul>
+            In addition, all these bits trigger the not-pause behaviour.<br />
+            Hostile action is something like an effect from a spell with the hostile flag, damage effect, a simple attack or a failed pickpocket action.<br />
+            <br />
+            Note: This field does not exist in DLG files used in BG1.
+          </td>
         </tr>
       </tbody>
     </table>

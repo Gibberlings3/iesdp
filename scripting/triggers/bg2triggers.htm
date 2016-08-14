@@ -35,6 +35,7 @@
     NT Returns true only if the current CRE obtained the specified item in the last script round.<br />
     Trigger appears to be broken?<br />
     <br />
+    <strong>0x0002 AttackedBy(O:Object*,I:Style*AStyles)</strong><br />
     Returns true only if the active CRE was attacked in the style specified (not necessarily hit) or had an offensive spell cast on it by the specified object in the last script round. The style parameter is non functional - this trigger is triggered by any attack style.<br />
     Note that the LastAttacker object is only set for physical attacks (i.e. spell and script damage does not set LastAttacker).<br />
     <br />
@@ -197,7 +198,7 @@
     As above except for less than.<br />
     <br />
     <strong>0x0036 OnCreation()</strong><br />
-    Returns true only if the active creature came into existance in the last script round. If this is in an area script this returns true when the player enters the area for the first time.<br />
+    Returns true if the script is processed for the first time this session, e.g. when a creature is created (for CRE scripts) or when the player enters an area (for ARE scripts).<br />
     <br />
     <strong>0x4037 StateCheck(O:Object*,I:State*State)</strong><br />
     Returns true only if the specified object is in the state specified.<br />
@@ -427,20 +428,17 @@
     Returns true if the specified object has the specified item in one of its quicklots if it is a weapon, or has it equipped if it is a piece of armour of an amulet etc.<br />
     <br />
     <strong>0x4080 NumCreatureVsParty(O:Object*,I:Number*)</strong><br />
-    This trigger does not work as expected.<br />
-    <div class="unknown">Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, is equal to the 2nd parameter.</div>
+    Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is equal to the 2nd parameter.<br />
     <br />
     <strong>0x4081 NumCreatureVsPartyLT(O:Object*,I:Number*)</strong><br />
-    This trigger does not work as expected.<br />
-    <div class="unknown">Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, is less than the 2nd parameter.</div>
+    Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is less than the 2nd parameter.<br />
     <br />
     <strong>0x4082 NumCreatureVsPartyGT(O:Object*,I:Number*)</strong><br />
-    This trigger does not work as expected.<br />
-    <div class="unknown">Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, is greater than the 2nd parameter.</div>
+    Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is greater than the 2nd parameter.<br />
     <br />
     <strong>0x4083 CombatCounter(I:Number*)</strong><br />
     This trigger does may not work as expected.<br />
-    <div class="unknown">Returns true only if the combat counter (counts down from 150 after each attack) is of the value specified. CombatCounter(0) returns true only if there is no combat in the active area at the moment. CombatCounter can giev false results after dialog has been completed or after a Hide in Shadows chck has been failed.</div>
+    <div class="unknown">Returns true only if the combat counter (counts down from 150 after each attack) is of the value specified. CombatCounter(0) returns true only if there is no combat in the active area at the moment. CombatCounter can give false results after dialog has been completed or after a Hide in Shadows chck has been failed.</div>
     <br />
     <strong>0x4084 CombatCounterLT(I:Number*)</strong><br />
     Returns true only if the combat counter (counts down from 150 after each attack) is less than the value specified.<br />
@@ -545,37 +543,34 @@
     Returns true only if the party has the item specified and it is identified.<br />
     <br />
     <strong>0x40B0 HasBounceEffects(O:Object*)</strong><br />
-    Information from http://groups.yahoo.com/group/BG2/files/SR/BG2SR.htm.<br />
-    Returns true if one of the following spells is active on the specified object:<br />
-    Minor Spell Turning<br />
-    Physical Mirror<br />
-    Spell Turning<br />
-    (Item: Cloak of Mirroring)<br />
-    (Item: Shield of Reflection +1)<br />
+    Returns true if any of the specified object is currently affected by any of the listed effects:<br />
+<ul>
+<li>0xc5 Bounce Projectile</li>
+<li>0xc6 Bounce Opcode</li>
+<li>0xc7 Bounce Spell Level</li>
+<li>0xc8 </li>
+<li>0xca Bounce Spell School</li>
+<li>0xcb Bounce Secondary Type</li>
+<li>0xcf Bounce Specified School</li>
+<li>0xe3 Bounce School Decrement</li>
+<li>0xe4 Bounce Secondary Type Decrement</li>
+</ul>
     <br />
     <strong>0x40B1 HasImmunityEffects(O:Object*)</strong><br />
-    Information from http://groups.yahoo.com/group/BG2/files/SR/BG2SR.htm.<br />
-    Returns true if one of the following spells is active on the specified object:<br />
-    Minor Spell Turning<br />
-    Chaotic Commands<br />
-    Death Ward (also SCRIPTINGSTATE2)<br />
-    Free Action<br />
-    Globe of Invulnerability<br />
-    (also MINORGLOBE)<br />
-    Minor Globe of Invulnerability (also MINORGLOBE)<br />
-    Minor Spell Deflection Negative Plane Protection (also SCRIPTINGSTATE3)<br />
-    Protection from Normal Missiles (also SHIELDGLOBE)<br />
-    Protection from Petrification<br />
-    Remove Fear<br />
-    Resist Fear<br />
-    Shapechange (Troll only)<br />
-    Shield of the Archons<br />
-    Spell Deflection<br />
-    Spell Immunity<br />
-    Spell Shield<br />
-    Vocalize<br />
-    (Item: Ring of Free Action)<br />
-    (Not Spell Trap)<br />
+    Returns true if any of the specified object is currently affected by any of the listed effects:<br />
+<ul>
+<li>0x53 Protection from projectiles</li>
+<li>0x65 Protection from effects</li>
+<li>0xa9 Protection from portrait icon (this is a subtype of 0x65)</li>
+<li>0x10b Protection from display string (also a subtype of 0x65)</li>
+<li>0x128 Protection from visual effect (also a subtype of 0x65)</li>
+<li>0x66 Immunity to spell level</li>
+<li>0xc9 Decrementing spell level immunity</li>
+<li>0xcc Immunity to primary type (school)</li>
+<li>0xcd Immunity to secondary type </li>
+<li>0xdf Decrementing immunity to primary type</li>
+<li>0xe2 Decrementing immunity to secondary type</li>
+</ul>
     <br />
     <strong>0x40B2 HasItemSlot(O:Object*,I:Slot*SLOTS)</strong><br />
     NT Returns true only if the specified object has an item in the specified slot.<br />
@@ -584,7 +579,7 @@
     NT Returns true if the specified object exactly as far away from the active CRE as the 2nd parameter specifies.<br />
     <br />
     <strong>0x40B4 InMyGroup(O:Object*)</strong><br />
-    Returns true only if the allegiance of the specified object is the same as that of the active CRE. GOODCUTOFF are all in the player's group for example.<br />
+    Returns true only if the specifics value of the specified object is the same as that of the active CRE.<br />
     <br />
     <strong>0x40B5 RealGlobalTimerExact(S:Name*,S:Area*)</strong><br />
     NT<br />

@@ -112,7 +112,7 @@ N.B. Does not remove the state_helpless flag.</div><br />
         <span class="descriptionheading">Description:</span><br />
 
         <div class="descriptiondata">Applies the berserk effect to the targeted creature(s), as specifed by the 'Type' field.<br />
-Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.<br />
+Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. This effect only affects party members.<br />
 <br />
 Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;Default<br />
@@ -501,9 +501,9 @@ NB. 'Statistic Modifier' can be positive or negative.</div><br />
         <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br />
 <br />
 Known values for 'Type' are:<br />
-0 &nbsp;&nbsp;Cumulative Modifier -> HP = HP + 'Statistic Modifier' value<br />
-1 &nbsp;&nbsp;Flat Value Modifier -> HP = 'Statistic Modifier' value<br />
-2 &nbsp;&nbsp;Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100<br />
+0 &nbsp;&nbsp;Cumulative Modifier -> HP = HP + 'Statistic Modifier' value (affects current and max HP)<br />
+1 &nbsp;&nbsp;Flat Value Modifier -> HP = 'Statistic Modifier' value (affects current and max HP)<br />
+2 &nbsp;&nbsp;Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)<br />
 <br />
 3 &nbsp;&nbsp;As 0 (does not affect current HP)<br />
 4 &nbsp;&nbsp;As 1 (does not affect current HP)<br />
@@ -620,6 +620,7 @@ Known values for 'Type' are:<br />
         <div class="descriptiondata">Damages the target by the 'Damage Amount' value, in the style specified by the 'Type' field.<br />
 <br />
 Known values for 'Type' are:<br />
+0 &nbsp;&nbsp;Inflict 'Damange Amount' per second<br />
 2 &nbsp;&nbsp;Inflict 'Damage Amount' per second<br />
 3 &nbsp;&nbsp;Inflict 1 damge per 'Damage Amount'<br />
 4 &nbsp;&nbsp;Inflict 'Damage Amount' per round<br />
@@ -1335,8 +1336,7 @@ Known values for 'Text Notification' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the non-detection effect to the targeted creature(s).<br />
-Both parameters should be 0 (zero).</div><br />
+        <div class="descriptiondata">Applies the non-detection effect to the targeted creature(s), setting STATE_NONDETECTION while active. This effect is negated by effect <a href="#op70">#70</a> Cure: Non-Detection. While in the non-detection state, the creature is immune to effects <a href="#op47">#47</a>: Cure Invisibility and <a href="#op116">#116</a>: Remove invisibilty, though they are affected by effects that remove illusionary protections by school or secondary type.</div><br />
         <hr />
         <br />
       </div>
@@ -1440,7 +1440,7 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat.<br />
+        <div class="descriptiondata">Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat. The Feeblemind portrait icon is automatically applied.<br />
 This effect ignores durations attributed to it.<br />
 <br />
 NB. A creatures scripts do not while the creature is feebleminded.</div><br />
@@ -1471,6 +1471,7 @@ Both parameters should be 0 (zero).</div><br />
         <div class="descriptiondata">Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.<br />
 <br />
 Known values for 'Type' are:<br />
+0 &nbsp;&nbsp;Hit Points per second<br />
 1 &nbsp;&nbsp;Hit Points per round<br />
 2 &nbsp;&nbsp;Hit Points per Second<br />
 3 &nbsp;&nbsp;Seconds per Hit Points<br />
@@ -1898,7 +1899,8 @@ Known values for 'Type' are:<br />
         <div class="descriptiondata">Restores HP to the value of 'Regeneration Amount' in the style specified by the 'Type' field, to the targeted creature(s).<br />
 <br />
 Known values for 'Type' are:<br />
-1 &nbsp;&nbsp;Restore 'Damage Amount' as a percentage of total HP<br />
+0 &nbsp;&nbsp;Restore 'Regeneration Amount' per second<br />
+1 &nbsp;&nbsp;Restore 'Regeneration Amount' as a percentage of total HP<br />
 2 &nbsp;&nbsp;Restore x HP every second<br />
 3 &nbsp;&nbsp;Restore 1HP every x seconds<br />
 4 &nbsp;&nbsp;Restrore x HP per round<br />
@@ -2421,7 +2423,7 @@ e vvc field controls the bam file played when summoning.</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Modifies the THAC0 and morale of the target creature(s) by the amount specified by the 'Modifier' parameter.</div><br />
+        <div class="descriptiondata">Modifies the THAC0 and morale of the target creature(s) by the amount specified by the 'Modifier' parameter. The effect is non cumulative and removes Bane on apply.</div><br />
         <hr />
         <br />
       </div>
@@ -2590,11 +2592,15 @@ Known values for 'Type' are:<br />
      <div id="op141" class="opcode">
         <span class="opnumberdata">#141 (0x08D)</span>
         <span class="opnamedata">Graphics: Lighting Effects [141]</span><br />
-        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Target</span><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Shows the lighting effect specified by the 'Type' value.<br />
+        <div class="descriptiondata">Shows the lighting effect (a .bam file) specified by the 'Type' value at the location specified by 'Target'. These effects are usually used for spell hits based on the spell school.<br />
+<br />
+Known values for 'Target' are:<br />
+0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Current Location<br />
+Non-0 &nbsp;Target Location<br />
 <br />
 Known values for 'Type' are:<br />
 0 &nbsp;&nbsp;Necromancy Air<br />
@@ -3110,7 +3116,7 @@ Known values for 'Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised). Only affects spells with the SPPR/SPWI/SPCL/SPIN naming convention.<br />
+        <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised).<br />
 Both parameters should be 0 (zero).</div><br />
         <hr />
         <br />
@@ -3649,7 +3655,103 @@ Known values for 'Type' are:<br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The Type parameter sets how the effect works, known values are: 0 for default, 1 for undead, 2 for not undead, 3 for fire using/dwelling, 4 for not fire using/dwelling, 5 for humanoid, 6 for not humanoid, 7 for animal, 8 for not animal,9 for elemental, 10 for not elemental, 11 for fungus, 12 for not fungus, 13 for huge creature, 14 for not huge creature, 15 for elf, 16 for not elf, 17 for umber hulk, 18 for not umber hulk, 19 for half-elf, 20 for not half-elf, 21 for humanoid or animal, 22 for not humanoid or animal, 23 for blind, 24 for not blind, 25 for cold using/dwelling, 26 for not cold using/dwelling, 27 for golem, 28 for not golem, 29 for minotaur, 30 for not minotaur, 31 for undead or fungus, 32 for not undead or fungus, 33 for good, 34 for not good, 35 for neutral, 36 for not neutral, 37 for evil, 38 for not evil, 39 for paladin, 40 for not paladin, 41 for same moral alignment as source, 42 for not same moral alignment as source, 43 forsource, 44 for not source, 45 for water using/dwelling, 46 for not water using/dwelling, 47 for breathing, 48 for not breathing, 49 for allies, 50 for not allies, 51 for enemies, 52 for not enemies, 53 for fire or cold using/dwelling, 54 for not fire or cold using/dwelling, 55 for unnatural, 56 for not unnatural, 57 for male, 58 for not male, 59 for lawful, 60 for not lawful, 61 for chaotic, 62 for not chaotic, 63 for evasion check (thief), 64 for orc, 65 for not orc, 66 for deaf, 67 for not deaf, 68 for summoned creature, 69 for not summoned creature, 70 mind flayer, 71 for not mind flayer, 72 for silenced, 73 for not silenced, 74 for intelligence less than (parameter 1 is value), 75 for intelligence greater than (parameter 1 is value), 76 is intelligence less than or equal (parameter 1 is value), 77 is intelligence greater than or equal (parameter 1 is value), 78 is bard skald, 79 is not bard skald, 80 is near enemies, 81 is not near enemies, 90 is keg, 91 is not keg, 92 is outsider, and 93 is not outsider.</div><br />
+        <div class="descriptiondata">The Type parameter sets how the effect works.<br />
+<br />
+Kknown values for 'Type' are:<br />
+0 for default<br />
+1 for undead<br />
+2 for not undead<br />
+3 for fire using/dwelling<br />
+4 for not fire using/dwelling<br />
+5 for humanoid<br />
+6 for not humanoid<br />
+7 for animal<br />
+8 for not animal<br />
+9 for elemental<br />
+10 for not elemental<br />
+11 for fungus<br />
+12 for not fungus<br />
+13 for huge creature<br />
+14 for not huge creature<br />
+15 for elf<br />
+16 for not elf<br />
+17 for umber hulk<br />
+18 for not umber hulk<br />
+19 for half-elf<br />
+20 for not half-elf<br />
+21 for humanoid or animal<br />
+22 for not humanoid or animal<br />
+23 for blind<br />
+24 for not blind<br />
+25 for cold using/dwelling<br />
+26 for not cold using/dwelling<br />
+27 for golem<br />
+28 for not golem<br />
+29 for minotaur<br />
+30 for not minotaur<br />
+31 for undead or fungus<br />
+32 for not undead or fungus<br />
+33 for good<br />
+34 for not good<br />
+35 for neutral<br />
+36 for not neutral<br />
+37 for evil<br />
+38 for not evil<br />
+39 for paladin<br />
+40 for not paladin<br />
+41 for same moral alignment as source<br />
+42 for not same moral alignment as source<br />
+43 forsource<br />
+44 for not source<br />
+45 for water using/dwelling<br />
+46 for not water using/dwelling<br />
+47 for breathing<br />
+48 for not breathing<br />
+49 for allies<br />
+50 for not allies<br />
+51 for enemies<br />
+52 for not enemies<br />
+53 for fire or cold using/dwelling<br />
+54 for not fire or cold using/dwelling<br />
+55 for unnatural<br />
+56 for not unnatural<br />
+57 for male<br />
+58 for not male<br />
+59 for lawful<br />
+60 for not lawful<br />
+61 for chaotic<br />
+62 for not chaotic<br />
+63 for evasion check (thief) - disabled<br />
+64 for orc<br />
+65 for not orc<br />
+66 for deaf<br />
+67 for not deaf<br />
+68 for summoned creature<br />
+69 for not summoned creature<br />
+70 mind flayer<br />
+71 for not mind flayer<br />
+72 for silenced<br />
+73 for not silenced<br />
+74 for intelligence less than (parameter 1 is value)<br />
+75 for intelligence greater than (parameter 1 is value)<br />
+76 is intelligence less than or equal (parameter 1 is value)<br />
+77 is intelligence greater than or equal (parameter 1 is value)<br />
+78 is bard skald - causes crash<br />
+79 is not bard skald - causes crash<br />
+80 is near enemies<br />
+81 is not near enemies<br />
+82 - drow<br />
+83 - not drow<br />
+84 - gray dwarf<br />
+85 - not gray dwarf<br />
+86 - daytime<br />
+87 - not daytime<br />
+88 - outdoor<br />
+89 - not outdoor<br />
+90 is keg<br />
+91 is not keg<br />
+92 is outsider<br />
+93 is not outsider.</div><br />
         <hr />
         <br />
       </div>
@@ -5987,7 +6089,8 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">The Value parameter sets the new code.</div><br />
+        <div class="descriptiondata">If Value is zero, then this opcode changes the animation of the target to cleric (keeps race/gender). This works only for player character animations.<br />
+If Value is nonzero, then it will set the animation to that value. A permanent timing will set the base animation ID.</div><br />
         <hr />
         <br />
       </div>
@@ -5999,7 +6102,7 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the heroic inspiration effect to the targeted creature(s).<br />
+        <div class="descriptiondata">This effect increases all saving throws, hit bonus and damage bonus by 1 when the targetted creature(s) is wounded more than 50%.<br />
 <br />
 Both parameters should be 0 (zero).</div><br />
         <hr />
@@ -6096,6 +6199,18 @@ Both parameters should be 0 (zero).</div><br />
         <br />
       </div>
 
+     <div id="op445" class="opcode">
+        <span class="opnumberdata">#445 (0x1BD)</span>
+        <span class="opnamedata">Charm: Slippery Mind [445]</span><br />
+        <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
+        <span class="descriptionheading">Description:</span><br />
+
+        <div class="descriptiondata">Used internally by the charm opcode. Removes charm opcodes from ther targetted creature(s).</div><br />
+        <hr />
+        <br />
+      </div>
+
      <div id="op446" class="opcode">
         <span class="opnumberdata">#446 (0x1BE)</span>
         <span class="opnamedata">Spell Effect: Smite Evil [446]</span><br />
@@ -6169,10 +6284,10 @@ Known values for 'Type' are:<br />
         <span class="opnumberdata">#451 (0x1C3)</span>
         <span class="opnamedata">State: Lower Resistance [451]</span><br />
         <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
-        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
+        <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the lower resistance effect to the targettted creature(s).<br />
+        <div class="descriptiondata">Lowers the resistance of the targettted creature(s) by 2 * caster level (to a maximum of 50%). The effect is non-cummulative.<br />
 Both parameters should be 0 (zero).</div><br />
         <hr />
         <br />
@@ -6185,7 +6300,8 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the bane effect to the targettted creature(s).<br />
+        <div class="descriptiondata">This is the reverse of the Bless opcode. The effect lowers the target's BaB and morale by 'Modifier'. The effect is non cumulative and removes Bless on apply.<br />
+<br />
 Both parameters should be 0 (zero).</div><br />
         <hr />
         <br />
@@ -6198,8 +6314,7 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the power attack effect to the targeted creature(s).<br />
-Both parameters should be 0 (zero).</div><br />
+        <div class="descriptiondata">Disables the usage of Expertise, detects the activation/revocation of Power Attack, prints appropriate messages. This effect is used internally.</div><br />
         <hr />
         <br />
       </div>
@@ -6211,8 +6326,7 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the expertise effect to the targeted creature(s).<br />
-Both parameters should be 0 (zero).</div><br />
+        <div class="descriptiondata">Disables the usage of Power Attack, detects the activation/revocation of Expertise, prints appropriate messages. This effect is used internally.</div><br />
         <hr />
         <br />
       </div>
@@ -6224,8 +6338,7 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the arterial strike effect to the targeted creature(s).<br />
-Both parameters should be 0 (zero).</div><br />
+        <div class="descriptiondata">Disables the usage of Hmstring, detects the activation/revocation of Arterial Strike, prints appropriate messages. This effect is used internally.</div><br />
         <hr />
         <br />
       </div>
@@ -6237,8 +6350,7 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the hamstring effect to the targeted creature(s).<br />
-Both parameters should be 0 (zero).</div><br />
+        <div class="descriptiondata">Disables the usage of Arterial Strike, detects the activation/revocation of Hamstring, prints appropriate messages. This effect is used internally.</div><br />
         <hr />
         <br />
       </div>
@@ -6250,8 +6362,7 @@ Both parameters should be 0 (zero).</div><br />
         <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
         <span class="descriptionheading">Description:</span><br />
 
-        <div class="descriptiondata">Applies the rapid shot effect to the targeted creature(s).<br />
-Both parameters should be 0 (zero).</div><br />
+        <div class="descriptiondata">Detects the activation/revocation of Rapid Shot, prints appropriate messages. This effect is used internally.</div><br />
         <hr />
         <br />
       </div>

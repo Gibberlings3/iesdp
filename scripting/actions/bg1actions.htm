@@ -676,7 +676,7 @@
   
   <div class="actionHeader"><a name="36">36 Continue()</a></div>
   <div class="indent1">
-  This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle.<br />
+  This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly.<br />
   <br />
   <pre class="code">
   IF
@@ -867,7 +867,7 @@
   
   <div class="actionHeader"><a name="60">60 ChangeAIScript(S:ScriptFile*,I:Level*Scrlev)</a></div>
   <div class="indent1">
-  This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from <a href="../../files/ids/bg1/scrlev.htm">scrlev.ids</a>.<br />
+  This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from <a href="../../files/ids/bg1/scrlev.htm">scrlev.ids</a>. Scripts can be set for any scriptable object (container, creature, door etc.), but are not persisted.<br />
   <br />
   <pre class="code">
   IF
@@ -1175,10 +1175,18 @@
   </pre>
   <br />
   </div>
+
+
+  <div class="actionHeader"><a name="93">93 LeaveAreaName(I:Target*)</a></div>
+  <div class="indent1">
+  The signature of this action is not listed in the action.ids file provided with the game. This action causes the active creature to leave the area using the trigger region identified by the specified parameter. The parameter is the internal global ID of the region.<br />
+  <br />
+  </div>
   
+ 
   <div class="actionHeader"><a name="94">94 GroupAttack(O:Target*)</a></div>
   <div class="indent1">
-  <span class="unknown">This action has not been seen to produce any results.</span><br />
+  This action instructs the active creature to attack creatures with the same specific value as the target creature.<br />
   <br />
   </div>
   
@@ -1254,6 +1262,12 @@
   <br />
   </div>
   
+  <div class="actionHeader"><a name="101">101 FlyToPoint(P:Point*, I:time*)</a></div>
+  <div class="indent1">
+  <span class="unknown">This action is used internally by action 100 (RandomFly); it moves the active creature towards the given point for the specified amount of time.</span><br />
+  <br />
+  </div>
+
   <div class="actionHeader"><a name="102">102 MoraleSet(O:Target*,I:Morale*)</a></div>
   <div class="indent1">
   <span class="unknown">This action sets the morale of the active creature.</span><br />
@@ -1333,7 +1347,7 @@
   
   <div class="actionHeader"><a name="108">108 EscapeArea()</a></div>
   <div class="indent1">
-  This action instructs the active creature to leave the current area, either by walking, or, if the path is blocked, by simply disappearing.<br />
+  This action instructs the active creature to leave the current area, either by walking, or, if the path is blocked, by simply disappearing. The action is uninterruptable; actions listed this one in a script may not execute as intended.<br />
   <br />
   <pre class="code">
   IF
@@ -1985,7 +1999,7 @@ The example is from AR0516.bcs.<br />
   
   <div class="actionHeader"><a name="147">147 RemoveSpell(I:Spell*Spell)</a></div>
   <div class="indent1">
-  This action removes the selected spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in <a href="../../files/ids/bg1/spell.htm">spell.ids</a>. Any memorised copies of the spell will not be removed.<br />
+  This action removes one memorised indtance of the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in <a href="../../files/ids/bg1/spell.htm">spell.ids</a>.<br />
   <br />
   <pre class="code">
   IF
@@ -2535,7 +2549,7 @@ The example is from AR0516.bcs.<br />
   <div class="actionHeader"><a name="181">181 ReallyForceSpell(O:Target,I:Spell*Spell)</a></div>
   <div class="actionHeader"><a name="181">181 ReallyForceSpellRES(S:RES*, O:TargetI:Spell*Spell)</a></div>
   <div class="indent1">
-  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. <span class="unknown">This action may not be reliable.</span> The example script is from suelfw9.bcs.<br />
+  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. The example script is from suelfw9.bcs.<br />
   <br />
   </div>
   

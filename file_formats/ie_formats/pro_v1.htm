@@ -43,7 +43,7 @@
         <li>Projectile area of effect</li>
         <li>Projectile sound</li>
       </ul>
-      These files have constant length 512h bytes (single target), or 768 bytes (area effect).
+      These files have constant length f8h bytes (no BAM), 512h bytes (single target), or 768 bytes (area effect).
     </div>
     <br />
     
@@ -79,6 +79,7 @@
           <td>2 (word)</td>
           <td>Projectile type<br />
             <ul>
+              <li>1 no BAM</li>
               <li>2 single target</li>
               <li>3 area of effect</li>
             </ul>
@@ -91,28 +92,23 @@
         </tr>
         <tr>
           <td>0x0000c</td>
-          <td>2 (word)</td>
+          <td>4 (dword)</td>
           <td>Sparking flags
             <ul>
-              <li>bit 0: Show sparks</li>
-              <li>bit 1: Flying projectile (affects height of visual)</li>
+              <li>bit 0: Show sparkle</li>
+              <li>bit 1: Use z coordinate</li>
               <li>bit 2: Loop sound (0x10)</li>
               <li>bit 3: Loop sound (0x18)</li>
-              <li>bit 4: Ignore centre</li>
-              <li>bit 5: Snail trail sparks (req. bit 0)</li>
-          </ul>
-          Further bits are unused.
-        </td>
-        </tr>
-        <tr>
-          <td>0x0000e</td>
-          <td>2 (word)</td>
-          <td><span class="unknown">Unknown</span></td>
+              <li>bit 4: Do not affect direct target</li>
+              <li>bit 5: Draw below animate objects</li>
+            </ul>
+            Further bits are unused.
+          </td>
         </tr>
         <tr>
           <td>0x00010</td>
           <td>8 (resref)</td>
-          <td><a href="wavc_v1.htm">WAVC file</a> </td>
+          <td><a href="wavc_v1.htm">WAVC file</a> (travelling)</td>
         </tr>
         <tr>
           <td>0x00018</td>
@@ -122,23 +118,23 @@
         <tr>
           <td>0x00020</td>
           <td>8 (resref)</td>
-          <td><a href="wavc_v1.htm">WAVC file</a></td>
+          <td>Travelling VVC/BAM</td>
         </tr>
         <tr>
           <td>0x00028</td>
-          <td>4 (dword)</td>
-          <td>Spark colour
+          <td>2 (word)</td>
+          <td>Spark colour (from sprkclr.2da)
             <ul>
               <li>0 = Crashes</li>
               <li>1 = Black</li>
               <li>2 = Blue</li>
-              <li>3 = Purple and amber</li>
+              <li>3 = Chromatic</li>
               <li>4 = Gold</li>
               <li>5 = Green</li>
               <li>6 = Purple</li>
               <li>7 = Red</li>
               <li>8 = White</li>
-              <li>9 = Aqua</li>
+              <li>9 = Ice</li>
               <li>10 = Stone</li>
               <li>11 = Magenta</li>
               <li>12 = Orange</li>
@@ -146,25 +142,25 @@
           </td>
         </tr>
         <tr>
-          <td>0x0002c</td>
-          <td>212 (byte)</td>
-          <td><span class="unknown">Unknown</span></td>
+          <td>0x0002a</td>
+          <td>214 (byte)</td>
+          <td>Unused</td>
         </tr>
         <tr>
           <td>0x00100</td>
           <td>4 (dword)</td>
-          <td>Flags
+          <td>BAM projectile flags
             <ul>
-              <li>bit 0: Enable BAM colouring</li>
+              <li>bit 0: Enable BAM colouring (palette at 0x11c)</li>
               <li>bit 1: Enable smoke</li>
-              <li><span class="unknown"> bit 2: Unknown </span></li>
-              <li>bit 3: Darken projectile</li>
-              <li><span class="unknown"> bit 4: Unknown </span></li>
+              <li>bit 2: Unused</li>
+              <li>bit 3: Enable area lighting usage</li>
+              <li>bit 4: Enable area heigt usage</li>
               <li>bit 5: Enable shadow</li>
               <li>bit 6: Enable light spot</li>
-              <li>bit 7: Translucent</li>
-              <li><span class="unknown"> bit 8: Blend (related to gamma correction) </span></li>
-              <li><span class="unknown"> bit 9: Blend (related to gamma correction) </span></li>
+              <li>bit 7: Enable brighten flags</li>
+              <li>bit 8: Low level brighten</li>
+              <li>bit 9: High level brighten</li>
             </ul>
           </td>
         </tr>
@@ -227,7 +223,7 @@
         <tr>
           <td>0x0012b</td>
           <td>1 (byte)</td>
-          <td>Smoke puff delay</td>
+          <td>Smoke puff period</td>
         </tr>
         <tr>
           <td>0x0012c</td>
@@ -284,8 +280,8 @@
         </tr>
         <tr>
           <td>0x00154</td>
-          <td>176 (bytes)</td>
-          <td><span class="unknown">Unknown</span></td>
+          <td>172 (bytes)</td>
+          <td>Unused</td>
         </tr>
       </table>
     <br />
@@ -308,25 +304,25 @@
       <tbody>
       <tr>
         <td>0x00200</td>
-        <td>2 (word)</td>
-        <td>Target flags
+        <td>4 (dword)</td>
+        <td>Area projectile flags
           <ul>
-            <li>bit 0: Projectile visible</li>
+            <li>bit 0: Projectile remains visible at destination</li>
             <li><span class="unknown"> bit 1: Triggered by inanimate objects (e.g. doors) </span></li>
             <li>bit 2: Triggered on condition</li>
-            <li>bit 3: No overlapping effects</li>
+            <li>bit 3: Trigger during delay</li>
             <li>bit 4: Use secondary projectile</li>
             <li>bit 5: Use fragment graphics</li>
             <li>bit 6: Target selection*</li>
             <li>bit 7: Target selection*</li>
-            <li>bit 8: Explosion count based on caster/monster level</li>
-            <li>bit 9: Multiple set off</li>
+            <li>bit 8: Number of triggers equal to cast mage level</li>
+            <li>bit 9: Number of triggers equal to cast cleric level</li>
             <li>bit 10: Use VVC</li>
             <li>bit 11: Cone shape</li>
-            <li><span class="unknown"> bit 12: Unknown </span></li>
-            <li><span class="unknown">bit 13: No explosion</span></li>
-            <li><span class="unknown">bit 14: Delayed explosion</span></li>
-            <li><span class="unknown">bit 15: Affect only one target</span></li>
+            <li>bit 12: Affect objects through wall, mountain, building, and off-area</li>
+            <li>bit 13: Check triggers from animation frame 30 (req. bit 0)</li>
+            <li>bit 14: Delayed explosion</li>
+            <li>bit 15: Affect only one target</li>
             <br />
             *Target selection is relative to caster:<br />
             <ul>
@@ -336,12 +332,8 @@
               <li>11 Affect only allies</li>
             </ul>
           </ul>
+          Further bits are unused
         </td>
-      </tr>
-      <tr>
-        <td>0x00202</td>
-        <td>2 (word)</td>
-        <td><span class="unknown">Unknown</span></td>
       </tr>
       <tr>
         <td>0x00204</td>
@@ -376,7 +368,7 @@
       <tr>
         <td>0x00216</td>
         <td>1 (byte)</td>
-        <td>Duration/Trigger count</td>
+        <td>Trigger count (used if bits 8 and 9 at 0x200 are not set)</td>
       </tr>
       <tr>
         <td>0x00217</td>
@@ -391,12 +383,12 @@
       <tr>
         <td>0x000219</td>
         <td>1 (byte)</td>
-        <td><span class="unknown">Unknown</span></td>
+        <td>Unused</td>
       </tr>
       <tr>
         <td>0x00021a</td>
         <td>2 (bytes)</td>
-        <td>Explosion projectile (projectl.ids).</td>
+        <td>Explosion projectile (projectl.ids), played on affected creatures</td>
       </tr>
       <tr>
         <td>0x00021c</td>
@@ -406,12 +398,12 @@
       <tr>
         <td>0x000224</td>
         <td>2 (word)</td>
-        <td>Cone width (0x0 to 0xFF)</td>
+        <td>Cone width (1 to 359)</td>
       </tr>
       <tr>
         <td>0x000226</td>
         <td>218 (bytes)</td>
-        <td><span class="unknown">Unknown</span></td>
+        <td>Unused</td>
       </tr>
     </tbody>
     </table>

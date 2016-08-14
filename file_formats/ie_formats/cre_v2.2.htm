@@ -828,12 +828,13 @@
           <tr>
             <td>0x029d</td>
             <td>1 (byte)</td>
-            <td>Set &lt;scriptname&gt;_DEAD variable on death (0 = no, 1 = yes)</td>
+            <td>Set &lt;scriptname&gt;_DEAD variable on death (0 = no, 1 = yes)<br />
+                Also increment KILL_&lt;scriptname&gt;_CNT by one</td>
           </tr>
           <tr>
             <td>0x029e</td>
             <td>1 (byte)</td>
-            <td>Set KILL_&lt;scriptname&gt;_CNT on death (0 = no, 1 = yes)</td>
+            <td>Set KILL_&lt;racename&gt;_CNT on death (0 = no, 1 = yes)</td>
           </tr>
           <tr>
             <td>0x029f</td>
@@ -939,7 +940,17 @@
           </tr>
           <tr>
             <td>0x03b4</td>
-            <td>6 (byte)</td>
+            <td>2 (word)</td>
+            <td>AVClass value (duplicate of class, used for object matching)</td>
+          </tr>
+          <tr>
+            <td>0x03b6</td>
+            <td>2 (word)</td>
+            <td>ClassMsk bitfield value (duplicate of class, used for object matching)</td>
+          </tr>
+          <tr>
+            <td>0x03b8</td>
+            <td>2 (word)</td>
             <td><span class="unknown"> Unknown </span></td>
           </tr>
           <tr>
@@ -1831,23 +1842,30 @@
           </tr>
           <tr>
             <td>0x0008</td>
-            <td>2 (word)</td>
-            <td>Quantity/Charges 1</td>
+            <td>1 (byte)</td>
+            <td><span class="unknown">Item expiration time - item creation hour (replace with drained item)</span></td>
+          </tr>
+          <tr>
+            <td>0x0009</td>
+            <td>1 (byte)</td>
+            <td><span class="unknown">Item expiration time - (elapsed hour count divided by 256, rounded down) + 1 (replace with drained item)<br />
+            When the game hour and elapsed hour count for the current game time exceed these values, the item is removed.
+            </span></td>
           </tr>
           <tr>
             <td>0x000a</td>
             <td>2 (word)</td>
-            <td>Quantity/Charges 2</td>
+            <td>Quantity/Charges 1</td>
           </tr>
           <tr>
             <td>0x000c</td>
             <td>2 (word)</td>
-            <td>Quantity/Charges 3</td>
+            <td>Quantity/Charges 2</td>
           </tr>
           <tr>
             <td>0x000e</td>
             <td>2 (word)</td>
-            <td>Usage3</td>
+            <td>Quantity/Charges 3</td>
           </tr>
           <tr>
             <td>0x0010</td>

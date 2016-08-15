@@ -10,6 +10,7 @@ Visible at: https://lynxlynxlynx.github.io/iesdp/
 - logo is a link to the main page
 - added quickjump menu to opcode lists
 - added quickjump button to all pages (hidden by default)
+- added forum link to the main menu
 
 # content changes
 - fixed chargen title

@@ -11,6 +11,7 @@ Visible at: https://lynxlynxlynx.github.io/iesdp/
 - added quickjump menu to opcode lists
 - added quickjump button to all pages (hidden by default)
 - added forum link to the main menu
+- added forum&github links to the landing page
 
 # content changes
 - fixed chargen title

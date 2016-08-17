@@ -5,14 +5,30 @@ title: internal playground
     <p class="center">
       Checking code concepts, github limits.
       <br />
-      <br />
-      Last update: {{ site.time | date: "%d.%m.%Y" }}<br />
-      <br />
-{% for i in (-3..17) %}
-      Dec: {{ i }} || Hex: {{ i | dec_to_hex }}<br />
-{% endfor %}
-{% assign i="17" %}
-      Dec: {{ i }} || Hex: {{ i | dec_to_hex }}<br />
-{% assign i="0x17" %}
-      Dec: {{ i }} || Hex: {{ i | dec_to_hex }}<br />
     </p>
+
+<div>
+
+<!--
+I could not make where_exp work at all. Would be handy, since we could just use an array.
+Turns out I had a too old jekyll, but in hindsight this way is more explicit and less prone to error,
+since all the values (keys) are there.
+-->
+{% assign ops = site.opcodes | where: 'bg1', 1 %}
+{% for opcode in ops %}
+<div id="op{{ opcode.n }}" class="opcode">
+  <span class="opnumberdata">#{{ opcode.n }} ({{ opcode.n | dec_to_hex }})</span>
+  <span class="opnamedata">{{ opcode.name }}</span><br />
+
+  <span class="parameterheading">Parameter #1:</span>
+    <span class="parameterdata">{{ opcode.param1 }}</span><br />
+  <span class="parameterheading">Parameter #2:</span>
+    <span class="parameterdata">{{ opcode.param2 }}</span><br />
+
+  <span class="descriptionheading">Description</span><br />
+  <div class="descriptiondata"> {{ opcode.content }} </div><br />
+  <hr />
+  <br />
+</div>
+{% endfor %}
+</div>

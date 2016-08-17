@@ -18,3 +18,5 @@ Visible at: https://lynxlynxlynx.github.io/iesdp/
 - changelog note added
 - imported old releases back to 2002
 - integrated Argent77's fixes
+
+Handy cheat sheet: http://jekyll.tips/jekyll-cheat-sheet/

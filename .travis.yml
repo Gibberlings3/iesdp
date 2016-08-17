@@ -4,15 +4,11 @@ rvm:
 
 sudo: false
 
-install: gem install jekyll html-proofer
+install: gem install jekyll
 
-script: jekyll build && pwd && htmlproofer ./_site --disable-external --extension .htm
+script: jekyll build
 
 # branch whitelist, only for GitHub Pages
 branches:
   only:
   - master
-
-env:
-  global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer

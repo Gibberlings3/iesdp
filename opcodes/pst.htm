@@ -11,61 +11,12 @@ title: "Opcodes"
   </div>
   <br />
 
-<div id="op0" class="opcode">
-  <span class="opnumberdata">#0 (0x0)</span>
-  <span class="opnamedata">Stat: AC vs. Damage Type Modifier [0]</span><br />
-  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> AC Modifier</span><br />
-  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
-  <span class="descriptionheading">Description:</span><br />
+  
+  
+  
+  
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'AC Modifier' field to the category specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   All Weapons<br/>1   Crushing<br/>2   Missile<br/>4   Piercing <br/>8   Slashing<br/>16  Base AC setting (sets the targets AC to the value specified by the 'AC Modifier' field -1. If the targets AC is already 'AC Modifier' or below, this effect will do nothing).<br/>AC is capped to the range [-20, 20]</div><br />
-  <hr />
-  <br />
-</div>
-<div id="op1" class="opcode">
-  <span class="opnumberdata">#1 (0x1)</span>
-  <span class="opnamedata">Stat: Attacks Per Round Modifier [1]</span><br />
-  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Key Modifier</span><br />
-  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
-  <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Alters a characters Attacks per Round, by changing the Key by the modifier value specified by the 'Key Value' field, in the style specified by 'Type' field.<br/>Key     Attacks Per Round<br/>0        0<br/>1        1<br/>2        2<br/>3        3<br/>4        4<br/>5        5<br/>6        0.5<br/>7        1.5<br/>8        2.5<br/>9        3.5<br/>10      4.5<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Key = Key + 'Key Modifier' value<br/>1   Flat Value Modifier -> Key = 'Key Modifier' value<br/>2   Percentage Modifier -> Key = (Key * 'Key Modifier' value) / 100<br/>Note: When this opcode is stacked, the values of the Key Modifier are stacked, not the number of attacks.</div><br />
-  <hr />
-  <br />
-</div>
-<div id="op2" class="opcode">
-  <span class="opnumberdata">#2 (0x2)</span>
-  <span class="opnamedata">Cure: Sleep [2]</span><br />
-  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
-  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
-  <span class="descriptionheading">Description:</span><br />
-
-  <div class="descriptiondata">Removes the state_sleeping flag from the targeted creature(s).<br/>This effect ignores durations attributed to it.<br/>N.B. Does not remove the state_helpless flag.</div><br />
-  <hr />
-  <br />
-</div>
-<div id="op3" class="opcode">
-  <span class="opnumberdata">#3 (0x3)</span>
-  <span class="opnamedata">State: Berserking [3]</span><br />
-  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
-  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
-  <span class="descriptionheading">Description:</span><br />
-
-  <div class="descriptiondata">Applies the berserk effect to the targeted creature(s).<br/>Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. This effect only affects party members.</div><br />
-  <hr />
-  <br />
-</div>
-<div id="op4" class="opcode">
-  <span class="opnumberdata">#4 (0x4)</span>
-  <span class="opnamedata">Cure: Berserking [4]</span><br />
-  <span class="parameterheading">Parameter #1:</span><span class="parameterdata"> Irrelevant</span><br />
-  <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
-  <span class="descriptionheading">Description:</span><br />
-
-  <div class="descriptiondata">Removes the state_beserk flag from the targeted creature(s).<br/>This effect ignores durations attributed to it.</div><br />
-  <hr />
-  <br />
-</div>
 <div id="op5" class="opcode">
   <span class="opnumberdata">#5 (0x5)</span>
   <span class="opnamedata">Charm: Charm Specific Creature [5]</span><br />
@@ -73,7 +24,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Charm Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids.<br/>Known values for 'Charm Type' are:<br/>0    Charmed (Target neutral after effect ends)<br/>1    Charmed (Target hostile after effect ends)<br/>2    Dire charmed (Target neutral after effect ends)<br/>3    Dire charmed (Target hostile after effect ends)</div><br />
+  <div class="descriptiondata">Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids.
+<br/>Known values for 'Charm Type' are:
+<br/>0    Charmed (Target neutral after effect ends)
+<br/>1    Charmed (Target hostile after effect ends)
+<br/>2    Dire charmed (Target neutral after effect ends)
+<br/>3    Dire charmed (Target hostile after effect ends)</div><br />
   <hr />
   <br />
 </div>
@@ -84,7 +40,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Charisma = Charisma + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Charisma = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Charisma = (Charisma * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Charisma = Charisma + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Charisma = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Charisma = (Charisma * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -95,7 +56,26 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Location</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Alters the colour of the area specified by the 'Location' field, to the colour gradient specified by the 'Gradient Number' field.<br/>Known values for 'Location' are:<br/>00   Belt Buckle (on armour) or amulets (on robes)<br/>01   Minor colour<br/>02   Major colour<br/>03   Skin colour<br/>04   Strap colour (on armour) or minor trimming (on robes - the centre strip down a robe and the hem on some robes)<br/>05   Armor colour (and major trimming on robe - cross trim and cape trim on  robe of archmagi)<br/>06   Hair colour<br/>16   Quillons or Crossguard<br/>20   Grip (usually not visible as it's in the characters hand)<br/>21   Blade or major portion of weapon<br/>32   Shield hub<br/>34   Shield panelling<br/>37   Shield rim<br/>48   Helm ornamentation - i.e. wings<br/>49   Helm ornamentation - i.e. feathers/horsehair<br/>50   Helm ornamentation - i.e. feathers/horsehair<br/>52   Unknown but listed in helm01<br/>53   Helm - the main covering</div><br />
+  <div class="descriptiondata">Alters the colour of the area specified by the 'Location' field, to the colour gradient specified by the 'Gradient Number' field.
+<br/>Known values for 'Location' are:
+<br/>00   Belt Buckle (on armour) or amulets (on robes)
+<br/>01   Minor colour
+<br/>02   Major colour
+<br/>03   Skin colour
+<br/>04   Strap colour (on armour) or minor trimming (on robes - the centre strip down a robe and the hem on some robes)
+<br/>05   Armor colour (and major trimming on robe - cross trim and cape trim on  robe of archmagi)
+<br/>06   Hair colour
+<br/>16   Quillons or Crossguard
+<br/>20   Grip (usually not visible as it's in the characters hand)
+<br/>21   Blade or major portion of weapon
+<br/>32   Shield hub
+<br/>34   Shield panelling
+<br/>37   Shield rim
+<br/>48   Helm ornamentation - i.e. wings
+<br/>49   Helm ornamentation - i.e. feathers/horsehair
+<br/>50   Helm ornamentation - i.e. feathers/horsehair
+<br/>52   Unknown but listed in helm01
+<br/>53   Helm - the main covering</div><br />
   <hr />
   <br />
 </div>
@@ -128,7 +108,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Constitution = Constitution + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Constitution = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Constitution = (Constitution * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Constitution = Constitution + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Constitution = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Constitution = (Constitution * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -139,7 +124,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Removes the poison effect from the targeted creature(s).<br/>This effect ignores durations attributed to it.</div><br />
+  <div class="descriptiondata">Removes the poison effect from the targeted creature(s).
+<br/>This effect ignores durations attributed to it.</div><br />
   <hr />
   <br />
 </div>
@@ -150,7 +136,36 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Damage Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Set the Dice Throws and Size to the random damage you wish to do to the target (if you want no random damage done, leave it at 0d0).  If you wish to do fixed damage as well, or by itself, set the Fixed Damage parameter to the ammount of damage to do (if you want no fixed damage done, leave the value at 0).<br/>If a saving throw is made, the damage values are cut in half, including Fixed Damage.  To completely negate damage in the case of a successful saving throw, set the Resource Key to NEG.<br/>The following values are valid for Damage Type:<br/>0                is Crushing Damage<br/>1                is Lower HP to Fixed Damage value(Ignores random damage values)<br/>2                is Lower HP to Fixed Percent set by Fixed Damage value<br/>4                is Lower HP by 1/3 of the effect's damage (after random damage has been rolled)<br/>65536            is Acid Damage<br/>131072           is Cold Damage<br/>262144           is Electic Damage<br/>524288           is Fire Damage<br/>1048576          is Piercing Damage<br/>2097152          is Poison Damage<br/>4194304          is Magic Damage<br/>8388608          is Missile Damage<br/>16777216         is Slashing Damage<br/>33554432         is Magic Fire Damage<br/>67108864         is Magic Cold Damage<br/>134217728        is Stunning Damage<br/>The opcode uses the 'variable' field at 0x2c to determine which (if any) custom critical damage visual to play. Known values are:<br/> 0x01 - The Nameless One<br/> 0x02 - Annah<br/> 0x04 - Grace<br/> 0x08 - Nordom<br/> 0x10 - Vhailor<br/> 0x20 - Morte<br/> 0x40 - Dakkon<br/> 0x80 - Ignus<br/>Keep in mind that if a character makes a save for damage type 1 or 2 without the NEG Resource Key, the Fixed Damage will be cut in half, which will cause MORE HP loss!<br/>NB. 'Stunning' damage does not stun the target. Stunning damage cannot kill a creature, creatures are reduced to 1 HP and are knocked unconscious.</div><br />
+  <div class="descriptiondata">Set the Dice Throws and Size to the random damage you wish to do to the target (if you want no random damage done, leave it at 0d0).  If you wish to do fixed damage as well, or by itself, set the Fixed Damage parameter to the ammount of damage to do (if you want no fixed damage done, leave the value at 0).
+<br/>If a saving throw is made, the damage values are cut in half, including Fixed Damage.  To completely negate damage in the case of a successful saving throw, set the Resource Key to NEG.
+<br/>The following values are valid for Damage Type:
+<br/>0                is Crushing Damage
+<br/>1                is Lower HP to Fixed Damage value(Ignores random damage values)
+<br/>2                is Lower HP to Fixed Percent set by Fixed Damage value
+<br/>4                is Lower HP by 1/3 of the effect's damage (after random damage has been rolled)
+<br/>65536            is Acid Damage
+<br/>131072           is Cold Damage
+<br/>262144           is Electic Damage
+<br/>524288           is Fire Damage
+<br/>1048576          is Piercing Damage
+<br/>2097152          is Poison Damage
+<br/>4194304          is Magic Damage
+<br/>8388608          is Missile Damage
+<br/>16777216         is Slashing Damage
+<br/>33554432         is Magic Fire Damage
+<br/>67108864         is Magic Cold Damage
+<br/>134217728        is Stunning Damage
+<br/>The opcode uses the 'variable' field at 0x2c to determine which (if any) custom critical damage visual to play. Known values are:
+<br/> 0x01 - The Nameless One
+<br/> 0x02 - Annah
+<br/> 0x04 - Grace
+<br/> 0x08 - Nordom
+<br/> 0x10 - Vhailor
+<br/> 0x20 - Morte
+<br/> 0x40 - Dakkon
+<br/> 0x80 - Ignus
+<br/>Keep in mind that if a character makes a save for damage type 1 or 2 without the NEG Resource Key, the Fixed Damage will be cut in half, which will cause MORE HP loss!
+<br/>NB. 'Stunning' damage does not stun the target. Stunning damage cannot kill a creature, creatures are reduced to 1 HP and are knocked unconscious.</div><br />
   <hr />
   <br />
 </div>
@@ -161,7 +176,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Death State?</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">This effect will instantly kill a creature. Leave both parameters at zero for this effect to work.  <br/>NOTE:  DO NOT use a timing mode of Duration or Permanent for this effect, or it will crash! To use this effect without a delay, simply set the timing mode to Delay, and the time to 0.<br/>The Death State? parameter sets whether or not the CGAMESPRITE_STATE_DEAD is applied to the target:<br/>0 or any multiple of 4 (4,8,16,32...)-State set in target<br/>Any other-Target simply killed.</div><br />
+  <div class="descriptiondata">This effect will instantly kill a creature. Leave both parameters at zero for this effect to work.  
+<br/>NOTE:  DO NOT use a timing mode of Duration or Permanent for this effect, or it will crash! To use this effect without a delay, simply set the timing mode to Delay, and the time to 0.
+<br/>The Death State? parameter sets whether or not the CGAMESPRITE_STATE_DEAD is applied to the target:
+<br/>0 or any multiple of 4 (4,8,16,32...)-State set in target
+<br/>Any other-Target simply killed.</div><br />
   <hr />
   <br />
 </div>
@@ -183,7 +202,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Dexterity = Dexterity + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Dexterity = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Dexterity = (Dexterity * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Dexterity = Dexterity + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Dexterity = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Dexterity = (Dexterity * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -194,7 +218,13 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> HP = HP + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> HP = 'Statistic Modifier' value<br/>2   Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100<br/>NB. If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.<br/>NB. 'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> HP = HP + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> HP = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100
+<br/>NB. If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.
+<br/>NB. 'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -205,7 +235,16 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> HP = HP + 'Statistic Modifier' value (affects current and max HP)<br/>1   Flat Value Modifier -> HP = 'Statistic Modifier' value (affects current and max HP)<br/>2   Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)<br/>3   As 0 (does not affect current HP)<br/>4   As 1 (does not affect current HP)<br/>5   As 2 (does not affect current HP)<br/>NB. If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.<br/>NB. 'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> HP = HP + 'Statistic Modifier' value (affects current and max HP)
+<br/>1   Flat Value Modifier -> HP = 'Statistic Modifier' value (affects current and max HP)
+<br/>2   Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)
+<br/>3   As 0 (does not affect current HP)
+<br/>4   As 1 (does not affect current HP)
+<br/>5   As 2 (does not affect current HP)
+<br/>NB. If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.
+<br/>NB. 'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -216,7 +255,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Intelligence = Intelligence + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Intelligence = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Intelligence = (Intelligence * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Intelligence = Intelligence + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Intelligence = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Intelligence = (Intelligence * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -227,7 +271,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Leave both parameters at all zeros for this Effect to work.<br/>This effect will not work with a timing mode of Duration or Permanent. All other timing modes function correctly.</div><br />
+  <div class="descriptiondata">Leave both parameters at all zeros for this Effect to work.
+<br/>This effect will not work with a timing mode of Duration or Permanent. All other timing modes function correctly.</div><br />
   <hr />
   <br />
 </div>
@@ -238,7 +283,13 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Lore = Lore + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Lore = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Lore = (Lore * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.<br/>NB. This effect does not work with Timing Mode 1.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Lore = Lore + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Lore = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Lore = (Lore * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.
+<br/>NB. This effect does not work with Timing Mode 1.</div><br />
   <hr />
   <br />
 </div>
@@ -249,7 +300,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect set STATE_LUCK, and is only applied if STATE_LUCK is not already set.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Luck = Luck + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Luck = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Luck = (Luck * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect set STATE_LUCK, and is only applied if STATE_LUCK is not already set.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Luck = Luck + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Luck = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Luck = (Luck * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -260,7 +315,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Modifier Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The Modifier Type parameter sets how the Statistic Modifier works. <br/>The following values are valid for the Modifier Type parameter:<br/>0    Bonus: the statistic modifier is added to the current index reference value. Negative values decrease it.<br/>1    Set: the index reference value is set to the statistic modifier<br/>2    Scale: the statistic modifier is applied as a percentage (i.e. 50 = 50%) to the statistic modifier.<br/>Note that any Morale-based effects (i.e. Panic) may be added or removed by this effect.</div><br />
+  <div class="descriptiondata">The Modifier Type parameter sets how the Statistic Modifier works. 
+<br/>The following values are valid for the Modifier Type parameter:
+<br/>0    Bonus: the statistic modifier is added to the current index reference value. Negative values decrease it.
+<br/>1    Set: the index reference value is set to the statistic modifier
+<br/>2    Scale: the statistic modifier is applied as a percentage (i.e. 50 = 50%) to the statistic modifier.
+<br/>Note that any Morale-based effects (i.e. Panic) may be added or removed by this effect.</div><br />
   <hr />
   <br />
 </div>
@@ -282,7 +342,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Poison Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The Poison Type determines the damage. The Timing Mode must be set to either 'Duration' or 'Delay with Duration' (Timing Mode 3) for this effect to work.<br/>Known values for 'Poison Type'  are:<br/>0   Inflict 'Variable' per second<br/>1   Percentage Damage: The Variable parameter defines the percentage damage to inflict<br/>2   Hit Points Per Second: The Variable parameter defines how much hit point damage is done each second<br/>3   Seconds Per Hit Points: The Variable parameter defines how long it takes to do 1 HP of damage</div><br />
+  <div class="descriptiondata">The Poison Type determines the damage. The Timing Mode must be set to either 'Duration' or 'Delay with Duration' (Timing Mode 3) for this effect to work.
+<br/>Known values for 'Poison Type'  are:
+<br/>0   Inflict 'Variable' per second
+<br/>1   Percentage Damage: The Variable parameter defines the percentage damage to inflict
+<br/>2   Hit Points Per Second: The Variable parameter defines how much hit point damage is done each second
+<br/>3   Seconds Per Hit Points: The Variable parameter defines how long it takes to do 1 HP of damage</div><br />
   <hr />
   <br />
 </div>
@@ -293,7 +358,9 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Removes cursed items from the targeted creature(s). Known values for 'Type' are:<br/>0   Normal<br/>1   Dispel effect #211 (Induce Hiccups)</div><br />
+  <div class="descriptiondata">Removes cursed items from the targeted creature(s). Known values for 'Type' are:
+<br/>0   Normal
+<br/>1   Dispel effect #211 (Induce Hiccups)</div><br />
   <hr />
   <br />
 </div>
@@ -304,7 +371,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -315,7 +387,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -326,7 +403,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -337,7 +419,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -348,7 +435,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -359,7 +451,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Raises the targeted creature(s) from the dead.<br/>This effect ignores durations attributed to it.</div><br />
+  <div class="descriptiondata">Raises the targeted creature(s) from the dead.
+<br/>This effect ignores durations attributed to it.</div><br />
   <hr />
   <br />
 </div>
@@ -370,7 +463,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -381,7 +479,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -392,7 +495,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -403,7 +511,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -414,7 +527,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -447,7 +565,27 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Displays the sparkle effect specified by the 'Type' field, in the colour specified by the 'Colour' field. The colour field may be connected to sprkclr.2da.<br/>Known values for 'Colour' are:<br/>0   Crash<br/>1   Nothing<br/>2   White with small blue specs that alternate between white and dark blue<br/>3   Mostly purple, changing to white towards the end of the effect<br/>4   White sparkles that fade out<br/>5   White sparkles that fade out, but last longer than '4'<br/>6   White sparkles that alternate to purple at the end of the effect<br/>7   Like six, except it seems to change faster<br/>8   Glittering white specs<br/>9   White and grey specs that alternate to blue at the end of the effect<br/>10  Dark grey specs that alternate to white at the end of the effect<br/>11  Pink specs, some changing to white at the end of the effect<br/>12  White effects that very slowly fade out           <br/>13  Crash<br/>Known values for 'Type' are:<br/>1   Sparkle Puff<br/>2   No effect?<br/>3   Sparkle Shower<br/>Both of these params use only the lower 16 bits (upper bits might have other function).</div><br />
+  <div class="descriptiondata">Displays the sparkle effect specified by the 'Type' field, in the colour specified by the 'Colour' field. The colour field may be connected to sprkclr.2da.
+<br/>Known values for 'Colour' are:
+<br/>0   Crash
+<br/>1   Nothing
+<br/>2   White with small blue specs that alternate between white and dark blue
+<br/>3   Mostly purple, changing to white towards the end of the effect
+<br/>4   White sparkles that fade out
+<br/>5   White sparkles that fade out, but last longer than '4'
+<br/>6   White sparkles that alternate to purple at the end of the effect
+<br/>7   Like six, except it seems to change faster
+<br/>8   Glittering white specs
+<br/>9   White and grey specs that alternate to blue at the end of the effect
+<br/>10  Dark grey specs that alternate to white at the end of the effect
+<br/>11  Pink specs, some changing to white at the end of the effect
+<br/>12  White effects that very slowly fade out           
+<br/>13  Crash
+<br/>Known values for 'Type' are:
+<br/>1   Sparkle Puff
+<br/>2   No effect?
+<br/>3   Sparkle Shower
+<br/>Both of these params use only the lower 16 bits (upper bits might have other function).</div><br />
   <hr />
   <br />
 </div>
@@ -458,7 +596,20 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Spell Level</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Alters the number of wizard spell slots available to the targeted creature(s), as specified by the 'Slot Amount Modifier' field, at the level specified by the 'Spell Level' field.<br/>Known values for 'Spell Level' are:<br/>0   Double spells<br/>1   Level 1<br/>2   Level 2<br/>4   Level 3<br/>8   Level 4<br/>16  Level 5<br/>32  Level 6<br/>64  Level 7<br/>128 Level 8<br/>256 Level 9<br/>For a 'Spell Level' of 0, the amount of spell slots is doubled for the level specified by the 'Slot Amount Modifier' value and all levels below. The target creature(s) must have at least 1 slot at the selected level to have their slot count changed. If the resultant slot count is negative, the creature is given 12 slots.<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Alters the number of wizard spell slots available to the targeted creature(s), as specified by the 'Slot Amount Modifier' field, at the level specified by the 'Spell Level' field.
+<br/>Known values for 'Spell Level' are:
+<br/>0   Double spells
+<br/>1   Level 1
+<br/>2   Level 2
+<br/>4   Level 3
+<br/>8   Level 4
+<br/>16  Level 5
+<br/>32  Level 6
+<br/>64  Level 7
+<br/>128 Level 8
+<br/>256 Level 9
+<br/>For a 'Spell Level' of 0, the amount of spell slots is doubled for the level specified by the 'Slot Amount Modifier' value and all levels below. The target creature(s) must have at least 1 slot at the selected level to have their slot count changed. If the resultant slot count is negative, the creature is given 12 slots.
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -480,7 +631,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Strength = Strength + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Strength = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Strength = (Strength * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Strength = Strength + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Strength = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Strength = (Strength * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -513,7 +669,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Removes the invisibility effect from the targeted creature(s).<br/>This effect ignores durations attributed to it.</div><br />
+  <div class="descriptiondata">Removes the invisibility effect from the targeted creature(s).
+<br/>This effect ignores durations attributed to it.</div><br />
   <hr />
   <br />
 </div>
@@ -524,7 +681,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Removes the silence effect and the silenced state from the targeted creature(s).<br/>This effect ignores durations attributed to it.</div><br />
+  <div class="descriptiondata">Removes the silence effect and the silenced state from the targeted creature(s).
+<br/>This effect ignores durations attributed to it.</div><br />
   <hr />
   <br />
 </div>
@@ -535,7 +693,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Wisdom = Wisdom + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Wisdom = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Wisdom = (Wisdom * 'Statistic Modifier' value) / 100<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Wisdom = Wisdom + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Wisdom = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Wisdom = (Wisdom * 'Statistic Modifier' value) / 100
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -568,7 +731,15 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">This effect polymorphs the target into a specific creature animation set (i.e. you can change Vhailor into Annah, if you wished, etc). To figure out the Animate Set parameter value, do the following:<br/>Look up the value for the Animation Set you wish to use for this effect in the RESDATA.INI file (it'll be the number in the brackets directly above it), then do the following:<br/>If you want the animation to be falsely/'clown' coloured, add 24576<br/>If you want the animation to be true coloured, add 57344<br/>There are several animations that SHOULD NOT be used with this effect. They are special, and will result in a CRASH!<br/>Iron Golem<br/>Pillar of Skulls<br/>Foundry Gears<br/>Mortuary Ghost</div><br />
+  <div class="descriptiondata">This effect polymorphs the target into a specific creature animation set (i.e. you can change Vhailor into Annah, if you wished, etc). To figure out the Animate Set parameter value, do the following:
+<br/>Look up the value for the Animation Set you wish to use for this effect in the RESDATA.INI file (it'll be the number in the brackets directly above it), then do the following:
+<br/>If you want the animation to be falsely/'clown' coloured, add 24576
+<br/>If you want the animation to be true coloured, add 57344
+<br/>There are several animations that SHOULD NOT be used with this effect. They are special, and will result in a CRASH!
+<br/>Iron Golem
+<br/>Pillar of Skulls
+<br/>Foundry Gears
+<br/>Mortuary Ghost</div><br />
   <hr />
   <br />
 </div>
@@ -579,7 +750,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> THAC0 = THAC0 + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> THAC0 = 'Statistic Modifier' value<br/>2   Percentage Modifier -> THAC0 = (THAC0 * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> THAC0 = THAC0 + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> THAC0 = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> THAC0 = (THAC0 * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -590,7 +765,139 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">This item will kill the type of creature set by the parameters. The IDS file is the filen to get the reference number from. The Reference number is the creature type to kill.  <br/>NOTE:  DO NOT use a timing mode of Duration, Permanent or Delay with Duration for this effect, or it will crash! To use this effect without a delay, simply set the timing mode to Delay, and the time to 0.<br/>The following values are valid for the parameters:<br/>IDS File: 3 (General)<br/>Reference Value:<br/>1 HUMANOID <br/>2 ANIMAL <br/>3 DEAD <br/>4 UNDEAD <br/>5 GIANTHUMANOID <br/>6 FROZEN <br/>7 DRUNK <br/>8 GOOD <br/>9 BAD <br/>10 HIDDEN <br/>11 LEADER <br/>12 FOLLOWER <br/>13 MANY_1 <br/>14 MANY_2 <br/>15 MANY_3 <br/>16 MANY_4 <br/>255 MONSTER<br/>IDS File: 4 (Race)<br/>Reference Value:<br/>1   HUMAN<br/>2   AASIMAR<br/>3   ABISHAI_BLACK<br/>4   ABISHAI_GREEN<br/>5   ABISHAI_RED<br/>6   ANNAH<br/>7   BAATEZU<br/>8   CAMPATUSKANELLA<br/>9   CORNUGON<br/>10  Cranium_Rat<br/>11 DABUS <br/>12 DAKKON <br/>13 DEIONARRA <br/>14 DEVA <br/>15 DRONE_BOSS <br/>16 DRONE_HEAVY <br/>17 DRONE_LIGHT <br/>18 DRONE_MEDIUM <br/>19 FALL_FROM_GRACE <br/>20 FELL <br/>21 GEHRELETH <br/>22 GENSAI_AIR <br/>23 GENSAI_FIRE <br/>24 GENSAI_STONE <br/>25 GENSAI_WATER <br/>26 GHOST <br/>27 GHOUL <br/>28 GIANT_SKELETON <br/>29 GITHYANKI <br/>30 GITHZERAI <br/>31 GLABREZU <br/>32 GRILLIG <br/>33 GRONK <br/>34 HARGRIMM <br/>35 IGNUS <br/>36 IRON_GOLEM <br/>37 JAMES_BIRD <br/>38 LADY_OF_PAIN <br/>39 LEMURE <br/>40 LIM_LIM <br/>41 LOTHAR <br/>42 MANTUOK <br/>43 MANY_AS_ONE <br/>44 MODRON <br/>45 MORTE <br/>46 NIGHT_HAG <br/>b47 NO_RACE <br/>48 NORDOM <br/>49 NUPPERIBO <br/>50 PILLAR_OF_SKULLS <br/>51 RESTLESS_SPIRIT <br/>52 ROGUE_MODRON <br/>53 SHADOW_MARK_1 <br/>54 SHADOW_MARK_2 <br/>55 SHADOW_MARK_3 <br/>56 SKELETON <br/>57 SKELETON_GIANT <br/>58 SKELETON_PRIEST <br/>59 SOHMIEN <br/>60 STONE_GOLEM <br/>61 SUCCUBUS <br/>62 TANARRI <br/>63 THOKOLA <br/>64 TIEFLING <br/>65 TRIGIT <br/>66 TROCOPOTOCA <br/>67 VARGOUILLE <br/>68 VHAILOR <br/>69 WERERAT <br/>70 WERERAT_MANTUOK <br/>71 WORM <br/>72 ZOMBIE <br/>73 BARIAUR <br/>254 UNKNOWN_RACE <br/>255 NO_RACE<br/>IDS File: 5  (Class)<br/>Reference Values:<br/>1   MAGE <br/>2   FIGHTER <br/>3   CLERIC <br/>4   THIEF <br/>5   BARD <br/>6   PALADIN <br/>7   FIGHTER_MAGE <br/>8   FIGHTER_CLERIC<br/>9   FIGHTER_THIEF <br/>10  FIGHTER_MAGE_THIEF <br/>11  DRUID <br/>12  RANGER <br/>13  MAGE_THIEF <br/>14  CLERIC_MAGE <br/>15  CLERIC_THIEF <br/>16  FIGHTER_DRUID <br/>17  FIGHTER_MAGE_CLERIC <br/>18  CLERIC_RANGER <br/>255 NO_CLASS<br/>IDS File: 8 (Alignment)<br/>Reference Values:<br/>00  NONE<br/>17  LAWFUL_GOOD<br/>18  LAWFUL_NEUTRAL<br/>19  LAWFUL_EVIL<br/>33  NEUTRAL_GOOD<br/>34  NEUTRAL<br/>35  NEUTRAL_EVIL<br/>49  CHAOTIC_GOOD<br/>50  CHAOTIC_NEUTRAL<br/>51  CHAOTIC_EVIL<br/>Other values are undetermined at this time.</div><br />
+  <div class="descriptiondata">This item will kill the type of creature set by the parameters. The IDS file is the filen to get the reference number from. The Reference number is the creature type to kill.  
+<br/>NOTE:  DO NOT use a timing mode of Duration, Permanent or Delay with Duration for this effect, or it will crash! To use this effect without a delay, simply set the timing mode to Delay, and the time to 0.
+<br/>The following values are valid for the parameters:
+<br/>IDS File: 3 (General)
+<br/>Reference Value:
+<br/>1 HUMANOID 
+<br/>2 ANIMAL 
+<br/>3 DEAD 
+<br/>4 UNDEAD 
+<br/>5 GIANTHUMANOID 
+<br/>6 FROZEN 
+<br/>7 DRUNK 
+<br/>8 GOOD 
+<br/>9 BAD 
+<br/>10 HIDDEN 
+<br/>11 LEADER 
+<br/>12 FOLLOWER 
+<br/>13 MANY_1 
+<br/>14 MANY_2 
+<br/>15 MANY_3 
+<br/>16 MANY_4 
+<br/>255 MONSTER
+<br/>IDS File: 4 (Race)
+<br/>Reference Value:
+<br/>1   HUMAN
+<br/>2   AASIMAR
+<br/>3   ABISHAI_BLACK
+<br/>4   ABISHAI_GREEN
+<br/>5   ABISHAI_RED
+<br/>6   ANNAH
+<br/>7   BAATEZU
+<br/>8   CAMPATUSKANELLA
+<br/>9   CORNUGON
+<br/>10  Cranium_Rat
+<br/>11 DABUS 
+<br/>12 DAKKON 
+<br/>13 DEIONARRA 
+<br/>14 DEVA 
+<br/>15 DRONE_BOSS 
+<br/>16 DRONE_HEAVY 
+<br/>17 DRONE_LIGHT 
+<br/>18 DRONE_MEDIUM 
+<br/>19 FALL_FROM_GRACE 
+<br/>20 FELL 
+<br/>21 GEHRELETH 
+<br/>22 GENSAI_AIR 
+<br/>23 GENSAI_FIRE 
+<br/>24 GENSAI_STONE 
+<br/>25 GENSAI_WATER 
+<br/>26 GHOST 
+<br/>27 GHOUL 
+<br/>28 GIANT_SKELETON 
+<br/>29 GITHYANKI 
+<br/>30 GITHZERAI 
+<br/>31 GLABREZU 
+<br/>32 GRILLIG 
+<br/>33 GRONK 
+<br/>34 HARGRIMM 
+<br/>35 IGNUS 
+<br/>36 IRON_GOLEM 
+<br/>37 JAMES_BIRD 
+<br/>38 LADY_OF_PAIN 
+<br/>39 LEMURE 
+<br/>40 LIM_LIM 
+<br/>41 LOTHAR 
+<br/>42 MANTUOK 
+<br/>43 MANY_AS_ONE 
+<br/>44 MODRON 
+<br/>45 MORTE 
+<br/>46 NIGHT_HAG 
+<br/>b47 NO_RACE 
+<br/>48 NORDOM 
+<br/>49 NUPPERIBO 
+<br/>50 PILLAR_OF_SKULLS 
+<br/>51 RESTLESS_SPIRIT 
+<br/>52 ROGUE_MODRON 
+<br/>53 SHADOW_MARK_1 
+<br/>54 SHADOW_MARK_2 
+<br/>55 SHADOW_MARK_3 
+<br/>56 SKELETON 
+<br/>57 SKELETON_GIANT 
+<br/>58 SKELETON_PRIEST 
+<br/>59 SOHMIEN 
+<br/>60 STONE_GOLEM 
+<br/>61 SUCCUBUS 
+<br/>62 TANARRI 
+<br/>63 THOKOLA 
+<br/>64 TIEFLING 
+<br/>65 TRIGIT 
+<br/>66 TROCOPOTOCA 
+<br/>67 VARGOUILLE 
+<br/>68 VHAILOR 
+<br/>69 WERERAT 
+<br/>70 WERERAT_MANTUOK 
+<br/>71 WORM 
+<br/>72 ZOMBIE 
+<br/>73 BARIAUR 
+<br/>254 UNKNOWN_RACE 
+<br/>255 NO_RACE
+<br/>IDS File: 5  (Class)
+<br/>Reference Values:
+<br/>1   MAGE 
+<br/>2   FIGHTER 
+<br/>3   CLERIC 
+<br/>4   THIEF 
+<br/>5   BARD 
+<br/>6   PALADIN 
+<br/>7   FIGHTER_MAGE 
+<br/>8   FIGHTER_CLERIC
+<br/>9   FIGHTER_THIEF 
+<br/>10  FIGHTER_MAGE_THIEF 
+<br/>11  DRUID 
+<br/>12  RANGER 
+<br/>13  MAGE_THIEF 
+<br/>14  CLERIC_MAGE 
+<br/>15  CLERIC_THIEF 
+<br/>16  FIGHTER_DRUID 
+<br/>17  FIGHTER_MAGE_CLERIC 
+<br/>18  CLERIC_RANGER 
+<br/>255 NO_CLASS
+<br/>IDS File: 8 (Alignment)
+<br/>Reference Values:
+<br/>00  NONE
+<br/>17  LAWFUL_GOOD
+<br/>18  LAWFUL_NEUTRAL
+<br/>19  LAWFUL_EVIL
+<br/>33  NEUTRAL_GOOD
+<br/>34  NEUTRAL
+<br/>35  NEUTRAL_EVIL
+<br/>49  CHAOTIC_GOOD
+<br/>50  CHAOTIC_NEUTRAL
+<br/>51  CHAOTIC_EVIL
+<br/>Other values are undetermined at this time.</div><br />
   <hr />
   <br />
 </div>
@@ -601,7 +908,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Inverts the alignment of the targeted creature(s).<br/>Does not affect the Protagonist.</div><br />
+  <div class="descriptiondata">Inverts the alignment of the targeted creature(s).
+<br/>Does not affect the Protagonist.</div><br />
   <hr />
   <br />
 </div>
@@ -612,7 +920,19 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Alignment</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Alters the alignment of the targeted creature(s) to the value specified by 'Alignment'.<br/>Does not affect the Protagonist.<br/>Known values for 'Alignment' are:<br/>00   None<br/>17   Lawful Good<br/>18   Lawful Neutral<br/>19   Lawful Evil<br/>33   Neutral Good<br/>34   True Neutral<br/>35   Neutral Evil<br/>49   Chaotic Good<br/>50   Chaotic Neutral<br/>51   Chaotic Evil</div><br />
+  <div class="descriptiondata">Alters the alignment of the targeted creature(s) to the value specified by 'Alignment'.
+<br/>Does not affect the Protagonist.
+<br/>Known values for 'Alignment' are:
+<br/>00   None
+<br/>17   Lawful Good
+<br/>18   Lawful Neutral
+<br/>19   Lawful Evil
+<br/>33   Neutral Good
+<br/>34   True Neutral
+<br/>35   Neutral Evil
+<br/>49   Chaotic Good
+<br/>50   Chaotic Neutral
+<br/>51   Chaotic Evil</div><br />
   <hr />
   <br />
 </div>
@@ -623,7 +943,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Dispels magic from the targeted creature(s) (excepting magical weapons eg. Spirtual Hammer). Depending on the value of the 'Type' field, the 'Level' field can be used to set the level of the effect.<br/>Known values for 'Type' are:<br/>0   Always dispel<br/>1   Use Caster Level<br/>2   USe 'Level' field<br/>With 'Type' of 1 or 2, the base chance of successfully dispelling is 50%. This chance is modified by the relative levels of the dispeller to the caster. Each level below gives a -10% chance, each level above gives a +5% chance. There is always a 1% chance of success or failure.</div><br />
+  <div class="descriptiondata">Dispels magic from the targeted creature(s) (excepting magical weapons eg. Spirtual Hammer). Depending on the value of the 'Type' field, the 'Level' field can be used to set the level of the effect.
+<br/>Known values for 'Type' are:
+<br/>0   Always dispel
+<br/>1   Use Caster Level
+<br/>2   USe 'Level' field
+<br/>With 'Type' of 1 or 2, the base chance of successfully dispelling is 50%. This chance is modified by the relative levels of the dispeller to the caster. Each level below gives a -10% chance, each level above gives a +5% chance. There is always a 1% chance of success or failure.</div><br />
   <hr />
   <br />
 </div>
@@ -634,7 +959,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Stealth = Stealth + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Stealth = 'Statistic Modifier' value</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Stealth = Stealth + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Stealth = 'Statistic Modifier' value</div><br />
   <hr />
   <br />
 </div>
@@ -645,7 +973,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The targeted creature(s) will fail to cast the type of spell specified by the 'Type' field, 'Percent Chance' percent of the time.<br/>Known values for 'Type' are:<br/>0   Mage Spells<br/>1   Cleric Spells</div><br />
+  <div class="descriptiondata">The targeted creature(s) will fail to cast the type of spell specified by the 'Type' field, 'Percent Chance' percent of the time.
+<br/>Known values for 'Type' are:
+<br/>0   Mage Spells
+<br/>1   Cleric Spells</div><br />
   <hr />
   <br />
 </div>
@@ -656,7 +987,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">This effect crashes the game.<br/>This effect has previously been referenced as Alchemy.</div><br />
+  <div class="descriptiondata">This effect crashes the game.
+<br/>This effect has previously been referenced as Alchemy.</div><br />
   <hr />
   <br />
 </div>
@@ -667,7 +999,18 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Spell Level</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Alters the number of priest spell slots available to the targeted creature(s), as specified by the 'Slot Amount Modifier' field, at the level specified by the 'Spell Level' field.<br/>Known values for 'Spell Level' are:<br/>0   Double spells<br/>1   Level 1<br/>2   Level 2<br/>4   Level 3<br/>8   Level 4<br/>16  Level 5<br/>32  Level 6<br/>64  Level 7<br/>For a 'Spell Level' of 0, the amount of spell slots is doubled for the level specified by the 'Slot Amount Modifier' value and all levels below. The target creature(s) must have at least 1 slot at the selected level to have their slot count changed. If the resultant slot count is negative, the creature is given 12 slots.<br/>'Statistic Modifier' can be positive or negative.</div><br />
+  <div class="descriptiondata">Alters the number of priest spell slots available to the targeted creature(s), as specified by the 'Slot Amount Modifier' field, at the level specified by the 'Spell Level' field.
+<br/>Known values for 'Spell Level' are:
+<br/>0   Double spells
+<br/>1   Level 1
+<br/>2   Level 2
+<br/>4   Level 3
+<br/>8   Level 4
+<br/>16  Level 5
+<br/>32  Level 6
+<br/>64  Level 7
+<br/>For a 'Spell Level' of 0, the amount of spell slots is doubled for the level specified by the 'Slot Amount Modifier' value and all levels below. The target creature(s) must have at least 1 slot at the selected level to have their slot count changed. If the resultant slot count is negative, the creature is given 12 slots.
+<br/>'Statistic Modifier' can be positive or negative.</div><br />
   <hr />
   <br />
 </div>
@@ -689,7 +1032,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Removes infravision from the targeted creature(s).<br/>NB. This will not remove racial infravision.</div><br />
+  <div class="descriptiondata">Removes infravision from the targeted creature(s).
+<br/>NB. This will not remove racial infravision.</div><br />
   <hr />
   <br />
 </div>
@@ -722,7 +1066,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Leave both parameters at zero and the duration to 'permanent' for this effect to work. The resource key must be set to the name of the file you wish to use. Creatures summoned in this manner are in full control of the party.<br/>This effect REQUIRES a Bam file named SPBOOM in a bif or the override folder for this effect to work.  Without it, the effect WILL NOT WORK.</div><br />
+  <div class="descriptiondata">Leave both parameters at zero and the duration to 'permanent' for this effect to work. The resource key must be set to the name of the file you wish to use. Creatures summoned in this manner are in full control of the party.
+<br/>This effect REQUIRES a Bam file named SPBOOM in a bif or the override folder for this effect to work.  Without it, the effect WILL NOT WORK.</div><br />
   <hr />
   <br />
 </div>
@@ -733,7 +1078,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Unsummons a creature, with feedback controlled by 'Text Notification'.<br/>Known values for 'Text Notification' are:<br/>0   No text notification<br/>1   Show text notification</div><br />
+  <div class="descriptiondata">Unsummons a creature, with feedback controlled by 'Text Notification'.
+<br/>Known values for 'Text Notification' are:
+<br/>0   No text notification
+<br/>1   Show text notification</div><br />
   <hr />
   <br />
 </div>
@@ -766,7 +1114,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Alters the gender of the targetted creature(s) to the value specified by the 'Gender.ids' field, in the style specified by the 'Type' value.<br/>Known values for 'Type' are:<br/>0 Reverse Gender<br/>1 Flat Value Modifier -> Gender = 'Statistic Modifier' value (values from gender.ids)</div><br />
+  <div class="descriptiondata">Alters the gender of the targetted creature(s) to the value specified by the 'Gender.ids' field, in the style specified by the 'Type' value.
+<br/>Known values for 'Type' are:
+<br/>0 Reverse Gender
+<br/>1 Flat Value Modifier -> Gender = 'Statistic Modifier' value (values from gender.ids)</div><br />
   <hr />
   <br />
 </div>
@@ -777,7 +1128,15 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Identifier Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Set the Identifier Type to the Object Identifier you wish to alter in the given creature. The IDS Value is the value from the associated IDS file.<br/>Known values for 'Identifier Type' are:<br/>0   Allegiance (EA.IDS)<br/>1   General (GENERAL.IDS)<br/>2   Race (RACE.IDS)<br/>3   Class (CLASS.IDS)<br/>4   Specific (SPECIFIC.IDS)<br/>5   Gender (GENDER.IDS)<br/>6   Alignment (ALIGNMEN.IDS)</div><br />
+  <div class="descriptiondata">Set the Identifier Type to the Object Identifier you wish to alter in the given creature. The IDS Value is the value from the associated IDS file.
+<br/>Known values for 'Identifier Type' are:
+<br/>0   Allegiance (EA.IDS)
+<br/>1   General (GENERAL.IDS)
+<br/>2   Race (RACE.IDS)
+<br/>3   Class (CLASS.IDS)
+<br/>4   Specific (SPECIFIC.IDS)
+<br/>5   Gender (GENDER.IDS)
+<br/>6   Alignment (ALIGNMEN.IDS)</div><br />
   <hr />
   <br />
 </div>
@@ -788,7 +1147,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The 'Type' parameter sets how the Statistic Modifier works. NOTE: THIS ONE IS DIFFERENT FROM OTHERS!!:<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value<br/>1+  Flat Value Modifier -> Damage = 'Statistic Modifier' value</div><br />
+  <div class="descriptiondata">The 'Type' parameter sets how the Statistic Modifier works. NOTE: THIS ONE IS DIFFERENT FROM OTHERS!!:
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
+<br/>1+  Flat Value Modifier -> Damage = 'Statistic Modifier' value</div><br />
   <hr />
   <br />
 </div>
@@ -821,7 +1183,9 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat.<br/>This effect ignores durations attributed to it.<br/>NB. A creatures scripts do not while the creature is feebleminded.</div><br />
+  <div class="descriptiondata">Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat.
+<br/>This effect ignores durations attributed to it.
+<br/>NB. A creatures scripts do not while the creature is feebleminded.</div><br />
   <hr />
   <br />
 </div>
@@ -843,7 +1207,20 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.<br/>Known values for 'Type' are:<br/>0   1 HP per second<br/>1   1 HP per second<br/>2   'Damage' per Second<br/>3   Cause 1HP every 'Damage' seconds<br/>4   Strength Penalty<br/>5   Dexterity Penalty<br/>6   Constitution Penalty<br/>7   Intelligence Penalty<br/>8   Wisdom Penalty<br/>9   Charisma Penalty<br/>'Damage' can be positive (penalty) or negative (bonus).<br/>Permanent timing modes require a duration for this effect to work.</div><br />
+  <div class="descriptiondata">Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.
+<br/>Known values for 'Type' are:
+<br/>0   1 HP per second
+<br/>1   1 HP per second
+<br/>2   'Damage' per Second
+<br/>3   Cause 1HP every 'Damage' seconds
+<br/>4   Strength Penalty
+<br/>5   Dexterity Penalty
+<br/>6   Constitution Penalty
+<br/>7   Intelligence Penalty
+<br/>8   Wisdom Penalty
+<br/>9   Charisma Penalty
+<br/>'Damage' can be positive (penalty) or negative (bonus).
+<br/>Permanent timing modes require a duration for this effect to work.</div><br />
   <hr />
   <br />
 </div>
@@ -876,7 +1253,44 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Index Number</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Set the index number to the Projectile/Special Graphic effect you wish the target(s) to be immune from. What does this mean? It means any spell, effect, or item using this index number +1 cannot affect the target(s).<br/>Known values for 'Index Number' are:<br/>0   None<br/>1   Arrow (Red End)<br/>2   Arrow (Flame Tipped, Exploding)<br/>3   Arrow (Flame Tipped)<br/>4   Arrow (Lavender End)<br/>6   Throwing Axe #1<br/>9   Throwing Axe #2<br/>10  Throwing Axe #3<br/>11  Crossbow Bolt #1<br/>12  Crossbow Bolt (Smoking, Exploding)<br/>14  Crossbow Bolt #2<br/>15  Crossbow Bolt #3<br/>16  Sling Stone #1<br/>17  Sling Stone (Smoking, Exploding)<br/>19  Sling Stone #2<br/>21  Fan of Flame<br/>22  Quick Lightning Bolt<br/>23  Chromiatic Orb<br/>24  Cone of Cold Graphic effect that is delayed 1 second<br/>25  Cone of Cold Graphic Effect #1<br/>26  Throwing Dagger (Black Handle) #1<br/>29  Throwing Dagger (Grey Handle)<br/>31  Throwing Dagger (Light Grey Handle)<br/>32  Throwing Dagger (Smoking, Exploding)<br/>34  Throwing Dagger (Black Handle) #2<br/>36  Magic Missile (Old, 1) #1<br/>37  Fireball (Explosion)<br/>39  Lightning (Special, Strings between walls back and forth)<br/>40  Thrown Stone<br/>41  Slow light blue missile that makes a bright yellow burst of light<br/>44  Small Steam burst<br/>46  Quick Light Blue Missile #3<br/>47  Quick Light Blue Missile #4<br/>48  Quick Light Blue Missile #5<br/>49  Quick Light Blue Missile #6<br/>50  Quick Light Blue Missile #7</div><br />
+  <div class="descriptiondata">Set the index number to the Projectile/Special Graphic effect you wish the target(s) to be immune from. What does this mean? It means any spell, effect, or item using this index number +1 cannot affect the target(s).
+<br/>Known values for 'Index Number' are:
+<br/>0   None
+<br/>1   Arrow (Red End)
+<br/>2   Arrow (Flame Tipped, Exploding)
+<br/>3   Arrow (Flame Tipped)
+<br/>4   Arrow (Lavender End)
+<br/>6   Throwing Axe #1
+<br/>9   Throwing Axe #2
+<br/>10  Throwing Axe #3
+<br/>11  Crossbow Bolt #1
+<br/>12  Crossbow Bolt (Smoking, Exploding)
+<br/>14  Crossbow Bolt #2
+<br/>15  Crossbow Bolt #3
+<br/>16  Sling Stone #1
+<br/>17  Sling Stone (Smoking, Exploding)
+<br/>19  Sling Stone #2
+<br/>21  Fan of Flame
+<br/>22  Quick Lightning Bolt
+<br/>23  Chromiatic Orb
+<br/>24  Cone of Cold Graphic effect that is delayed 1 second
+<br/>25  Cone of Cold Graphic Effect #1
+<br/>26  Throwing Dagger (Black Handle) #1
+<br/>29  Throwing Dagger (Grey Handle)
+<br/>31  Throwing Dagger (Light Grey Handle)
+<br/>32  Throwing Dagger (Smoking, Exploding)
+<br/>34  Throwing Dagger (Black Handle) #2
+<br/>36  Magic Missile (Old, 1) #1
+<br/>37  Fireball (Explosion)
+<br/>39  Lightning (Special, Strings between walls back and forth)
+<br/>40  Thrown Stone
+<br/>41  Slow light blue missile that makes a bright yellow burst of light
+<br/>44  Small Steam burst
+<br/>46  Quick Light Blue Missile #3
+<br/>47  Quick Light Blue Missile #4
+<br/>48  Quick Light Blue Missile #5
+<br/>49  Quick Light Blue Missile #6
+<br/>50  Quick Light Blue Missile #7</div><br />
   <hr />
   <br />
 </div>
@@ -887,7 +1301,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -898,7 +1316,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -909,7 +1331,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -920,7 +1346,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -931,7 +1361,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -942,7 +1376,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -953,7 +1391,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -964,7 +1406,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -975,7 +1421,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -986,7 +1436,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -997,7 +1451,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -1008,7 +1466,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -1019,7 +1481,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Level = Level + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Level = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Level = (Level * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Level = Level + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Level = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Level = (Level * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -1030,7 +1496,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Bonus = Bonus + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Bonus = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Bonus = (Bonus * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Bonus = Bonus + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Bonus = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Bonus = (Bonus * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -1041,7 +1511,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Regen Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The Regen Type parameter sets how the Regen/Time parameter works. <br/>00 then all of the target's lost Hit Points will be restored<br/>01 then the Regen/Time parameter is the Maximum Hit Point percentage to replace each second <br/>02 the Modifier is the amount of Hit Points to regenerate per second <br/>03 then the Regen/Time parameter's value is the amount of seconds it takes to regenerate 1 Hit Point<br/>Permanent timing modes require a duration for this effect to work.</div><br />
+  <div class="descriptiondata">The Regen Type parameter sets how the Regen/Time parameter works. 
+<br/>00 then all of the target's lost Hit Points will be restored
+<br/>01 then the Regen/Time parameter is the Maximum Hit Point percentage to replace each second 
+<br/>02 the Modifier is the amount of Hit Points to regenerate per second 
+<br/>03 then the Regen/Time parameter's value is the amount of seconds it takes to regenerate 1 Hit Point
+<br/>Permanent timing modes require a duration for this effect to work.</div><br />
   <hr />
   <br />
 </div>
@@ -1052,7 +1527,14 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Alters spell durations of the targeted creature(s), to the percentage specified by the 'Duration Modifier' field, affecting the spell type specified by the 'Type' field. Timing mode 0 is the only timing mode reliably affected.<br/>eg.<br/>'Duration Modifier' = 0   -> Spells have no duration<br/>'Duration Modifier' = 100 -> Spells have normal duration<br/>'Duration Modifier' = 200 -> Spells have double duration<br/>Known values for 'Type' are:<br/>0   Mage<br/>1   Priest</div><br />
+  <div class="descriptiondata">Alters spell durations of the targeted creature(s), to the percentage specified by the 'Duration Modifier' field, affecting the spell type specified by the 'Type' field. Timing mode 0 is the only timing mode reliably affected.
+<br/>eg.
+<br/>'Duration Modifier' = 0   -> Spells have no duration
+<br/>'Duration Modifier' = 100 -> Spells have normal duration
+<br/>'Duration Modifier' = 200 -> Spells have double duration
+<br/>Known values for 'Type' are:
+<br/>0   Mage
+<br/>1   Priest</div><br />
   <hr />
   <br />
 </div>
@@ -1063,7 +1545,15 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Set the IDS file to the value you want to target. Set the Index Number to the value within the file.  To be protected from any creature, leave the Index at zero, and the IDS at 2. Protection will grant the bearer immunity from being attack, cast a spell at, or otherwise targeted by creatures with this type. <br/>The following values are valid for the IDS File parameter:<br/>2 is Enemy/Ally (EA.IDS)<br/>3 is General (GENERAL.IDS)<br/>4 is Race (RACE.IDS)<br/>5 is Class (CLASS.IDS)<br/>6 is Specifics (SPECIFIC.IDS)<br/>7 is Gender (GENDER.IDS)<br/>8 is Alignment (ALIGNMEN.IDS)</div><br />
+  <div class="descriptiondata">Set the IDS file to the value you want to target. Set the Index Number to the value within the file.  To be protected from any creature, leave the Index at zero, and the IDS at 2. Protection will grant the bearer immunity from being attack, cast a spell at, or otherwise targeted by creatures with this type. 
+<br/>The following values are valid for the IDS File parameter:
+<br/>2 is Enemy/Ally (EA.IDS)
+<br/>3 is General (GENERAL.IDS)
+<br/>4 is Race (RACE.IDS)
+<br/>5 is Class (CLASS.IDS)
+<br/>6 is Specifics (SPECIFIC.IDS)
+<br/>7 is Gender (GENDER.IDS)
+<br/>8 is Alignment (ALIGNMEN.IDS)</div><br />
   <hr />
   <br />
 </div>
@@ -1085,7 +1575,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Gives the targeted creature(s) protection from spells up to the level specified by the 'Spell Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Spell Level' parameter in the extended header that is being called.<br/>Known values for 'Spell Level' are:<br/>1<br/>..<br/>9</div><br />
+  <div class="descriptiondata">Gives the targeted creature(s) protection from spells up to the level specified by the 'Spell Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Spell Level' parameter in the extended header that is being called.
+<br/>Known values for 'Spell Level' are:
+<br/>1
+<br/>..
+<br/>9</div><br />
   <hr />
   <br />
 </div>
@@ -1107,7 +1601,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> XP = XP + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> XP = 'Statistic Modifier' value<br/>2   Percentage Modifier -> XP = (XP * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> XP = XP + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> XP = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> XP = (XP * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -1118,7 +1616,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Gold = Gold + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Gold = 'Statistic Modifier' value<br/>2   Unknown (not percentage)</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Gold = Gold + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Gold = 'Statistic Modifier' value
+<br/>2   Unknown (not percentage)</div><br />
   <hr />
   <br />
 </div>
@@ -1129,7 +1631,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Morale Break = Morale Break + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Morale Break = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Morale Break = (Morale * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Morale Break = Morale Break + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Morale Break = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Morale Break = (Morale * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -1140,7 +1646,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Sets the portrait of the targeted creature(s) to that specified in the resource key, based on the 'Type' value. This effect ignores durations attributed to it.<br/>Known values for 'Type' are:<br/>0   Small portrait<br/>1   Large portrait</div><br />
+  <div class="descriptiondata">Sets the portrait of the targeted creature(s) to that specified in the resource key, based on the 'Type' value. This effect ignores durations attributed to it.
+<br/>Known values for 'Type' are:
+<br/>0   Small portrait
+<br/>1   Large portrait</div><br />
   <hr />
   <br />
 </div>
@@ -1151,7 +1660,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Sets the individual reputation of the targeted creature(s) to the value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.<br/>This does not affect the main reputation of the Party. Though it can affect ranger/paladinhood of any target.<br/>Known values for 'Type' are:<br/>0   Cumulative Modifier -> Reputation = Reputation + 'Statistic Modifier' value<br/>1   Flat Value Modifier -> Reputation = 'Statistic Modifier' value<br/>2   Percentage Modifier -> Reputation = (Reputation * 'Statistic Modifier' value) / 100</div><br />
+  <div class="descriptiondata">Sets the individual reputation of the targeted creature(s) to the value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+<br/>This does not affect the main reputation of the Party. Though it can affect ranger/paladinhood of any target.
+<br/>Known values for 'Type' are:
+<br/>0   Cumulative Modifier -> Reputation = Reputation + 'Statistic Modifier' value
+<br/>1   Flat Value Modifier -> Reputation = 'Statistic Modifier' value
+<br/>2   Percentage Modifier -> Reputation = (Reputation * 'Statistic Modifier' value) / 100</div><br />
   <hr />
   <br />
 </div>
@@ -1162,7 +1676,15 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">This item will set the 'helpless' status in the type of creature set by the parameters. It's similar to a hold effect. The IDS file is the file to get the reference number from. The Reference number is the creature type to affect.  <br/>The following values are valid for the IDS File parameter:<br/>2 is Enemy/Ally (EA.IDS)<br/>3 is General (GENERAL.IDS)<br/>4 is Race (RACE.IDS)<br/>5 is Class (CLASS.IDS)<br/>6 is Specifics (SPECIFIC.IDS)<br/>7 is Gender (GENDER.IDS)<br/>8 is Alignment (ALIGNMEN.IDS)</div><br />
+  <div class="descriptiondata">This item will set the 'helpless' status in the type of creature set by the parameters. It's similar to a hold effect. The IDS file is the file to get the reference number from. The Reference number is the creature type to affect.  
+<br/>The following values are valid for the IDS File parameter:
+<br/>2 is Enemy/Ally (EA.IDS)
+<br/>3 is General (GENERAL.IDS)
+<br/>4 is Race (RACE.IDS)
+<br/>5 is Class (CLASS.IDS)
+<br/>6 is Specifics (SPECIFIC.IDS)
+<br/>7 is Gender (GENDER.IDS)
+<br/>8 is Alignment (ALIGNMEN.IDS)</div><br />
   <hr />
   <br />
 </div>
@@ -1173,7 +1695,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Leave both parameters at zero for this effect to work.<br/>Known values for 'Type' are:<br/>7 Weak<br/>8 Walk<br/>Other values for 'Type' act as 'Run Away'</div><br />
+  <div class="descriptiondata">Leave both parameters at zero for this effect to work.
+<br/>Known values for 'Type' are:
+<br/>7 Weak
+<br/>8 Walk
+<br/>Other values for 'Type' act as 'Run Away'</div><br />
   <hr />
   <br />
 </div>
@@ -1206,7 +1732,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The use of this effect is unknown, and effect of its parameters are undefined.<br/>***This effect has never been seen to work.***</div><br />
+  <div class="descriptiondata">The use of this effect is unknown, and effect of its parameters are undefined.
+<br/>***This effect has never been seen to work.***</div><br />
   <hr />
   <br />
 </div>
@@ -1217,7 +1744,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Alignment Mask</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Detects the alignment specified by the 'Alignment Mask' field.<br/>Known values for 'Alignment Mask' are:<br/>0   Evil (Glow red)<br/>1   Neutral (Glow blue)<br/>2   Good (Glow Green)</div><br />
+  <div class="descriptiondata">Detects the alignment specified by the 'Alignment Mask' field.
+<br/>Known values for 'Alignment Mask' are:
+<br/>0   Evil (Glow red)
+<br/>1   Neutral (Glow blue)
+<br/>2   Good (Glow Green)</div><br />
   <hr />
   <br />
 </div>
@@ -1272,7 +1803,20 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Gives the targeted creature(s) immunity to melee weapons as specified by the 'Type' field. The 'Enchantment' field is used if 'Type' is set to 0.<br/>Known values for 'Type' are:<br/>0  Enchantment<br/>1  Magical<br/>2  Non-Magical<br/>3  Silver<br/>4  Non-Silver<br/>5  Silver / Non-Magical<br/>6  Two-Handed<br/>7  Non Two-Handed<br/>8  Cursed<br/>9  Non-Cursed<br/>10 Cold-Iron<br/>11 Non Cold-Iron</div><br />
+  <div class="descriptiondata">Gives the targeted creature(s) immunity to melee weapons as specified by the 'Type' field. The 'Enchantment' field is used if 'Type' is set to 0.
+<br/>Known values for 'Type' are:
+<br/>0  Enchantment
+<br/>1  Magical
+<br/>2  Non-Magical
+<br/>3  Silver
+<br/>4  Non-Silver
+<br/>5  Silver / Non-Magical
+<br/>6  Two-Handed
+<br/>7  Non Two-Handed
+<br/>8  Cursed
+<br/>9  Non-Cursed
+<br/>10 Cold-Iron
+<br/>11 Non Cold-Iron</div><br />
   <hr />
   <br />
 </div>
@@ -1283,7 +1827,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Undefined</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The use of this effect is unknown, and effect of its parameters are undefined.<br/>***This effect has never been seen to work.***</div><br />
+  <div class="descriptiondata">The use of this effect is unknown, and effect of its parameters are undefined.
+<br/>***This effect has never been seen to work.***</div><br />
   <hr />
   <br />
 </div>
@@ -1349,7 +1894,21 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Summons a number of monsters.<br/>Each creature files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect is equal to the 'Number' field / Creature Power Level.<br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = Type + 1. The .2da files must be edited to add valid creature names. A file named SPBOOM.bam is required in the override directory for this effect to work. The specific 2da files used are:<br/>0 MONSUM01 Monster Summon 1<br/>1 MONSUM02 Monster Summon 2<br/>2 MONSUM03 Monster Summon 3<br/>3 ANISUM01 Animal Summon 1<br/>4 ANISUM02 Animal Summon 2<br/>5 MONSUM01 Monster Summon 1 Hostile<br/>6 MONSUM02 Monster Summon 2 Hostile<br/>7 MONSUM03 Monster Summon 3 Hostile<br/>8 ANISUM01 Animal Summon 1 Hostile<br/>9 ANISUM02 Animal Summon 2 Hostile<br/>A custom .2da file can be entered in the resource field.<br/>If used from an external effect (.eff), the vvc field controls the bam file played when summoning.</div><br />
+  <div class="descriptiondata">Summons a number of monsters.
+<br/>Each creature files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect is equal to the 'Number' field / Creature Power Level.
+<br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = Type + 1. The .2da files must be edited to add valid creature names. A file named SPBOOM.bam is required in the override directory for this effect to work. The specific 2da files used are:
+<br/>0 MONSUM01 Monster Summon 1
+<br/>1 MONSUM02 Monster Summon 2
+<br/>2 MONSUM03 Monster Summon 3
+<br/>3 ANISUM01 Animal Summon 1
+<br/>4 ANISUM02 Animal Summon 2
+<br/>5 MONSUM01 Monster Summon 1 Hostile
+<br/>6 MONSUM02 Monster Summon 2 Hostile
+<br/>7 MONSUM03 Monster Summon 3 Hostile
+<br/>8 ANISUM01 Animal Summon 1 Hostile
+<br/>9 ANISUM02 Animal Summon 2 Hostile
+<br/>A custom .2da file can be entered in the resource field.
+<br/>If used from an external effect (.eff), the vvc field controls the bam file played when summoning.</div><br />
   <hr />
   <br />
 </div>
@@ -1393,7 +1952,9 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the chant effect to the targeted creature(s). Chant affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. The effect sets STATE_CHANT.<br/>'Modifier' must be in the [-6,5] range.<br/>Multiple chant effects are not cumulative.</div><br />
+  <div class="descriptiondata">Applies the chant effect to the targeted creature(s). Chant affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. The effect sets STATE_CHANT.
+<br/>'Modifier' must be in the [-6,5] range.
+<br/>Multiple chant effects are not cumulative.</div><br />
   <hr />
   <br />
 </div>
@@ -1448,7 +2009,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies the chant effect to the targeted creature(s).<br/>This effect works as the reverse of chant. The effect sets STATE_CHANTBAD.</div><br />
+  <div class="descriptiondata">Applies the chant effect to the targeted creature(s).
+<br/>This effect works as the reverse of chant. The effect sets STATE_CHANTBAD.</div><br />
   <hr />
   <br />
 </div>
@@ -1459,7 +2021,58 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Animation Sequence</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The Animation Sequence parameter sets which animation is shown. The known values of the Animation Sequence parameter are <br/>00,12,66  is Make Attack Motions<br/>01,06     is Fall Down, as if asleep<br/>02        is Spell Casting motions<br/>03        is Stronger Spell Casting Motions<br/>04,59     is Recieve Damage animation<br/>05        is quick combat stance<br/>09,13     is Make more attack motions<br/>10        is Lay Down Quickly<br/>11        is Walk and stop quickly<br/>14        is Third attack animation<br/>20,67     is the first Talk animation<br/>21,68     is Second Talk animation<br/>22,69     is third talk animation<br/>23,70	    is fidget while standing<br/>24,71	    is the second fidget while standing animation<br/>25,72	    is fidget while in attack stance<br/>26,73	    is the second fidget while in attack stance animation<br/>27,76	    is assume an attack stance from standing<br/>28,77	    is assume a stand from and attack stance<br/>29,56	    is the first attack animation<br/>30,57	    is the second attack animation<br/>31,58	    is the third attack animation<br/>32,62	    is the first spell animation<br/>33,63	    is the second spell animation<br/>34,64	    is the third spell animation<br/>35,65	    is getting up from sleep/death<br/>36	    is the first miscellaneous animation<br/>37	    is the second miscellaneous animation<br/>38	    is the third miscellaneous animation<br/>39	    is the fourth miscellaneous animation<br/>40	    is the fifth miscellaneous animation<br/>41	    is the sixth miscellaneous animation<br/>42	    is the seventh miscellaneous animation<br/>43	    is the eigth miscellaneous animation<br/>44	    is the ninth miscellaneous animation<br/>45	    is the tenth miscellaneous animation<br/>46	    is the 11th miscellaneous animation<br/>47	    is the 12th miscellaneous animation<br/>48	    is the 13th miscellaneous animation<br/>49	    is the 14th miscellaneous animation<br/>50	    is the 15th miscellaneous animation<br/>51	    is the 16th miscellaneous animation<br/>52	    is the 17th miscellaneous animation<br/>53	    is the 18th miscellaneous animation<br/>54	    is the 19th miscellaneous animation<br/>55	    is the 20th miscellaneous animation<br/>60	    is the Run animation<br/>61	    is the Walk animation<br/>74	    is the standing animation<br/>75	    is the attack stance animation<br/>Not all animations are valid for all chatacters. In such a case, no animation would be shown.</div><br />
+  <div class="descriptiondata">The Animation Sequence parameter sets which animation is shown. The known values of the Animation Sequence parameter are 
+<br/>00,12,66  is Make Attack Motions
+<br/>01,06     is Fall Down, as if asleep
+<br/>02        is Spell Casting motions
+<br/>03        is Stronger Spell Casting Motions
+<br/>04,59     is Recieve Damage animation
+<br/>05        is quick combat stance
+<br/>09,13     is Make more attack motions
+<br/>10        is Lay Down Quickly
+<br/>11        is Walk and stop quickly
+<br/>14        is Third attack animation
+<br/>20,67     is the first Talk animation
+<br/>21,68     is Second Talk animation
+<br/>22,69     is third talk animation
+<br/>23,70	    is fidget while standing
+<br/>24,71	    is the second fidget while standing animation
+<br/>25,72	    is fidget while in attack stance
+<br/>26,73	    is the second fidget while in attack stance animation
+<br/>27,76	    is assume an attack stance from standing
+<br/>28,77	    is assume a stand from and attack stance
+<br/>29,56	    is the first attack animation
+<br/>30,57	    is the second attack animation
+<br/>31,58	    is the third attack animation
+<br/>32,62	    is the first spell animation
+<br/>33,63	    is the second spell animation
+<br/>34,64	    is the third spell animation
+<br/>35,65	    is getting up from sleep/death
+<br/>36	    is the first miscellaneous animation
+<br/>37	    is the second miscellaneous animation
+<br/>38	    is the third miscellaneous animation
+<br/>39	    is the fourth miscellaneous animation
+<br/>40	    is the fifth miscellaneous animation
+<br/>41	    is the sixth miscellaneous animation
+<br/>42	    is the seventh miscellaneous animation
+<br/>43	    is the eigth miscellaneous animation
+<br/>44	    is the ninth miscellaneous animation
+<br/>45	    is the tenth miscellaneous animation
+<br/>46	    is the 11th miscellaneous animation
+<br/>47	    is the 12th miscellaneous animation
+<br/>48	    is the 13th miscellaneous animation
+<br/>49	    is the 14th miscellaneous animation
+<br/>50	    is the 15th miscellaneous animation
+<br/>51	    is the 16th miscellaneous animation
+<br/>52	    is the 17th miscellaneous animation
+<br/>53	    is the 18th miscellaneous animation
+<br/>54	    is the 19th miscellaneous animation
+<br/>55	    is the 20th miscellaneous animation
+<br/>60	    is the Run animation
+<br/>61	    is the Walk animation
+<br/>74	    is the standing animation
+<br/>75	    is the attack stance animation
+<br/>Not all animations are valid for all chatacters. In such a case, no animation would be shown.</div><br />
   <hr />
   <br />
 </div>
@@ -1481,7 +2094,16 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The type parameter makes references to Baldur's Gate casting effect graphics. These graphics are not 3D, nor are they sticky. The animations are uncompressed BAM files.<br/>Known values for 'Type' are:<br/>9   bluish circle with a white star in centre glowing around chest then exploding in a puff of smoke<br/>10  white ball with purple/blue spikes all around it's outside glowing around chest then exploding in a puff of smoke<br/>11  yellow light in an up and down line with yellow light moving around it making triangle shape glowing around chest then exploding in a bunch of sparks<br/>12  green ball with white flashing through it glowing around chest then exploding in a enlarge circle<br/>13  little black ball glowing around chest then exploding in a puff of smoke<br/>14  purple circle with cloud in centre glowing around chest then exploding in a bunch of sparks<br/>15  red ball glowing around chest then exploding in a bunch of sparks<br/>16  lightning in small circle around chest then explodes out to a larger lightning circle around chest</div><br />
+  <div class="descriptiondata">The type parameter makes references to Baldur's Gate casting effect graphics. These graphics are not 3D, nor are they sticky. The animations are uncompressed BAM files.
+<br/>Known values for 'Type' are:
+<br/>9   bluish circle with a white star in centre glowing around chest then exploding in a puff of smoke
+<br/>10  white ball with purple/blue spikes all around it's outside glowing around chest then exploding in a puff of smoke
+<br/>11  yellow light in an up and down line with yellow light moving around it making triangle shape glowing around chest then exploding in a bunch of sparks
+<br/>12  green ball with white flashing through it glowing around chest then exploding in a enlarge circle
+<br/>13  little black ball glowing around chest then exploding in a puff of smoke
+<br/>14  purple circle with cloud in centre glowing around chest then exploding in a bunch of sparks
+<br/>15  red ball glowing around chest then exploding in a bunch of sparks
+<br/>16  lightning in small circle around chest then explodes out to a larger lightning circle around chest</div><br />
   <hr />
   <br />
 </div>
@@ -1492,7 +2114,15 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Shows the lighting effect (a .bam file) specified by the 'Type' value at the location specified by 'Target'. These effects are usually used for spell hits based on the spell school.<br/>Known values for 'Target' are:<br/>0      Current Location<br/>Non-0  Target Location<br/>Known values for 'Type' are (animations requiring BG1 graphics files are listed with a *):<br/>0	*Whisps of smoke float from the head<br/>1	*Droplets of water fall on the ground<br/>2	*Whisps of smoke travel to the ground<br/>38	*Mirror opens and closes behind target</div><br />
+  <div class="descriptiondata">Shows the lighting effect (a .bam file) specified by the 'Type' value at the location specified by 'Target'. These effects are usually used for spell hits based on the spell school.
+<br/>Known values for 'Target' are:
+<br/>0      Current Location
+<br/>Non-0  Target Location
+<br/>Known values for 'Type' are (animations requiring BG1 graphics files are listed with a *):
+<br/>0	*Whisps of smoke float from the head
+<br/>1	*Droplets of water fall on the ground
+<br/>2	*Whisps of smoke travel to the ground
+<br/>38	*Mirror opens and closes behind target</div><br />
   <hr />
   <br />
 </div>
@@ -1503,7 +2133,53 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The Slot Type parameter sets which slot the item is created in. Any items in that slot are replaced by this effect.  The Resource Key needs to be set to the item name (i.e. the .itm file name) to be created. Known values are:<br/>(NOTE: The type of slots are dependent on the character's death variable!)<br/>00 is Hand <br/>01 is Eyeball/Earring(Left)<br/>02 is Tattoo (Bottom Left)<br/>03 is Bracelet<br/>04 is Ring (Right)<br/>05 is Tattoo (Top Left)<br/>06 is Ring (Left)<br/>07 is Earring (Right)/Lens<br/>08 is Armor<br/>09 is Tattoo (Bottom Right)<br/>10 is SPECIAL: Replace default weapon until next reload of game<br/>11 is Quiver slot #1<br/>12 is Quiver slot #2<br/>13 is Quiver slot #3<br/>14 is Quiver slot #4<br/>15 is Quiver slot #5<br/>17 is Quick item slot #1<br/>18 is Quick item slot #2<br/>19 is Quick item slot #3<br/>20 is Quick item slot #4<br/>21 is Quick item slot #5<br/>22 is Inventory Slot #1 (Top Row)<br/>23 is Inventory Slot #2 (Bottom Row)<br/>24 is Inventory Slot #3 (Top Row)<br/>25 is Inventory Slot #4 (Bottom Row)<br/>26 is Inventory Slot #5 (Top Row)<br/>27 is Inventory Slot #6 (Bottom Row)<br/>28 is Inventory Slot #7 (Top Row)<br/>29 is Inventory Slot #8<br/>30 is Inventory Slot #9<br/>31 is Inventory Slot #10<br/>32 is Inventory Slot #11<br/>33 is Inventroy Slot #12<br/>34 is Inventory Slot #13<br/>35 is Inventory Slot #14<br/>36 is Inventory Slot #15<br/>37 is Inventory Slot #16<br/>38 is Inventory Slot #17<br/>39 is Inventory Slot #18<br/>40 is Inventory Slot #19<br/>41 is Inventory Slot #20<br/>43 is Weapon Slot #1<br/>44 is Weapon Slot #2<br/>45 is Weapon Slot #3<br/>46 is Weapon Slot #4</div><br />
+  <div class="descriptiondata">The Slot Type parameter sets which slot the item is created in. Any items in that slot are replaced by this effect.  The Resource Key needs to be set to the item name (i.e. the .itm file name) to be created. Known values are:
+<br/>(NOTE: The type of slots are dependent on the character's death variable!)
+<br/>00 is Hand 
+<br/>01 is Eyeball/Earring(Left)
+<br/>02 is Tattoo (Bottom Left)
+<br/>03 is Bracelet
+<br/>04 is Ring (Right)
+<br/>05 is Tattoo (Top Left)
+<br/>06 is Ring (Left)
+<br/>07 is Earring (Right)/Lens
+<br/>08 is Armor
+<br/>09 is Tattoo (Bottom Right)
+<br/>10 is SPECIAL: Replace default weapon until next reload of game
+<br/>11 is Quiver slot #1
+<br/>12 is Quiver slot #2
+<br/>13 is Quiver slot #3
+<br/>14 is Quiver slot #4
+<br/>15 is Quiver slot #5
+<br/>17 is Quick item slot #1
+<br/>18 is Quick item slot #2
+<br/>19 is Quick item slot #3
+<br/>20 is Quick item slot #4
+<br/>21 is Quick item slot #5
+<br/>22 is Inventory Slot #1 (Top Row)
+<br/>23 is Inventory Slot #2 (Bottom Row)
+<br/>24 is Inventory Slot #3 (Top Row)
+<br/>25 is Inventory Slot #4 (Bottom Row)
+<br/>26 is Inventory Slot #5 (Top Row)
+<br/>27 is Inventory Slot #6 (Bottom Row)
+<br/>28 is Inventory Slot #7 (Top Row)
+<br/>29 is Inventory Slot #8
+<br/>30 is Inventory Slot #9
+<br/>31 is Inventory Slot #10
+<br/>32 is Inventory Slot #11
+<br/>33 is Inventroy Slot #12
+<br/>34 is Inventory Slot #13
+<br/>35 is Inventory Slot #14
+<br/>36 is Inventory Slot #15
+<br/>37 is Inventory Slot #16
+<br/>38 is Inventory Slot #17
+<br/>39 is Inventory Slot #18
+<br/>40 is Inventory Slot #19
+<br/>41 is Inventory Slot #20
+<br/>43 is Weapon Slot #1
+<br/>44 is Weapon Slot #2
+<br/>45 is Weapon Slot #3
+<br/>46 is Weapon Slot #4</div><br />
   <hr />
   <br />
 </div>
@@ -1514,7 +2190,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Spell Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Disables spell casting abilities of the targeted creature(s), in the style specified by the 'Spell Type;' field.<br/>Known values for 'Type' are:<br/>0   Wizard<br/>1   Priest<br/>2   Innate</div><br />
+  <div class="descriptiondata">Disables spell casting abilities of the targeted creature(s), in the style specified by the 'Spell Type;' field.
+<br/>Known values for 'Type' are:
+<br/>0   Wizard
+<br/>1   Priest
+<br/>2   Innate</div><br />
   <hr />
   <br />
 </div>
@@ -1525,7 +2205,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Casts the spell specified by the resource key at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.<br/>Target-type 'Global' forcs all creatures within range to cast the spell.<br/>Known values for 'Type' are:<br/>0   Normal Casting<br/>1   Cast Instantly<br/>If the target is a container, the Type parameter is ignored and treated as 0</div><br />
+  <div class="descriptiondata">Casts the spell specified by the resource key at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.
+<br/>Target-type 'Global' forcs all creatures within range to cast the spell.
+<br/>Known values for 'Type' are:
+<br/>0   Normal Casting
+<br/>1   Cast Instantly
+<br/>If the target is a container, the Type parameter is ignored and treated as 0</div><br />
   <hr />
   <br />
 </div>
@@ -1536,7 +2221,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Spell Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The Resource Key must be set to the Spell Name (i.e. the .spl file name) to learn. The following values are valid for the Spell Type parameter:<br/>0-Mage<br/>1-Priest<br/>2-Innate (Useless in Torment: Spell Learned but NOT memorized.)<br/>Note that in order for the target to learn mage or priest spells, they must be able to cast spells of that type.</div><br />
+  <div class="descriptiondata">The Resource Key must be set to the Spell Name (i.e. the .spl file name) to learn. The following values are valid for the Spell Type parameter:
+<br/>0-Mage
+<br/>1-Priest
+<br/>2-Innate (Useless in Torment: Spell Learned but NOT memorized.)
+<br/>Note that in order for the target to learn mage or priest spells, they must be able to cast spells of that type.</div><br />
   <hr />
   <br />
 </div>
@@ -1547,7 +2236,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Casts the spell specified by the resource key, at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.<br/>Known values for 'Type' are:<br/>0   Normal Casting<br/>1   Cast Instantly<br/>This opcode does not work if the target is a container</div><br />
+  <div class="descriptiondata">Casts the spell specified by the resource key, at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.
+<br/>Known values for 'Type' are:
+<br/>0   Normal Casting
+<br/>1   Cast Instantly
+<br/>This opcode does not work if the target is a container</div><br />
   <hr />
   <br />
 </div>
@@ -1580,7 +2273,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Leave both parameters at all zeros for this Effect to work. The Resource Key must be set to the Creature Name (i.e. the .cre file name) to be summoned.<br/>If cast upon a party member, the summoned creature appears in the same spot as the target, and the target is moved over slightly.<br/>If cast upon a non party member, the summoned creature appears in the same spot as the target, and the target is removed totally.<br/>Timing modes 'Duration' and 'Delay with Duration' (Timing mode 3) both function as 'Permantent' and 'Delayed', accordingly.</div><br />
+  <div class="descriptiondata">Leave both parameters at all zeros for this Effect to work. The Resource Key must be set to the Creature Name (i.e. the .cre file name) to be summoned.
+<br/>If cast upon a party member, the summoned creature appears in the same spot as the target, and the target is moved over slightly.
+<br/>If cast upon a non party member, the summoned creature appears in the same spot as the target, and the target is removed totally.
+<br/>Timing modes 'Duration' and 'Delay with Duration' (Timing mode 3) both function as 'Permantent' and 'Delayed', accordingly.</div><br />
   <hr />
   <br />
 </div>
@@ -1789,7 +2485,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Gives the spell specified by the resource key to the targeted creature(s).<br/>Note that the abilities characters can have depend on the creature death variable.</div><br />
+  <div class="descriptiondata">Gives the spell specified by the resource key to the targeted creature(s).
+<br/>Note that the abilities characters can have depend on the creature death variable.</div><br />
   <hr />
   <br />
 </div>
@@ -1800,7 +2497,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Irrelevant</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised).<br/>Both parameters should be 0 (zero).</div><br />
+  <div class="descriptiondata">Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised).
+<br/>Both parameters should be 0 (zero).</div><br />
   <hr />
   <br />
 </div>
@@ -1833,7 +2531,15 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> IDS File</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'.<br/>Known values for 'IDS File' are:<br/>2   EA.ids<br/>3   General.ids<br/>4   Race.ids<br/>5   Class.ids<br/>6   Specific.ids<br/>7   Gender.ids<br/>8   Align.ids</div><br />
+  <div class="descriptiondata">Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'.
+<br/>Known values for 'IDS File' are:
+<br/>2   EA.ids
+<br/>3   General.ids
+<br/>4   Race.ids
+<br/>5   Class.ids
+<br/>6   Specific.ids
+<br/>7   Gender.ids
+<br/>8   Align.ids</div><br />
   <hr />
   <br />
 </div>
@@ -1954,7 +2660,44 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Effect Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Adds effects to any the target may have already had. Enoll Eva's Duplication and Zerthimon's Focus use this effect to work. The first byte Must be set to 1 to use this effect.<br/>Known values of 'Set Type' are:<br/>  0 Clear effect<br/>  1 Set effect<br/>Known values of 'Effect Type' are:<br/>  Sleeping(1) (01 00 00 00)--Sets the 'Asleep' status in target(s)<br/>  Berserk(2)  (02 00 00 00)--Sets the 'Berserk' status in target(s)<br/>  Panic(4)    (04 00 00 00)--Sets the 'Panic' status in target(s)<br/>  Stunned(8)  (08 00 00 00)--Sets the 'Stunned' status in target(s).  Works on the protagonist.<br/>  Curse(16)   (16 00 00 00)--Sets the 'Cursed' status. No penalties towards stats.<br/>  Helpless(32) (32 00 00 00)--Sets the 'Helpless' status.  No portrait change.<br/>  Frozen Death(64) (64 00 00 00)--Immobilizes.<br/>  Petrified Death(128)<br/>  Mirror Image(256)<br/>  Flaming Death(512)<br/>  Acid Death(1024)<br/>  Death(2048)<br/>  Silenced(4096)<br/>  Charmed(8192)<br/>  Poisoned(16384)<br/>  Protection from Critical Hits(32768)<br/>  Bonus Critical Hits(65536)<br/>  Infravision(131072)<br/>  Blind(262144)<br/>  Disease(524288)<br/>  Feeblemind(1048576)<br/>  Non-detection(2097152)<br/>  Duplicated(4194304)<br/>  Blessed(8388608)<br/>  Detect Evil(16777216)<br/>  Invisible(33554432)<br/>  Luck Bonus(67108864)<br/>  Aid(124217728)<br/>  Antimagic(268435456)<br/>  Blur(536870912)<br/>  Embalming(1073741824)<br/>  Confused(217483648)<br/>Note that all the death effects are in name only, with the exception of regular 'death', and will not fuction exactly like the regular effects, though they are dispelable by the same manner. The only way to remove frozen death is to kill the target or some other means, otherwise they will be permanately immobilized. Acid and Flaming Death seem to have no effect here. The same is true for Mirror Image.  All values between the values listed here are combinations of the effects.</div><br />
+  <div class="descriptiondata">Adds effects to any the target may have already had. Enoll Eva's Duplication and Zerthimon's Focus use this effect to work. The first byte Must be set to 1 to use this effect.
+<br/>Known values of 'Set Type' are:
+<br/>  0 Clear effect
+<br/>  1 Set effect
+<br/>Known values of 'Effect Type' are:
+<br/>  Sleeping(1) (01 00 00 00)--Sets the 'Asleep' status in target(s)
+<br/>  Berserk(2)  (02 00 00 00)--Sets the 'Berserk' status in target(s)
+<br/>  Panic(4)    (04 00 00 00)--Sets the 'Panic' status in target(s)
+<br/>  Stunned(8)  (08 00 00 00)--Sets the 'Stunned' status in target(s).  Works on the protagonist.
+<br/>  Curse(16)   (16 00 00 00)--Sets the 'Cursed' status. No penalties towards stats.
+<br/>  Helpless(32) (32 00 00 00)--Sets the 'Helpless' status.  No portrait change.
+<br/>  Frozen Death(64) (64 00 00 00)--Immobilizes.
+<br/>  Petrified Death(128)
+<br/>  Mirror Image(256)
+<br/>  Flaming Death(512)
+<br/>  Acid Death(1024)
+<br/>  Death(2048)
+<br/>  Silenced(4096)
+<br/>  Charmed(8192)
+<br/>  Poisoned(16384)
+<br/>  Protection from Critical Hits(32768)
+<br/>  Bonus Critical Hits(65536)
+<br/>  Infravision(131072)
+<br/>  Blind(262144)
+<br/>  Disease(524288)
+<br/>  Feeblemind(1048576)
+<br/>  Non-detection(2097152)
+<br/>  Duplicated(4194304)
+<br/>  Blessed(8388608)
+<br/>  Detect Evil(16777216)
+<br/>  Invisible(33554432)
+<br/>  Luck Bonus(67108864)
+<br/>  Aid(124217728)
+<br/>  Antimagic(268435456)
+<br/>  Blur(536870912)
+<br/>  Embalming(1073741824)
+<br/>  Confused(217483648)
+<br/>Note that all the death effects are in name only, with the exception of regular 'death', and will not fuction exactly like the regular effects, though they are dispelable by the same manner. The only way to remove frozen death is to kill the target or some other means, otherwise they will be permanately immobilized. Acid and Flaming Death seem to have no effect here. The same is true for Mirror Image.  All values between the values listed here are combinations of the effects.</div><br />
   <hr />
   <br />
 </div>
@@ -1965,7 +2708,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Method</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Plays BAM file along with other special features. <br/>Known bit values of Method are:<br/>1 - Repeat animation, otherwise duration counts, except for permanent which plays once.<br/>2 - Removes stickiness (background animation)</div><br />
+  <div class="descriptiondata">Plays BAM file along with other special features. 
+<br/>Known bit values of Method are:
+<br/>1 - Repeat animation, otherwise duration counts, except for permanent which plays once.
+<br/>2 - Removes stickiness (background animation)</div><br />
   <hr />
   <br />
 </div>
@@ -1976,7 +2722,16 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Method</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Plays BAM file along with other special features.<br/>Known bit values of Method are:<br/>0x1000   - Sticky flag (default is opposite as with #187)<br/>0x30000  - Both bits must be set, this causes Repeat animation<br/>0x100000 - RGB is used as transparency, fade totally at speed of DiceSize<br/>There are four effects doing exactly the same, this is probably to have resistances against opcode.<br/>#188 used for swarm curse<br/>#189 used mostly for Ravel's spells (black barbed curse, vampiric touch, blacksphere, cone of cold and stygian ice.)<br/>#190 appears to be unused<br/>#191 used for the rest of the spells.</div><br />
+  <div class="descriptiondata">Plays BAM file along with other special features.
+<br/>Known bit values of Method are:
+<br/>0x1000   - Sticky flag (default is opposite as with #187)
+<br/>0x30000  - Both bits must be set, this causes Repeat animation
+<br/>0x100000 - RGB is used as transparency, fade totally at speed of DiceSize
+<br/>There are four effects doing exactly the same, this is probably to have resistances against opcode.
+<br/>#188 used for swarm curse
+<br/>#189 used mostly for Ravel's spells (black barbed curse, vampiric touch, blacksphere, cone of cold and stygian ice.)
+<br/>#190 appears to be unused
+<br/>#191 used for the rest of the spells.</div><br />
   <hr />
   <br />
 </div>
@@ -1987,7 +2742,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Method</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Plays BAM file along with other special features.<br/>See use at #188</div><br />
+  <div class="descriptiondata">Plays BAM file along with other special features.
+<br/>See use at #188</div><br />
   <hr />
   <br />
 </div>
@@ -1998,7 +2754,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Method</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Plays BAM file along with other special features.<br/>See use at #188</div><br />
+  <div class="descriptiondata">Plays BAM file along with other special features.
+<br/>See use at #188</div><br />
   <hr />
   <br />
 </div>
@@ -2009,7 +2766,8 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Method</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Plays BAM file along with other special features.<br/>See use at #188</div><br />
+  <div class="descriptiondata">Plays BAM file along with other special features.
+<br/>See use at #188</div><br />
   <hr />
   <br />
 </div>
@@ -2020,7 +2778,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Drain Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Set the Dice Throws and Size to the random drain ammount you wish the effect to do (if you want no random ammount involved, leave it at 0d0).  If you wish to do a fixed ammount of draining as well, or by itself, set the Fixed Drain parameter to the ammount of health to drain (if you want no fixed ammount of HP drained, leave the value at 0). The Drain Type sets who receives and who delivers the hit points.<br/>Known values for 'Drain Type' are:<br/>0   the target receives hit points<br/>1   the caster receives hit points<br/>2   the target and caster hit points (this works even if both are at full health)<br/>3   the target receives hit points (this works even if both are at full health. No damage animation is shown)</div><br />
+  <div class="descriptiondata">Set the Dice Throws and Size to the random drain ammount you wish the effect to do (if you want no random ammount involved, leave it at 0d0).  If you wish to do a fixed ammount of draining as well, or by itself, set the Fixed Drain parameter to the ammount of health to drain (if you want no fixed ammount of HP drained, leave the value at 0). The Drain Type sets who receives and who delivers the hit points.
+<br/>Known values for 'Drain Type' are:
+<br/>0   the target receives hit points
+<br/>1   the caster receives hit points
+<br/>2   the target and caster hit points (this works even if both are at full health)
+<br/>3   the target receives hit points (this works even if both are at full health. No damage animation is shown)</div><br />
   <hr />
   <br />
 </div>
@@ -2053,7 +2816,24 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">This effect tints the screen depending on the value specified by the 'Type' field, to a colour specified by the using 'RGB Colour' field.<br/>The 'RGB Colour' field is handled as follows:<br/>First byte = Red (0-255)<br/>Second byte  = Green (0-255)<br/>Third byte = Blue (0-255)<br/>Know values for 'Type' are:<br/>0,1      Quick fade from light to dark, then quick fade to light<br/>2,3      Quick fade from light to dark, then instant light<br/>4,5,6,7  Fade from light to dark, goes for duration of effect, then fade to light<br/>8        No Effect<br/>9        Very fast light to black shift and back<br/>10       Instant black for the duration of the effect, then instant light<br/>100      Unknown<br/>200      Unknown<br/>The duration only applies to 4,5,6,7, and 10.<br/>The dice values control the fading speed.<br/>The resource field contains a wav resref.<br/>NB. Character colour will not be affected by this effect.</div><br />
+  <div class="descriptiondata">This effect tints the screen depending on the value specified by the 'Type' field, to a colour specified by the using 'RGB Colour' field.
+<br/>The 'RGB Colour' field is handled as follows:
+<br/>First byte = Red (0-255)
+<br/>Second byte  = Green (0-255)
+<br/>Third byte = Blue (0-255)
+<br/>Know values for 'Type' are:
+<br/>0,1      Quick fade from light to dark, then quick fade to light
+<br/>2,3      Quick fade from light to dark, then instant light
+<br/>4,5,6,7  Fade from light to dark, goes for duration of effect, then fade to light
+<br/>8        No Effect
+<br/>9        Very fast light to black shift and back
+<br/>10       Instant black for the duration of the effect, then instant light
+<br/>100      Unknown
+<br/>200      Unknown
+<br/>The duration only applies to 4,5,6,7, and 10.
+<br/>The dice values control the fading speed.
+<br/>The resource field contains a wav resref.
+<br/>NB. Character colour will not be affected by this effect.</div><br />
   <hr />
   <br />
 </div>
@@ -2064,7 +2844,11 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Effect</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Starts specific special effects on the targeted creature(s), dependent on the 'Effect' field.<br/>Known values for 'Effect' are:<br/>0   Adder's Kiss<br/>1   Ball Lightning<br/>2   Fizzle</div><br />
+  <div class="descriptiondata">Starts specific special effects on the targeted creature(s), dependent on the 'Effect' field.
+<br/>Known values for 'Effect' are:
+<br/>0   Adder's Kiss
+<br/>1   Ball Lightning
+<br/>2   Fizzle</div><br />
   <hr />
   <br />
 </div>
@@ -2119,7 +2903,21 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Effect</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Set the resource key for the BAM file to apply to the creature. The Effect parameter sets the spell effect to apply to the creature:<br/>0   Cloak of Warding<br/>1   Shield<br/>2   Black Barbed Shield<br/>3   Pain Mirror<br/>4   Guardian Mantle<br/>6   Enoll Eva's Duplication<br/>7   Armor<br/>8   Antimagic Shell<br/>11  Flame Walk<br/>12  Protection from Evil<br/>13  Conflagration<br/>14  Infernal Shield<br/>15  Submerge the Will<br/>16  Balance in All Things</div><br />
+  <div class="descriptiondata">Set the resource key for the BAM file to apply to the creature. The Effect parameter sets the spell effect to apply to the creature:
+<br/>0   Cloak of Warding
+<br/>1   Shield
+<br/>2   Black Barbed Shield
+<br/>3   Pain Mirror
+<br/>4   Guardian Mantle
+<br/>6   Enoll Eva's Duplication
+<br/>7   Armor
+<br/>8   Antimagic Shell
+<br/>11  Flame Walk
+<br/>12  Protection from Evil
+<br/>13  Conflagration
+<br/>14  Infernal Shield
+<br/>15  Submerge the Will
+<br/>16  Balance in All Things</div><br />
   <hr />
   <br />
 </div>
@@ -2174,7 +2972,10 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Embalming Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">The embalming type parameter determines what affect is given to the target of the effect. <br/>A 0 will give the target 2-8 hit points and +1 AC for the duration of the spell. <br/>Any other value gives the target +2 hit points per level of the caster and +2 AC. <br/>Both effects last for the duration of the spell.</div><br />
+  <div class="descriptiondata">The embalming type parameter determines what affect is given to the target of the effect. 
+<br/>A 0 will give the target 2-8 hit points and +1 AC for the duration of the spell. 
+<br/>Any other value gives the target +2 hit points per level of the caster and +2 AC. 
+<br/>Both effects last for the duration of the spell.</div><br />
   <hr />
   <br />
 </div>
@@ -2185,7 +2986,12 @@ title: "Opcodes"
   <span class="parameterheading">Parameter #2:</span><span class="parameterdata"> Type</span><br />
   <span class="descriptionheading">Description:</span><br />
 
-  <div class="descriptiondata">Toggles all interactive elements of the game (e.g. the GUI, character selection etc), based on the 'Type' field.<br/>Known values of 'Type' are:<br/>0 Stop actions<br/>1 Enable actions<br/>This effect has no duration.<br/>NB. Scripts and animations continue to run</div><br />
+  <div class="descriptiondata">Toggles all interactive elements of the game (e.g. the GUI, character selection etc), based on the 'Type' field.
+<br/>Known values of 'Type' are:
+<br/>0 Stop actions
+<br/>1 Enable actions
+<br/>This effect has no duration.
+<br/>NB. Scripts and animations continue to run</div><br />
   <hr />
   <br />
 </div>

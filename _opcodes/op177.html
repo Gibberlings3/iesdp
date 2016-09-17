@@ -5,19 +5,28 @@ param1: "IDS Entry"
 param2: "IDS File"
 bg1: 1
 bg2: 1
-bgee: 0
-iwd1: 0
-iwd2: 0
-pst: 0
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
 ---
 Applies the eff file specified by the resource key to the targeted creature(s), if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'.
 <br/>NB. When using an eff to alter thac0/dmg bonus, set param1 = 0, and param2 = 2.
 <br/>Known values for 'IDS File' are:
-<br/>2   EA.ids
+<br/>2   EA.ids / EnemyAlly.ids (in IWD)
 <br/>3   General.ids
 <br/>4   Race.ids
 <br/>5   Class.ids
 <br/>6   Specific.ids
 <br/>7   Gender.ids
 <br/>8   Align.ids
-<br/>Note: This effect causes a crash if used by a container
+<br/>9   Kit.ids (only in EEs)
+
+{% capture note %}
+This effect causes a crash if used by a container<br/>
+PST: This effect doesn't exist and always crashes the game.<br/>
+IWD2: there was a note to not use this effect in older IESDP.
+{% endcapture %}
+
+{% include warning.html %}
+

@@ -1,0 +1,42 @@
+---
+n: 12
+name: "Damage"
+param1: "Fixed Damage"
+param2: "Damage Type"
+bg1: 0
+bg2: 0
+bgee: 0
+iwd1: 0
+iwd2: 0
+pst: 1
+---
+Set the Dice Throws and Size to the random damage you wish to do to the target (if you want no random damage done, leave it at 0d0).  If you wish to do fixed damage as well, or by itself, set the Fixed Damage parameter to the ammount of damage to do (if you want no fixed damage done, leave the value at 0).
+<br/>If a saving throw is made, the damage values are cut in half, including Fixed Damage.  To completely negate damage in the case of a successful saving throw, set the Resource Key to NEG.
+<br/>The following values are valid for Damage Type:
+<br/>0                is Crushing Damage
+<br/>1                is Lower HP to Fixed Damage value(Ignores random damage values)
+<br/>2                is Lower HP to Fixed Percent set by Fixed Damage value
+<br/>4                is Lower HP by 1/3 of the effect's damage (after random damage has been rolled)
+<br/>65536            is Acid Damage
+<br/>131072           is Cold Damage
+<br/>262144           is Electic Damage
+<br/>524288           is Fire Damage
+<br/>1048576          is Piercing Damage
+<br/>2097152          is Poison Damage
+<br/>4194304          is Magic Damage
+<br/>8388608          is Missile Damage
+<br/>16777216         is Slashing Damage
+<br/>33554432         is Magic Fire Damage
+<br/>67108864         is Magic Cold Damage
+<br/>134217728        is Stunning Damage
+<br/>The opcode uses the 'variable' field at 0x2c to determine which (if any) custom critical damage visual to play. Known values are:
+<br/> 0x01 - The Nameless One
+<br/> 0x02 - Annah
+<br/> 0x04 - Grace
+<br/> 0x08 - Nordom
+<br/> 0x10 - Vhailor
+<br/> 0x20 - Morte
+<br/> 0x40 - Dakkon
+<br/> 0x80 - Ignus
+<br/>Keep in mind that if a character makes a save for damage type 1 or 2 without the NEG Resource Key, the Fixed Damage will be cut in half, which will cause MORE HP loss!
+<br/>NB. 'Stunning' damage does not stun the target. Stunning damage cannot kill a creature, creatures are reduced to 1 HP and are knocked unconscious.

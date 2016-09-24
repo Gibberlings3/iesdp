@@ -12,11 +12,16 @@ Visible at: https://lynxlynxlynx.github.io/iesdp/
 - added quickjump button to all pages (hidden by default)
 - added forum link to the main menu
 - added forum&github links to the landing page
+- opcodes are now in individual files and partly merged for easier comparison
+- opcodes partly use styled notes
 
 # content changes
 - fixed chargen title
 - changelog note added
 - imported old releases back to 2002
 - integrated Argent77's fixes
+- removed various typos and copy/paste errors
+- fixed opcode count for totl
+- clarified missing opcodes for iwd2 (20, 36-37, 182, 187)
 
 Handy cheat sheet: http://jekyll.tips/jekyll-cheat-sheet/

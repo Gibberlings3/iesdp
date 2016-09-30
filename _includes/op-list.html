@@ -2,7 +2,36 @@
 	<div id="op{{ opcode.n }}" class="opcode">
 		<span class="opnumberdata">#{{ opcode.n }} ({{ opcode.n | dec_to_hex }})</span>
 
-		<span class="opnamedata">{{ opcode.name }}</span><br />
+		<span class="opnamedata">{{ opcode.name }}</span>
+
+		{% comment %}
+			Generate a list of opcode variants — what the other games use at the same op number.
+		{% endcomment %}
+		{% assign sisters = site.opcodes | where: 'n', {{opcode.n}} %}
+		{% assign prefix = true %}
+		{% for sis in sisters %}
+			{% if sis.bg1 == opcode.bg1 and sis.bg2 == opcode.bg2 and sis.iwd1 == opcode.iwd1 and sis.iwd2 == opcode.iwd2 and sis.pst == opcode.pst and sis.bgee == opcode.bgee %}
+				{% continue %}
+			{% endif %}
+			{% if prefix == true %}
+				Variants:
+				{% assign prefix = false %}
+			{% endif %}
+			{% if sis.bg1 == 1 %}
+				<a class="opvariant" href="{{site.fullurl}}/opcodes/bg1tots.htm#op{{opcode.n}}">BG1</a>
+			{% elsif sis.bg2 == 1 %}
+				<a class="opvariant" href="{{site.fullurl}}/opcodes/bg2tob.htm#op{{opcode.n}}">BG2</a>
+			{% elsif sis.bgee == 1 %}
+				<a class="opvariant" href="{{site.fullurl}}/opcodes/bgee.htm#op{{opcode.n}}">BGEE</a>
+			{% elsif sis.iwd1 == 1 %}
+				<a class="opvariant" href="{{site.fullurl}}/opcodes/iwd1totl.htm#op{{opcode.n}}">IWD1</a>
+			{% elsif sis.iwd2 == 1 %}
+				<a class="opvariant" href="{{site.fullurl}}/opcodes/iwd2.htm#op{{opcode.n}}">IWD2</a>
+			{% elsif sis.pst == 1 %}
+				<a class="opvariant" href="{{site.fullurl}}/opcodes/pst.htm#op{{opcode.n}}">PST</a>
+			{% endif %}
+		{% endfor %}
+		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">{{ opcode.param1 }}</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">{{ opcode.param2 }}</span><br />

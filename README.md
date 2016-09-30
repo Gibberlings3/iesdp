@@ -14,6 +14,7 @@ Visible at: https://lynxlynxlynx.github.io/iesdp/
 - added forum&github links to the landing page
 - opcodes are now in individual files and partly merged for easier comparison
 - opcodes partly use styled notes
+- opcodes now have links to versions in other engines
 
 # content changes
 - fixed chargen title

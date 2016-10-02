@@ -1,6 +1,6 @@
 # iesdp
 
-Visible at: https://lynxlynxlynx.github.io/iesdp/
+Visible at: https://gibberlings3.github.io/iesdp/
 
 # structural changes so far
 - partly jekyllized

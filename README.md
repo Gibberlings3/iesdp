@@ -23,6 +23,13 @@ Visible at: https://gibberlings3.github.io/iesdp/
 - integrated Argent77's fixes
 - removed various typos and copy/paste errors
 - fixed opcode count for totl
-- clarified missing opcodes for iwd2 (20, 36-37, 182, 187)
+- clarified missing opcodes for iwd2 (20, 36-37, 182, 187) and pst (80, 81)
+- fixed inaccessible iwd1 ids file
+
+# how it works
+Since Github pages don't allow plugins, we have to use an extra step in
+deployment. Travis, when checking for syntax errors, also pushes the resulting
+Jekyll build back to the gh-pages branch. That is what is displayed if you
+visit the URL at the top. Actual work happens on the master branch.
 
 Handy cheat sheet: http://jekyll.tips/jekyll-cheat-sheet/

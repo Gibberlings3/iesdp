@@ -186,10 +186,17 @@ IWD2 uses different parameters altogether.
 <br>2   Percentage Modifier -&gt; Key = (Key * 'Key Modifier' value) / 100
 <br>3   Cumulative Modifier -&gt; Same as 0
 
-<p>
-Note: When this opcode is stacked, the values of the Key Modifier are stacked,
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+When this opcode is stacked, the values of the Key Modifier are stacked,
  not the number of attacks.
-</p>
+
+  </div>
+</div>
+
 
 
 
@@ -229,7 +236,16 @@ PST does not support Type 3, while BG(2)EE uses it differently.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the state_sleeping flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
-<br/>NB. Does not remove the state_helpless flag.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Does not remove the state_helpless flag.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -266,11 +282,22 @@ PST does not support Type 3, while BG(2)EE uses it differently.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the berserk effect to the targeted creature(s).
 <br/>Target will uncontrollably attack enemies if any are in view, and will occasionally
-attack neutral creatures. This effect only affects party members.
+attack neutral creatures.
 
 <p>
 The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag.
 </p> 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect only affects party members.
+
+  </div>
+</div>
+
 
 
 
@@ -309,7 +336,17 @@ The second paragraph hasn't been verified for PST and BG1 yet, but likely holds.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the state_beserk flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
 
 
 
@@ -418,7 +455,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Charisma = Charisma + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Charisma = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Charisma = (Charisma * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -615,7 +652,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Constitution = Constitution + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Constitution = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Constitution = (Constitution * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -642,7 +679,17 @@ At least in BG2 and EEs, this effect only affects player characters.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the poison effect from the targeted creature(s).
-<br/>This effect ignores durations attributed to it.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+This effect ignores durations attributed to it.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -717,8 +764,28 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/> 0x20 - Morte
 <br/> 0x40 - Dakkon
 <br/> 0x80 - Ignus
-<br/>Keep in mind that if a character makes a save for damage type 1 or 2 without the NEG Resource Key, the Fixed Damage will be cut in half, which will cause MORE HP loss!
-<br/>NB. 'Stunning' damage does not stun the target. Stunning damage cannot kill a creature, creatures are reduced to 1 HP and are knocked unconscious.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Keep in mind that if a character makes a save for damage type 1 or 2 without the NEG Resource Key, the Fixed Damage will be cut in half, which will cause MORE HP loss!
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+'Stunning' damage does not stun the target. Stunning damage cannot kill a creature, creatures are reduced to 1 HP and are knocked unconscious.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -766,7 +833,18 @@ At least in BG2 and EEs, this effect only affects player characters.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This effect will instantly kill a creature. Leave both parameters at zero for this effect to work.  
-<br/>NOTE:  DO NOT use a timing mode of Duration or Permanent for this effect, or it will crash! To use this effect without a delay, simply set the timing mode to Delay, and the time to 0.
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+DO NOT use a timing mode of Duration or Permanent for this effect, or it will crash! To use this effect without a delay, simply set the timing mode to Delay, and the time to 0.
+
+  </div>
+</div>
+
+ 
 <br/>The Death State? parameter sets whether or not the CGAMESPRITE_STATE_DEAD is applied to the target:
 <br/>0 or any multiple of 4 (4,8,16,32...)-State set in target
 <br/>Any other-Target simply killed.
@@ -862,7 +940,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Dexterity = Dexterity + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Dexterity = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Dexterity = (Dexterity * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -908,8 +986,18 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> HP = HP + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> HP = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100
-<br/>NB. If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.
-<br/>NB. 'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -943,9 +1031,29 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>3   As 0 (does not affect current HP)
 <br/>4   As 1 (does not affect current HP)
 <br/>5   As 2 (does not affect current HP)
-<br/>NB. For non-permanent timing modes of 'Type' 2 or 5 use the base maximum HP value, and therefor override other 'Type' 2 or 5 modifiers.
-<br/>NB. If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.
-<br/>NB. 'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+For non-permanent timing modes of 'Type' 2 or 5 use the base maximum HP value, and therefor override other 'Type' 2 or 5 modifiers.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -985,7 +1093,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Intelligence = Intelligence + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Intelligence = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Intelligence = (Intelligence * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1039,7 +1147,17 @@ At least in BG2 and EEs, this effect only affects player characters.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Leave both parameters at all zeros for this Effect to work.
-<br/>This effect will not work with a timing mode of Duration or Permanent. All other timing modes function correctly.
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This effect will not work with a timing mode of Duration or Permanent. All other timing modes function correctly.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -1079,8 +1197,18 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Lore = Lore + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Lore = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Lore = (Lore * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
-<br/>NB. This effect does not work with Timing Mode 1.
+<br/><br/>'Statistic Modifier' can be positive or negative.
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This effect does not work with Timing Mode 1.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -1165,7 +1293,17 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Morale = Morale + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Morale = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Morale = (Morale * 'Statistic Modifier' value) / 100
-<br/>Note that any Morale-based effect (i.e. Panic) may be added or removed by this effect.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -1335,7 +1473,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1375,7 +1513,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1415,7 +1553,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1455,7 +1593,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1495,7 +1633,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1571,7 +1709,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1611,7 +1749,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1651,7 +1789,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1691,7 +1829,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1731,7 +1869,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 <br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1873,11 +2011,21 @@ The engine is hard-coded to allow these spells to be cast by a silenced creature
 <br/>11  Pink specs, some changing to white at the end of the effect
 <br/>12  White effects that very slowly fade out           
 <br/>13  Crash
-<br/>Known values for 'Type' are:
+<br/><br/>Known values for 'Type' are:
 <br/>1   Sparkle Puff
 <br/>2   No effect?
 <br/>3   Sparkle Shower
-<br/>Both of these params use only the lower 16 bits (upper bits might have other function).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Both of these params use only the lower 16 bits (upper bits might have other function).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -1925,7 +2073,7 @@ The engine is hard-coded to allow these spells to be cast by a silenced creature
 <br/>128 Level 8
 <br/>256 Level 9
 <br/>For a 'Spell Level' of 0, the amount of spell slots is doubled for the level specified by the 'Slot Amount Modifier' value and all levels below. The target creature(s) must have at least 1 slot at the selected level to have their slot count changed. If the resultant slot count is negative, the creature is given 12 slots.
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -1951,8 +2099,18 @@ The engine is hard-coded to allow these spells to be cast by a silenced creature
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Changes the targeted creature(s) from stone to flesh.<br/>
+		<div class="descriptiondata"> Changes the targeted creature(s) from stone to flesh.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2004,7 +2162,7 @@ Both parameters should be 0 (zero).
 <br/>0   Cumulative Modifier -> Strength = Strength + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Strength = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Strength = (Strength * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -2074,7 +2232,18 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect will make the target not stunned anymore. Cannot affect targets stunned by 'Set Status Effect(s)'. Leave both parameters to zero for this effect to function.
+		<div class="descriptiondata"> This effect will make the target not stunned anymore. Cannot affect targets stunned by 'Set Status Effect(s)'.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Leave both parameters to zero for this effect to function.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2102,7 +2271,17 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the invisibility effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2175,7 +2354,7 @@ Both parameters should be 0 (zero).
 <br/>0   Cumulative Modifier -> Wisdom = Wisdom + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Wisdom = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Wisdom = (Wisdom * 'Statistic Modifier' value) / 100
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -2332,11 +2511,21 @@ Both parameters should be 0 (zero).
 <br/>Look up the value for the Animation Set you wish to use for this effect in the RESDATA.INI file (it'll be the number in the brackets directly above it), then do the following:
 <br/>If you want the animation to be falsely/'clown' coloured, add 24576
 <br/>If you want the animation to be true coloured, add 57344
-<br/>There are several animations that SHOULD NOT be used with this effect. They are special, and will result in a CRASH!
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+There are several animations that SHOULD NOT be used with this effect. They are special, and will result in a CRASH!
 <br/>Iron Golem
 <br/>Pillar of Skulls
 <br/>Foundry Gears
 <br/>Mortuary Ghost
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2376,7 +2565,17 @@ Both parameters should be 0 (zero).
 <br/>0   Cumulative Modifier -> THAC0 = THAC0 + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> THAC0 = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> THAC0 = (THAC0 * 'Statistic Modifier' value) / 100
-<br/>NB. This effect adjusts the base stat, rather than modified THAC0.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect adjusts the base stat, rather than modified THAC0.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2579,7 +2778,17 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Inverts the alignment of the targeted creature(s).
-<br/>Does not affect the Protagonist.
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Does not affect the Protagonist.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2615,7 +2824,6 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the alignment of the targeted creature(s) to the value specified by 'Alignment'.
-<br/>Does not affect the Protagonist.
 <br/>Known values for 'Alignment' are:
 <br/>00   None
 <br/>17   Lawful Good
@@ -2627,6 +2835,17 @@ Both parameters should be 0 (zero).
 <br/>49   Chaotic Good
 <br/>50   Chaotic Neutral
 <br/>51   Chaotic Evil
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Does not affect the Protagonist.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2777,8 +2996,27 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect crashes the game.
-<br/>This effect has previously been referenced as Alchemy.
+		<div class="descriptiondata"> 
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This effect crashes the game.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect has previously been referenced as Alchemy.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2824,7 +3062,7 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 <br/>32  Level 6
 <br/>64  Level 7
 <br/>For a 'Spell Level' of 0, the amount of spell slots is doubled for the level specified by the 'Slot Amount Modifier' value and all levels below. The target creature(s) must have at least 1 slot at the selected level to have their slot count changed. If the resultant slot count is negative, the creature is given 12 slots.
-<br/>'Statistic Modifier' can be positive or negative.
+<br/><br/>'Statistic Modifier' can be positive or negative.
  </div>
 		<hr />
 
@@ -2851,7 +3089,17 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Gives the targeted creature(s) infravision.
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2879,8 +3127,28 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes infravision from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
-<br/>NB. This will not remove racial infravision.
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This will not remove racial infravision.
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2907,7 +3175,17 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the blur effect to the targeted creature(s). Graphical displacement is affected by movement rate.
-<br>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2990,7 +3268,17 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Leave both parameters at zero and the duration to 'permanent' for this effect to work. The resource key must be set to the name of the file you wish to use. Creatures summoned in this manner are in full control of the party.
-<br/>This effect REQUIRES a Bam file named SPBOOM in a bif or the override folder for this effect to work.  Without it, the effect WILL NOT WORK.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+This effect REQUIRES a Bam file named SPBOOM in a bif or the override folder for this effect to work.  Without it, the effect WILL NOT WORK.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3128,7 +3416,7 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
 <br/>Known values for 'Type' are:
 <br/>0 Reverse Gender
 <br/>1 Flat Value Modifier -> Gender = 'Statistic Modifier' value (values from gender.ids)
-<br/>The effect modifies stat 193.
+<br/><br/>The effect modifies stat 193.
  </div>
 		<hr />
 
@@ -3294,9 +3582,19 @@ PST treats all Type values above 1 as 1 - it does not support the percentage mod
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the blindness effect from the targeted creature(s).<br/>
-This effect ignores durations attributed to it.<br/>
+		<div class="descriptiondata"> Removes the blindness effect from the targeted creature(s).
+<br/>This effect ignores durations attributed to it.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3333,7 +3631,17 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat.
 <br/>This effect ignores durations attributed to it.
-<br/>NB. A creatures scripts do not while the creature is feebleminded.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+A creature's scripts do not run while the creature is feebleminded.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3359,9 +3667,19 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the feeblemind effect from the targeted creature(s).<br/>
-This effect ignores durations attributed to it.<br/>
+		<div class="descriptiondata"> Removes the feeblemind effect from the targeted creature(s).
+<br/>This effect ignores durations attributed to it.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3426,8 +3744,18 @@ Both parameters should be 0 (zero).
 <br/>7   Intelligence Penalty
 <br/>8   Wisdom Penalty
 <br/>9   Charisma Penalty
-<br/>'Damage' can be positive (penalty) or negative (bonus).
-<br/>Permanent timing modes require a duration for this effect to work.
+<br/><br/>'Damage' can be positive (penalty) or negative (bonus).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Permanent timing modes require a duration for this effect to work.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3455,7 +3783,17 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the disease effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
-<br>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3529,7 +3867,17 @@ PST: it is unclear if this effect exist or does anything!
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Remove the deafness effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
 
 
 
@@ -4131,7 +4479,17 @@ PST: it is unclear if this effect exists or does anything!
 <br/>0   Cumulative Modifier -> Level = Level + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Level = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Level = (Level * 'Statistic Modifier' value) / 100
-<br/>Note: In IWD2 the class to receive the change is specified at 0x2C
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+In IWD2 the class to receive the change is specified at 0x2C
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4215,11 +4573,21 @@ PST: it is unclear if this effect exists or does anything!
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The Regen Type parameter sets how the Regen/Time parameter works. 
-<br/>00 then all of the target's lost Hit Points will be restored
-<br/>01 then the Regen/Time parameter is the Maximum Hit Point percentage to replace each second 
-<br/>02 the Modifier is the amount of Hit Points to regenerate per second 
-<br/>03 then the Regen/Time parameter's value is the amount of seconds it takes to regenerate 1 Hit Point
-<br/>Permanent timing modes require a duration for this effect to work.
+<br/>0 then all of the target's lost Hit Points will be restored
+<br/>1 then the Regen/Time parameter is the Maximum Hit Point percentage to replace each second 
+<br/>2 the Modifier is the amount of Hit Points to regenerate per second 
+<br/>3 then the Regen/Time parameter's value is the amount of seconds it takes to regenerate 1 Hit Point
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Permanent timing modes require a duration for this effect to work.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4460,7 +4828,17 @@ Not seen to work in BG1.
 <br/>0   Cumulative Modifier -> Gold = Gold + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Gold = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Gold = (Gold * 'Statistic Modifier' value) / 100
-<br/>NB. This effect can only be used to lower the gold value.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect can only be used to lower the gold value.
+
+  </div>
+</div>
+
 
 
 
@@ -4764,7 +5142,17 @@ PST does not support the percentage modifier type (unknown what it actually does
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The use of this effect is unknown, and effect of its parameters are undefined.
-<br/>***This effect has never been seen to work.***
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This effect has never been seen to work.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4829,9 +5217,19 @@ PST does not support the percentage modifier type (unknown what it actually does
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes invisibility from the targeted creature(s).<br/>
-This effect ignores durations attributed to it.<br/>
+		<div class="descriptiondata"> Removes invisibility from the targeted creature(s).
+<br/>This effect ignores durations attributed to it.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4867,7 +5265,17 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the clairvoyance effect to the targeted creature(s).
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4903,7 +5311,17 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The use of this effect is unknown, and effect of its parameters are undefined.
-<br/>***This effect has never been seen to work.***
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This effect has never been seen to work.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5111,7 +5529,18 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Leave both parameters at all zeros for this Effect to work. To use the spell as a teleport to a point in the area, set the spell or item's target to Area.
+		<div class="descriptiondata"> To use the spell as a teleport to a point in the area, set the spell or item's target to Area.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Leave both parameters at all zeros for this Effect to work.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5138,7 +5567,17 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the knock effect to the targeted creature(s).
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5361,7 +5800,17 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the chant effect to the targeted creature(s). Chant affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. The effect sets STATE_CHANT.
 <br/>'Modifier' must be in the [-6,5] range.
-<br/>Multiple chant effects are not cumulative.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Multiple chant effects are not cumulative.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5414,7 +5863,17 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the petrification effect to the targeted creature(s). This effects kills & removes PC's from the party, and ends the game if used on the Protagonist (not in IWDs or PST).
-<br>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5488,9 +5947,20 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Renders the targeted creature(s) partially visible: removes normal invisibility, but not the improved invisibility state; the targeted is visible and attackable, but not targetable by spells.
+<br/>
 <br/>The effect has no meaning on visible targets.
 <br/>This effect has no duration.
-<br/>Leave both parameters at zero for this effect to work.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Leave both parameters at zero for this effect to work.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5526,6 +5996,7 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the chant effect to the targeted creature(s).
+<br/>
 <br/>This effect works as the reverse of chant. The effect sets STATE_CHANTBAD.
  </div>
 		<hr />
@@ -5624,7 +6095,17 @@ Both parameters should be 0 (zero).
 <br/>61	    is the Walk animation
 <br/>74	    is the standing animation
 <br/>75	    is the attack stance animation
-<br/>Not all animations are valid for all chatacters. In such a case, no animation would be shown.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Not all animations are valid for all chatacters. In such a case, no animation would be shown.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5877,52 +6358,63 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The Slot Type parameter sets which slot the item is created in. Any items in that slot are replaced by this effect.  The Resource Key needs to be set to the item name (i.e. the .itm file name) to be created. Known values are:
-<br/>(NOTE: The type of slots are dependent on the character's death variable!)
-<br/>00 is Hand 
-<br/>01 is Eyeball/Earring(Left)
-<br/>02 is Tattoo (Bottom Left)
-<br/>03 is Bracelet
-<br/>04 is Ring (Right)
-<br/>05 is Tattoo (Top Left)
-<br/>06 is Ring (Left)
-<br/>07 is Earring (Right)/Lens
-<br/>08 is Armor
-<br/>09 is Tattoo (Bottom Right)
-<br/>10 is SPECIAL: Replace default weapon until next reload of game
-<br/>11 is Quiver slot #1
-<br/>12 is Quiver slot #2
-<br/>13 is Quiver slot #3
-<br/>14 is Quiver slot #4
-<br/>15 is Quiver slot #5
-<br/>17 is Quick item slot #1
-<br/>18 is Quick item slot #2
-<br/>19 is Quick item slot #3
-<br/>20 is Quick item slot #4
-<br/>21 is Quick item slot #5
-<br/>22 is Inventory Slot #1 (Top Row)
-<br/>23 is Inventory Slot #2 (Bottom Row)
-<br/>24 is Inventory Slot #3 (Top Row)
-<br/>25 is Inventory Slot #4 (Bottom Row)
-<br/>26 is Inventory Slot #5 (Top Row)
-<br/>27 is Inventory Slot #6 (Bottom Row)
-<br/>28 is Inventory Slot #7 (Top Row)
-<br/>29 is Inventory Slot #8
-<br/>30 is Inventory Slot #9
-<br/>31 is Inventory Slot #10
-<br/>32 is Inventory Slot #11
-<br/>33 is Inventroy Slot #12
-<br/>34 is Inventory Slot #13
-<br/>35 is Inventory Slot #14
-<br/>36 is Inventory Slot #15
-<br/>37 is Inventory Slot #16
-<br/>38 is Inventory Slot #17
-<br/>39 is Inventory Slot #18
-<br/>40 is Inventory Slot #19
-<br/>41 is Inventory Slot #20
-<br/>43 is Weapon Slot #1
-<br/>44 is Weapon Slot #2
-<br/>45 is Weapon Slot #3
-<br/>46 is Weapon Slot #4
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The type of slots are dependent on the character's death variable!
+
+  </div>
+</div>
+
+
+<br/>00  Hand 
+<br/>01  Eyeball/Earring(Left)
+<br/>02  Tattoo (Bottom Left)
+<br/>03  Bracelet
+<br/>04  Ring (Right)
+<br/>05  Tattoo (Top Left)
+<br/>06  Ring (Left)
+<br/>07  Earring (Right)/Lens
+<br/>08  Armor
+<br/>09  Tattoo (Bottom Right)
+<br/>10  SPECIAL: Replace default weapon until next reload of game
+<br/>11  Quiver slot #1
+<br/>12  Quiver slot #2
+<br/>13  Quiver slot #3
+<br/>14  Quiver slot #4
+<br/>15  Quiver slot #5
+<br/>17  Quick item slot #1
+<br/>18  Quick item slot #2
+<br/>19  Quick item slot #3
+<br/>20  Quick item slot #4
+<br/>21  Quick item slot #5
+<br/>22  Inventory Slot #1 (Top Row)
+<br/>23  Inventory Slot #2 (Bottom Row)
+<br/>24  Inventory Slot #3 (Top Row)
+<br/>25  Inventory Slot #4 (Bottom Row)
+<br/>26  Inventory Slot #5 (Top Row)
+<br/>27  Inventory Slot #6 (Bottom Row)
+<br/>28  Inventory Slot #7 (Top Row)
+<br/>29  Inventory Slot #8
+<br/>30  Inventory Slot #9
+<br/>31  Inventory Slot #10
+<br/>32  Inventory Slot #11
+<br/>33  Inventroy Slot #12
+<br/>34  Inventory Slot #13
+<br/>35  Inventory Slot #14
+<br/>36  Inventory Slot #15
+<br/>37  Inventory Slot #16
+<br/>38  Inventory Slot #17
+<br/>39  Inventory Slot #18
+<br/>40  Inventory Slot #19
+<br/>41  Inventory Slot #20
+<br/>43  Weapon Slot #1
+<br/>44  Weapon Slot #2
+<br/>45  Weapon Slot #3
+<br/>46  Weapon Slot #4
  </div>
 		<hr />
 
@@ -6060,7 +6552,17 @@ Both parameters should be 0 (zero).
 <br/>0-Mage
 <br/>1-Priest
 <br/>2-Innate (Useless in Torment: Spell Learned but NOT memorized.)
-<br/>Note that in order for the target to learn mage or priest spells, they must be able to cast spells of that type.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+In order for the target to learn mage or priest spells, they must be able to cast spells of that type.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6090,7 +6592,17 @@ Both parameters should be 0 (zero).
 <br/>Known values for 'Type' are:
 <br/>0   Normal Casting
 <br/>1   Cast Instantly
-<br/>This opcode does not work if the target is a container in non-ee versions.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This opcode does not work if the target is a container in non-ee versions.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6143,7 +6655,17 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the find traps effect to the targeted creature(s).
-<br>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6196,7 +6718,7 @@ Both parameters should be 0 (zero).
 	<div id="op152" class="opcode">
 		<span class="opnumberdata">#152 (0x98)</span>
 
-		<span class="opnamedata">Play Movie</span>
+		<span class="opnamedata">Spell Effect: Play Movie</span>
 
 		
 		
@@ -6240,7 +6762,40 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Leave both parameters at all zeros for this Effect to work. The Resource Key must be set to the Movie Name to play. Known movies are ALYBIRTH, ARRV_IGN, ARRV_VHA, BAATOR, BISLOGO, CANNON, CARCERI, CONFLAG, CREDITS, CRETURN, CURSTD, DEATH, DRAGON, FINALE, FORTDOOR, FORTRESS, INTROH, MAZE1, MAZE2, METEOR, OPENING, OUTLANDS, RUNE, SIGIL, SS_ADETH, SS_MSLAB, SS_PHAROD, T1ABSORB, T1DEATH, T1ENTER, TIME, TSRLOGO.
+		<div class="descriptiondata"> Leave both parameters at all zeros for this Effect to work. The Resource Key must be set to the Movie Name to play.
+<br/>Known movies are:
+<br/>ALYBIRTH
+<br/>ARRV_IGN
+<br/>ARRV_VHA
+<br/>BAATOR
+<br/>BISLOGO
+<br/>CANNON
+<br/>CARCERI
+<br/>CONFLAG
+<br/>CREDITS
+<br/>CRETURN
+<br/>CURSTD
+<br/>DEATH
+<br/>DRAGON
+<br/>FINALE
+<br/>FORTDOOR
+<br/>FORTRESS
+<br/>INTROH
+<br/>MAZE1
+<br/>MAZE2
+<br/>METEOR
+<br/>OPENING
+<br/>OUTLANDS
+<br/>RUNE
+<br/>SIGIL
+<br/>SS_ADETH
+<br/>SS_MSLAB
+<br/>SS_PHAROD
+<br/>T1ABSORB
+<br/>T1DEATH
+<br/>T1ENTER
+<br/>TIME
+<br/>TSRLOGO
  </div>
 		<hr />
 
@@ -6267,8 +6822,19 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the sanctuary effect to the targeted creature(s).
+<br/>
 <br/>This effect sets stat #63 (SANCTUARY) to 1.
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6295,8 +6861,19 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the entangle visual effect to the targeted creature(s). Does not actually prevent the target from moving.
+<br/>
 <br/>This effect sets stat #62 (ENTANGLE) to 1.
-<br/>Both parameters should be set to 0.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be set to 0.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6332,6 +6909,7 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the minor globe visual effect to the targeted creature(s).
+<br/>
 <br/>This effect sets stat #64 (MINORGLOBE) to 1.
  </div>
 		<hr />
@@ -6359,8 +6937,19 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the protection from normal missiles cylinder visual effect to the targeted creature(s).
+<br/>
 <br/>This effect sets stat #65 (SHIELDGLOBE) to 1.
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6387,8 +6976,19 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the web effect to the targeted creature(s). The affected creature becomes immobile and its AI scripts stop running.
+<br/>
 <br/>This effect sets stats #58 (HELD) and #67 (WEB) to 1. It also sets the STATE_HELPLESS flag.
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6415,8 +7015,19 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the grease visual effect to the targeted creature(s). Does not actually affect the target's movement rate.
+<br/>
 <br/>This effect sets stat #66 (GREASE) to 1.
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6478,7 +7089,17 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the sanctuary effect from the targeted creature(s).
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6506,7 +7127,6 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the horror effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
-
  </div>
 		<hr />
 
@@ -6631,8 +7251,19 @@ Both parameters should be 0 (zero).
 		<div class="descriptiondata"> Applies the pause effect to the targeted creature(s). 
 This effect is similar to stun, except the targeted creature(s) scripts continue to run.
  Characters are still selectable.
+<br/>
 <br/>This effect sets stat #70 (CasterHold) to 1.
-<br/>Both parameters should be 0.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6820,7 +7451,17 @@ This effect is similar to stun, except the targeted creature(s) scripts continue
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Gives the spell specified by the resource key to the targeted creature(s).
-<br/>Note that the abilities characters can have depend on the creature death variable.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The abilities characters can have depend on the creature death variable.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6862,7 +7503,17 @@ This effect is similar to stun, except the targeted creature(s) scripts continue
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised).
-<br/>Both parameters should be 0 (zero).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -7293,7 +7944,17 @@ IWD2: there was a note to not use this effect in older IESDP.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies an effect when the specified item is equipped. 
-<br/>***This effect has never been seen to work.***
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This effect has never been seen to work.
+
+  </div>
+</div>
+
 
 
 
@@ -7911,7 +8572,17 @@ IWD2: Don't use.
 <br/>The duration only applies to 4,5,6,7, and 10.
 <br/>The dice values control the fading speed.
 <br/>The resource field contains a wav resref.
-<br/>NB. Character colour will not be affected by this effect.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Character colour will not be affected by this effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -8494,8 +9165,19 @@ IWD2: Don't use.
 <br/>Known values of 'Type' are:
 <br/>0 Stop actions
 <br/>1 Enable actions
+<br/>
 <br/>This effect has no duration.
-<br/>NB. Scripts and animations continue to run
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Scripts and animations continue to run
+
+  </div>
+</div>
+
  </div>
 		<hr />
 

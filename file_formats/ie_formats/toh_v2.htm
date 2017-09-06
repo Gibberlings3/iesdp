@@ -1,0 +1,95 @@
+---
+title: "TOH file format"
+---
+    <div class="title_main">TOH file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BGEE, BGEE, IWDEE, PSTEE</div><br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+       This file format serves a similar purpose (and has a similar structure to) TLK files. Version 2 of the TOH format combines the separate TOH/TOT files requried by version 1, while still allowing text from dialog.tlk to be overriden. The files are contained in the <a href="sav_v1.htm"> SAV files </a> in the savegame folders.<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+    <div class="fileHeader">Header</div>
+    This section is 14h bytes long.<br />
+    <br />
+    <table border="1" width="98%">
+      <colgroup>
+        <col width="5%" />
+        <col width="12%" />
+         <col width="*" />
+      </colgroup>
+      <thead>
+      <tr>
+        <th>Offset</th>
+        <th>Size (data type)</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+        <tr>
+          <td>0x0000</td>
+          <td>4 (char array)</td>
+          <td>Signature ('TLK ')</td>
+        </tr>
+        <tr>
+          <td>0x0004</td>
+          <td>4 (char array)</td>
+          <td>Version (0x02)</td>
+        </tr>
+        <tr>
+          <td>0x0008</td>
+          <td>4 (dword)</td>
+          <td><span class="unknown">Unknown</span></td>
+        </tr>
+        <tr>
+          <td>0x000c</td>
+          <td>4 (dword)</td>
+          <td>Number of strref entries in TOH file</td>
+        </tr>
+        <tr>
+          <td>0x0010</td>
+          <td>4 (dword)</td>
+          <td>Start offset of strref entries</td>
+        </tr>
+    </table>
+    <br />
+    <div class="fileHeader">Strref Entries</div>
+    These sections have 8h bytes.<br />
+    <br />
+    <table border="1" width="98%">
+      <colgroup>
+        <col width="5%" />
+        <col width="12%" />
+         <col width="*" />
+      </colgroup>
+      <thead>
+      <tr>
+        <th>Offset</th>
+        <th>Size (data type)</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+        <tr>
+          <td>0x0000</td>
+          <td>4 (dword)</td>
+          <td>String reference number. Values in TOH files are generally over 3,000,000. Smaller values can be used to override existing <a href="tlk_v1.htm">dialog.tlk </a>entries</td>
+        </tr>
+        <tr>
+          <td>0x0004</td>
+          <td>4 (dword)</td>
+          <td>Start offset of the override string (relative to the start of the Strref entries section)</td>
+        </tr>
+    </table>
+    </div>
+    <br />	
+	
+    <div class="fileHeader"><a name="tohv2_Strings"></a>TOH V2 Strings</div>
+    <div class="indent1">
+      This section is composed of null-terminated ASCII strings.
+    </div>	
+  </div>
+</div>

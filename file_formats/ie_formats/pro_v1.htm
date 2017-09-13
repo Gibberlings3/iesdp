@@ -4,8 +4,8 @@ title: "PRO file format"
     <div class="title_main">PRO file format</div>
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1"> BG2, BG2: ToB </div><br />
-    
+    <div class="indent1"> BG2, BG2: ToB, BGEE </div><br />
+
     <div class="fileHeader">General Description</div>
     <div class="indent1">
       This file format describes projectiles, and the files are referenced spells and projectile weapons. Projectile files can control:<br />
@@ -15,10 +15,10 @@ title: "PRO file format"
         <li>Projectile area of effect</li>
         <li>Projectile sound</li>
       </ul>
-      These files have constant length f8h bytes (no BAM), 512h bytes (single target), or 768 bytes (area effect).
+      These files have constant length 256 bytes (no BAM), 512 bytes (single target), or 768 bytes (area of effect).
     </div>
     <br />
-    
+
     <div class="fileHeader">Detailed Description</div>
     <div class="indent1">
       <br />
@@ -73,6 +73,7 @@ title: "PRO file format"
               <li>bit 3: Loop sound (0x18)</li>
               <li>bit 4: Do not affect direct target</li>
               <li>bit 5: Draw below animate objects</li>
+              <li>bit 6: Allow saving game (EE)</li>
             </ul>
             Further bits are unused.
           </td>
@@ -90,7 +91,7 @@ title: "PRO file format"
         <tr>
           <td>0x00020</td>
           <td>8 (resref)</td>
-          <td>Travelling VVC/BAM</td>
+          <td>Travelling <a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a></td>
         </tr>
         <tr>
           <td>0x00028</td>
@@ -114,10 +115,189 @@ title: "PRO file format"
           </td>
         </tr>
         <tr>
+          <td colspan="3"><b>The following fields are used by Enhanced Editions games only:</b></td>
+        </tr>
+        <tr>
           <td>0x0002a</td>
-          <td>214 (byte)</td>
+          <td>2 (word)</td>
+          <td>Projectile width</td>
+        </tr>
+        <tr>
+          <td>0x0002c</td>
+          <td>4 (dword)</td>
+          <td>Extended flags
+            <ul>
+              <li>Bit 0: Bounce from walls</li>
+              <li>Bit 1: Pass target</li>
+              <li>Bit 2: Draw centre VVC once</li>
+              <li>Bit 3: Hit immediately</li>
+              <li>Bit 4: Face target</li>
+              <li>Bit 5: Curved path</li>
+              <li>Bit 6: Start random frame</li>
+              <li>Bit 7: Pillar</li>
+              <li>Bit 8: Semi-transparent trail puff VEF</li>
+              <li>Bit 9: Tinted trail puff VEF</li>
+              <li>Bit 10: Multiple projectiles</li>
+              <li>Bit 11: Default spell on missed</li>
+              <li>Bit 12: Falling path</li>
+              <li>Bit 13: Comet</li>
+              <li>Bit 14: Lined up area of effect</li>
+              <li>Bit 15: Rectangular area of effect</li>
+              <li>Bit 16: Draw behind target</li>
+              <li>Bit 17: Casting glow effect</li>
+              <li>Bit 18: Travel door</li>
+              <li>Bit 19: Stop/fade after hit</li>
+              <li>Bit 20: Display message</li>
+              <li>Bit 21: Random path</li>
+              <li>Bit 22: Start random sequence</li>
+              <li>Bit 23: Colour pulse on hit</li>
+              <li>Bit 24: Touch projectile</li>
+              <li>Bit 25: Negate first creature target</li>
+              <li>Bit 26: Negate second creature target</li>
+              <li>Bit 27: Use either IDS</li>
+              <li>Bit 28: Delayed payload</li>
+              <li>Bit 29: Limited path count</li>
+              <li>Bit 30: IWD-style check (use entries from splprot.2da for first and second creature target)</li>
+              <li>Bit 31: Caster affected</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>0x00030</td>
+          <td>4 (strref)</td>
+          <td>Display message</td>
+        </tr>
+        <tr>
+          <td>0x00034</td>
+          <td>4 (dword)</td>
+          <td>Pulse colour (byte order: blue, green, red, unused) </td>
+        </tr>
+        <tr>
+          <td>0x00038</td>
+          <td>2 (word)</td>
+          <td>Colour speed</td>
+        </tr>
+        <tr>
+          <td>0x0003a</td>
+          <td>2 (word)</td>
+          <td>Screen shake amount</td>
+        </tr>
+        <tr>
+          <td>0x0003c</td>
+          <td>2 (word)</td>
+          <td>First creature target: Value<br />
+              <br />
+              If Extended Flags bit 30 is
+              <ul>
+                <li>unset: use IDS targets</li>
+                <li>set: use splprot.2da</li>
+              </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>0x0003e</td>
+          <td>2 (word)</td>
+          <td>First creature target: Type<br />
+              <br />
+              If Extended Flags bit 30 is unset: use IDS targets
+              <ul>
+                <li>2 EA.IDS</li>
+                <li>3 GENERAL.IDS</li>
+                <li>4 RACE.IDS</li>
+                <li>5 CLASS.IDS</li>
+                <li>6 SPECIFIC.IDS</li>
+                <li>7 GENDER.IDS</li>
+                <li>8 ALIGNMEN.IDS</li>
+                <li>9 KIT.IDS</li>
+              </ul>
+              If Extended Flags bit 30 is set: use entries from splprot.2da
+          </td>
+        </tr>
+        <tr>
+          <td>0x00040</td>
+          <td>2 (word)</td>
+          <td>Second creature target: Value</td>
+        </tr>
+        <tr>
+          <td>0x00042</td>
+          <td>2 (word)</td>
+          <td>Second creature target: Type</td>
+        </tr>
+        <tr>
+          <td>0x00044</td>
+          <td>8 (resref)</td>
+          <td>Default spell (<a href="spl_v1.htm">SPL</a>)</td>
+        </tr>
+        <tr>
+          <td>0x0004c</td>
+          <td>8 (resref)</td>
+          <td>Success spell (<a href="spl_v1.htm">SPL</a>)</td>
+        </tr>
+        <tr>
+          <td>0x00054</td>
+          <td>2 (word)</td>
+          <td>Angle increase minimum [PSTEE]</td>
+        </tr>
+        <tr>
+          <td>0x00056</td>
+          <td>2 (word)</td>
+          <td>Angle increase maximum [PSTEE]</td>
+        </tr>
+        <tr>
+          <td>0x00058</td>
+          <td>2 (word)</td>
+          <td>Curve minimum [PSTEE]</td>
+        </tr>
+        <tr>
+          <td>0x0005a</td>
+          <td>2 (word)</td>
+          <td>Curve maximum [PSTEE]</td>
+        </tr>
+        <tr>
+          <td>0x0005c</td>
+          <td>2 (word)</td>
+          <td>THAC0 bonus [PSTEE]</td>
+        </tr>
+        <tr>
+          <td>0x0005e</td>
+          <td>2 (word)</td>
+          <td>THAC0 bonus (non-actor) [PSTEE]</td>
+        </tr>
+        <tr>
+          <td>0x00060</td>
+          <td>2 (word)</td>
+          <td>Radius minimum [PSTEE]</td>
+        </tr>
+        <tr>
+          <td>0x00062</td>
+          <td>2 (word)</td>
+          <td>Radius maximum [PSTEE]</td>
+        </tr>
+        <tr>
+          <td>0x00064</td>
+          <td>156 (bytes)</td>
           <td>Unused</td>
         </tr>
+      </tbody>
+    </table>
+    <br />
+
+    The following struct is added when the projectile is a single target or area effect projectile (see 'Projectile type' at offset 0x00008). It has 100h (256) bytes.<br />
+    <br />
+    <table border="1" width="98%">
+      <colgroup>
+        <col width="5%" />
+        <col width="12%" />
+         <col width="*" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Offset</th>
+          <th>Size (datatype)</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
         <tr>
           <td>0x00100</td>
           <td>4 (dword)</td>
@@ -265,10 +445,11 @@ title: "PRO file format"
           <td>168 (bytes)</td>
           <td>Unused</td>
         </tr>
-      </table>
+      </tbody>
+    </table>
     <br />
-    
-    If the projectile is an area affect projectile then an additional struct is added to the file. It has 100h (256) bytes.<br />
+
+    If the projectile is an area effect projectile then an additional struct is added to the file. It has 100h (256) bytes.<br />
     <br />
     <table border="1" width="98%">
       <colgroup>
@@ -383,8 +564,75 @@ title: "PRO file format"
         <td>Cone width (1 to 359)</td>
       </tr>
       <tr>
-        <td>0x000226</td>
-        <td>218 (bytes)</td>
+        <td colspan="3"><b>The following fields are used by Enhanced Editions games only:</b></td>
+      </tr>
+      <tr>
+        <td>0x00226</td>
+        <td>2 (word)</td>
+        <td><span class="unknown"> Unused </span></td>
+      </tr>
+      <tr>
+        <td>0x00228</td>
+        <td>8 (resref)</td>
+        <td>Spread animation (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)</td>
+      </tr>
+      <tr>
+        <td>0x00230</td>
+        <td>8 (resref)</td>
+        <td>Ring animation (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)</td>
+      </tr>
+      <tr>
+        <td>0x00238</td>
+        <td>8 (resref)</td>
+        <td>Area sound (<a href="wavc_v1.htm">WAV</a>)</td>
+      </tr>
+      <tr>
+        <td>0x00240</td>
+        <td>4 (dword)</td>
+        <td>Extended flags
+          <ul>
+            <li>Bit 0: Paletted ring</li>
+            <li>Bit 1: Random speed</li>
+            <li>Bit 2: Start scattered</li>
+            <li>Bit 3: Paletted centre</li>
+            <li>Bit 4: Repeat scattering</li>
+            <li>Bit 5: Paletted animation</li>
+            <li>Bit 6: <span class="unknown"> Unused </span></li>
+            <li>Bit 7: <span class="unknown"> Unused </span></li>
+            <li>Bit 8: <span class="unknown"> Unused </span></li>
+            <li>Bit 9: Oriented fireball puffs</li>
+            <li>Bit 10: Use hit dice lookup</li>
+            <li>Bit 11: <span class="unknown"> Unused </span></li>
+            <li>Bit 12: <span class="unknown"> Unused </span></li>
+            <li>Bit 13: Blended area/ring animation</li>
+            <li>Bit 14: Glowing area/ring animation</li>
+            <li>Bit 15: Hit point limit</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>0x00244</td>
+        <td>2 (word)</td>
+        <td>Dice thrown for multiple targets</td>
+      </tr>
+      <tr>
+        <td>0x00246</td>
+        <td>2 (word)</td>
+        <td>Dice sides for multiple targets</td>
+      </tr>
+      <tr>
+        <td>0x00248</td>
+        <td>2 (word)</td>
+        <td>Animation granularity</td>
+      </tr>
+      <tr>
+        <td>0x0024a</td>
+        <td>2 (word)</td>
+        <td>Animation granularity divider</td>
+      </tr>
+      <tr>
+        <td>0x0024c</td>
+        <td>180 (bytes)</td>
         <td>Unused</td>
       </tr>
     </tbody>

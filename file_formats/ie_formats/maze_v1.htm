@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<!--  <meta charset="utf-8"> -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>MAZE file format</title>
+  <meta name="description" content="The IESDP (Infinity Engine Structures Description Project) is an effort to research the workings of the Bioware Infinity Engine(R), and act as a collective resource for those interested in such workings.
+">
+
+  
+
+
+
+
+
+  <link rel="stylesheet" href="../../css/main.css">
+
+<!--
+  <link rel="canonical" href="https://gibberlings3.github.io/iesdp/file_formats/ie_formats/maze_v1.htm">
+  <link rel="alternate" type="application/rss+xml" title="IESDP" href="https://gibberlings3.github.io/iesdp/feed.xml">
+-->
+</head>
+
+
+<body>
+
+<header class="site-header">
+
+
+
+
+
+
+
+
+    <hr />
+    <div id="buttonboxtop">
+      <div id="buttonstriptop">
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a> &nbsp;&bull;&nbsp;
+        <a href="http://gibberlings3.net/forums/index.php?showforum=54" target="_blank">Forum</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <a href="../../main.htm">
+        <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+      </a>
+    </div>
+
+</header>
+
+
+<div id="nonFooter">
+  <div id="content">
+
+    <div class="title_main">MAZE file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">PSTEE</div><br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+       This file format is used to randomise the layout of the Modron Maze. It is very similar to the maze structure found within <a href="gam_v1.1.htm#GAMEV1_1_Modron"> GAM V1.1 </a> for classic PST. A resource of this type can usually only be found inside <a href="sav_v1.htm"> SAV files </a> after the Modron Maze has been initialized by the game.<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Overall structure<br />
+      <div class="indent1">
+        <li><a href="#MAZEV1_0_Header">Header</a>
+        <li><a href="#MAZEV1_0_Entry">Maze Entry</a>
+      </div>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="MAZEV1_0_Header">Header</a></div>
+    <div class="indent1">
+      <br />
+      The main structure defines the layout of all maze areas, including special areas such as foyer, engine room or wizard room. By default it is 740h (1856) bytes long.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+        <tr>
+          <th>Offset</th>
+          <th>Size (data type)</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature ('MAZE')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (char array)</td>
+            <td>Version ('V1.0')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>64 * 28 (array of structs)</td>
+            <td>A 8 x 8 grid of <a href="#MAZEV1_0_Entry">Maze Entries</a></td>
+          </tr>
+          <tr>
+            <td>0x0708</td>
+            <td>4 (dword)</td>
+            <td># rows of areas (always 8)</td>
+          </tr>
+          <tr>
+            <td>0x070c</td>
+            <td>4 (dword)</td>
+            <td># columns of areas (always 8)</td>
+          </tr>
+          <tr>
+            <td>0x0710</td>
+            <td>4 (dword)</td>
+            <td>Wizard room position X</td>
+          </tr>
+          <tr>
+            <td>0x0714</td>
+            <td>4 (dword)</td>
+            <td>Wizard room position Y</td>
+          </tr>
+          <tr>
+            <td>0x0718</td>
+            <td>4 (dword)</td>
+            <td>Nordom's room position X</td>
+          </tr>
+          <tr>
+            <td>0x071c</td>
+            <td>4 (dword)</td>
+            <td>Nordom's room position Y</td>
+          </tr>
+          <tr>
+            <td>0x0720</td>
+            <td>4 (dword)</td>
+            <td>Foyer position X</td>
+          </tr>
+          <tr>
+            <td>0x0724</td>
+            <td>4 (dword)</td>
+            <td>Foyer position Y</td>
+          </tr>
+          <tr>
+            <td>0x0728</td>
+            <td>4 (dword)</td>
+            <td>Engine room position X</td>
+          </tr>
+          <tr>
+            <td>0x072c</td>
+            <td>4 (dword)</td>
+            <td>Engine room position Y</td>
+          </tr>
+          <tr>
+            <td>0x0730</td>
+            <td>4 (dword)</td>
+            <td>Total number of traps</td>
+          </tr>
+          <tr>
+            <td>0x0734</td>
+            <td>4 (dword)</td>
+            <td>Maze initialized (0: no, 1: yes)</td>
+          </tr>
+          <tr>
+            <td>0x0738</td>
+            <td>4 (dword)</td>
+            <td>Foyer maze blocker made (0: no, 1: yes)</td>
+          </tr>
+          <tr>
+            <td>0x073c</td>
+            <td>4 (dword)</td>
+            <td>Foyer engine blocker made (0: no, 1: yes)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="MAZEV1_0_Entry">Maze Entry</a></div>
+    <div class="indent1">
+      <br />
+      This structure defines the individual configuration of a single Modron Maze area. It has 1Ch (28) bytes.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+        <tr>
+          <th>Offset</th>
+          <th>Size (data type)</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Used (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>Accessible (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Is valid (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (dword)</td>
+            <td>Is trapped (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>4 (dword)</td>
+            <td>Trap type
+              <ul>
+                <li>0: Trap A</li>
+                <li>1: Trap B</li>
+                <li>2: Trap C</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0014</td>
+            <td>4 (dword)</td>
+            <td>Exits available at
+              <ul>
+                <li>Bit 0: East</li>
+                <li>Bit 1: West</li>
+                <li>Bit 2: North</li>
+                <li>Bit 3: South</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0018</td>
+            <td>4 (dword)</td>
+            <td>Populated (0: No, 1: Yes)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<a href="#" class="go-up">
+  &nbsp;
+</a>
+
+
+  </div>
+</div>
+
+<footer class="site-footer">
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="https://gibberlings3.github.io/iesdp" />
+        <input type="hidden" name="sitesearch" value="https://gibberlings3.github.io/iesdp" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+
+</footer>
+
+
+</body>
+</html>

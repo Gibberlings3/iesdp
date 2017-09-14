@@ -1,0 +1,206 @@
+---
+title: "MAZE file format"
+---
+    <div class="title_main">MAZE file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">PSTEE</div><br />
+    
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+       This file format is used to randomise the layout of the Modron Maze. It is very similar to the maze structure found within <a href="gam_v1.1.htm#GAMEV1_1_Modron"> GAM V1.1 </a> for classic PST. A resource of this type can usually only be found inside <a href="sav_v1.htm"> SAV files </a> after the Modron Maze has been initialized by the game.<br />
+    </div>
+    <br />
+    
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Overall structure<br />
+      <div class="indent1">
+        <li><a href="#MAZEV1_0_Header">Header</a>
+        <li><a href="#MAZEV1_0_Entry">Maze Entry</a>
+      </div>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="MAZEV1_0_Header">Header</a></div>
+    <div class="indent1">
+      <br />
+      The main structure defines the layout of all maze areas, including special areas such as foyer, engine room or wizard room. By default it is 740h (1856) bytes long.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+        <tr>
+          <th>Offset</th>
+          <th>Size (data type)</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature ('MAZE')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (char array)</td>
+            <td>Version ('V1.0')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>64 * 28 (array of structs)</td>
+            <td>A 8 x 8 grid of <a href="#MAZEV1_0_Entry">Maze Entries</a></td>
+          </tr>
+          <tr>
+            <td>0x0708</td>
+            <td>4 (dword)</td>
+            <td># rows of areas (always 8)</td>
+          </tr>
+          <tr>
+            <td>0x070c</td>
+            <td>4 (dword)</td>
+            <td># columns of areas (always 8)</td>
+          </tr>
+          <tr>
+            <td>0x0710</td>
+            <td>4 (dword)</td>
+            <td>Wizard room position X</td>
+          </tr>
+          <tr>
+            <td>0x0714</td>
+            <td>4 (dword)</td>
+            <td>Wizard room position Y</td>
+          </tr>
+          <tr>
+            <td>0x0718</td>
+            <td>4 (dword)</td>
+            <td>Nordom's room position X</td>
+          </tr>
+          <tr>
+            <td>0x071c</td>
+            <td>4 (dword)</td>
+            <td>Nordom's room position Y</td>
+          </tr>
+          <tr>
+            <td>0x0720</td>
+            <td>4 (dword)</td>
+            <td>Foyer position X</td>
+          </tr>
+          <tr>
+            <td>0x0724</td>
+            <td>4 (dword)</td>
+            <td>Foyer position Y</td>
+          </tr>
+          <tr>
+            <td>0x0728</td>
+            <td>4 (dword)</td>
+            <td>Engine room position X</td>
+          </tr>
+          <tr>
+            <td>0x072c</td>
+            <td>4 (dword)</td>
+            <td>Engine room position Y</td>
+          </tr>
+          <tr>
+            <td>0x0730</td>
+            <td>4 (dword)</td>
+            <td>Total number of traps</td>
+          </tr>
+          <tr>
+            <td>0x0734</td>
+            <td>4 (dword)</td>
+            <td>Maze initialized (0: no, 1: yes)</td>
+          </tr>
+          <tr>
+            <td>0x0738</td>
+            <td>4 (dword)</td>
+            <td>Foyer maze blocker made (0: no, 1: yes)</td>
+          </tr>
+          <tr>
+            <td>0x073c</td>
+            <td>4 (dword)</td>
+            <td>Foyer engine blocker made (0: no, 1: yes)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="MAZEV1_0_Entry">Maze Entry</a></div>
+    <div class="indent1">
+      <br />
+      This structure defines the individual configuration of a single Modron Maze area. It has 1Ch (28) bytes.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+        <tr>
+          <th>Offset</th>
+          <th>Size (data type)</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Used (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>Accessible (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Is valid (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (dword)</td>
+            <td>Is trapped (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>4 (dword)</td>
+            <td>Trap type
+              <ul>
+                <li>0: Trap A</li>
+                <li>1: Trap B</li>
+                <li>2: Trap C</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0014</td>
+            <td>4 (dword)</td>
+            <td>Exits available at
+              <ul>
+                <li>Bit 0: East</li>
+                <li>Bit 1: West</li>
+                <li>Bit 2: North</li>
+                <li>Bit 3: South</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0018</td>
+            <td>4 (dword)</td>
+            <td>Populated (0: No, 1: Yes)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

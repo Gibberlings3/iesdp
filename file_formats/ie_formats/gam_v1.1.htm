@@ -4,7 +4,7 @@ title: "GAM file format"
     <div class="title_main">GAM file format</div>
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1"> BG1, BG1: TotS, IWD, IWD:HoW, IWD: TotL</div>
+    <div class="indent1"> BG1, BG1: TotS, IWD, IWD:HoW, IWD: TotL, PST</div>
     <br />
     
     <div class="fileHeader">General Description</div>
@@ -24,7 +24,11 @@ title: "GAM file format"
         <li><a href="#GAMEV1_1_Stats">NPC kills statistics (embedded in NPC struct)</a>
         <li>NPC CRE file data
         <li><a href="#GAMEV1_1_Variable">Variables (in the GLOBAL namespace)</a>
+        <li><a href="#GAMEV1_1_KillVariable">Kill variables (PST-only)</a>
         <li><a href="#GAMEV1_1_Journal">Journal entries</a>
+        <li><a href="#GAMEV1_1_Modron">Modron Maze (PST-only)</a>
+        <li><a href="#GAMEV1_1_ModronEntry">Modron Maze Entry (PST-only)</a>
+        <li><a href="#GAMEV1_1_Bestiary">Bestiary (PST-only)</a>
       </div>
     </div>
     <br />
@@ -179,6 +183,9 @@ title: "GAM file format"
             <td>Offset to <a href="#GAMEV1_1_Journal"> journal entries </a></td>
           </tr>
           <tr>
+            <td colspan="3"><b>The following entries apply only to BG1 and IWD:</b></td>
+          </tr>
+          <tr>
             <td>0x0054</td>
             <td>4 (dword)</td>
             <td>Party Reputation (*10)</td>
@@ -214,8 +221,61 @@ title: "GAM file format"
           </tr>    
           <tr>
             <td>0x0064</td>
-            <td>80 (bytes)</td>
+            <td>4 (dword)</td>
+            <td>Save version (BG1 only):
+              <ul>
+                <li>0: BG1 without TotSC</li>
+                <li>1: BG1 + TotSC</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0068</td>
+            <td>76 (bytes)</td>
             <td><span class="unknown">Unknown</span></td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>The following entries apply only to PST:</b></td>
+          </tr>
+          <tr>
+            <td>0x0054</td>
+            <td>4 (dword)</td>
+            <td>Offset to <a href="#GAMEV1_1_Modron">Modron Maze struct</a></td>
+          </tr>
+          <tr>
+            <td>0x0058</td>
+            <td>4 (dword)</td>
+            <td>Party Reputation (*10)</td>
+          </tr>
+          <tr>
+            <td>0x0058</td>
+            <td>8 (resref)</td>
+            <td>Current area</td>
+          </tr>
+          <tr>
+            <td>0x0064</td>
+            <td>4 (dword)</td>
+            <td>Offset to <a href="#GAMEV1_1_KillVariable">Kill variables</a></td>
+          </tr>    
+          <tr>
+            <td>0x0068</td>
+            <td>4 (dword)</td>
+            <td>Count of <a href="#GAMEV1_1_KillVariable">Kill variables</a></td>
+          </tr>    
+          <tr>
+            <td>0x006c</td>
+            <td>4 (dword)</td>
+            <td>Offset to <a href="#GAMEV1_1_Bestiary">Bestiary structure</a></td>
+          </tr>    
+          <tr>
+            <td>0x0070</td>
+            <td>8 (resref)</td>
+            <td>Current area 2</td>
+          </tr>    
+          <tr>
+            <td>0x0078</td>
+            <td>64 (bytes)</td>
+            <td><span class="unknown">Unused</span></td>
           </tr>
         </tbody>
       </table>
@@ -644,6 +704,7 @@ title: "GAM file format"
     <br />
     
     <div class="fileHeader"><a name="GAMEV1_1_Variable">GAME V1.1 Game variables</a></div>
+    <div class="fileHeader"><a name="GAMEV1_1_KillVariable">GAME V1.1 Kill variables (PST-only)</a></div>
     <div class="indent1">
       <br /> 
       <table border="1" width="98%">
@@ -764,6 +825,204 @@ title: "GAM file format"
             <td>0x000b</td>
             <td>1 (byte)</td>
             <td>Location flag (0x1F = external TOT/TOH, 0xFF = internal TLK) </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="GAMEV1_1_Modron">GAME V1.1 Modron Maze (PST-only)</a></div>
+    <div class="indent1">
+      <br />
+      The maze structure defines the layout of all areas, inclusive special areas such as foyer, engine room or wizard room. It is 6B8h (1720) bytes long.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>64 * 26 (array of structs)</td>
+            <td>A 8 x 8 grid of <a href="#GAMEV1_1_ModronEntry">Modron Maze Entries</a></td>
+          </tr>
+        <tr>
+          <td>0x0680</td>
+          <td>4 (dword)</td>
+          <td># rows of areas (always 8)</td>
+        </tr>
+        <tr>
+          <td>0x0684</td>
+          <td>4 (dword)</td>
+          <td># columns of areas (always 8)</td>
+        </tr>
+        <tr>
+          <td>0x0688</td>
+          <td>4 (dword)</td>
+          <td>Wizard room position X</td>
+        </tr>
+        <tr>
+          <td>0x068c</td>
+          <td>4 (dword)</td>
+          <td>Wizard room position Y</td>
+        </tr>
+        <tr>
+          <td>0x0690</td>
+          <td>4 (dword)</td>
+          <td>Nordom's room position X</td>
+        </tr>
+        <tr>
+          <td>0x0694</td>
+          <td>4 (dword)</td>
+          <td>Nordom's room position Y</td>
+        </tr>
+        <tr>
+          <td>0x0698</td>
+          <td>4 (dword)</td>
+          <td>Foyer position X</td>
+        </tr>
+        <tr>
+          <td>0x069c</td>
+          <td>4 (dword)</td>
+          <td>Foyer position Y</td>
+        </tr>
+        <tr>
+          <td>0x06a0</td>
+          <td>4 (dword)</td>
+          <td>Engine room position X</td>
+        </tr>
+        <tr>
+          <td>0x06a4</td>
+          <td>4 (dword)</td>
+          <td>Engine room position Y</td>
+        </tr>
+        <tr>
+          <td>0x06a8</td>
+          <td>4 (dword)</td>
+          <td>Total number of traps</td>
+        </tr>
+        <tr>
+          <td>0x06ac</td>
+          <td>4 (dword)</td>
+          <td>Maze initialized (0: no, 1: yes)</td>
+        </tr>
+        <tr>
+          <td>0x06b0</td>
+          <td>4 (dword)</td>
+          <td>Foyer maze blocker made (0: no, 1: yes)</td>
+        </tr>
+        <tr>
+          <td>0x06b4</td>
+          <td>4 (dword)</td>
+          <td>Foyer engine blocker made (0: no, 1: yes)</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="GAMEV1_1_ModronEntry">GAME V1.1 Modron Maze Entry (PST-only)</a></div>
+    <div class="indent1">
+      <br />
+      Each modron maze entry defines the layout of traps and available exits for a single area of the maze. They have 1ah (26) bytes.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+        <tr>
+          <th>Offset</th>
+          <th>Size (data type)</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Used (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>Accessible (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Is valid (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (dword)</td>
+            <td>Is trapped (0: No, 1: Yes)</td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>4 (dword)</td>
+            <td>Trap type
+              <ul>
+                <li>0: Trap A</li>
+                <li>1: Trap B</li>
+                <li>2: Trap C</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0014</td>
+            <td>2 (word)</td>
+            <td>Exits available at
+              <ul>
+                <li>Bit 0: East</li>
+                <li>Bit 1: West</li>
+                <li>Bit 2: North</li>
+                <li>Bit 3: South</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0016</td>
+            <td>4 (dword)</td>
+            <td>Polulated (0: No, 1: Yes)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="GAMEV1_1_Bestiary">GAME V1.1 Bestiary (PST-only)</a></div>
+    <div class="indent1">
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>260 * 1 (bytes)</td>
+            <td><span class="unknown">Indicates whether the creature represented by the specific byte value is available in the bestiary (1) or not (0).</span></td>
           </tr>
         </tbody>
       </table>

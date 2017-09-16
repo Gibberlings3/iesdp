@@ -4,87 +4,152 @@ title: "TIS file format"
     <div class="title_main">TIS file format</div>
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div><br />
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2, BGEE</div><br />
 
     <div class="fileHeader">General Description</div>
     <div class="indent1">
-      This file format describes a tileset. TIS files are generally comprised of a large number of tiles, each of which consists of a palette and a rectangular block of pixels. Each pixel is an index into the associated palette. Each tile has its own palette and a block of pixels. The pixel data is not compressed. TIS files contain only the graphics for an area - the location information is stored in a .WED file.<br />
+      This file format describes a tileset. There are currently two variants available:<br />
       <br />
-      Engine specific notes:<br />
-      <div class="indent1">
-        &bull; PST can only load TIS files when they are stored in a BIFF file.<br />
-      </div>
+      <strong>1. Palette-based TIS</strong><br />
+      TIS files are generally comprised of a large number of tiles, each of which consists of a palette and a rectangular block of pixels. Each pixel is an index into the associated palette. Each tile has its own palette and a block of pixels. The pixel data is not compressed. TIS files contain only the graphics for an area - the location information is stored in a <a href="wed_v1.3.htm">WED file</a>.<br />
+      <br />
+      <strong>2. PVRZ-based TIS</strong><br />
+      This variant is only supported by <em>Enhanced Edition</em> games. Each tile definition refers to a block of pixels within an associated <a href="pvrz.htm">PVRZ file</a>. As with palette-based TIS this format contains only the graphics for an area - the location information is stored in a <a href="wed_v1.3.htm">WED file</a>.<br />
+      <br />
+      <strong>Engine specific notes:</strong>
+      <ul>
+        <li>PST can only load TIS files when they are stored in a BIFF file.</li>
+        <li>Palette-based TIS induces a noticeable performance hit and occasional visual glitches when used in <em>Enhanced Edition</em> games. It is highly recommended to use PVRZ-based TIS instead.</li>
+      </ul>
     </div>
     
     <br />
     
     <div class="fileHeader">Detailed Description</div>
     <div class="indent1">
-      Each tile consists of a 256 colour palette, with each entry being an RGBA value stored in BGRA order (note that the Alpha value is unused), followed by 8-bit pixel values, which are indices into the palette. The pixel values are row by row, from left to right and top to bottom. Index 0 is hardcoded to be the transparent index.<br />
+      <strong>Palette-based:</strong> Each tile consists of a 256 colour palette, with each entry being an RGBA value stored in BGRA order (note that the Alpha value is unused), followed by 8-bit pixel values, which are indices into the palette. The pixel values are row by row, from left to right and top to bottom. Index 0 is hardcoded to be the transparent index.<br />
+      <br />
+      <strong>PVRZ-based:</strong> Each tile consists of a block of pixels that is defined in an associated <a href="pvrz.htm">PVRZ file</a>.<br />
     <br />
     </div>
     
     <div class="fileHeader">Header</div><br />
     <div class="indent1">
-    The Header has a constant length of 18h bytes.<br />
+      The Header has a constant length of 18h (24) bytes.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (datatype)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (char array)</td>
+            <td>Signature ('TIS ')</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (char array)</td>
+            <td>Version ('V1 &nbsp;')</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>Count of tiles within this tileset</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (dword)</td>
+            <td>Length of a tile data block<br />
+            <br />
+            This value can be used to determine the correct TIS variant:
+            <ul>
+              <li><a href="#tis_v1_palette_tile">Palette-based</a>: always 5120 (0x1400)</li>
+              <li><a href="#tis_v1_pvrz_tile">PVRZ-based</a>: always 12 (0x000c)</li>
+            </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0010</td>
+            <td>4 (dword)</td>
+            <td>Size of the header (offset to tiles)</td>
+          </tr>
+          <tr>
+            <td>0x0014</td>
+            <td>4 (dword)</td>
+            <td>Dimension of 1 tile in pixels (64x64)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <br />
-    <table border="1" width="98%">
-      <colgroup>
-        <col width="5%" />
-        <col width="12%" />
-         <col width="*" />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Offset</th>
-          <th>Size (data type)</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tr>
-        <td>0x0000</td>
-        <td>(4 char )</td>
-        <td>Signature ('TIS ')</td>
-      </tr>
-      <tr>
-        <td>0x0004</td>
-        <td>(4 char)</td>
-        <td>Version ('V1 &nbsp;')</td>
-      </tr>
-      <tr>
-        <td>0x0008</td>
-        <td>(4 dword)</td>
-        <td>Count of tiles within this tileset</td>
-      </tr>
-      <tr>
-        <td>0x000c</td>
-        <td>(4 dword)</td>
-        <td>Length of tiles section</td>
-      </tr>
-      <tr>
-        <td>0x0010</td>
-        <td>(4 dword)</td>
-        <td>Size of the header (offset to tiles)</td>
-      </tr>
-      <tr>
-        <td>0x0014</td>
-        <td>(4 dword)</td>
-        <td>Dimension of 1 tile in pixels (64x64)</td>
-      </tr>
-    </table>
-    <br />
-    The tile data itself always starts at 0x18.<br />
+
+    <div class="fileHeader"><a name="tis_v1_palette_tile">Tile Data (Palette-based)</a></div><br />
     <div class="indent1">
+      The tile data itself always starts at 0x18. Each tile data block is 1400h (5120) bytes long.<br />
+      <br />
       <ul>
-        <li>One tile inside TIS files is 0x000c offset value&nbsp; bytes long</li>
-        <li>All tiles are composed of 0x0014 offset value pixels</li>
+        <li>One tile inside TIS files is <em>0x000c offset value</em> bytes long</li>
+        <li>All tiles are composed of <em>0x0014 offset value</em> pixels</li>
         <li>Usually in areas that contain doors/ overlays areas there are several more tiles than it may be visible on main area</li>
-        <li>Such a tile has size :&nbsp;&nbsp; (Width(in tiles)*Height(in tiles) + DoorsTilesClosedState + OverlayShapesTiles) *(offset 0x000c value) bytes</li>
+        <li>Such a tile has size :&nbsp;&nbsp; (Width(in tiles)*Height(in tiles) + DoorsTilesClosedState + OverlayShapesTiles) *(<em>offset 0x000c value</em>) bytes</li>
         <li>The special &quot;green&quot; colour is used to mark overlay areas in OverlayShapesTiles</li>
         <li>DoorTilesClosedState and OverlayShapesTiles are also referenced from WED files but as the alternative tiles from Tilemap structure and their appearance is defined by offset 0x0006 of this structure</li>
       </ul>
     </div>
-    </div>
+
+    <br />
+
+    <div class="fileHeader"><a name="tis_v1_pvrz_tile">Tile Data (PVRZ-based)</a></div><br />
+    <div class="indent1">
+      As with the palette-based variant the tile data itself always starts at 0x18. Each tile data block is 0ch (12) bytes long.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+           <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (datatype)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>PVRZ page<br />
+            <br />
+            Filenames of referenced <a href="pvrz.htm">PVRZ resources</a> are made up from the first character of the TIS filename, the four digits of the area code, the optional 'N' from night tilesets and this page value as a zero-padded two digits number. Example: AR2600N.TIS would refer to A2600Nxx.PVRZ where xx indicates the PVRZ page.<br />
+            <br />
+            Special: A value of -1 (0xffffffff) indicates a solid black tile.
+            </td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (dword)</td>
+            <td>PVRZ texture coordinate X</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td>PVRZ texture coordinate Y</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

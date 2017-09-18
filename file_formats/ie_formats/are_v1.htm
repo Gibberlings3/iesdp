@@ -4,23 +4,23 @@ title: "ARE file format"
     <div class="title_main">ARE file format</div>
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, BGEE</div>
     <br />
     
     
     <div class="fileHeader">Area overview</div>
     <div class="indent1">
-    An area in the Infinity Engine is made up of several files; ARE, TIS, WED, MOS, BMP and, depending on the complexity of the area, references to BCS, CRE, ITM, BAM and ACM files. The role of each file type is outlined below, based on area AR0001 and standard naming conventions:<br />
-    <div class="indent1">
-      &bull; AR0001.TIS contains the area graphics<br />
-      &bull; AR0001.WED contains the area region information (wall groups, alternate tiles, doors etc.)<br />
-      &bull; AR0001.MOS contains the area minimap graphics<br />
-      &bull; AR0001.ARE contains the area definition (area type, animations, containers etc.)<br />
-      &bull; AR0001SR.BMP contains the area search map<br />
-      &bull; AR0001LM.BMP contains the area light map<br />
-      &bull; AR0001HT.BMP contains the area height map<br />
-      &bull; AR0001.BCS contains the area script<br />
-    </div>
+    An area in the Infinity Engine is made up of several files; ARE, TIS, WED, MOS, BMP and, depending on the complexity of the area, references to BCS, CRE, ITM, BAM and ACM files. The role of each file type is outlined below, based on area AR0001 and standard naming conventions:
+    <ul>
+      <li>AR0001.TIS contains the area graphics</li>
+      <li>AR0001.WED contains the area region information (wall groups, alternate tiles, doors etc.)</li>
+      <li>AR0001.MOS contains the area minimap graphics (unused in BGEE)</li>
+      <li>AR0001.ARE contains the area definition (area type, animations, containers etc.)</li>
+      <li>AR0001SR.BMP contains the area search map</li>
+      <li>AR0001LM.BMP contains the area light map</li>
+      <li>AR0001HT.BMP contains the area height map</li>
+      <li>AR0001.BCS contains the area script</li>
+    </ul>
     </div>
     <br />
 
@@ -97,24 +97,48 @@ title: "ARE file format"
         <tr>
           <td>0x0014</td>
           <td>4 (dword)</td>
-          <td>Area flag (AREAFLAG.IDS)<br />
+          <td>Area flags (AREAFLAG.IDS)<br />
             <br />
             BG1:TotS, IWD:ToTL, BG2:ToB:
             <ul>
-              <li>bit 0: Save allowed</li>
+              <li>bit 0: Save not allowed</li>
               <li>bit 1: Tutorial area (not BG1)</li>
               <li>bit 2: Dead magic zone</li>
               <li>bit 3: Dream</li>
             </ul>
 
+            BGEE:
+            <ul>
+              <li>bit 0: Save not allowed</li>
+              <li>bit 1: Tutorial area</li>
+              <li>bit 2: Dead magic zone</li>
+              <li>bit 3: Dream</li>
+              <li>bit 4: Player1 death does not end the game</li>
+              <li>bit 5: Resting not allowed</li>
+              <li>bit 6: Travel not allowed</li>
+            </ul>
+
             PST:
             <ul>
-              <li>0 - Rest allowed</li>
-              <li>2 - "You cannot rest here."</li>
-              <li>4 - "You cannot rest right now."</li>
-              <li>6 - "You must obtain permission to rest here."</li>
+              <li>bit 0: Save not allowed</li>
+              <li>bit 1: "You cannot rest here."</li>
+              <li>bit 2: "Too dangerous to rest."</li>
+              <li>bit 1+2: "You must obtain permission to rest here."</li>
             </ul>
-            In between values mirror the preceeding one. Values higher than those listed are treated as 0.
+
+            PSTEE:
+            <ul>
+              <li>Bit 0: Save not allowed</li>
+              <li>Bit 1: <span class="unknown">Unknown</span></li>
+              <li>bit 2: Dead magic zone</li>
+              <li>bit 3: Dream</li>
+              <li>bit 4: Player1 death does not end the game</li>
+              <li>bit 5: Resting not allowed</li>
+              <li>bit 6: Travel not allowed</li>
+              <li>bit 7: "You cannot rest here."</li>
+              <li>bit 8: "Too dangerous to rest."</li>
+              <li>bit 7+8: "You must obtain permission to rest here."</li>
+            </ul>
           </td>
         </tr>
         <tr>
@@ -180,9 +204,9 @@ title: "ARE file format"
         <tr>
           <td>0x0048</td>
           <td>2 (word)</td>
-          <td>Area flags (AREATYPE.IDS)
+          <td>Area type flags (AREATYPE.IDS)<br />
             <br />
-            BG1:TotS, IWD:ToTL, BG2:ToB:
+            BG1:TotS, IWD:ToTL, BG2:ToB, BGEE:
             <ul>
               <li>bit 0: Outdoor</li>
               <li>bit 1: Day/night</li>
@@ -194,19 +218,19 @@ title: "ARE file format"
               <li>bit 7: Can rest indoors</li>
             </ul>
 
-            PST:
+            PST, PSTEE:
             <ul>
-              <li>0: Hive</li>
-              <li>1: Hive night?</li>
-              <li>2: Clerk's Ward</li>
-              <li>3: Lower Ward</li>
-              <li>4: Ravel's Maze</li>
-              <li>5: Baator</li>
-              <li>6: Modron Cube</li>
-              <li>7: Fortress of Regrets</li>
-              <li>8: Curst</li>
-              <li>9: Carceri</li>
-              <li>10: Outdoors</li>
+              <li>Bit 0: Hive</li>
+              <li>Bit 1: <span class="unknown">Hive night?</span></li>
+              <li>Bit 2: Clerk's Ward</li>
+              <li>Bit 3: Lower Ward</li>
+              <li>Bit 4: Ravel's Maze</li>
+              <li>Bit 5: Baator</li>
+              <li>Bit 6: Rubikon</li>
+              <li>Bit 7: Fortress of Regrets</li>
+              <li>Bit 8: Curst</li>
+              <li>Bit 9: Carceri</li>
+              <li>Bit 10: Outdoors</li>
             </ul>
           </td>
         </tr>
@@ -223,7 +247,7 @@ title: "ARE file format"
         <tr>
           <td>0x004e</td>
           <td>2 (word)</td>
-          <td>Fog probability (unused)</td>
+          <td>Fog probability (BGEE only)</td>
         </tr>
         <tr>
           <td>0x0050</td>
@@ -233,7 +257,12 @@ title: "ARE file format"
         <tr>
           <td>0x0052</td>
           <td>2 (word)</td>
-          <td>Wind speed</td>
+          <td>BG1:TotS, IWD:ToTL, BG2:ToB:<br />
+              Wind speed (unused?)<br />
+              <br />
+              BGEE:<br />
+              Overlay transparency (only first byte)
+          </td>
         </tr>
         <tr>
           <td>0x0054</td>
@@ -416,18 +445,18 @@ title: "ARE file format"
         <tr>
           <td>0x00d4</td>
           <td>8 (resref)</td>
-          <td>BG2: ToB - Rest movie (day) <br />
+          <td>BG2: ToB, BGEE - Rest movie (day) <br />
               Others - <span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>0x00dc</td>
           <td>8 (resref)</td>
-          <td>BG2: ToB - Rest movie (night) <br />
+          <td>BG2: ToB, BGEE - Rest movie (night) <br />
               Others - <span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>0x00e4</td>
-          <td>56 (byte)</td>
+          <td>56 (bytes)</td>
           <td>Unused</td>
         </tr>
       </tbody>
@@ -740,7 +769,8 @@ title: "ARE file format"
             <td>0x0068</td>
             <td>2 (word)</td>
             <td>Trap detection difficulty (%). <br />
-N.B. A value of 100 or higher will prevent the trap from being detected (e.g. via thief skills, Find Traps effect).</td>
+                N.B. A value of 100 or higher will prevent the trap from being detected (e.g. via thief skills, Find Traps effect).
+            </td>
           </tr>
           <tr>
             <td>0x006a</td>
@@ -795,22 +825,27 @@ N.B. A value of 100 or higher will prevent the trap from being detected (e.g. vi
           <tr>
             <td>0x00ac</td>
             <td>8 (resref)</td>
-            <td>Sound (PST)</td>
+            <td>Sound (PST, PSTEE)</td>
           </tr>
           <tr>
             <td>0x00b4</td>
-            <td>4 (dword)</td>
-            <td>Talk location point</td>
+            <td>2 (word)</td>
+            <td>Talk location point X coordinate (PST, PSTEE)</td>
+          </tr>
+          <tr>
+            <td>0x00b6</td>
+            <td>2 (word)</td>
+            <td>Talk location point Y coordinate (PST, PSTEE)</td>
           </tr>
           <tr>
             <td>0x00b8</td>
             <td>4 (strref)</td>
-            <td>Name</td>
+            <td>Speaker name (PST, PSTEE)</td>
           </tr>
           <tr>
             <td>0x00bc</td>
             <td>8 (resref)</td>
-            <td>Dialog file <span class="unknown">(PST)</span></td>
+            <td>Dialog file (PST, PSTEE)</td>
           </tr>
         </tbody>
       </table>
@@ -854,52 +889,52 @@ N.B. A value of 100 or higher will prevent the trap from being detected (e.g. vi
           <tr>
             <td>0x0024</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>1st resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x002c</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>2nd resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x0034</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>3rd resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x003c</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>4th resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x0044</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>5th resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x004c</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>6th resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x0054</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>7th resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x005c</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>8th resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x0064</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>9th resref of creature to spawn</td>
           </tr>
           <tr>
             <td>0x006c</td>
             <td>8 (resref)</td>
-            <td>Resref of creature to spawn</td>
+            <td>10th resref of creature to spawn</td>
           </tr>
             <tr>
             <td>0x0074</td>
@@ -1009,8 +1044,79 @@ N.B. A value of 100 or higher will prevent the trap from being detected (e.g. vi
             <td>Probability (night)</td>
           </tr>
           <tr>
+            <td colspan="3"><b>The following field applies only to BG1, BG2, PST and IWD:</b></td>
+          </tr>
+          <tr>
             <td>0x0090</td>
-            <td>56 (word)</td>
+            <td>56 (bytes)</td>
+            <td>Unused</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>The following fields apply only to BGEE:</b></td>
+          </tr>
+          <tr>
+            <td>0x0090</td>
+            <td>4 (dword)</td>
+            <td>Spawn frequency</td>
+          </tr>
+          <tr>
+            <td>0x0094</td>
+            <td>4 (dword)</td>
+            <td>Countdown</td>
+          </tr>
+          <tr>
+            <td>0x0098</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 1st creature slot (see <em>offset 0x0024</em>)</td>
+          </tr>
+          <tr>
+            <td>0x0099</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 2nd creature slot (see <em>offset 0x002c</em>)</td>
+          </tr>
+          <tr>
+            <td>0x009a</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 3rd creature slot (see <em>offset 0x0034</em>)</td>
+          </tr>
+          <tr>
+            <td>0x009b</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 4th creature slot (see <em>offset 0x003c</em>)</td>
+          </tr>
+          <tr>
+            <td>0x009c</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 5th creature slot (see <em>offset 0x0044</em>)</td>
+          </tr>
+          <tr>
+            <td>0x009d</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 6th creature slot (see <em>offset 0x004c</em>)</td>
+          </tr>
+          <tr>
+            <td>0x009e</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 7th creature slot (see <em>offset 0x0054</em>)</td>
+          </tr>
+          <tr>
+            <td>0x009f</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 8th creature slot (see <em>offset 0x005c</em>)</td>
+          </tr>
+          <tr>
+            <td>0x00a0</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 9th creature slot (see <em>offset 0x0064</em>)</td>
+          </tr>
+          <tr>
+            <td>0x00a1</td>
+            <td>1 (byte)</td>
+            <td>Spawn weight of 10th creature slot (see <em>offset 0x006c</em>)</td>
+          </tr>
+          <tr>
+            <td>0x00a2</td>
+            <td>38 (bytes)</td>
             <td>Unused</td>
           </tr>
         </tbody>
@@ -1859,7 +1965,8 @@ N.B. A value of 100 or higher will prevent the trap from being detected (e.g. vi
           <tr>
             <td>0x0028</td>
             <td>8 (resref)</td>
-            <td>Animation resref (BAM)</td>
+            <td>Animation resref (BGEE: BAM/WBM/PVRZ, Others: BAM)
+            </td>
           </tr>
           <tr>
             <td>0x0030</td>
@@ -1889,6 +1996,9 @@ N.B. A value of 100 or higher will prevent the trap from being detected (e.g. vi
                 <li>bit 10: (0) Don't use palette bitmap / (1) Use palatte bitmap</li>
                 <li>bit 11: (0) Not mirrored / (1) Mirrored</li>
                 <li>bit 12: (0) Hide in combat / (1) Show in combat</li>
+                <li>bit 13: Use WBM resref (BGEE)</li>
+                <li>bit 14: <span class="unknown">Underground?</span> (BGEE)</li>
+                <li>bit 15: Use PVRZ resref (BGEE)</li>
               </ul>
             </td>
           </tr>
@@ -1924,8 +2034,19 @@ N.B. A value of 100 or higher will prevent the trap from being detected (e.g. vi
           </tr>
           <tr>
             <td>0x0048</td>
-            <td>4 (dword)</td>
-            <td>Unused</td>
+            <td>2 (word)</td>
+            <td>Animation width (BGEE)<br />
+                <br />
+                Note: Only required for WBM and PVRZ resources (see Flags bit 13/15)
+            </td>
+          </tr>
+          <tr>
+            <td>0x004a</td>
+            <td>2 (word)</td>
+            <td>Animation height (BGEE)<br />
+                <br />
+                Note: Only required for WBM and PVRZ resources (see Flags bit 13/15)
+            </td>
           </tr>
         </tbody>
       </table>
@@ -2294,8 +2415,10 @@ N.B. A value of 100 or higher will prevent the trap from being detected (e.g. vi
           <tr>
             <td>0x0050</td>
             <td>4 (dword)</td>
-            <td>Reverb from REVERB.IDS (if REVERB.IDS exists)</span>
-          </td>
+            <td>If REVERB.IDS exists: Reverb from REVERB.IDS<br />
+                If REVERB.2DA exists: Reverb from REVERB.2DA<br />
+                Otherwise unused.
+            </td>
           </tr>
           <tr>
             <td>0x0054</td>

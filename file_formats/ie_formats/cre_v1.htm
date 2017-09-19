@@ -4,7 +4,7 @@ title: "CRE file format"
     <div class="title_main">CRE file format</div>
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB</div>
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, BGEE</div>
     <br />
 
     <div class="fileHeader">General Description</div>
@@ -71,34 +71,38 @@ title: "CRE file format"
             <td>Creature flags
               <ul>
                 <li><span class="unknown">bit 0 Show longname in tooltip</span></li>
-                <li>bit 1 No corpse</li>          
-                <li>bit 2 Keep corpse</li>
-                <li>bit 3 Original class was Fighter</li>
-                <li>bit 4 Original class was Mage</li>
-                <li>bit 5 Original class was Cleric</li>
-                <li>bit 6 Original class was Thief</li>
-                <li>bit 7 Original class was Druid</li>
-                <li>bit 8 Original class was Ranger</li>
-                <li>bit 9 Fallen Paladin</li>
-                <li>bit 10 Fallen Ranger</li>
-                <li>bit 11 Exportable</li>
-                <li><span class="unknown">bit 12 Hide injury status in tooltip</span></li>
-                <li>bit 13 Quest critical / affected by alternative damage</li>
-                <li><span class="unknown">bit 14 Can activate "Can not be used by NPC" triggers</span></li>
-                <li>bit 15 Been in Party</li>
-                <li><span class="unknown">bit 16 Restore item in hand</span></li>
-                <li><span class="unknown">bit 17 Un-sets bit 16</span></li>
-                <li><span class="unknown">bit 18 - 23 Unused</span></li>
-                <li><span class="unknown">bit 24 Related to random walk (ea)</span></li>
-                <li><span class="unknown">bit 25 Related to random walk (general)</span></li>
-                <li><span class="unknown">bit 26 Related to random walk (race)</span></li>
-                <li><span class="unknown">bit 27 Related to random walk (class)</span></li>
-                <li><span class="unknown">bit 28 Related to random walk (specific)</span></li>
-                <li><span class="unknown">bit 29 Related to random walk (gender)</span></li>
-                <li><span class="unknown">bit 30 Related to random walk (alignment)</span></li>
-                <li><span class="unknown">bit 31 Un-interruptable (memory only)</span></li>
+                <li>bit 1: No corpse</li>          
+                <li>bit 2: Keep corpse</li>
+                <li>bit 3: Original class was Fighter</li>
+                <li>bit 4: Original class was Mage</li>
+                <li>bit 5: Original class was Cleric</li>
+                <li>bit 6: Original class was Thief</li>
+                <li>bit 7: Original class was Druid</li>
+                <li>bit 8: Original class was Ranger</li>
+                <li>bit 9: Fallen Paladin</li>
+                <li>bit 10: Fallen Ranger</li>
+                <li>bit 11: Exportable</li>
+                <li><span class="unknown">bit 12: Hide injury status in tooltip</span></li>
+                <li>bit 13: Quest critical / affected by alternative damage</li>
+                <li><span class="unknown">bit 14: Can activate "Can not be used by NPC" triggers</span></li>
+                <li>bit 15: Been in Party</li>
+                <li><span class="unknown">bit 16: Restore item in hand</span></li>
+                <li><span class="unknown">bit 17: Un-sets bit 16</span></li>
+                <li><span class="unknown">bit 18 - 19 Unused</span></li>
+                <li>bit 20: Prevent exploding death (BGEE)</li>
+                <li><span class="unknown">bit 21: Unused</span></li>
+                <li>bit 22: Don't apply nightmare mode modifiers (BGEE)</li>
+                <li>bit 23: No tooltip (BGEE)</li>
+                <li><span class="unknown">bit 24: Related to random walk (ea)</span></li>
+                <li><span class="unknown">bit 25: Related to random walk (general)</span></li>
+                <li><span class="unknown">bit 26: Related to random walk (race)</span></li>
+                <li><span class="unknown">bit 27: Related to random walk (class)</span></li>
+                <li><span class="unknown">bit 28: Related to random walk (specific)</span></li>
+                <li><span class="unknown">bit 29: Related to random walk (gender)</span></li>
+                <li><span class="unknown">bit 30: Related to random walk (alignment)</span></li>
+                <li><span class="unknown">bit 31: Un-interruptable (memory only)</span></li>
               </ul>
-              A multiclass char is indicated is by the absence of any of the &quot;original class&quot; flags being set.<br />
+              A multiclass char is indicated by the absence of any of the &quot;original class&quot; flags being set.<br />
             </td>
           </tr>
           <tr>
@@ -135,6 +139,11 @@ title: "CRE file format"
             <td>0x0028</td>
             <td>4 (dword)</td>
             <td>Animation ID (ANIMATE.IDS)<br />
+                <br />
+                BGEE:<br />
+                Animation slots have been (for the most parts) externalised. Symbolic names are defined in ANIMATE.IDS. Animation definitions can be found in INI files where filenames are made up from the hexadecimal representation of the slot value and the ".INI" extension. Example: Animation of "0x6004 CLERIC_MALE_GNOME" is defined in 6004.INI.<br />
+                <br />
+                Other games:<br />
                 There is some structure to the ordering of these entries, however, it is mostly hard-coded into the .exe, and uneditable.
             </td>
           </tr>
@@ -191,7 +200,7 @@ title: "CRE file format"
           <tr>
             <td>0x003c</td>
             <td>8 (resref)</td>
-            <td>Large Portrait (BMP)</td>
+            <td>Large Portrait (PSTEE: BAM, Other games: BMP)</td>
           </tr>
           <tr>
             <td>0x0044</td>
@@ -376,102 +385,141 @@ title: "CRE file format"
           <tr>
             <td>0x006e</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Large swords proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1: Large swords proficiency<br />
+                Other games: Unused proficiency<br />
+                Note: Proficiencies are packed into 3-bit chunks for primary and secondary classes.
+            </td>
           </tr>
           <tr>
             <td>0x006f</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Small swords proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1: Small swords proficiency<br />
+                BG2: Unused proficiency<br />
+                Note: Proficiencies are packed into 3-bit chunks for primary and secondary classes.
+            </td>
           </tr>
           <tr>
             <td>0x0070</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Bows proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1: Bows proficiency<br />
+                BG2: Unused proficiency<br />
+                Note: Proficiencies are packed into 3-bit chunks for primary and secondary classes.
+            </td>
           </tr>
           <tr>
             <td>0x0071</td>
             <td>1 (byte)</td>
-              <td>(unused in BG2) Spears proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1: Spears proficiency<br />
+                BG2: Unused proficiency<br />
+                Note: Proficiencies are packed into 3-bit chunks for primary and secondary classes.
+            </td>
           </tr>
           <tr>
             <td>0x0072</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Blunt proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1: Blunt proficiency<br />
+                BG2: Unused proficiency<br />
+                Note: Proficiencies are packed into 3-bit chunks for primary and secondary classes.
+            </td>
           </tr>
           <tr>
             <td>0x0073</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Spiked proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1: Spiked proficiency<br />
+                BG2: Unused proficiency<br />
+                Note: Proficiencies are packed into 3-bit chunks for primary and secondary classes.
+            </td>
           </tr>
           <tr>
             <td>0x0074</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Axe proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1: Axe proficiency<br />
+                BG2: Unused proficiency<br />
+                Note: Proficiencies are packed into 3-bit chunks for primary and secondary classes.
+            </td>
           </tr>
           <tr>
             <td>0x0075</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Missile proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1: Missile proficiency<br />
+                BG2: Unused proficiency<br />
+                Note: Proficiencies are packed into 3-bit chunks for primary and secondary classes.
+            </td>
           </tr>
           <tr>
             <td>0x0076</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)</td>
           </tr>
           <tr>
             <td>0x0077</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)</td>
           </tr>
           <tr>
             <td>0x0078</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)</td>
           </tr>
           <tr>
             <td>0x0079</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)</td>
           </tr>
           <tr>
             <td>0x007a</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)</td>
           </tr>
           <tr>
             <td>0x007b</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1, BG2: Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)<br />
+                PSTEE: Unspent proficiencies
+            </td>
           </tr>
           <tr>
             <td>0x007c</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1, BG2: Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)<br />
+                PSTEE: Number of available inventory slots (0 indicates default number)
+            </td>
           </tr>
           <tr>
             <td>0x007d</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1, BG2: Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)<br />
+                BGEE: Nightmare mode modifiers applied
+            </td>
           </tr>
           <tr>
             <td>0x007e</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1, BG2: Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)<br />
+                BGEE: Translucency (range: 0-255)
+            </td>
           </tr>
           <tr>
             <td>0x007f</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1, BG2: Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)<br />
+                BGEE: Reputation gain/loss when killed<br />
+                PSTEE: MURDER variable increment value
+            </td>
           </tr>
           <tr>
             <td>0x0080</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1, BG2: Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)<br />
+                BGEE: Reputation gain/loss when joining party
+            </td>
           </tr>
           <tr>
             <td>0x0081</td>
             <td>1 (byte)</td>
-            <td>(unused in BG2) Unknown proficiency (Proficiencies maybe be packed into 3-bit chunks for the primary and secondary classes)</td>
+            <td>BG1, BG2: Unused proficiency (Proficiencies are packed into 3-bit chunks for primary and secondary classes)<br />
+                BGEE: Reputation gain/loss when leaving party
+            </td>
           </tr>
           <tr>
             <td>0x0082</td>
@@ -484,9 +532,128 @@ title: "CRE file format"
             <td>Tracking skill (0-100)</td>
           </tr>
           <tr>
+            <td colspan="3"><b>The following entry applies to BG1, BG2 and BGEE:</b></td>
+          </tr>
+          <tr>
             <td>0x0084</td>
             <td>32 (char array)</td>
             <td>Tracking target</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>The following entries apply only to PSTEE:</b></td>
+          </tr>
+          <tr>
+            <td>0x0084</td>
+            <td>4 (dword)</td>
+            <td>Current thief class experience</td>
+          </tr>
+          <tr>
+            <td>0x0088</td>
+            <td>4 (dword)</td>
+            <td>Current mage class experience</td>
+          </tr>
+          <tr>
+            <td>0x008c</td>
+            <td>1 (byte)</td>
+            <td>GOOD variable increment value</td>
+          </tr>
+          <tr>
+            <td>0x008d</td>
+            <td>1 (byte)</td>
+            <td>LAW variable increment value</td>
+          </tr>
+          <tr>
+            <td>0x008e</td>
+            <td>1 (byte)</td>
+            <td>LADY variable increment value</td>
+          </tr>
+          <tr>
+            <td>0x008f</td>
+            <td>1 (byte)</td>
+            <td>Faction (see <a href="../../files/ids/pst/faction.htm">FACTION.IDS</a>)</td>
+          </tr>
+          <tr>
+            <td>0x0090</td>
+            <td>1 (byte)</td>
+            <td>Team (see <a href="../../files/ids/pst/team.htm">TEAM.IDS</a>)</td>
+          </tr>
+          <tr>
+            <td>0x0091</td>
+            <td>1 (byte)</td>
+            <td>Species (see <a href="../../files/ids/pst/race.htm">RACE.IDS</a>)</td>
+          </tr>
+          <tr>
+            <td>0x0092</td>
+            <td>1 (byte)</td>
+            <td>Dialogue activation range</td>
+          </tr>
+          <tr>
+            <td>0x0093</td>
+            <td>1 (byte)</td>
+            <td>Selection circle size</td>
+          </tr>
+          <tr>
+            <td>0x0094</td>
+            <td>1 (byte)</td>
+            <td>Shield flags:
+              <ul>
+                <li>Bit 0: Normal shield</li>
+                <li>Bit 1: Black barbed shield</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x0095</td>
+            <td>1 (byte)</td>
+            <td><span class="unknown">Field of vision</span> (bitfield?)</td>
+          </tr>
+          <tr>
+            <td>0x0096</td>
+            <td>4 (dword)</td>
+            <td>Attribute flags:
+              <ul>
+                <li>Bit 0: Auto-calculate marker rectangle</li>
+                <li>Bit 1: Translucent</li>
+                <li>Bit 2: <span class="unknown">Unknown</span></li>
+                <li>Bit 3: <span class="unknown">Unknown</span></li>
+                <li>Bit 4: Increment death variable counter (deathvariable_DEAD)</li>
+                <li>Bit 5: Increment character type death counter</li>
+                <li>Bit 6: Character type death counter modifier</li>
+                <li>Bit 7: Increment faction death counter (KILL_faction)</li>
+                <li>Bit 8: Increment team death counter (KILL_team)</li>
+                <li>Bit 9: Invulnerable</li>
+                <li>Bit 10: Increment GOOD variable</li>
+                <li>Bit 11: Increment LAW variable</li>
+                <li>Bit 12: Increment LADY variable</li>
+                <li>Bit 13: Increment MURDER variable</li>
+                <li>Bit 14: Do not face target during dialogue</li>
+                <li>Bit 15: Turn all nearby creatures party-hostile when calling Help()</li>
+                <li>Bit 16: <span class="unknown">Unknown</span></li>
+                <li>Bit 17: <span class="unknown">Unknown</span></li>
+                <li>Bit 18: <span class="unknown">Unknown</span></li>
+                <li>Bit 19: <span class="unknown">Unknown</span></li>
+                <li>Bit 20: <span class="unknown">Unknown</span></li>
+                <li>Bit 21: <span class="unknown">Unknown</span></li>
+                <li>Bit 22: <span class="unknown">Unknown</span></li>
+                <li>Bit 23: <span class="unknown">Unknown</span></li>
+                <li>Bit 24: <span class="unknown">Unknown</span></li>
+                <li>Bit 25: <span class="unknown">Unknown</span></li>
+                <li>Bit 26: <span class="unknown">Unknown</span></li>
+                <li>Bit 27: <span class="unknown">Unknown</span></li>
+                <li>Bit 28: <span class="unknown">Unknown</span></li>
+                <li>Bit 29: <span class="unknown">Unknown</span></li>
+                <li>Bit 30: Do not increment globals (used in save games to prevent duplicate counting)</li>
+                <li>Bit 31: Area supplemental</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>0x009a</td>
+            <td>10 (bytes)</td>
+            <td>Unused</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Continued for all games:</b></td>
           </tr>
           <tr>
             <td>0x00a4</td>
@@ -563,7 +730,7 @@ title: "CRE file format"
           <tr>
             <td>0x0241</td>
             <td>1 (byte)</td>
-            <td>Racial enemy (RACE.IDS)</td>
+            <td>Racial enemy (<a href="../../files/ids/bg2/race.htm">RACE.IDS</a>)</td>
           </tr>
           <tr>
             <td>0x0242</td>
@@ -573,71 +740,40 @@ title: "CRE file format"
           <tr>
             <td>0x0244</td>
             <td>4 (dword)</td>
-            <td>Kit information<br />
-              NONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x00000000<br />
-              KIT_BARBARIAN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x00004000<br />
-              KIT_TRUECLASS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40000000<br />
-              KIT_BERSERKER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40010000<br />
-              KIT_WIZARDSLAYER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40020000<br />
-              KIT_KENSAI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40030000<br />
-              KIT_CAVALIER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40040000<br />
-              KIT_INQUISITOR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40050000<br />
-              KIT_UNDEADHUNTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40060000<br />
-              KIT_ARCHER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40070000<br />
-              KIT_STALKER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40080000<br />
-              KIT_BEASTMASTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40090000<br />
-              KIT_ASSASSIN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x400A0000<br />
-              KIT_BOUNTYHUNTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x400B0000<br />
-              KIT_SWASHBUCKLER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x400C0000<br />
-              KIT_BLADE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x400D0000<br />
-              KIT_JESTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x400E0000<br />
-              KIT_SKALD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x400F0000<br />
-              KIT_TOTEMIC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40100000<br />
-              KIT_SHAPESHIFTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40110000<br />
-              KIT_AVENGER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40120000<br />
-              KIT_GODTALOS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40130000<br />
-              KIT_GODHELM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40140000<br />
-              KIT_GODLATHANDER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x40150000<br />
-              ABJURER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x00400000<br />
-              CONJURER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x00800000<br />
-              DIVINER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x01000000<br />
-              ENCHANTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x02000000<br />
-              ILLUSIONIST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x04000000<br />
-              INVOKER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x08000000<br />
-              NECROMANCER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x10000000<br />
-              TRANSMUTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;0x20000000<br />
+            <td>Kit information:<br />
+              <pre>
+NONE                0x00000000
+KIT_BARBARIAN       0x00004000
+KIT_TRUECLASS       0x40000000
+KIT_BERSERKER       0x40010000
+KIT_WIZARDSLAYER    0x40020000
+KIT_KENSAI          0x40030000
+KIT_CAVALIER        0x40040000
+KIT_INQUISITOR      0x40050000
+KIT_UNDEADHUNTER    0x40060000
+KIT_ARCHER          0x40070000
+KIT_STALKER         0x40080000
+KIT_BEASTMASTER     0x40090000
+KIT_ASSASSIN        0x400A0000
+KIT_BOUNTYHUNTER    0x400B0000
+KIT_SWASHBUCKLER    0x400C0000
+KIT_BLADE           0x400D0000
+KIT_JESTER          0x400E0000
+KIT_SKALD           0x400F0000
+KIT_TOTEMIC         0x40100000
+KIT_SHAPESHIFTER    0x40110000
+KIT_AVENGER         0x40120000
+KIT_GODTALOS        0x40130000
+KIT_GODHELM         0x40140000
+KIT_GODLATHANDER    0x40150000
+ABJURER             0x00400000
+CONJURER            0x00800000
+DIVINER             0x01000000
+ENCHANTER           0x02000000
+ILLUSIONIST         0x04000000
+INVOKER             0x08000000
+NECROMANCER         0x10000000
+TRANSMUTER          0x20000000</pre>
               <br />
               NB.: The values of this offset are written in big endian style.<br />
               NB.: In BG1 the valid values are mages schools and None<br />
@@ -671,42 +807,42 @@ title: "CRE file format"
           <tr>
             <td>0x0270</td>
             <td>1 (byte)</td>
-            <td>Enemy-Ally (EA.IDS)</td>
+            <td>Enemy-Ally (<a href="../../files/ids/bg2/ea.htm">EA.IDS</a>)</td>
           </tr>
           <tr>
             <td>0x0271</td>
             <td>1 (byte)</td>
-            <td>General (GENERAL.IDS)</td>
+            <td>General (<a href="../../files/ids/bg2/general.htm">GENERAL.IDS</a>)</td>
           </tr>
           <tr>
             <td>0x0272</td>
             <td>1 (byte)</td>
-            <td>Race (RACE.IDS)</td>
+            <td>Race (<a href="../../files/ids/bg2/race.htm">RACE.IDS</a>)</td>
           </tr>
           <tr>
             <td>0x0273</td>
             <td>1 (byte)</td>
-            <td>Class (CLASS.IDS)</td>
+            <td>Class (<a href="../../files/ids/bg2/class.htm">CLASS.IDS</a>)</td>
           </tr>
           <tr>
             <td>0x0274</td>
             <td>1 (byte)</td>
-            <td>Specific (SPECIFIC.IDS)</td>
+            <td>Specific (<a href="../../files/ids/bg2/specific.htm">SPECIFIC.IDS</a>)</td>
           </tr>
           <tr>
             <td>0x0275</td>
             <td>1 (byte)</td>
-            <td>Gender (GENDER.IDS). Dictates the casting voice, and checked for the summoning cap.</td>
+            <td>Gender (<a href="../../files/ids/bg2/gender.htm">GENDER.IDS</a>). Dictates the casting voice, and checked for the summoning cap.</td>
           </tr>
           <tr>
             <td>0x0276</td>
             <td>5 (bytes)</td>
-            <td>OBJECT.IDS references</td>
+            <td><a href="../../files/ids/bg2/object.htm">OBJECT.IDS</a> references</td>
           </tr>
           <tr>
             <td>0x027b</td>
             <td>1 (byte)</td>
-            <td>Alignment (ALIGNMEN.IDS)</td>
+            <td>Alignment (<a href="../../files/ids/bg2/alignmen.htm">ALIGNMEN.IDS</a>)</td>
           </tr>
           <tr>
             <td>0x027c</td>
@@ -1005,7 +1141,10 @@ title: "CRE file format"
     <div class="fileHeader"><a name="CREV1_0_ItemSlots">CRE V1.0 Item Slots</a></div>
     <div class="indent1">
       <br />
-      This is an array keeping track of which items are located in each particular location in the CRE's inventory. There are 40 slots, and they are not the same as the order specified in specified in SLOTS.IDS. The actual order is:<br />
+      This is an array of words keeping track of which items are located in each particular location in the CRE's inventory. Each entry will be either -1 (0xFFFF - &quot;empty&quot;) or an index into the <a href="#CREV1_0_Item">Items table</a>. Selected weapon is a word value indicating which weapon slot is currently selected. Values are from slots.ids - 35, with 1000 meaning &quot;fist&quot;.<br />
+      <br />
+      BG1, BG2, BGEE:<br />
+      There are 40 slots, and they are not the same as the order specified in specified in <a href="../../files/ids/bg2/slots.htm">SLOTS.IDS</a>. The actual order is:
       <ul>
         <li>Helmet</li>
         <li>Armor</li>
@@ -1033,7 +1172,79 @@ title: "CRE file format"
         <li>Selected weapon</li>
         <li>Selected weapon ability</li>
       </ul>
-      Each entry will be either 0xFFFF (&quot;empty&quot;) or an index into the <a href="#CREV1_0_Item">Items table</a>. Selected is a dword indicating which weapon slot us currently selected. Values are from slots.ids - 35, with 1000 meaning &quot;fist&quot;.<br />
+      <br />
+      PSTEE:<br />
+      Non-party characters have 40 item slots by default if field at offset 0x007c is set to 0. Slot configuration is defined in <a href="../../files/2da/2da_bgee/itmslots.htm">ITMSLOTS.2DA</a>. The default order is:
+      <ul>
+        <li>Left Earring/Lens/Helmet</li>
+        <li>Chest</li>
+        <li>Right Tattoo (lower)</li>
+        <li>Hand</li>
+        <li>Right Ring</li>
+        <li>Left Ring</li>
+        <li>Right Earring/Eyeball</li>
+        <li>Left Tattoo</li>
+        <li>Wrist</li>
+        <li>Weapon 1</li>
+        <li>Weapon 2</li>
+        <li>Weapon 3</li>
+        <li>Weapon 4</li>
+        <li>Quiver 1</li>
+        <li>Quiver 2</li>
+        <li>Quiver 3</li>
+        <li>Quiver 4</li>
+        <li>Right Tattoo (upper)</li>
+        <li>Quick item 1</li>
+        <li>Quick item 2</li>
+        <li>Quick item 3</li>
+        <li>Inventory item (1 to 16)</li>
+        <li>Magic weapon</li>
+        <li>Selected weapon</li>
+        <li>Selected weapon ability</li>
+      </ul>
+
+      Party members have 57 item slots by default. Actual slot number (excluding "Selected weapon ability") is defined at offset 0x007c. Slot configuration can be modified in <a href="../../files/2da/2da_bgee/itmslots.htm">ITMSLOTS.2DA</a>. The default order is:
+      <ul>
+        <li>Left Earring/Lens/Helmet</li>
+        <li>Chest</li>
+        <li>Right Tattoo (lower)</li>
+        <li>Hand</li>
+        <li>Right Ring</li>
+        <li>Left Ring</li>
+        <li>Right Earring/Eyeball</li>
+        <li>Left Tattoo</li>
+        <li>Wrist</li>
+        <li>Weapon 1</li>
+        <li>Weapon 2</li>
+        <li>Weapon 3</li>
+        <li>Weapon 4</li>
+        <li>Quiver 1</li>
+        <li>Quiver 2</li>
+        <li>Quiver 3</li>
+        <li>Quiver 4</li>
+        <li>Right Tattoo (upper)</li>
+        <li>Quick item 1</li>
+        <li>Quick item 2</li>
+        <li>Quick item 3</li>
+        <li>Inventory item (1 to 16)</li>
+        <li>Magic weapon</li>
+        <li>Quiver 5</li>
+        <li><span class="unknown">Unused</span></li>
+        <li>Quick item 4</li>
+        <li>Quick item 5</li>
+        <li>Inventory item (17 to 20)</li>
+        <li><span class="unknown">Unused</span></li>
+        <li><span class="unknown">Unused</span></li>
+        <li><span class="unknown">Unused</span></li>
+        <li><span class="unknown">Unused</span></li>
+        <li><span class="unknown">Unused</span></li>
+        <li><span class="unknown">Unused</span></li>
+        <li><span class="unknown">Unused</span></li>
+        <li><span class="unknown">Unused</span></li>
+        <li><span class="unknown">Unused</span></li>
+        <li>Selected weapon</li>
+        <li>Selected weapon ability</li>
+      </ul>
     </div>
   </div>
 </div>

@@ -69,7 +69,7 @@
     <div class="title_main">BAM file format</div>
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2</div><br />
+    <div class="indent1">BG1, BG1: TotS, BG2, BG2: ToB, PST, IWD, IWD:HoW, IWD:TotL, IWD2, BGEE</div><br />
     
     <div class="fileHeader">File versions</div>
     <div class="indent1">
@@ -89,6 +89,7 @@ This file format describes animated graphics. Such files are used for animations
       <span class="unknown">PST: Unknown (greater than 256*256)</span><br />
       <span class="unknown">IWD1: Unknown</span><br />
       <span class="unknown">IWD2: Unknown</span><br />
+      <span class="unknown">BGEE: Unknown (1024*1024 or greater)</span><br />
     </div>
     <br />
     
@@ -263,13 +264,16 @@ This file format describes animated graphics. Such files are used for animations
       <br />
       The palette is a standard array of RGBQUAD structures, with a layout as follows:<br />
       <pre>
-        BB GG RR 00
-        BB GG RR 00
-        BB GG RR 00
-        ...
-        BB GG RR 00
-      </pre>
-      The alpha component of the RGBQUAD is unused.
+    BB GG RR AA
+    BB GG RR AA
+    BB GG RR AA
+    ...
+    BB GG RR AA</pre>
+      BG1, BG2, PST, IWD, IWD2:<br />
+      Alpha component of the RGBQUAD is unused.<br />
+      <br />
+      BGEE:<br />
+      Alpha is only considered when used in the context of the user interface (e.g. for portrait, worldmap or spellbook icons). An alpha value of 00h is treated as fully opaque to maintain backwards compatibility with non-Enhanced games. Alpha values of 01h .. FFh indicate transparency ranging from almost completely transparent to fully opaque. Full transparency can be realized by using palette index 0.
     </div>
     <br />
 

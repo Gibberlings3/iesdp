@@ -3833,19 +3833,19 @@ Other states are untested.<br />
 
   <div class="actionHeader"><a name="372">372 MoveToCampaign(S:Campaign*)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action reinitializes important default values and resource references based on definitions from <a href="../../files/2da/2da_bgee/campaign.htm">campaign.2da</a>, such as world scripts, save folder name or starting area. Campaign refers to the name defined in the first column of that table. It is currently used to switch from BGEE to the Siege of Dragonspear campaign.<br />
   <br />
   </div>
 
   <div class="actionHeader"><a name="373">373 AddWorldmapAreaFlag(S:Area*,I:Type*WMPFLAG)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action can be used to set flags of an area on the worlmap that control visibility or accessibility. Flags are taken from <a href="../../files/ids/bgee/wmpflag.htm">wmpflag.ids</a>.<br />
   <br />
   </div>
 
   <div class="actionHeader"><a name="374">374 RemoveWorldmapAreaFlag(S:Area*,I:Type*WMPFLAG)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action can be used to clear flags of an area on the worlmap that control visibility or accessibility. Flags are taken from <a href="../../files/ids/bgee/wmpflag.htm">wmpflag.ids</a>.<br />
   <br />
   </div>
 
@@ -3857,19 +3857,19 @@ Other states are untested.<br />
 
   <div class="actionHeader"><a name="376">376 DisplayStringNoNameDlg(O:Object*,I:StrRef*)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action behaves like <a href="#262">DisplayStringNoName</a>, except that it also works in dialogues. It displays the strref specified by the StrRef parameter in the message window, without attributing the text to an object.<br />
   <br />
   </div>
 
   <div class="actionHeader"><a name="377">377 SetGlobalTimerRandom(S:Name*,S:Area*,I:Min*GTimes,I:Max*GTimes)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action sets a global timer to a random value within the range of Min and Max specified by the 3rd and 4th parameter. Both parameters accept symbolic values from <a href="../../files/ids/bgee/gtimes.htm">gtimes.ids</a>. The timer is checked by the GlobalTimerExpired() and GlobalTimerNotExpired() triggers.<br />
   <br />
   </div>
 
   <div class="actionHeader"><a name="378">378 ExportParty(S:Name*)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action will export all exportable characters of the party into the "Characters" folder of the game. "Name" specifies the prefix for each exported character, which is expanded by the character's party slot number. This action creates both .CHR and .BIO files.<br />
   <br />
   </div>
 
@@ -3924,19 +3924,59 @@ Other states are untested.<br />
 
   <div class="actionHeader"><a name="387">387 SetCutSceneBreakable(I:Breakable*BOOLEAN)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action controls whether a cutscene can be skipped by pressing ESC. When set to TRUE the cutscene can be interrupted. Set to FALSE to prevent the cutscene from being interrupted. When properly prepared the skipped cutscene can be detected and completed in a safe manner.<br />
+  <br />
+  Code snippet of the opening cutscene in BG2EE - SoA (NEWGAME.BCS):
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId("CSJon")
+      SetAreaScript("cutskip2",OVERRIDE)
+      SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",1)
+      SetCutSceneBreakable(TRUE)
+      CreateCreatureEffect("M05PCSPY","",[3374.3068],S)
+
+      // more script actions...
+
+      SetCutSceneBreakable(FALSE)
+      SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",0)
+      SetAreaScript("",OVERRIDE)
+      ActionOverride("Imoen",EndCutSceneMode())
+      ActionOverride("Imoen",Dialogue(Player1))
+      DestroySelf()
+  END</pre>
+  <br />
+  <span class="mono">SetAreaScript("cutskip2",OVERRIDE)</span> defines a "failsafe" script to execute when the cutscene is interrupted. The OVERRIDE slot ensures that it has precedence over the default area script. <span class="mono">SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",1)</span> is used to identify the cutscene that has been interrupted (if the failsafe script handles more than one cutscene).<br />
   <br />
   </div>
 
   <div class="actionHeader"><a name="388">388 DisplayStringHeadNoLog(O:Object*,I:StrRef*)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action displays the string specified by the StrRef parameter over the head of the given object on the game-screen, but not in the message log.<br />
   <br />
   </div>
 
   <div class="actionHeader"><a name="389">389 SetItemFlags(S:ItemName*,I:Flags*INVITEM,I:SetReset*BOOLEAN)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action sets or resets specific item flags, such as "IDENTIFIED" or "STOLEN". Setting the third parameter to TRUE sets the bit, setting it to FALSE clears the bit.<br />
+  <br />
+  Example from Siege of Dragonspear (BDINTRO.BCS):<br />
+  <br />
+  <pre class="code">
+  IF
+    Global("SOD_fromimport","GLOBAL",0)
+    !HasItemEquiped("ring05",Player1)  // Sandthief's Ring
+    InMyArea("safana")  // Safana
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      GiveItemCreate("ring05","safana",7,0,0)  // Sandthief's Ring
+      ActionOverride("safana",SetItemFlags("ring05",IDENTIFIED,TRUE))  // Sandthief's Ring
+      XEquipItem("ring05","safana",SLOT_RING_RIGHT,EQUIP)  // Sandthief's Ring
+  END
+  </pre>
   <br />
   </div>
 
@@ -3964,7 +4004,7 @@ Other states are untested.<br />
   <br />
   </div>
 
-  <div class="actionHeader"><a name="393">394 MoveContainerContents(S:Container1*,S:Container2*)</a></div>
+  <div class="actionHeader"><a name="394">394 MoveContainerContents(S:Container1*,S:Container2*)</a></div>
   <div class="indent1">
   Moves the content of Container1 into Container2. You can prefix each container with an area code, separated by asterisks, to move containers over different maps. The script action can be successfully executed on any map.<br />
   <br />
@@ -4087,6 +4127,6 @@ Other states are untested.<br />
 
   <div class="actionHeader"><a name="412">412 ZoomLock(I:Lock*BOOLEAN)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action can be used to set zoom to 100%. When set to TRUE zoom factor is locked at 100% and can not be changed by user input. Setting it to FALSE restores the original zoom factor. The zoom lock state is not saved.<br />
   <br />
   </div>

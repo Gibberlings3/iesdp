@@ -22,7 +22,7 @@ title: "BGEE Script Triggers"
     Returns true if the specified object has left the party in the last script round. This trigger is only sent to player characters.<br />
     <br />
     <strong>0x0006 ReceivedOrder(O:Object*,I:Order ID*)</strong><br />
-    NT<br />
+    This trigger is used in conjunction with the GiveOrder() action, and works in a similar way to the Heard() trigger. Only one creature at a time responds to an order, and creatures do not detect their own orders. The creature must be in visual range for this trigger to work.<br />
     <br />
     <strong>0x0007 Said(O:Object*,I:Dialog ID*)</strong><br />
     NT<br />
@@ -345,13 +345,13 @@ title: "BGEE Script Triggers"
     Returns true only if the number of party members (dead ones also count) is less than the number specified.<br />
     <br />
     <strong>0x406D UnselectableVariable(I:Num*)</strong><br />
-    NT<br />
+    Returns true only if the active creature is for exactly the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../opcodes/bgee.htm#op365">opcode 365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().<br />
     <br />
     <strong>0x406E UnselectableVariableGT(I:Num*)</strong><br />
-    NT<br />
+    Returns true only if the active creature is for more than the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../opcodes/bgee.htm#op365">opcode 365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().<br />
     <br />
     <strong>0x406F UnselectableVariableLT(I:Num*)</strong><br />
-    NT<br />
+    Returns true only if the active creature is for less than the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../opcodes/bgee.htm#op365">opcode 365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().<br />
     <br />
     <strong>0x0070 Clicked(O:Object*)</strong><br />
     Only for trigger regions. Returns true if the specified object clicked on the trigger region running this script.<br />
@@ -612,13 +612,13 @@ title: "BGEE Script Triggers"
     Returns true if the specified object has experience points less than the number specified.<br />
     <br />
     <strong>0x40C6 G(S:ResRef*,I:Num*)</strong><br />
-    NT<br />
+    This trigger acts as a shortcut for Global(). The trigger can only check global variables.<br />
     <br />
     <strong>0x40C7 GGT(S:ResRef*,I:Num*)</strong><br />
-    NT<br />
+    This trigger acts as a shortcut for GlobalGT(). The trigger can only check global variables.<br />
     <br />
     <strong>0x40C8 GLT(S:ResRef*,I:Num*)</strong><br />
-    NT<br />
+    This trigger acts as a shortcut for GlobalLT(). The trigger can only check global variables.<br />
     <br />
     <strong>0x40C9 ModalState(I:State*MODAL)</strong><br />
     Returns true only if the active CRE is in the state/mode specified. e.g. detecting traps.<br />
@@ -744,7 +744,7 @@ title: "BGEE Script Triggers"
     NT<br />
     <br />
     <strong>0x40F1 ModalStateObject(O:Object*,I:ModalState*Modal)</strong><br />
-    NT<br />
+    Returns true only if the specified object is in the state/mode specified. e.g. detecting traps.<br />
     <br />
     <strong>0x40F2 WeaponCanDamage(O:Object*,I:Hand*HAND)</strong><br />
     Returns true if the weapon equipped in the hand defined by the 2nd parameter of the active creature can cause non-zero damage to the target object specified in the 1st parameter.<br />
@@ -765,16 +765,16 @@ title: "BGEE Script Triggers"
     NT<br />
     <br />
     <strong>0x40F8 CanEquipRanged()</strong><br />
-    NT<br />
+    Returns true only if the active creature can switch to a ranged weapon that is ready for use (e.g. a throwing weapon, such as darts, or a launcher with corresponding ammo, such as bow and arrow).<br />
     <br />
     <strong>0x40F9 ImmuneToSpellLevel(O:Object*,I:Level*)</strong><br />
-    NT<br />
+    Returns true if the specified object is immune to spells of the level specified by the 2nd parameter.<br />
     <br />
     <strong>0x40FA StoryModeOn()</strong><br />
     Returns true if Story Mode is active.<br />
     <br />
     <strong>0x40FB IsForcedRandomEncounterActive(S:Area*)</strong><br />
-    NT<br />
+    Returns true only if a random encounter to the specified area has been initialized by a preceding call of <a href="../actions/bgeeactions.htm#357">ForceRandomEncounter()</a> or <a href="../actions/bgeeactions.htm#357">ForceRandomEncounterEntry()</a>.<br />
     <br />
     <strong>0x40FC reserved()</strong><br />
     NT<br />
@@ -799,8 +799,8 @@ title: "BGEE Script Triggers"
     Returns true if the active CRE has the specified spell scribed in their spellbook. It does not have to be memorised.<br />
     <br />
     <strong>0x4103 CheckItemSlot(O:Object*,S:Item*,I:Slot*SLOTS)</strong><br />
-    NT<br />
+    Returns true only if the item specified in the 2nd parameter can be found in the inventory slot (taken from <a href="../../files/ids/bgee/slots.htm">SLOTS.IDS</a>) of the specified object.<br />
     <br />
     <strong>0x4104 CurrentAmmo(S:ResRef*,O:Object*)</strong><br />
-    NT<br />
+    Returns true only if the specified object has a ranged weapon with the ammo specified by ResRef equipped.<br />
     <br />

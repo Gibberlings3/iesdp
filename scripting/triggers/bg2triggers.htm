@@ -21,7 +21,7 @@ title: "BG2: ToB Script Triggers"
     Returns true if the specified object has left the party in the last script round. This trigger is only sent to player characters.<br />
     <br />
     <strong>0x0006 ReceivedOrder(O:Object*,I:Order ID*)</strong><br />
-    NT<br />
+    This trigger is used in conjunction with the GiveOrder() action, and works in a similar way to the Heard() trigger. Only one creature at a time responds to an order, and creatures do not detect their own orders. The creature must be in visual range for this trigger to work.<br />
     <br />
     <strong>0x0007 Said(O:Object*,I:Dialog ID*)</strong><br />
     NT<br />
@@ -340,13 +340,13 @@ title: "BG2: ToB Script Triggers"
     Returns true only if the number of party members (dead ones also count) is less than the number specified.<br />
     <br />
     <strong>0x406D UnselectableVariable(I:Num*)</strong><br />
-    NT<br />
+    Returns true only if the active creature is for exactly the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bg2actions.htm#182">MakeUnselectable()</a>.<br />
     <br />
     <strong>0x406E UnselectableVariableGT(I:Num*)</strong><br />
-    NT<br />
+    Returns true only if the active creature is for more than the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bg2actions.htm#182">MakeUnselectable()</a>.<br />
     <br />
     <strong>0x406F UnselectableVariableLT(I:Num*)</strong><br />
-    NT<br />
+    Returns true only if the active creature is for less than the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bg2actions.htm#182">MakeUnselectable()</a>.<br />
     <br />
     <strong>0x0070 Clicked(O:Object*)</strong><br />
     Only for trigger regions. Returns true if the specified object clicked on the trigger region running this script.<br />
@@ -607,13 +607,13 @@ title: "BG2: ToB Script Triggers"
     Returns true if the specified object has experience points less than the number specified.<br />
     <br />
     <strong>0x40C6 G(S:ResRef*,I:Num*)</strong><br />
-    NT<br />
+    This trigger acts as a shortcut for Global(). The trigger can only check global variables.<br />
     <br />
     <strong>0x40C7 GGT(S:ResRef*,I:Num*)</strong><br />
-    NT<br />
+    This trigger acts as a shortcut for GlobalGT(). The trigger can only check global variables.<br />
     <br />
     <strong>0x40C8 GLT(S:ResRef*,I:Num*)</strong><br />
-    NT<br />
+    This trigger acts as a shortcut for GlobalLT(). The trigger can only check global variables.<br />
     <br />
     <strong>0x40C9 ModalState(I:State*MODAL)</strong><br />
     Returns true only if the active CRE is in the state/mode specified. e.g. detecting traps.<br />

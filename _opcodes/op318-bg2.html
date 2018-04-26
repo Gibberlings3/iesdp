@@ -1,0 +1,33 @@
+---
+n: 318
+name: "Stat: Set Stat (TobEx)"
+param1: "Statistic Modifier"
+param2: "Stat Opcode (low word) / Type (high word)"
+bg1: 0
+bg2: 1
+bgee: 0
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field to the opcode specified by the 'Stat Opcode' field.
+<br/>Known values for 'Type' are:
+<br/>0 Cumulative Modifier -> Value = Value + 'Statistic Modifier' value
+<br/>1 Flat Value Modifier -> Value = 'Statistic Modifier' value
+<br/>2 Percentage Modifier -> Value = (Value * 'Statistic Modifier' value) / 100
+<br/>3 Multiplicative Modifier -> Value = Value * 'Statistic Modifier' value
+<br/>4 Divisive Modifier -> Value = Value / 'Statistic Modifier' value
+<br/>5 Modulus Modifier -> Value = Value % 'Statistic Modifier' value
+<br/>6 Logical AND Modifier -> Value = Value && 'Statistic Modifier' value
+<br/>7 Logical OR Modifier -> Value = Value || 'Statistic Modifier' value
+<br/>8 Bitwise AND Modifier -> Value = Value & 'Statistic Modifier' value
+<br/>9 Bitwise OR Modifier -> Value = Value | 'Statistic Modifier' value
+<br/>10 Inverse Modifier -> Value = !Value
+<br/>
+<br/>You cannot set any stats with opcode &lt; 387 with this effect. New stats 202-400 are reserved for new hard-coded stats.
+
+{% capture note %}
+ONLY available if TobEx is installed!
+{% endcapture %}
+
+{% include important.html %}

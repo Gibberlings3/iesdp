@@ -5807,47 +5807,6 @@ In IWD2 both parameters should be 0.
 
 	</div>
 
-	<div id="op124" class="opcode">
-		<span class="opnumberdata">#124 (0x7C)</span>
-
-		<span class="opnamedata">Spell Effect: Teleport (Dimension Door)</span>
-
-		
-		
-		
-		
-			
-			
-				Variants:
-				
-			
-			
-				<a class="opvariant" href="bgee.htm#op124">BGEE</a>
-			
-		
-			
-			
-			
-				<a class="opvariant" href="pst.htm#op124">PST</a>
-			
-		
-			
-				
-		<br />
-
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
-
-		
-		
-
-		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Teleports the targeted creature(s).
- </div>
-		<hr />
-
-	</div>
-
 	<div id="op125" class="opcode">
 		<span class="opnumberdata">#125 (0x7D)</span>
 
@@ -6991,6 +6950,7 @@ The engine refuses to show portrait 79 (Imprisonment).
 <br/>0   Wizard
 <br/>1   Priest
 <br/>2   Innate
+<br/>3   Innate, only 'magical' abilities (SPL flags bit 14 "Ignore dead/wild magic" unset) (BGEE)
  </div>
 		<hr />
 
@@ -15518,38 +15478,33 @@ This effect will cancel out the slow opcode.
 	<div id="op318" class="opcode">
 		<span class="opnumberdata">#318 (0x13E)</span>
 
-		<span class="opnamedata">Unused / SetStat</span>
+		<span class="opnamedata">Protection: from Spell</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op318">BG2</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Type</span><br />
 
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unknown.
-
-
-
-<div class="note important">
-  <div>
-    <strong>Important:</strong> 
-ONLY if TobEx is installed:<br>
-Parameter #1: Statistic Modifier<br>
-Parameter #2 low: Stat Opcode<br>
-Parameter #2 high: Type
-
-  </div>
-</div>
-
+		<div class="descriptiondata"> The creature type specified by the 'Type' field becomes immune to the spell or item specified in the 'Resource' field. See <a href="#op324">opcode #324</a> for more information.
  </div>
 		<hr />
 
@@ -15648,7 +15603,7 @@ Parameter #2 high: Type
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes effects from the resource specified by the resouce key, in the style specified by the 'Type' field.
+		<div class="descriptiondata"> Removes effects from the resource specified by the resouce key, in the style specified by the 'Type' field. Both spell and item resources are considered.
 <br/>Known values for 'Type' are:
 <br/>0   Default
 <br/>1   Equipped effects list only
@@ -15735,7 +15690,8 @@ Parameter #2 high: Type
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Known values for 'Stat Type' are defined in splprot.2da. splprot.2da uses three codes (labeled STAT, VALUE and RELATION) to define a targeting type.
+		<div class="descriptiondata"> The creature type specified by the 'Type' field becomes immune to the spell or item specified in the 'Resource' field. It also gives a message on successful resist.
+<br/>Known values for 'Stat Type' are defined in splprot.2da. splprot.2da uses three codes (labeled STAT, VALUE and RELATION) to define a targeting type.
   <br/><br/>STAT is either a straight stat value (listed in stat.ids) or a pseudo stat of the to be targeted creature:
   <br/>0x100 - source equals target
   <br/>0x101 - source is not target

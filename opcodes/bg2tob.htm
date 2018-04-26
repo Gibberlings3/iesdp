@@ -73,7 +73,7 @@
     <a href="#op80"> 80 </a> || <a href="#op100"> 100 </a> || <a href="#op120"> 120 </a> || <a href="#op140"> 140 </a> ||
     <a href="#op160"> 160 </a> || <a href="#op180"> 180 </a> || <a href="#op200"> 200 </a> ||
     <a href="#op220"> 220 </a> || <a href="#op240"> 240 </a> || <a href="#op260"> 260 </a> ||
-    <a href="#op280"> 280 </a> || <a href="#op300"> 300 </a> || <a href="#op317"> 317 </a>
+    <a href="#op280"> 280 </a> || <a href="#op300"> 300 </a> || <a href="#op318"> 318 </a>
   </div>
   <br />
   
@@ -6917,6 +6917,7 @@ The engine refuses to show portrait 79 (Imprisonment).
 <br/>0   Wizard
 <br/>1   Priest
 <br/>2   Innate
+<br/>3   Innate, only 'magical' abilities (SPL flags bit 14 "Ignore dead/wild magic" unset) (BGEE)
  </div>
 		<hr />
 
@@ -15410,7 +15411,7 @@ This effect will cancel out the slow opcode.
 	<div id="op318" class="opcode">
 		<span class="opnumberdata">#318 (0x13E)</span>
 
-		<span class="opnamedata">Unused / SetStat</span>
+		<span class="opnamedata">Stat: Set Stat (TobEx)</span>
 
 		
 		
@@ -15418,26 +15419,46 @@ This effect will cancel out the slow opcode.
 		
 			
 				
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op318">BGEE</a>
+			
+		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Statistic Modifier</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Opcode (low word) / Type (high word)</span><br />
 
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unknown.
+		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field to the opcode specified by the 'Stat Opcode' field.
+<br/>Known values for 'Type' are:
+<br/>0 Cumulative Modifier -> Value = Value + 'Statistic Modifier' value
+<br/>1 Flat Value Modifier -> Value = 'Statistic Modifier' value
+<br/>2 Percentage Modifier -> Value = (Value * 'Statistic Modifier' value) / 100
+<br/>3 Multiplicative Modifier -> Value = Value * 'Statistic Modifier' value
+<br/>4 Divisive Modifier -> Value = Value / 'Statistic Modifier' value
+<br/>5 Modulus Modifier -> Value = Value % 'Statistic Modifier' value
+<br/>6 Logical AND Modifier -> Value = Value && 'Statistic Modifier' value
+<br/>7 Logical OR Modifier -> Value = Value || 'Statistic Modifier' value
+<br/>8 Bitwise AND Modifier -> Value = Value & 'Statistic Modifier' value
+<br/>9 Bitwise OR Modifier -> Value = Value | 'Statistic Modifier' value
+<br/>10 Inverse Modifier -> Value = !Value
+<br/>
+<br/>You cannot set any stats with opcode &lt; 387 with this effect. New stats 202-400 are reserved for new hard-coded stats.
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-ONLY if TobEx is installed:<br>
-Parameter #1: Statistic Modifier<br>
-Parameter #2 low: Stat Opcode<br>
-Parameter #2 high: Type
+ONLY available if TobEx is installed!
 
   </div>
 </div>

@@ -12,9 +12,34 @@ pst: 0
 ---
 Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids.
 <br/>Known values for 'Charm Type' are:
-<br/>0    Charmed (Target neutral after effect ends)
-<br/>1    Charmed (Target hostile after effect ends)
-<br/>2    Dire charmed (Target neutral after effect ends)
+<br/>0    Neutral Charm
+  <ul>
+    <li>Does not alter targets allegiance stat.</li>
+    <li>Maintains EA[7][REALLYCHARMED] on the target if the caster is EA[30][GOODCUTOFF].</li>
+    <li>Maintains EA[254][EVILBYCHARM] on the target if the caster is EA[31][NOTGOOD].</li>
+    <li>Maintains Portrait Icon STATDESC[0]['Charm'] on the target.</li>
+    <li>Effect ends if the creature is attacked by EA[30][GOODCUTOFF].</li>
+    <li>Target displays string ENGINEST[STRREF_EFFECT_CHARMED](#).</li>
+  </ul>
+<br/>1    Hostile Charm
+  <ul>
+    <li>Sets targets allegiance to EA[30][GOODCUTOFF] if the caster is EA[200][EVILCUTOFF].</li>
+    <li>Sets targets allegiance to EA[200][EVILCUTOFF] if the caster is EA[199][NOTEVIL].</li>
+    <li>Maintains EA[7][REALLYCHARMED] on the target if the caster is EA[30][GOODCUTOFF].</li>
+    <li>Maintains EA[254][EVILBYCHARM] on the target if the caster is EA[31][NOTGOOD].</li>
+    <li>Maintains Portrait Icon STATDESC[0]['Charm'] on the target.</li>
+    <li>Effect ends if the creature is attacked by EA[30][GOODCUTOFF].</li>
+    <li>Target displays string ENGINEST[STRREF_EFFECT_CHARMED](#).</li>
+  </ul>
+<br/>2    Neutral Dire Charm
+  <ul>
+    <li>Does not alter targets allegiance stat.</li>
+    <li>Maintains EA[5][CONTROLLED] on the target if the caster is EA[30][GOODCUTOFF].</li>
+    <li>Maintains EA[255][ENEMY] on the target if the caster is EA[31][NOTGOOD].</li>
+    <li>Maintains Portrait Icon STATDESC[1]['Dire Charm'] on the target.</li>
+    <li>Effect ends if the creature is attacked by EA[30][GOODCUTOFF].</li>
+    <li>Target displays string ENGINEST[STRREF_EFFECT_DIRECHARMED](#).</li>
+  </ul>
 <br/>3    Dire charmed (Target hostile after effect ends)
 <br/>4    Controlled by Cleric
 <br/>5    Target is hostile

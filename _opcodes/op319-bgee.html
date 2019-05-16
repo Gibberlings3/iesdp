@@ -1,6 +1,7 @@
 ---
 n: 319
 name: "Usability: Item Usability"
+power: "Usability behavior"
 param1: "IDS Entry"
 param2: "IDS File"
 special: "Description note"
@@ -11,7 +12,7 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-This effect restricts the item to creature(s) matching the object identifiers. The string to display when an invalid creature attempts to use the item is held in 0x2c.
+When 'Power' is set to 1, this effect restricts the item to creature(s) matching the object identifiers. When 'Power' is set to 0, creature(s) matching the object identifiers cannot use the item. The string to display when an invalid creature attempts to use the item is held in 0x2c.
 <br/>Known values for 'IDS File' are:
 <br/>2   EA.ids
 <br/>3   General.ids
@@ -23,6 +24,6 @@ This effect restricts the item to creature(s) matching the object identifiers. T
 <br/>9   Kit.ids
 <br/>10  Actor's name
 <br/>11  Actor's scripting name (8 maximum in resource field)
-<br/>If 'IDS File' is set to 10, the item is restricted to characters with the name specified by the strref held in parameter1.
-<br/>If 'IDS File' is set to 11, the item is restricted to characters with the death variable specified by the resource field.
+<br/>If 'IDS File' is set to 10 and the strref held in parameter1 is set to "-1" (None), then you're targeting player-created characters (e.g., <CHARNAME>).
+<br/>If 'IDS File' is set to 11 and no death variable is specified in the resource field, then you're targeting player-created characters (e.g., <CHARNAME>).
 <br/><br/>The message defined in 'Description note' will be displayed whenever this effect is triggered.

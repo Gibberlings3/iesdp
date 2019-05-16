@@ -10,11 +10,17 @@ iwd1: 1
 iwd2: 1 
 pst: 1
 ---
-Removes the state_sleeping flag from the targeted creature(s).
+Removes opcode 39 effects and the STATE_SLEEPING flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 {% capture note %}
-Does not remove the state_helpless flag.
+Does not remove the STATE_HELPLESS flag.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+At least in EEs, it can remove opcode 177 effects targeting an EFF with opcode 39. Does not always work when delayed.
 {% endcapture %}
 
 {% include note.html %}

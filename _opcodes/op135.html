@@ -23,3 +23,16 @@ At least in EEs, when param #2 is 0, this opcode sets Strength, Dexterity, Resis
 {% endcapture %}
 
 {% include note.html %}
+
+{% capture note %}
+When the resource key is empty, and it subsequently clears other Polymorph Effects, param#2 is used just like param#1 of Opcode #337.
+As a result, it will clear all Polymorph effects if param#2 = "-1", else it will only clear Polymorph effects that have a param#2 that matches.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+The creature you're polymorphing into cannot have STATE_SLEEPING, STATE_FROZEN_DEATH, STATE_STONE_DEATH, STATE_FLAME_DEATH, or STATE_DEAD set in its CRE file, or the game will crash.
+{% endcapture %}
+
+{% include warning.html %}

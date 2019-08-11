@@ -14,9 +14,10 @@ Applies the invisibility effect, in the style specified by the 'Type' value.
 <br/>Known values for 'Type' are :
 <br/>0   Normal Invisibility   -> affected creature makes the first attack with +4
 <br/>1   Improved Invisibility -> affected creature stays invisible after attack
+<br/>2   Weak Invisibility -> EE: It's the same type of invisibility as 'Improved Invisibility' after you take a hostile action and reveal yourself.
 
 {% capture note %}
-'Improved Invisibility' does not provide saving throw bonuses
+'Improved Invisibility' does not provide saving throw bonuses outside EEs, where it provides a bonus of 4 to all. The same holds for 'Weak Invisibility'.
 {% endcapture %}
 
 {% include note.html %}
@@ -28,7 +29,13 @@ Applies the invisibility effect, in the style specified by the 'Type' value.
 {% include note.html %}
 
 {% capture note %}
-Creatures attacking an improved invisible creature suffer a -4 penalty to hit, unless they are affected by #193 Invisible Detection by Script
+'Weak Invisibility' is not by itself sufficient to trigger backstabs.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+Creatures attacking an invisible creature suffer a -4 penalty to hit, unless they are affected by <a href="#op193">opcode #193</a> Invisible Detection by Script. Moreover, you cannot target an improved/weak invisible creature with spells unless you're affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures.
 {% endcapture %}
 
 {% include info.html %}

@@ -10,11 +10,17 @@ iwd1: 1
 iwd2: 1 
 pst: 1
 ---
-Removes the state_sleeping flag from the targeted creature(s).
+Removes <a href="#op39">opcode #39</a> effects and the STATE_SLEEPING flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 {% capture note %}
-Does not remove the state_helpless flag.
+Does not remove the STATE_HELPLESS flag.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+At least in EEs, it can remove <a href="#op177">opcode #177</a> effects targeting an EFF with <a href="#op39">opcode #39</a>. Does not always work when delayed.
 {% endcapture %}
 
 {% include note.html %}

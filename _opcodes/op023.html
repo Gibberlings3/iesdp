@@ -3,9 +3,10 @@ n: 23
 name: "Stat: Morale Modifier"
 param1: "Statistic Modifier"
 param2: "Type"
+special: "Mode"
 bg1: 1
 bg2: 0
-bgee: 0
+bgee: 1
 iwd1: 1
 iwd2: 1
 pst: 1
@@ -15,6 +16,15 @@ Applies the modifier value specified by the 'Statistic Modifier' field in the st
 <br/>0   Cumulative Modifier -> Morale = Morale + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Morale = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Morale = (Morale * 'Statistic Modifier' value) / 100
+
+<br/>At least in EEs, known values for 'Mode' are:
+<br/>0   BG2 mode -> It's hardcoded to fill the following values:
+<ul>
+  <li>param #1 = 10</li>
+  <li>param #2 = 1</li>
+  <li>m_done = 1 (internal field that immediately removes the effect from creature, no matter duration)</li>
+</ul><br/>In addition, it checks if the creature is berserking, and if it is, it returns without doing anything.
+<br/>1   BG1 mode -> Default (functions as expected)
 
 {% capture note %}
 Any Morale-based effect (i.e. Panic) may be added or removed by this effect.

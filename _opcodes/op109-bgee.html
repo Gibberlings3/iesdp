@@ -3,6 +3,7 @@ n: 109
 name: "State: Hold"
 param1: "IDS Entry"
 param2: "IDS File"
+special: "Mode"
 bg1: 0
 bg2: 0
 bgee: 1
@@ -22,3 +23,10 @@ Applies the hold effect to the targeted creature(s), if the targeted creature(s)
 <br/>9   Kit.ids
 <br/>The affected creature becomes immobile and its AI scripts stop running.
 <br/>This effect sets stat #58 (HELD) to 1. It also sets the STATE_HELPLESS flag.
+<br/><br/>Known values for 'Mode' are:
+<br/>0 -> Default
+<br/>Non-zero -> False Petrify
+  <ul>
+    <li>In addition to the normal paralyze effect, it maintains a detectable STATE_STONE_DEATH and the stone overlay, but does not directly kill, award XP, or chunk when attacked. Only functions like this against non-party members.</li>
+    <li>Against party members, it functions as normal, unless you save and reload while the effect is active. Upon reloading, the stone overlay will be applied and the character will be dropped to 0 hit points, but not killed, and no STATE_STONE_DEATH (this is probably to avoid kicking the character from the party).</li>
+  </ul>

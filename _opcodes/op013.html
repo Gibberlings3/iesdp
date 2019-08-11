@@ -16,14 +16,80 @@ Instantly kills the targeted creature(s), in the style specified by the 'Death T
 <br/>1   Don't show death message
 <br/>Known values for 'Death Type' are:
 <br/>0   Acid death
+  <ul>
+    <li>Sets state STATE_ACID_DEATH (0x00000400), STATE_DEAD (0x00000800)</li>
+    <li>Kicked from party, drops inventory</li>
+  </ul>
 <br/>1   Burning death
+  <ul>
+    <li>Sets state STATE_FLAME_DEATH (0x00000200), STATE_DEAD (0x00000800)</li>
+    <li>Character Tint Solid, character color ~[0x00404040] (Darkens avatar)</li>
+    <li>Kicked from party, drops inventory</li>
+  </ul>
 <br/>2   Crushed death
+  <ul>
+    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
+    <li>Kicked from party, drops inventory</li>
+  </ul>
 <br/>4   Normal death
+  <ul>
+    <li>Sets state STATE_DEAD (0x00000800)</li>
+    <li>Drops inventory</li>
+  </ul>
 <br/>8   Chunked death
+  <ul>
+    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
+    <li>Sets ANIMATE[0x230][EXPLODING_TORSO]</li>
+    <li>Plays sound ("GORE.WAV")/("GORE2.WAV")</li>
+    <li>Kicked from party, drops inventory, sets all color indexes to 70</li>
+  </ul>
 <br/>16  Stoned death
+  <ul>
+    <li>Sets state STATE_STONE_DEATH (0x00000080)</li>
+    <li>Any hostile action against the creature(s) applies an Exploding Stoned Death to them</li>
+    <li>Kicked from party, retains inventory, overlay's color index 72</li>
+  </ul>
 <br/>32  Freezing death
-<br/>64  Exploding stoned death
+  <ul>
+    <li>Applies Exploding Freezing Death to the target with a (random) 0-5 second delay</li>
+    <li>Sets state STATE_FROZEN_DEATH (0x00000040)</li>
+    <li>Any hostile action against the creature applies an Exploding Freezing Death to the target</li>
+    <li>Kicked from party, retains inventory, overlay's color index 71</li>
+  </ul>
+<br/>64  Exploding stoned death/Level Drain death
+  <ul>
+    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
+    <li>Sets ANIMATE[0x100][CHUNKS]</li>
+    <li>Kicked from party, retains inventory, sets all color indexes to 72</li>
+  </ul>
 <br/>128 Exploding freezing death
-<br/>256 Electrified death 
+  <ul>
+    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
+    <li>Sets ANIMATE[0x100][CHUNKS]</li>
+    <li>Kicked from party, retains inventory, sets all color indexes to 71</li>
+  </ul>
+<br/>256 Electrified death
+  <ul>
+    <li>Sets state STATE_FLAMING_DEATH (0x00000200), STATE_DEAD (0x00000800)</li>
+    <li>Character Tint Solid, character color ~[0x00404040] (Darkens avatar)</li>
+    <li>Kicked from party, drops inventory</li>
+  </ul>
 <br/>512 Disintegration death
+  <ul>
+    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
+    <li>Sets ANIMATE[0x100][CHUNKS]</li>
+    <li>Kicked from party, retains inventory, sets all color indexes to 72</li>
+  </ul>
 <br/>1024 Destruction (in IWD2)
+  <ul>
+    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
+    <li>Sets ANIMATE[0x230][EXPLODING_TORSO]</li>
+    <li>Plays sound ("GORE.WAV")/("GORE2.WAV")</li>
+    <li>Kicked from party, retains inventory, sets all color indexes to 70</li>
+  </ul>
+<br/>Other
+  <ul>
+    <li>Removes all death states, but does not restore HP</li>
+    <li>Drops inventory</li>
+  </ul>
+<br/>Any -> Removes death states that they do not set (e.g, a normal Death will remove STATE_FROZEN_DEATH).

@@ -3,6 +3,8 @@ n: 12
 name: "HP: Damage"
 param1: "Damage Amount"
 param2: "Type"
+savingthrow: "Save Type"
+special: "Flags"
 bg1: 0
 bg2: 0
 bgee: 1
@@ -73,10 +75,17 @@ Damages the target by the value specified by the 'Damage Amount' field, with the
 <br/>1073741826  Disease Set to Percentage
 <br/>1073741827  Disease Reduce by Percentage
 <br/><br/>The Dice values can be used to inflict varying damage amounts - e.g. 2d6 would do 2-12 damage (Damage type is still specified by the 'Type' value).
+<br/><br/>Useful bit values for 'Save Type' are:
+<br/>Bit 10 - Ignore primary target - Line AoE projectile doesn't affect end target
+<br/>Bit 11 - Ignore secondary target - Line AoE projectile doesn't affect bystanders
+<br/>Bit 24 - Bypass 'mirror image'
+<br/>Bit 25 - Ignore difficulty - It refers to the damage multiplier to party members based on difficulty.
 <br/><br/>Known bit values for 'Flags' are:
 <br/>Bit 0 - Drain HP to caster
 <br/>Bit 1 - Transfer HP to target
 <br/>Bit 2 - Fist damage only
+<br/>Bit 3 - Drain to max. HP of caster
+<br/>Bit 5 - Suppress combat log feedback string
 <br/>Bit 8 - Save for half
 <br/>Bit 9 - Made save
 <br/>Bit 10 - Does not wake sleepers
@@ -93,7 +102,21 @@ Damages the target by the value specified by the 'Damage Amount' field, with the
 {% include note.html %}
 
 {% capture note %}
-Using 'Magic Fire' or 'Magic Cold' as a damage type will result the game to crash if the damage kills the target.
+Damage type "Poison" automatically uses save flag "Bypass Mirror Image".
 {% endcapture %}
 
-{% include warning.html %}
+{% include note.html %}
+
+{% capture note %}
+If this effect reduces target to -20 (Allegiance: [PC]) or -9 (any other Allegiance value) hit points, it also applies opcode #13 of the specified type:
+<ul>
+  <li>Crushing/Slashing/Piercing: Exploding Death</li>
+  <li>Acid/Unlisted: Acid Death</li>
+  <li>Cold/Magic Cold: Frozen Death</li>
+  <li>Fire/Magic Fire: Burning Death</li>
+  <li>Electricity: Electrified Death</li>
+  <li>Magic/Missile/Poison: Normal Death</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

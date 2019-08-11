@@ -12,15 +12,83 @@ pst: 0
 ---
 Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids.
 <br/>Known values for 'Charm Type' are:
-<br/>0    Charmed (Target neutral after effect ends)
-<br/>1    Charmed (Target hostile after effect ends)
-<br/>2    Dire charmed (Target neutral after effect ends)
-<br/>3    Dire charmed (Target hostile after effect ends)
+<br/>0    Neutral Charm
+  <ul>
+    <li>Does not alter targets allegiance stat.</li>
+    <li>Maintains EA REALLYCHARMED on the target if the caster is EA GOODCUTOFF.</li>
+    <li>Maintains EA CHARMED_PC on the target if the caster is EA NOTGOOD.</li>
+    <li>Maintains Portrait Icon 'Charm' on the target.</li>
+    <li>Effect ends if the creature is attacked by EA GOODCUTOFF.</li>
+    <li>Target displays "charmed" string.</li>
+  </ul>
+<br/>1    Hostile Charm
+  <ul>
+    <li>Sets targets allegiance to GOODCUTOFF if the caster is EVILCUTOFF.</li>
+    <li>Sets targets allegiance to EVILCUTOFF if the caster is NOTEVIL.</li>
+    <li>Maintains EA REALLYCHARMED on the target if the caster is GOODCUTOFF.</li>
+    <li>Maintains EA CHARMED_PC on the target if the caster is NOTGOOD.</li>
+    <li>Maintains Portrait Icon 'Charm' on the target.</li>
+    <li>Effect ends if the creature is attacked by EA GOODCUTOFF.</li>
+    <li>Target displays "charmed" string.</li>
+  </ul>
+<br/>2    Neutral Dire Charm
+  <ul>
+    <li>Does not alter targets allegiance stat.</li>
+    <li>Maintains EA CONTROLLED on the target if the caster is GOODCUTOFF.</li>
+    <li>Maintains EA ENEMY on the target if the caster is NOTGOOD.</li>
+    <li>Maintains Portrait Icon 'Dire Charm' on the target.</li>
+    <li>Effect ends if the creature is attacked by EA GOODCUTOFF.</li>
+    <li>Target displays "dire charmed" string.</li>
+  </ul>
+<br/>3    Hostile Dire Charm
+  <ul>
+    <li>Sets targets allegiance to GOODCUTOFF if the caster is EVILCUTOFF.</li>
+    <li>Sets targets allegiance to EVILCUTOFF if the caster is NOTEVIL.</li>
+    <li>Maintains EA CONTROLLED on the target if the caster is GOODCUTOFF.</li>
+    <li>Maintains EA ENEMY on the target if the caster is NOTGOOD.</li>
+    <li>Maintains Portrait Icon 'Dire Charm' on the target.</li>
+    <li>Effect ends if the creature is attacked by EA GOODCUTOFF.</li>
+    <li>Target displays "dire charmed" string.</li>
+  </ul>
 <br/>4    Controlled by Cleric
-<br/>5    Target is hostile
-<br/>1000 Charmed (no text) (Target neutral after effect ends)
-<br/>1001 Charmed (no text) (Target hostile after effect ends)
-<br/>1002 Dire charmed (no text) (Target neutral after effect ends)
-<br/>1003 Dire charmed (no text) (Target hostile after effect ends)
-<br/>1004 Controlled by Cleric (no text)
-<br/>1005 Target is hostile (no text)
+  <ul>
+    <li>Sets targets allegiance to GOODCUTOFF if the caster is EVILCUTOFF.</li>
+    <li>Sets targets allegiance to EVILCUTOFF if the caster is NOTEVIL.</li>
+    <li>Maintains EA CONTROLLED on the target if the caster is GOODCUTOFF.</li>
+    <li>Maintains EA ENEMY on the target if the caster is NOTGOOD.</li>
+    <li>Target displays "turned" string.</li>
+  </ul>
+<br/>5    Thrull Charm
+  <ul>
+    <li>Does not alter targets allegiance stat.</li>
+    <li>Maintains EA ENEMY on the target (regardless of casters Allegience).</li>
+    <li>Sets THRULLCHARM stat to 1.</li>
+    <li>Maintains Portrait Icon 'Charm' on the target.</li>
+    <li>Target displays "charmed" string.</li>
+  </ul>
+<br/>1000 Neutral Charm (no Feedback) -> Same as 0, but target does not display any string.
+<br/>1001 Hostile Charm (no Feedback) -> Same as 1, but target does not display any string.
+<br/>1002 Neutral Domination -> Same as 2, except:
+  <ul>
+    <li>Maintains Portrait Icon 'Domination' on the target.</li>
+    <li>Target does not display any string.</li>
+  </ul>
+<br/>1003 Hostile Domination -> Same as 3, except:
+  <ul>
+    <li>Maintains Portrait Icon 'Domination' on the target.</li>
+    <li>Target does not display any string.</li>
+  </ul>
+<br/>1004 Controlled by Cleric (no Feedback) -> Same as 4, but target does not display any string.
+<br/>1005 Thrull Charm (no Feedback) -> Same as 5, but target does not display any string.
+
+{% capture note %}
+If this effect turns a party member hostile, it will disable all of their scripts.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+In EEs, the "Dice Thrown" parameter can be used to override the maintained EA Value. It is used in all but the first application of the effect.
+{% endcapture %}
+
+{% include note.html %}

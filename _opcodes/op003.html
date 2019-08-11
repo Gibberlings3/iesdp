@@ -10,13 +10,22 @@ iwd1: 0
 iwd2: 0
 pst: 1
 ---
-Applies the berserk effect to the targeted creature(s).
-<br/>Target will uncontrollably attack enemies if any are in view, and will occasionally
-attack neutral creatures.
+Applies the berserk effect to the targeted creature(s) in the style specified by the 'Type' field.
+<br/>Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.
+<br/>Known values for 'Type' are:
+<br/>0 Default/In Combat -> Only berserk while in combat.
+<br/>1 Constant -> always berserk, sets SPELLSTATE 39 - ANIMAL_RAGE (only in EEs).
+<br/>2 Blood Rage -> this is probably not implemented. It should be linked to SPELLSTATE 35 - SUPPRESS_HP_INFO. (only in EEs)
 
 <p>
 The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag.
 </p> 
+
+{% capture note %}
+Forces creature(s) to use a melee weapon if possible.
+{% endcapture %}
+
+{% include note.html %}
 
 {% capture note %}
 This effect only affects party members.
@@ -29,3 +38,9 @@ The second paragraph hasn't been verified for PST and BG1 yet, but likely holds.
 {% endcapture %}
 
 {% include note.html %}
+
+{% capture note %}
+Used with timing modes 1/4/7 results in setting STATE_BERSERK when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
+{% endcapture %}
+
+{% include important.html %}

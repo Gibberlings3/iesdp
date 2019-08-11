@@ -17,3 +17,22 @@ Polymorphs the targeted creature(s) into the creature specified by the resource 
 <br/>
 <br/>This effect sets stat #59 (POLYMORPHED) to 1 but only if param #2 is 0.<br/>
 If the resource key is empty, other polymorph effects are removed, allowing for removal of permanent effects.
+
+{% capture note %}
+When param #2 is 0, this opcode sets Strength, Dexterity, Resistances (excluding Poison and Magic Damage), Base AC, Specific AC (Crush/Slash/Pierce/Missile), and Base APR.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+When the resource key is empty, and it subsequently clears other Polymorph Effects, param#2 is used just like param#1 of <a href="#op337">opcode #337</a>.
+As a result, it will clear all Polymorph effects if param#2 = "-1", else it will only clear Polymorph effects that have a param#2 that matches.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+The creature you're polymorphing into cannot have STATE_SLEEPING, STATE_FROZEN_DEATH, STATE_STONE_DEATH, STATE_FLAME_DEATH, or STATE_DEAD set in its CRE file, or the game will crash.
+{% endcapture %}
+
+{% include warning.html %}

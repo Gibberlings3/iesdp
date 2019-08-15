@@ -99,7 +99,7 @@ Known values for 'Type' are:
  If the targets AC is already 'AC Modifier' or below, this effect will do nothing).
 
 <p>
-AC is capped to the range [-20, 20]
+Each modifier type to AC from this opcode is capped to the range [-20, 20]. Each AC type total is capped to the range [-32768,32767].
 </p>
 
 
@@ -187,7 +187,7 @@ PST does not support Type 3, while BG(2)EE uses it differently.
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Removes the state_sleeping flag from the targeted creature(s).
+  <div class="descriptiondata"> Removes <a href="#op39">opcode #39</a> effects and the STATE_SLEEPING flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -195,10 +195,22 @@ PST does not support Type 3, while BG(2)EE uses it differently.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Does not remove the state_helpless flag.
+Does not remove the STATE_HELPLESS flag.
 
   </div>
 </div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, it can remove <a href="#op177">opcode #177</a> effects targeting an EFF with <a href="#op39">opcode #39</a>. Does not always work when delayed.
+
+  </div>
+</div>
+
  </div><br />
   <hr />
   <br />
@@ -214,13 +226,27 @@ Does not remove the state_helpless flag.
     <span class="parameterdata">Type</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Applies the berserk effect to the targeted creature(s).
-<br/>Target will uncontrollably attack enemies if any are in view, and will occasionally
-attack neutral creatures.
+  <div class="descriptiondata"> Applies the berserk effect to the targeted creature(s) in the style specified by the 'Type' field.
+<br/>Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.
+<br/>Known values for 'Type' are:
+<br/>0 Default/In Combat -> Only berserk while in combat.
+<br/>1 Constant -> always berserk, sets SPELLSTATE 39 - ANIMAL_RAGE (only in EEs).
+<br/>2 Blood Rage -> this is probably not implemented. It should be linked to SPELLSTATE 35 - SUPPRESS_HP_INFO. (only in EEs)
 
 <p>
 The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag.
 </p> 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Forces creature(s) to use a melee weapon if possible.
+
+  </div>
+</div>
+
 
 
 
@@ -243,6 +269,17 @@ The second paragraph hasn't been verified for PST and BG1 yet, but likely holds.
   </div>
 </div>
 
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Used with timing modes 1/4/7 results in setting STATE_BERSERK when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
+
+  </div>
+</div>
+
  </div><br />
   <hr />
   <br />
@@ -258,7 +295,7 @@ The second paragraph hasn't been verified for PST and BG1 yet, but likely holds.
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Removes the state_beserk flag from the targeted creature(s).
+  <div class="descriptiondata"> Removes <a href="#op3">opcode #3</a> effects and STATE_BERSERK from the targeted creature(s). Does not remove <a href="#op245">opcode #245</a>, <a href="#op246">opcode #246</a> and <a href="#op247">opcode #247</a> effects.
 <br/>This effect ignores durations attributed to it.
 
 
@@ -282,6 +319,17 @@ At least in BG2 and EEs, this effect only affects player characters.
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in BG2 and EEs, this effect can remove <a href="#op177">opcode #177</a> effects targeting an EFF with <a href="#op3">opcode #3</a>.
+
+  </div>
+</div>
+
  </div><br />
   <hr />
   <br />
@@ -299,18 +347,96 @@ At least in BG2 and EEs, this effect only affects player characters.
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids.
 <br/>Known values for 'Charm Type' are:
-<br/>0    Charmed (Target neutral after effect ends)
-<br/>1    Charmed (Target hostile after effect ends)
-<br/>2    Dire charmed (Target neutral after effect ends)
-<br/>3    Dire charmed (Target hostile after effect ends)
+<br/>0    Neutral Charm
+  <ul>
+    <li>Does not alter targets allegiance stat.</li>
+    <li>Maintains EA REALLYCHARMED on the target if the caster is EA GOODCUTOFF.</li>
+    <li>Maintains EA CHARMED_PC on the target if the caster is EA NOTGOOD.</li>
+    <li>Maintains Portrait Icon 'Charm' on the target.</li>
+    <li>Effect ends if the creature is attacked by EA GOODCUTOFF.</li>
+    <li>Target displays "charmed" string.</li>
+  </ul>
+<br/>1    Hostile Charm
+  <ul>
+    <li>Sets targets allegiance to GOODCUTOFF if the caster is EVILCUTOFF.</li>
+    <li>Sets targets allegiance to EVILCUTOFF if the caster is NOTEVIL.</li>
+    <li>Maintains EA REALLYCHARMED on the target if the caster is GOODCUTOFF.</li>
+    <li>Maintains EA CHARMED_PC on the target if the caster is NOTGOOD.</li>
+    <li>Maintains Portrait Icon 'Charm' on the target.</li>
+    <li>Effect ends if the creature is attacked by EA GOODCUTOFF.</li>
+    <li>Target displays "charmed" string.</li>
+  </ul>
+<br/>2    Neutral Dire Charm
+  <ul>
+    <li>Does not alter targets allegiance stat.</li>
+    <li>Maintains EA CONTROLLED on the target if the caster is GOODCUTOFF.</li>
+    <li>Maintains EA ENEMY on the target if the caster is NOTGOOD.</li>
+    <li>Maintains Portrait Icon 'Dire Charm' on the target.</li>
+    <li>Effect ends if the creature is attacked by EA GOODCUTOFF.</li>
+    <li>Target displays "dire charmed" string.</li>
+  </ul>
+<br/>3    Hostile Dire Charm
+  <ul>
+    <li>Sets targets allegiance to GOODCUTOFF if the caster is EVILCUTOFF.</li>
+    <li>Sets targets allegiance to EVILCUTOFF if the caster is NOTEVIL.</li>
+    <li>Maintains EA CONTROLLED on the target if the caster is GOODCUTOFF.</li>
+    <li>Maintains EA ENEMY on the target if the caster is NOTGOOD.</li>
+    <li>Maintains Portrait Icon 'Dire Charm' on the target.</li>
+    <li>Effect ends if the creature is attacked by EA GOODCUTOFF.</li>
+    <li>Target displays "dire charmed" string.</li>
+  </ul>
 <br/>4    Controlled by Cleric
-<br/>5    Target is hostile
-<br/>1000 Charmed (no text) (Target neutral after effect ends)
-<br/>1001 Charmed (no text) (Target hostile after effect ends)
-<br/>1002 Dire charmed (no text) (Target neutral after effect ends)
-<br/>1003 Dire charmed (no text) (Target hostile after effect ends)
-<br/>1004 Controlled by Cleric (no text)
-<br/>1005 Target is hostile (no text)
+  <ul>
+    <li>Sets targets allegiance to GOODCUTOFF if the caster is EVILCUTOFF.</li>
+    <li>Sets targets allegiance to EVILCUTOFF if the caster is NOTEVIL.</li>
+    <li>Maintains EA CONTROLLED on the target if the caster is GOODCUTOFF.</li>
+    <li>Maintains EA ENEMY on the target if the caster is NOTGOOD.</li>
+    <li>Target displays "turned" string.</li>
+  </ul>
+<br/>5    Thrull Charm
+  <ul>
+    <li>Does not alter targets allegiance stat.</li>
+    <li>Maintains EA ENEMY on the target (regardless of casters Allegience).</li>
+    <li>Sets THRULLCHARM stat to 1.</li>
+    <li>Maintains Portrait Icon 'Charm' on the target.</li>
+    <li>Target displays "charmed" string.</li>
+  </ul>
+<br/>1000 Neutral Charm (no Feedback) -> Same as 0, but target does not display any string.
+<br/>1001 Hostile Charm (no Feedback) -> Same as 1, but target does not display any string.
+<br/>1002 Neutral Domination -> Same as 2, except:
+  <ul>
+    <li>Maintains Portrait Icon 'Domination' on the target.</li>
+    <li>Target does not display any string.</li>
+  </ul>
+<br/>1003 Hostile Domination -> Same as 3, except:
+  <ul>
+    <li>Maintains Portrait Icon 'Domination' on the target.</li>
+    <li>Target does not display any string.</li>
+  </ul>
+<br/>1004 Controlled by Cleric (no Feedback) -> Same as 4, but target does not display any string.
+<br/>1005 Thrull Charm (no Feedback) -> Same as 5, but target does not display any string.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+If this effect turns a party member hostile, it will disable all of their scripts.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+In EEs, the "Dice Thrown" parameter can be used to override the maintained EA Value. It is used in all but the first application of the effect.
+
+  </div>
+</div>
+
  </div><br />
   <hr />
   <br />
@@ -494,7 +620,7 @@ At least in BG2 and EEs, this effect only affects player characters.
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Removes the poison effect from the targeted creature(s).
+  <div class="descriptiondata"> Removes <a href="#op25">opcode #25</a> poison effects and STATE_POISON from the targeted creature(s).
 
 
 
@@ -502,6 +628,17 @@ At least in BG2 and EEs, this effect only affects player characters.
   <div>
     <strong>Info:</strong> 
 This effect ignores durations attributed to it.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least in EEs, this effect can remove <a href="#op177">opcode #177</a> effects targeting an EFF with <a href="#op25">opcode #25</a>.
 
   </div>
 </div>
@@ -909,6 +1046,15 @@ This effect does not work with Timing Mode 1.
 <br/>1   Flat Value Modifier -> Morale = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Morale = (Morale * 'Statistic Modifier' value) / 100
 
+<br/>At least in EEs, known values for 'Mode' are:
+<br/>0   BG2 mode -> It's hardcoded to fill the following values:
+<ul>
+  <li>param #1 = 10</li>
+  <li>param #2 = 1</li>
+  <li>m_done = 1 (internal field that immediately removes the effect from creature, no matter duration)</li>
+</ul><br/>In addition, it checks if the creature is berserking, and if it is, it returns without doing anything.
+<br/>1   BG1 mode -> Default (functions as expected)
+
 
 
 <div class="note info">
@@ -931,10 +1077,13 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
   <span class="parameterheading">Parameter #1:</span>
     <span class="parameterdata">Irrelevant</span><br />
   <span class="parameterheading">Parameter #2:</span>
-    <span class="parameterdata">Irrelevant</span><br />
+    <span class="parameterdata">Type</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Applies the horror effect to the targeted creature(s).
+  <div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the 'Type' field, which is suspected to be an EE extension.
+<br/>Known values for 'Type' are:
+<br/>0 -> Default
+<br/>Non-zero -> Bypass opcode #101 (Immunity to effect)
  </div><br />
   <hr />
   <br />
@@ -2003,14 +2152,18 @@ Both parameters should be 0 (zero).
   <span class="parameterheading">Parameter #1:</span>
     <span class="parameterdata">Fade Amount</span><br />
   <span class="parameterheading">Parameter #2:</span>
-    <span class="parameterdata">Irrelevant</span><br />
+    <span class="parameterdata">Visual Effect</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Fades the targeted creature(s) by the value in the amount specified by the 'Fade Amount' field.
+  <div class="descriptiondata"> Fades the targeted creature(s) by the value in the amount specified by the 'Fade Amount' field in the style specified by the 'Visual Effect' field.
 <br/>Known values for 'Fade Amount' are:
 <br/>1   Fully visible
 <br/>..
 <br/>255 Almost invisible
+<br/>Known values for 'Visual Effect' are:
+<br/>0  -> Draw instantly
+<br/>1  -> Fade in
+<br/>2  -> Fade out
 <br/><br/>This effect sets stat #60 (TRANSLUCENT) to param #1.
  </div><br />
   <hr />
@@ -3019,11 +3172,13 @@ PST does not support the percentage modifier type (unknown what it actually does
 
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Sets the individual reputation of the targeted creature(s) to the value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>This does not affect the main reputation of the Party. Though it can affect ranger/paladinhood of any target.
+<br/>This does not affect the main reputation of the Party, unless 'Type' 3 or 4 are used. Though it can affect ranger/paladinhood of any target.
 <br/>Known values for 'Type' are:
 <br/>0   Cumulative Modifier -> Reputation = Reputation + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Reputation = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Reputation = (Reputation * 'Statistic Modifier' value) / 100
+<br/>3   Increment Party Reputation -> by 10x param#1, cannot lower reputation below 100, will raise reputation to 100 if already less (only in EEs)
+<br/>4   Reset Party Reputation to 100 (only in EEs)
  </div><br />
   <hr />
   <br />
@@ -3436,7 +3591,17 @@ Both parameters should be 0 (zero).
 
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Summons a number of monsters.
-<br/>Each creature files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect is equal to the 'Number' field / Creature Power Level.
+<br/>Each creature files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect depends on this value, the special parameter and if it's used in SPL/ITM or from an external EFF.
+<br/>When used in SPL/ITM, known value for 'Mode' are:
+<br/>0  Summon until Creature Power Level equals/exceeds 'Number'
+<br/>1  Summon amount equal to 'Number'
+<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"
+
+<br/>When used in EFF, known value for 'Mode' are:
+<br/>0  Summon until Creature Power Level equals/exceeds 'Number'
+<br/>1  Summon amount equal to ('Number' + Dice rolls)
+<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF
+
 <br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = Type + 1. 0-4 are allied , 5-9 are hostile. The specific 2da files used are:
 <br/>0 MONSUM01 Monster Summon 1
 <br/>1 MONSUM02 Monster Summon 2
@@ -4655,6 +4820,17 @@ Both parameters should be 0 (zero).
 
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Gives the spell specified by the resource key to the targeted creature(s).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Any delayed opcode 171 effect will be removed by death.
+
+  </div>
+</div>
+
  </div><br />
   <hr />
   <br />

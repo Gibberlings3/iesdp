@@ -117,7 +117,7 @@ Known values for 'Type' are:
  If the targets AC is already 'AC Modifier' or below, this effect will do nothing).
 
 <p>
-AC is capped to the range [-20, 20]
+Each modifier type to AC from this opcode is capped to the range [-20, 20]. Each AC type total is capped to the range [-32768,32767].
 </p>
 
 
@@ -234,7 +234,7 @@ PST does not support Type 3, while BG(2)EE uses it differently.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the state_sleeping flag from the targeted creature(s).
+		<div class="descriptiondata"> Removes <a href="#op39">opcode #39</a> effects and the STATE_SLEEPING flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -242,10 +242,22 @@ PST does not support Type 3, while BG(2)EE uses it differently.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Does not remove the state_helpless flag.
+Does not remove the STATE_HELPLESS flag.
 
   </div>
 </div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, it can remove <a href="#op177">opcode #177</a> effects targeting an EFF with <a href="#op39">opcode #39</a>. Does not always work when delayed.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -280,13 +292,27 @@ Does not remove the state_helpless flag.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the berserk effect to the targeted creature(s).
-<br/>Target will uncontrollably attack enemies if any are in view, and will occasionally
-attack neutral creatures.
+		<div class="descriptiondata"> Applies the berserk effect to the targeted creature(s) in the style specified by the 'Type' field.
+<br/>Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.
+<br/>Known values for 'Type' are:
+<br/>0 Default/In Combat -> Only berserk while in combat.
+<br/>1 Constant -> always berserk, sets SPELLSTATE 39 - ANIMAL_RAGE (only in EEs).
+<br/>2 Blood Rage -> this is probably not implemented. It should be linked to SPELLSTATE 35 - SUPPRESS_HP_INFO. (only in EEs)
 
 <p>
 The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag.
 </p> 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Forces creature(s) to use a melee weapon if possible.
+
+  </div>
+</div>
+
 
 
 
@@ -305,6 +331,17 @@ This effect only affects party members.
   <div>
     <strong>Note:</strong> 
 The second paragraph hasn't been verified for PST and BG1 yet, but likely holds.
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Used with timing modes 1/4/7 results in setting STATE_BERSERK when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
 
   </div>
 </div>
@@ -334,7 +371,7 @@ The second paragraph hasn't been verified for PST and BG1 yet, but likely holds.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the state_beserk flag from the targeted creature(s).
+		<div class="descriptiondata"> Removes <a href="#op3">opcode #3</a> effects and STATE_BERSERK from the targeted creature(s). Does not remove <a href="#op245">opcode #245</a>, <a href="#op246">opcode #246</a> and <a href="#op247">opcode #247</a> effects.
 <br/>This effect ignores durations attributed to it.
 
 
@@ -354,6 +391,17 @@ Both parameters should be 0 (zero).
   <div>
     <strong>Note:</strong> 
 At least in BG2 and EEs, this effect only affects player characters.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in BG2 and EEs, this effect can remove <a href="#op177">opcode #177</a> effects targeting an EFF with <a href="#op3">opcode #3</a>.
 
   </div>
 </div>
@@ -678,7 +726,7 @@ At least in BG2 and EEs, this effect only affects player characters.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the poison effect from the targeted creature(s).
+		<div class="descriptiondata"> Removes <a href="#op25">opcode #25</a> poison effects and STATE_POISON from the targeted creature(s).
 
 
 
@@ -686,6 +734,17 @@ At least in BG2 and EEs, this effect only affects player characters.
   <div>
     <strong>Info:</strong> 
 This effect ignores durations attributed to it.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least in EEs, this effect can remove <a href="#op177">opcode #177</a> effects targeting an EFF with <a href="#op25">opcode #25</a>.
 
   </div>
 </div>
@@ -1286,6 +1345,8 @@ This effect does not work with Timing Mode 1.
 
 		
 		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Mode</span><br />
+		
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
@@ -1293,6 +1354,15 @@ This effect does not work with Timing Mode 1.
 <br/>0   Cumulative Modifier -> Morale = Morale + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Morale = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Morale = (Morale * 'Statistic Modifier' value) / 100
+
+<br/>At least in EEs, known values for 'Mode' are:
+<br/>0   BG2 mode -> It's hardcoded to fill the following values:
+<ul>
+  <li>param #1 = 10</li>
+  <li>param #2 = 1</li>
+  <li>m_done = 1 (internal field that immediately removes the effect from creature, no matter duration)</li>
+</ul><br/>In addition, it checks if the creature is berserking, and if it is, it returns without doing anything.
+<br/>1   BG1 mode -> Default (functions as expected)
 
 
 
@@ -1332,13 +1402,16 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s).
+		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the 'Type' field, which is suspected to be an EE extension.
+<br/>Known values for 'Type' are:
+<br/>0 -> Default
+<br/>Non-zero -> Bypass opcode #101 (Immunity to effect)
  </div>
 		<hr />
 
@@ -4935,11 +5008,13 @@ PST does not support the percentage modifier type (unknown what it actually does
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Sets the individual reputation of the targeted creature(s) to the value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>This does not affect the main reputation of the Party. Though it can affect ranger/paladinhood of any target.
+<br/>This does not affect the main reputation of the Party, unless 'Type' 3 or 4 are used. Though it can affect ranger/paladinhood of any target.
 <br/>Known values for 'Type' are:
 <br/>0   Cumulative Modifier -> Reputation = Reputation + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Reputation = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Reputation = (Reputation * 'Statistic Modifier' value) / 100
+<br/>3   Increment Party Reputation -> by 10x param#1, cannot lower reputation below 100, will raise reputation to 100 if already less (only in EEs)
+<br/>4   Reset Party Reputation to 100 (only in EEs)
  </div>
 		<hr />
 

@@ -741,22 +741,22 @@
       <tbody>
         <tr>
           <td>0</td>
-          <td> Unsellable (critical item)*</td>
+            <td> Unsellable (critical item)<small><sup>1</sup></small></td>
           <td> Silver</td>
           <td> <span class="unknown"> Unused </span></td>
           <td> Not dispellable in magical weapon slot (BGEE, TobEx)</td>
         </tr>
         <tr>
           <td>1</td>
-          <td> Two-handed</td>
+          <td> Two-handed<small><sup>2</sup></small></td>
           <td> Cold-Iron</td>
           <td> <span class="unknown"> Unused </span></td>
-          <td> Toggle critical hit aversion (BGEE, TobEx)</td>
+          <td> Toggle critical hit aversion<small><sup>5</sup></small> (BGEE, TobEx)</td>
         </tr>
         <tr>
           <td>2</td>
           <td> Movable</td>
-          <td> Unsellable (stolen) / two handed animation <br /><br />
+          <td> Unsellable (stolen) / forces dual-wield animation <br /><br />
                Set offhand animations for 0x5###-0x6### animId series (excluding 0x64##) when weapon placed in offhand.</td>
           <td> <span class="unknown"> Unused </span></td>
           <td> <span class="unknown"> Unused </span></td>
@@ -778,7 +778,7 @@
         <tr>
           <td>5</td>
           <td> <span class="unknown"> Cannot scribe to spellbook (scrolls) </span></td>
-          <td> Not usable in off-hand (BGEE)</td>
+          <td> Not usable in off-hand<small><sup>4</sup></small> (BGEE)</td>
           <td> <span class="unknown"> Unused </span></td>
           <td> <span class="unknown"> Unused </span></td>
         </tr>
@@ -791,7 +791,7 @@
         </tr>
         <tr>
           <td>7</td>
-          <td> Bow</td>
+          <td> Left-handed<small><sup>3</sup></small></td>
           <td> Adamantine (BGEE)</td>
           <td> <span class="unknown"> Unused </span></td>
           <td> <span class="unknown"> Unused </span></td>
@@ -799,7 +799,15 @@
       </tbody>
     </table>
     <br />
-    * In BG1, this flag does not affect whether the item can be sold.<br />
+    <small><sup>1</sup></small> In BG1, this flag does not affect whether the item can be sold.<br />
+    <small><sup>2</sup></small> Forces Two-Handed Weapon style, disables off-hand attacks and equipped effects.<br />
+    <small><sup>3</sup></small> Disables off-hand attacks, equipped effects and Two-Weapon style (inventory still displays Two-Weapon style modifiers, but they are not included in the calculations).<br />
+    <small><sup>4</sup></small> It does not disable equipped effects of the off-hand (weapon or shield). In particular:
+        <ul>
+            <li>For normal weapons, it only disables Two-Weapon style.</li>
+            <li>For magically created weapons, it disables off-hand attacks and Two-Weapon style.</li>
+        </ul><br />
+    <small><sup>5</sup></small>Keep in mind that if you set this bit to 1 for an ITM whose<a href="#Header_ItemType"> Item type</a> is 0x0007 (Headgear), then you'll toggle off the Critical hit aversion.
     </div>
     
     <br />
@@ -1805,12 +1813,12 @@
         </tr>
         <tr>
           <td>2</td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td> Damage strength bonus (BGEE split bit 0)</td>
           <td> Hostile</td>
         </tr>
         <tr>
           <td>3</td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td> THAC0 strength bonus (BGEE split bit 0)</td>
           <td> Recharges</td>
         </tr>
         <tr>

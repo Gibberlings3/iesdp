@@ -1774,6 +1774,7 @@ The example is from AR0516.bcs.<br />
   <div class="actionHeader"><a name="134">134 AttackReevaluate(O:Target*,I:ReevaluationPeriod*)</a></div>
   <div class="indent1">
   This action instructs the active creature to attack the target for the specified time (ReevaluationPeriod) which is measured in AI updates (which default to 15 per second).The script will then run again, checking for other true conditions.<br />
+  Just to give an idea, <a href="#105">AttackOneRound()</a> would be equivalent to AttackReevaluate() with a 100 tick reevaluation period.<br />
   <br />
   <pre class="code">
   IF
@@ -2810,12 +2811,42 @@ This action creates the item specified by the resref parameter on the creature s
   <div class="actionHeader"><a name="216">216 AddFamiliar()</a></div>
   <div class="indent1">
   This action causes the active creature to become the players ally. The active creature does not act as a normal familiar (i.e. no HP bonus or Constitution loss on death).<br />
+      
+  
+      <div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+          Unfortunately, this action is currently bugged (as of v2.5) - It temporarily sets all non-EA values to 0 (GENERAL, RACE, CLASS, ALIGNMENT, SPECIFICS). Anything that forces the targeted character's action bar to update itself will revert the creature to its normal values (and action bar). For instance:
+          <ul>
+              <li>Casting a spell from a quick spell slot (needs to update the quantity)</li>
+              <li>Changing the spell in a quick spell slot</li>
+              <li>Using a quick item with quantity/charges</li>
+          </ul>
+      
+  </div>
+</div>
+
   <br />
   </div>
   
   <div class="actionHeader"><a name="217">217 RemoveFamiliar()</a></div>
   <div class="indent1">
   This action removes the ally flag set by AddFamiliar.<br />
+      
+  
+      <div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+          Unfortunately, this action is currently bugged (as of v2.5) - It temporarily sets all non-EA values to 0 (GENERAL, RACE, CLASS, ALIGNMENT, SPECIFICS). Anything that forces the targeted character's action bar to update itself will revert the creature to its normal values (and action bar). For instance:
+          <ul>
+              <li>Casting a spell from a quick spell slot (needs to update the quantity)</li>
+              <li>Changing the spell in a quick spell slot</li>
+              <li>Using a quick item with quantity/charges</li>
+          </ul>
+      
+  </div>
+</div>
+
   <br />
   </div>
   
@@ -3976,7 +4007,16 @@ Other states are untested.<br />
 
   <div class="actionHeader"><a name="385">385 XEquipItem(S:Item*,O:Object*,I:Slot*Slots,I:EquipUnEquip*XEQUIP)</a></div>
   <div class="indent1">
-  <span class="unknown">Unknown</span><br />
+  This action puts the item specified by the Item parameter in the slot specified by the Slot parameter of the creature specified by the Object parameter in the style specified by the Equip/UnEquip parameter.<br />
+  <br />
+  Code snippet:
+  <pre class="code">
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      XEquipItem("HAMM01",Protagonist,SLOT_WEAPON1,EQUIP)  // War Hammer
+  END</pre>
   <br />
   </div>
 

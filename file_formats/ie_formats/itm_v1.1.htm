@@ -10,7 +10,7 @@ title: "ITM file format"
     
     <div class="fileHeader">General Description</div>
     <div class="indent1">
-      This file format describes an &quot;item&quot;. Items include weapons, armor, books, scrolls, rings and more. Items can have attached abilties, occuring either when a target creature it hit, or when the item is equipped. ITM files have a similar structure to <a href="spl_v1.htm">SPL </a>files.<br />
+      This file format describes an &quot;item&quot;. Items include weapons, armor, books, scrolls, rings and more. Items can have attached abilties, occuring either when a target creature it hit, or when the item is equipped. ITM files have a similar structure to <a href="spl_v1.htm">SPL</a> files.<br />
     </div>
     <br />
     
@@ -18,11 +18,11 @@ title: "ITM file format"
     <table align="center">
       <tr>
         <td><img src="../../images/red.jpg" width="10" height="10"></td>
-        <td><strong>Header:</strong> <font size="-1">Size=114 Bytes</font></td>
+        <td><strong>Header: </strong><font size="-1">Size = 114 Bytes</font></td>
         <td><img src="../../images/blue.jpg" width="10" height="10"></td>
-        <td><strong>Ext. Header:</strong> <font size="-1">Size= 56 Bytes</font></td>
+        <td><strong>Ext. Header: </strong><font size="-1">Size = 56 Bytes</font></td>
         <td><img src="../../images/green.jpg" width="10" height="10"></td>
-        <td><strong>Feature Block:</strong> <font size="-1">Size=48 Bytes</font></td>
+        <td><strong>Feature Block: </strong><font size="-1">Size = 48 Bytes</font></td>
       </table>
     <br />
     
@@ -69,32 +69,32 @@ title: "ITM file format"
           <tr>
             <td>0x0008</td>
             <td>4 (strref)</td>
-            <td>Item name - generic (strref)</td>
+            <td>Unidentified Name (strref)</td>
           </tr>
           <tr>
             <td>0x000c</td>
             <td>4 (strref)</td>
-            <td>Item name - identified (strref)</td>
+            <td>Identified Name (strref)</td>
           </tr>
           <tr>
             <td>0x0010</td>
             <td>8 (resref)</td>
-            <td>Drop sound (played when the item is dropped in the inventory)</td>
+            <td>Drop sound - played when the item is dropped in the inventory (WAV)</td>
           </tr>
           <tr>
             <td>0x0018</td>
             <td>4 (dword)</td>
-            <td><a href="#Header_Flags"> Flags</a></td>
+            <td><a href="#Header_Flags">Flags</a></td>
           </tr>
           <tr>
             <td>0x001c</td>
             <td>2 (word)</td>
-            <td><a href="#Header_ItemType"> Item type</a></td>
+            <td><a href="#Header_ItemType">Item type</a></td>
           </tr>
           <tr>
             <td>0x001e</td>
             <td>1*4 (byte)</td>
-            <td><a href="#Header_Usability"> Usability bitmask</a></td>
+            <td><a href="#Header_Usability">Usability bitmask</a></td>
           </tr>
           <tr>
             <td>0x0022</td>
@@ -162,7 +162,7 @@ title: "ITM file format"
           <tr>
             <td>0x003a</td>
             <td>8 (resref)</td>
-            <td>Item icon</td>
+            <td>Inventory icon (BAM)</td>
           </tr>
           <tr>
             <td>0x0042</td>
@@ -172,7 +172,7 @@ title: "ITM file format"
           <tr>
             <td>0x0044</td>
             <td>8 (resref)</td>
-            <td>Ground icon</td>
+            <td>Ground icon (BAM)</td>
           </tr>
           <tr>
             <td>0x004c</td>
@@ -182,17 +182,17 @@ title: "ITM file format"
           <tr>
             <td>0x0050</td>
             <td>4 (strref)</td>
-            <td>Item description - generic (strref)</td>
+            <td>Unidentified Description (strref)</td>
           </tr>
           <tr>
             <td>0x0054</td>
             <td>4 (strref)</td>
-            <td>Item description - identified (strref)</td>
+            <td>Identified Description (strref)</td>
           </tr>
           <tr>
             <td>0x0058</td>
             <td>8 (resref)</td>
-            <td>Pickup sound (played when the item is picked up in the inventory)</td>
+            <td>Pickup sound - played when the item is picked up in the inventory (WAV)</td>
           </tr>
           <tr>
             <td>0x0060</td>
@@ -217,22 +217,22 @@ title: "ITM file format"
           <tr>
             <td>0x006e</td>
             <td>2 (word)</td>
-            <td>Offset to equipping feature blocks</td>
+            <td>Index into equipping feature blocks</td>
           </tr>
           <tr>
             <td>0x0070</td>
             <td>2 (word)</td>
-            <td>Count of equipping feature blocks</a></td>
+            <td>Count of equipping feature blocks</td>
           </tr>
           <tr>
             <td>0x0072</td>
-            <td>8 (char)</td>
-            <td>Dialog</td>
+            <td>8 (resref)</td>
+            <td>Dialog (DLG)</td>
           </tr>
           <tr>
             <td>0x007a</td>
-            <td>4 (dword)</td>
-            <td>Conversable label strref</td>
+            <td>4 (strref)</td>
+            <td>Conversable label (strref)</td>
           </tr>
           <tr>
             <td>0x007e</td>
@@ -276,8 +276,8 @@ title: "ITM file format"
           </tr>
         </tbody>
       </table>
+      <br />
     </div>
-    <br />
     
     <div class="fileHeader"><a name="itmv1.1_Extended_Header">Extended Header</a></div>
     <br />
@@ -304,7 +304,7 @@ title: "ITM file format"
           <tr>
             <td>0x0000</td>
             <td>1 (char)</td>
-            <td>Attack type <br />
+            <td>Attack type
               <ul>
                 <li>0 = None</li>
                 <li>1 = Melee</li>
@@ -328,7 +328,7 @@ title: "ITM file format"
           <tr>
             <td>0x0002</td>
             <td>1 (char)</td>
-            <td>Location<br />
+            <td>Location
               <ul>
                 <li>0 = None</li>
                 <li>1 = Weapon</li>
@@ -453,7 +453,7 @@ title: "ITM file format"
           <tr>
             <td>0x0020</td>
             <td>2 (word)</td>
-            <td>Offset to feature blocks</td>
+          <td>Index into feature blocks</td>
           </tr>
           <tr>
             <td>0x0022</td>
@@ -475,7 +475,7 @@ title: "ITM file format"
           <tr>
             <td>0x0026</td>
             <td>4 (dword)</td>
-            <td><a href="#ExtHeader_Flags"> Flags</a></td>
+            <td><a href="#ExtHeader_Flags">Flags</a></td>
           </tr>
           <tr>
             <td>0x002a</td>
@@ -535,19 +535,19 @@ title: "ITM file format"
             <td>1 (char)</td>
             <td>Target type<br />
               <ul>
-                  <li>0=None</li>
-                  <li>1=Self (pre-projectile)</li>
-                  <li>2=Pre-target</li>
-                  <li>3=Party</li>
-                  <li>4=Everyone (inc. party)</li>
-                  <li>5=Everyone (excl. party)</li>
+                  <li>0 = None</li>
+                  <li>1 = Self (pre-projectile)</li>
+                  <li>2 = Pre-target</li>
+                  <li>3 = Party</li>
+                  <li>4 = Everyone (inc. party)</li>
+                  <li>5 = Everyone (excl. party)</li>
               </ul>
             </td>
           </tr>
           <tr>
             <td>0x0003</td>
             <td>1 (char)</td>
-            <td>Power<td>
+            <td>Power</td>
           </tr>
           <tr>
             <td>0x0004</td>
@@ -557,25 +557,25 @@ title: "ITM file format"
           <tr>
             <td>0x0008</td>
             <td>4 (dword)</td>
-            <td>Parameter 2<td>
+            <td>Parameter 2</td>
           </tr>
           <tr>
             <td>0x000c</td>
             <td>1 (char)</td>
             <td>Timing mode
               <ul>
-                <li>0=Duration</li>
-                <li>1=Permanent</li>
-                <li>2=While equipped</li>
-                <li>3=Delayed Duration</li>
-                <li>4=Delayed</li>
-                <li>5=Delayed (transforms to 8)</li>
-                <li>6=Duration?</li>
-                <li>7=Permanent?</li>
-                <li>8=Permanent (unsaved)</li>
-                <li>9=Permanent (after Death)</li>
-                <li>10=Trigger</li>
-                <li>4096=Absolute duration</li>
+                <li>0 = Duration</li>
+                <li>1 = Permanent</li>
+                <li>2 = While equipped</li>
+                <li>3 = Delayed Duration</li>
+                <li>4 = Delayed</li>
+                <li>5 = Delayed (transforms to 8)</li>
+                <li>6 = Duration?</li>
+                <li>7 = Permanent?</li>
+                <li>8 = Permanent (unsaved)</li>
+                <li>9 = Permanent (after Death)</li>
+                <li>10 = Trigger</li>
+                <li>4096 = Absolute duration</li>
               </ul>
             </td>
           </tr>
@@ -592,10 +592,10 @@ title: "ITM file format"
               <br />
               This can also be presented in the more traditional way:<br />
               <ul>
-                <li>0=Nonmagical</li>
-                <li>1=Can be dispelled/Affected by resistance</li>
-                <li>2=Cannot be dispelled/Ignores resistance</li>
-                <li>3=Can be dispelled/Ignores resistance</li>
+                <li>0 = Nonmagical</li>
+                <li>1 = Can be dispelled/Affected by resistance</li>
+                <li>2 = Cannot be dispelled/Ignores resistance</li>
+                <li>3 = Can be dispelled/Ignores resistance</li>
               </ul>
             </td>
           </tr>
@@ -615,7 +615,7 @@ title: "ITM file format"
             <td>Probability 2<br />
               <br />
               Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.<br />
-              Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.<br />
+              Note: Other engines treat probability as two values, effects are applied in the range probability &lt;= x &lt;= probability.<br />
               Probability range is 0-99<br />
             </td>
           </tr>
@@ -631,7 +631,7 @@ title: "ITM file format"
           </tr>
           <tr>
             <td>0x0020</td>
-            <td>2 (word)</td>
+            <td>4 (dword)</td>
             <td>Dice Sides</td>
           </tr>
           <tr>
@@ -665,7 +665,7 @@ title: "ITM file format"
     
     <hr />
     <br />
-    <a id="Header_Flags"><div class="actionheader"> Header Flags </a></div>
+    <a id="Header_Flags"><div class="actionheader">Header Flags</div></a>
     <br />
     <div class="indent1">
     <table border="1" width="98%">
@@ -678,7 +678,7 @@ title: "ITM file format"
       </colgroup>
       <thead>
         <tr>
-          <th>Bit </th>
+          <th>Bit</th>
           <th>Byte 1</th>
           <th>Byte 2</th>
           <th>Byte 3</th>
@@ -688,70 +688,69 @@ title: "ITM file format"
       <tbody>
         <tr>
           <td>0</td>
-          <td> Unsellable (critical item)</td>
-          <td> Silver</td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
+          <td>Unsellable (critical item)</td>
+          <td>Silver</td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
         </tr>
         <tr>
           <td>1</td>
-          <td> Two-handed</td>
-          <td> Cold-Iron</td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
+          <td>Two-handed</td>
+          <td>Cold-Iron</td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
         </tr>
         <tr>
           <td>2</td>
-          <td> Movable</td>
-          <td> Steel</td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
+          <td>Movable</td>
+          <td>Steel</td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
         </tr>
         <tr>
           <td>3</td>
-          <td> Displayable</td>
-          <td> Converable</td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
+          <td>Displayable</td>
+          <td>Conversable</td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
         </tr>
         <tr>
           <td>4</td>
-          <td> Cursed</td>
-          <td> Pulsating</td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
+          <td>Cursed</td>
+          <td>Pulsating</td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
         </tr>
         <tr>
           <td>5</td>
-          <td> <span class="unknown"> Cannot scribe to spellbook (scrolls) </span></td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
+          <td><span class="unknown">Cannot scribe to spellbook (scrolls)</span></td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
         </tr>
         <tr>
           <td>6</td>
-          <td> Magical</td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
+          <td>Magical</td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
         </tr>
         <tr>
           <td>7</td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
-          <td> <span class="unknown"> Unused </span></td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
+          <td><span class="unknown">Unused</span></td>
         </tr>
       </tbody>
     </table>
     </div>
     
-    
     <br />
-    <a id="Header_ItemType"><div class="actionheader"> Header Item Type</a></div>
+    <a id="Header_ItemType"><div class="actionheader">Header Item Type</div></a>
     <div class="indent1">
     <br />
-    The item type of an item affects the pick-up/put-down sound when moving the item in the inventory, whether stores will buy the item and the ability ubttons shown on the item description screen.<br />
+    The item type of an item affects the pick-up/put-down sound when moving the item in the inventory, whether stores will buy the item and the ability buttons shown on the item description screen.<br />
     <br />
     <table border="1" width="98%">
       <colgroup>
@@ -761,7 +760,7 @@ title: "ITM file format"
       <thead>
         <tr>
           <th>Code</th>
-          <th>Item type></th>
+          <th>Item type</th>
         </tr>
       </thead>
       <tbody>
@@ -843,11 +842,11 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0013</td>
-          <td>Short swords</td>
+          <td>Small swords</td>
         </tr>
         <tr>
           <td>0x0014</td>
-          <td>Long swords (in BG, this includes 2-handed and bastard swords)</td>
+          <td>Large swords (in BG, this includes 2-handed and bastard swords)</td>
         </tr>
         <tr>
           <td>0x0015</td>
@@ -867,8 +866,7 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0019</td>
-          <td>Axes (specifically, 1-handed axes -- halberds and 2-handed polearms
-            not included)</td>
+          <td>Axes (specifically, 1-handed axes -- halberds and 2-handed polearms not included)</td>
         </tr>
         <tr>
           <td>0x001a</td>
@@ -900,8 +898,7 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0021</td>
-          <td>Gold pieces (not an inventory item, but can appear as &quot;monster
-            dropped&quot; treasure)</td>
+          <td>Gold pieces (not an inventory item, but can appear as &quot;monster dropped&quot; treasure)</td>
         </tr>
         <tr>
           <td>0x0022</td>
@@ -913,15 +910,15 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0024</td>
-          <td>Bag/eye/broken armor</td>
+          <td>Containers/eye/broken armor</td>
         </tr>
         <tr>
           <td>0x0025</td>
-          <td>Broken shield/bracelet</td>
+          <td>Broken shields/bracelets</td>
         </tr>
         <tr>
           <td>0x0026</td>
-          <td>Broken sword/earring</td>
+          <td>Broken swords/earrings</td>
         </tr>
         <tr>
           <td>0x0027</td>
@@ -929,15 +926,15 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0028</td>
-          <td>Lenses(PST)</td>
+          <td>Lenses (PST)</td>
         </tr>
         <tr>
           <td>0x0029</td>
-          <td>Buckler/teeth</td>
+          <td>Bucklers/teeth</td>
         </tr>
         <tr>
           <td>0x002a</td>
-          <td>Candle</td>
+          <td>Candles</td>
         </tr>
         <tr>
           <td>0x002b</td>
@@ -945,7 +942,7 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x002c</td>
-          <td>Clubs(IWD)</td>
+          <td>Clubs (IWD)</td>
         </tr>
         <tr>
           <td>0x002d</td>
@@ -957,7 +954,7 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x002f</td>
-          <td>Large Shield(IWD)</td>
+          <td>Large Shields (IWD)</td>
         </tr>
         <tr>
           <td>0x0030</td>
@@ -965,7 +962,7 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0031</td>
-          <td>Medium Shield(IWD)</td>
+          <td>Medium Shields (IWD)</td>
         </tr>
         <tr>
           <td>0x0032</td>
@@ -981,7 +978,7 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0035</td>
-          <td>Small Shield(IWD)</td>
+          <td>Small Shields (IWD)</td>
         </tr>
         <tr>
           <td>0x0036</td>
@@ -989,15 +986,15 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0037</td>
-          <td>Telescope(IWD)</td>
+          <td>Telescopes (IWD)</td>
         </tr>
         <tr>
           <td>0x0038</td>
-          <td>Drink(IWD)</td>
+          <td>Drinks (IWD)</td>
         </tr>
         <tr>
           <td>0x0039</td>
-          <td>Great Sword(IWD)</td>
+          <td>Great Swords (IWD)</td>
         </tr>
         <tr>
           <td>0x003a</td>
@@ -1053,7 +1050,7 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0047</td>
-          <td>Food(IWD2)</td>
+          <td>Food (IWD2)</td>
         </tr>
         <tr>
           <td>0x0048</td>
@@ -1068,7 +1065,7 @@ title: "ITM file format"
     </div>
     <br />
     
-    <a id="Header_Usability"><div class="actionheader"> Header Usability </a></div>
+    <a id="Header_Usability"><div class="actionheader">Header Usability</div></a>
     <br />
     <div class="indent1">
     <table border="1" width="98%">
@@ -1081,7 +1078,7 @@ title: "ITM file format"
       </colgroup>
       <thead>
         <tr>
-          <th>Bit </th>
+          <th>Bit</th>
           <th>Byte 1</th>
           <th>Byte 2</th>
           <th>Byte 3</th>
@@ -1091,59 +1088,59 @@ title: "ITM file format"
       <tbody>
         <tr>
           <td>0</td>
-          <td> Unusable by Chatoic</td>
-          <td> Unusable by Godsmen</td>
-          <td> Unusable by Indeps</td>
-          <td> Unusable by Ignus</td>
+          <td>Unusable by Chaotic</td>
+          <td>Unusable by Godsmen</td>
+          <td>Unusable by Indeps</td>
+          <td>Unusable by Ignus</td>
         </tr>
         <tr>
           <td>1</td>
-          <td> Unusable by Evil</td>
-          <td> Unusable by Anarchist</td>
-          <td> Unusable by Fighter Thief</td>
-          <td> Unusable by Morte</td>
+          <td>Unusable by Evil</td>
+          <td>Unusable by Anarchist</td>
+          <td>Unusable by Fighter Thief</td>
+          <td>Unusable by Morte</td>
         </tr>
         <tr>
           <td>2</td>
-          <td> Unusable by Good</td>
-          <td> Unusable by Chaosmen</td>
-          <td> Unusable by Mage</td>
-          <td> Unusable by Nordom</td>
+          <td>Unusable by Good</td>
+          <td>Unusable by Chaosmen</td>
+          <td>Unusable by Mage</td>
+          <td>Unusable by Nordom</td>
         </tr>
         <tr>
           <td>3</td>
-          <td> Unusable by Good-Evil Neutral</td>
-          <td> Unusable by Fighter</td>
-          <td> Unusable by Mage Thief</td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td>Unusable by Good-Evil Neutral</td>
+          <td>Unusable by Fighter</td>
+          <td>Unusable by Mage Thief</td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>4</td>
-          <td> Unusable by Lawful</td>
-          <td> No Faction</td>
-          <td> Unusable by Dak'kon</td>
-          <td> Unusable by Annah</td>
+          <td>Unusable by Lawful</td>
+          <td>No Faction</td>
+          <td>Unusable by Dak'kon</td>
+          <td>Unusable by Annah</td>
         </tr>
         <tr>
           <td>5</td>
-          <td> Unusable by Lawful-Chaotic Neutral</td>
-          <td> Unusable by Fighter Mage</td>
-          <td> Unusable by Fall-From-Grace</td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td>Unusable by Lawful-Chaotic Neutral</td>
+          <td>Unusable by Fighter Mage</td>
+          <td>Unusable by Fall-From-Grace</td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>6</td>
-          <td> Unusable by Sensates</td>
-          <td> Unusable by Dustmen</td>
-          <td> Unusable by Thief</td>
-          <td> Unusable by Nameless One</td>
+          <td>Unusable by Sensates</td>
+          <td>Unusable by Dustmen</td>
+          <td>Unusable by Thief</td>
+          <td>Unusable by Nameless One</td>
         </tr>
         <tr>
           <td>7</td>
-          <td> Unusable by Priest</td>
-          <td> Unusable by Mercykillers</td>
-          <td> Unusable by Vhailor</td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td>Unusable by Priest</td>
+          <td>Unusable by Mercykillers</td>
+          <td>Unusable by Vhailor</td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
       </tbody>
     </table>
@@ -1151,7 +1148,7 @@ title: "ITM file format"
     <br />
     
     
-    <a id="ExtHeader_Flags"><div class="actionheader"> Extension Header Flags</a></div>
+    <a id="ExtHeader_Flags"><div class="actionheader">Extension Header Flags</div></a>
     <br />
     <div class="indent1">
     <table border="1" width="98%">
@@ -1162,7 +1159,7 @@ title: "ITM file format"
       </colgroup>
       <thead>
         <tr>
-          <th>Bit </th>
+          <th>Bit</th>
           <th>Byte 1</th>
           <th>Byte 2</th>
         </tr>
@@ -1170,49 +1167,49 @@ title: "ITM file format"
       <tbody>
         <tr>
           <td>0</td>
-          <td> Add strength bonus</td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td>Add strength bonus</td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>1</td>
-          <td> Breakable</td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td>Breakable</td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>2</td>
-          <td> <span class="unknown">Unknown</span></td>
-          <td> Hostile</td>
+          <td><span class="unknown">Unknown</span></td>
+          <td>Hostile</td>
         </tr>
         <tr>
           <td>3</td>
-          <td> <span class="unknown">Unknown</span></td>
-          <td> Recharges</td>
+          <td><span class="unknown">Unknown</span></td>
+          <td>Recharges</td>
         </tr>
         <tr>
           <td>4</td>
-          <td> <span class="unknown">Unknown</span></td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>5</td>
-          <td> <span class="unknown">Unknown</span></td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>6</td>
-          <td> <span class="unknown">Unknown</span></td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>7</td>
-          <td> <span class="unknown">Unknown</span></td>
-          <td> <span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
       </tbody>
     </table>
     </div>
     <br />
-    
+
   </div>
 </div>
 

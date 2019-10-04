@@ -571,20 +571,23 @@ title: "ITM file format"
           <tr>
             <td>0x000d</td>
             <td>1 (char)</td>
-            <td>Resistance<br />
+            <td>Magic Resistance<br />
               <br />
               The default behaviour is that effects cannot be dispelled and ignore resistance.<br />
               <ul>
-                <li>bit 0: Can be dispelled, affected by resistance</li>
-                <li>bit 1: Ignores resistance (when used in combination with bit 0)</li>
+                <li>bit 0: Can be dispelled, affected by magic resistance</li>
+                <li>bit 1: Ignores magic resistance (when used in combination with bit 0)</li>
+                <li>bit 2: Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+ / external EFF's)</li>
+                <li>bit 31: Effect was applied by an ITM (only present in EE games patched to v2.0+ / external EFF's). It is set by the engine if the effect's source ITM is identified. This bit is only used by Opcode #324, which checks it to determine whether it should set STRREF_FEEDBACK_IMMUNE_RESOURCE's <RESOURCE> token to the ITM's general or identified name</li>
               </ul>
+              The only difference between 0 and 2 is that 0 will automatically convert to 2 when targeting yourself.<br />
               <br />
               This can also be presented in the more traditional way:<br />
               <ul>
-                <li>0 = Nonmagical</li>
-                <li>1 = Can be dispelled/Affected by resistance</li>
-                <li>2 = Cannot be dispelled/Ignores resistance</li>
-                <li>3 = Can be dispelled/Ignores resistance</li>
+                <li>0 = Natural/Nonmagical</li>
+                <li>1 = Can be dispelled/Affected by magic resistance</li>
+                <li>2 = Cannot be dispelled/Ignores magic resistance</li>
+                <li>3 = Can be dispelled/Ignores magic resistance</li>
               </ul>
             </td>
           </tr>

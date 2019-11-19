@@ -1215,6 +1215,12 @@ This action instructs the active creature to face the specified direction. Direc
       AttackOneRound(NearestEnemyOf())
   END
   </pre >
+  {% capture note %}
+  This action shares most of its code with <a href="#134">AttackReevaluate()</a>. In fact, it is 'AttackReevaluate()' with an extra hardcoded bit that forces it to terminate after one round.
+  This means that, unlike in 'AttackReevaluate()', 'ActionListEmpty()' will return TRUE once a round is up – and unless you immediately reinstate 'AttackOneRound()', the creature won't continue attacking.
+  {% endcapture %}
+
+  {% include note.html %}
   <br />
   </div>
   
@@ -1726,10 +1732,27 @@ The example is from AR0516.bcs.<br />
       AttackReevaluate(LastSeenBy(),30)
   END
   </pre>
+  {% capture note %}
+  Conventional object targets (e.g., 'NearestEnemyOf(Myself)') are "locked in" until:
+  <ul>
+    <li>They die / get removed from the game</li>
+    <li>The creature has been chasing target for the time specified by the 'ReevaluationPeriod' parameter</li>
+  </ul>
+  On the other hand, object selectors (e.g., 'FifthNearest([EVILCUTOFF.PLANT])', '[PC]', 'NearestEnemyOfType([0.0.0.IMP])' and so forth) constantly reevaluate the target, not being affected by the 'ReevaluationPeriod' at all.
+  {% endcapture %}
+
+  {% include info.html %}
+
+  {% capture note %}
+  The only natural end condition for the action is if it can't find any valid objects to attack, either initially, or after a reeval has been triggered.
+  This means that the script trigger 'ActionListEmpty()' will not return TRUE once 'ReevaluationPeriod' is up.
+  {% endcapture %}
+
+  {% include note.html %}
   <br />
   </div>
 
-  
+
   <div class="actionHeader"><a name="135">135 LockScroll()</a></div>
   <div class="indent1">
   This action locks the screen on the active creature, preventing the screen from being scrolled away. The action only works from a creature script.<br />

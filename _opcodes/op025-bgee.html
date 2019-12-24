@@ -1,0 +1,46 @@
+---
+n: 25
+name: "State: Poison"
+param1: "Amount_1"
+param2: "Type"
+param3: "Amount_2"
+param4: "Frequency Multiplier"
+special: "Icon"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Damages the target by a certain amount, in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<ul>
+	<li>0   Inflict 1HP per second ('Amount_2' and 'Frequency Multiplier' are ignored – 'Amount_1' needs to be non-zero)</li>
+	<li>1   Inflict 1HP per second (for best results, leave 'Amount_2' and 'Frequency Multiplier' at zero, 'Amount_1' between 1 and 101)</li>
+	<li>2   Deals 'Amount_1' damage every 'Frequency Multiplier' second(s)</li>
+	<li>3   Deals one damage every ('Amount_1' * 'Frequency Multiplier') second(s)</li>
+	<li>4   Deals 'Amount_2' damage every ('Amount_1' * 'Frequency Multiplier') second(s) – This is the only one that must be in external EFF files</li>
+	<li>5+  Crash</li>
+</ul>
+<br/>
+'Icon' defines the index from statdesc.2da for custom portrait icons. Default value is 6 – Poisoned.
+<br/>
+
+{% capture note %}
+The 'Damage Amount' parameters should be set to a positive value.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+If 'Frequency Multiplier' = 0: its value is treated as '1'. This is the default value for SPL/ITM effects.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+When the effect is NOT attached through <a href="#op177">opcode #177</a>, 'Frequency Multiplier' will be replaced when using <a href="#op329">opcode #329</a> (Slow Poison) – not necessarily "slow" though, as it can increase or decrease the frequency.
+{% endcapture %}
+
+{% include note.html %}

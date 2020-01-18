@@ -1303,18 +1303,33 @@ Using 'Magic Fire' or 'Magic Cold' as a damage type will result the game to cras
 <br/>Known values for 'Type' are:
 <br/>0   Normal Haste
 <br/>1   Improved Haste
-<br/>2   Speed haste without attack bonuses
+<br/>2   Weak Haste – Speed haste without attack bonuses
+<br/><br/>All of them set STATE_HASTED. Improved/Weak function by setting an additional STAT value, which modifies the behavior of STATE_HASTED:
+<ul>
+	<li>STAT 155 – IMPROVEDHASTE.</li>
+	<li>STAT 185 – ANIMATION_ONLY_HASTE.</li>
+</ul>
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-This effect will cancel out the slow opcode.
+This effect will cancel out the <a href="#op40">slow opcode</a>.
 
   </div>
 </div>
 
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This opcode will set the STATE_HASTED flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>. This only works when applying normal/improved haste (there's no difference, since the STAT for improved haste doesn't get set this way), weak haste does not do anything with timing mode 1.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -1375,9 +1390,8 @@ If 'Statistic Modifier' and the Dice values are both non-zero, the total HP chan
 
 <br/><br/>The upper word of the 'Type' field can further control the style.
 <br/>Known values for the upper word of 'Type' are:
-<br/>1 Cure death
-<br/>2 Removes all non timing-mode-9 effects
-<br/>3 Cure death and remove non timing-mode-9 effects
+<br/>BIT0 – Raise dead
+<br/>BIT1 – Remove all effects with a limited timing mode (not equipped(2) or permanent(9)), but also any ITM in the Magical Weapon slot.
  </div>
 		<hr />
 
@@ -1784,6 +1798,12 @@ this is a gimped effect in bg2, unlike the rest of the games!
 			
 			
 			
+				<a class="opvariant" href="bgee.htm#op25">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op25">IWD1</a>
 			
 		
@@ -1818,13 +1838,14 @@ this is a gimped effect in bg2, unlike the rest of the games!
 <br/>3   Inflict 1HP every 'Damage Amount' seconds
 <br/>4   Inflict Param 3 Damage every Param 1 seconds
 <br/>5+  Crash
+<br/><br/>
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The 'Damage Amount' parameter should be set a positive value.
+The 'Damage Amount' parameter should be set to a positive value.
 
   </div>
 </div>
@@ -2366,20 +2387,28 @@ The engine is hard-coded to allow these spells to be cast by a silenced creature
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Wake on Damage</span><br />
 
 		
+		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the unconsciousness effect to the targeted creature(s).
+		<div class="descriptiondata"> Applies the unconsciousness effect to the targeted creature(s).<br />
+Known values for 'Wake on Damage' are (only in EEs):
+<ul>
+	<li>0 => Yes</li>
+	<li>1 => No</li>
+</ul>
+'Icon' defines the index from statdesc.2da for custom portrait icons (EE only).
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-A permanent timing mode will set the state_helpless flag.
+A permanent timing mode will set the STATE_HELPLESS flag. In such a case, that flag cannot be removed in-game.
 
   </div>
 </div>
@@ -2416,7 +2445,7 @@ A permanent timing mode will set the state_helpless flag.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-This effect will cancel out the haste opcode.
+This effect will cancel out the <a href="#op16">haste opcode</a>.
 
   </div>
 </div>
@@ -2432,6 +2461,16 @@ This effect doubles the casting time of all spells. Not verified for IWD2.
   </div>
 </div>
 
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This opcode will set the STATE_SLOWED flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -2690,6 +2729,16 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Stuns the targeted creature(s).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode automatically provides the 'Stun' portrait icon.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -4992,6 +5041,12 @@ In IWD2 the class to receive the change is specified at 0x2C
 			
 			
 			
+				<a class="opvariant" href="bgee.htm#op98">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op98">IWD1</a>
 			
 		
@@ -5025,13 +5080,14 @@ In IWD2 the class to receive the change is specified at 0x2C
 <br/>2   Restore 'Regeneration Amount' HP every second
 <br/>3   Restore 1HP every 'Regeneration Amount' seconds
 <br/>4   Restore Param 3 HP every Param 1 seconds
+<br/><br/>
 
 
 
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-'Type' values greater or equal to 5 will chrash the game!
+'Type' values greater or equal to 5 will crash the game!
 
   </div>
 </div>
@@ -5519,7 +5575,28 @@ Not seen to work in BG1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates the item specified by the resource key. The number of items created is controlled by the 'Amount' field. The item is created in the Magical Weapon slot.
+		<div class="descriptiondata"> Creates the item specified by the resource key. The number of items created is controlled by the 'Amount' field. The item is created in the Magical Weapon slot (SLOT_MISC19 - #34).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The Magical Weapon slot does not allow Item Abilities (header_type = 3).
+
+  </div>
+</div>
+
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+The resource field should not be empty, or the game will crash (not consistently, but it happens).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -5545,7 +5622,7 @@ Not seen to work in BG1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the resource key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see slots.ids) is removed. EFF_M02 is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use effect 123 for inventory items).
+		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the resource key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see slots.ids) is removed. EFF_M02 is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use <a href="#op123">opcode #123</a> for inventory items).
  </div>
 		<hr />
 
@@ -5951,7 +6028,7 @@ This does not remove the fog of war.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s).  This effect should be used to remove inventory items (use effect 112 for equipped items).
+		<div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s).  This effect should be used to remove inventory items (use <a href="#op112">opcode #112</a> for equipped items).
  </div>
 		<hr />
 
@@ -6636,6 +6713,16 @@ Leave both parameters at zero for this effect to work.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Displays the strref specified by the 'String Reference' value.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least on EE games, it is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -6962,7 +7049,7 @@ Leave both parameters at zero for this effect to work.
 <br/>136  Strength of One
 <br/>137  Bleeding
 <br/>138  Barbarian Rage
-<br/>139  Boon of Lathlander
+<br/>139  Boon of Lathander
 <br/>140  Storm Shield
 <br/>141  Enraged
 <br/>142  Stunning Blow
@@ -6974,7 +7061,8 @@ Leave both parameters at zero for this effect to work.
 <br/>148  Power Attack
 <br/>149  Whirlwind Attack
 <br/>150  Greater Whirlwind
-<br/>151  Magic Flue
+<br/>151  Magic Flute
+<br/>151  Chaos of Battle (IWD:EE only)
 <br/>152  Critical Strike
 <br/>153  Greater Deathblow
 <br/>154  Deathblow
@@ -6988,7 +7076,57 @@ Leave both parameters at zero for this effect to work.
 <br/>162  Improved Chaos Shield*
 <br/>163  Chaos Shield*
 <br/>164  Fire Elemental Transformation
+<br/>164  Shield of Lathander (IWD:EE only)
 <br/>165  Earth Elemental Transformation
+<br/>165  Greater Shield of Lathander (IWD:EE only)
+<br/>166  Mind Blank (IWD:EE only)
+<br/>167  Aid (IWD:EE only)
+<br/>168  Phased (IWD:EE only)
+<br/>169  Pain (IWD:EE only)
+<br/>170  Impervious Sanctity of Mind (IWD:EE only)
+<br/>171  Petrified (IWD:EE only)
+<br/>172  Iron Body (IWD:EE only)
+<br/>173  Animal Rage (IWD:EE only)
+<br/>174  Exaltation (IWD:EE only)
+<br/>175  Recitation (IWD:EE only)
+<br/>176  Blood Rage (IWD:EE only)
+<br/>177  The Ballad of Three Heroes (IWD:EE only)
+<br/>178  The Tale of Curran Strongheart (IWD:EE only)
+<br/>179  Tymora's Melody (IWD:EE only)
+<br/>180  The Song of Kaudies (IWD:EE only)
+<br/>181  The Siren's Yearning (IWD:EE only)
+<br/>182  War Chant of Sith (IWD:EE only)
+<br/>183  Prayer (IWD:EE only)
+<br/>184  Righteous Wrath of the Faithful (IWD:EE only)
+<br/>185  Cat's Grace (IWD:EE only)
+<br/>186  Hope (IWD:EE only)
+<br/>187  Courage (IWD:EE only)
+<br/>188  Enchanted Weapon (EE only)
+<br/>189  Spirit Ward (EE only)
+<br/>190  Ether Gate (EE only)
+<br/>191  Shamanic Dance (EE only)
+<br/>192  Chaos of Battle (BG:EE only)
+<br/>192  Repulsion (IWD:EE only)
+<br/>193  Marek's Poison (BG:EE only)
+<br/>193  Increased Movement Rate (IWD:EE only)
+<br/>194  Repulsion (BG:EE only)
+<br/>194  Immunity: Abjuration (IWD:EE only)
+<br/>195  Increased Movement Rate (BG:EE only)
+<br/>195  Immunity: Conjuration (IWD:EE only)
+<br/>196  Immunity: Abjuration (BG:EE only)
+<br/>196  Immunity: Divination (IWD:EE only)
+<br/>197  Immunity: Conjuration (BG:EE only)
+<br/>197  Immunity: Enchantment (IWD:EE only)
+<br/>198  Immunity: Divination (BG:EE only)
+<br/>198  Immunity: Illusion (IWD:EE only)
+<br/>199  Immunity: Enchantment (BG:EE only)
+<br/>199  Immunity: Evocation (IWD:EE only)
+<br/>200  Immunity: Illusion (BG:EE only)
+<br/>200  Immunity: Necromancy (IWD:EE only)
+<br/>201  Immunity: Evocation (BG:EE only)
+<br/>201  Immunity: Alteration (IWD:EE only)
+<br/>202  Immunity: Necromancy (BG:EE only)
+<br/>203  Immunity: Alteration (BG:EE only)
 
 
 
@@ -7079,11 +7217,22 @@ The engine refuses to show portrait 79 (Imprisonment).
 <br/>31  MISC16
 <br/>32  MISC17
 <br/>33  MISC18
-<br/>34  MISC19
+<br/>34  MISC19 – Magical Weapon slot
 <br/>35  WEAPON0
 <br/>36  WEAPON1
 <br/>37  WEAPON2
 <br/>38  WEAPON3
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The Magical Weapon slot does not allow Item Abilities (header_type = 3).<br>
+Moreover, unlike <a href="#op111">opcode #111</a>, this opcode will not "equip" the item that's created in this particular slot.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -7704,6 +7853,16 @@ Both parameters should be 0 (zero).
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It cannot be removed by any of the stun/held removal opcodes.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -8314,7 +8473,7 @@ Both parameters should be 0 (zero).
 <br/>136  Strength of One
 <br/>137  Bleeding
 <br/>138  Barbarian Rage
-<br/>139  Boon of Lathlander
+<br/>139  Boon of Lathander
 <br/>140  Storm Shield
 <br/>141  Enraged
 <br/>142  Stunning Blow
@@ -8326,7 +8485,8 @@ Both parameters should be 0 (zero).
 <br/>148  Power Attack
 <br/>149  Whirlwind Attack
 <br/>150  Greater Whirlwind
-<br/>151  Magic Flue
+<br/>151  Magic Flute
+<br/>151  Chaos of Battle (IWD:EE only)
 <br/>152  Critical Strike
 <br/>153  Greater Deathblow
 <br/>154  Deathblow
@@ -8340,8 +8500,57 @@ Both parameters should be 0 (zero).
 <br/>162  Improved Chaos Shield*
 <br/>163  Chaos Shield*
 <br/>164  Fire Elemental Transformation
+<br/>164  Shield of Lathander (IWD:EE only)
 <br/>165  Earth Elemental Transformation
- </div>
+<br/>165  Greater Shield of Lathander (IWD:EE only)
+<br/>166  Mind Blank (IWD:EE only)
+<br/>167  Aid (IWD:EE only)
+<br/>168  Phased (IWD:EE only)
+<br/>169  Pain (IWD:EE only)
+<br/>170  Impervious Sanctity of Mind (IWD:EE only)
+<br/>171  Petrified (IWD:EE only)
+<br/>172  Iron Body (IWD:EE only)
+<br/>173  Animal Rage (IWD:EE only)
+<br/>174  Exaltation (IWD:EE only)
+<br/>175  Recitation (IWD:EE only)
+<br/>176  Blood Rage (IWD:EE only)
+<br/>177  The Ballad of Three Heroes (IWD:EE only)
+<br/>178  The Tale of Curran Strongheart (IWD:EE only)
+<br/>179  Tymora's Melody (IWD:EE only)
+<br/>180  The Song of Kaudies (IWD:EE only)
+<br/>181  The Siren's Yearning (IWD:EE only)
+<br/>182  War Chant of Sith (IWD:EE only)
+<br/>183  Prayer (IWD:EE only)
+<br/>184  Righteous Wrath of the Faithful (IWD:EE only)
+<br/>185  Cat's Grace (IWD:EE only)
+<br/>186  Hope (IWD:EE only)
+<br/>187  Courage (IWD:EE only)
+<br/>188  Enchanted Weapon (BG:EE only)
+<br/>189  Spirit Ward (EE only)
+<br/>190  Ether Gate (EE only)
+<br/>191  Shamanic Dance (EE only)
+<br/>192  Chaos of Battle (BG:EE only)
+<br/>192  Repulsion (IWD:EE only)
+<br/>193  Marek's Poison (BG:EE only)
+<br/>193  Increased Movement Rate (IWD:EE only)
+<br/>194  Repulsion (BG:EE only)
+<br/>194  Immunity: Abjuration (IWD:EE only)
+<br/>195  Increased Movement Rate (BG:EE only)
+<br/>195  Immunity: Conjuration (IWD:EE only)
+<br/>196  Immunity: Abjuration (BG:EE only)
+<br/>196  Immunity: Divination (IWD:EE only)
+<br/>197  Immunity: Conjuration (BG:EE only)
+<br/>197  Immunity: Enchantment (IWD:EE only)
+<br/>198  Immunity: Divination (BG:EE only)
+<br/>198  Immunity: Illusion (IWD:EE only)
+<br/>199  Immunity: Enchantment (BG:EE only)
+<br/>199  Immunity: Evocation (IWD:EE only)
+<br/>200  Immunity: Illusion (BG:EE only)
+<br/>200  Immunity: Necromancy (IWD:EE only)
+<br/>201  Immunity: Evocation (BG:EE only)
+<br/>201  Immunity: Alteration (IWD:EE only)
+<br/>202  Immunity: Necromancy (BG:EE only)
+<br/>203  Immunity: Alteration (BG:EE only) </div>
 		<hr />
 
 	</div>
@@ -8745,6 +8954,17 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 <br/>9   Kit.ids (EE only)
 <br/>
 <br/>This effect sets stat #58 (HELD) to 1. It also sets the STATE_HELPLESS flag.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode automatically displays the string specified by <code>STRREF_EFFECT_HOLD</code> defined in <code>ENGINEST.2DA</code> in the combat log.
+It even overrides the entries in <code>EFFTEXT.2DA</code>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -8891,6 +9111,19 @@ IWD2: there was a note to not use this effect in older IESDP.
 <br/>7   Gender.ids
 <br/>8   Align.ids
 <br/>9   Kit.ids (EE only)
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>It will affect all attacks, not just the weapon it's on, which would be incorrect when dual-wielding.</li>
+	<li>Multiple <a href="#op178">opcode #178</a> effects only allow additional targeting, they do not stack their THAC0 bonus.</li>
+</ul>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -8943,6 +9176,21 @@ IWD2: there was a note to not use this effect in older IESDP.
 <br/>7   Gender.ids
 <br/>8   Align.ids
 <br/>9   Kit.ids (EE only)
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>It will affect all attacks, not just the weapon it's on, which would be incorrect when dual-wielding.</li>
+	<li>For two-handed/ranged weapons, it can be ideal if a base weapon damage bonus is desired.</li>
+	<li>Damage is multiplied by critical hits (and maybe backstabs).</li>
+	<li>Multiple <a href="#op179">opcode #179</a> effects only allow additional targeting, they do not stack their damage bonus.</li>
+</ul>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -9146,10 +9394,23 @@ PST: This effect doesn't exist and always crashes the game.
 
 
 
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Ammo (i.e., Arrows(5), Bullets(14) and Bolts(31)) does not work well with this opcode. The Ammo Slots are always "Equipped", even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
+<br/>The offhand has the same issue – even when disabled, it's detected by this opcode as equipped.
+<br/>Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen).
+
+  </div>
+</div>
+
+
+
+
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-This effect has never been seen to work.
+This effect has never been seen to work. This is not true for EE games.
 
   </div>
 </div>
@@ -9242,7 +9503,7 @@ IWD2: Don't use.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.
-<br/>This effect is not removed by effect 162.
+<br/>This effect is not removed by <a href="#op162">effect #162</a>.
 <br/>Known values for 'IDS File' are:
 <br/>2   EA.ids
 <br/>3   General.ids
@@ -9253,6 +9514,17 @@ IWD2: Don't use.
 <br/>8   Align.ids
 <br/>9   Kit.ids (EE only)
 <br/>This effect sets stat #58 (HELD) to 1. It also sets the STATE_HELPLESS flag.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode automatically displays the string specified by <code>STRREF_EFFECT_HOLD</code> defined in <code>ENGINEST.2DA</code> in the combat log.
+It even overrides the entries in <code>EFFTEXT.2DA</code>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -10043,6 +10315,16 @@ This can cause a crash if two creatures end up reflecting to each other.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) will absorb a number of spells (specified by the 'Amount' field), from the spell level specified in the 'Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Level' parameter in the extended header that is being called.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It cannot deflect effects through AoE projectiles.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -10633,6 +10915,8 @@ This can cause a crash if two creatures end up reflecting to each other.
 
 		
 		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
+		
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the maze effect to the targeted creature(s).
@@ -10647,7 +10931,7 @@ This can cause a crash if two creatures end up reflecting to each other.
 <br/>12 to 14 int -> 3d4 rounds
 <br/>15 to 17 int -> 2d4 rounds
 <br/>18+ int      -> 1d4 rounds
- </div>
+<br/>'Icon' defines the index from statdesc.2da for custom portrait icons (EE only). </div>
 		<hr />
 
 	</div>
@@ -12116,6 +12400,16 @@ When creating an image for use as in Mislead, the image will have a script assig
 <br/>2   Can attack, can not cast spells (ProjImag.spl is cast on the creature)
 <br/>3   Can attack, can cast spells (Simulacrs.pl is cast on the creature)
 <br/>4+  As 0
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Keep in mind that if the caster is equipped with an irremovable item (e.g., Edwin's Amulet), then its images will not inherit any bonuses/maluses from that specific item.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -12436,7 +12730,7 @@ When creating an image for use as in Mislead, the image will have a script assig
 <br/>136  Strength of One
 <br/>137  Bleeding
 <br/>138  Barbarian Rage
-<br/>139  Boon of Lathlander
+<br/>139  Boon of Lathander
 <br/>140  Storm Shield
 <br/>141  Enraged
 <br/>142  Stunning Blow
@@ -12448,7 +12742,8 @@ When creating an image for use as in Mislead, the image will have a script assig
 <br/>148  Power Attack
 <br/>149  Whirlwind Attack
 <br/>150  Greater Whirlwind
-<br/>151  Magic Flue
+<br/>151  Magic Flute
+<br/>151  Chaos of Battle (IWD:EE only)
 <br/>152  Critical Strike
 <br/>153  Greater Deathblow
 <br/>154  Deathblow
@@ -12462,8 +12757,57 @@ When creating an image for use as in Mislead, the image will have a script assig
 <br/>162  Improved Chaos Shield*
 <br/>163  Chaos Shield*
 <br/>164  Fire Elemental Transformation
+<br/>164  Shield of Lathander (IWD:EE only)
 <br/>165  Earth Elemental Transformation
- </div>
+<br/>165  Greater Shield of Lathander (IWD:EE only)
+<br/>166  Mind Blank (IWD:EE only)
+<br/>167  Aid (IWD:EE only)
+<br/>168  Phased (IWD:EE only)
+<br/>169  Pain (IWD:EE only)
+<br/>170  Impervious Sanctity of Mind (IWD:EE only)
+<br/>171  Petrified (IWD:EE only)
+<br/>172  Iron Body (IWD:EE only)
+<br/>173  Animal Rage (IWD:EE only)
+<br/>174  Exaltation (IWD:EE only)
+<br/>175  Recitation (IWD:EE only)
+<br/>176  Blood Rage (IWD:EE only)
+<br/>177  The Ballad of Three Heroes (IWD:EE only)
+<br/>178  The Tale of Curran Strongheart (IWD:EE only)
+<br/>179  Tymora's Melody (IWD:EE only)
+<br/>180  The Song of Kaudies (IWD:EE only)
+<br/>181  The Siren's Yearning (IWD:EE only)
+<br/>182  War Chant of Sith (IWD:EE only)
+<br/>183  Prayer (IWD:EE only)
+<br/>184  Righteous Wrath of the Faithful (IWD:EE only)
+<br/>185  Cat's Grace (IWD:EE only)
+<br/>186  Hope (IWD:EE only)
+<br/>187  Courage (IWD:EE only)
+<br/>188  Enchanted Weapon (BG:EE only)
+<br/>189  Spirit Ward (EE only)
+<br/>190  Ether Gate (EE only)
+<br/>191  Shamanic Dance (EE only)
+<br/>192  Chaos of Battle (BG:EE only)
+<br/>192  Repulsion (IWD:EE only)
+<br/>193  Marek's Poison (BG:EE only)
+<br/>193  Increased Movement Rate (IWD:EE only)
+<br/>194  Repulsion (BG:EE only)
+<br/>194  Immunity: Abjuration (IWD:EE only)
+<br/>195  Increased Movement Rate (BG:EE only)
+<br/>195  Immunity: Conjuration (IWD:EE only)
+<br/>196  Immunity: Abjuration (BG:EE only)
+<br/>196  Immunity: Divination (IWD:EE only)
+<br/>197  Immunity: Conjuration (BG:EE only)
+<br/>197  Immunity: Enchantment (IWD:EE only)
+<br/>198  Immunity: Divination (BG:EE only)
+<br/>198  Immunity: Illusion (IWD:EE only)
+<br/>199  Immunity: Enchantment (BG:EE only)
+<br/>199  Immunity: Evocation (IWD:EE only)
+<br/>200  Immunity: Illusion (BG:EE only)
+<br/>200  Immunity: Necromancy (IWD:EE only)
+<br/>201  Immunity: Evocation (BG:EE only)
+<br/>201  Immunity: Alteration (IWD:EE only)
+<br/>202  Immunity: Necromancy (BG:EE only)
+<br/>203  Immunity: Alteration (BG:EE only) </div>
 		<hr />
 
 	</div>
@@ -12837,6 +13181,16 @@ At least in EEs, setting parameter2 to 4 (i.e., BIT2) results in restricting thi
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It will always apply to both main and offhand weapon.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -13167,7 +13521,7 @@ This effect works in SoA but not ToB
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-The difference from opcode #122 is that when used in an external .eff, the duration (from the calling file) is specified in days.
+The difference from <a href="#op122">opcode #122</a> is that when used in an external .eff, the duration (from the calling file) is specified in days.
 
   </div>
 </div>
@@ -13843,6 +14197,12 @@ All timing modes act as permanent for this effect.
 				
 			
 			
+				<a class="opvariant" href="bgee.htm#op272">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op272">IWD1</a>
 			
 		
@@ -13882,7 +14242,7 @@ The timings are relative to the movement rate of the affected creature(s). Effec
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-If two or more effects of this type affect a creature, only the shortest duration effect will occur. This is fixed for the EEs.
+If two or more effects of this type affect a creature, only the shortest duration effect will occur.
 
   </div>
 </div>
@@ -15603,6 +15963,7 @@ This opcode is also known as ImmunityToSequester.
   <div>
     <strong>Warning:</strong> 
 Do not use this effect in conjunction with the Juggernaut Golem Manual as it will corrupt the use of that item.
+In particular, the Juggernaut Golem <code>TOMEGOL4.CRE</code> is scripted by <code>TOMEGOL4.BCS</code> to <code>Kill()</code> itself if its Summoner and none of the Players Party have stat #199 (STONESKINSGOLEM) set to a non-zero value.
 
   </div>
 </div>
@@ -15700,19 +16061,17 @@ The Constant Value parameter should be set to a non-zero value.
 <br/>Known values for 'Type' are:
 <br/>0   Normal Haste
 <br/>1   Improved Haste
-<br/>2   Speed haste without attack bonuses
-<br/><br/>The effect modifies stat 155.
+<br/>2   Weak Haste – Speed haste without attack bonuses
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-This effect will cancel out the slow opcode.
+This effect is functionally identical to <a href="#op16">opcode #16</a>. The only difference between the two is that some ITMs/SPLs/abilities will specifically block/remove <a href="#op16">opcode #16</a> but not <a href="#op317">opcode #317</a> (e.g., Monks are immune to <a href="#op16">opcode #16</a> but not <a href="#op317">opcode #317</a>).
 
   </div>
 </div>
-
  </div>
 		<hr />
 

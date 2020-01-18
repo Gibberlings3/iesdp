@@ -1671,6 +1671,12 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 				
 			
 			
+				<a class="opvariant" href="bgee.htm#op25">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op25">IWD1</a>
 			
 		
@@ -2267,20 +2273,28 @@ The engine is hard-coded to allow these spells to be cast by a silenced creature
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Wake on Damage</span><br />
 
 		
+		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the unconsciousness effect to the targeted creature(s).
+		<div class="descriptiondata"> Applies the unconsciousness effect to the targeted creature(s).<br />
+Known values for 'Wake on Damage' are (only in EEs):
+<ul>
+	<li>0 => Yes</li>
+	<li>1 => No</li>
+</ul>
+'Icon' defines the index from statdesc.2da for custom portrait icons (EE only).
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-A permanent timing mode will set the state_helpless flag.
+A permanent timing mode will set the STATE_HELPLESS flag. In such a case, that flag cannot be removed in-game.
 
   </div>
 </div>
@@ -2317,7 +2331,7 @@ A permanent timing mode will set the state_helpless flag.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-This effect will cancel out the haste opcode.
+This effect will cancel out the <a href="#op16">haste opcode</a>.
 
   </div>
 </div>
@@ -2333,6 +2347,16 @@ This effect doubles the casting time of all spells. Not verified for IWD2.
   </div>
 </div>
 
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This opcode will set the STATE_SLOWED flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -2585,6 +2609,16 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Stuns the targeted creature(s).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode automatically provides the 'Stun' portrait icon.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -4872,6 +4906,12 @@ This effect can unset scripts from a creature, which can break the game.
 				
 			
 			
+				<a class="opvariant" href="bgee.htm#op98">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op98">IWD1</a>
 			
 		
@@ -5412,7 +5452,28 @@ This effect has never been seen to work.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates the item specified by the resource key. The number of items created is controlled by the 'Amount' field. The item is created in the Magical Weapon slot.
+		<div class="descriptiondata"> Creates the item specified by the resource key. The number of items created is controlled by the 'Amount' field. The item is created in the Magical Weapon slot (SLOT_MISC19 - #34).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The Magical Weapon slot does not allow Item Abilities (header_type = 3).
+
+  </div>
+</div>
+
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+The resource field should not be empty, or the game will crash (not consistently, but it happens).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -5438,7 +5499,7 @@ This effect has never been seen to work.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the resource key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see slots.ids) is removed. EFF_M02 is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use effect 123 for inventory items).
+		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the resource key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see slots.ids) is removed. EFF_M02 is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use <a href="#op123">opcode #123</a> for inventory items).
  </div>
 		<hr />
 
@@ -5866,7 +5927,7 @@ This opcode only works when used with a delayed timing mode (4).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s).  This effect should be used to remove inventory items (use effect 112 for equipped items).
+		<div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s).  This effect should be used to remove inventory items (use <a href="#op112">opcode #112</a> for equipped items).
  </div>
 		<hr />
 
@@ -6504,6 +6565,16 @@ Leave both parameters at zero for this effect to work.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Displays the strref specified by the 'String Reference' value.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least on EE games, it is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -6829,11 +6900,22 @@ Leave both parameters at zero for this effect to work.
 <br/>31  MISC16
 <br/>32  MISC17
 <br/>33  MISC18
-<br/>34  MISC19
+<br/>34  MISC19 – Magical Weapon slot
 <br/>35  WEAPON0
 <br/>36  WEAPON1
 <br/>37  WEAPON2
 <br/>38  WEAPON3
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The Magical Weapon slot does not allow Item Abilities (header_type = 3).<br>
+Moreover, unlike <a href="#op111">opcode #111</a>, this opcode will not "equip" the item that's created in this particular slot.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -7443,6 +7525,16 @@ Both parameters should be 0 (zero).
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It cannot be removed by any of the stun/held removal opcodes.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -8680,10 +8772,23 @@ PST: This effect doesn't exist and always crashes the game.
 
 
 
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Ammo (i.e., Arrows(5), Bullets(14) and Bolts(31)) does not work well with this opcode. The Ammo Slots are always "Equipped", even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
+<br/>The offhand has the same issue – even when disabled, it's detected by this opcode as equipped.
+<br/>Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen).
+
+  </div>
+</div>
+
+
+
+
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-This effect has never been seen to work.
+This effect has never been seen to work. This is not true for EE games.
 
   </div>
 </div>

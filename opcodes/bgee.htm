@@ -1056,7 +1056,7 @@ At least in EEs, this effect can remove <a href="#op177">opcode #177</a> effects
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Damage type "Poison" automatically uses save flag "Bypass Mirror Image".
+Damage type 'Poison' automatically uses save flag 'Bypass Mirror Image'.
 
   </div>
 </div>
@@ -1349,18 +1349,33 @@ If this effect reduces target to -20 (Allegiance: [PC]) or -9 (any other Allegia
 <br/>Known values for 'Type' are:
 <br/>0   Normal Haste
 <br/>1   Improved Haste
-<br/>2   Speed haste without attack bonuses
+<br/>2   Weak Haste – Speed haste without attack bonuses
+<br/><br/>All of them set STATE_HASTED. Improved/Weak function by setting an additional STAT value, which modifies the behavior of STATE_HASTED:
+<ul>
+	<li>STAT 155 – IMPROVEDHASTE.</li>
+	<li>STAT 185 – ANIMATION_ONLY_HASTE.</li>
+</ul>
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-This effect will cancel out the slow opcode.
+This effect will cancel out the <a href="#op40">slow opcode</a>.
 
   </div>
 </div>
 
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This opcode will set the STATE_HASTED flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>. This only works when applying normal/improved haste (there's no difference, since the STAT for improved haste doesn't get set this way), weak haste does not do anything with timing mode 1.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -1421,9 +1436,8 @@ If 'Statistic Modifier' and the Dice values are both non-zero, the total HP chan
 
 <br/><br/>The upper word of the 'Type' field can further control the style.
 <br/>Known values for the upper word of 'Type' are:
-<br/>1 Cure death
-<br/>2 Removes all non timing-mode-9 effects
-<br/>3 Cure death and remove non timing-mode-9 effects
+<br/>BIT0 – Raise dead
+<br/>BIT1 – Remove all effects with a limited timing mode (not equipped(2) or permanent(9)), but also any ITM in the Magical Weapon slot.
  </div>
 		<hr />
 
@@ -1843,6 +1857,8 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 			
 		
 			
+				
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op25">IWD1</a>
@@ -1861,35 +1877,84 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op25">BG2</a>
+			
+		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Damage Amount</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount_1</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
+			<span class="parameterheading">Parameter #3:</span> <span class="parameterdata">Amount_2</span><br />
+		
+		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Damages the target by the 'Damage Amount' value, in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Inflict 1HP per second (only if 'Damage Amount' is non-zero)
-<br/>1   Inflict 1HP per second (only if 'Damage Amount' is greater than 1)
-<br/>2   Inflict 'Damage Amount' per second
-<br/>3   Inflict 1HP every 'Damage Amount' seconds
-<br/>4   Inflict Param 3 Damage every Param 1 seconds
-<br/>5+  Crash
+		<div class="descriptiondata"> Damages the target by a certain amount, in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li><code>0</code> => Inflict 1 HP per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
+	<li><code>1</code> => Inflict 1 HP per second (for best results, leave <code>Amount_2</code> and <code>Frequency Multiplier</code> at zero, <code>Amount_1</code> between <code>1</code> and <code>101</code>)</li>
+	<li><code>2</code> => Deal <code>Amount_1</code> damage every <code>Frequency Multiplier</code> second(s)</li>
+	<li><code>3</code> => Deal one damage every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
+	<li><code>4</code> => Deal <code>Amount_2</code> damage every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
+	<li><code>5+</code> => Crash</li>
+</ul>
+
+<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>6 // Poisoned</code>.
+<br/>
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The 'Damage Amount' parameter should be set a positive value.
+The <code>Damage Amount</code> parameters should be set to a positive value.
 
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+When the effect is NOT attached through <a href="#op177">opcode #177</a>, <code>Frequency Multiplier</code> will be replaced when using <a href="#op329">opcode #329</a> (Slow Poison) – not necessarily "slow" though, as it can increase or decrease the frequency.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+When the <code>Type</code> field is <code>1</code>:
+<ul>
+	<li>if the <code>Frequency Multiplier</code> field is non-zero, damage is always dealt.</li>
+	<li>if the <code>Amount_1</code> field is less than <code>256</code>, damage is dealt while <code>HP > 100 / Amount_1</code>.</li>
+</ul>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -2427,20 +2492,28 @@ The engine is hard-coded to allow these spells to be cast by a silenced creature
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Wake on Damage</span><br />
 
 		
+		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the unconsciousness effect to the targeted creature(s).
+		<div class="descriptiondata"> Applies the unconsciousness effect to the targeted creature(s).<br />
+Known values for 'Wake on Damage' are (only in EEs):
+<ul>
+	<li>0 => Yes</li>
+	<li>1 => No</li>
+</ul>
+'Icon' defines the index from statdesc.2da for custom portrait icons (EE only).
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-A permanent timing mode will set the state_helpless flag.
+A permanent timing mode will set the STATE_HELPLESS flag. In such a case, that flag cannot be removed in-game.
 
   </div>
 </div>
@@ -2477,7 +2550,7 @@ A permanent timing mode will set the state_helpless flag.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-This effect will cancel out the haste opcode.
+This effect will cancel out the <a href="#op16">haste opcode</a>.
 
   </div>
 </div>
@@ -2493,6 +2566,16 @@ This effect doubles the casting time of all spells. Not verified for IWD2.
   </div>
 </div>
 
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+This opcode will set the STATE_SLOWED flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -2751,6 +2834,16 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Stuns the targeted creature(s).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode automatically provides the 'Stun' portrait icon.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -4248,35 +4341,37 @@ Both parameters should be 0 (zero).
 		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Damage</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
 		
-			<span class="parameterheading">Special:</span> <span class="parameterdata">Behaviour</span><br />
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.
-<br/>Known values for 'Type' are:
-<br/>0   1 HP per second
-<br/>1   1 HP per second
-<br/>2   'Damage' per Second
-<br/>3   Cause 1HP every 'Damage' seconds
-<br/>4   Strength Penalty
-<br/>5   Dexterity Penalty
-<br/>6   Constitution Penalty
-<br/>7   Intelligence Penalty
-<br/>8   Wisdom Penalty
-<br/>9   Charisma Penalty
-<br/>10  Slow Effect
-<br/>11  Mold touch/Single
-<br/>12  Mold touch/Decrement
-<br/>13  Contagion
-<br/><br/>'Damage' can be positive (penalty) or negative (bonus).
-<br/>The field 'Behaviour' is used for "Mold touch" and consists of two word values:
-<br/>First word: # rounds to apply the affect
-<br/>Second word: Whether to use damage defined in 'Damage'.
+		<div class="descriptiondata"> Set the <code>Amount</code> parameter as the amount of damage, and the <code>Disease Type</code> parameter as how the disease functions.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li><code>0</code> => Inflict 1 HP per second (<code>Frequency Multiplier</code> is ignored – <code>Amount</code> needs to be non-zero)</li>
+	<li><code>1</code> => Inflict 1 HP per second (for best results, leave <code>Frequency Multiplier</code> at zero, <code>Amount</code> between <code>1</code> and <code>101</code>)</li>
+	<li><code>2</code> => Deal <code>Amount</code> damage every <code>Frequency Multiplier</code> second(s)</li>
+	<li><code>3</code> => Deal one damage every <code>Amount * Frequency Multiplier</code> second(s)</li>
+	<li><code>4</code> => Reduce Strength score by <code>Amount</code></li>
+	<li><code>5</code> => Reduce Dexterity score by <code>Amount</code></li>
+	<li><code>6</code> => Reduce Constitution score by <code>Amount</code></li>
+	<li><code>7</code> => Reduce Intelligence score by <code>Amount</code></li>
+	<li><code>8</code> => Reduce Wisdom score by <code>Amount</code></li>
+	<li><code>9</code> => Reduce Charisma score by <code>Amount</code></li>
+	<li><code>10</code> => Slow Effect</li>
+	<li><code>11</code> => Mold touch/Single</li>
+	<li><code>12</code> => Mold touch/Decrement</li>
+	<li><code>13</code> => Contagion</li>
+</ul>
+<br/><br/><code>Amount</code> can be positive (penalty) or negative (bonus).
+<br/><br/>
+<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+<br/>
 
 
 
@@ -4288,6 +4383,83 @@ Permanent timing modes require a duration for this effect to work.
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+The Slow effect is no different from that caused by <a href="#op40">opcode #40</a> (Slow), including its stacking interaction with Haste, except that it is blocked/removed as a disease, not as a slow effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Contagion is a composite of Strength, Dexterity, Charisma drain and the Slow effect, each ability score reduced by <code>Amount</code>.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+When the <code>Type</code> field is <code>1</code>:
+<ul>
+	<li>if the <code>Frequency Multiplier</code> field is non-zero, damage is always dealt.</li>
+	<li>if the <code>Amount</code> field is less than <code>256</code>, damage is dealt while <code>HP > 100 / Amount</code>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<code>Mold touch</code> is complicated and not consistent across the EE games.
+The general idea is that it deals <code>x</code> or <code>xd6</code> damage and applies the <code>SPL</code> specified by the resource key every (round or second) for either <code>1</code> round (single) or across multiple rounds dealing less each round (decrement).
+In particular:
+<ul>
+	<li>If <code>Type=11</code>, then the damage dealt is always <code>1</code></li>
+	<li>if <code>Type=11</code>, then the damage dealt depends on the game:
+		<ul>
+			<li><code>IWD:EE</code> uses <code>Amount</code> for 'x', and calculates duration as <code>6 * Amount</code>.</li>
+			<li><code>BG:EE</code> calculates 'x' from <code>duration / 6</code>. (It's reasonable to assume that <code>BG2:EE</code> uses this one as well).</li>
+			<li>If you set <code>duration = 6 * Amount</code>, it should junction the same in both games.</li>
+		</ul>
+	</li>
+</ul>
+<code>Frequency Multiplier</code> determines whether it deals damage every second or every round, and whether it deals <code>x</code> or <code>xd6</code> damage.
+<ul>
+	<li><code>Frequency Multiplier = 0</code> => <code>xd6</code> per round</li>
+	<li><code>Frequency Multiplier = 65536 + even</code> => <code>x</code> per round</li>
+	<li><code>Frequency Multiplier = 65537 + odd</code> => <code>x</code> per second</li>
+</ul>
+Regardless, the value of <code>x</code> decrements only once per round.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -5059,6 +5231,8 @@ In IWD2 the class to receive the change is specified at 0x2C
 			
 		
 			
+				
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op98">IWD1</a>
@@ -5077,30 +5251,43 @@ In IWD2 the class to receive the change is specified at 0x2C
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op98">BG2</a>
+			
+		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Regeneration Amount</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount_1</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
+			<span class="parameterheading">Parameter #3:</span> <span class="parameterdata">Amount_2</span><br />
+		
+		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Restores HP to the value of 'Regeneration Amount' in the style specified by the 'Type' field, to the targeted creature(s).
-<br/>Known values for 'Type' are:
-<br/>0   Restore 'Regeneration Amount' per second
-<br/>1   Restore 'Regeneration Amount' as a percentage of total HP
-<br/>2   Restore 'Regeneration Amount' HP every second
-<br/>3   Restore 1HP every 'Regeneration Amount' seconds
-<br/>4   Restore Param 3 HP every Param 1 seconds
+		<div class="descriptiondata"> Restores HP according to the style specified by the <code>Type</code> field, to the targeted creature(s).
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li><code>0</code> => Restore 1 HP per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
+	<li><code>1</code> => Restore 1 HP per second (for best results, leave both <code>Amount_2</code> and <code>Frequency Multiplier</code> at zero, <code>Amount_1</code> between <code>1</code> and <code>101</code>)</li>
+	<li><code>2</code> => Restore <code>Amount_1</code> HP every <code>Frequency Multiplier</code> second(s)</li>
+	<li><code>3</code> => Restore 1 HP every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
+	<li><code>4</code> => Restore <code>Amount_2</code> HP every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
+</ul>
+
+<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+<br/>
 
 
 
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-'Type' values greater or equal to 5 will chrash the game!
+<code>Type</code> values greater or equal to <code>5</code> will crash the game!
 
   </div>
 </div>
@@ -5116,6 +5303,31 @@ Permanent timing modes require a duration for this effect to work.
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+When the <code>Type</code> field is <code>1</code>:
+<ul>
+	<li>if the <code>Frequency Multiplier</code> field is non-zero, HP is always restored.</li>
+	<li>if the <code>Amount_1</code> field is less than <code>256</code>, HP is restored while <code>HP > 100 / Amount_1</code>.</li>
+</ul>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -5598,7 +5810,28 @@ Not seen to work in BG1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates the item specified by the resource key. The number of items created is controlled by the 'Amount' field. The item is created in the Magical Weapon slot.
+		<div class="descriptiondata"> Creates the item specified by the resource key. The number of items created is controlled by the 'Amount' field. The item is created in the Magical Weapon slot (SLOT_MISC19 - #34).
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The Magical Weapon slot does not allow Item Abilities (header_type = 3).
+
+  </div>
+</div>
+
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+The resource field should not be empty, or the game will crash (not consistently, but it happens).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -5624,7 +5857,7 @@ Not seen to work in BG1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the resource key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see slots.ids) is removed. EFF_M02 is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use effect 123 for inventory items).
+		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the resource key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see slots.ids) is removed. EFF_M02 is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use <a href="#op123">opcode #123</a> for inventory items).
  </div>
 		<hr />
 
@@ -6030,7 +6263,7 @@ This does not remove the fog of war.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s).  This effect should be used to remove inventory items (use effect 112 for equipped items).
+		<div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s).  This effect should be used to remove inventory items (use <a href="#op112">opcode #112</a> for equipped items).
  </div>
 		<hr />
 
@@ -6731,6 +6964,16 @@ Leave both parameters at zero for this effect to work.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Displays the strref specified by the 'String Reference' value.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least on EE games, it is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -7057,7 +7300,7 @@ Leave both parameters at zero for this effect to work.
 <br/>136  Strength of One
 <br/>137  Bleeding
 <br/>138  Barbarian Rage
-<br/>139  Boon of Lathlander
+<br/>139  Boon of Lathander
 <br/>140  Storm Shield
 <br/>141  Enraged
 <br/>142  Stunning Blow
@@ -7069,7 +7312,8 @@ Leave both parameters at zero for this effect to work.
 <br/>148  Power Attack
 <br/>149  Whirlwind Attack
 <br/>150  Greater Whirlwind
-<br/>151  Magic Flue
+<br/>151  Magic Flute
+<br/>151  Chaos of Battle (IWD:EE only)
 <br/>152  Critical Strike
 <br/>153  Greater Deathblow
 <br/>154  Deathblow
@@ -7083,7 +7327,57 @@ Leave both parameters at zero for this effect to work.
 <br/>162  Improved Chaos Shield*
 <br/>163  Chaos Shield*
 <br/>164  Fire Elemental Transformation
+<br/>164  Shield of Lathander (IWD:EE only)
 <br/>165  Earth Elemental Transformation
+<br/>165  Greater Shield of Lathander (IWD:EE only)
+<br/>166  Mind Blank (IWD:EE only)
+<br/>167  Aid (IWD:EE only)
+<br/>168  Phased (IWD:EE only)
+<br/>169  Pain (IWD:EE only)
+<br/>170  Impervious Sanctity of Mind (IWD:EE only)
+<br/>171  Petrified (IWD:EE only)
+<br/>172  Iron Body (IWD:EE only)
+<br/>173  Animal Rage (IWD:EE only)
+<br/>174  Exaltation (IWD:EE only)
+<br/>175  Recitation (IWD:EE only)
+<br/>176  Blood Rage (IWD:EE only)
+<br/>177  The Ballad of Three Heroes (IWD:EE only)
+<br/>178  The Tale of Curran Strongheart (IWD:EE only)
+<br/>179  Tymora's Melody (IWD:EE only)
+<br/>180  The Song of Kaudies (IWD:EE only)
+<br/>181  The Siren's Yearning (IWD:EE only)
+<br/>182  War Chant of Sith (IWD:EE only)
+<br/>183  Prayer (IWD:EE only)
+<br/>184  Righteous Wrath of the Faithful (IWD:EE only)
+<br/>185  Cat's Grace (IWD:EE only)
+<br/>186  Hope (IWD:EE only)
+<br/>187  Courage (IWD:EE only)
+<br/>188  Enchanted Weapon (EE only)
+<br/>189  Spirit Ward (EE only)
+<br/>190  Ether Gate (EE only)
+<br/>191  Shamanic Dance (EE only)
+<br/>192  Chaos of Battle (BG:EE only)
+<br/>192  Repulsion (IWD:EE only)
+<br/>193  Marek's Poison (BG:EE only)
+<br/>193  Increased Movement Rate (IWD:EE only)
+<br/>194  Repulsion (BG:EE only)
+<br/>194  Immunity: Abjuration (IWD:EE only)
+<br/>195  Increased Movement Rate (BG:EE only)
+<br/>195  Immunity: Conjuration (IWD:EE only)
+<br/>196  Immunity: Abjuration (BG:EE only)
+<br/>196  Immunity: Divination (IWD:EE only)
+<br/>197  Immunity: Conjuration (BG:EE only)
+<br/>197  Immunity: Enchantment (IWD:EE only)
+<br/>198  Immunity: Divination (BG:EE only)
+<br/>198  Immunity: Illusion (IWD:EE only)
+<br/>199  Immunity: Enchantment (BG:EE only)
+<br/>199  Immunity: Evocation (IWD:EE only)
+<br/>200  Immunity: Illusion (BG:EE only)
+<br/>200  Immunity: Necromancy (IWD:EE only)
+<br/>201  Immunity: Evocation (BG:EE only)
+<br/>201  Immunity: Alteration (IWD:EE only)
+<br/>202  Immunity: Necromancy (BG:EE only)
+<br/>203  Immunity: Alteration (BG:EE only)
 
 
 
@@ -7174,11 +7468,22 @@ The engine refuses to show portrait 79 (Imprisonment).
 <br/>31  MISC16
 <br/>32  MISC17
 <br/>33  MISC18
-<br/>34  MISC19
+<br/>34  MISC19 – Magical Weapon slot
 <br/>35  WEAPON0
 <br/>36  WEAPON1
 <br/>37  WEAPON2
 <br/>38  WEAPON3
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The Magical Weapon slot does not allow Item Abilities (header_type = 3).<br>
+Moreover, unlike <a href="#op111">opcode #111</a>, this opcode will not "equip" the item that's created in this particular slot.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -7799,6 +8104,16 @@ Both parameters should be 0 (zero).
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It cannot be removed by any of the stun/held removal opcodes.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -8409,7 +8724,7 @@ Both parameters should be 0 (zero).
 <br/>136  Strength of One
 <br/>137  Bleeding
 <br/>138  Barbarian Rage
-<br/>139  Boon of Lathlander
+<br/>139  Boon of Lathander
 <br/>140  Storm Shield
 <br/>141  Enraged
 <br/>142  Stunning Blow
@@ -8421,7 +8736,8 @@ Both parameters should be 0 (zero).
 <br/>148  Power Attack
 <br/>149  Whirlwind Attack
 <br/>150  Greater Whirlwind
-<br/>151  Magic Flue
+<br/>151  Magic Flute
+<br/>151  Chaos of Battle (IWD:EE only)
 <br/>152  Critical Strike
 <br/>153  Greater Deathblow
 <br/>154  Deathblow
@@ -8435,8 +8751,57 @@ Both parameters should be 0 (zero).
 <br/>162  Improved Chaos Shield*
 <br/>163  Chaos Shield*
 <br/>164  Fire Elemental Transformation
+<br/>164  Shield of Lathander (IWD:EE only)
 <br/>165  Earth Elemental Transformation
- </div>
+<br/>165  Greater Shield of Lathander (IWD:EE only)
+<br/>166  Mind Blank (IWD:EE only)
+<br/>167  Aid (IWD:EE only)
+<br/>168  Phased (IWD:EE only)
+<br/>169  Pain (IWD:EE only)
+<br/>170  Impervious Sanctity of Mind (IWD:EE only)
+<br/>171  Petrified (IWD:EE only)
+<br/>172  Iron Body (IWD:EE only)
+<br/>173  Animal Rage (IWD:EE only)
+<br/>174  Exaltation (IWD:EE only)
+<br/>175  Recitation (IWD:EE only)
+<br/>176  Blood Rage (IWD:EE only)
+<br/>177  The Ballad of Three Heroes (IWD:EE only)
+<br/>178  The Tale of Curran Strongheart (IWD:EE only)
+<br/>179  Tymora's Melody (IWD:EE only)
+<br/>180  The Song of Kaudies (IWD:EE only)
+<br/>181  The Siren's Yearning (IWD:EE only)
+<br/>182  War Chant of Sith (IWD:EE only)
+<br/>183  Prayer (IWD:EE only)
+<br/>184  Righteous Wrath of the Faithful (IWD:EE only)
+<br/>185  Cat's Grace (IWD:EE only)
+<br/>186  Hope (IWD:EE only)
+<br/>187  Courage (IWD:EE only)
+<br/>188  Enchanted Weapon (BG:EE only)
+<br/>189  Spirit Ward (EE only)
+<br/>190  Ether Gate (EE only)
+<br/>191  Shamanic Dance (EE only)
+<br/>192  Chaos of Battle (BG:EE only)
+<br/>192  Repulsion (IWD:EE only)
+<br/>193  Marek's Poison (BG:EE only)
+<br/>193  Increased Movement Rate (IWD:EE only)
+<br/>194  Repulsion (BG:EE only)
+<br/>194  Immunity: Abjuration (IWD:EE only)
+<br/>195  Increased Movement Rate (BG:EE only)
+<br/>195  Immunity: Conjuration (IWD:EE only)
+<br/>196  Immunity: Abjuration (BG:EE only)
+<br/>196  Immunity: Divination (IWD:EE only)
+<br/>197  Immunity: Conjuration (BG:EE only)
+<br/>197  Immunity: Enchantment (IWD:EE only)
+<br/>198  Immunity: Divination (BG:EE only)
+<br/>198  Immunity: Illusion (IWD:EE only)
+<br/>199  Immunity: Enchantment (BG:EE only)
+<br/>199  Immunity: Evocation (IWD:EE only)
+<br/>200  Immunity: Illusion (BG:EE only)
+<br/>200  Immunity: Necromancy (IWD:EE only)
+<br/>201  Immunity: Evocation (BG:EE only)
+<br/>201  Immunity: Alteration (IWD:EE only)
+<br/>202  Immunity: Necromancy (BG:EE only)
+<br/>203  Immunity: Alteration (BG:EE only) </div>
 		<hr />
 
 	</div>
@@ -8840,6 +9205,17 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 <br/>9   Kit.ids (EE only)
 <br/>
 <br/>This effect sets stat #58 (HELD) to 1. It also sets the STATE_HELPLESS flag.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode automatically displays the string specified by <code>STRREF_EFFECT_HOLD</code> defined in <code>ENGINEST.2DA</code> in the combat log.
+It even overrides the entries in <code>EFFTEXT.2DA</code>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -8986,6 +9362,19 @@ IWD2: there was a note to not use this effect in older IESDP.
 <br/>7   Gender.ids
 <br/>8   Align.ids
 <br/>9   Kit.ids (EE only)
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>It will affect all attacks, not just the weapon it's on, which would be incorrect when dual-wielding.</li>
+	<li>Multiple <a href="#op178">opcode #178</a> effects only allow additional targeting, they do not stack their THAC0 bonus.</li>
+</ul>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -9038,6 +9427,21 @@ IWD2: there was a note to not use this effect in older IESDP.
 <br/>7   Gender.ids
 <br/>8   Align.ids
 <br/>9   Kit.ids (EE only)
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>It will affect all attacks, not just the weapon it's on, which would be incorrect when dual-wielding.</li>
+	<li>For two-handed/ranged weapons, it can be ideal if a base weapon damage bonus is desired.</li>
+	<li>Damage is multiplied by critical hits (and maybe backstabs).</li>
+	<li>Multiple <a href="#op179">opcode #179</a> effects only allow additional targeting, they do not stack their damage bonus.</li>
+</ul>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -9236,10 +9640,23 @@ PST: This effect doesn't exist and always crashes the game.
 
 
 
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Ammo (i.e., Arrows(5), Bullets(14) and Bolts(31)) does not work well with this opcode. The Ammo Slots are always "Equipped", even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
+<br/>The offhand has the same issue – even when disabled, it's detected by this opcode as equipped.
+<br/>Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen).
+
+  </div>
+</div>
+
+
+
+
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-This effect has never been seen to work.
+This effect has never been seen to work. This is not true for EE games.
 
   </div>
 </div>
@@ -9332,7 +9749,7 @@ IWD2: Don't use.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.
-<br/>This effect is not removed by effect 162.
+<br/>This effect is not removed by <a href="#op162">effect #162</a>.
 <br/>Known values for 'IDS File' are:
 <br/>2   EA.ids
 <br/>3   General.ids
@@ -9343,6 +9760,17 @@ IWD2: Don't use.
 <br/>8   Align.ids
 <br/>9   Kit.ids (EE only)
 <br/>This effect sets stat #58 (HELD) to 1. It also sets the STATE_HELPLESS flag.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode automatically displays the string specified by <code>STRREF_EFFECT_HOLD</code> defined in <code>ENGINEST.2DA</code> in the combat log.
+It even overrides the entries in <code>EFFTEXT.2DA</code>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -10122,6 +10550,16 @@ This can cause a crash if two creatures end up reflecting to each other.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) will absorb a number of spells (specified by the 'Amount' field), from the spell level specified in the 'Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Level' parameter in the extended header that is being called.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It cannot deflect effects through AoE projectiles.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -10712,6 +11150,8 @@ This can cause a crash if two creatures end up reflecting to each other.
 
 		
 		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
+		
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the maze effect to the targeted creature(s).
@@ -10726,7 +11166,7 @@ This can cause a crash if two creatures end up reflecting to each other.
 <br/>12 to 14 int -> 3d4 rounds
 <br/>15 to 17 int -> 2d4 rounds
 <br/>18+ int      -> 1d4 rounds
- </div>
+<br/>'Icon' defines the index from statdesc.2da for custom portrait icons (EE only). </div>
 		<hr />
 
 	</div>
@@ -11200,7 +11640,7 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Use Dice</span><br />
 
 		
 		
@@ -11208,9 +11648,17 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field.
-<br/>'Icon' defines the index from statdesc.2da for custom portrait icons.
- </div>
+		<div class="descriptiondata"> Gives the targeted creature(s) a number of protections from physical attacks, as specified by the <code>Amount</code> field.<br/>
+Known values for <code>Use Dice</code> are:
+<ul>
+	<li><code>0</code> => No</li>
+	<li><code>1</code> => Yes</li>
+</ul>
+
+<p>
+	<br/>If <code>Amount</code> and <code>Use Dice</code> values are both non-zero, the total number of protections from physical attacks is: <code>Amount + Dice values</code>.
+</p>
+<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>80 // Stoneskin</code>. </div>
 		<hr />
 
 	</div>
@@ -11906,40 +12354,74 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Casts the spell specified by the resource field on the target specified by the 'Target' field, when the condition from the 'Condition' field is true. The conditions are akin to various triggers.
 <br/>Known values for 'Target' are:
-<br/>0   Effect Target
+<br/>0   Myself
 <br/>1   LastHitter
 <br/>2   NearestEnemyOf
 <br/>3   Nearest
 <br/><br/>Known values for 'Condition' are:
-<br/>0   HitBy()
-<br/>1   See(NearestEnemyOf())
-<br/>2   HPPercentLT(Myself 50)
-<br/>3   HPPercentLT(Myself 25)
-<br/>4   HPPercentLT(Myself 10)
-<br/>5   StateCheck(Myself,STATE_HELPLESS) i.e. unconscious
-<br/>6   StateCheck(Myself,STATE_POISONED) i.e. poisoned
-<br/>7   AttackedBy('Target')
-<br/>8   PersonalSpaceDistance('Target',4)
-<br/>9   PersonalSpaceDistance('Target',10)
+<br/>0   HitBy([ANYONE]) – Checked every time
+<br/>1   See(NearestEnemyOf(Myself)) – Checked once per round
+<br/>2   HPPercentLT(Myself, 50) – Checked once per round
+<br/>3   HPPercentLT(Myself, 25) – Checked once per round
+<br/>4   HPPercentLT(Myself, 10) – Checked once per round
+<br/>5   StateCheck(Myself,STATE_HELPLESS) i.e. unconscious – Checked once per round
+<br/>6   StateCheck(Myself,STATE_POISONED) i.e. poisoned – Checked once per round
+<br/>7   AttackedBy([ANYONE]) – Checked every time
+<br/>8   Range([ANYONE],4) – Checked once per round
+<br/>9   Range([ANYONE],10) – Checked once per round
 <br/>10  Unknown - every round
-<br/>11  TookDamage()
-<br/>12  Kill made
-<br/>13  Time of Day is 'Extra'
-<br/>14  Target in 'Extra' range
-<br/>15  Target's state is 'Extra'
-<br/>16  Target dies
-<br/>17  Target died
-<br/>18  Target turned by
-<br/>19  Target HP &lt; 'Extra'
-<br/>20  Target HP % &lt; 'Extra'
+<br/>11  TookDamage() – Checked every time
+<br/>12  Killed([ANYONE]) – Checked every time
+<br/>13  Time of Day is 'Extra' – Checked once per round
+<br/>14  Range([ANYONE],'Extra') – Checked once per round
+<br/>15  StateCheck(Myself,'Extra') – Checked once per round
+<br/>16  Died(Myself) – Checked every time
+<br/>17  Died([ANYONE]) – Checked every time
+<br/>18  TurnedBy([ANYONE]) – Checked every time
+<br/>19  HPLT(Myself,'Extra') – Checked once per round
+<br/>20  HPPercentLT(Myself,'Extra') – Checked once per round
+<br/>21  CheckSpellState(Myself,'Extra') – Checked once per round
 <br/><br/>The 'Extra' field is used for the following 'Target' values:
 <br/>13: Use value from TIMEODAY.IDS
 <br/>14: Range in feet
 <br/>15: Use value from STATE.IDS
-<br/>18: Any numeric value
+<br/>19: Any numeric value
 <br/>20: Any numeric value
+<br/>21: Use value from SPLSTATE.IDS
 <br/><br/>For a 'Condition' of 13, the 'Target' parameter must be 0.
 <br/><br/>Parameter 3 (EFF) activates the portrait icon and immediately triggers the HitBy() trigger
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+If you need a condition which is always true, you could set 'Condition' to 20 and 'Extra' to 102 ("hp < 102%" will always be true; 102 is used because 'value' must be even or the combat log will be flooded with feedback messages).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+These triggers and objects are limited to their normal detection range: e.g., "Died([ANYONE])" won't see someone dying on the other side of the map.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Excluding the "Range()" checks, [ANYONE] includes "Myself".
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -12217,6 +12699,16 @@ When creating an image for use as in Mislead, the image will have a script assig
 <br/>2   Can attack, can not cast spells (ProjImag.spl is cast on the creature)
 <br/>3   Can attack, can cast spells (Simulacrs.pl is cast on the creature)
 <br/>4+  As 0
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Keep in mind that if the caster is equipped with an irremovable item (e.g., Edwin's Amulet), then its images will not inherit any bonuses/maluses from that specific item.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -12538,7 +13030,7 @@ When creating an image for use as in Mislead, the image will have a script assig
 <br/>136  Strength of One
 <br/>137  Bleeding
 <br/>138  Barbarian Rage
-<br/>139  Boon of Lathlander
+<br/>139  Boon of Lathander
 <br/>140  Storm Shield
 <br/>141  Enraged
 <br/>142  Stunning Blow
@@ -12550,7 +13042,8 @@ When creating an image for use as in Mislead, the image will have a script assig
 <br/>148  Power Attack
 <br/>149  Whirlwind Attack
 <br/>150  Greater Whirlwind
-<br/>151  Magic Flue
+<br/>151  Magic Flute
+<br/>151  Chaos of Battle (IWD:EE only)
 <br/>152  Critical Strike
 <br/>153  Greater Deathblow
 <br/>154  Deathblow
@@ -12564,8 +13057,57 @@ When creating an image for use as in Mislead, the image will have a script assig
 <br/>162  Improved Chaos Shield*
 <br/>163  Chaos Shield*
 <br/>164  Fire Elemental Transformation
+<br/>164  Shield of Lathander (IWD:EE only)
 <br/>165  Earth Elemental Transformation
- </div>
+<br/>165  Greater Shield of Lathander (IWD:EE only)
+<br/>166  Mind Blank (IWD:EE only)
+<br/>167  Aid (IWD:EE only)
+<br/>168  Phased (IWD:EE only)
+<br/>169  Pain (IWD:EE only)
+<br/>170  Impervious Sanctity of Mind (IWD:EE only)
+<br/>171  Petrified (IWD:EE only)
+<br/>172  Iron Body (IWD:EE only)
+<br/>173  Animal Rage (IWD:EE only)
+<br/>174  Exaltation (IWD:EE only)
+<br/>175  Recitation (IWD:EE only)
+<br/>176  Blood Rage (IWD:EE only)
+<br/>177  The Ballad of Three Heroes (IWD:EE only)
+<br/>178  The Tale of Curran Strongheart (IWD:EE only)
+<br/>179  Tymora's Melody (IWD:EE only)
+<br/>180  The Song of Kaudies (IWD:EE only)
+<br/>181  The Siren's Yearning (IWD:EE only)
+<br/>182  War Chant of Sith (IWD:EE only)
+<br/>183  Prayer (IWD:EE only)
+<br/>184  Righteous Wrath of the Faithful (IWD:EE only)
+<br/>185  Cat's Grace (IWD:EE only)
+<br/>186  Hope (IWD:EE only)
+<br/>187  Courage (IWD:EE only)
+<br/>188  Enchanted Weapon (BG:EE only)
+<br/>189  Spirit Ward (EE only)
+<br/>190  Ether Gate (EE only)
+<br/>191  Shamanic Dance (EE only)
+<br/>192  Chaos of Battle (BG:EE only)
+<br/>192  Repulsion (IWD:EE only)
+<br/>193  Marek's Poison (BG:EE only)
+<br/>193  Increased Movement Rate (IWD:EE only)
+<br/>194  Repulsion (BG:EE only)
+<br/>194  Immunity: Abjuration (IWD:EE only)
+<br/>195  Increased Movement Rate (BG:EE only)
+<br/>195  Immunity: Conjuration (IWD:EE only)
+<br/>196  Immunity: Abjuration (BG:EE only)
+<br/>196  Immunity: Divination (IWD:EE only)
+<br/>197  Immunity: Conjuration (BG:EE only)
+<br/>197  Immunity: Enchantment (IWD:EE only)
+<br/>198  Immunity: Divination (BG:EE only)
+<br/>198  Immunity: Illusion (IWD:EE only)
+<br/>199  Immunity: Enchantment (BG:EE only)
+<br/>199  Immunity: Evocation (IWD:EE only)
+<br/>200  Immunity: Illusion (BG:EE only)
+<br/>200  Immunity: Necromancy (IWD:EE only)
+<br/>201  Immunity: Evocation (BG:EE only)
+<br/>201  Immunity: Alteration (IWD:EE only)
+<br/>202  Immunity: Necromancy (BG:EE only)
+<br/>203  Immunity: Alteration (BG:EE only) </div>
 		<hr />
 
 	</div>
@@ -12929,6 +13471,16 @@ At least in EEs, setting parameter2 to 4 (i.e., BIT2) results in restricting thi
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It will always apply to both main and offhand weapon.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -13259,7 +13811,7 @@ This effect works in SoA but not ToB
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-The difference from opcode #122 is that when used in an external .eff, the duration (from the calling file) is specified in days.
+The difference from <a href="#op122">opcode #122</a> is that when used in an external .eff, the duration (from the calling file) is specified in days.
 
   </div>
 </div>
@@ -13935,6 +14487,8 @@ All timing modes act as permanent for this effect.
 		
 		
 			
+				
+			
 			
 				Variants:
 				
@@ -13944,31 +14498,55 @@ All timing modes act as permanent for this effect.
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op272">BG2</a>
+			
+		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Frequency</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount_1</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
+			<span class="parameterheading">Parameter #3:</span> <span class="parameterdata">Amount_2</span><br />
+		
+		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the eff specified by the resource key to the targeted creature(s) as specified by the 'Type' field. 'Type' mode 4 makes use of Parameter 3, and so can only be used in external eff files.
-<br/>Known values for 'Type' are:
-<br/>0   Apply once per second
-<br/>1   Crash
-<br/>2   Apply 'Frequency' times per second
-<br/>3   Apply once per 'Frequency' seconds
-<br/>4   Apply Param 3 times per 'Frequency' rounds
-<br/>5+  Crash
+		<div class="descriptiondata"> Applies the EFF specified by the resource key to the targeted creature(s) as specified by the <code>Type</code> field. <code>Type</code> mode 4 makes use of Parameter 3, and so can only be used in external eff files.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li><code>0</code> => Apply once per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
+	<li><code>1</code> => Unknown (see below for further details)</li>
+	<li><code>2</code> => Apply <code>Amount_1</code> times every <code>Frequency Multiplier</code> second(s)</li>
+	<li><code>3</code> => Apply once every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
+	<li><code>4</code> => Apply <code>Amount_2</code> times every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
+	<li><code>5+</code> => Crash</li>
+</ul>
+
+<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+<br/>
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-The timings are relative to the movement rate of the affected creature(s). Effects 40 (Slow) and 78 (Disease) doubles the timing rate, effect 16 (Haste) halves the timing rate.
+The timings are relative to the movement rate of the affected creature(s). <a href="#op40">opcode #40</a> (Slow) and <a href="#op78">opcode #78</a> (Disease) doubles the timing rate, effect <a href="#op16">opcode #16</a> (Haste) halves the timing rate.
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+This opcode does not have any function when <code>Type = 1</code>, thought the effect is still present (it doesn't just instantly terminate), and will generate a portrait icon if <code>Icon</code> is non-zero.
 
   </div>
 </div>
@@ -13978,12 +14556,11 @@ The timings are relative to the movement rate of the affected creature(s). Effec
 
 <div class="note info">
   <div>
-    <strong>Note:</strong> 
-If two or more effects of this type affect a creature, only the shortest duration effect will occur. This is fixed for the EEs.
+    <strong>Info:</strong> 
+If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
 
   </div>
 </div>
-
  </div>
 		<hr />
 
@@ -15732,6 +16309,7 @@ This opcode is also known as ImmunityToSequester.
   <div>
     <strong>Warning:</strong> 
 Do not use this effect in conjunction with the Juggernaut Golem Manual as it will corrupt the use of that item.
+In particular, the Juggernaut Golem <code>TOMEGOL4.CRE</code> is scripted by <code>TOMEGOL4.BCS</code> to <code>Kill()</code> itself if its Summoner and none of the Players Party have stat #199 (STONESKINSGOLEM) set to a non-zero value.
 
   </div>
 </div>
@@ -15829,19 +16407,17 @@ The Constant Value parameter should be set to a non-zero value.
 <br/>Known values for 'Type' are:
 <br/>0   Normal Haste
 <br/>1   Improved Haste
-<br/>2   Speed haste without attack bonuses
-<br/><br/>The effect modifies stat 155.
+<br/>2   Weak Haste – Speed haste without attack bonuses
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-This effect will cancel out the slow opcode.
+This effect is functionally identical to <a href="#op16">opcode #16</a>. The only difference between the two is that some ITMs/SPLs/abilities will specifically block/remove <a href="#op16">opcode #16</a> but not <a href="#op317">opcode #317</a> (e.g., Monks are immune to <a href="#op16">opcode #16</a> but not <a href="#op317">opcode #317</a>).
 
   </div>
 </div>
-
  </div>
 		<hr />
 
@@ -15980,7 +16556,28 @@ This effect will cancel out the slow opcode.
 <br/>0   Default
 <br/>1   Equipped effects list only
 <br/>2   Timed effects list only
-<br/><br/>It always needs to be the first effect for stacking prevention. Timing Mode should be either Instant/Limited(0) with 0 duration, or Instant/Permanent(1).
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It always needs to be the first effect for stacking prevention. Timing Mode should be either Instant/Limited(0) with 0 duration, or Instant/Permanent(1).
+
+  </div>
+</div>
+
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+If the resource field is empty, it will remove level-up Weapon Proficiency effects.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -16045,7 +16642,7 @@ This effect will cancel out the slow opcode.
 	<div id="op324" class="opcode">
 		<span class="opnumberdata">#324 (0x144)</span>
 
-		<span class="opnamedata">Protection: Immunity from Spell and Message</span>
+		<span class="opnamedata">Protection: Immunity to Spell and Message</span>
 
 		
 		
@@ -16251,6 +16848,38 @@ This effect will cancel out the slow opcode.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the slow poison effect to the targeted creature(s), using the 'Slow Factor' field.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This opcode writes over the 'Frequency Multiplier' field of any <a href="#op25">opcode #25</a> effects on the targeted creature. As a result, it is useless against <a href="#op25">opcode #25</a> whose 'Type'=(0 or 1), as well as any <a href="#op25">Poison effect</a> that is used through <a href="#op177">opcode #177</a>, as 'Type'=4 requires.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It can also accelerate <a href="#op25">Poisons</a> if their 'Frequency Multiplier' field was already higher than the value specified in <a href="#op329">opcode #329</a>.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It does not alter the duration of the <a href="#op25">poison</a>, nor does it affect any of the other frequency opcodes (<a href="#op78">78</a>/<a href="#op98">98</a>/<a href="#op272">272</a>).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -16280,6 +16909,16 @@ This effect will cancel out the slow opcode.
 <br/>Known values for 'Type' are:
 <br/>0   Default (show strref)
 <br/>1   Cynicism (show Cynicism strrefs)
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -16307,21 +16946,32 @@ This effect will cancel out the slow opcode.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Each creature files has a Creature Power Level number (at 0x18). This effect summons a number of monsters depending on this value, the special parameter and if it is used in SPL/ITM or from an external EFF.
+		<div class="descriptiondata"> Each creature files has a Creature Power Level number (at 0x18). This effect summons a number of monsters depending on this value, the special parameter and if it is used in SPL/ITM or from an external EFF.<br>
 <br/>When used in SPL/ITM, known value for 'Mode' are:
 <br/>0  Summon amount equal to ('Count' + Dice rolls)
 <br/>1  Summon amount equal to ('Count' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"
+<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"<br>
 
 <br/>When used in EFF, known value for 'Mode' are:
 <br/>0  Summon until Creature Power Level equals/exceeds 'Count'
 <br/>1  Summon amount equal to ('Count' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF
+<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF<br>
 
 <br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are listed in smtables.2da.
 <br/>If the resource field is filled, it will use a .2da to determine which monsters to summon.
 <br/>If used from an external effect (.eff), the vvc field controls the bam/vvc file played over the creatures when summoning.
-<br/>If used from an external effect (.eff), the second vvc field controls the bam file played over the target area when summoning. </div>
+<br/>If used from an external effect (.eff), the second vvc field controls the bam file played over the target area when summoning.<br>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+As far as the 'Allegiance' of the summoned creatures is concerned, this opcode uses "Match Target", which sets the summoned creature's allegiance to one of 4|Ally, 128|Neutral, or 255|Enemy, based on the summoner (whichever group the summoner belongs to).
+
+  </div>
+</div>
+ </div>
 		<hr />
 
 	</div>

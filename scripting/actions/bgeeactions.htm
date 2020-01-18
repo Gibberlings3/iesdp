@@ -1279,6 +1279,17 @@ This action instructs the active creature to face the specified direction. Direc
       AttackOneRound(NearestEnemyOf())
   END
   </pre >
+  
+
+  <div class="note info">
+  <div>
+    <strong>Note:</strong> 
+  This action shares most of its code with <a href="#134">AttackReevaluate()</a>. In fact, it is 'AttackReevaluate()' with an extra hardcoded bit that forces it to terminate after one round.
+  This means that, unlike in 'AttackReevaluate()', 'ActionListEmpty()' will return TRUE once a round is up – and unless you immediately reinstate 'AttackOneRound()', the creature won't continue attacking.
+  
+  </div>
+</div>
+
   <br />
   </div>
   
@@ -1790,10 +1801,37 @@ The example is from AR0516.bcs.<br />
       AttackReevaluate(LastSeenBy(),30)
   END
   </pre>
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  Conventional object targets (e.g., 'NearestEnemyOf(Myself)') are "locked in" until:
+  <ul>
+    <li>They die / get removed from the game</li>
+    <li>The creature has been chasing target for the time specified by the 'ReevaluationPeriod' parameter</li>
+  </ul>
+  On the other hand, object selectors (e.g., 'FifthNearest([EVILCUTOFF.PLANT])', '[PC]', 'NearestEnemyOfType([0.0.0.IMP])' and so forth) constantly reevaluate the target, not being affected by the 'ReevaluationPeriod' at all.
+  
+  </div>
+</div>
+
+
+  
+
+  <div class="note info">
+  <div>
+    <strong>Note:</strong> 
+  The only natural end condition for the action is if it can't find any valid objects to attack, either initially, or after a reeval has been triggered.
+  This means that the script trigger 'ActionListEmpty()' will not return TRUE once 'ReevaluationPeriod' is up.
+  
+  </div>
+</div>
+
   <br />
   </div>
 
-  
+
   <div class="actionHeader"><a name="135">135 LockScroll()</a></div>
   <div class="indent1">
   This action locks the screen on the active creature, preventing the screen from being scrolled away. The action only works from a creature script.<br />
@@ -2055,6 +2093,16 @@ This action creates the item specified by the resref parameter on the creature s
   END
   </pre>
   <br />
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   </div>
   
   <div class="actionHeader"><a name="152">152 ChangeAIType(O:Object*)</a></div>
@@ -3170,6 +3218,16 @@ This action creates the item specified by the resref parameter on the creature s
   <div class="actionHeader"><a name="262">262 DisplayStringNoName(O:Object*,I:StrRef*)</a></div>
   <div class="indent1">
   This action displays the strref specified by the StrRef parameter in the message window, without attributing the text to an object.<br />
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   <br />
   </div>
   
@@ -3216,6 +3274,16 @@ This action creates the item specified by the resref parameter on the creature s
       UseItem(&quot;Potn52&quot;,Myself)
   END<br />
   </pre>
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   <br />
   </div>
   
@@ -3362,6 +3430,16 @@ This action creates the item specified by the resref parameter on the creature s
   <div class="actionHeader"><a name="292">292 DisplayStringHeadOwner(S:Item*,I:STRREF*)</a></div>
   <div class="indent1">
   This action displays the specified strref over the head of the creature with the specified item. The action only checks current party members.<br />
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   <br />
   </div>
   
@@ -3481,6 +3559,16 @@ This action creates the item specified by the resref parameter on the creature s
   <div class="actionHeader"><a name="311">311 DisplayStringWait(O:Object*,I:StrRef*)</a></div>
   <div class="indent1">
   This action displays the specified string over the head on the specified object (on the game-screen). The text stays onscreen until the associated sound has completed playing.<br />
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   <br />
   </div>
   
@@ -3698,6 +3786,16 @@ Other states are untested.<br />
   <div class="actionHeader"><a name="342">342 DisplayStringHeadDead(O:Object*,I:StrRef*)</a></div>
   <div class="indent1">
   This action displays the specified string over the head on the specified object (on the game-screen) even if the target is dead.<br />
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   <br />
   </div>
   
@@ -3722,6 +3820,16 @@ Other states are untested.<br />
   <div class="actionHeader"><a name="346">346 DisplayStringNoNameHead(O:Object*,I:StrRef*)</a></div>
   <div class="indent1">
   This action displays the specified string over the head on the specified object (on the game-screen), without displaying it in the message log.<br />
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   <br />
   </div>
   
@@ -3862,6 +3970,16 @@ Other states are untested.<br />
   <div class="actionHeader"><a name="361">361</a> DisplayStringPoint(I:Strref*,P:Location*)</div>
   <div class="indent1">
   Displays a floating message over a point in the script runner's current area.<br />
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   <br />
   </div>
 
@@ -4059,6 +4177,16 @@ Other states are untested.<br />
   <div class="actionHeader"><a name="388">388 DisplayStringHeadNoLog(O:Object*,I:StrRef*)</a></div>
   <div class="indent1">
   This action displays the string specified by the StrRef parameter over the head of the given object on the game-screen, but not in the message log.<br />
+  
+
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+  It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+  
+  </div>
+</div>
+
   <br />
   </div>
 

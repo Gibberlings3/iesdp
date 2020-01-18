@@ -1,0 +1,56 @@
+---
+n: 25
+name: "State: Poison"
+param1: "Amount_1"
+param2: "Type"
+param3: "Amount_2"
+param4: "Frequency Multiplier"
+special: "Icon"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Damages the target by a certain amount, in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li><code>0</code> => Inflict 1 HP per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
+	<li><code>1</code> => Inflict 1 HP per second (for best results, leave <code>Amount_2</code> and <code>Frequency Multiplier</code> at zero, <code>Amount_1</code> between <code>1</code> and <code>101</code>)</li>
+	<li><code>2</code> => Deal <code>Amount_1</code> damage every <code>Frequency Multiplier</code> second(s)</li>
+	<li><code>3</code> => Deal one damage every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
+	<li><code>4</code> => Deal <code>Amount_2</code> damage every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
+	<li><code>5+</code> => Crash</li>
+</ul>
+
+<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>6 // Poisoned</code>.
+<br/>
+
+{% capture note %}
+The <code>Damage Amount</code> parameters should be set to a positive value.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+When the effect is NOT attached through <a href="#op177">opcode #177</a>, <code>Frequency Multiplier</code> will be replaced when using <a href="#op329">opcode #329</a> (Slow Poison) – not necessarily "slow" though, as it can increase or decrease the frequency.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+When the <code>Type</code> field is <code>1</code>:
+<ul>
+	<li>if the <code>Frequency Multiplier</code> field is non-zero, damage is always dealt.</li>
+	<li>if the <code>Amount_1</code> field is less than <code>256</code>, damage is dealt while <code>HP > 100 / Amount_1</code>.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

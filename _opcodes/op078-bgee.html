@@ -1,9 +1,11 @@
 ---
 n: 78
 name: "State: Disease"
-param1: "Damage"
+param1: "Amount"
 param2: "Type"
-special: "Behaviour"
+param4: "Frequency Multiplier"
+resource: "SPL file"
+special: "Icon"
 bg1: 0
 bg2: 0
 bgee: 1
@@ -11,29 +13,84 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.
-<br/>Known values for 'Type' are:
-<br/>0   1 HP per second
-<br/>1   1 HP per second
-<br/>2   'Damage' per Second
-<br/>3   Cause 1HP every 'Damage' seconds
-<br/>4   Strength Penalty
-<br/>5   Dexterity Penalty
-<br/>6   Constitution Penalty
-<br/>7   Intelligence Penalty
-<br/>8   Wisdom Penalty
-<br/>9   Charisma Penalty
-<br/>10  Slow Effect
-<br/>11  Mold touch/Single
-<br/>12  Mold touch/Decrement
-<br/>13  Contagion
-<br/><br/>'Damage' can be positive (penalty) or negative (bonus).
-<br/>The field 'Behaviour' is used for "Mold touch" and consists of two word values:
-<br/>First word: # rounds to apply the affect
-<br/>Second word: Whether to use damage defined in 'Damage'.
+Set the <code>Amount</code> parameter as the amount of damage, and the <code>Disease Type</code> parameter as how the disease functions.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li><code>0</code> => Inflict 1 HP per second (<code>Frequency Multiplier</code> is ignored – <code>Amount</code> needs to be non-zero)</li>
+	<li><code>1</code> => Inflict 1 HP per second (for best results, leave <code>Frequency Multiplier</code> at zero, <code>Amount</code> between <code>1</code> and <code>101</code>)</li>
+	<li><code>2</code> => Deal <code>Amount</code> damage every <code>Frequency Multiplier</code> second(s)</li>
+	<li><code>3</code> => Deal one damage every <code>Amount * Frequency Multiplier</code> second(s)</li>
+	<li><code>4</code> => Reduce Strength score by <code>Amount</code></li>
+	<li><code>5</code> => Reduce Dexterity score by <code>Amount</code></li>
+	<li><code>6</code> => Reduce Constitution score by <code>Amount</code></li>
+	<li><code>7</code> => Reduce Intelligence score by <code>Amount</code></li>
+	<li><code>8</code> => Reduce Wisdom score by <code>Amount</code></li>
+	<li><code>9</code> => Reduce Charisma score by <code>Amount</code></li>
+	<li><code>10</code> => Slow Effect</li>
+	<li><code>11</code> => Mold touch/Single</li>
+	<li><code>12</code> => Mold touch/Decrement</li>
+	<li><code>13</code> => Contagion</li>
+</ul>
+<br/><br/><code>Amount</code> can be positive (penalty) or negative (bonus).
+<br/><br/>
+<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+<br/>
 
 {% capture note %}
 Permanent timing modes require a duration for this effect to work.
 {% endcapture %}
 
 {% include important.html %}
+
+{% capture note %}
+If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+The Slow effect is no different from that caused by <a href="#op40">opcode #40</a> (Slow), including its stacking interaction with Haste, except that it is blocked/removed as a disease, not as a slow effect.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+Contagion is a composite of Strength, Dexterity, Charisma drain and the Slow effect, each ability score reduced by <code>Amount</code>.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+When the <code>Type</code> field is <code>1</code>:
+<ul>
+	<li>if the <code>Frequency Multiplier</code> field is non-zero, damage is always dealt.</li>
+	<li>if the <code>Amount</code> field is less than <code>256</code>, damage is dealt while <code>HP > 100 / Amount</code>.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+<code>Mold touch</code> is complicated and not consistent across the EE games.
+The general idea is that it deals <code>x</code> or <code>xd6</code> damage and applies the <code>SPL</code> specified by the resource key every (round or second) for either <code>1</code> round (single) or across multiple rounds dealing less each round (decrement).
+In particular:
+<ul>
+	<li>If <code>Type=11</code>, then the damage dealt is always <code>1</code></li>
+	<li>if <code>Type=11</code>, then the damage dealt depends on the game:
+		<ul>
+			<li><code>IWD:EE</code> uses <code>Amount</code> for 'x', and calculates duration as <code>6 * Amount</code>.</li>
+			<li><code>BG:EE</code> calculates 'x' from <code>duration / 6</code>. (It's reasonable to assume that <code>BG2:EE</code> uses this one as well).</li>
+			<li>If you set <code>duration = 6 * Amount</code>, it should junction the same in both games.</li>
+		</ul>
+	</li>
+</ul>
+<code>Frequency Multiplier</code> determines whether it deals damage every second or every round, and whether it deals <code>x</code> or <code>xd6</code> damage.
+<ul>
+	<li><code>Frequency Multiplier = 0</code> => <code>xd6</code> per round</li>
+	<li><code>Frequency Multiplier = 65536 + even</code> => <code>x</code> per round</li>
+	<li><code>Frequency Multiplier = 65537 + odd</code> => <code>x</code> per second</li>
+</ul>
+Regardless, the value of <code>x</code> decrements only once per round.
+{% endcapture %}
+
+{% include note.html %}

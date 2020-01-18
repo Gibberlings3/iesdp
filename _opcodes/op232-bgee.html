@@ -13,37 +13,57 @@ pst: 0
 ---
 Casts the spell specified by the resource field on the target specified by the 'Target' field, when the condition from the 'Condition' field is true. The conditions are akin to various triggers.
 <br/>Known values for 'Target' are:
-<br/>0   Effect Target
+<br/>0   Myself
 <br/>1   LastHitter
 <br/>2   NearestEnemyOf
 <br/>3   Nearest
 <br/><br/>Known values for 'Condition' are:
-<br/>0   HitBy()
-<br/>1   See(NearestEnemyOf())
-<br/>2   HPPercentLT(Myself 50)
-<br/>3   HPPercentLT(Myself 25)
-<br/>4   HPPercentLT(Myself 10)
-<br/>5   StateCheck(Myself,STATE_HELPLESS) i.e. unconscious
-<br/>6   StateCheck(Myself,STATE_POISONED) i.e. poisoned
-<br/>7   AttackedBy('Target')
-<br/>8   PersonalSpaceDistance('Target',4)
-<br/>9   PersonalSpaceDistance('Target',10)
+<br/>0   HitBy([ANYONE]) – Checked every time
+<br/>1   See(NearestEnemyOf(Myself)) – Checked once per round
+<br/>2   HPPercentLT(Myself, 50) – Checked once per round
+<br/>3   HPPercentLT(Myself, 25) – Checked once per round
+<br/>4   HPPercentLT(Myself, 10) – Checked once per round
+<br/>5   StateCheck(Myself,STATE_HELPLESS) i.e. unconscious – Checked once per round
+<br/>6   StateCheck(Myself,STATE_POISONED) i.e. poisoned – Checked once per round
+<br/>7   AttackedBy([ANYONE]) – Checked every time
+<br/>8   Range([ANYONE],4) – Checked once per round
+<br/>9   Range([ANYONE],10) – Checked once per round
 <br/>10  Unknown - every round
-<br/>11  TookDamage()
-<br/>12  Kill made
-<br/>13  Time of Day is 'Extra'
-<br/>14  Target in 'Extra' range
-<br/>15  Target's state is 'Extra'
-<br/>16  Target dies
-<br/>17  Target died
-<br/>18  Target turned by
-<br/>19  Target HP &lt; 'Extra'
-<br/>20  Target HP % &lt; 'Extra'
+<br/>11  TookDamage() – Checked every time
+<br/>12  Killed([ANYONE]) – Checked every time
+<br/>13  Time of Day is 'Extra' – Checked once per round
+<br/>14  Range([ANYONE],'Extra') – Checked once per round
+<br/>15  StateCheck(Myself,'Extra') – Checked once per round
+<br/>16  Died(Myself) – Checked every time
+<br/>17  Died([ANYONE]) – Checked every time
+<br/>18  TurnedBy([ANYONE]) – Checked every time
+<br/>19  HPLT(Myself,'Extra') – Checked once per round
+<br/>20  HPPercentLT(Myself,'Extra') – Checked once per round
+<br/>21  CheckSpellState(Myself,'Extra') – Checked once per round
 <br/><br/>The 'Extra' field is used for the following 'Target' values:
 <br/>13: Use value from TIMEODAY.IDS
 <br/>14: Range in feet
 <br/>15: Use value from STATE.IDS
-<br/>18: Any numeric value
+<br/>19: Any numeric value
 <br/>20: Any numeric value
+<br/>21: Use value from SPLSTATE.IDS
 <br/><br/>For a 'Condition' of 13, the 'Target' parameter must be 0.
 <br/><br/>Parameter 3 (EFF) activates the portrait icon and immediately triggers the HitBy() trigger
+
+{% capture note %}
+If you need a condition which is always true, you could set 'Condition' to 20 and 'Extra' to 102 ("hp < 102%" will always be true; 102 is used because 'value' must be even or the combat log will be flooded with feedback messages).
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+These triggers and objects are limited to their normal detection range: e.g., "Died([ANYONE])" won't see someone dying on the other side of the map.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+Excluding the "Range()" checks, [ANYONE] includes "Myself".
+{% endcapture %}
+
+{% include note.html %}

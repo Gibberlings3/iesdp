@@ -11,18 +11,24 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Each creature files has a Creature Power Level number (at 0x18). This effect summons a number of monsters depending on this value, the special parameter and if it is used in SPL/ITM or from an external EFF.
+Each creature files has a Creature Power Level number (at 0x18). This effect summons a number of monsters depending on this value, the special parameter and if it is used in SPL/ITM or from an external EFF.<br>
 <br/>When used in SPL/ITM, known value for 'Mode' are:
 <br/>0  Summon amount equal to ('Count' + Dice rolls)
 <br/>1  Summon amount equal to ('Count' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"
+<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"<br>
 
 <br/>When used in EFF, known value for 'Mode' are:
 <br/>0  Summon until Creature Power Level equals/exceeds 'Count'
 <br/>1  Summon amount equal to ('Count' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF
+<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF<br>
 
 <br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are listed in smtables.2da.
 <br/>If the resource field is filled, it will use a .2da to determine which monsters to summon.
 <br/>If used from an external effect (.eff), the vvc field controls the bam/vvc file played over the creatures when summoning.
-<br/>If used from an external effect (.eff), the second vvc field controls the bam file played over the target area when summoning.
+<br/>If used from an external effect (.eff), the second vvc field controls the bam file played over the target area when summoning.<br>
+
+{% capture note %}
+As far as the 'Allegiance' of the summoned creatures is concerned, this opcode uses "Match Target", which sets the summoned creature's allegiance to one of 4|Ally, 128|Neutral, or 255|Enemy, based on the summoner (whichever group the summoner belongs to).
+{% endcapture %}
+
+{% include note.html %}

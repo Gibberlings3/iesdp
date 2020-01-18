@@ -1,0 +1,46 @@
+---
+n: 272
+name: "Spell: Apply Repeating EFF"
+param1: "Amount_1"
+param2: "Type"
+param3: "Amount_2"
+param4: "Frequency Multiplier"
+special: "Icon"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Applies the EFF specified by the resource key to the targeted creature(s) as specified by the <code>Type</code> field. <code>Type</code> mode 4 makes use of Parameter 3, and so can only be used in external eff files.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li><code>0</code> => Apply once per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
+	<li><code>1</code> => Unknown (see below for further details)</li>
+	<li><code>2</code> => Apply <code>Amount_1</code> times every <code>Frequency Multiplier</code> second(s)</li>
+	<li><code>3</code> => Apply once every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
+	<li><code>4</code> => Apply <code>Amount_2</code> times every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
+	<li><code>5+</code> => Crash</li>
+</ul>
+
+<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+<br/>
+
+{% capture note %}
+The timings are relative to the movement rate of the affected creature(s). <a href="#op40">opcode #40</a> (Slow) and <a href="#op78">opcode #78</a> (Disease) doubles the timing rate, effect <a href="#op16">opcode #16</a> (Haste) halves the timing rate.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+This opcode does not have any function when <code>Type = 1</code>, thought the effect is still present (it doesn't just instantly terminate), and will generate a portrait icon if <code>Icon</code> is non-zero.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+{% endcapture %}
+
+{% include info.html %}

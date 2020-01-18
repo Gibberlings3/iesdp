@@ -6,7 +6,8 @@ title: "BG(2)EE Identifiers : state.ids"
     <br />
     Relates to offset 0x0020 in the CRE file format.<br />
     Used by the <a href="../../../scripting/triggers/bgeetriggers.htm"> StateCheck(O:Object*,I:State*State) </a> trigger.<br />
-    The file is partially extensible; new states cannot be created though existing states can be combined to create shortcut states.<br />
+    The file is partially extensible; new states cannot be created though existing states can be combined to create shortcut states.<br /><br />
+    STATEs are cumulative: all those STATEs that aren't a power of 2 are combinations of other STATEs. In particular, you can BOR (bitwise OR) the base STATEs (i.e., all those listed at offset 0x0020 of a CRE file) to form all the others. For instance, STATE_HARMLESS is STATE_FEEBLEMINDED | STATE_CHARMED | STATE_IMMOBILE... and STATE_IMMOBILE is STATE_HELPLESS | STATE_STUNNED | STATE_SLEEPING.<br />
     <br />
 <pre>
 IDS V1.0

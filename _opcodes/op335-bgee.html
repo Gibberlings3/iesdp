@@ -1,8 +1,8 @@
 ---
 n: 335
 name: "Spell Effect: Seven Eyes"
-param1: "State"
-param2: "Type"
+param1: "Spellstate"
+param2: "Row#"
 special: "Eye Group"
 bg1: 0
 bg2: 0
@@ -11,6 +11,14 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-This effect sets spellstate 'State', increases the seven eyes stat and grants special ability named in the resource field.
-<br/>'Type' selects the blocked spell or effect, the blocking criteria are listed in 7eyes.2da thus works like a very selective spell trap.
+
+<br/>Known values for 'Spellstate' are defined in <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>.
+<br/>'Row#' selects the blocked spell or effect, the blocking criteria are listed in <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a> thus works like a very selective spell trap.
 <br/>'Eye Group' may be used to define separate eye groups (it will remove 336 opcodes of the same type).
+<br/>
+
+{% capture note %}
+Effect is not applied if target already has specified 'Spellstate' set.
+{% endcapture %}
+
+{% include important.html %}

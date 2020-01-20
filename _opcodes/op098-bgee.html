@@ -13,21 +13,21 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Restores HP according to the style specified by the <code>Type</code> field, to the targeted creature(s).
-<br/>Known values for <code>Type</code> are:
+Restores HP according to the style specified by the 'Type' field, to the targeted creature(s).
+<br/>Known values for 'Type' are:
 <ul>
-	<li><code>0</code> => Restore 1 HP per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
-	<li><code>1</code> => Restore 1 HP per second (for best results, leave both <code>Amount_2</code> and <code>Frequency Multiplier</code> at zero, <code>Amount_1</code> between <code>1</code> and <code>101</code>)</li>
-	<li><code>2</code> => Restore <code>Amount_1</code> HP every <code>Frequency Multiplier</code> second(s)</li>
-	<li><code>3</code> => Restore 1 HP every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
-	<li><code>4</code> => Restore <code>Amount_2</code> HP every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
+	<li>0 => Restore 1 HP per second ('Amount_2' and 'Frequency Multiplier' are ignored – 'Amount_1' needs to be non-zero)</li>
+	<li>1 => Restore 1 HP per second (for best results, leave both 'Amount_2' and 'Frequency Multiplier' at zero, 'Amount_1' between 1 and 101)</li>
+	<li>2 => Restore 'Amount_1' HP every 'Frequency Multiplier' second(s)</li>
+	<li>3 => Restore 1 HP every 'Amount_1' * 'Frequency Multiplier' second(s)</li>
+	<li>4 => Restore 'Amount_2' HP every 'Amount_1' * 'Frequency Multiplier' second(s) – This is the only one that must be in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files</li>
 </ul>
 
-<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is none (no icon).
 <br/>
 
 {% capture note %}
-<code>Type</code> values greater or equal to <code>5</code> will crash the game!
+'Type' values greater or equal to 5 will crash the game!
 {% endcapture %}
 
 {% include warning.html %}
@@ -39,16 +39,16 @@ Permanent timing modes require a duration for this effect to work.
 {% include important.html %}
 
 {% capture note %}
-If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+If 'Frequency Multiplier' = 0, its value is treated as 1. This is the default value for SPL/ITM effects.
 {% endcapture %}
 
 {% include info.html %}
 
 {% capture note %}
-When the <code>Type</code> field is <code>1</code>:
+When the 'Type' field is 1:
 <ul>
-	<li>if the <code>Frequency Multiplier</code> field is non-zero, HP is always restored.</li>
-	<li>if the <code>Amount_1</code> field is less than <code>256</code>, HP is restored while <code>HP > 100 / Amount_1</code>.</li>
+	<li>if the 'Frequency Multiplier' field is non-zero, HP is always restored.</li>
+	<li>if the 'Amount_1' field is less than 256, HP is restored while HP > 100 / Amount_1.</li>
 </ul>
 {% endcapture %}
 

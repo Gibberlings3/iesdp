@@ -8,7 +8,8 @@ title: "BG(2)EE Script Actions"
     <div class="center">
     <a href="#20"> 20 </a> || <a href="#40"> 40 </a> || <a href="#60"> 60 </a> || <a href="#82"> 82 </a> || <a href="#100"> 100 </a> || <a href="#120"> 120 </a> || <a href="#140"> 140 </a> || <a href="#160"> 160 </a> || <a href="#180"> 180 </a> || <a href="#200"> 200 </a> || <a href="#220"> 220 </a> || <a href="#240"> 240 </a> || <a href="#260"> 260 </a> || <a href="#280"> 280 </a> || <a href="#300"> 300 </a> || <a href="#320"> 320 </a> || <a href="#340"> 340 </a> || <a href="#360"> 360 </a> || <a href="#380"> 380 </a> || <a href="#400"> 400 </a> || <a href="#420"> 420 </a> || <a href="#440"> 440 </a> || <a href="#460"> 460 </a> || <a href="#471"> 471 </a>
     </div>
-    
+    <br/>
+
   <div class="actionHeader"><a name="0">0 NoAction()</a></div>
   <div class="indent1">
   This action can be used to do nothing - many characters walk around randomly or stand in one place doing nothing:<br />
@@ -40,7 +41,7 @@ title: "BG(2)EE Script Actions"
 
   <div class="actionHeader"><a name="1"> 1 ActionOverride(O:Actor*,A:Action*)</a></div>
   <div class="indent1">
-  This action can be used to control another creature. A creature referenced as the result of SetTokenObject is not a valid target for the ActionOverride action. The following is from the Irenicus cutscene after leaving his abode in chapter 1.<br />
+  This action can be used to control another creature. A creature referenced as the result of <a href="../actions/bgeeactions.htm#248">SetTokenObject()</a> is not a valid target for the ActionOverride() action. The following is from the Irenicus cutscene after leaving his abode in chapter 1.<br />
   <br />
   <pre class="code">
   IF
@@ -107,7 +108,7 @@ title: "BG(2)EE Script Actions"
   <div class="actionHeader"><a name="7">7 CreateCreature(S:NewObject*,P:Location*,I:Face*DIR)</a></div>
   <div class="actionHeader">7 CreateCreatureEffect(S:NewObject*,S:Effect*,P:Location*,I:Face*DIR)</div>
   <div class="indent1">
-  This action is used to create a creature - either an NPC, a neutral creature or an enemy. NewObject is the filename of the creature to create, Location is the coordinates to create the creature at ([x.y] format) and direction being the direction the creature is facing (0-15, 0 being south and the facing values increasing as the character turns clockwise). Note that a coordinate of [-1.-1] will create the creature next to the active creature. Effect of the second action variant can point to a VVC or BAM resource.<br />
+  This action is used to create a <a href="../../file_formats/ie_formats/cre_v1.htm">creature</a> - either an NPC, a neutral creature or an enemy. NewObject is the filename of the creature to create, Location is the coordinates to create the creature at ([x.y] format) and <a href="../../files/ids/bgee/dir.htm">direction</a> being the direction the creature is facing (0-15, 0 being south and the facing values increasing as the character turns clockwise). Note that a coordinate of [-1.-1] will create the creature next to the active creature. Effect of the second action variant can point to a <a href="../../file_formats/ie_formats/vvc_v1.htm">VVC</a> or <a href="../../file_formats/ie_formats/bam_v2.htm">BAM</a> resource.<br />
   <br />
   This script is from the area script for the Copper Coronet (AR0406) and creates extra guards when the Player is discovered in the off limits area.<br />
   <br />
@@ -1217,7 +1218,7 @@ This action instructs the active creature to face the specified direction. Direc
   </pre >
   {% capture note %}
   This action shares most of its code with <a href="#134">AttackReevaluate()</a>. In fact, it is 'AttackReevaluate()' with an extra hardcoded bit that forces it to terminate after one round.
-  This means that, unlike in 'AttackReevaluate()', 'ActionListEmpty()' will return TRUE once a round is up – and unless you immediately reinstate 'AttackOneRound()', the creature won't continue attacking.
+  This means that, unlike in 'AttackReevaluate()', <a href="../triggers/bgeetriggers.htm#0x402B">ActionListEmpty()</a> will return TRUE once a round is up – and unless you immediately reinstate 'AttackOneRound()', the creature won't continue attacking.
   {% endcapture %}
 
   {% include note.html %}
@@ -2528,7 +2529,7 @@ This action creates the item specified by the resref parameter on the creature s
   
   <div class="actionHeader"><a name="185">185 SetMasterArea(S:Name*)</a></div>
   <div class="indent1">
-  This action adds the specified area to the top of the area script processing stack. When the player enters an area that is not in the mastarea.2da the associated script is added to the bottom of the area script processing stack. When the player enters an area that is in mastarea.2da the associated script is added to the top of the area script processing stack.<br />
+  This action adds the specified area to the top of the area script processing stack. When the player enters an area that is not in the <a href="../../files/2da/2da_bgee/mastarea.htm">MASTAREA.2DA</a> the associated script is added to the bottom of the area script processing stack. When the player enters an area that is in mastarea.2da the associated script is added to the top of the area script processing stack.<br />
   <br />
   </div>
   
@@ -3505,7 +3506,7 @@ Other states are untested.<br />
   
   <div class="actionHeader"><a name="317">317 PlaySong(I:Song*)</a></div>
   <div class="indent1">
-  The action plays the specified song. Values are from songlist.2da.<br />
+  The action plays the specified song. Values are from <a href="../../files/2da/2da_bgee/songlist.htm">SONGLIST.2DA</a>.<br />
   <br />
   </div>
   
@@ -3550,7 +3551,7 @@ Other states are untested.<br />
   
   <div class="actionHeader"><a name="324">324 SetBeenInPartyFlags()</a></div>
   <div class="indent1">
-  This action sets the BeenInParty flag in the CRE file of the active creature. This action also triggers appropriate dialog and script file changes (as referenced in PDIALOG.2da).<br />
+  This action sets the 'BeenInParty' flag in the <a href="../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header">CRE</a> file of the active creature. This action also triggers appropriate dialog and script file changes (as referenced in <a href="../../files/2da/2da_bgee/pdialog.htm">PDIALOG.2DA</a>).<br />
   <br />
   </div>
   
@@ -3568,7 +3569,7 @@ Other states are untested.<br />
   
   <div class="actionHeader"><a name="327">327 AddXP2DA(S:Column*)</a></div>
   <div class="indent1">
-  This action gives a level dependent amount of XP to the party or a single party member. The XP amount is listed in xplist.2da at the intersection of the party level (column) and quest row (the mis-named parameter). The <a href="../../files/2da/2da_bgee/xplist.htm">file</a> lists the same XP value for all quests for all levels.<br />
+  This action gives a level dependent amount of XP to the party or a single party member. The XP amount is listed in <a href="../../files/2da/2da_bgee/xplist.htm">XPLIST.2DA</a> at the intersection of the party level (column) and quest row (the mis-named parameter). The file lists the same XP value for all quests for all levels.<br />
   <br />
   </div>
   
@@ -3718,7 +3719,7 @@ Other states are untested.<br />
   <div class="actionHeader"><a name="348">348 SetupWish(I:Column*,I:Count*)</a></div> 
   <div class="actionHeader"><a name="349">349 SetupWishObject(O:Creature*,I:Count*)</a></div>
   <div class="indent1">
-  This action instructs the engine to use the specified column of wish.2da, randomly select 5 choices (rows; count appears hardcoded) and set the appropriate globals for those spells. Once the maximum &quot;wish choices&quot; have been selected, the dialog continues and casts the selected spell.<br />
+  This action instructs the engine to use the specified column of <a href="../../files/2da/2da_bgee/wish.htm">WISH.2DA</a>, randomly select 5 choices (rows; count appears hardcoded) and set the appropriate globals for those spells. Once the maximum &quot;wish choices&quot; have been selected, the dialog continues and casts the selected spell.<br />
 <br />
   From a dialog: <br />
   &bull;IF ~CheckStatGT(LastTalkedToBy,17,WIS)~ THEN DO ~SetupWish(4,1)~ GOTO 8<br />
@@ -3778,13 +3779,13 @@ Other states are untested.<br />
   
   <div class="actionHeader"><a name="350">350 LeaveAreaLUAEntry(S:Area*,S:Entry*,P:Point*,I:Face*DIR)</a></div>
   <div class="indent1">
-  This action changes the current area. The active creature will move to the specified entry point (from entries.2da) before travelling. The action appears  to only work from a creature script.<br />
+  This action changes the current area. The active creature will move to the specified entry point (from <a href="../../files/2da/2da_bgee/entries.htm">ENTRIES.2DA</a>) before travelling. The action appears  to only work from a creature script.<br />
   <br />
   </div>
   
   <div class="actionHeader"><a name="351">351 LeaveAreaLUAPanicEntry(S:Area*,S:Entry*,P:Point*,I:Face*DIR)</a></div>
   <div class="indent1">
-  This action changes the current area. The creature moves to the destination point (from entries.2da) before travelling (the point parameter is unused).<br />
+  This action changes the current area. The creature moves to the destination point (from <a href="../../files/2da/2da_bgee/entries.htm">ENTRIES.2DA</a>) before travelling (the point parameter is unused).<br />
   <br />
   </div>
 

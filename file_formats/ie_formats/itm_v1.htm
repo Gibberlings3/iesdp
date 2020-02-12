@@ -384,7 +384,7 @@ title: "ITM file format"
             <ul>
               <li>This field is set to 32767</li>
               <li>The target creature(s) is STATE_HELPLESS</li>
-              <li>The target is affected by time stop</li>
+              <li>The target is affected by <a href="../../_opcodes/op231.html">time stop</a></li>
             </ul>
             </td>
         </tr>
@@ -577,17 +577,17 @@ title: "ITM file format"
               <ul>
                 <li>bit 0: Can be dispelled, affected by magic resistance</li>
                 <li>bit 1: Ignores magic resistance (when used in combination with bit 0)</li>
-                <li>bit 2: Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+ / external EFF's)</li>
-                <li>bit 31: Effect was applied by an ITM (only present in EE games patched to v2.0+ / external EFF's). It is set by the engine if the effect's source ITM is identified. This bit is only used by Opcode #324, which checks it to determine whether it should set STRREF_FEEDBACK_IMMUNE_RESOURCE's <RESOURCE> token to the ITM's general or identified name</li>
+                <li>bit 2: Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+ / external <a href="../ie_formats/eff_v2.htm">EFF</a> files)</li>
+                <li>bit 31: Effect was applied by an ITM (only present in EE games patched to v2.0+ / external <a href="../ie_formats/eff_v2.htm">EFF</a> files). It is set by the engine if the effect's source ITM is identified. This bit is only used by <a href="../../_opcodes/op324-bgee.html">Opcode #324</a> which checks it to determine whether it should set STRREF_FEEDBACK_IMMUNE_RESOURCE's <RESOURCE> token to the ITM's general or identified name</li>
               </ul>
               The only difference between 0 and 2 is that 0 will automatically convert to 2 when targeting yourself.<br />
               <br />
               This can also be presented in the more traditional way:<br />
               <ul>
                 <li>0 = Natural/Nonmagical</li>
-                <li>1 = Can be dispelled/Affected by magic resistance</li>
-                <li>2 = Cannot be dispelled/Ignores magic resistance</li>
-                <li>3 = Can be dispelled/Ignores magic resistance</li>
+                <li>1 = Can be dispelled/Affected by resistance</li>
+                <li>2 = Cannot be dispelled/Ignores resistance</li>
+                <li>3 = Can be dispelled/Ignores resistance</li>
               </ul>
             </td>
           </tr>
@@ -636,6 +636,10 @@ title: "ITM file format"
                 <li>bit 2: Death</li>
                 <li>bit 3: Wands</li>
                 <li>bit 4: Polymorph</li>
+                <li>bit 10: Ignore primary target – Line AoE projectile doesn't affect end target (EE only)</li>
+                <li>bit 11: Ignore secondary target – Line AoE projectile doesn't affect bystanders (EE only)</li>
+                <li>bit 24: Bypass mirror image (EE only)</li>
+                <li>bit 25: Ignore difficulty (EE only)</li>
               </ul>
               NB. If more than 1 saving throw type is specified, the target rolls against their best save.<br />
             </td>

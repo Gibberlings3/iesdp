@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+<div class="title_main actions_title"> {{ page.title }} </div>
+
+{% assign anchors = page.anchors %}
+{% include actions_anchors.html %}
+
+{% assign game = page.game %}
+
+{% assign actions = "" | split: "" %}
+{% for action_hash in site.data.actions %}
+  {% assign actions = actions | push: action_hash[1] %}
+{% endfor %}
+{% assign actions = actions | sort: "n" %}
+
+{% for action in actions %}
+
+  {% if action[game] == 1 %}
+    <div class="actionHeader">
+      <a name="{{ action.n }}" class="action_name">
+        {{ action.n }} {{ action.name }}({% include action_params.html %})
+      </a>
+      {% include action_sisters.html %}
+    </div>
+    <div class="indent1">
+      {{ action.desc | markdownify }}
+      <br />
+    </div>
+  {% endif %}
+
+{% endfor %}

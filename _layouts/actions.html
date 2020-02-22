@@ -20,10 +20,11 @@ layout: default
   {% if action[game] == 1 %}
     <div class="actionHeader">
       <a name="{{ action.n }}" class="action_name">
-        {{ action.n }} {{ action.name }}({% include action_params.html %})
+        {{ action.n }} {{ action.name }}({%- assign a = action -%}{%- include action_params.html -%})
       </a>
       {% include action_sisters.html %}
     </div>
+    {%- include action_aliases.html -%}
     <div class="indent1">
       {{ action.desc | markdownify }}
       <br />

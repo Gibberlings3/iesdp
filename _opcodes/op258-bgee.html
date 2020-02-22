@@ -1,5 +1,5 @@
 ---
-n: 260
+n: 258
 name: "Spell: Spell Sequencer Activation"
 param1: "Irrelevant"
 param2: "Irrelevant"
@@ -10,18 +10,18 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Activates a spell sequencer at a target point.<br/>
-Activates any <a href="../_opcodes/op256-bgee.html">opcode #256</a> with a matching resource ('Activation Key') of the targeted creature(s).<br/>
+Activates a spell sequencer at a single target.<br/>
+Activates any <a href="../_opcodes/op256-bgee.html">opcode #256</a> effects with a matching resource ('Activation Key') of the targeted creature(s).<br/>
 
 When used in combination with <a href="../_opcodes/op257-bgee.html">opcode #257</a> (Spell Sequencer Creation):
 
 <ul>
 	<li>The resource key must be set to the filename of the spell which contains the Spell Sequencer Creation effect.</li>
 	<li>The spell which contains the Spell Sequencer Creation effect can have a maximum filename of 7 characters.</li>
-	<li>The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the P character, and should be an innate ability. For instance:
+	<li>The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the D character, and should be an innate ability. For instance:
 		<ul>
 			<li>Spell Sequencer Creation filename = SPWI420</li>
-			<li>Spell Sequencer Activation filename = SPWI420P</li>
+			<li>Spell Sequencer Activation filename = SPWI420D</li>
 		</ul>
 	</li>
 </ul>
@@ -32,6 +32,12 @@ For each stored spell, "this" ability's target must be within range of that spel
 <br/><br/>
 
 All <a href="../_opcodes/op256-bgee.html">opcode #256</a> effects with a matching 'Activation Key' are removed if their 'Parameter3' = 1 (those created by <a href="../_opcodes/op257-bgee.html">opcode #257</a> / <a href="../_opcodes/op234-bgee.html">opcode #234</a> have this value set to '1' by default).
+
+{% capture note %}
+This opcode will fail if delivered directly in an area effect projectile (though it may still target "self" or be used in subsequent non-AoE subspells).
+{% endcapture %}
+
+{% include note.html %}
 
 {% capture note %}
 'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="../_opcodes/op256-bgee.html">256</a>/<a href="../_opcodes/op257-bgee.html">257</a> and <a href="../_opcodes/op258-bgee.html">258</a>/<a href="../_opcodes/op260-bgee.html">260</a>) use the exact same string.

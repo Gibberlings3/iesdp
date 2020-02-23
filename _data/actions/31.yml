@@ -17,4 +17,24 @@ aliases:
       - name: Target
         type: o
 unreliable: true
-desc: "This action causes the active creature to cast the specified spell at the target object. The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long.\n\n```\nIF\n  See([EVILCUTOFF])\n  !InParty([EVILCUTOFF])\n  !HasBounceEffects([ EVILCUTOFF])//like cloak of mirroring or spell deflection\n  !HasImmunityEffects([EVILCUTOFF])//\n  HaveSpell(WIZARD_MAGIC_MISSILE)\n  OR(2)\n  !StateCheck([EVILCUTOFF],STATE_INVISIBLE)\n  !StateCheck([EVILCUTOFF],STATE_IMPROVEDINVISIBLITY)\n  CheckStatLT([EVILCUTOFF], 30,RESISTMAGIC)\n  !Race([EVILCUTOFF],LICH)\n  !Race([EVILCUTOFF],RAKSHASA)\nTHEN\n  RESPONSE #100\n    Spell([EVILCUTOFF],WIZARD_MAGIC_MISSILE)\nEND\n```"
+desc: |-
+  This action causes the active creature to cast the specified spell at the target object. The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long.
+
+  ```
+  IF
+    See([EVILCUTOFF])
+    !InParty([EVILCUTOFF])
+    !HasBounceEffects([ EVILCUTOFF])//like cloak of mirroring or spell deflection
+    !HasImmunityEffects([EVILCUTOFF])//
+    HaveSpell(WIZARD_MAGIC_MISSILE)
+    OR(2)
+    !StateCheck([EVILCUTOFF],STATE_INVISIBLE)
+    !StateCheck([EVILCUTOFF],STATE_IMPROVEDINVISIBLITY)
+    CheckStatLT([EVILCUTOFF], 30,RESISTMAGIC)
+    !Race([EVILCUTOFF],LICH)
+    !Race([EVILCUTOFF],RAKSHASA)
+  THEN
+    RESPONSE #100
+      Spell([EVILCUTOFF],WIZARD_MAGIC_MISSILE)
+  END
+  ```

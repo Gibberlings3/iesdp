@@ -25,9 +25,12 @@ layout: default
       {% include action_sisters.html %}
     </div>
     {%- include action_aliases.html -%}
-    <div class="indent1">
-      {{ action.desc | markdownify }}
-      <br />
+    {%- include action_unknown.html -%}
+    <div class="indent1 action_body {{ action_unknown }}">
+      {%- if action.desc -%}{{ action.desc | markdownify }}{% endif %}
+      {%- if action.no_result -%}
+        <div class="unknown">This action has not been seen to produce any results.</div>
+      {% endif %}
     </div>
   {% endif %}
 

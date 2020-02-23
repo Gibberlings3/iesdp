@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<!--  <meta charset="utf-8"> -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>BG(2):EE 2DA Files : 7eyes.2da</title>
+  <meta name="description" content="The IESDP (Infinity Engine Structures Description Project) is an effort to research the workings of the Bioware Infinity Engine(R), and act as a collective resource for those interested in such workings.
+">
+
+  
+
+
+
+
+
+  <link rel="stylesheet" href="../../../css/main.css">
+
+<!--
+  <link rel="canonical" href="https://gibberlings3.github.io/iesdp/files/2da/2da_bgee/7eyes.htm">
+  <link rel="alternate" type="application/rss+xml" title="IESDP" href="https://gibberlings3.github.io/iesdp/feed.xml">
+-->
+</head>
+
+
+<body>
+
+<header class="site-header">
+
+
+
+
+
+
+
+
+    <hr />
+    <div id="buttonboxtop">
+      <div id="buttonstriptop">
+        <a href="../../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/legal.htm">Legal</a> &nbsp;&bull;&nbsp;
+        <a href="https://www.gibberlings3.net/forums/forum/54-iesdp-updates-and-info/" target="_blank">Forum</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <a href="../../../main.htm">
+        <img src="../../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+      </a>
+    </div>
+
+</header>
+
+
+<div id="nonFooter">
+  <div id="content">
+
+    <div class="title_main">7eyes.2da</div>
+<br />
+
+After the header rows (2DA V1.0, *, STATE STRREF 1 2 etc...), each row represents a parameter2 value for <a href="../../../_opcodes/op335-bgee.html">opcode #335</a> starting at 0, but the file still functions without op#335, it does not care how the <a href="../../ids/bgee/splstate.htm">spellstate</a> gets set, only that it is set.<br />
+<ul>
+    <li>Column 0 is an arbitrary label – has no real function, can be duplicate.</li>
+    <li>Column 1 is the spellstate that must be set to activate this row.</li>
+    <li>Column 2 is the string reference (<a href="../../../file_formats/ie_formats/tlk_v1.htm">dialog.tlk</a>) that will be displayed when the row triggers (for each effect it triggers on).</li>
+</ul>
+<br/>
+
+While the row is active (i.e., the spellstate is set), all effects it blocks will instead trigger the STRREF feedback message, and do nothing else.<br/>
+Later columns list a mix of 4 possible values to represent the effects it will block:
+<ul>
+    <li>*: (placeholder/nothing) some 2DA files need filled columns, so empty columns use one of these.</li>
+    <li>RESREF: file resource (SPWI605 SPWI713 SPWI912 SPPR511 SPPR734 etc...) – blocks all effects from that resource.</li>
+    <li>integer: opcode (38 45 74 80 109 etc...) – blocks all effects of that opcode, but not those attached through <a href="../../../_opcodes/op177.html">opcode #177</a> (or <a href="../../../_opcodes/op283-bgee.html">opcode #283</a>)</li>
+    <li>integer*value: opcode + 'parameter2' value (12*0x200000) (damage – poison); value can be integer or hexadecimal format. Blocks all effects of both that opcode and parameter2 value, but not those attached through <a href="../../../_opcodes/op177.html">opcode #177</a> (or <a href="../../../_opcodes/op283-bgee.html">opcode #283</a>).</li>
+</ul>
+<br />
+
+In IWD:EE we have:<br />
+
+<pre>
+2DA V1.0
+*
+             STATE      STRREF     1           2           3           4            5            6          7          8          9
+EYEMIND      48         21654      3           5           24          76           128          SPWI411    SPPR102    SPPR311    SPPR716
+EYESWORD     49         21653      12*0        12*0x800000 12*0x100000 12*0x1000000 12*0x8000000 *          *          *          *
+EYEMAGE      50         21652      12*0x80000  12*0x40000  12*0x20000  12*0x10000   12*0x400000  *          *          *          *
+EYEVENOM     51         21651      12*0x200000 25          *           *            *            *          *          *          *
+EYESPIRIT    52         21650      SPWI605     SPWI713     SPWI912     SPPR511      SPPR734      *          *          *          *
+EYEFORTITUDE 53         21649      38          45          74          80           109          175        210        *          *
+EYESTONE     54         21648      134         *           *           *            *            *          *          *          *
+
+</pre>
+<br />
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The inability to block effects through op#177/#283 is a reported bug.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+When a row triggers to block an effect, it will also block all effects of that resource that follow after it, but not any effects that precede it. The feedback STRREF is however only displayed for each effect it is actually listed to block.<br/>
+For instance, suppose an active row were setup to block op#58 (Dispel effects), and Dispel Magic were cast on them:
+<ul>
+    <li>It would still remove portrait icon "Deaf" and Cure Deafness, as they precede op#58.</li>
+    <li>It would display the feedback STRREF once, for the single op#58 effect, blocking the dispel effect.</li>
+    <li>The remaining effects after op#58 would also be blocked, but would not cause more feedback messages for being blocked.</li>
+</ul>
+
+  </div>
+</div>
+
+<a href="#" class="go-up">
+  &nbsp;
+</a>
+
+
+  </div>
+</div>
+
+<script>
+window.addEventListener("scroll", function(event) {
+  var top = window.pageYOffset || document.documentElement.scrollTop;
+  var arrow = document.getElementsByClassName("go-up")[0];
+  if (top > 100) {
+    arrow.style.visibility = "visible";
+  } else {
+    arrow.style.visibility = "hidden";
+  }
+});
+</script>
+
+<footer class="site-footer">
+
+<div id="footer">
+  <hr />
+
+    <form method="get" action="http://www.google.com/search">
+      <div style="margin: 0px; padding: 0px; text-align: center">
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="hidden" name="oe" value="UTF-8" />
+        <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+        <input class="form_button" type="submit" name="btnG" value="Search" />
+        <input type="hidden" name="domains" value="https://gibberlings3.github.io/iesdp" />
+        <input type="hidden" name="sitesearch" value="https://gibberlings3.github.io/iesdp" />
+      </div>
+    </form>
+
+  <hr />
+</div>
+
+</footer>
+
+
+</body>
+</html>

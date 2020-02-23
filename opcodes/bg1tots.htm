@@ -1673,7 +1673,7 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the 'Type' field, which is suspected to be an EE extension.
 <br/>Known values for 'Type' are:
 <br/>0 -> Default
-<br/>Non-zero -> Bypass opcode #101 (Immunity to effect)
+<br/>Non-zero -> Bypass <a href="#op101">opcode #101</a> (Immunity to effect)
  </div>
 		<hr />
 
@@ -2327,7 +2327,7 @@ Known values for 'Wake on Damage' are (only in EEs):
 	<li>0 => Yes</li>
 	<li>1 => No</li>
 </ul>
-'Icon' defines the index from statdesc.2da for custom portrait icons (EE only).
+'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only).
 
 
 
@@ -2700,7 +2700,7 @@ At least in EEs, this opcode automatically provides the 'Stun' portrait icon.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unstuns the targeted creature(s) (opcode #45).
+		<div class="descriptiondata"> Unstuns the targeted creature(s) (<a href="#op45">opcode #45</a>).
 <br/>This effect ignores durations attributed to it.
  </div>
 		<hr />
@@ -3076,7 +3076,7 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the animation of the targeted creature(s) to the animation specified by the 'Animation ID' field, in the style specified by the 'Type' field.
-<br/>Known values for Animation ID' are: (from animate.ids - in decimal)
+<br/>Known values for Animation ID' are: (from <a href="../files/ids/bgee/animate.htm">ANIMATE.IDS</a> - in decimal)
 <br/>Known values for 'Type' are:
 <br/>0   Change animation - non-permanently
 <br/>1   Remove any non-permanent animation change ('Animation ID' is unused)
@@ -5148,6 +5148,7 @@ Not seen to work in BG1.
 <br/>6   Specific.ids
 <br/>7   Gender.ids
 <br/>8   Align.ids / Alignmen.ids (in iwd1, pst)
+<br/>9   Kit.ids (only in EEs)
 <br/>
 <br/>To be protected from any creature, leave the Entry at zero, and the File at 2. Protection will grant the bearer immunity from being attacked, cast a spell at, or otherwise targeted by creatures with this type.
  </div>
@@ -5571,7 +5572,7 @@ This effect has never been seen to work.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The Magical Weapon slot does not allow Item Abilities (header_type = 3).
+The Magical Weapon slot does not allow <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">Item Abilities</a> (header_type = 3).
 
   </div>
 </div>
@@ -6217,28 +6218,35 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Summons a number of monsters.
-<br/>Each creature files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect depends on this value, the special parameter and if it's used in SPL/ITM or from an external EFF.
+<br/>Each <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect depends on this value, the special parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
 <br/>When used in SPL/ITM, known value for 'Mode' are:
-<br/>0  Summon until Creature Power Level equals/exceeds 'Number'
-<br/>1  Summon amount equal to 'Number'
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"
+<ul>
+	<li>0 => Summon until Creature Power Level equals/exceeds 'Number'</li>
+	<li>1 => Summon amount equal to 'Number'</li>
+	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level"</li>
+</ul>
 
 <br/>When used in EFF, known value for 'Mode' are:
-<br/>0  Summon until Creature Power Level equals/exceeds 'Number'
-<br/>1  Summon amount equal to ('Number' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF
+<ul>
+	<li>0 => Summon until Creature Power Level equals/exceeds 'Number'</li>
+	<li>1 => Summon amount equal to ('Number' + Dice rolls)</li>
+	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF (located at offset 0xc8)</li>
+</ul>
 
-<br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = Type + 1. 0-4 are allied , 5-9 are hostile. The specific 2da files used are:
-<br/>0 MONSUM01 Monster Summon 1
-<br/>1 MONSUM02 Monster Summon 2
-<br/>2 MONSUM03 Monster Summon 3
-<br/>3 ANISUM01 Animal Summon 1
-<br/>4 ANISUM02 Animal Summon 2
-<br/>5 MONSUM01 Monster Summon 1 Hostile
-<br/>6 MONSUM02 Monster Summon 2 Hostile
-<br/>7 MONSUM03 Monster Summon 3 Hostile
-<br/>8 ANISUM01 Animal Summon 1 Hostile
-<br/>9 ANISUM02 Animal Summon 2 Hostile
+<br/>The 'Type' field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = 'Type' + 1. 0-4 are allied , 5-9 are hostile. The specific 2da files used are:
+<ul>
+	<li>0 MONSUM01 Monster Summon 1</li>
+	<li>1 MONSUM02 Monster Summon 2</li>
+	<li>2 MONSUM03 Monster Summon 3</li>
+	<li>3 ANISUM01 Animal Summon 1</li>
+	<li>4 ANISUM02 Animal Summon 2</li>
+	<li>5 MONSUM01 Monster Summon 1 Hostile</li>
+	<li>6 MONSUM02 Monster Summon 2 Hostile</li>
+	<li>7 MONSUM03 Monster Summon 3 Hostile</li>
+	<li>8 ANISUM01 Animal Summon 1 Hostile</li>
+	<li>9 ANISUM02 Animal Summon 2 Hostile</li>
+</ul>
+
 <br/>A custom .2da file can be entered in the resource field (untested in bg1).
 <br/>If used from an external effect (.eff), the vvc field controls the bam file played when summoning.
  </div>
@@ -7870,7 +7878,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the paralysis effect (opcodes 109 and 175) from the targeted creature(s).
+		<div class="descriptiondata"> Removes the paralysis effect (<a href="#op109">opcode #109</a> and <a href="#op175">opcode #175</a>) from the targeted creature(s).
 
 
 
@@ -8335,7 +8343,7 @@ Both parameters should be 0 (zero).
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Any delayed opcode 171 effect will be removed by death.
+Any delayed <a href="#op171">opcode #171</a> will be removed by death.
 
   </div>
 </div>
@@ -9206,15 +9214,26 @@ At minimum in later engines, this opcode can also store other values. Check the 
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Set the 'Constant' field to 1 if you want no time needed between spells.
-<br/>This effect sets stat #76 (AURACLEANSING) to param #2.
+		<div class="descriptiondata"> Set the 'Stat Value' field to any non-zero value if you want no time needed between spells.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#76">STAT #76</a> to 'param2'.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 

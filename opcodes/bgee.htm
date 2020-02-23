@@ -1080,7 +1080,7 @@ Damage type 'Poison' automatically uses save flag 'Bypass Mirror Image'.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-If this effect reduces target to -20 (Allegiance: [PC]) or -9 (any other Allegiance value) hit points, it also applies opcode #13 of the specified type:
+If this effect reduces target to -20 (Allegiance: [PC]) or -9 (any other Allegiance value) hit points, it also applies <a href="#op13">opcode #13</a> of the specified type:
 <ul>
   <li>Crushing/Slashing/Piercing: Exploding Death</li>
   <li>Acid/Unlisted: Acid Death</li>
@@ -1857,7 +1857,7 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the 'Type' field, which is suspected to be an EE extension.
 <br/>Known values for 'Type' are:
 <br/>0 -> Default
-<br/>Non-zero -> Bypass opcode #101 (Immunity to effect)
+<br/>Non-zero -> Bypass <a href="#op101">opcode #101</a> (Immunity to effect)
  </div>
 		<hr />
 
@@ -1923,18 +1923,18 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Damages the target by a certain amount, in the style specified by the <code>Type</code> field.
-<br/>Known values for <code>Type</code> are:
+		<div class="descriptiondata"> Damages the target by a certain amount, in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
 <ul>
-	<li><code>0</code> => Inflict 1 HP per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
-	<li><code>1</code> => Inflict 1 HP per second (for best results, leave <code>Amount_2</code> and <code>Frequency Multiplier</code> at zero, <code>Amount_1</code> between <code>1</code> and <code>101</code>)</li>
-	<li><code>2</code> => Deal <code>Amount_1</code> damage every <code>Frequency Multiplier</code> second(s)</li>
-	<li><code>3</code> => Deal one damage every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
-	<li><code>4</code> => Deal <code>Amount_2</code> damage every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
-	<li><code>5+</code> => Crash</li>
+	<li>0 => Inflict 1 HP per second ('Amount_2' and 'Frequency Multiplier' are ignored – 'Amount_1' needs to be non-zero)</li>
+	<li>1 => Inflict 1 HP per second (for best results, leave 'Amount_2' and 'Frequency Multiplier' at zero, 'Amount_1' between 1 and 101)</li>
+	<li>2 => Deal 'Amount_1' damage every 'Frequency Multiplier' second(s)</li>
+	<li>3 => Deal one damage every 'Amount_1' * 'Frequency Multiplier' second(s)</li>
+	<li>4 => Deal 'Amount_2' damage every 'Amount_1' * 'Frequency Multiplier' second(s) – This is the only one that must be in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files</li>
+	<li>5+ => Crash</li>
 </ul>
 
-<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>6 // Poisoned</code>.
+'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is 6 (Poisoned).
 <br/>
 
 
@@ -1942,7 +1942,7 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The <code>Damage Amount</code> parameters should be set to a positive value.
+The Damage Amount parameters should be set to a positive value.
 
   </div>
 </div>
@@ -1953,7 +1953,7 @@ The <code>Damage Amount</code> parameters should be set to a positive value.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+If 'Frequency Multiplier' = 0, its value is treated as 1. This is the default value for SPL/ITM effects.
 
   </div>
 </div>
@@ -1964,7 +1964,7 @@ If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-When the effect is NOT attached through <a href="#op177">opcode #177</a>, <code>Frequency Multiplier</code> will be replaced when using <a href="#op329">opcode #329</a> (Slow Poison) – not necessarily "slow" though, as it can increase or decrease the frequency.
+When the effect is NOT attached through <a href="#op177">opcode #177</a>, 'Frequency Multiplier' will be replaced when using <a href="#op329">opcode #329</a> (Slow Poison) – not necessarily "slow" though, as it can increase or decrease the frequency.
 
   </div>
 </div>
@@ -1975,10 +1975,10 @@ When the effect is NOT attached through <a href="#op177">opcode #177</a>, <code>
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-When the <code>Type</code> field is <code>1</code>:
+When the 'Type' field is 1:
 <ul>
-	<li>if the <code>Frequency Multiplier</code> field is non-zero, damage is always dealt.</li>
-	<li>if the <code>Amount_1</code> field is less than <code>256</code>, damage is dealt while <code>HP > 100 / Amount_1</code>.</li>
+	<li>if the 'Frequency Multiplier' field is non-zero, damage is always dealt.</li>
+	<li>if the 'Amount_1' field is less than 256, damage is dealt while HP > 100 / 'Amount_1'.</li>
 </ul>
 
   </div>
@@ -2548,7 +2548,7 @@ Known values for 'Wake on Damage' are (only in EEs):
 	<li>0 => Yes</li>
 	<li>1 => No</li>
 </ul>
-'Icon' defines the index from statdesc.2da for custom portrait icons (EE only).
+'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only).
 
 
 
@@ -2672,7 +2672,7 @@ This opcode will set the STATE_SLOWED flag and nothing else when applied with ti
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Displays the sparkle effect specified by the 'Type' field, in the colour specified by the 'Colour' field. The colour field may be connected to sprkclr.2da.
+		<div class="descriptiondata"> Displays the sparkle effect specified by the 'Type' field, in the colour specified by the 'Colour' field. The colour field may be connected to <a href="../files/2da/2da_bgee/sprklclr.htm">SPRKLCLR.2DA</a>.
 <br/>Known values for 'Colour' are:
 <br/>0   Crash
 <br/>1   Black
@@ -2927,7 +2927,7 @@ At least in EEs, this opcode automatically provides the 'Stun' portrait icon.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unstuns the targeted creature(s) (opcode #45).
+		<div class="descriptiondata"> Unstuns the targeted creature(s) (<a href="#op45">opcode #45</a>).
 <br/>This effect ignores durations attributed to it.
  </div>
 		<hr />
@@ -3307,7 +3307,7 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the animation of the targeted creature(s) to the animation specified by the 'Animation ID' field, in the style specified by the 'Type' field.
-<br/>Known values for Animation ID' are: (from animate.ids - in decimal)
+<br/>Known values for Animation ID' are: (from <a href="../files/ids/bgee/animate.htm">ANIMATE.IDS</a> - in decimal)
 <br/>Known values for 'Type' are:
 <br/>0   Change animation - non-permanently
 <br/>1   Remove any non-permanent animation change ('Animation ID' is unused)
@@ -4433,27 +4433,27 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Set the <code>Amount</code> parameter as the amount of damage, and the <code>Disease Type</code> parameter as how the disease functions.
-<br/>Known values for <code>Type</code> are:
+		<div class="descriptiondata"> Set the 'Amount' parameter as the amount of damage, and the Disease Type parameter as how the disease functions.
+<br/>Known values for 'Type' are:
 <ul>
-	<li><code>0</code> => Inflict 1 HP per second (<code>Frequency Multiplier</code> is ignored – <code>Amount</code> needs to be non-zero)</li>
-	<li><code>1</code> => Inflict 1 HP per second (for best results, leave <code>Frequency Multiplier</code> at zero, <code>Amount</code> between <code>1</code> and <code>101</code>)</li>
-	<li><code>2</code> => Deal <code>Amount</code> damage every <code>Frequency Multiplier</code> second(s)</li>
-	<li><code>3</code> => Deal one damage every <code>Amount * Frequency Multiplier</code> second(s)</li>
-	<li><code>4</code> => Reduce Strength score by <code>Amount</code></li>
-	<li><code>5</code> => Reduce Dexterity score by <code>Amount</code></li>
-	<li><code>6</code> => Reduce Constitution score by <code>Amount</code></li>
-	<li><code>7</code> => Reduce Intelligence score by <code>Amount</code></li>
-	<li><code>8</code> => Reduce Wisdom score by <code>Amount</code></li>
-	<li><code>9</code> => Reduce Charisma score by <code>Amount</code></li>
-	<li><code>10</code> => Slow Effect</li>
-	<li><code>11</code> => Mold touch/Single</li>
-	<li><code>12</code> => Mold touch/Decrement</li>
-	<li><code>13</code> => Contagion</li>
+	<li>0 => Inflict 1 HP per second ('Frequency Multiplier' is ignored – 'Amount' needs to be non-zero)</li>
+	<li>1 => Inflict 1 HP per second (for best results, leave 'Frequency Multiplier' at zero, 'Amount' between 1 and 101)</li>
+	<li>2 => Deal 'Amount' damage every 'Frequency Multiplier' second(s)</li>
+	<li>3 => Deal one damage every 'Amount' * 'Frequency Multiplier' second(s)</li>
+	<li>4 => Reduce Strength score by 'Amount'</li>
+	<li>5 => Reduce Dexterity score by 'Amount'</li>
+	<li>6 => Reduce Constitution score by 'Amount'</li>
+	<li>7 => Reduce Intelligence score by 'Amount'</li>
+	<li>8 => Reduce Wisdom score by 'Amount'</li>
+	<li>9 => Reduce Charisma score by 'Amount'</li>
+	<li>10 => Slow Effect</li>
+	<li>11 => Mold touch/Single</li>
+	<li>12 => Mold touch/Decrement</li>
+	<li>13 => Contagion</li>
 </ul>
-<br/><br/><code>Amount</code> can be positive (penalty) or negative (bonus).
+<br/><br/>'Amount' can be positive (penalty) or negative (bonus).
 <br/><br/>
-<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is none (no icon).
 <br/>
 
 
@@ -4472,7 +4472,18 @@ Permanent timing modes require a duration for this effect to work.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+This opcode deals "Poison" damage, except Mold Touches, which deal "Magic" damage.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+If 'Frequency Multiplier' = 0, its value is treated as 1. This is the default value for SPL/ITM effects.
 
   </div>
 </div>
@@ -4494,7 +4505,7 @@ The Slow effect is no different from that caused by <a href="#op40">opcode #40</
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Contagion is a composite of Strength, Dexterity, Charisma drain and the Slow effect, each ability score reduced by <code>Amount</code>.
+Contagion is a composite of Strength, Dexterity, Charisma drain and the Slow effect, each ability score reduced by 'Amount'.
 
   </div>
 </div>
@@ -4505,10 +4516,10 @@ Contagion is a composite of Strength, Dexterity, Charisma drain and the Slow eff
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-When the <code>Type</code> field is <code>1</code>:
+When the 'Type' field is 1:
 <ul>
-	<li>if the <code>Frequency Multiplier</code> field is non-zero, damage is always dealt.</li>
-	<li>if the <code>Amount</code> field is less than <code>256</code>, damage is dealt while <code>HP > 100 / Amount</code>.</li>
+	<li>if the 'Frequency Multiplier' field is non-zero, damage is always dealt.</li>
+	<li>if the 'Amount' field is less than 256, damage is dealt while HP > 100 / 'Amount'.</li>
 </ul>
 
   </div>
@@ -4520,26 +4531,26 @@ When the <code>Type</code> field is <code>1</code>:
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-<code>Mold touch</code> is complicated and not consistent across the EE games.
-The general idea is that it deals <code>x</code> or <code>xd6</code> damage and applies the <code>SPL</code> specified by the resource key every (round or second) for either <code>1</code> round (single) or across multiple rounds dealing less each round (decrement).
+Mold touch is complicated and not consistent across the EE games.
+The general idea is that it deals x or xd6 damage and applies the SPL file specified by the resource key every (round or second) for either 1 round (single) or across multiple rounds dealing less each round (decrement).
 In particular:
 <ul>
-	<li>If <code>Type=11</code>, then the damage dealt is always <code>1</code></li>
-	<li>if <code>Type=11</code>, then the damage dealt depends on the game:
+	<li>If 'Type'=11, then the damage dealt is always 1</li>
+	<li>if 'Type'=12, then the damage dealt depends on the game:
 		<ul>
-			<li><code>IWD:EE</code> uses <code>Amount</code> for 'x', and calculates duration as <code>6 * Amount</code>.</li>
-			<li><code>BG:EE</code> calculates 'x' from <code>duration / 6</code>. (It's reasonable to assume that <code>BG2:EE</code> uses this one as well).</li>
-			<li>If you set <code>duration = 6 * Amount</code>, it should junction the same in both games.</li>
+			<li>IWD:EE uses 'Amount' for 'x', and calculates 'duration' as 6 * 'Amount'.</li>
+			<li>BG:EE calculates 'x' from 'duration' / 6. (It's reasonable to assume that BG2:EE uses this one as well).</li>
+			<li>If you set 'duration' = 6 * 'Amount', it should junction the same in both games.</li>
 		</ul>
 	</li>
 </ul>
-<code>Frequency Multiplier</code> determines whether it deals damage every second or every round, and whether it deals <code>x</code> or <code>xd6</code> damage.
+'Frequency Multiplier' determines whether it deals damage every second or every round, and whether it deals x or xd6 damage.
 <ul>
-	<li><code>Frequency Multiplier = 0</code> => <code>xd6</code> per round</li>
-	<li><code>Frequency Multiplier = 65536 + even</code> => <code>x</code> per round</li>
-	<li><code>Frequency Multiplier = 65537 + odd</code> => <code>x</code> per second</li>
+	<li>'Frequency Multiplier' = 0 => xd6 per round</li>
+	<li>'Frequency Multiplier' = 65536 or greater (must be even) => x per round</li>
+	<li>'Frequency Multiplier' = 65537 or greater (must be odd) => x per second</li>
 </ul>
-Regardless, the value of <code>x</code> decrements only once per round.
+Regardless, the value of x decrements only once per round.
 
   </div>
 </div>
@@ -5374,17 +5385,17 @@ In IWD2 the class to receive the change is specified at 0x2C
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Restores HP according to the style specified by the <code>Type</code> field, to the targeted creature(s).
-<br/>Known values for <code>Type</code> are:
+		<div class="descriptiondata"> Restores HP according to the style specified by the 'Type' field, to the targeted creature(s).
+<br/>Known values for 'Type' are:
 <ul>
-	<li><code>0</code> => Restore 1 HP per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
-	<li><code>1</code> => Restore 1 HP per second (for best results, leave both <code>Amount_2</code> and <code>Frequency Multiplier</code> at zero, <code>Amount_1</code> between <code>1</code> and <code>101</code>)</li>
-	<li><code>2</code> => Restore <code>Amount_1</code> HP every <code>Frequency Multiplier</code> second(s)</li>
-	<li><code>3</code> => Restore 1 HP every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
-	<li><code>4</code> => Restore <code>Amount_2</code> HP every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
+	<li>0 => Restore 1 HP per second ('Amount_2' and 'Frequency Multiplier' are ignored – 'Amount_1' needs to be non-zero)</li>
+	<li>1 => Restore 1 HP per second (for best results, leave both 'Amount_2' and 'Frequency Multiplier' at zero, 'Amount_1' between 1 and 101)</li>
+	<li>2 => Restore 'Amount_1' HP every 'Frequency Multiplier' second(s)</li>
+	<li>3 => Restore 1 HP every 'Amount_1' * 'Frequency Multiplier' second(s)</li>
+	<li>4 => Restore 'Amount_2' HP every 'Amount_1' * 'Frequency Multiplier' second(s) – This is the only one that must be in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files</li>
 </ul>
 
-<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is none (no icon).
 <br/>
 
 
@@ -5392,7 +5403,7 @@ In IWD2 the class to receive the change is specified at 0x2C
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-<code>Type</code> values greater or equal to <code>5</code> will crash the game!
+'Type' values greater or equal to 5 will crash the game!
 
   </div>
 </div>
@@ -5414,7 +5425,7 @@ Permanent timing modes require a duration for this effect to work.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+If 'Frequency Multiplier' = 0, its value is treated as 1. This is the default value for SPL/ITM effects.
 
   </div>
 </div>
@@ -5425,10 +5436,10 @@ If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-When the <code>Type</code> field is <code>1</code>:
+When the 'Type' field is 1:
 <ul>
-	<li>if the <code>Frequency Multiplier</code> field is non-zero, HP is always restored.</li>
-	<li>if the <code>Amount_1</code> field is less than <code>256</code>, HP is restored while <code>HP > 100 / Amount_1</code>.</li>
+	<li>if the 'Frequency Multiplier' field is non-zero, HP is always restored.</li>
+	<li>if the 'Amount_1' field is less than 256, HP is restored while HP > 100 / Amount_1.</li>
 </ul>
 
   </div>
@@ -5522,6 +5533,7 @@ Not seen to work in BG1.
 <br/>6   Specific.ids
 <br/>7   Gender.ids
 <br/>8   Align.ids / Alignmen.ids (in iwd1, pst)
+<br/>9   Kit.ids (only in EEs)
 <br/>
 <br/>To be protected from any creature, leave the Entry at zero, and the File at 2. Protection will grant the bearer immunity from being attacked, cast a spell at, or otherwise targeted by creatures with this type.
  </div>
@@ -5837,23 +5849,29 @@ Not seen to work in BG1.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the hold effect to the targeted creature(s), if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. 
 <br/>Known values for 'IDS File' are:
-<br/>2   EA.ids
-<br/>3   General.ids
-<br/>4   Race.ids
-<br/>5   Class.ids
-<br/>6   Specific.ids
-<br/>7   Gender.ids
-<br/>8   Align.ids
-<br/>9   Kit.ids
+<br/>2   <a href="../files/ids/bgee/ea.htm">EA.IDS</a>
+<br/>3   <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a>
+<br/>4   <a href="../files/ids/bgee/race.htm">RACE.IDS</a>
+<br/>5   <a href="../files/ids/bgee/class.htm">CLASS.IDS</a>
+<br/>6   <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a>
+<br/>7   <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a>
+<br/>8   <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a>
+<br/>9   <a href="../files/ids/bgee/kit.htm">KIT.IDS</a>
+<br/>
+
 <br/>The affected creature becomes immobile and its AI scripts stop running.
 <br/>This effect sets stat #58 (HELD) to 1. It also sets the STATE_HELPLESS flag.
+
 <br/><br/>Known values for 'Mode' are:
-<br/>0 -> Default
-<br/>Non-zero -> False Petrify
-  <ul>
-    <li>In addition to the normal paralyze effect, it maintains a detectable STATE_STONE_DEATH and the stone overlay, but does not directly kill, award XP, or chunk when attacked. Only functions like this against non-party members.</li>
-    <li>Against party members, it functions as normal, unless you save and reload while the effect is active. Upon reloading, the stone overlay will be applied and the character will be dropped to 0 hit points, but not killed, and no STATE_STONE_DEATH (this is probably to avoid kicking the character from the party).</li>
-  </ul>
+<ul>
+  <li>0 -> Default</li>
+  <li>Non-zero -> False Petrify
+    <ul>
+      <li>In addition to the normal paralyze effect, it maintains a detectable STATE_STONE_DEATH and the stone overlay, but does not directly kill, award XP, or chunk when attacked. Only functions like this against non-party members.</li>
+      <li>Against party members, it functions as normal, unless you save and reload while the effect is active. Upon reloading, the stone overlay will be applied and the character will be dropped to 0 hit points, but not killed, and no STATE_STONE_DEATH (this is probably to avoid kicking the character from the party)</li>
+    </ul>
+  </li>
+</ul>
  </div>
 		<hr />
 
@@ -5935,7 +5953,7 @@ Not seen to work in BG1.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The Magical Weapon slot does not allow Item Abilities (header_type = 3).
+The Magical Weapon slot does not allow <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">Item Abilities</a> (header_type = 3).
 
   </div>
 </div>
@@ -6575,28 +6593,35 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Summons a number of monsters.
-<br/>Each creature files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect depends on this value, the special parameter and if it's used in SPL/ITM or from an external EFF.
+<br/>Each <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect depends on this value, the special parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
 <br/>When used in SPL/ITM, known value for 'Mode' are:
-<br/>0  Summon until Creature Power Level equals/exceeds 'Number'
-<br/>1  Summon amount equal to 'Number'
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"
+<ul>
+	<li>0 => Summon until Creature Power Level equals/exceeds 'Number'</li>
+	<li>1 => Summon amount equal to 'Number'</li>
+	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level"</li>
+</ul>
 
 <br/>When used in EFF, known value for 'Mode' are:
-<br/>0  Summon until Creature Power Level equals/exceeds 'Number'
-<br/>1  Summon amount equal to ('Number' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF
+<ul>
+	<li>0 => Summon until Creature Power Level equals/exceeds 'Number'</li>
+	<li>1 => Summon amount equal to ('Number' + Dice rolls)</li>
+	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF (located at offset 0xc8)</li>
+</ul>
 
-<br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = Type + 1. 0-4 are allied , 5-9 are hostile. The specific 2da files used are:
-<br/>0 MONSUM01 Monster Summon 1
-<br/>1 MONSUM02 Monster Summon 2
-<br/>2 MONSUM03 Monster Summon 3
-<br/>3 ANISUM01 Animal Summon 1
-<br/>4 ANISUM02 Animal Summon 2
-<br/>5 MONSUM01 Monster Summon 1 Hostile
-<br/>6 MONSUM02 Monster Summon 2 Hostile
-<br/>7 MONSUM03 Monster Summon 3 Hostile
-<br/>8 ANISUM01 Animal Summon 1 Hostile
-<br/>9 ANISUM02 Animal Summon 2 Hostile
+<br/>The 'Type' field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = 'Type' + 1. 0-4 are allied , 5-9 are hostile. The specific 2da files used are:
+<ul>
+	<li>0 MONSUM01 Monster Summon 1</li>
+	<li>1 MONSUM02 Monster Summon 2</li>
+	<li>2 MONSUM03 Monster Summon 3</li>
+	<li>3 ANISUM01 Animal Summon 1</li>
+	<li>4 ANISUM02 Animal Summon 2</li>
+	<li>5 MONSUM01 Monster Summon 1 Hostile</li>
+	<li>6 MONSUM02 Monster Summon 2 Hostile</li>
+	<li>7 MONSUM03 Monster Summon 3 Hostile</li>
+	<li>8 ANISUM01 Animal Summon 1 Hostile</li>
+	<li>9 ANISUM02 Animal Summon 2 Hostile</li>
+</ul>
+
 <br/>A custom .2da file can be entered in the resource field (untested in bg1).
 <br/>If used from an external effect (.eff), the vvc field controls the bam file played when summoning.
  </div>
@@ -7836,7 +7861,7 @@ Moreover, unlike <a href="#op111">opcode #111</a>, this opcode will not "equip" 
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) tries to learn the spell specified by the resource key.
-<br/>Learning is successful when 1D100 <= the INT-dependent LEARN_SPELL value in INTBON.2DA.
+<br/>Learning is successful when 1D100 <= the INT-dependent LEARN_SPELL value in <a href="../files/2da/2da_bgee/intmod.htm">INTMOD.2DA</a>.
 <br/>The LEARN_SPELL value is modified for mage specialists, with +15 for same school spells, and -15 for non-same school spells.
  </div>
 		<hr />
@@ -8455,7 +8480,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the paralysis effect (opcodes 109 and 175) from the targeted creature(s).
+		<div class="descriptiondata"> Removes the paralysis effect (<a href="#op109">opcode #109</a> and <a href="#op175">opcode #175</a>) from the targeted creature(s).
 
 
 
@@ -8529,7 +8554,7 @@ This effect should be used with an instant timing mode.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Clears the drunkeness stat (as modified by opcode 94).
+		<div class="descriptiondata"> Clears the drunkeness stat (as modified by <a href="#op94">opcode #94</a>).
  </div>
 		<hr />
 
@@ -9066,7 +9091,7 @@ Both parameters should be 0 (zero).
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Any delayed opcode 171 effect will be removed by death.
+Any delayed <a href="#op171">opcode #171</a> will be removed by death.
 
   </div>
 </div>
@@ -9393,8 +9418,8 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in EEs, this opcode automatically displays the string specified by <code>STRREF_EFFECT_HOLD</code> defined in <code>ENGINEST.2DA</code> in the combat log.
-It even overrides the entries in <code>EFFTEXT.2DA</code>
+At least in EEs, this opcode automatically displays the string specified by <code>STRREF_EFFECT_HOLD</code> defined in <a href="../files/2da/2da_bgee/enginest.htm">ENGINEST.2DA</a> in the combat log.
+It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFFTEXT.2DA</a>.
 
   </div>
 </div>
@@ -9958,8 +9983,8 @@ IWD2: Don't use.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in EEs, this opcode automatically displays the string specified by <code>STRREF_EFFECT_HOLD</code> defined in <code>ENGINEST.2DA</code> in the combat log.
-It even overrides the entries in <code>EFFTEXT.2DA</code>
+At least in EEs, this opcode automatically displays the string specified by <code>STRREF_EFFECT_HOLD</code> defined in <a href="../files/2da/2da_bgee/enginest.htm">ENGINEST.2DA</a> in the combat log.
+It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFFTEXT.2DA</a>.
 
   </div>
 </div>
@@ -10098,15 +10123,26 @@ This effect can only be used in an external effect (ie. an eff file).
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Set the 'Constant' field to 1 if you want no time needed between spells.
-<br/>This effect sets stat #76 (AURACLEANSING) to param #2.
+		<div class="descriptiondata"> Set the 'Stat Value' field to any non-zero value if you want no time needed between spells.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#76">STAT #76</a> to 'param2'.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -10341,15 +10377,26 @@ Param#2==2 was tested only for BGEE and might not work on non-EE.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Allows invisible creatures to be attacked (via scripts) and makes it possible to target improved invisible creatures with spells. The Constant Value parameter should be set to 1 or 2.
-<br/>This effect sets stat #81 (SEEINVISIBLE) to param #2.
+		<div class="descriptiondata"> Allows invisible creatures to be attacked (via scripts) and makes it possible to target improved invisible creatures with spells.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#81">STAT #81</a> to 'param2'.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -10390,7 +10437,7 @@ Param#2==2 was tested only for BGEE and might not work on non-EE.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -10398,13 +10445,14 @@ Param#2==2 was tested only for BGEE and might not work on non-EE.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Allows the targeted creature(s) to carry on their actions during dialogs which pause action.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#82">STAT #82</a> to 'param2'.
 
 
 
-<div class="note important">
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-The Constant Value parameter should be set to 1.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -11376,9 +11424,9 @@ It cannot deflect effects through AoE projectiles.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the maze effect to the targeted creature(s).
 <br/>Known values for 'Type' are:
-<br/>0   Use intelligence based duration (via intmod.2da)
+<br/>0   Use intelligence based duration (via <a href="../files/2da/2da_bgee/intmod.htm">INTMOD.2DA</a>)
 <br/>1   Use duration field
-<br/>The duration of the effect is set in intmod.2da, default values are:
+<br/>The duration of the effect is set in <a href="../files/2da/2da_bgee/intmod.htm">INTMOD.2DA</a>, default values are:
 <br/>0 to 2 int   -> 2d4 rounds
 <br/>3 to 5 int   -> 1d4 rounds
 <br/>6 to 8 int   -> 5d4 rounds
@@ -11386,7 +11434,7 @@ It cannot deflect effects through AoE projectiles.
 <br/>12 to 14 int -> 3d4 rounds
 <br/>15 to 17 int -> 2d4 rounds
 <br/>18+ int      -> 1d4 rounds
-<br/>'Icon' defines the index from statdesc.2da for custom portrait icons (EE only). </div>
+<br/>'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only). </div>
 		<hr />
 
 	</div>
@@ -11873,17 +11921,18 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) a number of protections from physical attacks, as specified by the <code>Amount</code> field.<br/>
-Known values for <code>Use Dice</code> are:
+		<div class="descriptiondata"> Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field.<br/>
+Known values for 'Use Dice' are:
 <ul>
-	<li><code>0</code> => No</li>
-	<li><code>1</code> => Yes</li>
+	<li>0 => No</li>
+	<li>1 => Yes</li>
 </ul>
 
 <p>
-	<br/>If <code>Amount</code> and <code>Use Dice</code> values are both non-zero, the total number of protections from physical attacks is: <code>Amount + Dice values</code>.
+	<br/>If 'Amount' and 'Use Dice' values are both non-zero, the total number of protections from physical attacks is: 'Amount' + Dice values.
 </p>
-<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>80 // Stoneskin</code>. </div>
+'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is 80 – Stoneskin.
+ </div>
 		<hr />
 
 	</div>
@@ -12621,14 +12670,29 @@ Both parameters should be 0 (zero).
 <br/>20  HPPercentLT(Myself,'Extra') – Checked once per round
 <br/>21  CheckSpellState(Myself,'Extra') – Checked once per round
 <br/><br/>The 'Extra' field is used for the following 'Target' values:
-<br/>13: Use value from TIMEODAY.IDS
+<br/>13: Use value from <a href="../files/ids/bgee/timeoday.htm">TIMEODAY.IDS</a>
 <br/>14: Range in feet
-<br/>15: Use value from STATE.IDS
+<br/>15: Use value from <a href="../files/ids/bgee/state.htm">STATE.IDS</a>
 <br/>19: Any numeric value
 <br/>20: Any numeric value
-<br/>21: Use value from SPLSTATE.IDS
+<br/>21: Use value from <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>
 <br/><br/>For a 'Condition' of 13, the 'Target' parameter must be 0.
-<br/><br/>Parameter 3 (EFF) activates the portrait icon and immediately triggers the HitBy() trigger
+<br/><br/>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, "resource2" and "resource3" can also be specified – all spells will be cast when triggered.<br/><br/>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, known values for 'Parameter3' are:
+<ul>
+	<li>0 => Not a "real" contingency (Fire Shields, Globe of Blades, etc...)</li>
+	<li>1 => Real contingency (Maintains 'Contingency' portrait icon, displays feedback message ENGINEST[246|STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER] when triggered, and terminates this effect after first trigger. This value is always set when created by <a href="../_opcodes/op234-bgee">opcode #234</a>.</li>
+</ul>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, 'Parent Type' (Source Type) may be manually set to influence its behavior. Known values for 'Parent Type' are:
+<ul>
+	<li>0 = None – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+	<li>1 = Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string ENGINEST[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log.</li>
+	<li>2 = Item – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+</ul>
 
 
 
@@ -12661,6 +12725,18 @@ Excluding the "Range()" checks, [ANYONE] includes "Myself".
 
   </div>
 </div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the 'Cast Normal' result.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -12773,6 +12849,8 @@ Known values for 'Type' are:
 		
 		
 			
+				
+			
 			
 				Variants:
 				
@@ -12788,7 +12866,11 @@ Known values for 'Type' are:
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op234">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Maximum Level Usable</span><br />
@@ -12799,14 +12881,56 @@ Known values for 'Type' are:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates a contingency.
+		<div class="descriptiondata"> Creates a custom spell contingency, storing a certain number of spells to be cast upon a specified condition.
+<br/>The spells are stored using <a href="../_opcodes/op232-bgee.html">opcode #232</a>, using 'Timing Mode' 1 and 'Parameter3' set to 1.
 <br/>The 'Maximum Level' field indicates the maximum spell level that can be used in the contingency. The 'Amount/Type' field indicates the number of spells that can be used in the contingency, and the type of the contingency.
 <br/>Known values for the 'Amount/Type' field are:
-<br/>First word: Amount (1-3)
-<br/>Second word: 
-<br/>  0  Chain Contingency
-<br/>  1  Contingency
-<br/>  2  Broken Sequencer
+<ul>
+	<li>First word: Amount (1-3)</li>
+	<li>Second word:
+		<ul>
+			<li>0 => Chain Contingency (See <a href="../_opcodes/op232-bgee.html">opcode #232</a> for target and condition descriptions)
+				<ul>
+					<li>Target choices are limited to those listed in <a href="../files/2da/2da_bgee/conttarg.htm">CONTTARG.2DA</a></li>
+					<li>Condition choices limited to those listed in <a href="../files/2da/2da_bgee/contcond.htm">CONTCOND.2DA</a>.</li>
+				</ul>
+			</li>
+			<li>1 => Normal Contingency
+				<ul>
+					<li>Target choice is limited to '0|Myself', and only if it's listed in <a href="../files/2da/2da_bgee/conttarg.htm">CONTTARG.2DA</a>.</li>
+					<li>Condition choices limited to those listed in <a href="../files/2da/2da_bgee/contcond.htm">CONTCOND.2DA</a>.</li>
+				</ul>
+			</li>
+			<li>2 => Sequencer
+				<ul>
+					<li>Functions as per <a href="../_opcodes/op257-bgee.html">opcode #257</a>.</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+As of v2.3, an entry for the "Parent Resource" or "Activation Key" must be added to the 'mageBookStrings{}' lua table for the UI, or the game will crash upon use.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the 'Cast Normal' result.
+
+  </div>
+</div>
+
 
 
 
@@ -13666,7 +13790,7 @@ The 'Constant Value' parameter should be non-zero.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in EEs, the only difference between opcodes #3 and #247, is that #247 will not force the creature(s) to use melee weapons, and is not removed by Opcode #4 (Cure Berserk).
+At least in EEs, the only difference between opcodes <a href="#op3">#3</a> and #247, is that #247 will not force the creature(s) to use melee weapons, and is not removed by <a href="#op4">opcode #4</a> (Cure Berserk).
 
   </div>
 </div>
@@ -14093,11 +14217,17 @@ The difference from <a href="#op122">opcode #122</a> is that when used in an ext
 		
 		
 			
-				
-			
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op256">BG2</a>
+			
+		
+			
+				
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op256">IWD1</a>
@@ -14113,7 +14243,49 @@ The difference from <a href="#op122">opcode #122</a> is that when used in an ext
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect stores the spell resources for an active spell sequencer. The three spell resources are stored in the resource key, VVC field, and eff 3rd parameter.
+		<div class="descriptiondata"> This effect stores the spell resources for an active spell sequencer. These resources are stored in the resource key, VVC field (resource2), and resource3.<br/>
+This effect stores spells to be cast through <a href="../_opcodes/op258-bgee">opcode #258</a> and <a href="../_opcodes/op260-bgee.html">opcode #260</a>.
+<br/>
+
+When used in an external EFF file, known values for 'Parameter3' (Type) are:
+<ul>
+	<li>0 => Hidden – this sequencer is not viewable in the MageBook 'Contingency' screen, and is not removed when activated.</li>
+	<li>1 => Displayed – this sequencer is viewable in the MageBook 'Contingency' screen, and is removed when activated.</li>
+</ul>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, 'Parent Type' (Source Type) may be manually set to influence its behavior. Known values for 'Parent Type' are:
+<ul>
+	<li>0 = None – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+	<li>1 = Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string ENGINEST[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log.</li>
+	<li>2 = Item – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+</ul>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, "Parent Resource" (Activation key) must be manually set to influence its behavior.<br/>
+The 'Activation Key' is the "Resource" to be referenced by the effect(s) that will activate this sequencer.<br/>
+When set manually, it cannot contain lowercase characters, it MUST be in ALLCAPS, numbers, and/or symbols, or the sequencer cannot be activated.
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the 'Cast Normal' result.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="../_opcodes/op256-bgee.html">256</a>/<a href="../_opcodes/op257-bgee.html">257</a> and <a href="../_opcodes/op258-bgee.html">258</a>/<a href="../_opcodes/op260-bgee.html">260</a>) use the exact same string.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14129,11 +14301,17 @@ The difference from <a href="#op122">opcode #122</a> is that when used in an ext
 		
 		
 			
-				
-			
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op257">BG2</a>
+			
+		
+			
+				
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op257">IWD1</a>
@@ -14149,8 +14327,44 @@ The difference from <a href="#op122">opcode #122</a> is that when used in an ext
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates a spell sequencer.
+		<div class="descriptiondata"> Creates a custom spell sequencer, storing a certain number of spells for later use.<br/>
+It applies <a href="../_opcodes/op256-bgee.html">opcode #256</a> to the caster upon completing the spell selection process, and at the same time it grants you the -D or -P subspell (via <a href="../_opcodes/op171.html">opcode #171</a>). In particular:
+
+<ul>
+	<li>if all of the sequenced spells use ability target 4 (Target Point), it will grant spell 'Parent' + 'P' (provided such a spell exists – for instance: SPWI420P),</li>
+	<li>otherwise it will grant spell 'Parent' + 'D' (for instance: SPWI420D).</li>
+</ul>
+
+The chosen spells are stored using <a href="../_opcodes/op256-bgee.html">opcode #256</a>, using 'Timing Mode' 1 (regardless of timing mode for <a href="../_opcodes/op257-bgee.html">opcode #257</a>) and 'Parameter3' set to 1.
+
 <br/>The 'Maximum Level' field indicates the maximum spell level that can be used in the sequencer. The 'Amount' field indicates the number of spells that can be used in the sequencer.
+<br/><br/>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, 'Parent Type' (Source Type) may be manually set to influence its behavior. Known values for 'Parent Type' are:
+<ul>
+	<li>0 = None – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+	<li>1 = Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string ENGINEST[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log.</li>
+	<li>2 = Item – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+</ul>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, "Parent Resource" (Activation key) must be manually set to influence its behavior.<br/>
+When set manually, it cannot contain lowercase characters, it MUST be in ALLCAPS, numbers, and/or symbols, or the sequencer cannot be activated.
+<br/><br/>
+
+If not used in an external EFF, the 'Activation Key' will be the "Parent Resource".<br/>
+If used in an external EFF, the 'Activation Key' must be explicitly specified, but doesn't need to match its actual "Parent Resource".<br/>
+For the vanilla spells, the 'Activation Key' is always the parent spell of <a href="../_opcodes/op257-bgee.html">opcode #257</a>.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+As of v2.3, an entry for the "Parent Resource" or "Activation Key" must be added to the 'mageBookStrings{}' lua table, or the game will crash upon use.
+
+  </div>
+</div>
+
 
 
 
@@ -14158,6 +14372,28 @@ The difference from <a href="#op122">opcode #122</a> is that when used in an ext
   <div>
     <strong>Important:</strong> 
 The filename of a spell containing this effect should be no more than 7 characters.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the 'Cast Normal' result.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="../_opcodes/op256-bgee.html">256</a>/<a href="../_opcodes/op257-bgee.html">257</a> and <a href="../_opcodes/op258-bgee.html">258</a>/<a href="../_opcodes/op260-bgee.html">260</a>) use the exact same string.
 
   </div>
 </div>
@@ -14177,6 +14413,8 @@ The filename of a spell containing this effect should be no more than 7 characte
 		
 		
 			
+				
+			
 			
 				Variants:
 				
@@ -14192,7 +14430,11 @@ The filename of a spell containing this effect should be no more than 7 characte
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op258">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
@@ -14203,13 +14445,50 @@ The filename of a spell containing this effect should be no more than 7 characte
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Activates a spell sequencer.
-<br/>The resource key must be set to the filename of the spell which contains the Spell Sequencer Creation effect, which must be an innate ability.
-<br/>The spell which contains the Spell Sequencer Creation effect can have a maximum filename of 7 characters.
-<br/>The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the D character.
-<br/>eg:
-<br/>  Spell Sequencer Creation filename = SPSS101 
-<br/>  Spell Sequencer Activation filename = SPSS101D
+		<div class="descriptiondata"> Activates a spell sequencer at a single target.<br/>
+Activates any <a href="../_opcodes/op256-bgee.html">opcode #256</a> effects with a matching resource ('Activation Key') of the targeted creature(s).<br/>
+
+When used in combination with <a href="../_opcodes/op257-bgee.html">opcode #257</a> (Spell Sequencer Creation):
+
+<ul>
+	<li>The resource key must be set to the filename of the spell which contains the Spell Sequencer Creation effect.</li>
+	<li>The spell which contains the Spell Sequencer Creation effect can have a maximum filename of 7 characters.</li>
+	<li>The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the D character, and should be an innate ability. For instance:
+		<ul>
+			<li>Spell Sequencer Creation filename = SPWI420</li>
+			<li>Spell Sequencer Activation filename = SPWI420D</li>
+		</ul>
+	</li>
+</ul>
+<br/>
+
+Those spells are cast by the targeted creature(s) at "this" ability's target.<br/>
+For each stored spell, "this" ability's target must be within range of that spell, or it will fail.
+<br/><br/>
+
+All <a href="../_opcodes/op256-bgee.html">opcode #256</a> effects with a matching 'Activation Key' are removed if their 'Parameter3' = 1 (those created by <a href="../_opcodes/op257-bgee.html">opcode #257</a> / <a href="../_opcodes/op234-bgee.html">opcode #234</a> have this value set to '1' by default).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This opcode will fail if delivered directly in an area effect projectile (though it may still target "self" or be used in subsequent non-AoE subspells).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="../_opcodes/op256-bgee.html">256</a>/<a href="../_opcodes/op257-bgee.html">257</a> and <a href="../_opcodes/op258-bgee.html">258</a>/<a href="../_opcodes/op260-bgee.html">260</a>) use the exact same string.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14293,13 +14572,39 @@ The filename of a spell containing this effect should be no more than 7 characte
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Activates a spell sequencer at a target point.
-<br/>The resource key must be set to the filename of the spell which contains the Spell Sequencer Creation effect, which must be an innate ability.
-<br/>The spell which contains the Spell Sequencer Creation effect can have a maximum filename of 7 characters.
-<br/>The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the D character.
-<br/>eg:
-<br/>  Spell Sequencer Creation filename = SPSS101 
-<br/>  Spell Sequencer Activation filename = SPSS101D
+		<div class="descriptiondata"> Activates a spell sequencer at a target point.<br/>
+Activates any <a href="../_opcodes/op256-bgee.html">opcode #256</a> with a matching resource ('Activation Key') of the targeted creature(s).<br/>
+
+When used in combination with <a href="../_opcodes/op257-bgee.html">opcode #257</a> (Spell Sequencer Creation):
+
+<ul>
+	<li>The resource key must be set to the filename of the spell which contains the Spell Sequencer Creation effect.</li>
+	<li>The spell which contains the Spell Sequencer Creation effect can have a maximum filename of 7 characters.</li>
+	<li>The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the P character, and should be an innate ability. For instance:
+		<ul>
+			<li>Spell Sequencer Creation filename = SPWI420</li>
+			<li>Spell Sequencer Activation filename = SPWI420P</li>
+		</ul>
+	</li>
+</ul>
+<br/>
+
+Those spells are cast by the targeted creature(s) at "this" ability's target.<br/>
+For each stored spell, "this" ability's target must be within range of that spell, or it will fail.
+<br/><br/>
+
+All <a href="../_opcodes/op256-bgee.html">opcode #256</a> effects with a matching 'Activation Key' are removed if their 'Parameter3' = 1 (those created by <a href="../_opcodes/op257-bgee.html">opcode #257</a> / <a href="../_opcodes/op234-bgee.html">opcode #234</a> have this value set to '1' by default).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="../_opcodes/op256-bgee.html">256</a>/<a href="../_opcodes/op257-bgee.html">257</a> and <a href="../_opcodes/op258-bgee.html">258</a>/<a href="../_opcodes/op260-bgee.html">260</a>) use the exact same string.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14387,6 +14692,22 @@ The filename of a spell containing this effect should be no more than 7 characte
 <br/>Known values for 'Type' are:
 <br/>0   Cumulative Modifier -> Visual Range = Visual Range + 'Visual Range' value
 <br/>1   Flat Value Modifier -> Visual Range = 'Visual Range' value
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+With relation to this effect:
+<ul>
+	<li>Each unit of visible range equals 2ft: 32px(horizontal)/24px(vertical)</li>
+	<li>Default Visual Range = 14</li>
+	<li>Maximum visual range to reveal "Fog of War" = 23</li>
+</ul>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -14442,6 +14763,8 @@ The filename of a spell containing this effect should be no more than 7 characte
 		
 		
 			
+				
+			
 			
 				Variants:
 				
@@ -14451,7 +14774,11 @@ The filename of a spell containing this effect should be no more than 7 characte
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op264">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
@@ -14464,10 +14791,27 @@ The filename of a spell containing this effect should be no more than 7 characte
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the drop weapons effect to the targeted creature(s), in the style specified by the 'Type' field.
 <br/>This effect causes the targeted creature(s) to drop a piece of equipment.
-<br/>It won't affect items marked as 'critical'
 <br/>Known values for 'Type' are:
 <br/>0   Drop random equipment
-<br/>1   Drop a quickslot item (won't drop the left-hand weapon).
+<br/>1   Drop weapons from Quick-Weapon Slot (slots #35 – #38).
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Can drop items located in the Magical Weapon Slot (slot #34 – SLOT_MISC19) if they are not flagged properly.<br/>
+Will never drop items:
+<ul>
+	<li>located in slot #10 – SLOT_FIST</li>
+	<li>flagged as "Critical" => BIT0 (INDESTRUCTIBLE) set to 1 in the <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> file</li>
+	<li>not flagged as "Droppable" => BIT2 (DROPPABLE) set to 0 in the <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> file</li>
+	<li>flagged as "Undroppable" => BIT3 (NONDROPABLE) set to 1 in the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file</li>
+</ul>
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -14531,6 +14875,16 @@ All timing modes act as permanent for this effect.
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'Value' can store integers or coordinates. Coordinates are stored as first 2 bytes X, last 2 bytes Y (f.i.: "310 + (30 << 16)").
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -14603,6 +14957,18 @@ All timing modes act as permanent for this effect.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Prevents the strref specified by the 'String Reference' field being displayed by the targeted creature(s).
+<br/>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Only grants immunity to <a href="op139.html">opcode #139</a> effects with a matching 'String Reference' value.<br/>
+Cannot block string displays from any other mechanic.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -14642,6 +15008,17 @@ All timing modes act as permanent for this effect.
 <br/>The targeted creature(s) will be able to explore like a PC does.
 <br/>
 <br/>This effect sets stat #148 (EXPLORE) to 1.
+<br/>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Only 8 creatures in a given area can fully clear fog of war, with priority going to party members.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -14729,6 +15106,8 @@ All timing modes act as permanent for this effect.
 		
 		
 			
+				
+			
 			
 				Variants:
 				
@@ -14738,7 +15117,11 @@ All timing modes act as permanent for this effect.
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op271">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
@@ -14749,8 +15132,10 @@ All timing modes act as permanent for this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the animation of the targeted creature(s).
- </div>
+		<div class="descriptiondata"> Hides the creature's animation and selection circle, including illusionary images (Blur / Mirror Image).<br/>
+Disables the creature's AI scripts.<br/>
+The creature cannot take any action not listed in <a href="../files/ids/bgee/instant.htm">INSTANT.IDS</a> (usually through <a href="../scripting/actions/bgeeactions.htm#1">ActionOverride()</a>.<br/>
+The creature is still subject to area effect and may still be targeted directly by mouseover. </div>
 		<hr />
 
 	</div>
@@ -14797,18 +15182,18 @@ All timing modes act as permanent for this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the EFF specified by the resource key to the targeted creature(s) as specified by the <code>Type</code> field. <code>Type</code> mode 4 makes use of Parameter 3, and so can only be used in external eff files.
-<br/>Known values for <code>Type</code> are:
+		<div class="descriptiondata"> Applies the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> specified by the resource key to the targeted creature(s) as specified by the 'Type' field.
+<br/>Known values for 'Type' are:
 <ul>
-	<li><code>0</code> => Apply once per second (<code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero)</li>
-	<li><code>1</code> => Unknown (see below for further details)</li>
-	<li><code>2</code> => Apply <code>Amount_1</code> times every <code>Frequency Multiplier</code> second(s)</li>
-	<li><code>3</code> => Apply once every <code>Amount_1 * Frequency Multiplier</code> second(s)</li>
-	<li><code>4</code> => Apply <code>Amount_2</code> times every <code>Amount_1 * Frequency Multiplier</code> second(s) – This is the only one that must be in external EFF files</li>
-	<li><code>5+</code> => Crash</li>
+	<li>0 => Apply once per second ('Amount_2' and 'Frequency Multiplier' are ignored – 'Amount_1' needs to be non-zero)</li>
+	<li>1 => Unknown (see below for further details)</li>
+	<li>2 => Apply 'Amount_1' times every 'Frequency Multiplier' second(s)</li>
+	<li>3 => Apply once every 'Amount_1' * 'Frequency Multiplier' second(s)</li>
+	<li>4 => Apply 'Amount_2' times every 'Amount_1' * 'Frequency Multiplier' second(s) – This is the only one that must be in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files</li>
+	<li>5+ => Crash</li>
 </ul>
 
-<code>Icon</code> defines the index from <code>statdesc.2da</code> for custom portrait icons. Default value is <code>none // no icon</code>.
+'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is none (no icon).
 <br/>
 
 
@@ -14827,7 +15212,7 @@ The timings are relative to the movement rate of the affected creature(s). <a hr
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-This opcode does not have any function when <code>Type = 1</code>, thought the effect is still present (it doesn't just instantly terminate), and will generate a portrait icon if <code>Icon</code> is non-zero.
+This opcode does not have any function when 'Type' = 1, thought the effect is still present (it doesn't just instantly terminate), and will generate a portrait icon if 'Icon' is non-zero.
 
   </div>
 </div>
@@ -14838,7 +15223,7 @@ This opcode does not have any function when <code>Type = 1</code>, thought the e
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
+If 'Frequency Multiplier' = 0, its value is treated as 1. This is the default value for SPL/ITM effects.
 
   </div>
 </div>
@@ -14877,7 +15262,19 @@ If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes projectiles listed in clearair.2da.
+		<div class="descriptiondata"> Removes projectiles listed in <a href="../files/2da/2da_bgee/clearair.htm">CLEARAIR.2DA</a>.
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, If the resource field is filled, it will use a custom <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to determine which projectiles to remove.<br />
+The custom 2DA file must be structured as CLEARAIR.2DA.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -14954,6 +15351,16 @@ If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>
 <br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+When 'Type' = 0 and 'Timing Mode' = 9, it modifies <a href="../files/ids/bgee/stats.htm#180">STAT #180</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a> capped to the range [0,255], before being included in the creature's Hide in Shadows score.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -15000,6 +15407,16 @@ If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>
 <br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least in EEs, when 'Type' = 0 and 'Timing Mode' = 9, it modifies <a href="../files/ids/bgee/stats.htm#181">STAT #181</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a> capped to the range [0,255], before being included in the creature's Detect Illusions score.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -15040,6 +15457,16 @@ If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>
 <br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least in EEs, when 'Type' = 0 and 'Timing Mode' = 9, it modifies <a href="../files/ids/bgee/stats.htm#182">STAT #182</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a> capped to the range [0,255], before being included in the creature's Set Traps score.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -15144,6 +15571,17 @@ This effect adjusts modified THAC0, rather than the base stat.
 <br/>13  Innate Ability Button
 <br/>14  Find Traps Button
 <br/>15  Inventory Button (only in EEs)
+<br/>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Removing <a href="op144.html">opcode #144</a> is all it does, it cannot enable buttons disabled by other mechanics.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -15184,6 +15622,29 @@ This effect adjusts modified THAC0, rather than the base stat.
 <br/>Known values for 'Type' are:
 <br/>1   Affect next spell cast
 <br/>2   Affect all spells cast for effect duration
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Can only force Wild Surges on spells that are normally valid for them.<br/>
+In particular, it doesn't work for SPLs whose BIT14 (located at offset <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">0x18</a>) is set to 1, subspells, as well as certain script actions – mostly the "instant-cast" ones.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+'Type' = 1 also maintains <a href="../files/ids/bgee/stats.htm#153">STAT #153</a> to 1.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -15225,6 +15686,17 @@ This effect adjusts modified THAC0, rather than the base stat.
 <br/>0   Cumulative Modifier -> Chance = Chance + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Chance = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Chance = (Chance * 'Statistic Modifier' value) / 100
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least in EEs, the final value is added to the inherint level-based bonus of the Wild Mage.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -15260,14 +15732,19 @@ This effect adjusts modified THAC0, rather than the base stat.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Modifies Scripting state to the given value. Scripting State range from 0 to 35. The scripting state can be checked via scripts (see stats.ids), subtract 156 from the stat value to get the scripting state.
+		<div class="descriptiondata"> Modifies Scripting state to the given value. Scripting State range from 0 to 35. The scripting state can be checked via scripts (see <a href="../files/ids/bgee/stats.htm">STATS.IDS</a>) subtract 156 from the stat value to get the scripting state.
+<br/>
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-This effect does not have proper bounds checking, and can therefore be used in unintended ways. For example scripting state 13 equals with the NO_CIRCLE attribute (stat=169), and scripting state 1139 ties to PICKPOCKET (stat=29).
+<ul>
+	<li>On non-EE games, this effect does not have proper bounds checking. It can therefore be used in unintended ways. For example scripting state 13 equals with the NO_CIRCLE attribute (stat=169), and scripting state 1139 ties to PICKPOCKET (stat=29).</li>
+	<li>EEs have proper bounds checking for this opcode, can only modify stats #156 – #200, except #188 (SUMMON_DISABLE_ACTION), not all values are a straight "subtract 156 from their stat".<br/>
+		For best results, it should only be used for stats #156 – #165, as all others have dedicated opcodes and hardcoded effects.</li>
+</ul>
 
   </div>
 </div>
@@ -15364,7 +15841,7 @@ This effect does not have proper bounds checking, and can therefore be used in u
 <br/>1   Flat Value Modifier -> THAC0 = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> THAC0 = (THAC0 * 'Statistic Modifier' value) / 100
 <br/>
-<br/>The effect modifies stat 166.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#166">STAT #166</a>.
  </div>
 		<hr />
 
@@ -15406,7 +15883,7 @@ This effect does not have proper bounds checking, and can therefore be used in u
 <br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
 <br/>
-<br/>The effect modifies stat 167.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#167">STAT #167</a>.
  </div>
 		<hr />
 
@@ -15448,7 +15925,7 @@ This effect does not have proper bounds checking, and can therefore be used in u
 <br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
 <br/>
-<br/>The effect modifies stat 168.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#168">STAT #168</a>.
  </div>
 		<hr />
 
@@ -15486,7 +15963,7 @@ This effect does not have proper bounds checking, and can therefore be used in u
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the selection circle from the targeted creature(s).
 <br/>
-<br/>The effect modifies stat 169.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#169">STAT #169</a>.
  </div>
 		<hr />
 
@@ -15534,7 +16011,7 @@ This effect does not have proper bounds checking, and can therefore be used in u
 <br/>1   Flat Value Modifier -> THAC0 = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> THAC0 = (THAC0 * 'Statistic Modifier' value) / 100
 <br/>
-<br/>The effect modifies stat 170.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#170">STAT #170</a>.
  </div>
 		<hr />
 
@@ -15582,7 +16059,7 @@ This effect does not have proper bounds checking, and can therefore be used in u
 <br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
 <br/>
-<br/>The effect modifies stat 171.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#171">STAT #171</a>.
  </div>
 		<hr />
 
@@ -15597,6 +16074,8 @@ This effect does not have proper bounds checking, and can therefore be used in u
 		
 		
 		
+			
+				
 			
 			
 				Variants:
@@ -15613,7 +16092,11 @@ This effect does not have proper bounds checking, and can therefore be used in u
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op290">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">String Reference</span><br />
@@ -15622,15 +16105,21 @@ This effect does not have proper bounds checking, and can therefore be used in u
 		
 		
 		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Class</span><br />
+		
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Changes the title of the targeted creature(s), to the strref specified by the 'String Reference' field, at the location specified by the 'Position' field.
 <br/>Known values for 'Position' are:
-<br/>0   Records Screen information section
-<br/>1   Various character screens (eg. Inventory and Records Screen)
+<ul>
+	<li>0   Records Screen information section</li>
+	<li>1   Various character screens (eg. Inventory and Records Screen)</li>
+</ul>
 <br/>
-<br/>The effect modifies stats 172 and 173.
- </div>
+The effect modifies <a href="../files/ids/bgee/stats.htm#172">STAT #172</a> and <a href="../files/ids/bgee/stats.htm#173">STAT #173</a>.
+<br/>
+
+'Class' specifies which classes title is replaced (values are from <a href="../files/ids/bgee/class.htm">CLASS.IDS</a>). </div>
 		<hr />
 
 	</div>
@@ -15644,6 +16133,8 @@ This effect does not have proper bounds checking, and can therefore be used in u
 		
 		
 		
+			
+				
 			
 			
 				Variants:
@@ -15660,27 +16151,31 @@ This effect does not have proper bounds checking, and can therefore be used in u
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op291">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Disables the glowing disk from some effect on the targeted creature(s). Does not affect those visual effects which use BAM files - eg. Fire Shield (red).
+		<div class="descriptiondata"> Blocks the hardcoded animations applied by the following opcodes: <a href="op201.html">201</a>, <a href="op204.html">204</a>, <a href="op205.html">205</a>, <a href="op223.html">223</a>, <a href="op226.html">226</a>, <a href="op259.html">259</a>, <a href="op197.html">197</a>, <a href="op198.html">198</a>, <a href="op199.html">199</a>, <a href="op200.html">200</a>, <a href="op202.html">202</a>, <a href="op203.html">203</a>, <a href="op207.html">207</a>, <a href="op227.html">227</a>, <a href="op228.html">228</a>, <a href="op299.html">299</a>.
 <br/>
-<br/>The effect modifies stat 174 to param2.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#174">STAT #174</a> to 'param2'.
 
 
 
-<div class="note important">
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-The Constant Value parameter should be set to 1.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -15713,7 +16208,7 @@ The Constant Value parameter should be set to 1.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -15722,14 +16217,14 @@ The Constant Value parameter should be set to 1.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Makes the targeted creature(s) immune to backstabbing.
 <br/>
-<br/>The effect modifies stat 175 to param2.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#175">STAT #175</a> to 'param2'.
 
 
 
-<div class="note important">
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-The Constant Value parameter should be set to 1.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -15762,7 +16257,7 @@ The Constant Value parameter should be set to 1.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -15771,14 +16266,14 @@ The Constant Value parameter should be set to 1.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) will still run scripts when off-screen and out of combat.
 <br/>
-<br/>The effect modifies stat 183 to param2.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#183">STAT #183</a> to 'param2'.
 
 
 
-<div class="note important">
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-The Constant Value parameter should be set to 1.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -15862,23 +16357,24 @@ The effect modifies stat 184, unless param2 is set to 1.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Undefined</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This targeted creature(s) will never suffer a permanent death (and will therefore always remain resurrectable) - exceptions include petrification and freeze-death.
+		<div class="descriptiondata"> This targeted creature(s) will never suffer a permanent death (and will therefore always remain resurrectable) – exceptions include petrification and freeze-death.
 <br/>
-<br/>The effect modifies stat 186.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#186">STAT #186</a> to 'param2'.<br/>
+'Timing Mode' should be set to 9 (Permanent after Death).
 
 
 
-<div class="note important">
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-The Constant Value parameter should be set to 1, and timing mode should be 9 (Permanent after Death).
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -15918,7 +16414,28 @@ The Constant Value parameter should be set to 1, and timing mode should be 9 (Pe
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Provides the targeted creature(s) with immunity to the animation specified by the resource key
+		<div class="descriptiondata"> Provides the targeted creature(s) with immunity to <a href="op215.html">opcode #215</a> effects with a matching "Resource" specified by the resource key.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It does not remove any <a href="op215.html">opcode #215</a> effect already present on the targeted creature.
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+It cannot block animations from any other source.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -15947,7 +16464,7 @@ The Constant Value parameter should be set to 1, and timing mode should be 9 (Pe
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Undefined</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -15956,13 +16473,14 @@ The Constant Value parameter should be set to 1, and timing mode should be 9 (Pe
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Makes the targeted creature(s) immune to the Turn Undead effect.
 <br/>
-<br/>The effect modifies stat 187.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#187">STAT #187</a> to 'param2'.
 
 
-<div class="note important">
+
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-Constant Value should be non-zero.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -15982,6 +16500,8 @@ Constant Value should be non-zero.
 		
 		
 			
+				
+			
 			
 				Variants:
 				
@@ -15991,25 +16511,29 @@ Constant Value should be non-zero.
 			
 		
 			
-				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op298">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Executes script cut250a.bcs. By default this script teleports the party to the Pocket Plane area (AR4500).
+		<div class="descriptiondata"> Executes script "cut250a.bcs". By default this script teleports the party to the Pocket Plane area (AR4500).
 
 
 
-<div class="note important">
+<div class="note warning">
   <div>
-    <strong>Important:</strong> 
-The Constant Value parameter should be set to 1.
+    <strong>Warning:</strong> 
+Game will become locked in cutscene mode if "cut250a.bcs" doesn't exist.
 
   </div>
 </div>
@@ -16030,6 +16554,15 @@ The Constant Value parameter should be set to 1.
 		
 			
 				
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op299">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Shield Amount</span><br />
@@ -16042,10 +16575,36 @@ The Constant Value parameter should be set to 1.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This effect defends against wild surges and displays an associated icon as specified by the 'Icon' parameter.
 <br/>Known values for 'Icon' are:
-<br/>0  Normal Chaos Shield
-<br/>1  Improved Chaos Shield
+<ul>
+	<li>0  Normal Chaos Shield</li>
+	<li>1  Improved Chaos Shield</li>
+</ul>
 <br/>
-<br/>The effect modifies stat 189.
+The effect modifies <a href="../files/ids/bgee/stats.htm#189">STAT #189</a>.
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+It displays animation "SPTURNI2.BAM" (Spell Turning Disk).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+It does not directly block <a href="../_opcodes/op281.html">opcode #281</a> (or <a href="../_opcodes/op280-bgee.html">opcode #280</a>), it blocks the wild surge itself, which can be natural or forced.<br/>
+Surges it prevents do not count towards the "Next Spell" option of <a href="op280-bgee.html">opcode #280</a>.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -16065,7 +16624,7 @@ The Constant Value parameter should be set to 1.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -16073,14 +16632,14 @@ The Constant Value parameter should be set to 1.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This effect allows the targetted creature(s) to push other creatures out of the way while moving.
-<br/><br/>The effect modifies stat 190 to param 2.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#190">STAT #190</a> to 'param2'.
 
 
 
-<div class="note important">
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-Constant Value should be set to 1.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -16154,6 +16713,16 @@ Constant Value should be set to 1.
 <br/>29 SPEAR
 <br/>30 POLEARM
 <br/>31 BOLT
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+In v2.3 and prior, only the latest instance of this opcode applies. In v2.5+, all instances stack together.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -16170,10 +16739,19 @@ Constant Value should be set to 1.
 		
 			
 				
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op302">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -16181,14 +16759,25 @@ Constant Value should be set to 1.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) can use any item.
-<br/><br/>The effect modifies stat 191.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#191">STAT #191</a> to 'param2'.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+
+  </div>
+</div>
+
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The Constant Value parameter should be set to 1.
+It does not bypass item restrictions from <a href="../files/2da/2da_bgee/item_use.htm">ITEM_USE.2DA</a>, Ability Score/Level requirements, or to scribing spells of opposition schools.
 
   </div>
 </div>
@@ -16209,10 +16798,19 @@ The Constant Value parameter should be set to 1.
 		
 			
 				
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op303">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -16220,14 +16818,37 @@ The Constant Value parameter should be set to 1.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) will backstab with every hit.
-<br/><br/>The effect modifies stat 192.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#192">STAT #192</a> to 'param2'.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+
+  </div>
+</div>
+
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The Constant Value parameter should be set to 1.
+Creature must still be using a weapon valid for backstabbing.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Backstabs no longer require the creature to be invisible.<br/>
+Sneak Attacks no longer require the creature to be flanking their target.
 
   </div>
 </div>
@@ -16258,7 +16879,7 @@ The Constant Value parameter should be set to 1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect will raise multiple dead PCs and NPCs.
+		<div class="descriptiondata"> This effect will raise multiple dead Party Members (PCs).
  </div>
 		<hr />
 
@@ -16347,14 +16968,14 @@ The Constant Value parameter should be set to 1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Activates the Tracking Ability. A string from tracking.2da is shown, and arrows appear along the screen edge pointing to any creatures within range. The units of the range parameter are unknown.
+		<div class="descriptiondata"> Activates the Tracking Ability. A string from <a href="../files/2da/2da_bgee/tracking.htm">TRACKING.2DA</a> is shown, and arrows appear along the screen edge pointing to any creatures within range. The units of the range parameter are unknown.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-The arrow effect may be hardcoded to spell SPCL922.
+The arrow effect may be hardcoded to spell "SPCL922.SPL".
 
   </div>
 </div>
@@ -16365,7 +16986,7 @@ The arrow effect may be hardcoded to spell SPCL922.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-The file 'tracking.2da' lists the string reference that shows what information is learned from using this effect for each area.
+The file <a href="../files/2da/2da_bgee/tracking.htm">TRACKING.2DA</a> lists the string reference that shows what information is learned from using this effect for each area.
 
   </div>
 </div>
@@ -16386,18 +17007,82 @@ The file 'tracking.2da' lists the string reference that shows what information i
 		
 			
 				
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op308">BG2</a>
+			
+		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant value</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Radius</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Protects the targetted creature(s) from the Tracking arrows effect (has no affect on the area string displayed).
-<br/><br/>The effect modifies stat 195 to the value of param type.
+		<div class="descriptiondata"> Protects the targeted creature(s) from the Tracking arrows effect (has no effect on the area string displayed).
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#195">STAT #195</a> to 'param2'.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+
+  </div>
+</div>
+
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Using this effect "While Equipped" on an item will crash the game.
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Arrows do not display when using permanent or equipped timing modes.
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+This effect is not saved to file, it will be lost if you save & reload.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+'Radius': same scale as Area-Effect projectiles (16 units = 1ft).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -16435,12 +17120,22 @@ The file 'tracking.2da' lists the string reference that shows what information i
   <div>
     <strong>Info:</strong> 
 Since the Resource Key can only be 8 characters long maximum, you can not set a variable with this Effect this has a name longer than this amount.
-<br/>You can use the VVC field of external EFF files for an additional 8 characters of variable name.
-<br/>You can use the 3rd resource field of EFF files for an additional 8 characters.
+<br/>You can use the VVC field of external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files for an additional 8 characters of variable name.
+<br/>You can use the 3rd resource field of <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files for an additional 8 characters.
 
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+'Value' can store integers or coordinates. Coordinates are stored as first 2 bytes X, last 2 bytes Y (f.i.: "310 + (30 << 16)").
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -16460,7 +17155,7 @@ Since the Resource Key can only be 8 characters long maximum, you can not set a 
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -16468,14 +17163,26 @@ Since the Resource Key can only be 8 characters long maximum, you can not set a 
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) becomes immune to time-stop.
-<br/><br/>The effect modifies stat 197.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#197">STAT #197</a> to 'param2'.
 
 
 
-<div class="note important">
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-The Constant Value parameter should be set to 1.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value.<br/>
+If you set it to 0, you will disable the effect (for its duration). For instance, a Time Stop spell that applies (to everyone) op#310 with 'Stat Value' = 0 for 18s would trap those such as Demogorgon in the time stop.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Creatures are naturally immune to their own Time Stop effects, without needing this effect or setting stat #197 (IMMUNE_TO_TIME_STOP).
 
   </div>
 </div>
@@ -16549,24 +17256,33 @@ The Constant Value parameter should be set to 1.
 		
 			
 				
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op312">BG2</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Undefined</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Undefined</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect crashes the game.
+		<div class="descriptiondata"> The effect modifies <a href="../files/ids/bgee/stats.htm#198">STAT #198</a> to 'param2'.
 
 
 
 <div class="note info">
   <div>
-    <strong>Info:</strong> 
-This opcode is also known as ImmunityToSequester.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -16656,7 +17372,7 @@ In particular, the Juggernaut Golem <code>TOMEGOL4.CRE</code> is scripted by <co
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Constant Value</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
@@ -16664,14 +17380,14 @@ In particular, the Juggernaut Golem <code>TOMEGOL4.CRE</code> is scripted by <co
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This effect will remove the animation of the targeted creature(s).
-<br/><br/>The effect modifies stat 201.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#201">STAT #201</a> to 'param2'.
 
 
 
-<div class="note important">
+<div class="note info">
   <div>
-    <strong>Important:</strong> 
-The Constant Value parameter should be set to a non-zero value.
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -16820,9 +17536,41 @@ This effect is functionally identical to <a href="#op16">opcode #16</a>. The onl
 <br/>9   Kit.ids
 <br/>10  Actor's name
 <br/>11  Actor's scripting name (8 maximum in resource field)
-<br/>If 'IDS File' is set to 10 and the strref held in parameter1 is set to "-1" (None), then you're targeting player-created characters (e.g., <CHARNAME>).
-<br/>If 'IDS File' is set to 11 and no death variable is specified in the resource field, then you're targeting player-created characters (e.g., <CHARNAME>).
+
 <br/><br/>The message defined in 'Description note' will be displayed whenever this effect is triggered.
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+If 'IDS File' is set to 10 and the strref held in parameter1 is set to "-1" (None), then you're targeting player-created characters (e.g., "CHARNAME").
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+If 'IDS File' is set to 11 and no death variable is specified in the resource field, then you're targeting player-created characters (e.g., "CHARNAME").
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+This opcode must be attached to the item itself, and does not work when applied in <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files (such as through <a href="op177.html">opcode 177</a>).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -16943,7 +17691,7 @@ If the resource field is empty, it will remove level-up Weapon Proficiency effec
 	<div id="op323" class="opcode">
 		<span class="opnumberdata">#323 (0x143)</span>
 
-		<span class="opnamedata">Stat:Turn Undead Level</span>
+		<span class="opnamedata">Stat: Turn Undead Level</span>
 
 		
 		
@@ -16966,6 +17714,17 @@ If the resource field is empty, it will remove level-up Weapon Proficiency effec
 <br/>0   Cumulative Modifier -> TurnLevel = TurnLevel + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> TurnLevel = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> TurnLevel = (TurnLevel * 'Statistic Modifier' value) / 100"
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Only Clerics and Paladins will display their Turn Undead level on the Record Screen.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -16993,12 +17752,12 @@ If the resource field is empty, it will remove level-up Weapon Proficiency effec
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The creature type specified by the 'Type' field becomes immune to the spell or item specified in the 'Resource' field. It also gives a message on successful resist.
-<br/>Known values for 'Stat Type' are defined in splprot.2da. splprot.2da uses three codes (labeled STAT, VALUE and RELATION) to define a targeting type.
-  <br/><br/>STAT is either a straight stat value (listed in stat.ids) or a pseudo stat of the to be targeted creature:
+<br/>Known values for 'Stat Type' are defined in <a href="../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a>. <a href="../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a> uses three codes (labeled STAT, VALUE and RELATION) to define a targeting type.
+  <br/><br/>STAT is either a straight stat value (listed in <a href="../files/ids/bgee/stats.htm">STATS.IDS</a>) or a pseudo stat of the to be targeted creature:
   <br/>0x100 - source equals target
   <br/>0x101 - source is not target
   <br/>0x102 - circle size
-  <br/>0x103 - use two rows of splprot.2da
+  <br/>0x103 - use two rows of <a href="../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a>
   <br/>0x104 - negate 0x103
   <br/>0x105 - source and target morale match
   <br/>0x106 - areatype (like outdoors, forest, etc)
@@ -17032,6 +17791,18 @@ If the resource field is empty, it will remove level-up Weapon Proficiency effec
   <br/>9 - binary not match (none of the bits are common)
   <br/>10 - binary more (stat contains at least one bit not in value)
   <br/>11 - binary less (stat doesn't contain all the bits of value)
+
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Feedback message displays ~Unaffected by (source of "this" effect)~, not the "resource", should they differ.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17063,6 +17834,18 @@ If the resource field is empty, it will remove level-up Weapon Proficiency effec
 <br/>0   Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Save = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
+<br/>3   Increment Instantly -> Save = Save + 'Statistic Modifier' value
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+When 'Type' = 3, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when 'Type' = 0, it processes after.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17089,7 +17872,30 @@ If the resource field is empty, it will remove level-up Weapon Proficiency effec
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The creature type specified by the 'Stat Type' field will be affected by the spell in the 'Resource' field. See <a href="#op324">opcode #324</a> for more information.
+		<div class="descriptiondata"> The creature type specified by the 'Stat Type' field will be affected by the spell in the 'Resource' field. See <a href="#op324">opcode #324</a> for more information.<br/>
+The spell specified by the resource field is cast at the same level as "this" effect was cast, regardless of spell type.
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+If this effect is applied through <a href="#op177">opcode #177</a>, the spell is cast at the level specified at offset 0xc8 (Caster level) of the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The only meaningful timing modes for this opcode are: Instant/Limited(0) with 0 duration (or, equivalently, Instant/Permanent(1)) and Delayed/Permanent(4).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17286,19 +18092,23 @@ It is possible to colorize the string. In order to do so, follow the instruction
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Each creature files has a Creature Power Level number (at 0x18). This effect summons a number of monsters depending on this value, the special parameter and if it is used in SPL/ITM or from an external EFF.<br>
+		<div class="descriptiondata"> Each <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> files has a Creature Power Level number (at 0x18). This effect summons a number of monsters depending on this value, the special parameter and if it is used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.<br>
 <br/>When used in SPL/ITM, known value for 'Mode' are:
-<br/>0  Summon amount equal to ('Count' + Dice rolls)
-<br/>1  Summon amount equal to ('Count' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"<br>
+<ul>
+	<li>0 => Summon amount equal to ('Count' + Dice rolls)</li>
+	<li>1 => Summon amount equal to ('Count' + Dice rolls)</li>
+	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level"</li>
+</ul>
 
-<br/>When used in EFF, known value for 'Mode' are:
-<br/>0  Summon until Creature Power Level equals/exceeds 'Count'
-<br/>1  Summon amount equal to ('Count' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF<br>
+<br/>When used in <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> known value for 'Mode' are:
+<ul>
+	<li>0 => Summon until Creature Power Level equals/exceeds 'Count'</li>
+	<li>1 => Summon amount equal to ('Count' + Dice rolls)</li>
+	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level" field of <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> (located at offset 0xc8)</li>
+</ul>
 
-<br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are listed in smtables.2da.
-<br/>If the resource field is filled, it will use a .2da to determine which monsters to summon.
+<br/>The 'Type' field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are listed in <a href="../files/2da/2da_bgee/smtables.htm">SMTABLES.2DA</a>.
+<br/>If the resource field is filled, it will use a custom .2da to determine which monsters to summon.
 <br/>If used from an external effect (.eff), the vvc field controls the bam/vvc file played over the creatures when summoning.
 <br/>If used from an external effect (.eff), the second vvc field controls the bam file played over the target area when summoning.<br>
 
@@ -17307,7 +18117,7 @@ It is possible to colorize the string. In order to do so, follow the instruction
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-As far as the 'Allegiance' of the summoned creatures is concerned, this opcode uses "Match Target", which sets the summoned creature's allegiance to one of 4|Ally, 128|Neutral, or 255|Enemy, based on the summoner (whichever group the summoner belongs to).
+As far as the <a href="../files/ids/bgee/ea.htm">allegiance</a> of the summoned creatures is concerned, this opcode uses "Match Target", which sets the summoned creature's allegiance to one of 4|Ally, 128|Neutral, or 255|Enemy, based on the summoner (whichever group the summoner belongs to).
 
   </div>
 </div>
@@ -17350,6 +18160,16 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <br/>8   Piercing damage
 <br/>9   Crushing damage
 <br/>10  Missile damage
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'Modifier' is always a percentage, not a flat value. Multiple instances stack additively (+20% + 20% = +40%).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17426,8 +18246,8 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">State</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Spellstate</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Row#</span><br />
 
 		
 		
@@ -17436,9 +18256,27 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect sets spellstate 'State', increases the seven eyes stat and grants special ability named in the resource field.
-<br/>'Type' selects the blocked spell or effect, the blocking criteria are listed in 7eyes.2da thus works like a very selective spell trap.
-<br/>'Eye Group' may be used to define separate eye groups (it will remove 336 opcodes of the same type).
+		<div class="descriptiondata"> When the opcode is applied, it checks if the creature currently has the spellstate specified by 'Spellstate' set. Known values for 'Spellstate' are defined in <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>.
+<br/>
+
+<ul>
+	<li>If it's already set, this opcode is NOT applied, nothing happens.</li>
+	<li>Otherwise, the opcode is attached, the spellstate becomes set (for the duration of the effect), and the 'Resource' specified by the resource key (if any!) is granted to the character (as if through <a href="../_opcodes/op171.html">opcode #171</a>)</li>
+</ul>
+<br/>
+
+The next time the row number specified by 'Row#' of <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a> is triggered (blocks an effect), this effect will terminate, remove the spell it granted (as if through <a href="../_opcodes/op172.html">opcode #172</a>) and decrement <a href="../_opcodes/op336-bgee.html">opcode #336</a> effects according to their 'Eye Group' (parameter2 for op#336, special field for op#335).
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Setting 'Row#' = "-1" will effectively have it last its full duration, blocking every effect listed for that spellstate in 7EYES.2DA.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17458,15 +18296,42 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Sequence</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Eye Group</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Displays a twin VVC linked to the target. The last letter of the VVC is stored in 'Sequence'
- </div>
+		<div class="descriptiondata"> Displays 2 visual animations (VVC or BAM) similar to <a href="../_opcodes/op215.html">opcode #215</a> though only attached to a creature, not at a location (unattached). The animation filename is built from the 'resref' specified by the resource field and 'Sequence'.<br/>
+Known values for 'Sequence' are:
+<ul>
+	<li>0 => None</li>
+	<li>1 => A</li>
+	<li>2 => B</li>
+	<li>3 => C</li>
+	<li>4 => D</li>
+	<li>5 => E</li>
+	<li>6 => F</li>
+	<li>7 => G</li>
+	<li> ... </li>
+	<li>26 => Z</li>
+</ul>
+<br/>
+
+The two animations that are played must be named in the following way:
+<ol>
+	<li>'Resource'1'Sequence'.'extension'</li>
+	<li>'Resource'2'Sequence'.'extension'</li>
+</ol>
+For instance, in IWD:EE we have:
+<ul>
+	<li>#7eyes1a.VVC, #7eyes1b.VVC, #7eyes1c.VVC, #7eyes1d.VVC, #7eyes1e.VVC, #7eyes1f.VVC</li>
+	<li>#7eyes2a.VVC, #7eyes2b.VVC, #7eyes2c.VVC, #7eyes2d.VVC, #7eyes2e.VVC, #7eyes2f.VVC</li>
+</ul>
+<br/>
+
+Whenever an <a href="../_opcodes/op335-bgee.html">opcode #335</a> effect with a matching 'Eye Group' (parameter2 for op#336, special field for op#335) terminates on the creature, the 'Sequence' value is reduced by 1, until it reaches 0 and terminates itself. </div>
 		<hr />
 
 	</div>
@@ -17493,6 +18358,16 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes all 'Opcode' from target, that has the same param2 as 'Param'. Use -1 to ignore the parameter.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+This opcode cannot remove effects using 'Timing Mode' 9 (Instant/Permanent).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17524,6 +18399,16 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <br/>0 - cannot rest
 <br/>1 - cannot save
 <br/>2 - cannot save or rest
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+This effect cannot block autosaving or scripted resting.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17587,7 +18472,13 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Sets the Back Stab effect of the targetted creature to the spell specified by the resource key. Both parameters should be 0 (zero).
- </div>
+<br/>
+In particular:
+<ul>
+	<li>If the game option '3E Sneak Attacks' is not enabled, the spell is cast at the character's innate level.</li>
+	<li>If the game option '3E Sneak Attacks' is enabled, the spell is cast at level defined in <a href="../files/2da/2da_bgee/crippstr.htm">CRIPPSTR.2DA</a> + 1.<br/>
+		Default spell (without this effect) is "BACKSTAB.SPL".</li>
+</ul> </div>
 		<hr />
 
 	</div>
@@ -17627,7 +18518,17 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <br/>1  Melee Weapon only
 <br/>2  Ranged Weapon only
 <br />
-<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode 301</a>
+<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode #301</a>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect is not blocked from triggering by <a href="#op120">opcode #120</a> (Immunity to weapons).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17654,10 +18555,32 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Overrides the character animation's blood color or body heat flag.
+		<div class="descriptiondata"> Overrides the character animation's blood color, body heat flag or personal space.
 <br/>Known values for 'Field' are:
 <br/>1 - Override body heat
 <br/>2 - Override blood color
+<br/>4 - Override personal space
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'Value' = 0 causes infinite melee/spell range, both for their attacks/spells and when others target them.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Does not alter selection circle size.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17687,6 +18610,16 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		<div class="descriptiondata"> Known values for 'Mode' are:
 <br/>0 - Swap if caster HP > target HP
 <br/>1 - Always swap
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect is always instantaneous.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17709,6 +18642,10 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">IDS File</span><br />
 
 		
+			<span class="parameterheading">Parameter #3:</span> <span class="parameterdata">Weapon Slot</span><br />
+		
+		
+			<span class="parameterheading">Parameter #4:</span> <span class="parameterdata">Weapon Category</span><br />
 		
 		
 			<span class="parameterheading">Special:</span> <span class="parameterdata">Enchantment Level</span><br />
@@ -17724,7 +18661,15 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <br/>7 Gender.ids
 <br/>8 Align.ids
 <br/>9 Kit.ids
- </div>
+
+<br />
+<br/>Known values for 'Weapon Slot' are:
+<br/>0  All Weapons
+<br/>1  Melee Weapon only
+<br/>2  Ranged Weapon only
+
+<br />
+<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode 301</a> </div>
 		<hr />
 
 	</div>
@@ -17765,6 +18710,7 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <br/>9 Non-cursed
 <br/>10 Cold iron
 <br/>11 Non-cold iron
+
 <br/><br/>'Weapon Slot' can be one of the following:
 <br/>0 - current weapon (the one to which this opcode is attached as an equipped effect)
 <br/>1 - main hand weapon
@@ -17776,11 +18722,21 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-'Parameter4' is the item type of the affected weapon (0 matches all). This can be set to affect only fists, for example.
+'Parameter4' is the <a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType">item type</a> of the affected weapon (0 matches all). This can be set to affect only fists, for example.
 
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'Type' values 2, 4, 5, 7, 9, and 11 do nothing (the "non-" versions), as the opcode can only add properties, not remove them.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -17814,7 +18770,7 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <br/>0 Cumulative Modifier -> Save = Save + 'Statistic Modifier' value
 <br/>1 Flat Value Modifier -> Save = 'Statistic Modifier' value
 <br/>2 Percentage Modifier -> Save = (Save * 'Statistic Modifier' value) / 100
-<br/><br/>'Primary Type' defines the school of magic to save against (see mschool.2da).
+<br/><br/>'Primary Type' defines the school of magic to save against (see <a href="../files/2da/2da_bgee/mschool.htm">MSCHOOL.2DA</a>).
  </div>
 		<hr />
 
@@ -18233,7 +19189,18 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <br/>1  Melee Weapon only
 <br/>2  Ranged Weapon only
 <br />
-<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode 301</a>
+<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode #301</a>
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect is not blocked from triggering by <a href="#op120">opcode #120</a> (Immunity to weapons).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -18275,6 +19242,17 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 <br/>2  Ranged Weapon only
 <br />
 <br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode 301</a>
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+In v2.3 and prior, only the latest instance of this opcode applies. In v2.5+, all instances stack together.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -18283,7 +19261,7 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 	<div id="op363" class="opcode">
 		<span class="opnumberdata">#363 (0x16B)</span>
 
-		<span class="opnamedata">Movement rate check</span>
+		<span class="opnamedata">Modal state check</span>
 
 		
 		
@@ -18293,8 +19271,8 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Movement Rate</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
 		
@@ -18303,12 +19281,31 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Trying to move will break the current modal action, and breaking the modal action will remove this effect and any other effects applied by the same spell.
-<br/>Known values for 'Type' are:
-<br/>0 Cumulative Modifier -> Movement = Movement + 'Statistic Modifier' value
-<br/>1 Flat Value Modifier -> Movement = 'Statistic Modifier' value
-<br/>2 Percentage Modifier -> Movement = (Movement * 'Statistic Modifier' value) / 100
-<br/><br/>'Modal State' defines the modal state to check (see modal.ids).
+		<div class="descriptiondata"> Trying to move will break the current modal action, and breaking the modal action will remove this effect and any other effects applied by the same spell.<br />
+The targeted creature must already be in the specified Modal State when this opcode is applied.
+<br/><br/>'Modal State' defines the modal state to check (see <a href="../files/ids/bgee/modal.htm">MODAL.IDS</a>).
+<br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+If 'Modal State' = 0, then any modal state is eligible, but not "none", it must be an actual Modal State.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+When used in <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files, "Parent Resource" field must be used to specify which resources effects will be removed (an empty field will remove effects applied by the engine, such as level-up proficiencies).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -18364,8 +19361,45 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> 'Special' parameter: Enable selection circle color?
-<br/><br/>Any non-zero value in param1, param2, or special field enables dialogue, AI, and selection circle color respectively.
+		<div class="descriptiondata"> This effects makes the targeted creature unselectable.<br />
+
+Known values for 'Dialogue enabled' are:<br />
+BG:EE/SoD:
+<ul>
+	<li>0 => Enabled</li>
+	<li>1 => Disabled</li>
+</ul>
+BG2:EE:
+<ul>
+	<li>0 => Disabled</li>
+	<li>1 => Enabled</li>
+</ul>
+
+<br/>
+
+Known values for 'AI enabled' are:
+<ul>
+	<li>0 => Disabled</li>
+	<li>1 => Enabled</li>
+</ul>
+
+<br/>
+
+Known values for 'Selection circle color' are:
+<ul>
+	<li>0 => Purple Selection Circle</li>
+	<li>non-zero => Normal Selection Circle</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+'AI enabled' doesn't work in BG:EE/SoD games (i.e., you cannot disable the AI of the targeted creature).
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -18390,13 +19424,21 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		
 		
 		
-			<span class="parameterheading">Special:</span> <span class="parameterdata">Modal State</span><br />
-		
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This opcode applies the spell file (SPL) specified in the resref field to the target creature if it moves.
 <br/>The spell should be applied instantly and any casting times in the SPL file should be ignored.
-<br/><br/>'Modal State' defines the modal state to check (see modal.ids).
+<br/><br/>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect only triggers once, then terminates.
+
+  </div>
+</div>
  </div>
 		<hr />
 
@@ -18416,14 +19458,26 @@ As far as the 'Allegiance' of the summoned creatures is concerned, this opcode u
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Enabled</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Stat Value</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This is used in story mode. Any non-zero value in 'Enabled' enables it. Ensures that base stats of the affected creature can not be reduced to 0.
+		<div class="descriptiondata"> This is used in story mode. Any non-zero value in 'Stat Value' enables it. Ensures that base stats of the affected creature can not be reduced to 0.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#202">STAT #202</a> to 'param2'.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The 'Stat Value' parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 

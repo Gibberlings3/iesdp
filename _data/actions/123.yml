@@ -1,0 +1,17 @@
+bg2: 1
+n: 123
+name: ClearAllActions
+desc: |-
+  This action clears any queued actions for all creatures in the area. The example script is from ar0507.bcs.
+
+  ```
+  IF
+    Global("AmsiHouse","GLOBAL",3)
+    !Dead("amsi")
+  THEN
+    RESPONSE #100
+      ClearAllActions()
+      StartCutSceneMode()
+      ActionOverride("amsi",StartDialogueNoSet(Player1))
+  END
+  ```

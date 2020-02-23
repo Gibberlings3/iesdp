@@ -1,0 +1,17 @@
+bg2: 1
+n: 121
+name: StartCutSceneMode
+desc: |-
+  This action starts a cutscene. Player control is removed, and scripts stop running. Note that actions already in the action list are not cleared without an explicit call to ClearAllActions. The example script is from are0507.bcs.
+
+  ```
+  IF
+    Global("AmsiHouse","GLOBAL",3)
+    !Dead("amsi")
+  THEN
+    RESPONSE #100
+      ClearAllActions()
+      StartCutSceneMode()
+      ActionOverride("amsi",StartDialogueNoSet(Player1))
+  END
+  ```

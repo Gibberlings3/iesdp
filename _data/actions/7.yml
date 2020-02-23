@@ -1,23 +1,18 @@
-n: 7
-bg1: 1
 bg2: 1
-bgee: 1
-iwd1: 1
-pst: 1
-
+n: 7
 name: CreateCreature
 params:
   - name: NewObject
-    type: s # string
+    type: s
   - name: Location
-    type: p # point
+    type: p
   - name: Face
-    type: i # int
+    type: i
+desc: |-
+  This action is used to create a creature - either an NPC, a neutral creature or an enemy. NewObject is the filename of the creature to create, Location is the coordinates to create the creature at ([x.y] format) and direction being the direction the creature is facing (0-15, 0 being south and the facing values increasing as the character turns clockwise). Note that a coordinate of [-1.-1] will create the creature next to the active creature.
 
-desc: |
-  This action is used to create a creature - either an NPC, a neutral creature or an enemy. `NewObject` is the filename of the creature to create, `Location` is the coordinates to create the creature at (`[x.y]` format) and direction being the direction the creature is facing (0-15, 0 being south and the facing values increasing as the character turns clockwise). Note that a coordinate of `[-1.-1]` will create the creature next to the active creature.
+   This script is from the area script for the Copper Coronet (AR0406) and creates extra guards when the Player is discovered in the off limits area.
 
-  This script is from the area script for the Copper Coronet (AR0406) and creates extra guards when the Player is discovered in the off limits area.
   ```
   IF
     Global("CopperGuards","GLOBAL",1)

@@ -498,294 +498,535 @@ title: "BGEE Script Triggers"
 	</div>
 	<br />
 
+	<div class="triggerHeader"><a name="0x4051">0x4051 Dead(S:Name*)</a></div>
+	<div class="indent1">
+		Returns only true if the creature with the specified script name has its death variable set to 1. Not every form of death sets this, but most do. So it's an almost complete test for death. The creature must have existed for this to be true. <span class="unknown">Note that SPRITE_IS_DEAD variables are not set if the creaure is killed by a neutral creature.</span>
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x0052">0x0052 Opened(O:Object*)</a></div>
+	<div class="indent1">
+		Only for door scripts. Returns true only if the specified object opened the active door in the last script round.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x0053">0x0053 Closed(O:Object*)</a></div>
+	<div class="indent1">
+		Only for door scripts. Returns true only if the specified object closed the active door in the last script round.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x0054">0x0054 Detected(O:Object*)</a></div>
+	<div class="indent1">
+		Only for door scripts. Returns true only if the specified object detected this trap in the last script round.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x0055">0x0055 Reset(O:Object*)</a></div>
+	<div class="indent1">
+		NT Only for trap scripts? Returns true only if this trap or trigger was reset in the last script round by the object specified.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x0056">0x0056 Disarmed(O:Object*)</a></div>
+	<div class="indent1">
+		Only for trap/trigger region scripts. Returns true only if the specified object disarmed this trap in the last script round.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x0057">0x0057 Unlocked(O:Object*)</a></div>
+	<div class="indent1">
+		Only for door scripts – returns true only if this door was unlocked by the specified object in the last script round.<br />
+		Appears to be broken.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x4058">0x4058 OutOfAmmo()</a></div>
+	<div class="triggerHeader"><a name="0x4058">0x4058 HaveUsableWeapon()</a></div>
+	<div class="indent1">
+		Seems to be broken. Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a> has no ammunition for the current ranged weapon.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x4059">0x4059 NumTimesInteracted(I:NPC*NPC,I:Num*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the specified NPC has interacted with the party a number of times equal to the 2nd parameter.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x405A">0x405A NumTimesInteractedGT(I:NPC*NPC,I:Num*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the specified NPC has interacted with the party a number of times greater than the 2nd parameter.
+	</div>
+	<br />
 
+	<div class="triggerHeader"><a name="0x405B">0x405B NumTimesInteractedLT(I:NPC*NPC,I:Num*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the specified NPC has interacted with the party a number of times less than the 2nd parameter.
+	</div>
+	<br />
 
-	<strong>0x4051 Dead(S:Name*)</strong><br />
-	Returns only true if the creature with the specified script name has its death variable set to 1. Not every form of death sets this, but most do. So it's an almost complete test for death. The creature must have existed for this to be true. <span class="unknown">Note that SPRITE_IS_DEAD variables are not set if the creaure is killed by a neutral creature.</span><br />
-	<br />
-	<strong>0x0052 Opened(O:Object*)</strong><br />
-	Only for door scripts. Returns true only if the specified object opened the active door in the last script round.<br />
-	<br />
-	<strong>0x0053 Closed(O:Object*)</strong><br />
-	Only for door scripts. Returns true only if the specified object closed the active door in the last script round.<br />
-	<br />
-	<strong>0x0054 Detected(O:Object*)</strong><br />
-	Only for trap scripts. Returns true only if the specified object detected this trap in the last script round.<br />
-	<br />
-	<strong>0x0055 Reset(O:Object*)</strong><br />
-	NT Only for trap scripts? Returns true only if this trap or trigger was reset in the last script round by the object specified.<br />
-	<br />
-	<strong>0x0056 Disarmed(O:Object*)</strong><br />
-	Only for trap/trigger region scripts. Returns true only if the specified object disarmed this trap in the last script round.<br />
-	<br />
-	<strong>0x0057 Unlocked(O:Object*)</strong><br />
-	Only for door scripts - returns true only if this door was unlocked by the specified object in the last script round.<br />
-	Appears to be broken.<br />
-	<br />
-	<strong>0x4058 OutOfAmmo()</strong><br />
-	<strong>0x4058 HaveUsableWeapon()</strong><br />
-	Seems to be broken. Returns true only if the active CRE has no ammunition for the current ranged weapon.<br />
-	<br />
-	<strong>0x4059 NumTimesInteracted(I:NPC*NPC,I:Num*)</strong><br />
-	NT Returns true only if the specified NPC has interacted with the party a number of times equal to the 2nd parameter.<br />
-	<br />
-	<strong>0x405A NumTimesInteractedGT(I:NPC*NPC,I:Num*)</strong><br />
-	NT Returns true only if the specified NPC has interacted with the party a number of times greater than the 2nd parameter.<br />
-	<br />
-	<strong>0x405B NumTimesInteractedLT(I:NPC*NPC,I:Num*)</strong><br />
-	NT Returns true only if the specified NPC has interacted with the party a number of times less than the 2nd parameter.<br />
-	<br />
-	<strong>0x005C BreakingPoint()</strong><br />
-	Checks the current creatures happiness value. Note that this trigger is only evaluated when the happiness value is checked (at all other times this trigger returns false).<br />
-	<br />
-	<strong>0x005D PickPocketFailed(O:Object*)</strong><br />
-	Checks if a pickpocket attempt on the specified creature has failed in the last round.<br />
-	<br />
-	<strong>0x005E StealFailed(O:Object*)</strong><br />
-	For shopkeepers. Returns true if the specified object failed to steal from the shop in the last script round.<br />
-	<br />
-	<strong>0x005F DisarmFailed(O:Object*)</strong><br />
-	NT Not used in any existing scripts.<br />
-	<br />
-	<strong>0x0060 PickLockFailed(O:Object*)</strong><br />
-	NT Not used in any existing scripts.<br />
-	<br />
-	<strong>0x4061 HasItem(S:ResRef*,O:Object*)</strong><br />
-	<strong>0x4061 HasItemType(O:Object*,I:Type*ITEMFLAG,I:IgnoreDestructible*BOOLEAN)</strong><br />
-	Returns true only if the specified object has the specified item in its inventory. This trigger also checks with container items (e.g. Bags of Holding).<br />
-	<br />
-	<strong>0x4062 InteractingWith(O:Object*)</strong><br />
-	NT Returns true only if the active CRE is interacting (dialogue?) with the specified object.<br />
-	<br />
-	<strong>0x4063 InWeaponRange(O:Object*)</strong><br />
-	Returns true only if the specified object is within the range of the active CRE's currently equipped weapon.<br />
-	<br />
-	<strong>0x4064 HasWeaponEquiped(O:Object*)</strong><br />
-	Returns true only if the specified object has a weapon in a quickslot.<br />
-	<br />
-	<strong>0x4065 Happiness(O:Object*,I:Amount*Happy)</strong><br />
-	NT Returns true only if the specified object has the specified happiness value.<br />
-	<br />
-	<strong>0x4066 HappinessGT(O:Object*,I:Amount*Happy)</strong><br />
-	NT Returns true only if the specified object has greater than the specified happiness value.<br />
-	<br />
-	<strong>0x4067 HappinessLT(O:Object*,I:Amount*Happy)</strong><br />
-	NT Returns true only if the specified object has less than the specified happiness value.<br />
-	<br />
-	<strong>0x4068 TimeGT(I:Time*Time)</strong><br />
-	Returns true only if the current time is greater than that specified. Hours are offset by 30 minutes, e.g. TimeGT(1) is true between 01:30 and 02:29.<br />
-	<br />
-	<strong>0x4069 TimeLT(I:Time*Time)</strong><br />
-	Returns true only if the current time is less than that specified. Hours are offset by 30 minutes, e.g. TimeLT(1) is true between 23:30 and 00:29.<br />
-	<br />
-	<strong>0x406A NumInParty(I:Num*)</strong><br />
-	Returns true only if the number of party members (dead ones also count) is equal to the number specified.<br />
-	<br />
-	<strong>0x406B NumInPartyGT(I:Num*)</strong><br />
-	Returns true only if the number of party members (dead ones also count) is greater than the number specified.<br />
-	<br />
-	<strong>0x406C NumInPartyLT(I:Num*)</strong><br />
-	Returns true only if the number of party members (dead ones also count) is less than the number specified.<br />
-	<br />
-	<strong>0x406D UnselectableVariable(I:Num*)</strong><br />
-	Returns true only if the active creature is for exactly the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../opcodes/bgee.htm#op365">opcode 365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().<br />
-	<br />
-	<strong>0x406E UnselectableVariableGT(I:Num*)</strong><br />
-	Returns true only if the active creature is for more than the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../opcodes/bgee.htm#op365">opcode 365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().<br />
-	<br />
-	<strong>0x406F UnselectableVariableLT(I:Num*)</strong><br />
-	Returns true only if the active creature is for less than the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../opcodes/bgee.htm#op365">opcode 365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().<br />
-	<br />
-	<strong>0x0070 Clicked(O:Object*)</strong><br />
-	Only for trigger regions. Returns true if the specified object clicked on the trigger region running this script.<br />
-	<br />
-	<strong>0x4071 NumDead(S:Name*,I:Num*)</strong><br />
-	Returns true only if the number of creatures with script name &quot;Name&quot; that have been killed is equal to the 2nd parameter.<br />
-	<br />
-	<strong>0x4072 NumDeadGT(S:Name*,I:Num*)</strong><br />
-	Returns true only if the number of creatures with script name &quot;Name&quot; that have been killed is greater than the 2nd parameter.<br />
-	<br />
-	<strong>0x4073 NumDeadLT(S:Name*,I:Num*)</strong><br />
-	Returns true only if the number of creatures with script name &quot;Name&quot; that have been killed is less than the 2nd parameter.<br />
-	<br />
-	<strong>0x4074 Detect(O:Object*)</strong><br />
-	Returns true if the the specified object is detected by the active CRE in any way (hearing or sight). Neither Move Silently and Hide in Shadows prevent creatures being detected via Detect(). Detect ignores Protection from Creature type effects for static objects.<br />
-	<br />
-	<strong>0x4075 Contains(S:ResRef*,O:Object*)</strong><br />
-	Returns true only if the item specified in parameter 1 is in the container specified in parameter 2.<br />
-	<br />
-	<strong>0x4076 OpenState(O:Object*,I:Open*BOOLEAN)</strong><br />
-	NT Returns true only if the open state of the specified door matches the state specified in the 2nd parameter.<br />
-	<br />
-	<strong>0x4077 NumItems(S:ResRef*,O:Object*,I:Num*)</strong><br />
-	Returns true only if the specified object has the number of items in the 3rd parameter of the type specified in the 1st parameter in its inventory.<br />
-	<br />
-	<strong>0x4078 NumItemsGT(S:ResRef*,O:Object*,I:Num*)</strong><br />
-	Returns true only if the specified object has more than the number of items in the 3rd parameter of the type specified in the 1st parameter in its inventory.<br />
-	<br />
-	<strong>0x4079 NumItemsLT(S:ResRef*,O:Object*,I:Num*)</strong><br />
-	Returns true only if the specified object has fewer than the number of items in the 3rd parameter of the type specified in the 1st parameter in its inventory.<br />
-	<br />
-	<strong>0x407A NumItemsParty(S:ResRef*,I:Num*)</strong><br />
-	Returns true only if the party has a total number of items of the type specified equal to the 2nd parameter.<br />
-	<br />
-	<strong>0x407B NumItemsPartyGT(S:ResRef*,I:Num*)</strong><br />
-	Returns true only if the party has a total number of items of the type specified greater than the 2nd parameter.<br />
-	<br />
-	<strong>0x407C NumItemsPartyLT(S:ResRef*,I:Num*)</strong><br />
-	Returns true only if the party has a total number of items of the type specified less than the 2nd parameter.<br />
-	<br />
-	<strong>0x407D IsOverMe(O:Object*)</strong><br />
-	Only for trigger regions. Returns true only if the specified object is over the trigger running the script.<br />
-	<br />
-	<strong>0x407E AreaCheck(S:ResRef*)</strong><br />
-	Returns true only if the active CRE is in the area specified.<br />
-	<br />
-	<strong>0x407F HasItemEquiped(S:ResRef*,O:Object*)</strong><br />
-	Returns true if the specified object has the specified item in one of its quicklots if it is a weapon, or has it equipped if it is a piece of armour of an amulet etc. This trigger does not work for Melf's Minute Meteors.<br />
-	<br />
-	<strong>0x4080 NumCreatureVsParty(O:Object*,I:Number*)</strong><br />
-	Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is equal to the 2nd parameter.<br />
-	<br />
-	<strong>0x4081 NumCreatureVsPartyLT(O:Object*,I:Number*)</strong><br />
-	Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is less than the 2nd parameter.<br />
-	<br />
-	<strong>0x4082 NumCreatureVsPartyGT(O:Object*,I:Number*)</strong><br />
-	Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is greater than the 2nd parameter.<br />
-	<br />
-	<strong>0x4083 CombatCounter(I:Number*)</strong><br />
-	This trigger does may not work as expected.<br />
-	<div class="unknown">Returns true only if the combat counter (counts down from 150 after each attack) is of the value specified. CombatCounter(0) returns true only if there is no combat in the active area at the moment. CombatCounter can give false results after dialog has been completed or after a Hide in Shadows chck has been failed.</div>
-	<br />
-	<strong>0x4084 CombatCounterLT(I:Number*)</strong><br />
-	Returns true only if the combat counter (counts down from 150 after each attack) is less than the value specified.<br />
-	<br />
-	<strong>0x4085 CombatCounterGT(I:Number*)</strong><br />
-	This trigger does not work as expected.<br />
-	<div class="unknown">Returns true only if the combat counter (counts down from 150 after each attack) is greater than the value specified. CombatCounterGT(0) returns true if there is any combat going on in the active area.</div>
-	<br />
-	<strong>0x4086 AreaType(I:Number*AREATYPE)</strong><br />
-	Returns true only if the area in which the active CRE is, has the specified type flag set. Note that the value is OR'd. This trigger can cause a crash if it evaluates to true and is used as the first trigger in a dead NPCs dream script.<br />
-	<br />
-	<strong>0x0087 TrapTriggered(O:Triggerer*)</strong><br />
-	NT Only for trigger regions/traps. Returns true if this trap was triggered by the object specified.<br />
-	<br />
-	<strong>0x0088 PartyMemberDied(O:Object*)</strong><br />
-	NT Returns true only if the party member specified died in the last script round.<br />
-	<br />
-	<strong>0x4089 OR(I:OrCount*)</strong><br />
-	Returns true if any of the next 'OrCount' triggers returns true.<br />
-	<br />
-	<strong>0x4090 InPartySlot(O:Object*,I:Slot*)</strong><br />
-	Returns true only if the specified object is in the party and in the slot specified (slots are 0-5). Party slots are based on join order; Player1 is in slot 0, Player2 in slot 1 etc.<br />
-	<br />
-	<strong>0x0091 SpellCast(O:Object*,I:Spell*Spell)</strong><br />
-	<strong>0x0091 SpellCastRES(S:Spell*,O:Object*)</strong><br />
-	Returns true only if the specified object cast the spell in the 2nd paramater in the last script round. If the Spell parameter is 0, then this will return true for ANY spell cast.<br />
-	<br />
-	<strong>0x4092 InLine(S:Target*,O:Object*)</strong><br />
-	InLine(S:Target*,O:Object*) seems to have no effect.<br />
-	InLine(O:Object*) returns true if the active creature can see the target creature.<br />
-	<br />
-	<strong>0x0093 PartyRested()</strong><br />
-	Returns true if the party has just finished resting.<br />
-	<br />
-	<strong>0x4094 Level(O:Object*,I:Level*)</strong><br />
-	Returns true only if the experience level of the specified object equals the 2nd parameter.<br />
-	<br />
-	<strong>0x4095 LevelGT(O:Object*,I:Level*)</strong><br />
-	Returns true only if the experience level of the specified object is greater than the 2nd parameter.<br />
-	<br />
-	<strong>0x4096 LevelLT(O:Object*,I:Level*)</strong><br />
-	Returns true only if the experience level of the specified object is less than the 2nd parameter.<br />
-	<br />
-	<strong>0x0097 Summoned(O:Object*)</strong><br />
-	NT Returns true only if the active CRE summoned the specified object in the last script round.<br />
-	<br />
-	<strong>0x4098 GlobalsEqual(S:Name1*,S:Name2*)</strong><br />
-	Returns true only if the 2 global variables specified have equal values.<br />
-	<br />
-	<strong>0x4099 GlobalsGT(S:Name1*,S:Name2*)</strong><br />
-	Returns true only if the 1st global variable has a value greater than the 2nd one.<br />
-	<br />
-	<strong>0x409A GlobalsLT(S:Name1*,S:Name2*)</strong><br />
-	Returns true only if the 1st global variable has a value less than the 2nd one.<br />
-	<br />
-	<strong>0x409B LocalsEqual(S:Name1*,S:Name2*)</strong><br />
-	Returns true only if the 2 local variables specified have equal values.<br />
-	<br />
-	<strong>0x409C LocalsGT(S:Name1*,S:Name2*)</strong><br />
-	Returns true only if the 1st local variable has a value less than the 2nd one.<br />
-	<br />
-	<strong>0x409D LocalsLT(S:Name1*,S:Name2*)</strong><br />
-	Returns true only if the 1st local variable has a value less than the 2nd one.<br />
-	<br />
-	<strong>0x409E ObjectActionListEmpty(O:Object*)</strong><br />
-	Returns true only if the specified object has no actions waiting to be performed.<br />
-	<br />
-	<strong>0x409F OnScreen(O:Object*)</strong><br />
-	Returns true if the specified object is on the screen.<br />
-	<br />
-	<strong>0x40A0 InActiveArea(O:Object*)</strong><br />
-	Returns true only if specified object is in the active area. The active area is that in which player 1 is. This trigger will crash the game if the specified creature is not in the active area and is not a global object.<br />
-	<br />
-	<strong>0x00A1 SpellCastOnMe(O:Caster*,I:Spell*Spell)</strong><br />
-	<strong>0x00A1 SpellCastOnMeRES(S:Spell*,O:Caster*)</strong><br />
-	Returns true only if the specified object cast the specified spell on the active CRE in the last scriptround. If the Spell parameter is 0 (or "" for the RES version), then this trigger will return true for ANY spell cast.<br />
-	<br />
-	<strong>0x40A2 CalanderDay(I:Day*)</strong><br />
-	NT Returns true only if the current day is the day specified.<br />
-	<br />
-	<strong>0x40A3 CalanderDayGT(I:Day*)</strong><br />
-	NT Returns true only if the current day is after the day specified.<br />
-	<br />
-	<strong>0x40A4 CalanderDayLT(I:Day*)</strong><br />
-	NT Returns true only if the current day is before the day specified.<br />
-	<br />
-	<strong>0x40A5 Name(S:Name*,O:Object*)</strong><br />
-	Returns true only if the object in the 2nd parameter has the scriptname specified.<br />
-	<br />
-	<strong>0x00A6 SpellCastPriest(O:Object*,I:Spell*Spell)</strong><br />
-	<strong>0x00A6 SpellCastPriestRES(S:Spell*,O:Object*)</strong><br />
-	Returns true only if the specified object cast the specified priest spell in the last script round.<br />
-	<br />
-	<strong>0x00A7 SpellCastInnate(O:Object*,I:Spell*Spell)</strong><br />
-	<strong>0x00A7 SpellCastInnateRES(S:Spell*,O:Object*)</strong><br />
-	Returns true only if the specified object cast the specified innate spell in the last script round.<br />
-	NB. The spell level must match the spells definition (in spell.ids) for the trigger to return true.<br />
-	<br />
-	<strong>0x40A8 IsValidForPartyDialog(O:Object*)</strong><br />
-	<strong>0x40A8 IfValidForPartyDialog(O:Object*)</strong><br />
-	<strong>0x40A8 IsValidForPartyDialogue(O:Object*)</strong><br />
-	<strong>0x40A8 IfValidForPartyDialogue(O:Object*)</strong><br />
-	Returns true only if that specifed party member can take part in party dialogue.<br />
-	<br />
-	<strong>0x40A9 PartyHasItemIdentified(S:ResRef*)</strong><br />
-	Returns true only if the party has the item specified and it is identified.<br />
-	<br />
-	<strong>0x40B0 HasBounceEffects(O:Object*)</strong><br />
-	Returns true if any of the specified object is currently affected by any of the listed effects:<br />
-<ul>
-<li>0xc5 Bounce Projectile</li>
-<li>0xc6 Bounce Opcode</li>
-<li>0xc7 Bounce Spell Level</li>
-<li>0xc8 </li>
-<li>0xca Bounce Spell School</li>
-<li>0xcb Bounce Secondary Type</li>
-<li>0xcf Bounce Specified School</li>
-<li>0xe3 Bounce School Decrement</li>
-<li>0xe4 Bounce Secondary Type Decrement</li>
-</ul>
-	<br />
+	<div class="triggerHeader"><a name="0x005C">0x005C BreakingPoint()</a></div>
+	<div class="indent1">
+		Checks the current creature's happiness value. Note that this trigger is only evaluated when the happiness value is checked (at all other times this trigger returns false).
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x005D">0x005D PickPocketFailed(O:Object*)</a></div>
+	<div class="indent1">
+		Checks if a pickpocket attempt on the specified creature has failed in the last script round.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x005E">0x005E StealFailed(O:Object*)</a></div>
+	<div class="indent1">
+		For shopkeepers. Returns true if the specified object failed to steal from the shop in the last script round.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x005F">0x005F DisarmFailed(O:Object*)</a></div>
+	<div class="indent1">
+		NT Not used in any existing scripts.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x0060">0x0060 PickLockFailed(O:Object*)</a></div>
+	<div class="indent1">
+		NT Not used in any existing scripts.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4061">0x4061 HasItem(S:ResRef*,O:Object*)</a></div>
+	<div class="triggerHeader"><a name="0x4061">0x4061 HasItemType(O:Object*,I:Type*ITEMFLAG,I:IgnoreDestructible*BOOLEAN)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object has the specified <a href="../../file_formats/ie_formats/itm_v1.htm">item</a> in its inventory. This trigger also checks with container items (e.g. Bags of Holding).
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4062">0x4062 InteractingWith(O:Object*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a> is interacting (dialogue?) with the specified object.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4063">0x4063 InWeaponRange(O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object is within the range of the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a>'s currently equipped weapon.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4064">0x4064 HasWeaponEquiped(O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object has a weapon in a quickslot.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4065">0x4065 Happiness(O:Object*,I:Amount*Happy)</a></div>
+	<div class="indent1">
+		NT Returns true only if the specified object has the specified happiness value.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4066">0x4066 HappinessGT(O:Object*,I:Amount*Happy)</a></div>
+	<div class="indent1">
+		NT Returns true only if the happiness of the specified object is greater than the specified value.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4067">0x4067 HappinessLT(O:Object*,I:Amount*Happy)</a></div>
+	<div class="indent1">
+		NT Returns true only if the happiness of the specified object is less than the specified value.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4068">0x4068 TimeGT(I:Time*Time)</a></div>
+	<div class="indent1">
+		Returns true only if the current <a href="../../files/ids/bgee/time.htm">time</a> is greater than that specified. Hours are offset by 30 minutes, e.g. TimeGT(1) is true between 01:30 and 02:29.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4069">0x4069 TimeLT(I:Time*Time)</a></div>
+	<div class="indent1">
+		Returns true only if the current <a href="../../files/ids/bgee/time.htm">time</a> is less than that specified. Hours are offset by 30 minutes, e.g. TimeLT(1) is true between 23:30 and 00:29.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x406A">0x406A NumInParty(I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the number of party members (dead ones also count) is equal to the number specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x406B">0x406B NumInPartyGT(I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the number of party members (dead ones also count) is greater than the number specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x406C">0x406C NumInPartyLT(I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the number of party members (dead ones also count) is less than the number specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x406D">0x406D UnselectableVariable(I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">creature</a> is for exactly the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../_opcodes/op365-bgee.html">opcode #365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x406E">0x406E UnselectableVariableGT(I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">creature</a> is for more than the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../_opcodes/op365-bgee.html">opcode #365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x406F">0x406F UnselectableVariableLT(I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">creature</a> is for less than the specified number of ticks (1/15th seconds) left under the effect of the script action <a href="../actions/bgeeactions.htm#182">MakeUnselectable()</a> or <a href="../../_opcodes/op365-bgee.html">opcode #365</a>. Note: By default in BG2EE creatures stop processing scripts while under effect of the script action MakeUnselectable().
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x0070">0x0070 Clicked(O:Object*)</a></div>
+	<div class="indent1">
+		Only for <a href="../../file_formats/ie_formats/are_v1.htm#formAREAV1_0_Info">trigger regions</a>. Returns true if the specified object clicked on the trigger region running this script.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4071">0x4071 NumDead(S:Name*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the number of creatures with script name &quot;Name&quot; that have been killed is equal to the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4072">0x4072 NumDeadGT(S:Name*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the number of creatures with script name &quot;Name&quot; that have been killed is greater than the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4073">0x4073 NumDeadLT(S:Name*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the number of creatures with script name &quot;Name&quot; that have been killed is less than the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4074">0x4074 Detect(O:Object*)</a></div>
+	<div class="indent1">
+		Returns true if the the specified object is detected by the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a> in any way (hearing or sight). Neither Move Silently nor Hide in Shadows prevent creatures from being detected via Detect(). Detect ignores <a href="../../_opcodes/op100.html">Protection from Creature Type</a> effects for static objects.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4075">0x4075 Contains(S:ResRef*,O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the <a href="../../file_formats/ie_formats/itm_v1.htm">item</a> specified in parameter 1 is in the <a href="../../file_formats/ie_formats/are_v1.htm#formAREAV1_0_Container">container</a> specified in parameter 2.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4076">0x4076 OpenState(O:Object*,I:Open*BOOLEAN)</a></div>
+	<div class="indent1">
+		NT Returns true only if the open state of the specified <a href="../../file_formats/ie_formats/are_v1.htm#formAREAV1_0_Door">door</a> matches the state specified in the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4077">0x4077 NumItems(S:ResRef*,O:Object*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object has the number of <a href="../../file_formats/ie_formats/itm_v1.htm">items</a> in the 3rd parameter of the type specified in the 1st parameter in its inventory.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4078">0x4078 NumItemsGT(S:ResRef*,O:Object*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object has more than the number of <a href="../../file_formats/ie_formats/itm_v1.htm">items</a> in the 3rd parameter of the type specified in the 1st parameter in its inventory.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4079">0x4079 NumItemsLT(S:ResRef*,O:Object*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object has fewer than the number of <a href="../../file_formats/ie_formats/itm_v1.htm">items</a> in the 3rd parameter of the type specified in the 1st parameter in its inventory.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x407A">0x407A NumItemsParty(S:ResRef*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the party has a total number of <a href="../../file_formats/ie_formats/itm_v1.htm">items</a> of the type specified equal to the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x407B">0x407B NumItemsPartyGT(S:ResRef*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the party has a total number of <a href="../../file_formats/ie_formats/itm_v1.htm">items</a> of the type specified greater than the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x407C">0x407C NumItemsPartyLT(S:ResRef*,I:Num*)</a></div>
+	<div class="indent1">
+		Returns true only if the party has a total number of <a href="../../file_formats/ie_formats/itm_v1.htm">items</a> of the type specified less than the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x407D">0x407D IsOverMe(O:Object*)</a></div>
+	<div class="indent1">
+		Only for <a href="../../file_formats/ie_formats/are_v1.htm#formAREAV1_0_Info">trigger</a> regions. Returns true only if the specified object is over the trigger running the script.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x407E">0x407E AreaCheck(S:ResRef*)</a></div>
+	<div class="indent1">
+		Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a> is in the <a href="../../file_formats/ie_formats/are_v1.htm">area</a> specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x407F">0x407F HasItemEquiped(S:ResRef*,O:Object*)</a></div>
+	<div class="indent1">
+		Returns true if the specified object has the specified <a href="../../file_formats/ie_formats/itm_v1.htm">item</a> in one of its quicklots if it is a weapon, or has it equipped if it is a piece of armour or an amulet etc. This trigger does not work for Melf's Minute Meteors.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4080">0x4080 NumCreatureVsParty(O:Object*,I:Number*)</a></div>
+	<div class="indent1">
+		Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is equal to the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4081">0x4081 NumCreatureVsPartyLT(O:Object*,I:Number*)</a></div>
+	<div class="indent1">
+		Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is less than the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4082">0x4082 NumCreatureVsPartyGT(O:Object*,I:Number*)</a></div>
+	<div class="indent1">
+		Returns true if the number of hostile creatures of the type specified in the 1st parameter that are currently in fighting range of the party, minus the number of party members, is greater than the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4083">0x4083 CombatCounter(I:Number*)</a></div>
+	<div class="indent1">
+		This trigger may not work as expected.<br />
+		<div class="unknown">Returns true only if the combat counter (counts down from 150 after each attack) is of the value specified. CombatCounter(0) returns true only if there is no combat in the active area at the moment. CombatCounter() can give false results after dialog has been completed or after a Hide in Shadows check has been failed.</div>
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4084">0x4084 CombatCounterLT(I:Number*)</a></div>
+	<div class="indent1">
+		Returns true only if the combat counter (counts down from 150 after each attack) is less than the value specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4085">0x4085 CombatCounterGT(I:Number*)</a></div>
+	<div class="indent1">
+		This trigger does not work as expected.<br />
+		<div class="unknown">Returns true only if the combat counter (counts down from 150 after each attack) is greater than the value specified. CombatCounterGT(0) returns true if there is any combat going on in the active area.</div>
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4086">0x4086 AreaType(I:Number*AREATYPE)</a></div>
+	<div class="indent1">
+		Returns true only if the <a href="../../file_formats/ie_formats/are_v1.htm">area</a> in which the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a> is, has the specified <a href="../../files/ids/bgee/areatype.htm">type flag</a> set. Note that the value is OR'd. This trigger can cause a crash if it evaluates to true and is used as the first trigger in a dead NPCs dream script.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x0087">0x0087 TrapTriggered(O:Triggerer*)</a></div>
+	<div class="indent1">
+		NT Only for trigger <a href="../../file_formats/ie_formats/are_v1.htm#formAREAV1_0_Info">regions/traps</a>. Returns true if this trap was triggered by the object specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x0088">0x0088 PartyMemberDied(O:Object*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the party member specified died in the last script round.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4089">0x4089 OR(I:OrCount*)</a></div>
+	<div class="indent1">
+		Returns true if any (i.e., at least one) of the next 'OrCount' triggers returns true.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4090">0x4090 InPartySlot(O:Object*,I:Slot*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object is in the party and in the slot specified (slots are 0-5). Party slots are based on join order; Player1 is in slot 0, Player2 in slot 1 etc.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x0091">0x0091 SpellCast(O:Object*,I:Spell*Spell)</a></div>
+	<div class="triggerHeader"><a name="0x0091">0x0091 SpellCastRES(S:Spell*,O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object cast the spell in the 2nd paramater in the last script round. If the Spell parameter is 0, then this will return true for ANY spell cast.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4092">0x4092 InLine(S:Target*,O:Object*)</a></div>
+	<div class="indent1">
+		Seems to have no effect.<br />
+		InLine(O:Object*) returns true if the active creature can see the target creature.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x0093">0x0093 PartyRested()</a></div>
+	<div class="indent1">
+		Returns true if the party has just finished resting.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4094">0x4094 Level(O:Object*,I:Level*)</a></div>
+	<div class="indent1">
+		Returns true only if the experience level of the specified object equals the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4095">0x4095 LevelGT(O:Object*,I:Level*)</a></div>
+	<div class="indent1">
+		Returns true only if the experience level of the specified object is greater than the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4096">0x4096 LevelLT(O:Object*,I:Level*)</a></div>
+	<div class="indent1">
+		Returns true only if the experience level of the specified object is less than the 2nd parameter.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x0097">0x0097 Summoned(O:Object*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a> summoned the specified object in the last script round.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4098">0x4098 GlobalsEqual(S:Name1*,S:Name2*)</a></div>
+	<div class="indent1">
+		Returns true only if the 2 global <a href="../../appendices/variables.htm">variables</a> specified have equal values.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x4099">0x4099 GlobalsGT(S:Name1*,S:Name2*)</a></div>
+	<div class="indent1">
+		Returns true only if the 1st global <a href="../../appendices/variables.htm">variable</a> has a value greater than the 2nd one.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x409A">0x409A GlobalsLT(S:Name1*,S:Name2*)</a></div>
+	<div class="indent1">
+		Returns true only if the 1st global <a href="../../appendices/variables.htm">variable</a> has a value less than the 2nd one.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x409B">0x409B LocalsEqual(S:Name1*,S:Name2*)</a></div>
+	<div class="indent1">
+		Returns true only if the 2 local <a href="../../appendices/variables.htm">variables</a> specified have equal values.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x409C">0x409C LocalsGT(S:Name1*,S:Name2*)</a></div>
+	<div class="indent1">
+		Returns true only if the 1st local <a href="../../appendices/variables.htm">variable</a> has a value greater than the 2nd one.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x409D">0x409D LocalsLT(S:Name1*,S:Name2*)</a></div>
+	<div class="indent1">
+		Returns true only if the 1st local <a href="../../appendices/variables.htm">variable</a> has a value less than the 2nd one.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x409E">0x409E ObjectActionListEmpty(O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object has no actions waiting to be performed.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x409F">0x409F OnScreen(O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object is on the screen.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x40A0">0x40A0 InActiveArea(O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if specified object is in the active <a href="../../file_formats/ie_formats/are_v1.htm">area</a>. The active area is that in which Player1 is. This trigger will crash the game if the specified creature is not in the active area and is not a global object.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x00A1">0x00A1 SpellCastOnMe(O:Caster*,I:Spell*Spell)</a></div>
+	<div class="triggerHeader"><a name="0x00A1">0x00A1 SpellCastOnMeRES(S:Spell*,O:Caster*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object cast the specified spell on the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a> in the last script round. If the Spell parameter is 0 (or "" for the RES version), then this will return true for ANY spell cast.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x40A2">0x40A2 CalanderDay(I:Day*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the current day is the day specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x40A3">0x40A3 CalanderDayGT(I:Day*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the current day is after the day specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x40A4">0x40A4 CalanderDayLT(I:Day*)</a></div>
+	<div class="indent1">
+		NT Returns true only if the current day is before the day specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x40A5">0x40A5 Name(S:Name*,O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the object in the 2nd parameter has the script name specified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x00A6">0x00A6 SpellCastPriest(O:Object*,I:Spell*Spell)</a></div>
+	<div class="triggerHeader"><a name="0x00A6">0x00A6 SpellCastPriestRES(S:Spell*,O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object cast the specified priest spell in the last script round.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x00A7">0x00A7 SpellCastInnate(O:Object*,I:Spell*Spell)</a></div>
+	<div class="triggerHeader"><a name="0x00A7">0x00A7 SpellCastInnateRES(S:Spell*,O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if the specified object cast the specified innate spell in the last script round.<br />
+		NB. The spell level must match the spell's definition (in <a href="../../files/ids/bgee/spell.htm">SPELL.IDS</a>) for the trigger to return true.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x40A8">0x40A8 IsValidForPartyDialog(O:Object*)</a></div>
+	<div class="triggerHeader"><a name="0x40A8">0x40A8 IfValidForPartyDialog(O:Object*)</a></div>
+	<div class="triggerHeader"><a name="0x40A8">0x40A8 IsValidForPartyDialogue(O:Object*)</a></div>
+	<div class="triggerHeader"><a name="0x40A8">0x40A8 IfValidForPartyDialogue(O:Object*)</a></div>
+	<div class="indent1">
+		Returns true only if that specifed party member can take part in party dialogue.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x40A9">0x40A9 PartyHasItemIdentified(S:ResRef*)</a></div>
+	<div class="indent1">
+		Returns true only if the party has the <a href="../../file_formats/ie_formats/itm_v1.htm">item</a> specified and it is identified.
+	</div>
+	<br />
+
+	<div class="triggerHeader"><a name="0x40B0">0x40B0 HasBounceEffects(O:Object*)</a></div>
+	<div class="indent1">
+		Returns true if any of the specified object is currently affected by any of the listed effects:
+		<ul>
+			<li><a href="../../_opcodes/op197.html">Bounce Projectile</a></li>
+			<li><a href="../../_opcodes/op198.html">Bounce Opcode</a></li>
+			<li><a href="../../_opcodes/op199.html">Bounce Spell Level</a></li>
+			<li><a href="../../_opcodes/op200.html">Decrementing Bounce Spells</a></li>
+			<li><a href="../../_opcodes/op202.html">Bounce Spell School</a></li>
+			<li><a href="../../_opcodes/op203.html">Bounce Secondary Type</a></li>
+			<li><a href="../../_opcodes/op207.html">Bounce Specified Spell</a></li>
+			<li><a href="../../_opcodes/op227.html">Bounce School Decrement</a></li>
+			<li><a href="../../_opcodes/op228.html">Bounce Secondary Type Decrement</a></li>
+		</ul>
+	</div>
+	<br />
+
 	<strong>0x40B1 HasImmunityEffects(O:Object*)</strong><br />
 	Returns true if any of the specified object is currently affected by any of the listed effects:<br />
 <ul>

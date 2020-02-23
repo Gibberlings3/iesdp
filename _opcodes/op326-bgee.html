@@ -10,4 +10,18 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-The creature type specified by the 'Stat Type' field will be affected by the spell in the 'Resource' field. See <a href="#op324">opcode #324</a> for more information.
+The creature type specified by the 'Stat Type' field will be affected by the spell in the 'Resource' field. See <a href="#op324">opcode #324</a> for more information.<br/>
+The spell specified by the resource field is cast at the same level as "this" effect was cast, regardless of spell type.
+<br/>
+
+{% capture note %}
+If this effect is applied through <a href="#op177">opcode #177</a>, the spell is cast at the level specified at offset 0xc8 (Caster level) of the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+The only meaningful timing modes for this opcode are: Instant/Limited(0) with 0 duration (or, equivalently, Instant/Permanent(1)) and Delayed/Permanent(4).
+{% endcapture %}
+
+{% include note.html %}

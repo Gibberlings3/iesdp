@@ -41,14 +41,29 @@ Casts the spell specified by the resource field on the target specified by the '
 <br/>20  HPPercentLT(Myself,'Extra') – Checked once per round
 <br/>21  CheckSpellState(Myself,'Extra') – Checked once per round
 <br/><br/>The 'Extra' field is used for the following 'Target' values:
-<br/>13: Use value from TIMEODAY.IDS
+<br/>13: Use value from <a href="../files/ids/bgee/timeoday.htm">TIMEODAY.IDS</a>
 <br/>14: Range in feet
-<br/>15: Use value from STATE.IDS
+<br/>15: Use value from <a href="../files/ids/bgee/state.htm">STATE.IDS</a>
 <br/>19: Any numeric value
 <br/>20: Any numeric value
-<br/>21: Use value from SPLSTATE.IDS
+<br/>21: Use value from <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>
 <br/><br/>For a 'Condition' of 13, the 'Target' parameter must be 0.
-<br/><br/>Parameter 3 (EFF) activates the portrait icon and immediately triggers the HitBy() trigger
+<br/><br/>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, "resource2" and "resource3" can also be specified – all spells will be cast when triggered.<br/><br/>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, known values for 'Parameter3' are:
+<ul>
+	<li>0 => Not a "real" contingency (Fire Shields, Globe of Blades, etc...)</li>
+	<li>1 => Real contingency (Maintains 'Contingency' portrait icon, displays feedback message ENGINEST[246|STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER] when triggered, and terminates this effect after first trigger. This value is always set when created by <a href="../_opcodes/op234-bgee">opcode #234</a>.</li>
+</ul>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, 'Parent Type' (Source Type) may be manually set to influence its behavior. Known values for 'Parent Type' are:
+<ul>
+	<li>0 = None – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+	<li>1 = Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string ENGINEST[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log.</li>
+	<li>2 = Item – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+</ul>
 
 {% capture note %}
 If you need a condition which is always true, you could set 'Condition' to 20 and 'Extra' to 102 ("hp < 102%" will always be true; 102 is used because 'value' must be even or the combat log will be flooded with feedback messages).
@@ -64,6 +79,12 @@ These triggers and objects are limited to their normal detection range: e.g., "D
 
 {% capture note %}
 Excluding the "Range()" checks, [ANYONE] includes "Myself".
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the 'Cast Normal' result.
 {% endcapture %}
 
 {% include note.html %}

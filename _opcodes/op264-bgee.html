@@ -1,0 +1,31 @@
+---
+n: 264
+name: "Spell Effect: Drop Weapons in Panic"
+param1: "Irrelevant"
+param2: "Type"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Applies the drop weapons effect to the targeted creature(s), in the style specified by the 'Type' field.
+<br/>This effect causes the targeted creature(s) to drop a piece of equipment.
+<br/>Known values for 'Type' are:
+<br/>0   Drop random equipment
+<br/>1   Drop weapons from Quick-Weapon Slot (slots #35 – #38).
+<br/>
+
+{% capture note %}
+Can drop items located in the Magical Weapon Slot (slot #34 – SLOT_MISC19) if they are not flagged properly.<br/>
+Will never drop items:
+<ul>
+	<li>located in slot #10 – SLOT_FIST</li>
+	<li>flagged as "Critical" => BIT0 (INDESTRUCTIBLE) set to 1 in the <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> file</li>
+	<li>not flagged as "Droppable" => BIT2 (DROPPABLE) set to 0 in the <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> file</li>
+	<li>flagged as "Undroppable" => BIT3 (NONDROPABLE) set to 1 in the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

@@ -24,6 +24,7 @@ Known values for 'Type' are:
 <br/>9 Non-cursed
 <br/>10 Cold iron
 <br/>11 Non-cold iron
+
 <br/><br/>'Weapon Slot' can be one of the following:
 <br/>0 - current weapon (the one to which this opcode is attached as an equipped effect)
 <br/>1 - main hand weapon
@@ -31,7 +32,13 @@ Known values for 'Type' are:
 <br/>3 - both weapons
 
 {% capture note %}
-'Parameter4' is the item type of the affected weapon (0 matches all). This can be set to affect only fists, for example.
+'Parameter4' is the <a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType">item type</a> of the affected weapon (0 matches all). This can be set to affect only fists, for example.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+'Type' values 2, 4, 5, 7, 9, and 11 do nothing (the "non-" versions), as the opcode can only add properties, not remove them.
 {% endcapture %}
 
 {% include note.html %}

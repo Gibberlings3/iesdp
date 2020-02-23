@@ -16,17 +16,5 @@ aliases:
         type: s
       - name: Target
         type: o
-unknown: 1
-desc: |-
-  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. This action may not be reliable. This action works in the script round where the active creature has died.
-
-  ```
-  IF
-      Die()xx
-  THEN
-      RESPONSE #100
-          ReallyForceSpellDead(Myself,ILLUSION_DEATH)
-          Wait(1)
-          DestroySelf()
-  END
-  ```
+unreliable: true
+desc: "This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. This action works in the script round where the active creature has died.\n\n```\nIF\n    Die()xx\nTHEN\n    RESPONSE #100\n        ReallyForceSpellDead(Myself,ILLUSION_DEATH)\n        Wait(1)\n        DestroySelf()\nEND\n```"

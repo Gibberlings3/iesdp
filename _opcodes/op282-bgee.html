@@ -10,10 +10,15 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Modifies Scripting state to the given value. Scripting State range from 0 to 35. The scripting state can be checked via scripts (see stats.ids), subtract 156 from the stat value to get the scripting state.
+Modifies Scripting state to the given value. Scripting State range from 0 to 35. The scripting state can be checked via scripts (see <a href="../files/ids/bgee/stats.htm">STATS.IDS</a>) subtract 156 from the stat value to get the scripting state.
+<br/>
 
 {% capture note %}
-This effect does not have proper bounds checking, and can therefore be used in unintended ways. For example scripting state 13 equals with the NO_CIRCLE attribute (stat=169), and scripting state 1139 ties to PICKPOCKET (stat=29).
+<ul>
+	<li>On non-EE games, this effect does not have proper bounds checking. It can therefore be used in unintended ways. For example scripting state 13 equals with the NO_CIRCLE attribute (stat=169), and scripting state 1139 ties to PICKPOCKET (stat=29).</li>
+	<li>EEs have proper bounds checking for this opcode, can only modify stats #156 – #200, except #188 (SUMMON_DISABLE_ACTION), not all values are a straight "subtract 156 from their stat".<br/>
+		For best results, it should only be used for stats #156 – #165, as all others have dedicated opcodes and hardcoded effects.</li>
+</ul>
 {% endcapture %}
 
 {% include info.html %}

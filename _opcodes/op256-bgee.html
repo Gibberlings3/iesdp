@@ -4,10 +4,42 @@ name: "Spell: Spell Sequencer Active"
 param1: "Irrelevant"
 param2: "Irrelevant"
 bg1: 0
-bg2: 1
+bg2: 0
 bgee: 1
 iwd1: 0
 iwd2: 0
 pst: 0
 ---
-This effect stores the spell resources for an active spell sequencer. The three spell resources are stored in the resource key, VVC field, and eff 3rd parameter.
+This effect stores the spell resources for an active spell sequencer. These resources are stored in the resource key, VVC field (resource2), and resource3.<br/>
+This effect stores spells to be cast through <a href="../_opcodes/op258-bgee">opcode #258</a> and <a href="../_opcodes/op260-bgee.html">opcode #260</a>.
+<br/>
+
+When used in an external EFF file, known values for 'Parameter3' (Type) are:
+<ul>
+	<li>0 => Hidden – this sequencer is not viewable in the MageBook 'Contingency' screen, and is not removed when activated.</li>
+	<li>1 => Displayed – this sequencer is viewable in the MageBook 'Contingency' screen, and is removed when activated.</li>
+</ul>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, 'Parent Type' (Source Type) may be manually set to influence its behavior. Known values for 'Parent Type' are:
+<ul>
+	<li>0 = None – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+	<li>1 = Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string ENGINEST[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log.</li>
+	<li>2 = Item – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+</ul>
+
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, "Parent Resource" (Activation key) must be manually set to influence its behavior.<br/>
+The 'Activation Key' is the "Resource" to be referenced by the effect(s) that will activate this sequencer.<br/>
+When set manually, it cannot contain lowercase characters, it MUST be in ALLCAPS, numbers, and/or symbols, or the sequencer cannot be activated.
+<br/>
+
+{% capture note %}
+The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the 'Cast Normal' result.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="../_opcodes/op256-bgee.html">256</a>/<a href="../_opcodes/op257-bgee.html">257</a> and <a href="../_opcodes/op258-bgee.html">258</a>/<a href="../_opcodes/op260-bgee.html">260</a>) use the exact same string.
+{% endcapture %}
+
+{% include note.html %}

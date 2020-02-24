@@ -12,27 +12,34 @@ iwd2: 0
 pst: 0
 ---
 Summons a number of monsters.
-<br/>Each creature files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect depends on this value, the special parameter and if it's used in SPL/ITM or from an external EFF.
+<br/>Each <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect depends on this value, the special parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
 <br/>When used in SPL/ITM, known value for 'Mode' are:
-<br/>0  Summon until Creature Power Level equals/exceeds 'Number'
-<br/>1  Summon amount equal to 'Number'
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level"
+<ul>
+	<li>0 => Summon until Creature Power Level equals/exceeds 'Number'</li>
+	<li>1 => Summon amount equal to 'Number'</li>
+	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level"</li>
+</ul>
 
 <br/>When used in EFF, known value for 'Mode' are:
-<br/>0  Summon until Creature Power Level equals/exceeds 'Number'
-<br/>1  Summon amount equal to ('Number' + Dice rolls)
-<br/>2  Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF
+<ul>
+	<li>0 => Summon until Creature Power Level equals/exceeds 'Number'</li>
+	<li>1 => Summon amount equal to ('Number' + Dice rolls)</li>
+	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level" field of EFF (located at offset 0xc8)</li>
+</ul>
 
-<br/>The 'Type' field set which 2da file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = Type + 1. 0-4 are allied , 5-9 are hostile. The specific 2da files used are:
-<br/>0 MONSUM01 Monster Summon 1
-<br/>1 MONSUM02 Monster Summon 2
-<br/>2 MONSUM03 Monster Summon 3
-<br/>3 ANISUM01 Animal Summon 1
-<br/>4 ANISUM02 Animal Summon 2
-<br/>5 MONSUM01 Monster Summon 1 Hostile
-<br/>6 MONSUM02 Monster Summon 2 Hostile
-<br/>7 MONSUM03 Monster Summon 3 Hostile
-<br/>8 ANISUM01 Animal Summon 1 Hostile
-<br/>9 ANISUM02 Animal Summon 2 Hostile
+<br/>The 'Type' field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are monsumX and anisumX, where X = 'Type' + 1. 0-4 are allied , 5-9 are hostile. The specific 2da files used are:
+<ul>
+	<li>0 MONSUM01 Monster Summon 1</li>
+	<li>1 MONSUM02 Monster Summon 2</li>
+	<li>2 MONSUM03 Monster Summon 3</li>
+	<li>3 ANISUM01 Animal Summon 1</li>
+	<li>4 ANISUM02 Animal Summon 2</li>
+	<li>5 MONSUM01 Monster Summon 1 Hostile</li>
+	<li>6 MONSUM02 Monster Summon 2 Hostile</li>
+	<li>7 MONSUM03 Monster Summon 3 Hostile</li>
+	<li>8 ANISUM01 Animal Summon 1 Hostile</li>
+	<li>9 ANISUM02 Animal Summon 2 Hostile</li>
+</ul>
+
 <br/>A custom .2da file can be entered in the resource field (untested in bg1).
 <br/>If used from an external effect (.eff), the vvc field controls the bam file played when summoning.

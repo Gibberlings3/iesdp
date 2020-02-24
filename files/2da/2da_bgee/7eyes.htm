@@ -1,0 +1,58 @@
+---
+title: "BG(2):EE 2DA Files : 7eyes.2da"
+---
+    <div class="title_main">7eyes.2da</div>
+<br />
+
+After the header rows (2DA V1.0, *, STATE STRREF 1 2 etc...), each row represents a parameter2 value for <a href="../../../_opcodes/op335-bgee.html">opcode #335</a> starting at 0, but the file still functions without op#335, it does not care how the <a href="../../ids/bgee/splstate.htm">spellstate</a> gets set, only that it is set.<br />
+<ul>
+    <li>Column 0 is an arbitrary label – has no real function, can be duplicate.</li>
+    <li>Column 1 is the spellstate that must be set to activate this row.</li>
+    <li>Column 2 is the string reference (<a href="../../../file_formats/ie_formats/tlk_v1.htm">dialog.tlk</a>) that will be displayed when the row triggers (for each effect it triggers on).</li>
+</ul>
+<br/>
+
+While the row is active (i.e., the spellstate is set), all effects it blocks will instead trigger the STRREF feedback message, and do nothing else.<br/>
+Later columns list a mix of 4 possible values to represent the effects it will block:
+<ul>
+    <li>*: (placeholder/nothing) some 2DA files need filled columns, so empty columns use one of these.</li>
+    <li>RESREF: file resource (SPWI605 SPWI713 SPWI912 SPPR511 SPPR734 etc...) – blocks all effects from that resource.</li>
+    <li>integer: opcode (38 45 74 80 109 etc...) – blocks all effects of that opcode, but not those attached through <a href="../../../_opcodes/op177.html">opcode #177</a> (or <a href="../../../_opcodes/op283-bgee.html">opcode #283</a>)</li>
+    <li>integer*value: opcode + 'parameter2' value (12*0x200000) (damage – poison); value can be integer or hexadecimal format. Blocks all effects of both that opcode and parameter2 value, but not those attached through <a href="../../../_opcodes/op177.html">opcode #177</a> (or <a href="../../../_opcodes/op283-bgee.html">opcode #283</a>).</li>
+</ul>
+<br />
+
+In IWD:EE we have:<br />
+
+<pre>
+2DA V1.0
+*
+             STATE      STRREF     1           2           3           4            5            6          7          8          9
+EYEMIND      48         21654      3           5           24          76           128          SPWI411    SPPR102    SPPR311    SPPR716
+EYESWORD     49         21653      12*0        12*0x800000 12*0x100000 12*0x1000000 12*0x8000000 *          *          *          *
+EYEMAGE      50         21652      12*0x80000  12*0x40000  12*0x20000  12*0x10000   12*0x400000  *          *          *          *
+EYEVENOM     51         21651      12*0x200000 25          *           *            *            *          *          *          *
+EYESPIRIT    52         21650      SPWI605     SPWI713     SPWI912     SPPR511      SPPR734      *          *          *          *
+EYEFORTITUDE 53         21649      38          45          74          80           109          175        210        *          *
+EYESTONE     54         21648      134         *           *           *            *            *          *          *          *
+
+</pre>
+<br />
+
+{% capture note %}
+The inability to block effects through op#177/#283 is a reported bug.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+When a row triggers to block an effect, it will also block all effects of that resource that follow after it, but not any effects that precede it. The feedback STRREF is however only displayed for each effect it is actually listed to block.<br/>
+For instance, suppose an active row were setup to block op#58 (Dispel effects), and Dispel Magic were cast on them:
+<ul>
+    <li>It would still remove portrait icon "Deaf" and Cure Deafness, as they precede op#58.</li>
+    <li>It would display the feedback STRREF once, for the single op#58 effect, blocking the dispel effect.</li>
+    <li>The remaining effects after op#58 would also be blocked, but would not cause more feedback messages for being blocked.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

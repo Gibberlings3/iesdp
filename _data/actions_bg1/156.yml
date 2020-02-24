@@ -1,0 +1,21 @@
+bg2: 1
+n: 156
+name: ChangeClass
+params:
+  - name: Object
+    type: o
+  - name: Value
+    type: i
+    ids: class
+desc: |-
+  This action changes the class of the target creature to the specified value. Values are from [class.ids](../../files/ids/bg1/class.htm).
+
+  ```
+  IF
+    Global"KR_CLASS_CHANGE","LOCALS",0)< br>
+  THEN
+    RESPONSE #100
+      SetGlobal"KR_CLASS_CHANGE","LOCALS",1)
+      ChangeClass(Myself,FIGHTER)
+  END
+  ```

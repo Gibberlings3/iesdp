@@ -1,0 +1,21 @@
+bg2: 1
+n: 159
+name: ChangeAlignment
+params:
+  - name: Object
+    type: o
+  - name: Value
+    type: i
+    ids: align
+desc: |-
+  This action changes the alignment of the target creature to the specified value. Values are from [align.ids](../../files/ids/bgee/align.htm).
+
+  ```
+  IF
+    Global("KR_ALIGN_CHANGE","LOCALS",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("KR_ALIGN_CHANGE","LOCALS",1)
+      ChangeAlignment(LastSeenBy(Myself),CHAOTIC_GOOD)
+  END
+  ```

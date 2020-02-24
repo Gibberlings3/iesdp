@@ -1,0 +1,25 @@
+bg2: 1
+n: 115
+name: SetGlobalTimer
+params:
+  - name: Name
+    type: s
+  - name: Area
+    type: s
+  - name: Time
+    type: i
+    ids: gtimes
+desc: |-
+  This action sets a global timer. The timer is checked by the GlobalTimerExpired trigger or GlobalTimerNotExpired trigger.
+
+  ```
+  IF
+    GlobalTimerExpired("Areana","GLOBAL")
+    !Exists("TorLobo")
+    !Dead("TorLobo")
+  THEN
+    RESPONSE #100
+      ActionOverride("Areana",DestroySelf())
+      CreateCreature("TORLOB",[349.474],0)
+  END
+  ```

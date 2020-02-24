@@ -1,0 +1,21 @@
+bg2: 1
+n: 86
+name: SetInterrupt
+params:
+  - name: State
+    type: i
+    ids: boolean
+desc: |-
+  This action sets whether a creature can be interrupted while carrying out script actions.
+
+  ```
+  IF
+    See(Player2)
+    !Range(Player2,4)
+  THEN
+    RESPONSE #100
+      SetInterrupt(FALSE)
+      MoveToObject("Player2")
+      SetInterrupt (TRUE)
+  END
+  ```

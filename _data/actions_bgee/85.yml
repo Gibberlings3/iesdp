@@ -1,0 +1,17 @@
+bg2: 1
+n: 85
+name: RandomWalk
+desc: |-
+  This action causes the active creature to walk randomly, staying within the current area. The example script is blbear.bcs; it instructs bears to walk rather than fight if the nearest enemy is a druid.
+
+  ```
+  IF
+    Delay(5)
+    See(NearestEnemyOf(Myself))
+    Class(NearestEnemyOf(Myself),DRUID)
+    NumCreatureGT([ENEMY],1)
+  THEN
+    RESPONSE #100
+      RandomWalk()
+  END
+  ```

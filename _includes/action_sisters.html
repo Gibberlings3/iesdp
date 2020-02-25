@@ -1,18 +1,18 @@
-{% assign sister_actions = actions | where: 'n', action['n'] | where_exp: 'item', 'item[game] != 1' | where_exp: "item", "item['alias'] == nil" %}
+{%- assign sister_actions = actions | where: 'n', action['n'] | where_exp: 'item', 'item[game] != 1' | where_exp: "item", "item['alias'] == nil" -%}
 
-{% if sister_actions.size > 0 %}
+{%- if sister_actions.size > 0 -%}
   <span class="action_sisters">
     Variants:
-    {% for g in site.data.games %}
-      {% for sa in sister_actions %}
-        {% if sa contains g %}
+    {%- for g in site.data.games -%}
+      {%- for sa in sister_actions -%}
+        {%- if sa contains g -%}
           {%- if g == 'iwd1' -%}{%- assign g_linkname = 'totl' -%}
           {%- else -%}{%- assign g_linkname = g -%}{%- endif -%}
           <a class="opvariant" href = {{ '/scripting/actions/' | append: g_linkname | append: 'actions.htm#' | append: action["n"] | relative_url }}>
             {{ g | upcase }}
           </a>
-        {% endif %}
-      {% endfor %}
-    {% endfor %}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
   </span>
-{% endif %}
+{%- endif -%}

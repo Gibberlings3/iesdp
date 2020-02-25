@@ -1,5 +1,4 @@
-{% assign sister_actions = actions | where_exp: "item", "item['n'] == action['n'] and item[game] != 1" %}
-{% assign sister_actions = sister_actions | where_exp: "item", "item['alias'] == nil" %}
+{% assign sister_actions = actions | where: 'n', action['n'] | where_exp: 'item', 'item[game] != 1' | where_exp: "item", "item['alias'] == nil" %}
 
 {% if sister_actions.size > 0 %}
   <span class="action_sisters">

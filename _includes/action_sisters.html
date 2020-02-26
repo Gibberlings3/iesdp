@@ -25,7 +25,7 @@
             {%- if g == game -%}
             <span class="avariant_current">{{- g | upcase -}}</span>
             {%- else -%}
-              <a href="{{ href }}" title="{{ g | upcase }} version is identical to this one">{{- g | upcase -}}</a>
+              <span class="avariant_same"><a href="{{ href }}" title="{{ g | upcase }} version is identical to this one">{{- g | upcase -}}</a></span>
             {%- endif -%}
           {%- else -%}
             <a href="{{ href }}" title="{{ g | upcase }} version works differently">{{- g | upcase -}}</a>
@@ -33,6 +33,6 @@
           {%- unless forloop.last -%}/{%- endunless -%}
         {% endfor %}]
       </span>
-      {% endfor %}
+    {% endfor %}
   </span>
 {%- endif -%}

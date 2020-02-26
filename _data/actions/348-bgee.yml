@@ -9,12 +9,14 @@ params:
 desc: |-
   This action instructs the engine to use the specified column of [WISH.2DA](../../files/2da/2da_bgee/wish.htm), randomly select 5 choices (rows; count appears hardcoded) and set the appropriate globals for those spells. Once the maximum "wish choices" have been selected, the dialog continues and casts the selected spell.
 
-   From a dialog:
-   •IF ~CheckStatGT(LastTalkedToBy,17,WIS)~ THEN DO ~SetupWish(4,1)~ GOTO 8
-   •IF ~Global("WishPower01","GLOBAL",1)~ THEN REPLY #72526 /* ~'Breach' on everyone in the area, including the party.~ */ DO ~ActionOverride(LastTalkedToBy,ForceSpellRES("spwish26",Myself))
-   ApplySpell(Myself,POOF\_GONE)~ EXIT
+  From a dialog:
+  ```
+  IF ~CheckStatGT(LastTalkedToBy,17,WIS)~ THEN DO ~SetupWish(4,1)~ GOTO 8
+  IF ~Global("WishPower01","GLOBAL",1)~ THEN REPLY #72526 /* ~'Breach' on everyone in the area, including the party.~ */ 
+    DO ~ActionOverride(LastTalkedToBy,ForceSpellRES("spwish26",Myself)) ApplySpell(Myself,POOF\_GONE)~ EXIT
+  ```
 
-   The key is the Global("WishPower**","GLOBAL",1). The highest is "WishPower37", and the highest number in the WISH.2DA is also 37. There are a total of 46 SPWISH**.SPL files, but 9 are unused:
+  The key is the `Global("WishPower**","GLOBAL",1)`. The highest is "WishPower37", and the highest number in the WISH.2DA is also 37. There are a total of 46 SPWISH\*\*.SPL files, but 9 are unused:
 
   * SPWISH01 STR Bonus +1
   * SPWISH02 INT Bonus +1
@@ -26,8 +28,7 @@ desc: |-
   * SPWISH09 Globe of Blades
   * SPWISH15 Gain 10,000 Gold (Party)
 
-
-   Looking at the spells that have a "WishPower**" next to them, this list can be derived (sorted by Wisdom level (E=enemies, P=party, C=caster A=All)):
+  Looking at the spells that have a "WishPower\*\*" next to them, this list can be derived (sorted by Wisdom level (E=enemies, P=party, C=caster A=All)):
   ```
   Low (9-)            Medium (10-14)      High (15-17)        Ultra (18+)
 

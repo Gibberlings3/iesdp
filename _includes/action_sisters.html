@@ -1,18 +1,38 @@
-{%- assign sister_actions = actions | where: 'n', action['n'] | where_exp: 'item', 'item[game] != 1' | where_exp: "item", "item['alias'] == nil" -%}
+{%- assign sister_actions = actions | where: 'n', action['n'] | where: 'name', action['name'] -%}
+{%- assign sister_actions = sister_actions
+  | sort: 'pst', 'last'
+  | sort: 'iwd2', 'last'
+  | sort: 'iwd1', 'last'
+  | sort: 'bgee', 'last'
+  | sort: 'bg2', 'last'
+  | sort: 'bg1', 'last'
+-%}
 
-{%- if sister_actions.size > 0 -%}
+{%- if sister_actions.size > 1 -%}
   <span class="action_sisters">
     Variants:
-    {%- for g in site.data.games -%}
-      {%- for sa in sister_actions -%}
-        {%- if sa contains g -%}
-          {%- if g == 'iwd1' -%}{%- assign g_linkname = 'totl' -%}
-          {%- else -%}{%- assign g_linkname = g -%}{%- endif -%}
-          <a class="opvariant" href = {{ '/scripting/actions/' | append: g_linkname | append: 'actions.htm#' | append: action["n"] | relative_url }}>
-            {{ g | upcase }}
-          </a>
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endfor -%}
+      {% for sa in sister_actions %}
+        {%- assign sa_games = site.data.games | where_exp: 'item', 'sa[item] == 1' -%}
+        <span class="avariants">
+        [{% for g in sa_games %}
+          {%- if g == 'iwd1' -%}
+            {%- assign g_linkname = 'totl' -%}
+          {%- else -%}
+            {%- assign g_linkname = g -%}
+          {%- endif -%}
+          {%- assign href = "/scripting/actions/" | append: g_linkname | append: "actions.htm#" | append: a["n"] | relative_url -%}
+          {%- if sa[game] == 1 -%}
+            {%- if g == game -%}
+            <span class="avariant_current">{{- g | upcase -}}</span>
+            {%- else -%}
+            <span class="avariant_same"><a href="{{ href }}">{{- g | upcase -}}</a></span>
+            {%- endif -%}
+          {%- else -%}
+            <a href="{{ href }}">{{- g | upcase -}}</a>
+          {%- endif -%}
+          {%- unless forloop.last -%}/{%- endunless -%}
+        {% endfor %}]
+      </span>
+      {% endfor %}
   </span>
 {%- endif -%}

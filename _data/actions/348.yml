@@ -12,7 +12,8 @@ desc: |-
   From a dialog:
   ```
   IF ~CheckStatGT(LastTalkedToBy,17,WIS)~ THEN DO ~SetupWish(4,1)~ GOTO 8
-  IF ~Global("WishPower01","GLOBAL",1)~ THEN REPLY #72526 /* ~'Breach' on everyone in the area, including the party.~ */ DO ~ActionOverride(LastTalkedToBy,ForceSpellRES("spwish26",Myself)) ApplySpell(Myself,POOF\_GONE)~ EXIT
+  IF ~Global("WishPower01","GLOBAL",1)~ THEN REPLY #72526 /* ~'Breach' on everyone in the area, including the party.~ */
+    DO ~ActionOverride(LastTalkedToBy,ForceSpellRES("spwish26",Myself)) ApplySpell(Myself,POOF\_GONE)~ EXIT
   ```
 
   The key is the `Global("WishPower**","GLOBAL",1)`. The highest is "WishPower37", and the highest number in the WISH.2DA is also 37. There are a total of 46 SPWISH\*\*.SPL files, but 9 are unused:

@@ -10,17 +10,23 @@
 
 {%- if sister_actions.size > 1 -%}
   <span class="action_sisters">
+    {% assign present_games = "" | split: "" %}
     Variants:
-      {% for sa in sister_actions %}
-        {%- assign sa_games = site.data.games | where_exp: 'item', 'sa[item] == 1' -%}
-        <span class="avariants">
+    {% for sa in sister_actions %}
+      {%- assign sa_games = site.data.games | where_exp: 'item', 'sa[item] == 1' -%}
+      <span class="avariants">
         [{% for g in sa_games %}
-          {%- if g == 'iwd1' -%}
+          {%- comment -%} for displaying games missing the action {%- endcomment -%}
+          {% assign present_games = present_games | push: g %}
+
+          {%- if g == 'iwd1' -%}{%- comment -%} iwd has custom link {%- endcomment -%}
             {%- assign g_linkname = 'totl' -%}
           {%- else -%}
             {%- assign g_linkname = g -%}
           {%- endif -%}
+
           {%- assign href = "/scripting/actions/" | append: g_linkname | append: "actions.htm#" | append: a["n"] | relative_url -%}
+
           {%- if sa[game] == 1 -%}
             {%- if g == game -%}
             <span class="avariant_current">{{- g | upcase -}}</span>
@@ -28,11 +34,29 @@
               <span class="avariant_same"><a href="{{ href }}" title="{{ g | upcase }} version is identical to this one">{{- g | upcase -}}</a></span>
             {%- endif -%}
           {%- else -%}
-            <a href="{{ href }}" title="{{ g | upcase }} version works differently">{{- g | upcase -}}</a>
+            <a href="{{ href }}" title="{{ g | upcase }} version is different from this one">{{- g | upcase -}}</a>
           {%- endif -%}
+
           {%- unless forloop.last -%}/{%- endunless -%}
         {% endfor %}]
       </span>
     {% endfor %}
+
+    {%- comment -%} missing games {%- endcomment -%}
+    {% if present_games.size < site.data.games.size %}
+      {% assign missing_games = "" | split: "" %}
+      {% for g in site.data.games %}
+        {% unless present_games contains g %}
+          {% assign missing_games = missing_games | push: g %}
+        {% endunless %}
+      {% endfor %}
+      <span class="avariants">
+        [{%- for g in missing_games -%}
+          <span class="avariant_missing" title="{{- g | upcase -}} does not have this action">{{- g | upcase -}}</span>
+          {%- unless forloop.last -%}/{%- endunless -%}
+        {%- endfor -%}]
+      </span>
+    {% endif %}
+
   </span>
 {%- endif -%}

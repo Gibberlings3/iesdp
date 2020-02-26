@@ -7,7 +7,13 @@ layout: default
 {% assign anchors = page.anchors %}
 {% include actions_anchors.html %}
 
+{%- comment -%} For use in action descriptions. IWD is special again. {%- endcomment -%}
 {% assign game = page.game %}
+{% if game == iwd1 %}
+  {% assign gname = 'iwd' %}
+{% else %}
+  {% assign gname = game %}
+{% endif %}
 
 {% assign actions = "" | split: "" %}
 {% for action_hash in site.data.actions %}

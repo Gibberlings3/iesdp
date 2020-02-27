@@ -13,19 +13,14 @@
     {% assign present_games = "" | split: "" %}
     Variants:
     {% for sa in sister_actions %}
-      {%- assign sa_games = site.data.games | where_exp: 'item', 'sa[item] == 1' -%}
+      {%- assign sa_games = site.data.games | map: 'name' | where_exp: 'item', 'sa[item] == 1' -%}
       <span class="avariants">
         [{% for g in sa_games %}
           {%- comment -%} for displaying games missing the action {%- endcomment -%}
           {% assign present_games = present_games | push: g %}
 
-          {%- if g == 'iwd1' -%}{%- comment -%} iwd has custom link {%- endcomment -%}
-            {%- assign g_linkname = 'totl' -%}
-          {%- else -%}
-            {%- assign g_linkname = g -%}
-          {%- endif -%}
-
-          {%- assign href = "/scripting/actions/" | append: g_linkname | append: "actions.htm#" | append: a["n"] | relative_url -%}
+          {%- assign sag_actions_page = site.data.games | where: 'name', g | map: 'actions' | first -%}
+          {%- assign href = sag_actions_page | append: '#' | append: a["n"] | relative_url -%}
 
           {%- if sa[game] == 1 -%}
             {%- if g == game -%}
@@ -45,7 +40,8 @@
     {%- comment -%} missing games {%- endcomment -%}
     {% if present_games.size < site.data.games.size %}
       {% assign missing_games = "" | split: "" %}
-      {% for g in site.data.games %}
+      {% assign games = site.data.games | map: 'name' %}
+      {% for g in games %}
         {% unless present_games contains g %}
           {% assign missing_games = missing_games | push: g %}
         {% endunless %}

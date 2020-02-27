@@ -4,25 +4,21 @@ layout: default
 
 <div class="title_main actions_title"> {{ page.title }} </div>
 
+{% assign game = page.game %}
+{% comment %} url bases for use in descriptions {% endcomment %}
+{% assign ids = site.data.games | where: 'name', game | map: 'ids' | first %}
+{% assign 2da = site.data.games | where: 'name', game | map: '2da' | first %}
+{% assign actions_page = site.data.games | where: 'name', game | map: 'actions' | first %}
+
 {% assign anchors = page.anchors %}
 {% include actions_anchors.html %}
-
-{%- comment -%} For use in action descriptions. IWD is special again. {%- endcomment -%}
-{% assign game = page.game %}
-{% if game == iwd1 %}
-  {% assign gname = 'iwd' %}
-{% else %}
-  {% assign gname = game %}
-{% endif %}
-
-{% assign 2da_name = game %}
-{% if game == "bg2" %}{% assign 2da_name = 'tob' %}{% endif %}
 
 {% assign actions = "" | split: "" %}
 {% for action_hash in site.data.actions %}
   {% assign actions = actions | push: action_hash[1] %}
 {% endfor %}
 {% assign actions = actions | sort: 'name' | sort: 'n' %}
+
 
 {% for action in actions %}
 

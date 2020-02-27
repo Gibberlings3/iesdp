@@ -8,7 +8,8 @@ params:
 desc: |-
   This action controls whether a cutscene can be skipped by pressing ESC. When set to TRUE the cutscene can be interrupted. Set to FALSE to prevent the cutscene from being interrupted. When properly prepared the skipped cutscene can be detected and completed in a safe manner.
 
-  Code snippet of the opening cutscene in BG2EE - SoA (NEWGAME.BCS): ```
+  Code snippet of the opening cutscene in BG2EE - SoA (NEWGAME.BCS):
+  ```
   IF
     True()
   THEN
@@ -30,4 +31,4 @@ desc: |-
   END
   ```
 
-  SetAreaScript("cutskip2",OVERRIDE) defines a "failsafe" script to execute when the cutscene is interrupted. The OVERRIDE slot ensures that it has precedence over the default area script. SetGlobal("BD\_CUTSCENE\_BREAKABLE","GLOBAL",1) is used to identify the cutscene that has been interrupted (if the failsafe script handles more than one cutscene).
+  `SetAreaScript("cutskip2",OVERRIDE)` defines a "failsafe" script to execute when the cutscene is interrupted. The OVERRIDE slot ensures that it has precedence over the default area script. `SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",1)` is used to identify the cutscene that has been interrupted (if the failsafe script handles more than one cutscene).

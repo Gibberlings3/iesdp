@@ -1,0 +1,71 @@
+---
+n: 143
+name: "Item: Create Item in Slot"
+param1: "Slot"
+param2: "Irrelevant"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Creates the item specified by the resource key in the slot specified by the 'Slot' field, on the targeted creature(s).
+<br/>Known values for 'Slot' (from <a href="../files/ids/bgee/slots.htm">SLOTS.IDS</a>) are:
+<ul>
+	<li>0 => AMULET</li>
+	<li>1 => ARMOR</li>
+	<li>2 => BELT</li>
+	<li>3 => BOOTS</li>
+	<li>4 => CLOAK</li>
+	<li>5 => GAUNTLETS</li>
+	<li>6 => HELMET</li>
+	<li>7 => RING_LEFT</li>
+	<li>8 => RING_RIGHT</li>
+	<li>9 => SHIELD</li>
+	<li>10 => FIST</li>
+	<li>11 => AMMO</li>
+	<li>15 => MISC</li>
+	<li>35 => WEAPON</li>
+	<li>11 AMMO0</li>
+	<li>12 => AMMO1</li>
+	<li>13 => AMMO2</li>
+	<li>14 => AMMO3</li>
+	<li>15 => MISC0</li>
+	<li>16 => MISC1</li>
+	<li>17 => MISC2</li>
+	<li>18 => MISC3</li>
+	<li>19 => MISC4</li>
+	<li>20 => MISC5</li>
+	<li>21 => MISC6</li>
+	<li>22 => MISC7</li>
+	<li>23 => MISC8</li>
+	<li>24 => MISC9</li>
+	<li>25 => MISC10</li>
+	<li>26 => MISC11</li>
+	<li>27 => MISC12</li>
+	<li>28 => MISC13</li>
+	<li>29 => MISC14</li>
+	<li>30 => MISC15</li>
+	<li>31 => MISC16</li>
+	<li>32 => MISC17</li>
+	<li>33 => MISC18</li>
+	<li>34 => MISC19 – Magical Weapon Slot</li>
+	<li>35 => WEAPON0</li>
+	<li>36 => WEAPON1</li>
+	<li>37 => WEAPON2</li>
+	<li>38 => WEAPON3</li>
+</ul>
+
+{% capture note %}
+The Magical Weapon slot does not allow Item Abilities (header_type = 3).<br>
+Moreover, unlike <a href="#op111">opcode #111</a>, this opcode will not "equip" the item that's created in this particular slot.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+When using a non-permanent timing mode, it applies a delayed <a href="../_opcodes/op123.html">opcode #123</a> effect based on the duration, but with an empty resource field, resulting in nothing being removed.
+{% endcapture %}
+
+{% include note.html %}

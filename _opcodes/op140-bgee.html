@@ -1,0 +1,44 @@
+---
+n: 140
+name: "Graphics: Casting Glow"
+param1: "Projectile Index"
+param2: "Type"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Creates the specified projectile at the targeted creature's location. These effects are usually used for casting glows based on the spell school.
+<br/>Known values for 'Type' are:
+<ul>
+	<li>0 => Use 'Projectile Index' projectile value.</li>
+	<li>1 .. 8 => Crash</li>
+	<li>9 => PROJECTL[110], Default file: "CGNECROM.PRO"</li>
+	<li>10 => PROJECTL[111], Default file: 'CGALTERA.PRO'</li>
+	<li>11 => PROJECTL[112], Default file: 'CGENCHAN.PRO'</li>
+	<li>12 => PROJECTL[113], Default file: 'CGABJURA.PRO'</li>
+	<li>13 => PROJECTL[114], Default file: 'CGILLUSI.PRO'</li>
+	<li>14 => PROJECTL[115], Default file: 'CGCONJUR.PRO'</li>
+	<li>15 => PROJECTL[116], Default file: 'CGINVOCA.PRO'</li>
+	<li>16 => PROJECTL[117], Default file: 'CGDIVINA.PRO'</li>
+</ul>
+
+{% capture note %}
+'Projectile Index' must be treated as in spells, i.e.: value in <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> + 1
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+This projectile does not deliver any effects.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+The speed of the projectiles animations ARE affected by <a href="../files/ids/bgee/state.htm">STATE</a>[BIT15|STATE_HASTED] and <a href="../files/ids/bgee/state.htm">STATE</a>[BIT16|STATE_SLOWED] of the target.
+{% endcapture %}
+
+{% include note.html %}

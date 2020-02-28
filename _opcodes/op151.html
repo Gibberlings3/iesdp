@@ -12,7 +12,15 @@ pst: 0
 ---
 Replaces the targeted creature(s) with creature specified by the resource key, in the style specified by the 'Type' value.
 <br/>Known values for 'Type' are:
-<br/>0   Remove target silently
-<br/>1   Remove target - kill with chunk death (giving experience)
-<br/>2   Remove target - kill with normal death (giving experience)
-<br/>3+  Don't remove the target
+<ul>
+	<li>0 => Remove targeted creature via <a href="../_opcodes/op168-bgee.html">opcode #168</a></li>
+	<li>1 => Kill targeted creature via <a href="../_opcodes/op013.html">opcode #13</a>*8 (Chunking death)</li>
+	<li>2 => Kill targeted creature via <a href="../_opcodes/op013.html">opcode #13</a>*4 (Normal death)</li>
+	<li>3 => No effect on targeted creature – New creature (specified by the resource key) is spawned at target's location</li>
+</ul>
+
+{% capture note %}
+Experience is given as normal for a kill (the party still has to be the one applying the effect to earn experience).
+{% endcapture %}
+
+{% include note.html %}

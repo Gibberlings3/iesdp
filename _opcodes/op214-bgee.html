@@ -1,0 +1,50 @@
+---
+n: 214
+name: "Spell Effect: Select Spell"
+param1: "Irrelevant"
+param2: "Type"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Uses the 2da specified by the resource key to display multiple spell options, based on the 'Type' field.
+<br/>Known values for 'Type' are:
+<ul>
+	<li>0 => Use "resource" 2da list</li>
+	<li>1 => Known mage spells, except Identify (SPWI110), and Nahal's Reckless Dweomer (SPWI124)</li>
+	<li>2 => Known mage spells, except the above, and those with <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">spell flag</a> BIT15 "Ignore Wild Surge"</li>
+</ul>
+
+When 'Type' is 0, the 2da file must follow the following format:<br/>
+<pre>
+2DA V1.0
+****
+ResRef		Type
+(name)		(RESREF)			(Casting Type)
+(name)		(RESREF)			(Casting Type)
+</pre>
+<br/>
+
+(name) can be any string of characters/numbers without any whitespace, and does not need to be unique. (RESREF) is the filename of the spell without its [.SPL] extension.<br/>
+As far as (Casting Types) is concerned:
+<ul>
+	<li>0/1 => Spell completely mimics the mechanics of casting a spell from a quick-cast slot (including requiring and expending a memorization of the spell)</li>
+	<li>3 => Ignores Spells/Round rule, ignores memorization.</li>
+	<li>4 => Ignores Spells/Round rule, ignores memorization, spellcasting cannot be interrupted by damage.</li>
+	<li>5 => Ignores Spells/Round rule, cast instantly, even if the game is paused, can be cast without memorization, but will decrement memorization if exists.</li>
+</ul>
+
+{% capture note %}
+The target of this effect must be the only currently selected character when it triggers, and remain the selected character until a spell is chosen, or the menu will terminate.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the 'Cast Normal' result.
+{% endcapture %}
+
+{% include note.html %}

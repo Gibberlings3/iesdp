@@ -8,7 +8,16 @@
   | sort: 'bg1', 'last'
 -%}
 
-{%- if sister_actions.size > 1 -%}
+{% if sister_actions.size == 1 %}
+  {% assign single_variant_for_all = 1 %}
+  {% assign games = site.data.games | map: 'name' %}
+  {% for g in games %}
+    {% if sister_actions[0][g] != 1 %}{% assign single_variant_for_all = 0 %}{% endif %}
+  {% endfor %}
+{% endif %}
+
+
+{%- if single_variant_for_all != 1 -%}
   <span class="action_sisters">
     {% assign present_games = "" | split: "" %}
     Variants:

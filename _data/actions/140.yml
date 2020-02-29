@@ -1,0 +1,39 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 140
+name: GiveItemCreate
+params:
+  - name: ResRef
+    type: s
+  - name: Object
+    type: o
+  - name: Usage1
+    type: i
+  - name: Usage2
+    type: i
+  - name: Usage3
+    type: i
+desc: |-
+  This action creates the item specified by the resref parameter on the creature specified by the object parameter, with quantity/charges controlled by the usage parameters.
+
+  ```
+  IF
+    GlobalTimerExpired("dwVith","GLOBAL")
+    Global("dwVithal","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      CreateVisualEffectObject("SPPLANAR","udvith")
+      Wait(2)
+      Activate("udvith")
+      GiveItemCreate("scrl8z","udvith",1,1,0)
+      GiveItemCreate("scrl9g","udvith",1,1,0)
+      GiveItemCreate("scrl9e","udvith",1,1,0)
+      GiveItemCreate("scrl9v","udvith",1,1,0)
+      GiveItemCreate("scrl9r","udvith",1,1,0)
+      SetGlobal("dwVithal","GLOBAL",4)
+  END
+  ```

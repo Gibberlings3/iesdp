@@ -1,0 +1,28 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+n: 134
+name: AttackReevaluate
+params:
+  - name: Target
+    type: o
+  - name: ReevaluationPeriod
+    type: i
+desc: |-
+  This action instructs the active creature to attack the target for the specified time (ReevaluationPeriod) which is measured in AI updates (which default to 15 per second).The script will then run again, checking for other true conditions.
+
+  ```
+  IF
+    See([EVILCUTOFF])
+    Range(LastSeenBy(),4)
+    !InParty(LastSeenBy())
+    !Allegiance(LastSeenBy(Myself),GOODCUTOFF)
+    !Class(LastSeenBy(Myself),INNOCENT)
+    InWeaponRange(LastSeenBy())
+    HasWeaponEquiped()
+  THEN
+    RESPONSE #100
+      AttackReevaluate(LastSeenBy(),30)
+  END
+  ```

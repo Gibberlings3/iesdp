@@ -1,0 +1,34 @@
+bg2: 1
+bgee: 1
+n: 15
+name: GiveItem
+params:
+  - name: Object
+    type: s
+  - name: Target
+    type: o
+desc: |-
+  This action instructs the active creature to give the specified item (parameter 1) to the specified target (parameter 2). The active creature must possess the item to pass it (holding it within a container within the inventory is fine). The sample script makes uses of modified IDS files (action, instant, trigger and svtiobj) though such modification are not necessary to use the GiveItem action itself.
+
+  ```
+  IF
+    HPPercentLT(Myself,40)
+    !HasItem("potn52",Myself)
+  THEN
+    RESPONSE #100
+      GlobalShout(3015)
+      SetGlobal("KRNEEDITEM","GLOBAL",1)
+  END
+
+  IF
+    Heard([GOODCUTOFF],3015)
+    HasItem("potn52",Myself)
+    HPPercentGT(Myself,40)
+    Global("KRNEEDITEM","GLOBAL",1)
+  THEN
+    RESPONSE #100
+      MoveToObject(LastHeardBy())
+      GiveItem("potn52",LastHeardBy())
+      SetGlobal("KRNEEDITEM","GLOBAL",0)
+  END
+  ```

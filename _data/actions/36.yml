@@ -1,0 +1,17 @@
+bg2: 1
+bgee: 1
+n: 36
+name: Continue
+desc: |-
+  This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly. Use of continue in a script block will cause the parser to treater subsequent empty response blocks as though they contained a Continue() command - this parsing can be stopped by including a NoAction() in the empty response block.
+
+  ```
+  IF
+    See(NearestEnemyOf())
+    !InParty(NearestEnemyOf())
+  THEN
+    RESPONSE #100
+      AttackOneRound(NearestEnemyOf())
+      Continue()
+  END
+  ```

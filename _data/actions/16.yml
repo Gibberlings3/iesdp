@@ -1,0 +1,37 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 16
+name: GiveOrder
+params:
+  - name: Object
+    type: o
+  - name: Order
+    type: i
+desc: |-
+  This action is used in conjunction with the ReceivedOrder trigger, and works in a similar way to a global shout. The action passes a numeric order to the specified creature. Only one creature at a time responds to an order, and creatures to not detect their own orders.
+
+  ```
+  IF
+    See([EVILCUTOFF])
+    OR(3)
+    Class(Myself,FIGHTER_ALL)
+    Class(Myself,RANGER_ALL)
+    Class(Myse lf,PALADIN_ALL)
+  THEN
+    RESPONSE #100
+      GiveOrder([PC.0.0.THIEF_ALL],100)
+  END
+
+  IF
+    ReceivedOrder(Myself,100)
+    Class(Myself,THIEF_ALL)
+  THEN
+    RESPONSE #100
+      RunAwayFrom([EVILCUTOFF],120)
+      Hide()
+  END
+  ```

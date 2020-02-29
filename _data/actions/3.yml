@@ -1,0 +1,24 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 3
+name: Attack
+params:
+  - name: Target
+    type: o
+desc: |-
+  This action instructs the active creature to continually attack the target, i.e. the active creature will not switch targets until its target is dead.
+
+  ```
+  IF
+    See([EVILCUTOFF])
+    Class(LastSeenBy(),MAGE_ALL)
+    !InParty(LastSeenBy())
+  THEN
+    RESPONSE #100
+      Attack(LastSeenBy())
+  END
+  ```

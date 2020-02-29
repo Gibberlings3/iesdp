@@ -1,0 +1,32 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 164
+name: AddexperienceParty
+params:
+  - name: XP
+    type: i
+desc: |-
+  This action gives the specified amount of experience to the party. The XP amount is distributed among all current living party members. The example script is from ar1300.bcs.
+  ```
+  IF
+    OpenState("Bridge01",TRUE)
+    Global("BridgeOpen","GLOBAL",0)
+    !Dead("Torgal")
+  THEN
+    RESPONSE #100
+    SetGlobal("BridgeOpen","GLOBAL",1)
+    DisplayString(Myself,'The drawbridge has been lowered.')
+    CreateCreature("KPCAPT03",[2400.1592],6)
+    CreateCreature("KPSOLD03",[2425.1676],6)
+    CreateCreature("KPSOLD04",[2371.1754],6)
+    CreateCreature("KPSOLD05",[2315.1805],6)
+    CreateCreature("TROLGI01",[2391.1592],0)
+    CreateCreature("TROLGI02",[2282.1742],0)
+    CreateCreature("KPYUAN01",[2251.1731],0)
+    AddexperienceParty(29750)
+  (cut short for brevity)
+  ```

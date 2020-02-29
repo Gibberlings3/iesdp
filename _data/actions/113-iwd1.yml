@@ -1,0 +1,25 @@
+iwd1: 1
+pst: 1
+n: 113
+name: ForceSpell
+params:
+  - name: Target
+    type: o
+  - name: Spell
+    type: i
+    ids: spell
+unreliable: true
+desc: |-
+  This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The caster must meet the level requirements of the spell. The example script is from suelfw9.bcs.
+
+  ```
+  IF
+    Global("Scene2","AR2800",2)
+    See([ENEMY])
+    Global("Fight","LOCALS",2)
+  THEN
+    RESPONSE #100
+      IncrementGlobal("Fight","LOCALS",1)
+      ForceSpell([ENEMY],WIZARD_POWER_WORD_SLEEP)
+  END
+  ```

@@ -1,0 +1,26 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 14
+name: GetItem
+params:
+  - name: Object
+    type: s
+  - name: Target
+    type: o
+no_result: true
+desc: |-
+  ```
+  IF
+    See([ANYONE])
+    !HasItem("Sw1h01",Myself)
+    HasItem("Sw1h01",LastSeenBy ())
+  THEN
+    RESPONSE #100
+      MoveToObject(LastSeenBy())
+      GetItem("Sw1h01",LastSeenBy())
+  END
+  ```

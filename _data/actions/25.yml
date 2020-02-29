@@ -1,0 +1,25 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 25
+name: PickPockets
+params:
+  - name: Target
+    type: o
+desc: |-
+  This action instructs the active creature to attempt to pickpocket the target. This action can be used for any creature (not just thieves) though success in pick pocketing is dependent on points in the Pickpocket skill. Note that a failed pickpocket attempt is treated as an attack, hence the Attacked() trigger will return true if a pickpocket attempt is failed.
+
+  ```
+  IF
+    See([ANYONE])
+    OR(2)
+    Class(Myself,THIEF_ALL)
+    Class(Myself,BARD_ALL)
+  THEN
+    RESPONSE #100
+      PickPockets([ANYONE])
+  END
+  ```

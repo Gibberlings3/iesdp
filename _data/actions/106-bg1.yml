@@ -1,0 +1,31 @@
+bg1: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 106
+name: Shout
+params:
+  - name: ID
+    type: i
+    ids: shoutids
+desc: |-
+  This action is used to shout the specified number. The action is used in conjunction with the Heard trigger. A silenced creature cannot shout.
+
+  ```
+  IF
+    StateCheck(Myself,STATE_POISONED)
+  THEN
+    RESPONSE #100
+      Shout(4010)
+  END
+  ```
+
+  ```
+  IF
+    Heard([GOODCUTOFF],4010)
+    HaveSpell(CLERIC_SLOW_POISON)
+  THEN
+    RESPONSE #100
+      Spell(LastHeardBy(),CLERIC_SLOW_POISON)
+  END
+  ```

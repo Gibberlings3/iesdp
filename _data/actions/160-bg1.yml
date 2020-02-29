@@ -1,0 +1,30 @@
+bg1: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 160
+name: ApplySpell
+params:
+  - name: Target
+    type: o
+  - name: Spell
+    type: i
+    ids: spell
+desc: |-
+  This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by ApplySpell use a single dice value. The example script is used to mimic a contingency from mage18y.bcs.
+
+  ```
+  IF
+    See(NearestEnemyOf(Myself))
+    Global("Prep","LOCALS",0)
+  THEN
+    RESPONSE #100
+      ApplySpell(Myself,WIZARD_STONE_SKIN)
+      ApplySpell(Myself,WIZARD_SPELL_TRAP)
+      ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
+      ApplySpell(Myself,WIZARD_SPELL_TURNING)
+      ApplySpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+      ApplySpell(SixthNearestEnemyOf(Myself),WIZARD_MONSTER_SUMMONING_4)
+      SetGlobal("Prep","LOCALS",1)
+  END
+  ```

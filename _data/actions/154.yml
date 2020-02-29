@@ -1,0 +1,26 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 154
+name: ChangeGeneral
+params:
+  - name: Object
+    type: o
+  - name: Value
+    type: i
+    ids: general
+desc: |-
+  This action changes the general status of the target creature to the specified value. Values are from [general.ids]({{ ids }}/general.htm).
+
+  ```
+  IF
+    Global"KR_GENERAL_CHANGE","LOCALS" ,0)
+  THEN
+    RESPONSE #100
+      SetGlobal"KR_GENERAL_CHANGE","LOCALS",1)
+      ChangeGeneral(Myself,UNDEAD)
+  END
+  ```

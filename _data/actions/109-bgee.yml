@@ -1,0 +1,25 @@
+bgee: 1
+n: 109
+name: IncrementGlobal
+params:
+  - name: Name
+    type: s
+  - name: Area
+    type: s
+  - name: Value
+    type: i
+desc: |-
+  This action alters the specified variable, in the specified scope, by the amount indicated. The amount can be positive or negative.
+
+  ```
+  IF
+    See([EVILCUTOFF]
+    !Specifics(LastSeenBy(),160)
+    !Inparty(LastSeenBy())
+    !Allegiance(LastSeenBy([GOODCUTOFF])
+  THEN
+    RESPONSE #100
+      ChangeSpecifics(LastSeenBy(),160)
+      IncrementGlobal("KR_MONSTER_COUNTER_ALIVE","GLOBAL",1)
+  END
+  ```

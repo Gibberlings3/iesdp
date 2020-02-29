@@ -1,0 +1,23 @@
+bg2: 1
+bgee: 1
+n: 245
+name: SaveObjectLocation
+params:
+  - name: Area
+    type: s
+  - name: Global
+    type: s
+  - name: Object
+    type: o
+desc: |-
+  This action stores the location of the specified object in the named variable.
+
+  ```
+  IF
+    Global("SavedMyPos","LOCALS",0)
+  THEN
+    RESPONSE #50
+      SetGlobal("SavedMyPos","LOCALS",1)
+      SaveObjectLocation("LOCALS","DefaultLocation",Myself)
+  END
+  ```

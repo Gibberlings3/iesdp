@@ -1,0 +1,21 @@
+bg2: 1
+bgee: 1
+n: 297
+name: MoveToSavedLocation
+params:
+  - name: GLOBAL
+    type: s
+  - name: Area
+    type: s
+desc: |-
+  This action instructs the active creature to move to the previously saved specified location.
+
+  ```
+  IF
+    Global("MoveToLocation","LOCALS",0)
+  THEN
+    RESPONSE #50
+      SetGlobal("MoveToLocation","LOCALS",1)
+      MoveToSavedLocationn("DefaultLocation","LOCALS")
+  END
+  ```

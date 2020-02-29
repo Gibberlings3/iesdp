@@ -1,0 +1,30 @@
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 82
+name: CreateItem
+params:
+  - name: ResRef
+    type: s
+  - name: Usage1
+    type: i
+  - name: Usage2
+    type: i
+  - name: Usage3
+    type: i
+desc: |-
+  This action creates the specified item (resref) on the active creature. The usage parameters determine the number of items created or the number of charges on the item, depending on the item type being created. The example script is from AR0602.
+
+  ```
+  IF
+    Global("BG1Pantaloons","GLOBAL",0)
+    PartyHasItem("MISC47")
+  THEN
+    RESPONSE #100
+      SetGlobal("BG1Pantaloons","GLOBAL",1)
+      ActionOverride("Picture1",CreateItem("MISC47",0,0,0))
+      Continue()
+  END
+  ```

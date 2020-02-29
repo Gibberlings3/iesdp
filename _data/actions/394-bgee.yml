@@ -1,0 +1,23 @@
+bgee: 1
+n: 394
+name: MoveContainerContents
+params:
+  - name: Container1
+    type: s
+  - name: Container2
+    type: s
+desc: |-
+  Moves the content of Container1 into Container2. You can prefix each container with an area code, separated by asterisks, to move containers over different maps. The script action can be successfully executed on any map.
+
+  Example from Siege of Dragonspear (BD0103.BCS):
+
+  ```
+  IF
+    Global("BD_Imoen_Items","GLOBAL",1)
+    GlobalLT("BD_PLOT","GLOBAL",51)
+  THEN
+    RESPONSE #100
+      SetGlobal("BD_Imoen_Items","GLOBAL",2)
+      MoveContainerContents("BD0120*Imoen_import_eq","BD0103*Imoen_equipment")
+  END
+  ```

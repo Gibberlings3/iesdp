@@ -1,0 +1,18 @@
+bgee: 1
+n: 105
+name: AttackOneRound
+params:
+  - name: Target
+    type: o
+desc: |-
+  This action instructs the active creature to attack the specified target for one round.
+
+  ```
+  IF
+    See(NearestEnemyOf())
+  THEN
+    RESPONSE #100
+      AttackOneRound(NearestEnemyOf())
+  END
+  ```
+  {% capture note %} This action shares most of its code with [AttackReevaluate()](#134). In fact, it is 'AttackReevaluate()' with an extra hardcoded bit that forces it to terminate after one round. This means that, unlike in 'AttackReevaluate()', [ActionListEmpty()](../triggers/bgeetriggers.htm#0x402B) will return TRUE once a round is up - and unless you immediately reinstate 'AttackOneRound()', the creature won't continue attacking. {% endcapture %} {% include note.html %}

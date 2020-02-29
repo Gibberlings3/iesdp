@@ -1,0 +1,23 @@
+iwd1: 1
+n: 96
+name: Rest
+desc: |-
+  This action applies some of the benefits of resting (i.e. restoring spells and restoring abilities) to the active creature. The action does not play the rest movie or advance game time. The example script is from cut28a.bcs.
+
+  ```
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      StorePartyLocations()
+      FadeToColor([30.0],0)
+      Wait(1)
+      Rest()
+      ActionOverride(Player2,Rest())
+      ActionOverride(Player3,Rest())
+      ActionOverride(Player4,Rest())
+      ActionOverride(Player5,Rest())
+      ActionOverride(Player6,Rest())
+  (cut short for brevity)
+  ```

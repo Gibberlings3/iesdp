@@ -1,0 +1,23 @@
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 13
+name: FindTraps
+desc: |-
+  This action instructs the active creature to enter Detect Traps modal state. This action can be used for any creature (not just thieves) though success in detecting traps is dependent on points in the Find Traps skill.
+
+  ```
+  IF
+    ActionListEmpty()
+    !Exists([EVILCUTOFF])
+    !ModalState( Myself,DETECTTRAPS)
+    OR(2)
+    !StateCheck(Myself,STATE_INVISIBLE)
+    !StateChe ck(Myself,STATE_IMPROVEDINVISIBILITY)
+  THEN
+    RESPONSE #100
+      FindTraps()
+  END
+  ```

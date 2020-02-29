@@ -1,0 +1,25 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 60
+name: ChangeAIScript
+params:
+  - name: ScriptFile
+    type: s
+  - name: Level
+    type: i
+    ids: scrlev
+desc: |-
+  This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from [scrlev.ids]({{ ids }}/scrlev.htm). Scripts can be set for any scriptable object (container, creature, door etc.), but are not persisted.
+
+  ```
+  IF
+    See([EVILCUTOFF.0.DOG])
+  THEN
+    RESPONSE #100
+      ChangeAIScript("DOGFIGHT",DEFAULT)
+  END
+  ```

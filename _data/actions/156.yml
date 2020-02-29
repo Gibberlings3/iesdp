@@ -1,0 +1,26 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 156
+name: ChangeClass
+params:
+  - name: Object
+    type: o
+  - name: Value
+    type: i
+    ids: class
+desc: |-
+  This action changes the class of the target creature to the specified value. Values are from [class.ids]({{ ids }}/class.htm).
+
+  ```
+  IF
+    Global"KR_CLASS_CHANGE","LOCALS",0)
+  THEN
+    RESPONSE #100
+      SetGlobal"KR_CLASS_CHANGE","LOCALS",1)
+      ChangeClass(Myself,FIGHTER)
+  END
+  ```

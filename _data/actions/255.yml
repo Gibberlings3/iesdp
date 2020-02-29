@@ -1,0 +1,22 @@
+bg2: 1
+bgee: 1
+n: 255
+name: AddGlobals
+params:
+  - name: Name
+    type: s
+  - name: Name2
+    type: s
+desc: |-
+  This action will add the variable specified by parameter 2 onto the variable specified by parameter 1. It only works for variables in the "GLOBAL" scope. An example script is below.
+
+  ```
+  IF
+    Global("Var1","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("Var1","GLOBAL",75) //Var1 = 75
+      SetGlobal("Var2","GLOBAL",25) //Var2 = 25
+      AddGlobals("Var1","Var2") //Var1 = 100
+  END
+  ```

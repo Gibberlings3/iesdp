@@ -1,0 +1,26 @@
+iwd2: 1
+n: 294
+name: XEquipItem
+params:
+  - name: Item
+    type: s
+  - name: Object
+    type: o
+  - name: Slot
+    type: i
+    ids: slots
+  - name: EquipUnEquip
+    type: i
+    ids: boolean
+desc: |-
+  This action instructs the target object to (un)equip the specified item in the indicated slot. The example script instructs the active creature to equip "theItem" in the fist weapon slot.
+
+  ```
+  IF
+    Global("iiEquipped","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      XEquipItem("theItem",Myself,SLOT_WEAPON,TRUE)
+      SetGlobal("iiEquipped","GLOBAL",1)
+  END
+  ```

@@ -1,0 +1,31 @@
+iwd1: 1
+iwd2: 1
+n: 276
+name: PlayBardSong
+params:
+  - name: BardSong
+    type: i
+    ids: bardsong
+desc: |-
+  This action instructs the active creature to play the specified bard song. Valus are from [bardsong.ids]({{ ids }}/bardsong.htm).
+
+  ```
+  IF
+    ActionListEmpty()
+    CheckStatGT(Myself,2,LEVEL)
+    OR(2)
+    !Global("grCurrentSongPlaying","LOCALS",1)
+    !ModalState(Myself,BATTLESONG)
+    OR(6)
+    StateCheck(Player1,STATE_PANIC)
+    StateCheck(Player2,STATE_PANIC)
+    StateCheck(Player3,STATE_PANIC)
+    StateCheck(Player4,STATE_PANIC)
+    StateCheck(Player5,STATE_PANIC)
+    StateCheck(Player6,STATE_PANIC)
+  THEN
+    RESPONSE #100
+      SetGlobal("grCurrentSongPlaying","LOCALS",1)
+      PlayBardSong(THE_TALE_OF_CURRAN_STRONGHEART)
+  END
+  ```

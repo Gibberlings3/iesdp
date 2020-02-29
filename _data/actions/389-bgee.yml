@@ -1,0 +1,30 @@
+bgee: 1
+n: 389
+name: SetItemFlags
+params:
+  - name: ItemName
+    type: s
+  - name: Flags
+    type: i
+    ids: invitem
+  - name: SetReset
+    type: i
+    ids: boolean
+desc: |-
+  This action sets or resets specific item flags, such as "IDENTIFIED" or "STOLEN". Setting the third parameter to TRUE sets the bit, setting it to FALSE clears the bit.
+
+  Example from Siege of Dragonspear (BDINTRO.BCS):
+
+  ```
+  IF
+    Global("SOD_fromimport","GLOBAL",0)
+    !HasItemEquiped("ring05",Player1)  // Sandthief's Ring
+    InMyArea("safana")  // Safana
+  THEN
+    RESPONSE #100
+      CutSceneId(Player1)
+      GiveItemCreate("ring05","safana",7,0,0)  // Sandthief's Ring
+      ActionOverride("safana",SetItemFlags("ring05",IDENTIFIED,TRUE))  // Sandthief's Ring
+      XEquipItem("ring05","safana",SLOT_RING_RIGHT,EQUIP)  // Sandthief's Ring
+  END
+  ```

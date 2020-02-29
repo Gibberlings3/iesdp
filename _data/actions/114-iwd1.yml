@@ -1,0 +1,25 @@
+iwd1: 1
+pst: 1
+n: 114
+name: ForceSpellPoint
+params:
+  - name: Target
+    type: p
+  - name: Spell
+    type: i
+    ids: spell
+desc: |-
+  This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The caster must meet the level requirements of the spell.
+
+  ```
+  IF
+    Global("AndrisBehavior","AR1009",0)
+    See(NearestEnemyOf(Myself))
+  THEN
+    RESPONSE #100
+      ForceSpellPoint([2002.1554],WIZARD_DIMENSION_DOOR)
+      Wait(1)
+      SpellNoDec(NearestEnemyOf(Myself),WIZARD_CONFUSION)
+      SetGlobal("AndrisBehavior","AR1009",1)
+  END
+  ```

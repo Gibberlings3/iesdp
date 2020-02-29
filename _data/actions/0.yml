@@ -1,0 +1,29 @@
+bg2: 1
+bgee: 1
+n: 0
+name: NoAction
+desc: |-
+  This action can be used to do nothing - many characters walk around randomly or stand in one place doing nothing:
+
+  ```
+  IF
+    True()
+  THEN
+    RESPONSE #50
+      RandomWalk()
+    RESPONSE #50
+      NoAction()
+  END
+  ```
+
+  NoAction() is also commonly used as a hanging action in targeting blocks. This is a matter of good practice rather than necessary. The NoAction() action will never be rum since the block always returns false, but the having an action in the scripting block allows scripting programs to accurately check for errors.
+
+  ```
+  IF
+    See(NearestEnemyOf(Myself))
+    False()
+  THEN
+    RESPONSE #100
+      NoAction()
+  END
+  ```

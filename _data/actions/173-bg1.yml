@@ -1,0 +1,24 @@
+bg1: 1
+n: 173
+name: AddJournalEntry
+params:
+  - name: Entry
+    type: i
+  - name: Type
+    type: i
+    ids: jourtype
+desc: |-
+  This action adds an entry into the journal. The entry parameter is the strref to add, and the JourType is the type of entry (i.e. the location within the journal to add the entry to) - values are from jourtype.ids. The example script is from ar0511.bcs.
+
+  ```
+  IF
+    Dead("JanGith1")
+    Dead("JanGith2")
+    Global("ThumbSeeker","GLOBAL",2)
+    Global("HiddenJournal","AR0511",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("HiddenJournal","AR0511",1)
+      AddJournalEntry(34726,QUEST)
+  END
+  ```

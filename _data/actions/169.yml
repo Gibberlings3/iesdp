@@ -1,0 +1,24 @@
+bg1: 1
+bg2: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 169
+name: DestroyItem
+params:
+  - name: ResRef
+    type: s
+desc: |-
+  This action removes a single instance of the specified item from the active creature, unless the item exists in a stack, in which case the entire stack is removed. The example script is from ar1000.bcs.
+
+  ```
+  IF
+    Global("CerndBaby","GLOBAL",1)
+    Global("CerndBabyTake","AR1000",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("CerndBabyTake","AR1000",1)
+      TakePartyItem("misc8t")
+      DestroyItem("misc8t")
+  END
+  ```

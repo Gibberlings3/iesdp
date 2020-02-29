@@ -1,0 +1,32 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 92
+name: SelectWeaponAbility
+params:
+  - name: WeaponNum
+    type: i
+    ids: slots
+  - name: AbilityNum
+    type: i
+desc: |-
+  This action instructs the active creature to select the specified slot, and use the ability in the extended header specified by the ability parameter. The example script is from ankheg.bcs.
+
+  ```
+  IF
+    See(NearestEnemyOf(Myself))
+    Range(NearestEnemyOf(Myself),5)
+    Delay(12)
+  THEN
+    RESPONSE #40
+      SelectWeaponAbility(SLOT_WEAPON,0)
+      RunAwayFrom(NearestEnemyOf(Myself),45)
+      AttackReevaluate(NearestEnemyOf(Myself),15)
+    RESPONSE #60
+      SelectWeaponAbility(SLOT_WEAPON1,0)
+      AttackReevaluate(NearestEnemyOf(Myself),15)
+  END
+  ```

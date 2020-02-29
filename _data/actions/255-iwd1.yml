@@ -1,0 +1,23 @@
+iwd1: 1
+iwd2: 1
+n: 255
+name: SetBestWeapon
+params:
+  - name: Object
+    type: o
+  - name: Range
+    type: i
+desc: |-
+  This action instructs the active creature to equip the best weapon (from those available in the quickslots) for attacking the target object. If the target creature is within the specified range the most damaging melee weapon is equipped, whereas if the creature is beyond the specified range the most damaging ranged weapon is equipped.
+
+  ```
+  IF
+    See(NearestEnemyOf(Myself))
+    !Allegiance(NearestEnemyOf(Myself),PC)
+  THEN
+    RESPONSE #100
+      Shout(ATTACKING)
+      SetBestWeapon(NearestEnemyOf(Myself),6)
+      AttackReevaluate(NearestEnemyOf(Myself),105)
+  END
+  ```

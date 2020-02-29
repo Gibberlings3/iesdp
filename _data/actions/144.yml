@@ -1,0 +1,29 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 144
+name: CloseDoor
+params:
+  - name: Object
+    type: o
+desc: |-
+  This action closes the specified door. The example script is from ar0300.bcs.
+
+  ```
+  IF
+    OR(2)
+    Global("LyrosJob","GLOBAL",3)
+    Dead("lyros")
+    Exists("Rylock")
+    Global("RylockLeavesHarperDoor","AR0300",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("RylockLeavesHarperDoor","AR0300",1)
+      CloseDoor("DOOR0308")
+      Lock("DOOR0308")
+      ActionOverride("Rylock",EscapeArea())
+  END
+  ```

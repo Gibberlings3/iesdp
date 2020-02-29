@@ -1,0 +1,34 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 61
+name: StartTimer
+params:
+  - name: ID
+    type: i
+  - name: Time
+    type: i
+desc: |-
+  This action starts a timer local to the active creature. The timer is measured in seconds, and the timer value is not saved in save games. The timer is checked with the TimerExpired trigger.
+
+  ```
+  IF
+    Global("KRDEAD","LOCALS",0 )
+    Dead("Shadra01")
+  THEN
+    RESPONSE #100
+      StartTimer("SPAWNMON",12)
+      SetGlobal("KRDEAD","LOCALS",1)
+  END
+
+  IF
+    Timer Expired("SPAWNMON")
+    Global("KRDEAD","LOCALS",1)
+  THEN
+    RESPONSE #100
+      CreateCreature("Grothgar",[700.700],0)
+  END
+  ```

@@ -1,0 +1,28 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 66
+name: DayNight
+params:
+  - name: TimeOfDay
+    type: i
+    ids: time
+desc: |-
+  This action changes the time of day. The time parameter is taken from [time.ids]({{ ids }}/time.htm), though a direct number can be specified. The example script is from when Irenicus leaves his dungeon.
+
+  ```
+  IF
+    Global("AmaWaukeen","GLOBAL",1)
+  THEN
+    RESPONSE #100
+      DayNight(MIDNIGHT)
+      SetGlobal("AmaWaukeen","GLOBAL",2)
+      FadeToColor([20.0],0)
+      CreateCreature("shthass1",[877.898],7)
+      StartCutSceneMode()
+      StartCutScene("cut24a")
+  END
+  ```

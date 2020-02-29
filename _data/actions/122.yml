@@ -1,0 +1,29 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 122
+name: EndCutSceneMode
+desc: |-
+  This action ends a cutscene, and restores the GUI and player control. The example script is from ar0800.bcs.
+
+  ```
+  IF
+    GlobalGT("BodhiJob","GLOBAL",0)
+    Global("Movie02","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      ClearAllActions()
+      SetGlobal("Movie02","GLOBAL",1)
+      StartCutSceneMode()
+      FadeToColor([30.0],0)
+      Wait(2)
+      EndCutSceneMode()
+      TextScreen("SCENE04")
+      SmallWait(1)
+      StartCutSceneMode()
+      StartCutScene("Movie02a")
+  END
+  ```

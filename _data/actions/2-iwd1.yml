@@ -1,0 +1,44 @@
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 2
+name: AddWayPoint
+params:
+  - name: WayPoint
+    type: p
+desc: |-
+  This action is used to set waypoints for a creature to move between; it is commonly used from area scripts to script barmaids moving in a route around the bar. The point parameter represents the X and Y coordinates of the waypoint to add.
+
+  ```
+  IF
+    Global("KRNEWWAY","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("KRNEWWAY","GLOBAL",1)
+      AddWayPoint([100.200])
+      AddWayPoint([200.300])
+  END
+  ```
+
+  The following script, showing how to move to waypoints preset in the area file, is taken from the barmaid at the Copper Coronet.
+
+  ```
+  IF
+    Detect([PC])
+    Allegiance(Myself,NEUTRAL)
+    Global("quest1","LOCALS",0)
+  THEN
+    RESPONSE #100
+      MoveToObject("Way3")
+      ActionOverride("DRUNK2",DisplayStringHead(Myself,4592)
+      Wait(1)
+      DisplayStringHead(Myself,4604)
+      Wait(2)
+      MoveToObject("Way4")
+      Wait(1)
+      MoveToObject("Way3")
+      DisplayStringHead(Myself,4611)
+      Wait(2)
+      SetGlobal("quest1","LOCALS",1)
+  END
+  ```

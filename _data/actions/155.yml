@@ -1,0 +1,26 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 155
+name: ChangeRace
+params:
+  - name: Object
+    type: o
+  - name: Value
+    type: i
+    ids: race
+desc: |-
+  This action changes the race of the target creature to the specified value. Values are from [race.ids]({{ ids }}/race.htm).
+
+  ```
+  IF
+    Global"KR_RACE_CHANGE","LOCALS",0)
+  THEN
+    RESPONSE #100
+      SetGlobal"KR_RACE_CHANGE","LOCALS",1)
+      ChangeRace(Myself,DRAGON)
+  END
+  ```

@@ -1,0 +1,27 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 143
+name: OpenDoor
+params:
+  - name: Object
+    type: o
+desc: |-
+  This action will open the specified door. If the door is locked the creature must possess the correct key. Some doors central to the plot doors cannot be opened. The active creature can stick on this action if it fails.
+
+  ```
+  IF
+    See("Door01"
+    OpenState("Door01",FALSE)
+    !See([GOODCUTOFF])
+    !TargetUnreachable("Door01")
+  THEN
+    RESPONSE #100
+      MoveToObjectNoInterrupt("Door01")
+      Unlock("Door01" )
+      OpenDoor("Door01")
+  END
+  ```

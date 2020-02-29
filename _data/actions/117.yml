@@ -1,0 +1,28 @@
+bg1: 1
+bg2: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 117
+name: TakePartyGold
+params:
+  - name: Amount
+    type: i
+desc: |-
+  This action takes the specified amount of gold from the party. If performed by a party member, the gold is transferred to that characters gold stat (in the CRE file) and re-added to the party pot when the character re-joins the party.
+  The example script is from AR0602.bcs.
+
+  ```
+  IF
+    Global("TakeImportItems","AR0602",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("TakeImportItems","AR0602",1)
+      SetGlobal("Chapter","GLOBAL",1)
+      ActionOverride("Malaaq",MoveBetweenAreas("AR0601",[345.591],14))
+      ActionOverride("DuegarClanChief",TakeItemListPartyNum("IMPORT01",1))
+      ActionOverride("Shelf1",TakeItemListPartyNum("IMPORT03";,1))
+      SmallWait(4)
+      TakePartyGold(2147483647)
+  (cut short for brevity)
+  ```

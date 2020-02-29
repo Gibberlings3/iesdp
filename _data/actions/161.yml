@@ -1,0 +1,24 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+bgee: 1
+n: 161
+name: IncrementChapter
+params:
+  - name: RESREF
+    type: s
+desc: |-
+  This action is used to increment the chapter, and display a text screen (specified by the resref parameter - a 2DA file). The example script is from ar1803.bcs.
+
+  ```
+  IF
+    Dead("Davaeorn")
+    Global("Chapter","GLOBAL",4)
+  THEN
+    RESPONSE #100
+      RevealAreaOnMap("AR0900")
+      IncrementChapter("Chptxt5")
+      AddJournalEntry(15839,USER)
+  END
+  ```

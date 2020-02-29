@@ -1,0 +1,29 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 158
+name: ChangeGender
+params:
+  - name: Object
+    type: o
+  - name: Value
+    type: i
+    ids: gender
+desc: |-
+  This action changes the gender of the target creature to the specified value. Values are from [gender.ids]({{ ids }}/gender.htm). The example script changes the gender of summoned creatures to neither, to bypass the 5 concurrent summoned creatures limit.
+
+  ```
+  IF
+    See([ALLY])
+    !InParty(LastSeenBy(Myself))
+    Gender(LastS eenBy(Myself),SUMMONED)
+    !Specifics(LastSeenBy(Myself),3001)
+  THEN
+    RESPONSE #100
+      ChangeGender(LastSeenBy(),NEITHER)
+      ChangeSpecifics(LastSeenBy(Myself), 3001)
+  END
+  ```

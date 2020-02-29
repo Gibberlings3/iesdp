@@ -1,0 +1,24 @@
+bg1: 1
+iwd1: 1
+iwd2: 1
+n: 34
+name: UseItem
+params:
+  - name: Object
+    type: s
+  - name: Target
+    type: o
+desc: |-
+  This action instructs the active creature to use the specified item (object) on the specified target (target). This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (though it need not be equipped).
+
+  ```
+  IF
+    HPPercentLT(Myself,50)
+    HasItem("potn52",Myself)
+  THEN
+    RESPONSE #100
+      DisplayStringHead(Myself,46150) //quaffs a potion
+      UseItem("potn52",Myself)
+      Continue()
+  END
+  ```

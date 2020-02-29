@@ -1,0 +1,25 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 137
+name: StartDialog
+params:
+  - name: DialogFile
+    type: s
+  - name: Target
+    type: o
+desc: |-
+  This action instructs the active creature to start the specified dialog with the specified target. The dialog can be initiated from a distance and must have at least one state with all its top level conditions true else it will not initiate. The active creature has its dialog file permanently set to the file specified by the DialogFile parameter.
+
+  ```
+  IF
+    See([PC])
+    NumTimesTalkedTo(0)
+  THEN
+    RESPONSE #100
+      StartDialog("andris",[PC])
+  END
+  ```

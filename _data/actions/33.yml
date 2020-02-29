@@ -1,0 +1,24 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 33
+name: Turn
+desc: |-
+  This action turns any undead creatures within range of the active creature. This action can be used for any creature (not just paladins/clerics) though success in turning is dependent on the Turn Undead level of the creature, which is only calculated for paladins and clerics. The chance to successfully turn undead is based on creatures level and class. Paladins turn at 2 levels less than clerics of the same level. An undead creature will be destroyed/controlled if its level is more than 7 levels below the active creatures turn undead level. An undead creature may be turned (i.e. forced to flee) is its level is equal to, or up to 4 levels below, the active creatures turn undead level.
+
+  ```
+  IF
+    See([EVILCUTOFF])
+    General([EVILCUTOFF],UNDEAD)
+    LevelGT(Mysel f,12)
+    OR(2)
+    Class(Myself,PALADIN_ALL)
+    Class(Myself,CLERIC_ALL)
+  THEN
+    RESPONSE #100
+      Turn()
+  END
+  ```

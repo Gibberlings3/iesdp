@@ -1,0 +1,40 @@
+---
+layout: default
+---
+
+<div class="title_main actions_title"> {{ page.title }} </div>
+
+{% assign game = page.game %}
+{% comment %} url bases for use in descriptions {% endcomment %}
+{% assign ids = site.data.games | where: 'name', game | map: 'ids' | first %}
+{% assign 2da = site.data.games | where: 'name', game | map: '2da' | first %}
+{% assign actions_page = site.data.games | where: 'name', game | map: 'actions' | first %}
+
+{% assign anchors = page.anchors %}
+{% include actions_anchors.html %}
+
+{% assign actions = "" | split: "" %}
+{% for action_hash in site.data.actions %}
+  {% assign actions = actions | push: action_hash[1] %}
+{% endfor %}
+{% assign actions = actions | sort: 'name' | sort: 'n' %}
+
+
+{% for action in actions %}
+
+  {% if action[game] == 1 %}
+    <div class="actionHeader">
+      <a id="{{ action.n }}" class="action_name">
+        {{ action.n }} {{ action.name }}({%- assign a = action -%}{%- include action_params.html -%})
+      </a>
+      {%- include action_labels.html -%}
+      {%- include action_sisters.html -%}
+    </div>
+    <div class="indent1 action_body">
+        {%- include action_alias.html -%}
+        <p></p>{%- comment -%} if desc has only code, it gets too close to the name {%- endcomment -%}
+        {{ action.desc | liquify | markdownify }}
+    </div>
+  {% endif %}
+
+{% endfor %}

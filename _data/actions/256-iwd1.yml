@@ -1,0 +1,22 @@
+iwd1: 1
+iwd2: 1
+n: 256
+name: SetDialogueRange
+params:
+  - name: Range
+    type: i
+desc: |-
+  This action sets the maximum range dialog range (used by Dialogue() and DialogueNoSet()), i.e. the actions will work if the creature targetted by those actions actions is within this distance.
+
+  ```
+  IF
+    NumTimesTalkedTo(0)
+    See([PC])
+    !Allegiance(Myself,ENEMY)
+    !Dead(Myself)
+  THEN
+    RESPONSE #100
+      SetDialogueRange(75)
+      Dialogue([PC])
+  END
+  ```

@@ -1,0 +1,24 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 29
+name: RunAwayFrom
+params:
+  - name: Creature
+    type: o
+  - name: Time
+    type: i
+desc: |-
+  This action causes the active creature to run away from the specified creature, for the specified time. The time parameter is measured in AI updates, which default to 15 updates per second. Occasionally, fleeing creatures stop to attack another creature.
+
+  ```
+  IF
+    HPPercentLT(Myself,30)
+  THEN
+    RESPONSE #100
+      RunAwayFrom(LastAttackerOf(Myself),180)
+  END
+  ```

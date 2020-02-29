@@ -1,0 +1,32 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 146
+name: Polymorph
+params:
+  - name: AnimationType
+    type: i
+    ids: animate
+desc: |-
+  This action causes the active creature to change animation to the specified animation (values from [animate.ids]({{ ids }}/animate.htm))
+
+  ```
+  IF
+    !InPartyAllowDead("Aerie")
+    !Dead("Aerie")
+    !GlobalGT("AerieTransform","GLOBAL",0)
+    Global("Aerie","AR0607",0)
+    Global("KalahI","AR0607",0)
+  THEN
+    RESPONSE #100
+      MoveGlobal("Ar0607","Aerie",[318.378])
+      ChangeEnemyAlly("Aerie",NEUTRAL)
+      SetGlobal("Aerie","AR0607",1)
+      ActionOverride("Aerie",Polymorph(MAGE_FEMALE_ELF))
+      ActionOverride("Aerie",SetBeenInPartyFlags())
+      SetGlobal("AerieTransform","GLOBAL",2)
+  END
+  ```

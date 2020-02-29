@@ -1,0 +1,26 @@
+pst: 1
+n: 168
+name: Interact
+params:
+  - name: Object
+    type: o
+desc: |-
+  This action is used to initiate banter between NPCs. The action must be added to action.ids before it can be used. The example script is from edwin.bcs.
+
+  ```
+  IF
+    InParty(Myself)
+    Gender(Myself,FEMALE)
+    InParty("Aerie")
+    See("Aerie")
+    !Dead("Aerie")
+    !StateCheck("Aerie",STATE_SLEEPING)
+    Range("Aerie",10)
+    CombatCounter(0)
+    !Range(SecondNearest([PC]),10)
+    Global("EdwinW1","LOCALS",0)
+  THEN
+    RESPONSE #100
+      Interact("Aerie")
+  END
+  ```

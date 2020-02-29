@@ -1,0 +1,26 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 159
+name: ChangeAlignment
+params:
+  - name: Object
+    type: o
+  - name: Value
+    type: i
+    ids: align
+desc: |-
+  This action changes the alignment of the target creature to the specified value. Values are from [align.ids]({{ ids }}/align.htm).
+
+  ```
+  IF
+    Global("KR_ALIGN_CHANGE","LOCALS",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("KR_ALIGN_CHANGE","LOCALS",1)
+      ChangeAlignment(LastSeenBy(Myself),CHAOTIC_GOOD)
+  END
+  ```

@@ -1,0 +1,29 @@
+bgee: 1
+n: 7
+name: CreateCreature
+params:
+  - name: NewObject
+    type: s
+  - name: Location
+    type: p
+  - name: Face
+    type: i
+    ids: dir
+desc: |-
+  This action is used to create a [creature](../../file_formats/ie_formats/cre_v1.htm) - either an NPC, a neutral creature or an enemy. NewObject is the filename of the creature to create, Location is the coordinates to create the creature at ([x.y] format) and [direction]({{ ids }}/dir.htm) being the direction the creature is facing (0-15, 0 being south and the facing values increasing as the character turns clockwise). Note that a coordinate of [-1.-1] will create the creature next to the active creature. Effect of the second action variant can point to a [VVC](../../file_formats/ie_formats/vvc_v1.htm) or [BAM](../../file_formats/ie_formats/bam_v2.htm) resource.
+
+  This script is from the area script for the Copper Coronet (AR0406) and creates extra guards when the Player is discovered in the off limits area.
+
+  ```
+  IF
+    Global("CopperGuards","GLOBAL",1)
+  THEN
+    RESPONSE #100
+      CreateCreature("ccguard1",[2338.412],14)
+      CreateCreature("ccguard2",[2318.457],14)
+      CreateCreature("ccguard1",[2749.793],6)
+      CreateCreature("ccguard2",[2791.831],6)
+      CreateCreature("ccguard1",[1981.762],14)
+      CreateCreature("ccguard1",[1286.1500],14)
+  END
+  ```

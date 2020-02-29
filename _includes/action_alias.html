@@ -1,0 +1,16 @@
+{%- if action.alias -%}
+
+  {% if action.alias == true %}
+    {% assign original_num = action.n %}
+  {% else %}
+    {% assign original_num = action.alias %}
+  {% endif %}
+
+  {% assign original_action = actions
+    | where: 'n', original_num
+    | where_exp: 'item', 'item[game] == action[game]'
+    | where_exp: "item", "item.alias == nil"
+    | first
+  %}
+  <p>See <a href="#{{ original_action.n }}">{{ original_action.name }}.</a></p>
+{%- endif -%}

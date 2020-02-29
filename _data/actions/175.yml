@@ -1,0 +1,21 @@
+bg1: 1
+bg2: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 175
+name: SetLeavePartyDialogFile
+desc: |-
+  This action sets the dialog for the active creature to their leave dialog.
+
+  ```
+  IF
+    !InParty(Myself)
+    HPGT(Myself,0)
+  THEN
+    RESPONSE #100
+      SetLeavePartyDialogFile()
+      Dialogue(Player1)
+      ChangeAIScript("",DEFAULT)
+  END
+  ```

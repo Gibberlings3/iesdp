@@ -1,0 +1,18 @@
+pst: 1
+n: 116
+name: TakePartyItem
+params:
+  - name: Item
+    type: s
+desc: |-
+  This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). The item is transferred to the inventory of the active creature. The example is from AR0516.bcs.
+
+  ```
+  IF
+    Global("ThrallOrb","GLOBAL",2)
+    PartyHasItem("MISC7Y")
+  THEN
+    RESPONSE #100
+      TakePartyItem("MISC7Y")
+  END
+  ```

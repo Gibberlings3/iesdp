@@ -1,0 +1,26 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 147
+name: RemoveSpell
+params:
+  - name: Spell
+    type: i
+    ids: spell
+desc: |-
+  This action removes one memorised indtance of the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in [spell.ids]({{ ids }}/spell.htm).
+
+  ```
+  IF
+    Global("KR_ANTI_PALADIN_CHANGE","LOCALS",1)
+  THEN
+    RESPONSE #100
+      RemoveSpell(PALADIN_LAY_ON_HANDS)
+      RemoveSpell(PALADIN_DETECT_EVIL)
+      RemoveSpell(PALADIN_PROTECTION_FROM_EVIL)
+      SetGlobal("KR_ANTI_PALADIN_CHANGE","LOCALS",2)
+  END
+  ```

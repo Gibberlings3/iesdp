@@ -1,0 +1,28 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 103
+name: MoraleInc
+params:
+  - name: Target
+    type: o
+  - name: Morale
+    type: i
+desc: |-
+  This action alters the morale of the target by the specified amount. The change amount can be positive or negative. The example script is from bardsh.bcs.
+
+  ```
+  IF
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    Allegiance(Myself,NEUTRAL)
+    Global("PlayerAttackedActors","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("PlayerAttackedActors","GLOBAL",1)
+      MoraleInc(Myself,-5)
+      Enemy()
+  END
+  ```

@@ -1,0 +1,39 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 157
+name: ChangeSpecifics
+params:
+  - name: Object
+    type: o
+  - name: Value
+    type: i
+    ids: specific
+desc: |-
+  This action changes the specific status of the target creature to the specified value. Values are from [specific.ids]({{ ids }}/specific.htm). The action produces inconsistent results when used on player characters in multiplayer games. The specific value is represented by one byte, and so is limited to values 0-255. The example script assigns a script to a newly created simulacrum.
+
+  ```
+  IF
+    See([ALLY])
+    !InParty(LastSeenBy(Myself))
+    !Gender(LastSeenBy(Myself),SUMMONED)
+    !General(LastSeenBy(Myself),ANIMAL)
+    !General(LastSeenBy(Myself),MONSTER)
+    !General(LastSeenBy(Myself),UNDEAD)
+    !General(LastSeenBy (Myself),GIANTHUMANOID)
+    !Race(LastSeenBy(Myself),ELEMENTAL)
+    !Race(LastSeenBy(Myself),MEPHIT)
+    !Race(LastSeenBy(Myself),IMP)
+    !HasItem("IMOENHP1&q uot;,LastSeenBy(Myself))
+    !HasItem("MINHP1",LastSeenBy(Myself))
+    !Specifics(LastSeenBy(Myself),100)
+  THEN
+    RESPONSE #100
+      DisplayStringHead(LastSeenBy(Myself),26234) // 'Simulacrum'
+      ActionOverride(LastSeenBy(Myself), ChangeAIScript("gbSim&quot;,DEFAULT))
+      ChangeSpecifics(LastSeenBy(Myself),100)
+  END
+  ```

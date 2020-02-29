@@ -1,0 +1,22 @@
+bgee: 1
+n: 269
+name: DisplayStringHead
+params:
+  - name: Object
+    type: o
+  - name: StrRef
+    type: i
+desc: |-
+  This action displays the specified string over the head on the specified object (on the game-screen). The string may also be shown in the message log, depending on options specified in baldur.ini.
+
+  ```
+  IF
+    HPPercentLT(Myself,50)
+    HasItem("Potn52",Myself)
+  THEN
+    RESPONSE #100
+      DisplayStringHead(Myself,46150)
+      UseItem("Potn52",Myself)
+  END
+  ```
+  {% capture note %} It is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during [Character Creation]({{  "/appendices/charactercreation.htm" | relative_url }}). {% endcapture %} {% include info.html %}

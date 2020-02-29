@@ -1,0 +1,33 @@
+bg1: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 133
+name: ClearActions
+params:
+  - name: Object
+    type: o
+desc: |-
+  This action clears the action list of the specified object. The example script is from ar2400.bcs.
+
+  ```
+  IF
+    GlobalTimerExpired("udWaitOgreDoor","GLOBAL")
+    Global("HaveOgreOpenDoor","AR2400",0)
+    Global("udGithDead","AR2400",0)
+    !Global("udMind","GLOBAL",30)
+  THEN
+    RESPONSE #100
+      SetInterrupt(FALSE)
+      SetGlobal("HaveOgreOpenDoor","AR2400",1)
+      ClearActions(Player1)
+      ClearActions(Player2)
+      ClearActions(Player3)
+      ClearActions(Player4)
+      ClearActions(Player5)
+      ClearActions(Player6)
+      SetInterrupt(TRUE)
+      StartCutSceneMode()
+      StartCutScene("Cut44i")
+  END
+  ```

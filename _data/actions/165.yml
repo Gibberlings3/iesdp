@@ -1,0 +1,25 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 165
+name: AddExperiencePartyGlobal
+params:
+  - name: Name
+    type: s
+  - name: Area
+    type: s
+desc: |-
+  This action adds experience to the party, with the amount corresponding to a global variable.
+
+  ```
+  IF
+    Global("MyXP","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("MyXP","GLOBAL",50)
+      AddExperiencePartyGlobal("MyXP","GLOBAL")
+  END
+  ```

@@ -1,0 +1,26 @@
+bg2: 1
+bgee: 1
+n: 116
+name: TakePartyItem
+params:
+  - name: Item
+    type: s
+desc: |-
+  This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). Characters are checked in current party order. The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). If an item is found in a container on an earlier player and in the inventory of a later player, both item instances may be removed. All slots are checked; inventory slots are checked in the following order
+
+  ```
+  0, 2, 4, 6, 8, 10, 12, 14
+  1, 3, 5, 7, 9, 11, 13, 15
+  ```
+
+  The example is from AR0516.bcs.
+
+  ```
+  IF
+    Global("ThrallOrb","GLOBAL",2)
+    PartyHasItem("MISC7Y")
+  THEN
+    RESPONSE #100
+      TakePartyItem("MISC7Y")
+  END
+  ```

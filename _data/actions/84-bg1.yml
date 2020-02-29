@@ -1,0 +1,24 @@
+bg1: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 84
+name: Face
+params:
+  - name: Direction
+    type: i
+desc: |-
+  This action instructs the active creature to face the specified direction. Directions run from 0-15 with 0 being south and moving clockwise. Negative values cause object to rotate continuously.
+
+  ```
+  IF
+    Global("BeholderBehavior","LOCALS",0)
+    See([PC])
+    HPGT(Myself,65)
+  THEN
+    RESPONSE #100
+      FaceObject([PC])
+      ForceSpell([PC],BEHOLDER_CHARM_PERSON)
+      Continue()
+  END
+  ```

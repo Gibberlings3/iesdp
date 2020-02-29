@@ -1,0 +1,34 @@
+bgee: 1
+n: 387
+name: SetCutSceneBreakable
+params:
+  - name: Breakable
+    type: i
+    ids: boolean
+desc: |-
+  This action controls whether a cutscene can be skipped by pressing ESC. When set to TRUE the cutscene can be interrupted. Set to FALSE to prevent the cutscene from being interrupted. When properly prepared the skipped cutscene can be detected and completed in a safe manner.
+
+  Code snippet of the opening cutscene in BG2EE - SoA (NEWGAME.BCS):
+  ```
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      CutSceneId("CSJon")
+      SetAreaScript("cutskip2",OVERRIDE)
+      SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",1)
+      SetCutSceneBreakable(TRUE)
+      CreateCreatureEffect("M05PCSPY","",[3374.3068],S)
+
+      // more script actions...
+
+      SetCutSceneBreakable(FALSE)
+      SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",0)
+      SetAreaScript("",OVERRIDE)
+      ActionOverride("Imoen",EndCutSceneMode())
+      ActionOverride("Imoen",Dialogue(Player1))
+      DestroySelf()
+  END
+  ```
+
+  `SetAreaScript("cutskip2",OVERRIDE)` defines a "failsafe" script to execute when the cutscene is interrupted. The OVERRIDE slot ensures that it has precedence over the default area script. `SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",1)` is used to identify the cutscene that has been interrupted (if the failsafe script handles more than one cutscene).

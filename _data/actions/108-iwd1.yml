@@ -1,0 +1,18 @@
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 108
+name: EscapeArea
+desc: |-
+  This action, in its first form, instructs the active creature to leave the current area, either by walking, or, if the path is blocked, by simply disappearing. In the actions second form the action functions as a combination of EscapeAreaDestroy() and MoveBetweenAreas(). The parameters are similar to MoveBetweenAreas(), in that it takes in all the same information, but unlike MoveBetweenAras(), the character will search for the nearest travel trigger, move to that, then execute his movement to the specified area. If he cannot find a travel trigger, he will execute the movement.
+
+  The action is uninterruptable; actions listed this one in a script may not execute as intended.
+
+  ```
+  IF
+    HPPercentLT(Myself,35)
+  THEN
+    RESPONSE #100
+      EscapeArea()
+  END
+  ```

@@ -1,0 +1,27 @@
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 5
+name: BackStab
+params:
+  - name: Target
+    type: o
+not_tested: true
+desc: |-
+  This action instructs the active creature to backstab the specified target. Note that some creatures (notably dragons and golems) are immune to being backstabbed, that not all weapons are valid to backstab with, and that the active creature must be hidden to make a successful backstab. This action causes the game to crash. As long as the correct conditions are met, the first attack of a hidden creature will count as a backstab attack.
+
+  ```
+  IF
+    See(NearestEnemyOf())
+    Range(NearestEnemyOf(),4)
+    !Race(NearestEnemyOf(),DRAGON)
+    !Race(NearestEnemyOf(),GOLEM)
+    !InParty(NearestEnemyOf(Myself))
+    OR(2)
+      StateCheck(Myself,STATE_INVISIBLE)
+      StateCheck(Myself,STATE_IMPROVEDINVISIBLITY)
+  THEN
+    RESPONSE #100
+      Attack(NearestEnemyOf())
+  END
+  ```

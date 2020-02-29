@@ -1,0 +1,28 @@
+bg1: 1
+bg2: 1
+pst: 1
+iwd2: 1
+iwd1: 1
+bgee: 1
+n: 131
+name: Kill
+params:
+  - name: Object
+    type: o
+desc: |-
+  This action causes the target creature to die, dropping any droppable items they are carrying.
+
+  ```
+  IF
+    Global("KillArntra04","AR0307",1)
+  THEN
+    RESPONSE #100
+      SetGlobal("KillArntra04","AR0307",2)
+      ActionOverride("arntra04",Face(10))
+      Wait(1)
+      ForceSpell("arntra04",CLERIC_FLAME_STRIKE)
+      Wait(1)
+      Kill("arntra04")
+      CreateCreature("Arntra05",[3213.485],0)
+  END
+  ```

@@ -1,0 +1,31 @@
+iwd1: 1
+n: 31
+name: Spell
+params:
+  - name: Target
+    type: o
+  - name: Spell
+    type: i
+    ids: spell
+unreliable: true
+desc: |-
+  This action causes the active creature to cast the specified spell at the target object. The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell.
+
+  ```
+  IF
+    See([EVILCUTOFF])
+    !InParty([EVILCUTOFF])
+    !HasBounceEffects([ EVILCUTOFF])//like cloak of mirroring or spell deflection
+    !HasImmunityEffects([EVILCUTOFF])//
+    HaveSpell(WIZARD_MAGIC_MISSILE)
+    OR(2)
+    !StateCheck([EVILCUTOFF],STATE_INVISIBLE)
+    !StateCheck([EVILCUTOFF],STATE_IMPROVEDINVISIBLITY)
+    CheckStatLT([EVILCUTOFF], 30,RESISTMAGIC)
+    !Race([EVILCUTOFF],LICH)
+    !Race([EVILCUTOFF],RAKSHASA)
+  THEN
+    RESPONSE #100
+      Spell([EVILCUTOFF],WIZARD_MAGIC_MISSILE)
+  END
+  ```

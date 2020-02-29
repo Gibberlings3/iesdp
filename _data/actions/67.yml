@@ -1,0 +1,24 @@
+bg1: 1
+bg2: 1
+bgee: 1
+iwd1: 1
+iwd2: 1
+pst: 1
+n: 67
+name: Weather
+params:
+  - name: Weather
+    type: i
+    ids: weather
+desc: |-
+  This action changes the weather. The action only works in outdoors areas that have weather enabled in the ARE file. Values for the weather parameter are from [weather.ids]({{ ids }}/weather.htm). Note that the fog weather type does not work.
+
+  ```
+  IF
+    Global("KRSTORM","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      Weather(RAIN)
+      SetGlobal("KRSTORM","GLOBAL",1)
+  END
+  ```

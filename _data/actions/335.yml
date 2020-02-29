@@ -1,0 +1,24 @@
+bg2: 1
+bgee: 1
+n: 335
+name: SetTokenGlobal
+params:
+  - name: GLOBAL
+    type: s
+  - name: Area
+    type: s
+  - name: Token
+    type: s
+desc: |-
+  This action sets the specified token to the given variable (in the specified scope). The example script will display 100 over the head of the active creature.
+
+  ```
+  IF
+    Global("Value","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      SetGlobal("Value","GLOBAL",100)
+      SetTokenGlobal("Value","GLOBAL","PPOINTS")
+      DisplayStringHead(Myself,63037) //63037  is <PPOINTS> for me
+  END
+  ```

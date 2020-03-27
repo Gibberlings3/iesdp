@@ -11,14 +11,14 @@ iwd2: 0
 pst: 0
 ---
 Creates a custom spell sequencer, storing a certain number of spells for later use.<br/>
-It applies <a href="../_opcodes/op256-bgee.html">opcode #256</a> to the caster upon completing the spell selection process, and at the same time it grants you the -D or -P subspell (via <a href="../_opcodes/op171.html">opcode #171</a>). In particular:
+It applies <a href="#op256">opcode #256</a> to the caster upon completing the spell selection process, and at the same time it grants you the -D or -P subspell (via <a href="#op171">opcode #171</a>). In particular:
 
 <ul>
 	<li>if all of the sequenced spells use ability target 4 (Target Point), it will grant spell 'Parent' + 'P' (provided such a spell exists – for instance: SPWI420P),</li>
 	<li>otherwise it will grant spell 'Parent' + 'D' (for instance: SPWI420D).</li>
 </ul>
 
-The chosen spells are stored using <a href="../_opcodes/op256-bgee.html">opcode #256</a>, using 'Timing Mode' 1 (regardless of timing mode for <a href="../_opcodes/op257-bgee.html">opcode #257</a>) and 'Parameter3' set to 1.
+The chosen spells are stored using <a href="#op256">opcode #256</a>, using 'Timing Mode' 1 (regardless of timing mode for <a href="#op257">opcode #257</a>) and 'Parameter3' set to 1.
 
 <br/>The 'Maximum Level' field indicates the maximum spell level that can be used in the sequencer. The 'Amount' field indicates the number of spells that can be used in the sequencer.
 <br/><br/>
@@ -36,7 +36,7 @@ When set manually, it cannot contain lowercase characters, it MUST be in ALLCAPS
 
 If not used in an external EFF, the 'Activation Key' will be the "Parent Resource".<br/>
 If used in an external EFF, the 'Activation Key' must be explicitly specified, but doesn't need to match its actual "Parent Resource".<br/>
-For the vanilla spells, the 'Activation Key' is always the parent spell of <a href="../_opcodes/op257-bgee.html">opcode #257</a>.
+For the vanilla spells, the 'Activation Key' is always the parent spell of <a href="#op257">opcode #257</a>.
 
 {% capture note %}
 As of v2.3, an entry for the "Parent Resource" or "Activation Key" must be added to the 'mageBookStrings{}' lua table, or the game will crash upon use.
@@ -57,7 +57,7 @@ The presence of this effect in any of a spell's ability headers will force any W
 {% include note.html %}
 
 {% capture note %}
-'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="../_opcodes/op256-bgee.html">256</a>/<a href="../_opcodes/op257-bgee.html">257</a> and <a href="../_opcodes/op258-bgee.html">258</a>/<a href="../_opcodes/op260-bgee.html">260</a>) use the exact same string.
+'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="#op256">256</a>/<a href="#op257">257</a> and <a href="#op258">258</a>/<a href="#op260">260</a>) use the exact same string.
 {% endcapture %}
 
 {% include note.html %}

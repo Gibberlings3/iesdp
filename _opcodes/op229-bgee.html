@@ -1,0 +1,47 @@
+---
+n: 229
+name: "Removal: Remove One School"
+param1: "Max Level"
+param2: "School Type"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Removes all effects with a matching 'School Type', with a non-zero 'Power Level' up to 'Max Level', of the first two valid 'Parent Resources' from the targeted creature(s).
+<br/>Known values for 'School Type' are:
+<ul>
+	<li>0 => None</li>
+	<li>1 => Abjurer</li>
+	<li>2 => Conjurer</li>
+	<li>3 => Diviner</li>
+	<li>4 => Enchanter</li>
+	<li>5 => Illusionist</li>
+	<li>6 => Invoker</li>
+	<li>7 => Necromancer</li>
+	<li>8 => Transmuter</li>
+	<li>9 => Generalist</li>
+</ul>
+
+The first valid 'Parent Resource' has a matching effect with a Timing Mode other than (2/5/8), all such matching effects of this 'Parent Resource' will be removed.
+<br/><br/>
+
+The second valid 'Parent Resource' has a matching effect with a Timing Mode (2/5/8), all such matching effects of this 'Parent Resource' will be removed.
+<br/><br/>
+
+If any effects are removed, the String Reference corresponding to the 'School Type' from <a href="../files/2da/2da_bgee/mschool.htm">MSCHOOL.2DA</a> is returned to the combat log.
+
+{% capture note %}
+Basically it removes one equipped resource effect list and one non-equipped resource effect list, except that equipped effects aren't removable while its item is equipped, so this behavior is not common.
+The only way to really see this behavior (removing two separate resources) is to have a spell or item ability that only applies equipped effects.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+Effects with a 'Power Level' of 0 are completely ignored by this opcode.
+{% endcapture %}
+
+{% include note.html %}

@@ -1,6 +1,6 @@
 ---
 n: 318
-name: "Protection: from Spell"
+name: "Protection from Resource"
 param1: "Value"
 param2: "Stat Type"
 bg1: 0
@@ -11,3 +11,10 @@ iwd2: 0
 pst: 0
 ---
 The creature type specified by the 'Type' field becomes immune to the spell or item specified in the 'Resource' field. See <a href="#op324">opcode #324</a> for more information.
+
+{% capture note %}
+This opcode can block <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files too.<br/>
+In order to do so, both the "Resource" field of op#318 and the "Parent resource" field (located at offset 0x94) of the EFF file must be the same string (max. 8 character long). Unlike <a href="#op206">opcode #206</a>, this one can innately block any type of resource (None/Spell/Item).
+{% endcapture %}
+
+{% include info.html %}

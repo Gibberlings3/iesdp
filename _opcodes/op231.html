@@ -12,9 +12,24 @@ pst: 0
 ---
 Applies the time stop effect. 
 <br/>The timestop effect lasts half as long as the Duration specified for the effect.
+<br/><br/>
+
+In particular:
+<ul>
+	<li>All creatures not immune to Time Stop will be rendered uncontrollable, can be hit automatically by attacks as if they were HELPLESS (but do not actually have STATE_HELPLESS set), and their frequency-based effects will not trigger (poison/regeneration), but their duration will run.</li>
+	<li>Projectiles are suspended mid-flight until the Time Stop ends, at which point they will resume normal function.</li>
+	<li>Area effect projectiles are suppressed until the Time Stop ends, at which point they will resume normal function, though their duration will run during the Time Stop.</li>
+	<li>Projectiles that hit "instantly" (#0 and #1 for spells/items) are unaffected by Time Stop, which includes all melee weapons.</li>
+</ul>
 
 {% capture note %}
 Both parameters should be 0 (zero).
 {% endcapture %}
 
 {% include important.html %}
+
+{% capture note %}
+Only one creature may have a Time Stop effect running at a time, applying a Time Stop effect during another will override the previous. The caster is always immune to their own Time Stop effect, they do not require <a href="#op310">opcode #310</a>, unless their own Time Stop is at risk of being overridden.
+{% endcapture %}
+
+{% include note.html %}

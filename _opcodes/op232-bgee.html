@@ -55,18 +55,18 @@ When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>
 When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, known values for 'Parameter3' are:
 <ul>
 	<li>0 => Not a "real" contingency (Fire Shields, Globe of Blades, etc...)</li>
-	<li>1 => Real contingency (Maintains 'Contingency' portrait icon, displays feedback message ENGINEST[246|STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER] when triggered, and terminates this effect after first trigger. This value is always set when created by <a href="../_opcodes/op234-bgee">opcode #234</a>.</li>
+	<li>1 => Real contingency (Maintains 'Contingency' portrait icon, displays feedback message <a href="../files/2da/2da_bgee/enginest.htm">ENGINEST</a>[246|STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER] when triggered, and terminates this effect after first trigger. This value is always set when created by <a href="#op234">opcode #234</a>.</li>
 </ul>
 
 When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, 'Parent Type' (Source Type) may be manually set to influence its behavior. Known values for 'Parent Type' are:
 <ul>
 	<li>0 = None – Allows further effects with a matching "Parent Resource" to affect the target.</li>
-	<li>1 = Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string ENGINEST[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log.</li>
+	<li>1 = Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string <a href="../files/2da/2da_bgee/enginest.htm">ENGINEST</a>[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log. Spells must therefore either have this as the last effect, or use it in an EFF through <a href="#op177">opcode #177</a>, specifying a 'Parent Type' of 0 or 2.</li>
 	<li>2 = Item – Allows further effects with a matching "Parent Resource" to affect the target.</li>
 </ul>
 
 {% capture note %}
-If you need a condition which is always true, you could set 'Condition' to 20 and 'Extra' to 102 ("hp < 102%" will always be true; 102 is used because 'value' must be even or the combat log will be flooded with feedback messages).
+If you need a condition which is always true, you could set 'Condition' to 20 and 'Extra' to 102 ("hp < 102%" will always be true; 102 is used because 'Extra' must be even or the combat log will be flooded with feedback messages).
 {% endcapture %}
 
 {% include note.html %}

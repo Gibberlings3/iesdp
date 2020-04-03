@@ -6618,7 +6618,7 @@ Leave both parameters at zero for this effect to work.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-At least on EE games, it is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+At least in EE games, it is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
 
   </div>
 </div>
@@ -6637,11 +6637,17 @@ At least on EE games, it is possible to colorize the string. In order to do so, 
 		
 		
 			
-				
-			
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op140">BGEE</a>
+			
+		
+			
+				
+			
 			
 			
 				<a class="opvariant" href="pst.htm#op140">PST</a>
@@ -6690,11 +6696,17 @@ At least on EE games, it is possible to colorize the string. In order to do so, 
 		
 		
 			
-				
-			
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op141">BGEE</a>
+			
+		
+			
+				
+			
 			
 			
 				<a class="opvariant" href="pst.htm#op141">PST</a>
@@ -7317,6 +7329,17 @@ Both parameters should be 0 (zero).
   </div>
 </div>
 
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+This effect is automatically successful, but can only find traps that are normally detectable by the Find Traps skill.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -7433,6 +7456,15 @@ Both parameters should be 0 (zero).
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op153">BGEE</a>
+			
+		
+			
 				
 		<br />
 
@@ -7471,6 +7503,15 @@ Both parameters should be 0 (zero).
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op154">BGEE</a>
+			
 		
 			
 				
@@ -7513,11 +7554,17 @@ Both parameters should be set to 0.
 		
 		
 			
-				
-			
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op155">BGEE</a>
+			
+		
+			
+				
+			
 			
 			
 				<a class="opvariant" href="bg1tots.htm#op155">BG1</a>
@@ -7549,6 +7596,15 @@ Both parameters should be set to 0.
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op156">BGEE</a>
+			
 		
 			
 				
@@ -7591,6 +7647,15 @@ Both parameters should be 0 (zero).
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op157">BGEE</a>
+			
+		
+			
 				
 		<br />
 
@@ -7626,6 +7691,7 @@ It cannot be removed by any of the stun/held removal opcodes.
 
   </div>
 </div>
+
  </div>
 		<hr />
 
@@ -7639,6 +7705,15 @@ It cannot be removed by any of the stun/held removal opcodes.
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op158">BGEE</a>
+			
 		
 			
 				
@@ -7821,6 +7896,15 @@ This effect should be used with an instant timing mode.
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op163">BGEE</a>
+			
+		
+			
 				
 		<br />
 
@@ -7832,7 +7916,8 @@ This effect should be used with an instant timing mode.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the free action effect to the targeted creature(s), restoring the creatures movement rate to its default value if the current movement rate value is below the default for the animation type.
+		<div class="descriptiondata"> Applies the free action effect to the targeted creature(s), restoring the creatures movement rate to its default value if the current movement rate value is below the default for the animation type.<br/>
+Also check out the EE description <a href="bgee.htm#op163">here</a>.
  </div>
 		<hr />
 
@@ -7895,11 +7980,17 @@ This effect should be used with an instant timing mode.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the pause effect to the targeted creature(s). 
-This effect is similar to stun and the targeted creature(s) scripts are paused.
- Characters are still selectable.
-<br/>
-<br/>This effect sets stat #70 (CasterHold) to 1.
+		<div class="descriptiondata"> Applies the pause effect to the targeted creature(s).<br/>
+In particular:
+<ul>
+	<li>Their inventory is still access-able.</li>
+	<li>They are still select-able, and can be issued orders (for instance, activating modal abilities), though not all actions can be taken.</li>
+	<li>It does not interrupt/end modal abilities the creature is currently using.</li>
+	<li>They are not "helpless", an attack roll is still required to hit them.</li>
+	<li>Their scripts stop running.</li>
+</ul>
+
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#70">STAT #70</a> to 1.
 
 
 
@@ -8036,8 +8127,18 @@ Both parameters should be 0.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the creature specified by the resource key (giving no experience).<br/>
-Also known as "Script: Destroy Self".
+		<div class="descriptiondata"> Moves the targeted creature(s) to area ".ARE" (a non-existent area). Also known as <a href="../scripting/actions/bgeeactions.htm#111">Script: Destroy Self</a>.
+<br/><br/>
+
+This deletes non-global creatures from the game (most common usage).
+<br/><br/>
+
+For Global Creatures:
+<ul>
+	<li>This effect removes the creature from the player's party (if they were in it).</li>
+	<li>The effect will keep the creature out of the party and any other Area for its duration, but does not re-instate the creature once it expires.</li>
+	<li>They can still be recovered through script actions once the effect expires.</li>
+</ul>
 
 
 
@@ -8322,17 +8423,6 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Gives the spell specified by the resource key to the targeted creature(s).
-
-
-
-<div class="note important">
-  <div>
-    <strong>Important:</strong> 
-Any delayed <a href="#op171">opcode #171</a> will be removed by death.
-
-  </div>
-</div>
-
  </div>
 		<hr />
 
@@ -8403,6 +8493,15 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op173">BGEE</a>
+			
 		
 			
 				
@@ -8607,14 +8706,16 @@ PST: This effect doesn’t exist and always crashes the game.
 		<div class="descriptiondata"> Applies the eff file specified by the resource key to the targeted creature(s), if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'.
 <br/>NB. When using an eff to alter thac0/dmg bonus, set param1 = 0, and param2 = 2.
 <br/>Known values for 'IDS File' are:
-<br/>2   EA.ids
-<br/>3   General.ids
-<br/>4   Race.ids
-<br/>5   Class.ids
-<br/>6   Specific.ids
-<br/>7   Gender.ids
-<br/>8   Align.ids
-<br/>9   Kit.ids (only in EEs)
+<ul>
+	<li>2 => <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
+	<li>3 => <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
+	<li>4 => <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
+	<li>5 => <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
+	<li>6 => <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
+	<li>7 => <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
+	<li>8 => <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
+	<li>9 => <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+</ul>
 
 
 
@@ -10492,11 +10593,17 @@ This effect changes the casting level stat, but has no actual affect in-game IWD
 		
 		
 			
-				
-			
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op214">BGEE</a>
+			
+		
+			
+				
+			
 			
 			
 				<a class="opvariant" href="bg2tob.htm#op214">BG2</a>
@@ -10577,6 +10684,12 @@ This effect changes the casting level stat, but has no actual affect in-game IWD
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op216">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op216">IWD1</a>
@@ -11225,6 +11338,12 @@ This effect changes the casting level stat, but has no actual affect in-game IWD
 				
 			
 			
+				<a class="opvariant" href="bgee.htm#op229">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op229">IWD1</a>
 			
 		
@@ -11276,6 +11395,12 @@ This effect changes the casting level stat, but has no actual affect in-game IWD
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op230">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op230">IWD1</a>
@@ -11352,6 +11477,15 @@ This effect changes the casting level stat, but has no actual affect in-game IWD
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the time stop effect. 
 <br/>The timestop effect lasts half as long as the Duration specified for the effect.
+<br/><br/>
+
+In particular:
+<ul>
+	<li>All creatures not immune to Time Stop will be rendered uncontrollable, can be hit automatically by attacks as if they were HELPLESS (but do not actually have STATE_HELPLESS set), and their frequency-based effects will not trigger (poison/regeneration), but their duration will run.</li>
+	<li>Projectiles are suspended mid-flight until the Time Stop ends, at which point they will resume normal function.</li>
+	<li>Area effect projectiles are suppressed until the Time Stop ends, at which point they will resume normal function, though their duration will run during the Time Stop.</li>
+	<li>Projectiles that hit "instantly" (#0 and #1 for spells/items) are unaffected by Time Stop, which includes all melee weapons.</li>
+</ul>
 
 
 
@@ -11359,6 +11493,17 @@ This effect changes the casting level stat, but has no actual affect in-game IWD
   <div>
     <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Only one creature may have a Time Stop effect running at a time, applying a Time Stop effect during another will override the previous. The caster is always immune to their own Time Stop effect, they do not require <a href="#op310">opcode #310</a>, unless their own Time Stop is at risk of being overridden.
 
   </div>
 </div>
@@ -11943,6 +12088,12 @@ Both parameters should be 0 (zero).
 				
 			
 			
+				<a class="opvariant" href="bgee.htm#op242">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op242">IWD1</a>
 			
 		
@@ -12433,6 +12584,12 @@ At least in IWD1, this effect can lead to a crash upon save game loading, if a c
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op252">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op252">IWD1</a>

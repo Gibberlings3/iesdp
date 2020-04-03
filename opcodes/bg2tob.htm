@@ -6867,7 +6867,7 @@ Leave both parameters at zero for this effect to work.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-At least on EE games, it is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
+At least in EE games, it is possible to colorize the string. In order to do so, follow the instructions concerning the colorization of the name of your character during <a href="https://gibberlings3.github.io/iesdp/appendices/charactercreation.htm">Character Creation</a>.
 
   </div>
 </div>
@@ -6889,6 +6889,12 @@ At least on EE games, it is possible to colorize the string. In order to do so, 
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op140">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd2.htm#op140">IWD2</a>
@@ -6942,6 +6948,12 @@ At least on EE games, it is possible to colorize the string. In order to do so, 
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op141">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd2.htm#op141">IWD2</a>
@@ -7289,6 +7301,17 @@ The engine refuses to show portrait 79 (Imprisonment).
   </div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+In EE games, values 0 – 190 are drawn directly from “STATES.BAM” from sequences 65 – 255, but can be overridden in <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a>. Additional values must be added to <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a>.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -7385,6 +7408,18 @@ Moreover, unlike <a href="#op111">opcode #111</a>, this opcode will not "equip" 
 
   </div>
 </div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+When using a non-permanent timing mode, it applies a delayed <a href="#op123">opcode #123</a> effect based on the duration, but with an empty resource field, resulting in nothing being removed.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -7695,6 +7730,17 @@ Both parameters should be 0 (zero).
   </div>
 </div>
 
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+This effect is automatically successful, but can only find traps that are normally detectable by the Find Traps skill.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -7738,10 +7784,23 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Replaces the targeted creature(s) with creature specified by the resource key, in the style specified by the 'Type' value.
 <br/>Known values for 'Type' are:
-<br/>0   Remove target silently
-<br/>1   Remove target - kill with chunk death (giving experience)
-<br/>2   Remove target - kill with normal death (giving experience)
-<br/>3+  Don't remove the target
+<ul>
+	<li>0 => Remove targeted creature via <a href="#op168">opcode #168</a></li>
+	<li>1 => Kill targeted creature via <a href="#op13">opcode #13</a>*8 (Chunking death)</li>
+	<li>2 => Kill targeted creature via <a href="#op13">opcode #13</a>*4 (Normal death)</li>
+	<li>3 => No effect on targeted creature – New creature (specified by the resource key) is spawned at target's location</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Experience is given as normal for a kill (the party still has to be the one applying the effect to earn experience).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -7796,31 +7855,187 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Plays the movie specified by the resource key.
-<br/>Known movies are:
-<br/>BG2-
-<br/>  BISLOGO
-<br/>  BWDRAGON
-<br/>  DAYNITE
-<br/>  DEATHAND
-<br/>  END15FPS
-<br/>  ENDCRDIT
-<br/>  FLYTHR01
-<br/>  FLYTHR02
-<br/>  FLYTHR03
-<br/>  FLYTHR04
-<br/>  INTRO15F
-<br/>  NITEDAY
-<br/>  RESTCAMP
-<br/>  RESTDUNG
-<br/>  RESTINN
-<br/>  WOTC
-<br/>TOB-
-<br/>  INTRO
-<br/>  MANAFORG
-<br/>  MELISSAN
-<br/>  OUTRO
-<br/>  SARADUSH
-<br/>  POCKETZZ
+<br><br>
+
+<table border="1" width="98%">
+	<colgroup>
+		<col width="5%" />
+		<col width="12%" />
+		<col width="*" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th>BG2</th>
+			<th>TOB</th>
+			<th>All EE games</th>
+			<th>BG:EE</th>
+			<th>BG:SoD</th>
+			<th>BG2:EE</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>BISLOGO</td>
+			<td>INTRO</td>
+			<td>LOGO – WotC logo</td>
+			<td>DEATHAND – Death</td>
+			<td>SODCIN01 – Siege of Dragonspear Introduction</td>
+			<td>NITEDAY – Sunrise</td>
+		</tr>
+		<tr>
+			<td>BWDRAGON</td>
+			<td>MANAFORG</td>
+			<td></td>
+			<td>INTRO – Baldur's Gate: Enhanced Edition Introduction</td>
+			<td>SODCIN02 – Boarskyr Bridge</td>
+			<td>DAYNITE – Sunset</td>
+		</tr>
+		<tr>
+			<td>DAYNITE</td>
+			<td>MELISSAN</td>
+			<td></td>
+			<td>REST – Resting Outside</td>
+			<td>SODCIN03 – Murder</td>
+			<td>DEATHAND – Death</td>
+		</tr>
+		<tr>
+			<td>DEATHAND</td>
+			<td>OUTRO</td>
+			<td></td>
+			<td>RESTDUNG – Resting in Dungeon</td>
+			<td>SODCIN05 – Epilogue</td>
+			<td>INTRO15F – Shadows of Amn Intro</td>
+		</tr>
+		<tr>
+			<td>END15FPS</td>
+			<td>SARADUSH</td>
+			<td></td>
+			<td>RESTINN – Resting at Inn</td>
+			<td></td>
+			<td>FLYTHR01 – Asylum</td>
+		</tr>
+		<tr>
+			<td>ENDCRDIT</td>
+			<td>POCKETZZ</td>
+			<td></td>
+			<td>BGENTER – Entering Baldur's Gate</td>
+			<td></td>
+			<td>FLYTHR02 – Underdark</td>
+		</tr>
+		<tr>
+			<td>FLYTHR01</td>
+			<td></td>
+			<td></td>
+			<td>FRARMINN – Friendly Arm Inn</td>
+			<td></td>
+			<td>FLYTHR03 – Suldanessellar</td>
+		</tr>
+		<tr>
+			<td>FLYTHR02</td>
+			<td></td>
+			<td></td>
+			<td>NASHKELL – Nashkell</td>
+			<td></td>
+			<td>FLYTHR04 – Hell</td>
+		</tr>
+		<tr>
+			<td>FLYTHR03</td>
+			<td></td>
+			<td></td>
+			<td>CAMP – Bandit Camp</td>
+			<td></td>
+			<td>INTRO – Throne of Bhaal Intro</td>
+		</tr>
+		<tr>
+			<td>FLYTHR04</td>
+			<td></td>
+			<td></td>
+			<td>MINEFLOD – Flooding Cloakwood Mines</td>
+			<td></td>
+			<td>POCKETZZ – Pocket Plane Rest</td>
+		</tr>
+		<tr>
+			<td>INTRO15F</td>
+			<td></td>
+			<td></td>
+			<td>ELDRCITY – Undercity</td>
+			<td></td>
+			<td>SARADUSH – Saradush Flythrough</td>
+		</tr>
+		<tr>
+			<td>NITEDAY</td>
+			<td></td>
+			<td></td>
+			<td>ENDMOVIE – Epilogue</td>
+			<td></td>
+			<td>MANAFORG – Mana Forge Flythrough</td>
+		</tr>
+		<tr>
+			<td>RESTCAMP</td>
+			<td></td>
+			<td></td>
+			<td>ENDCRDIT – Credits</td>
+			<td></td>
+			<td>MELISSAN – Melissan's Demise</td>
+		</tr>
+		<tr>
+			<td>RESTDUNG</td>
+			<td></td>
+			<td></td>
+			<td>WRECK – Wrecked Ship (Werewolf Island)</td>
+			<td></td>
+			<td>OUTRO – Closing the Book</td>
+		</tr>
+		<tr>
+			<td>RESTINN</td>
+			<td></td>
+			<td></td>
+			<td>BLACKPIT – The Black Pits Introduction</td>
+			<td></td>
+			<td>HEXXATDR – Dragomyr's Crypt (Hexxat)</td>
+		</tr>
+		<tr>
+			<td>WOTC</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>DORNGORG – Resurrection Gorge (Dorn)</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>DORNTREE – Ritual Circle (Dorn)</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>NEERAES – Town Bell (Neera)</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>RASAADMI – Sharran (Rasaad)</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>RASAADTE – Temple (Rasaad)</td>
+		</tr>
+	</tbody>
+</table>
  </div>
 		<hr />
 
@@ -7834,6 +8049,15 @@ Both parameters should be 0 (zero).
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op153">BGEE</a>
+			
 		
 			
 				
@@ -7874,6 +8098,15 @@ Both parameters should be 0 (zero).
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op154">BGEE</a>
+			
 		
 			
 				
@@ -7921,6 +8154,12 @@ Both parameters should be set to 0.
 				
 			
 			
+				<a class="opvariant" href="bgee.htm#op155">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd2.htm#op155">IWD2</a>
 			
 		
@@ -7952,6 +8191,15 @@ Both parameters should be set to 0.
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op156">BGEE</a>
+			
 		
 			
 				
@@ -7994,6 +8242,15 @@ Both parameters should be 0 (zero).
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op157">BGEE</a>
+			
+		
+			
 				
 		<br />
 
@@ -8029,6 +8286,7 @@ It cannot be removed by any of the stun/held removal opcodes.
 
   </div>
 </div>
+
  </div>
 		<hr />
 
@@ -8042,6 +8300,15 @@ It cannot be removed by any of the stun/held removal opcodes.
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op158">BGEE</a>
+			
 		
 			
 				
@@ -8233,6 +8500,15 @@ This effect should be used with an instant timing mode.
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op163">BGEE</a>
+			
+		
+			
 				
 		<br />
 
@@ -8244,7 +8520,8 @@ This effect should be used with an instant timing mode.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the free action effect to the targeted creature(s), restoring the creatures movement rate to its default value if the current movement rate value is below the default for the animation type.
+		<div class="descriptiondata"> Applies the free action effect to the targeted creature(s), restoring the creatures movement rate to its default value if the current movement rate value is below the default for the animation type.<br/>
+Also check out the EE description <a href="bgee.htm#op163">here</a>.
  </div>
 		<hr />
 
@@ -8307,11 +8584,17 @@ This effect should be used with an instant timing mode.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the pause effect to the targeted creature(s). 
-This effect is similar to stun and the targeted creature(s) scripts are paused.
- Characters are still selectable.
-<br/>
-<br/>This effect sets stat #70 (CasterHold) to 1.
+		<div class="descriptiondata"> Applies the pause effect to the targeted creature(s).<br/>
+In particular:
+<ul>
+	<li>Their inventory is still access-able.</li>
+	<li>They are still select-able, and can be issued orders (for instance, activating modal abilities), though not all actions can be taken.</li>
+	<li>It does not interrupt/end modal abilities the creature is currently using.</li>
+	<li>They are not "helpless", an attack roll is still required to hit them.</li>
+	<li>Their scripts stop running.</li>
+</ul>
+
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#70">STAT #70</a> to 1.
 
 
 
@@ -8449,8 +8732,18 @@ Both parameters should be 0.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the creature specified by the resource key (giving no experience).<br/>
-Also known as "Script: Destroy Self".
+		<div class="descriptiondata"> Moves the targeted creature(s) to area ".ARE" (a non-existent area). Also known as <a href="../scripting/actions/bgeeactions.htm#111">Script: Destroy Self</a>.
+<br/><br/>
+
+This deletes non-global creatures from the game (most common usage).
+<br/><br/>
+
+For Global Creatures:
+<ul>
+	<li>This effect removes the creature from the player's party (if they were in it).</li>
+	<li>The effect will keep the creature out of the party and any other Area for its duration, but does not re-instate the creature once it expires.</li>
+	<li>They can still be recovered through script actions once the effect expires.</li>
+</ul>
 
 
 
@@ -8510,7 +8803,7 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Prevents the icon specified by the 'Icon' field from being displayed.
-<br/>All values are drawn directly from STATES.BAM in the GUIBam.bif starting at sequence 65.
+<br/>All values are drawn directly from "STATES.BAM" in the "GUIBam.bif" starting at sequence 65.
 <br/>Known values for 'Icon' are:
 <br/>0   Charm
 <br/>1   Dire Charm
@@ -8728,7 +9021,30 @@ Both parameters should be 0 (zero).
 <br/>201  Immunity: Evocation (BG:EE only)
 <br/>201  Immunity: Alteration (IWD:EE only)
 <br/>202  Immunity: Necromancy (BG:EE only)
-<br/>203  Immunity: Alteration (BG:EE only) </div>
+<br/>203  Immunity: Alteration (BG:EE only)
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Only blocks <a href="#op142">opcode #142</a> effects with a matching 'param2' value. Cannot block portrait icons generated by any other mechanic.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+In EE games, can also block <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effects if their EFF file uses <a href="#op142">opcode #142</a> with a matching ‘param2’ value.
+
+  </div>
+</div>
+
+ </div>
 		<hr />
 
 	</div>
@@ -8811,17 +9127,6 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Gives the spell specified by the resource key to the targeted creature(s).
-
-
-
-<div class="note important">
-  <div>
-    <strong>Important:</strong> 
-Any delayed <a href="#op171">opcode #171</a> will be removed by death.
-
-  </div>
-</div>
-
  </div>
 		<hr />
 
@@ -8892,6 +9197,15 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 		
 		
 		
+		
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op173">BGEE</a>
+			
 		
 			
 				
@@ -9126,18 +9440,20 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.
+		<div class="descriptiondata"> Applies a yellow fade in graphic effect to the targeted creature(s), and shows the 'Held' icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.
 <br/>Known values for 'IDS File' are:
-<br/>2   EA.ids
-<br/>3   General.ids
-<br/>4   Race.ids
-<br/>5   Class.ids
-<br/>6   Specific.ids
-<br/>7   Gender.ids
-<br/>8   Align.ids
-<br/>9   Kit.ids (EE only)
-<br/>
-<br/>This effect sets stat #58 (HELD) to 1. It also sets the STATE_HELPLESS flag.
+<ul>
+	<li>2 => <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
+	<li>3 => <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
+	<li>4 => <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
+	<li>5 => <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
+	<li>6 => <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
+	<li>7 => <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
+	<li>8 => <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
+	<li>9 => <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+</ul>
+
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#58">STAT #58</a> to 1. It also sets the STATE_HELPLESS flag.
 
 
 
@@ -9149,6 +9465,7 @@ It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFF
 
   </div>
 </div>
+
  </div>
 		<hr />
 
@@ -9222,14 +9539,16 @@ PST: This effect doesn’t exist and always crashes the game.
 		<div class="descriptiondata"> Applies the eff file specified by the resource key to the targeted creature(s), if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'.
 <br/>NB. When using an eff to alter thac0/dmg bonus, set param1 = 0, and param2 = 2.
 <br/>Known values for 'IDS File' are:
-<br/>2   EA.ids
-<br/>3   General.ids
-<br/>4   Race.ids
-<br/>5   Class.ids
-<br/>6   Specific.ids
-<br/>7   Gender.ids
-<br/>8   Align.ids
-<br/>9   Kit.ids (only in EEs)
+<ul>
+	<li>2 => <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
+	<li>3 => <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
+	<li>4 => <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
+	<li>5 => <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
+	<li>6 => <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
+	<li>7 => <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
+	<li>8 => <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
+	<li>9 => <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+</ul>
 
 
 
@@ -9311,6 +9630,18 @@ IWD2: there was a note to not use this effect in older IESDP.
 
   </div>
 </div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This opcode uses a reverse stacking order: the “oldest” effect with matching IDS values for the target is used, not the most recent, and equipped effects take priority over non-equipped effects.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -9379,6 +9710,18 @@ IWD2: there was a note to not use this effect in older IESDP.
 
   </div>
 </div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This opcode uses a reverse stacking order: the “oldest” effect with matching IDS values for the target is used, not the most recent, and equipped effects take priority over non-equipped effects.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -9696,18 +10039,21 @@ IWD2: Don’t use.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.
+		<div class="descriptiondata"> Applies a yellow fade in graphic effect to the targeted creature(s), and shows the 'Held' icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.
 <br/>This effect is not removed by <a href="#op162">effect #162</a>.
 <br/>Known values for 'IDS File' are:
-<br/>2   EA.ids
-<br/>3   General.ids
-<br/>4   Race.ids
-<br/>5   Class.ids
-<br/>6   Specific.ids
-<br/>7   Gender.ids
-<br/>8   Align.ids
-<br/>9   Kit.ids (EE only)
-<br/>This effect sets stat #58 (HELD) to 1. It also sets the STATE_HELPLESS flag.
+<ul>
+	<li>2 => <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
+	<li>3 => <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
+	<li>4 => <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
+	<li>5 => <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
+	<li>6 => <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
+	<li>7 => <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
+	<li>8 => <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
+	<li>9 => <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+</ul>
+
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#58">STAT #58</a> to 1. It also sets the STATE_HELPLESS flag.
 
 
 
@@ -10844,6 +11190,18 @@ It cannot deflect effects through AoE projectiles.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Gives the targeted creature(s) immunity from the spell specified in the resource key. The strref specified by the 'String Reference' field is displayed when the spell is absorbed.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+At least in EEs, this opcode can block <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files too.<br />
+In order to do so, both the “Resource” field of op#206 and the “Parent resource” field (located at offset 0x94) of the EFF file must be the same string (max. 8 character long); moreover, you must set the “Resource type” field (located at offset 0x90) of the EFF file to 1 (Spell).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -11071,7 +11429,7 @@ It cannot deflect effects through AoE projectiles.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the imprisonment effect to the targeted creature(s).
-<br/>The field at 0xcc can be used to prevent death related effects (e.g. removal from party) running on the targetted creature(s).
+<br/>The field at 0xcc can be used to prevent death related effects (e.g. removal from party) running on the targetted creature(s) – not verified on EE games.
  </div>
 		<hr />
 
@@ -11166,17 +11524,24 @@ It cannot deflect effects through AoE projectiles.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the maze effect to the targeted creature(s).
 <br/>Known values for 'Type' are:
-<br/>0   Use intelligence based duration (via <a href="../files/2da/2da_bgee/intmod.htm">INTMOD.2DA</a>)
-<br/>1   Use duration field
+<ul>
+	<li>0 => Use intelligence based duration (via <a href="../files/2da/2da_bgee/intmod.htm">INTMOD.2DA</a>)</li>
+	<li>1 => Use 'Duration' field</li>
+</ul>
+
 <br/>The duration of the effect is set in <a href="../files/2da/2da_bgee/intmod.htm">INTMOD.2DA</a>, default values are:
-<br/>0 to 2 int   -> 2d4 rounds
-<br/>3 to 5 int   -> 1d4 rounds
-<br/>6 to 8 int   -> 5d4 rounds
-<br/>9 to 11 int  -> 4d4 rounds
-<br/>12 to 14 int -> 3d4 rounds
-<br/>15 to 17 int -> 2d4 rounds
-<br/>18+ int      -> 1d4 rounds
-<br/>'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only). </div>
+<ul>
+	<li>0 to 2 int   -> 20d4 rounds</li>
+	<li>3 to 5 int   -> 10d4 rounds</li>
+	<li>6 to 8 int   -> 5d4 rounds</li>
+	<li>9 to 11 int  -> 4d4 rounds</li>
+	<li>12 to 14 int -> 3d4 rounds</li>
+	<li>15 to 17 int -> 2d4 rounds</li>
+	<li>18+ int      -> 1d4 rounds</li>
+</ul>
+
+<br/>'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only).
+ </div>
 		<hr />
 
 	</div>
@@ -11194,6 +11559,12 @@ It cannot deflect effects through AoE projectiles.
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op214">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op214">IWD1</a>
@@ -11268,9 +11639,12 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Plays the BAM/VVC specified by the resource key, in the style specified by the 'Effect State' value.
 <br/>Known values for 'Effect State' are:
-<br/>0   Play on target (not attached)
-<br/>1   Play on target (attached)
-<br/>2   Play on point
+<ul>
+	<li>0 => Play on target (not attached)</li>
+	<li>1 => Play on target (attached)</li>
+	<li>2 => Play on point</li>
+</ul>
+
 <br/>Known BAM files are:
 <br/>acidblob   Ankheg Spit
 <br/>aciddth    Acid Hit
@@ -11533,6 +11907,17 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 <br/>webentd  Other version of web
 <br/>webenth  Entangling web
 <br/>webentt  Travelling ball of shining web
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+‘Effect State’ 0 or 2 also supports <a href="../file_formats/ie_formats/vef_v1.htm">VEF</a> files.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -11551,6 +11936,12 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op216">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op216">IWD1</a>
@@ -11961,6 +12352,17 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the restoration effect to the targeted creature(s), resetting the level of the target.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Removes op#216 (Level drain) effects from the creature, will not remove op#96 (Level change) effects.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -12184,6 +12586,12 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 				
 			
 			
+				<a class="opvariant" href="bgee.htm#op229">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op229">IWD1</a>
 			
 		
@@ -12234,6 +12642,12 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op230">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op230">IWD1</a>
@@ -12309,6 +12723,15 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the time stop effect. 
 <br/>The timestop effect lasts half as long as the Duration specified for the effect.
+<br/><br/>
+
+In particular:
+<ul>
+	<li>All creatures not immune to Time Stop will be rendered uncontrollable, can be hit automatically by attacks as if they were HELPLESS (but do not actually have STATE_HELPLESS set), and their frequency-based effects will not trigger (poison/regeneration), but their duration will run.</li>
+	<li>Projectiles are suspended mid-flight until the Time Stop ends, at which point they will resume normal function.</li>
+	<li>Area effect projectiles are suppressed until the Time Stop ends, at which point they will resume normal function, though their duration will run during the Time Stop.</li>
+	<li>Projectiles that hit "instantly" (#0 and #1 for spells/items) are unaffected by Time Stop, which includes all melee weapons.</li>
+</ul>
 
 
 
@@ -12316,6 +12739,17 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
   <div>
     <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Only one creature may have a Time Stop effect running at a time, applying a Time Stop effect during another will override the previous. The caster is always immune to their own Time Stop effect, they do not require <a href="#op310">opcode #310</a>, unless their own Time Stop is at risk of being overridden.
 
   </div>
 </div>
@@ -12484,6 +12918,28 @@ Known values for 'Type' are:
 <br/>Extra Proficiency 18(Unused) 132
 <br/>Extra Proficiency 19(Unused) 133
 <br/>Extra Proficiency 20(Unused) 134
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+In EE games, ‘Type’ 99 (Halberd) currently cannot use the “Increment” option without crashing (bug).
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+In EE games, the 'Special' field must currently be "zero", due to an incomplete (bugged) feature added by Beamdog (it wasn't used before anyway, so there was no point in it not being zero).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -12585,20 +13041,33 @@ This opcode only works from party-members.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the wing buffet effect centred on the casting creature(s), buffeting the targeted creature(s) at the speed specified by the 'Speed' field, in the direction specified by the 'Direction' field.
+		<div class="descriptiondata"> Applies the wing buffet effect centred on the casting creature(s), buffeting the targeted creature(s) at the speed specified by the 'Speed' field, in the direction specified by the 'Direction' field. 'Speed' ranges from 0 to 255.
 <br/>Known values for 'Direction' are:
-<br/>0   As 1
-<br/>1   Away from the destination point (specified in EFF file)
-<br/>2   Away from the source
-<br/>3   Towards the destination point (specified in EFF file)
-<br/>4   Towards source
+<ul>
+	<li>0/1 => Away from the destination point (specified in EFF file)</li>
+	<li>2 => Away from the source</li>
+	<li>3 => Towards the destination point (specified in EFF file)</li>
+	<li>4 => Towards source</li>
+</ul>
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-If used on creatures with the passwall effect applied, creatures can cross points marked as light obstacles on the search map.
+If used on creatures with the “pass-wall” effect applied, creatures can cross points marked as light obstacles on the search map.<br />
+In EEs, this effect can push creatures through closed (and locked) doors. (this does not require the “pass-wall” effect).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+‘Direction’ options 1 and 3 “can” be overriden in external EFF files, but default to the ability target/location.
 
   </div>
 </div>
@@ -13085,7 +13554,30 @@ Keep in mind that if the caster is equipped with an irremovable item (e.g., Edwi
 <br/>201  Immunity: Evocation (BG:EE only)
 <br/>201  Immunity: Alteration (IWD:EE only)
 <br/>202  Immunity: Necromancy (BG:EE only)
-<br/>203  Immunity: Alteration (BG:EE only) </div>
+<br/>203  Immunity: Alteration (BG:EE only)
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Only removes <a href="#op142">opcode #142</a> effects, with a matching 'param2' value. Cannot remove portrait icons generated by any other mechanic.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+In EE games, can also remove <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effects if their EFF file uses <a href="#op142">opcode #142</a> with a matching ‘param2’ value.
+
+  </div>
+</div>
+
+ </div>
 		<hr />
 
 	</div>
@@ -13139,6 +13631,12 @@ Keep in mind that if the caster is equipped with an irremovable item (e.g., Edwi
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op242">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op242">IWD1</a>
@@ -13455,7 +13953,7 @@ At least in EEs, the only difference between opcodes <a href="#op3">#3</a> and #
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Sets the effect specified by the resource key as a melee effect.
 <br/>The specified effect will be applied to the target of each successful melee attack.
-<br/>The resource key references a .eff not a .spl.
+<br/>The resource key references a <a href="../file_formats/ie_formats/eff_v2.htm">.EFF</a> not a <a href="../file_formats/ie_formats/spl_v1.htm">.SPL</a>.
 
 
 
@@ -13477,6 +13975,18 @@ It will always apply to both main and offhand weapon.
 
   </div>
 </div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode applies its effect inbetween base weapon damage and the on-hit effects of the weapon.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -13520,7 +14030,18 @@ It will always apply to both main and offhand weapon.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Sets the effect specified by the resource key as a ranged effect.
 <br/>The specified effect will be applied to the target of each successful ranged attack.
-<br/>The resource key references a .eff not a .spl.
+<br/>The resource key references a <a href="../file_formats/ie_formats/eff_v2.htm">.EFF</a> not a <a href="../file_formats/ie_formats/spl_v1.htm">.SPL</a>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in EEs, this opcode applies its effect after both the base weapon damage and the on-hit effects of the weapon.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -13563,6 +14084,17 @@ It will always apply to both main and offhand weapon.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the 'Damage Modifier' value to the damage caused by the targetted creature(s). The effect works as a minimum damage value, i.e. at least 'Damage Modifier' damage will always be caused (on a successful hit).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+This opcode works in the same manner as luck (and stacks with it), except that it only affects base weapon damage. It can be positive or negative.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -13636,6 +14168,12 @@ It will always apply to both main and offhand weapon.
 			
 				Variants:
 				
+			
+			
+				<a class="opvariant" href="bgee.htm#op252">BGEE</a>
+			
+		
+			
 			
 			
 				<a class="opvariant" href="iwd1totl.htm#op252">IWD1</a>
@@ -16609,7 +17147,8 @@ Creatures are naturally immune to their own Time Stop effects, without needing t
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field.
+		<div class="descriptiondata"> Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field.<br />
+This opcode maintains <a href="../files/ids/bgee/stats.htm#199">STAT #199</a> to the amount of skins left.
 
 
 
@@ -16617,7 +17156,7 @@ Creatures are naturally immune to their own Time Stop effects, without needing t
   <div>
     <strong>Warning:</strong> 
 Do not use this effect in conjunction with the Juggernaut Golem Manual as it will corrupt the use of that item.
-In particular, the Juggernaut Golem <code>TOMEGOL4.CRE</code> is scripted by <code>TOMEGOL4.BCS</code> to <code>Kill()</code> itself if its Summoner and none of the Players Party have stat #199 (STONESKINSGOLEM) set to a non-zero value.
+In particular, the Juggernaut Golem “TOMEGOL4.CRE” is scripted by “TOMEGOL4.BCS” to “Kill()” itself if its Summoner and none of the Players Party have stat #199 (STONESKINSGOLEM) set to a non-zero value.
 
   </div>
 </div>

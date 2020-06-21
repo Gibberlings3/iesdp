@@ -199,8 +199,9 @@ title: "EFF file format"
               <li>bit 10: Ignore primary target – Line AoE projectile doesn't affect end target (EE only)</li>
               <li>bit 11: Ignore secondary target – Line AoE projectile doesn't affect bystanders (EE only)</li>
               <li>bit 24: Bypass mirror image (EE/ToBEx only)</li>
-              <li>bit 25: Ignore difficulty (EE/ToBEx only)</li>
-            </ul>
+              <li>bit 25: EE - ignore difficulty; TobEx - limit effect stacking</li>
+              <li>bit 26: TobEx internal (don't use) - suspend effect application</li>
+          </ul>
             NB. If more than 1 saving throw type is specified, the target rolls against their best save<br />
           </td>
         </tr>
@@ -212,7 +213,12 @@ title: "EFF file format"
         <tr>
           <td>0x0048</td>
           <td>4 (dword)</td>
-          <td><span class="unknown">Set local variable only if non-existant</span></td>
+          <td>TobEx: Stacking ID. Checked when bit 25 of the Saving Throw Type is set.
+            <br /><br />
+            If two effects of the same opcode are applied, both have Limit Effect Stacking bit set, and both have the same stacking ID, then the latter applied effect is suspended in application until the former effect expires. Regardless of whether it is applied, the latter effect will expire at the same time that it would expire if it was applied. In other words, the total duration of some non-stacking effect opcode is not extended because more than one copy of the effect was applied.
+            <br /><br />
+            Stacking IDs are unique to the opcode being applied. To maintain uniqueness of stacking IDs between different mods, one recommendation is to use the higher word of Special as the modder's Infinity Engine Community Prefix, then use the lower word as an identifying ID. For example, 0x41360001 ('A6' 0x0001).
+          </td>
         </tr>
         <tr>
           <td>0x004c</td>

@@ -4,3 +4,19 @@ n: 218
 name: PauseGame
 desc: |-
   This action pauses the game. Script processing is halted while the game is paused.
+
+  The action only works when used by PC or FAMILIAR. However, it's not enough to just set EA to FAMILIAR. The calling creature must be global and added as a familiar via scripting. Futhermore, it appears that `AddFamiliar()` is not instant, so calling `PauseGame()` right after it won't work. To workaround, another command must be added to the script just before.
+
+  Working code example:
+
+  ```
+  IF
+    OnCreation()
+  THEN
+    RESPONSE #100
+      MakeGlobal()
+      AddFamiliar()
+      SmallWait(1)
+      PauseGame()
+  END
+  ```

@@ -2621,42 +2621,38 @@ THEN
       <a id="120" class="action_name">
         120 StartCutScene(S:CutScene*)
       </a></div>
-    <div class="indent1 action_body"><p></p><p>This action starts a cutscene; a cinematic sequence that removes the GUI and player control. The cutscene parameter is the script name to run. The example script is from the Irenicus cutscene cut01.bcs.</p>
+    <div class="indent1 action_body"><p></p><p>This action starts a cutscene; a cinematic sequence that removes the GUI and player control. The cutscene parameter is the script name to run.
+The second variant can enable condition checking (trigger evaluation, off by default) when the second parameter is set to TRUE.</p>
+
+<p>The example script is from cutscene BDCUT17B.bcs and shows how they can be reused. With <code class="highlighter-rouge">StartCutSceneEx("BDCUT17B",TRUE)</code> it executes
+only one script block depending on the specified conditions. With <code class="highlighter-rouge">StartCutSceneEx("BDCUT17B",FALSE)</code> it will execute both blocks
+regardless of condition.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  True()
+  GlobalLT("bd_cut17b_cycle","bd1000",10)
+  !NearLocation(Player1,4535,550,30)
 THEN
   RESPONSE #100
-    CutSceneId(Player1)
-    LeaveAreaLUAPanic("AR0700","",[2753.868],4)
-    LeaveAreaLUA("AR0700","",[2753.868],4)
-    ActionOverride(Player2,LeaveAreaLUA("AR0700","",[2805.882],4))
-    ActionOverride(Player3,LeaveAreaLUA("AR0700","",[2791.820],4))
-    ActionOverride(Player4,LeaveAreaLUA("AR0700","",[2764.788],2))
-    ActionOverride(Player5,LeaveAreaLUA("AR0700","",[2781.716],0))
-    ActionOverride(Player6,LeaveAreaLUA("AR0700","",[2763.668],0))
+    CutSceneId("bdcutid")
+    IncrementGlobal("bd_cut17b_cycle","bd1000",1)
     Wait(1)
-    Explore()
-    MultiPlayerSync()
-    SetGlobal("EnteredWaukeen","AR0700",1)
-    TextScreen("SCENE01")
-    ActionOverride("Imoen",SetDialog("None"))
-    ActionOverride("Imoen",LeaveParty())
-    ActionOverride("Imoen",GivePartyAllEquipment())
-    ActionOverride("Imoen",DestroySelf())
-    CreateCreature("CSIMOEN",[2732.831],2)
-    CreateCreature("CSIREN",[2557.935],0)
-    CreateCreature("CSTHIEF1",[2740.1009],6)
-    CreateCreature("CSTHIEF2",[2678.1043],6)
-    CreateCreature("CSTHIEF3",[2579.1075],8)
-    CreateCreature("CSTHIEF4",[2488.1078],10)
-    CreateCreature("CSGAYL",[2671.1101],6)
-    CreateCreature("AMNG1",[2736.1260],0)
-    SmallWait(1)
-    MoveViewPoint([2576.908],INSTANT)
-    DayNight(DAWN_END)
-    FadeFromColor([40.0],0)
-    StartCutScene("Cut01a")
+    StartCutSceneEx("bdcut17b",TRUE)
+END
+
+IF
+  OR(2)
+    GlobalGT("bd_cut17b_cycle","bd1000",9)
+    NearLocation(Player1,4535,550,30)
+THEN
+  RESPONSE #100
+    CutSceneId("bdcutid")
+    SmallWait(10)
+    SetCutSceneBreakable(FALSE)
+    SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",0)
+    SetAreaScript("",OVERRIDE)
+    SmallWait(5)
+    SetGlobalTimer("bd_mdd016b_timer","bd1000",TWO_ROUNDS)
+    ActionOverride("bdcaelar",StartDialogNoSet(Player1))
 END
 </code></pre></div></div>
 
@@ -2666,9 +2662,31 @@ END
 
 
   
+    <div class="actionHeader">
+      <a id="120" class="action_name">
+        120 StartCutSceneEx(S:CutScene*,I:evaluateConditions*Boolean)
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bgeeactions.htm#120" title="BGEE version is identical to this one">BGEE</a></span>/<span class="avariant_current">PST</span>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="BG2 does not have this action">BG2</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>]
+      </span>
+    
 
+  </span></div>
+    <div class="indent1 action_body">
 
+  
+  <p>See <a href="#120">StartCutScene.</a></p><p></p>
 
+    </div>
   
 
 

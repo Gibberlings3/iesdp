@@ -1,26 +1,18 @@
-- offset: "0x0000"
-  length: 4
+- desc: Signature ('SPL ')
   type: char array
-  desc: Signature ('SPL ')
-- offset: "0x0004"
   length: 4
+- desc: Version ('V1  ')
   type: char array
-  desc: Version ('V1  ')
-- offset: "0x0008"
+  length: 4
+- desc: Spell Name - Unidentified (strref)
   type: dword
-  desc: Spell Name - Unidentified (strref)
-- offset: "0x000c"
+- desc: Spell Name - Identified (strref) (usually -1)
   type: dword
-  desc: Spell Name - Identified (strref) (usually -1)
-- offset: "0x0010"
+- desc: Completion Sound
   type: resref
-  desc: Completion Sound
-- offset: "0x0018"
+- desc: "[Flags](#Header_Flags)"
   type: dword
-  desc: "[Flags](#Header_Flags)"
-- offset: "0x001c"
-  type: word
-  desc: |
+- desc: |
     Spell type:
     <div class="indent1">
       0=Special<br />
@@ -30,115 +22,85 @@
       4=Innate<br />
       5=Bardsong<br />
     </div>
-- offset: "0x000e"
-  type: dword
-  desc: "[Exclusion Flags](#Exclusion_Flags)"
-- offset: "0x0022"
   type: word
-  desc: "[Casting Graphics](#Header_Casting_Graphics)"
-- offset: "0x0024"
-  length: 4
+- desc: "[Exclusion Flags](#Exclusion_Flags)"
+  type: dword
+- desc: "[Casting Graphics](#Header_Casting_Graphics)"
+  type: word
+- desc: Min Level
   type: char
-  desc: Min Level
   unused: 1
-- offset: "0x0025"
+- desc: "Primary Type (Spell school) (IWD: school.2da, BG2:mschool.2da)"
   type: byte
-  desc: "Primary Type (Spell school) (IWD: school.2da, BG2:mschool.2da)"
-- offset: "0x0026"
+- desc: Min Strength
   type: byte
-  desc: Min Strength
   unused: 1
-- offset: "0x0027"
+- desc: Secondary Type (BG2:msectype.2da)
   type: char
-  desc: Secondary Type (BG2:msectype.2da)
-- offset: "0x0028"
-  lenght: 4
+- desc: Min Strength Bonus
   type: byte
-  desc: Min Strength Bonus
   unused: 1
-- offset: "0x0029"
+- desc: Usability 1
   type: byte
-  desc: Usability 1
   unused: 1
-- offset: "0x002a"
+- desc: Min Int
   type: byte
-  desc: Min Int
   unused: 1
-- offset: "0x002b"
+- desc: Usability 2
   type: byte
-  desc: Usability 2
   unused: 1
-- offset: "0x002c"
+- desc: Min Dex
   type: byte
-  desc: Min Dex
   unused: 1
-- offset: "0x002d"
+- desc: Usability 3
   type: byte
-  desc: Usability 3
   unused: 1
-- offset: "0x002e"
+- desc: Min Wis
   type: byte
-  desc: Min Wis
   unused: 1
-- offset: "0x002f"
+- desc: Usability 4
   type: byte
-  desc: Usability 4
   unused: 1
-- offset: "0x0030"
+- desc: Min Con
   type: word
-  desc: Min Con
   unused: 1
-- offset: "0x0032"
+- desc: Min Cha
   type: word
-  desc: Min Cha
   unused: 1
-- offset: "0x0034"
+- desc: Spell Level
   type: dword
-  desc: Spell Level
-- offset: "0x0038"
-  type: dword
-  desc: Stack amount
+- desc: Stack amount
+  type: word
   unused: 1
-- offset: "0x003a"
+- desc: Spellbook icon (BAM). The engine replaces the last character of this filename with a C.
   type: resref
-  desc: Spellbook icon (BAM). The engine replaces the last character of this filename with a C.
-- offset: "0x0042"
-  type: dword
-  desc: Lore to ID
-  usused: 1
-- offset: "0x0044"
-  type: resref
-  desc: Ground icon
+- desc: Lore to ID
+  type: word
   unused: 1
-- offset: "0x004c"
-  type: dword
-  desc: Weight
-  usused: 1
-- offset: "0x0050"
-  type: dword
-  desc: Spell Description - Unidentified (strref)
-- offset: "0x0054"
-  type: dword
-  desc: Spell Description - Identified (strref) (usually -1)
-- offset: "0x0058"
+- desc: Ground icon
   type: resref
-  desc: Description icon
   unused: 1
-- offset: "0x0060"
+- desc: Weight
   type: dword
-  desc: Enchantment
-- offset: "0x0064"
-  type: word
-  desc: Extended Header offset
-- offset: "0x0068"
-  type: word
-  desc: Extended Header count
-- offset: "0x006a"
+  unused: 1
+- desc: Spell Description - Unidentified (strref)
   type: dword
-  desc: Feature Block Table offset
-- offset: "0x006e"
+- desc: Spell Description - Identified (strref) (usually -1)
   type: dword
-  desc: Casting Feature Block offset (these feature blocks may not use target type 2)
-- offset: "0x0070"
+- desc: Description icon
+  type: resref
+  unused: 1
+- desc: Enchantment
+  type: dword
+  unused: 1
+- desc: Extended Header offset
+  type: dword
+- desc: Extended Header count
   type: word
-  desc: Casting Feature Block count
+- desc: Feature Block Table offset
+  type: dword
+- desc: Casting Feature Block offset (these feature blocks may not use target type 2)
+  type: word
+- desc: Casting Feature Block count
+  offset: 0x70
+  type: word

@@ -16,22 +16,17 @@
   {% assign olength = o.length %}
 {% else %}
   {% case o.type %}
-    {% when 'byte' %}
-      {% assign olength = 1 %}
-    {% when 'char' %}
-      {% assign olength = 1 %}
-    {% when 'word' %}
-      {% assign olength = 2 %}
-    {% when 'dword' %}
-      {% assign olength = 4 %}
-    {% when 'resref' %}
-      {% assign olength = 8 %}
+    {% when 'byte' %} {% assign olength = 1 %}
+    {% when 'char' %} {% assign olength = 1 %}
+    {% when 'word' %} {% assign olength = 2 %}
+    {% when 'dword' %} {% assign olength = 4 %}
+    {% when 'resref' %} {% assign olength = 8 %}
   {% endcase %}
 {% endif %}
 
   <td>{{ current_offset | offset_to_hex }}</td>
   <td>{{ olength }} ({{ o.type }})</td>
-  <td>{{ odesc | markdownify | remove: '<p>' | remove: '</p>' }}</td>
+  <td>{{ odesc | liquify |  markdownify }}</td>
 </tr>
 
 {% assign current_offset = current_offset | plus: olength %}

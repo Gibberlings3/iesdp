@@ -11,8 +11,16 @@ iwd2: 1
 pst: 0
 ---
 Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>The engine allows values for 'Statistic Modifier' from 0 (immobile) to 255 (instantaneous), though behaviour is only consistent in the range 0 - 30.
+<br/>The engine allows values for 'Statistic Modifier' from 0 (immobile) to 255 (instantaneous), though behaviour
+ is only consistent in the range 0 - 30.
 <br/>Known values for 'Type' are:
 <br/>0   Cumulative Modifier -> Movement = Movement + 'Statistic Modifier' value
 <br/>1   Flat Value Modifier -> Movement = 'Statistic Modifier' value
 <br/>2   Percentage Modifier -> Movement = (Movement * 'Statistic Modifier' value) / 100
+
+{% capture note %}
+BG1 does not support the cumulative modifier and will behave as if in flat modifier mode.
+{% endcapture %}
+
+{% include note.html %}
+

@@ -1,4 +1,9 @@
 {% assign current_offset = 0 %}
+{% if offset_start and offset_start != 0 %}
+  {% assign current_offset = offset_start %}
+  {% assign offset_start = 0 %}
+{% endif %}
+
 {% for o in offsets %}
 <tr>
 

@@ -21,11 +21,18 @@
     {% when 'word' %} {% assign olength = 2 %}
     {% when 'dword' %} {% assign olength = 4 %}
     {% when 'resref' %} {% assign olength = 8 %}
+    {% when 'strref' %} {% assign olength = 4 %}
   {% endcase %}
 {% endif %}
 
+{% assign display_length = olength %}
+{% if o.mult %}
+  {% assign display_length = olength | append: '*' | append: o.mult %}
+  {% assign olength = olength | times: o.mult %}
+{% endif %}
+
   <td>{{ current_offset | offset_to_hex }}</td>
-  <td>{{ olength }} ({{ o.type }})</td>
+  <td>{{ display_length }} ({{ o.type }})</td>
   <td>{{ odesc | liquify |  markdownify }}</td>
 </tr>
 

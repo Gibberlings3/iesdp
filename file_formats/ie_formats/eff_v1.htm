@@ -20,121 +20,12 @@ title: "EFF file format"
       </div>
       <br />
     </div>
-    
-    <div class="fileHeader"><a name="effv1_Header">EFF V1.0 Header</a></div>
-    <br />
-    <div class="indent1">
-    <table border="1" width="98%">
-      <colgroup>
-        <col width="5%" />
-        <col width="12%" />
-         <col width="*" />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Offset</th>
-          <th>Size (data type)</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>0x0000</td>
-          <td>2 (word)</td>
-          <td>Effect type</td>
-        </tr>
-        <tr>
-          <td>0x0002</td>
-          <td>1 (byte)</td>
-          <td>Target type<br />
-              <ul>
-                <li>0=None</li>
-                <li>1=Self (pre-projectile)</li>
-                <li>2=Pre-target</li>
-                <li>3=Party</li>
-                <li>4=Everyone (inc. party)</li>
-                <li>5=Everyone (excl. party)</li>
-              </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>0x0003</td>
-          <td>1 (byte)</td>
-          <td>Power</td>
-        </tr>
-        <tr>
-          <td>0x0004</td>
-          <td>4 (dword)</td>
-          <td>Parameter 1</td>
-        </tr>
-        <tr>
-          <td>0x0008</td>
-          <td>4 (dword)</td>
-          <td>Parameter 2</td>
-        </tr>
-        <tr>
-          <td>0x000c</td>
-          <td>1 (byte)</td>
-          <td>Timing Mode</td>
-        </tr>
-        <tr>
-          <td>0x000d</td>
-          <td>1 (byte)</td>
-          <td>Dispel/Resistance</td>
-        </tr>
-        <tr>
-          <td>0x000e</td>
-          <td>4 (dword)</td>
-          <td>Duration</td>
-        </tr>
-        <tr>
-          <td>0x0012</td>
-          <td>1 (byte)</td>
-          <td>Probability 1</td>
-        </tr>
-        <tr>
-          <td>0x0013</td>
-          <td>1 (byte)</td>
-            <td>Probability 2<br />
-              <br />
-              Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.<br />
-              Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.<br />
-              Probability range is 0-99<br />
-            </td>
-        </tr>
-        <tr>
-          <td>0x0014</td>
-          <td>8 (resref)</td>
-          <td>Resref key</td>
-        </tr>
-        <tr>
-          <td>0x001c</td>
-          <td>4 (dword)</td>
-          <td>Dice count</td>
-        </tr>
-        <tr>
-          <td>0x0020</td>
-          <td>4 (dword)</td>
-          <td>Dice sides</td>
-        </tr>
-        <tr>
-          <td>0x0024</td>
-          <td>4 (dword)</td>
-          <td>Saving throw type</td>
-        </tr>
-        <tr>
-          <td>0x0028</td>
-          <td>4 (dword)</td>
-          <td>Saving throw bonus</td>
-        </tr>
-        <tr>
-          <td>0x002c</td>
-          <td>4 (dword)</td>
-          <td>Unknown</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
+
+    {% assign offset_header_name = "effv1_Header" %}
+    {% assign offset_header_display_name = "EFF V1.0 Header" %}
+    {% assign offsets = site.data.file_formats.eff_v1.header %}
+    {% include offset_table.html %}
+
   </div>
 </div>
 

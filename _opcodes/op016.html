@@ -3,7 +3,7 @@ n: 16
 name: "State: Haste"
 param1: "Irrelevant"
 param2: "Type"
-bg1: 0
+bg1: 1
 bg2: 1
 bgee: 1
 iwd1: 0
@@ -12,14 +12,23 @@ pst: 0
 ---
 Applies the Haste effect, in the style specified by the 'Type' value.
 <br/>Known values for 'Type' are:
-<br/>0   Normal Haste
-<br/>1   Improved Haste
-<br/>2   Weak Haste – Speed haste without attack bonuses
+<br/>0   Normal Haste - double the movement rate and grants an additional Attack Per Round (APR), rounded down (capped at 6)
+<br/>1   Improved Haste - double the movement rate and doubles APR (capped at 10)
+<br/>2   Weak Haste – Speed haste without attack bonuses, round APR up (capped at 5)
 <br/><br/>All of them set STATE_HASTED. Improved/Weak function by setting an additional STAT value, which modifies the behavior of STATE_HASTED:
 <ul>
 	<li>STAT 155 – IMPROVEDHASTE.</li>
 	<li>STAT 185 – ANIMATION_ONLY_HASTE.</li>
 </ul>
+
+<p>
+The normal and improved haste types grant a -2 initiative (weapon speed) bonus. All types:
+- grant portrait icons<br/>
+- increase the creature's animation speed and the animation speed of Opcode 140 effects<br/>
+- halve the creature's round timer used by attacks, modal abilities and "Auto-Pause: End of Round"<br/>
+- increase frequency of application of <a href="#op25">poison</a>, <a href="#op78">disease</a>,
+ <a href="#op98">regeneration</a>, <a href="#op232">Cast on Condition</a> and <a href="#op272">Use EFF File (at Frequency)</a>
+</p>
 
 {% capture note %}
 This effect will cancel out the <a href="#op40">slow opcode</a>.
@@ -28,7 +37,11 @@ This effect will cancel out the <a href="#op40">slow opcode</a>.
 {% include info.html %}
 
 {% capture note %}
-This opcode will set the STATE_HASTED flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>. This only works when applying normal/improved haste (there's no difference, since the STAT for improved haste doesn't get set this way), weak haste does not do anything with timing mode 1.
+BG1 only supports haste type 0.<br>
+This opcode will set the STATE_HASTED flag and nothing else when applied with timing mode 1,
+ and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.
+This only works when applying normal/improved haste (there's no difference, since the STAT for
+ improved haste doesn't get set this way), weak haste does not do anything with timing mode 1.
 {% endcapture %}
 
 {% include warning.html %}

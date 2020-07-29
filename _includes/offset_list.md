@@ -13,6 +13,8 @@
 
 {% if o.unused %}
   {% assign odesc = '<span class="unknown">' | append: o.desc | append: ' (unused)</span>' %}
+{% elsif o.unknown %}
+  {% assign odesc = '<span class="unknown">' | append: o.desc | append: '</span>' %}
 {% else %}
   {% assign odesc = o.desc %}
 {% endif %}

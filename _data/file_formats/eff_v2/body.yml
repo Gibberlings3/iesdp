@@ -1,0 +1,167 @@
+- desc: |
+    External EFFs - the field is the same as the signature field from the header  
+    Embedded EFFs - this field is zeroed out
+  offset: 0x8
+  type: char array
+  length: 4
+- desc: |
+    External EFFs - the field is the same as the version field from the header  
+    Embedded EFFs - this field is zeroed out
+  type: char array
+  length: 4
+- desc: Opcode number
+  type: dword
+- desc: |
+    Target type
+    - 0=None
+    - 1=Self (pre-projectile)
+    - 2=Pre-target
+    - 3=Party
+    - 4=Everyone (inc. party)
+    - 5=Everyone (excl. party)
+    - 6=Everyone matching specific value of caster (or Party if cast by party member)
+    - 7=Everyone matching specific value of target
+    - 8=Everyone (excl. caster)
+    - 9=Self (post-projectile)
+  type: dword
+- desc: Power
+  type: dword
+- desc: Parameter 1
+  type: dword
+- desc: Parameter 2
+  type: dword
+- desc: |
+    Timing mode
+    - 0=Duration
+    - 1=Permanent
+    - 2=While equipped
+    - 3=Delayed Duration
+    - 4=Delayed
+    - 5=Delayed (transforms to 8)
+    - 6=Duration?
+    - 7=Permanent?
+    - 8=Permanent (unsaved)
+    - 9=Permanent (after Death)
+    - 10=Trigger
+    - 4096=Absolute duration
+
+    NB. all effects except those with Timing mode '9' are removed by death.
+  type: word
+- desc: Timing ?
+  type: word
+  unknown: 1
+- desc: Duration
+  type: dword
+- desc: Probability 1
+  type: word
+- desc: |
+    Probability 2
+
+    Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.  
+    Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.  
+    Probability range is 0-99
+  type: word
+- desc: Resource
+  type: resref
+- desc: Dice Thrown
+  type: dword
+- desc: Dice Sides
+  type: dword
+- desc: |
+    Saving throw type
+    - bit 0: Spells
+    - bit 1: Breath
+    - bit 2: Death
+    - bit 3: Wands
+    - bit 4: Polymorph
+    - bit 10: Ignore primary target – Line AoE projectile doesn't affect end target (EE only)
+    - bit 11: Ignore secondary target – Line AoE projectile doesn't affect bystanders (EE only)
+    - bit 24: Bypass mirror image (EE/ToBEx only)
+    - bit 25: EE - ignore difficulty; TobEx - limit effect stacking
+    - bit 26: TobEx internal (don't use) - suspend effect application
+
+    NB. If more than 1 saving throw type is specified, the target rolls against their best save
+  type: dword
+- desc: Save bonus
+  type: dword
+- desc: |
+    TobEx: Stacking ID. Checked when bit 25 of the Saving Throw Type is set.
+
+    If two effects of the same opcode are applied, both have Limit Effect Stacking bit set, and both have the same stacking ID, then the latter applied effect is suspended in application until the former effect expires. Regardless of whether it is applied, the latter effect will expire at the same time that it would expire if it was applied. In other words, the total duration of some non-stacking effect opcode is not extended because more than one copy of the effect was applied.
+
+    Stacking IDs are unique to the opcode being applied. To maintain uniqueness of stacking IDs between different mods, one recommendation is to use the higher word of Special as the modder's Infinity Engine Community Prefix, then use the lower word as an identifying ID. For example, 0x41360001 ('A6' 0x0001).
+  type: dword
+- desc: Primary type (school)
+  type: dword
+- desc: Unknown
+  type: dword
+  unknown: 1
+- desc: Parent resource lowest affected level
+  type: dword
+  unknown: 1
+- desc: Parent resource highest affected level
+  type: dword
+  unknown: 1
+- desc: |
+    Resistance
+
+    The default behaviour is that effects cannot be dispelled and ignore resistance.
+    - bit 0: Can be dispelled, affected by resistance
+    - bit 1: Ignores resistance (when used in combination with bit 0)
+
+    This can also be presented in the more traditional way:
+    - 0=Nonmagical
+    - 1=Can be dispelled/Affected by resistance
+    - 2=Cannot be dispelled/Ignores resistance
+    - 3=Can be dispelled/Ignores resistance
+  type: dword
+- desc: Parameter 3
+  type: dword
+- desc: Parameter 4
+  type: dword
+- desc: Parameter 5
+  type: dword
+- desc: Parameter 6
+  type: dword
+- desc: Resource 2 (VVC in many effects)
+  type: resref
+- desc: Resource 3
+  type: resref
+- desc: Caster X coordinate
+  type: dword
+- desc: Caster Y coordinate
+  type: dword
+- desc: Target X coordinate
+  type: dword
+- desc: Target Y coordinate
+  type: dword
+- desc: Parent resource type (0=None, 1=Spell, 2=Item)
+  type: dword
+  unknown: 1
+- desc: Parent resource
+  type: resref
+- desc: Parent resource flags (from SPL 0x18 or ITM ext header 0x26)
+  type: dword
+  unknown: 1
+- desc: Projectile
+  type: dword
+  unknown: 1
+- desc: Parent resource slot
+  type: dword
+  unknown: 1
+- desc: Variable
+  type: bytes
+  length: 32
+- desc: Caster level
+  type: dword
+  unknown: 1
+- desc: FirstApply (internal flag)
+  type: dword
+  unknown: 1
+- desc: Secondary Type
+  type: dword
+- desc: Unknown
+  type: dword
+  mult: 15
+  unknown: 1
+  offset: 0xd4

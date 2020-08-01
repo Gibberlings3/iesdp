@@ -1,0 +1,99 @@
+- desc: Opcode Number
+  type: word
+- desc: |
+    Target type
+    - 0 = None
+    - 1 = Self (pre-projectile)
+    - 2 = Pre-target
+    - 3 = Party
+    - 4 = Everyone (inc. party)
+    - 5 = Everyone (excl. party)
+    - 6 = Everyone matching specific value of caster (or Party if cast by party member)
+    - 7 = Everyone matching specific value of target (In ITM: ranged ability type only, otherwise no target)
+    - 8 = Everyone (excl. caster)
+    - 9 = Self (post-projectile)
+  type: char
+- desc: Power
+  type: char
+- desc: Parameter 1
+  type: dword
+- desc: Parameter 2
+  type: dword
+- desc: |
+    Timing Mode
+
+    - 0 = Duration
+    - 1 = Permanent
+    - 2 = While equipped
+    - 3 = Delayed Duration
+    - 4 = Delayed
+    - 5 = Delayed (transforms to 8)
+    - 6 = Duration?
+    - 7 = Permanent?
+    - 8 = Permanent (unsaved)
+    - 9 = Permanent (after Death)
+    - 10 = Trigger
+    - 4096 = Absolute duration
+
+    NB. all effects except those with Timing mode '9' are removed by death.
+  type: char
+- desc: |
+    Resistance
+
+    The default behaviour is that effects cannot be dispelled and ignore magic resistance.
+
+    - bit 0: Can be dispelled, affected by magic resistance
+    - bit 1: Ignores magic resistance (when used in combination with bit 0)
+    - bit 2: Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+ / external [EFF](../ie_formats/eff_v2.htm) files)
+    - bit 31: Effect was applied by an ITM (only present in EE games patched to v2.0+ / external [EFF](../ie_formats/eff_v2.htm) files). It is set by the engine if the effect's source ITM is identified. This bit is only used by [opcode #324](../../opcodes/bgee.htm#op324) which checks it to determine whether it should set STRREF_FEEDBACK_IMMUNE_RESOURCE (see [ENGINEST.2DA](../../files/2da/2da_bgee/enginest.htm)) to the ITM's general or identified name
+
+    The only difference between 0 and 2 is that 0 will automatically convert to 2 when targeting yourself.
+
+    This can also be presented in the more traditional way:
+    - 0 = Natural/Nonmagical
+    - 1 = Can be dispelled/Affected by resistance
+    - 2 = Cannot be dispelled/Ignores resistance
+    - 3 = Can be dispelled/Ignores resistance
+  type: char
+- desc: Duration
+  type: dword
+- desc: Probability 1
+  type: char
+- desc: |
+    Probability 2
+
+    Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.  
+    Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.  
+    Probability range is 0-99
+  type: char
+- desc: Resource
+  type: resref
+- desc: Dice Thrown
+  type: dword
+- desc: Dice Sides
+  type: dword
+- desc: |
+    Saving Throw Type
+    - bit 0: Spells
+    - bit 1: Breathe
+    - bit 2: Death
+    - bit 3: Wands
+    - bit 4: Polymorph
+    - bit 10: Ignore primary target – Line AoE projectile doesn't affect end target (EE only)
+    - bit 11: Ignore secondary target – Line AoE projectile doesn't affect bystanders (EE only)
+    - bit 24: Bypass mirror image (EE/TobEx only)
+    - bit 25: EE - ignore difficulty; TobEx - limit effect stacking
+    - bit 26: TobEx internal (don't use) - suspend effect application
+
+    NB. If more than 1 saving throw type is specified, the target rolls against their best save.
+  type: dword
+- desc: Saving Throw Bonus
+  type: dword
+- desc: |
+    TobEx: Stacking ID. Checked when bit 25 of the Saving Throw Type is set.
+
+    If two effects of the same opcode are applied, both have Limit Effect Stacking bit set, and both have the same stacking ID, then the latter applied effect is suspended in application until the former effect expires. Regardless of whether it is applied, the latter effect will expire at the same time that it would expire if it was applied. In other words, the total duration of some non-stacking effect opcode is not extended because more than one copy of the effect was applied.
+
+    Stacking IDs are unique to the opcode being applied. To maintain uniqueness of stacking IDs between different mods, one recommendation is to use the higher word of Special as the modder's Infinity Engine Community Prefix, then use the lower word as an identifying ID. For example, 0x41360001 ('A6' 0x0001).
+  type: dword
+  offset: 0x2c

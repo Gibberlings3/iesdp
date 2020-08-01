@@ -1,0 +1,112 @@
+- desc: |
+    Attack type
+    - 0 = None
+    - 1 = Melee
+    - 2 = Projectile
+    - 3 = Magic
+    - 4 = Launcher
+  type: char
+- desc: |
+    ID Req.
+    - bit 0: ID Required
+    - bit 1: Non-ID Required
+  type: char
+- desc: |
+    Location
+    - 0 = None
+    - 1 = Weapon
+    - 2 = Spell
+    - 3 = Equipment
+    - 4 = Innate
+  type: char
+- desc: Alternative dice sides
+  type: char
+- desc: Use icon
+  type: resref
+- desc: |
+    Target type
+    - 0 = Invalid (cannot be selected)
+    - 1 = Creature
+    - 2 = Crash
+    - 3 = Character potrait
+    - 4 = Area
+    - 5 = Self
+    - 6 = Crash
+    - 7 = None (Self, ignores game pause)
+  type: char
+- desc: Target count
+  type: char
+- desc: Range
+  type: word
+- desc: |
+    Projectile type
+    - 0 = None
+    - 1 = Arrow
+    - 2 = Bolt
+    - 3 = Bullet
+    - 40 = Spear
+    - 100 = Throwing Axe
+  type: byte
+- desc: Alternative dice thrown
+  type: byte
+- desc: Speed
+  type: byte
+- desc: Alternative damage bonus
+  type: byte
+- desc: |
+    THAC0 bonus
+
+    A successful hit will always occur if any of the conditions below is true
+    - This field is set to 32767
+    - The target creature(s) is STATE_HELPLESS
+    - The target is affected by time stop
+  type: word
+- desc: Dice sides
+  type: byte
+- desc: Primary type
+  type: byte
+- desc: Dice thrown
+  type: byte
+- desc: Secondary type
+  type: byte
+- desc: Damage bonus
+  type: word
+- desc: |
+    Damage type
+    - 0 = None
+    - 1 = Piercing/Magic
+    - 2 = Blunt
+    - 3 = Slashing
+    - 4 = Ranged
+    - 5 = Fists
+    - 6 = Piercing/Blunt (more) (BG2)
+    - 7 = Piercing/Slashing (more) (BG2)
+    - 8 = Blunt/Slashing (less) (BG2)
+  type: word
+- desc: Count of feature blocks
+  type: word
+- desc: Index into feature blocks
+  type: word
+- desc: Charges
+  type: word
+- desc: |
+    Charge depletion behaviour
+    - 0 = Don't vanish
+    - 1 = Expended
+    - 2 = Expended (w/o sound)
+    - 3 = Recharge each day
+  type: word
+- desc: '[Flags](#ExtHeader_Flags)'
+  type: dword
+- desc: Projectile animation (projectl.ids/missile.ids)
+  type: word
+- desc: '[Melee animation](#ExtendedHeader_MeleeAnimation)'
+  type: word
+  mult: 3
+- desc: Bow/Arrow qualifier (0=No, 1=Yes)
+  type: word
+- desc: Crossbow/Bolt qualifier (0=No, 1=Yes)
+  type: word
+- desc: Misc. Projectile qualifier (0=No, 1=Yes)
+  type: word
+  offset: 0x36

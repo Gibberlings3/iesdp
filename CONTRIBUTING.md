@@ -18,3 +18,10 @@ Try not to introduce spelling and grammar bugs.
 
 If possible, when changing opcode/action docs, check any other versions of the opcode.
 Perhaps the change applies there too.
+
+# Misc notes
+To make file format info machine readable, check this:
+https://github.com/Gibberlings3/iesdp/issues/84#issuecomment-667586511
+
+Action format:
+https://github.com/Gibberlings3/iesdp/issues/84#issuecomment-592303038

@@ -3,7 +3,29 @@ title: "BG(2):EE 2DA Files : extanim.2da"
 ---
     <div class="title_main"> extanim.2da</div>
 <br />
-This file can be used to define various properties of new creature animations.<br />
+This file can be used to define various properties of new creature animations. It was used until the EEs moved to PST-style ini files.<br />
+Columns:
+<ul>
+<li>1 - ARMOR_MAX_CODE = [0,1,2,3,4] max armor level. 4 = plate. It's basically set to 4 for all the characters except for the monk who has it set to 1</li>
+<li>2 - CAN_LIE_DOWN = [0, 1] Do we have frames where we are on the ground? Death animation checks this.</li>
+<li>3 - DETECTED_BY_INFRAVISION = [0,1] Are we detected by infravision</li>
+<li>4 - DOUBLE_BLIT = [0,1] Should probably always be set to 0, but the DEMB animation has this set to true.</li>
+<li>5 - EQUIP_HELMET = [0,1] Can they equip a helmet</li>
+<li>6 - SPLIT_BAMS = [0,1] Are the bams split</li>
+<li>7 - COLOR_BLOOD = [0-255] color palette lookup. Seems like 47 is pretty common</li>
+<li>8 - COLOR_CHUNKS = [0-255] used in EFFECT_EXPLODINGDEATH(8), seems to be either 0 or 255</li>
+<li>9 - FALSE_COLOR = [0,1] Tell it to use the character colors</li>
+<li>10 - HEIGHT_CODE = string - "WQM", "WQL", "WQS", etc. The prefix to the weapon animations. Will be set to "NONE" for most monsters.</li>
+<li>11 - HEIGHT_CODE_HELMET = string - same as above, but for the helmet animation</li>
+<li>12 - HEIGHT_CODE_SHIELD = string - see above</li>
+<li>13 - SND_FREQ = [0-255] Sound frequency. Lots of animations are set in under 10, then a few are quite high(150+, MGCP, MGCL, MDOG, etc)</li>
+<li>14 - PERSONAL_SPACE = [0-255] most are 3, dragons are 13</li>
+<li>15 - RESREF = string - animation resref. MDOG, ARAB, etc.</li>
+<li>16 - RESREF_PAPERDOLL = "CHMB", etc</li>
+<li>17 - RESREF_ARMORBASE = single char, 'T' thief, 'W' wizard. This is the 4th character in CHM?</li>
+<li>18 - RESREF_ARMORSPECIFIC = single char, see above. Use when their armor code is equal to ARMOR_MAX_CODE</li>
+<li>19 - RESREF_SHADOW = "CSHD", etc.</li>
+</ul>
 <br />
 In BG2EE we have:<br />
 

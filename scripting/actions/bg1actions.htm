@@ -104,7 +104,7 @@
   </span></div>
     <div class="indent1 action_body"><p></p><p>This action can be used to do nothing - many characters walk around randomly or stand in one place doing nothing:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #50
@@ -116,7 +116,7 @@ END
 
 <p>This command also sets a creatures ModalState to 0, and so can be used to stop other modal actions (e.g. Bard Song).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   ModalState(BATTLESONG)
 THEN
   RESPONSE #100
@@ -126,7 +126,7 @@ END
 
 <p>NoAction() is also commonly used as a hanging action in targeting blocks. This is a matter of good practice rather than necessary. The NoAction() action will never be rum since the block always returns false, but the having an action in the scripting block allows scripting programs to accurately check for errors.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(NearestEnemyOf(Myself))
   False()
 THEN
@@ -151,7 +151,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action can be used to control another creature. A creature referenced as the result of <a href="../actions/bgeeactions.htm#248">SetTokenObject()</a> is not a valid target for the ActionOverride() action. The following is from the Irenicus cutscene after leaving his abode in chapter 1.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -209,7 +209,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to continually attack the target, i.e. the active creature will not switch targets until its target is dead.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF])
   Class(LastSeenBy(),MAGE_ALL)
   !InParty(LastSeenBy())
@@ -253,7 +253,7 @@ END
 
 <p>This script is from the area script for the Copper Coronet (AR0406) and creates extra guards when the Player is discovered in the off limits area.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("CopperGuards","GLOBAL",1)
 THEN
   RESPONSE #100
@@ -301,7 +301,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to initiate dialog with the target creature. Dialog will not be initiated if the creature using this action has been assigned a dialog that has all top level conditions returning false.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   GlobalTimerExpired("Yeslick","GLOBAL")
   Global("FLOODED","GLOBAL",0)
 THEN
@@ -322,7 +322,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to drop the specified item at the specified location (relative to the active creature). The active creature must have the item to be dropped. Note that a coordinate of [-1.-1] will drop the item next to the active creature.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Clicked([ANYONE])
   Range(LastTrigger,12)
 THEN
@@ -343,7 +343,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action is used to change the allegiance of the active creature to enemy (making them hostile to the PC). This example script, from a peasant, will turn the creature hostile if it is attacked.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   AttackedBy([GOODCUTOFF],Myself)
   Allegiance(Myself,NEUTRAL)
 THEN
@@ -398,7 +398,7 @@ END
       <a id="14" class="action_name">
         14 GetItem(S:Object*,O:Target*)
       </a><span class="label label-warning" title="This action has not been seen to produce any results">does not work</span></div>
-    <div class="indent1 action_body"><p></p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+    <div class="indent1 action_body"><p></p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([ANYONE])
   !HasItem("Sw1h01",Myself)
   HasItem("Sw1h01",LastSeenBy ())
@@ -421,7 +421,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to give the specified item (parameter 1) to the specified target (parameter 2). The active creature must possess the item to pass it. The sample script makes uses of modified IDS files (action, instant, trigger and svtiobj) though such modification are not necessary to use the GiveItem action itself.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HPPercentLT(Myself,40)
   !HasItem("potn52",Myself)
 THEN
@@ -459,7 +459,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action is used in conjunction with the ReceivedOrder trigger, and works in a similar way to a global shout. The action passes a numeric order to the specified creature. Only one creature at a time responds to an order, and creatures to not detect their own orders.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF])
   OR(3)
   Class(Myself,FIGHTER_ALL)
@@ -492,7 +492,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action acts similar to shout, but does not accept values. The range of the Help action is slightly larger than the default visual radius of NPCs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HitBy([ANYONE],CRUSHING)
 THEN
   RESPONSE #50
@@ -530,7 +530,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to attempt to Hide in Shadows. This action can be used for any creature (not just thieves) though success in hiding is dependent on points in the Stealth skill. A hidden creature is treated as STATE_INVISIBLE.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   !See([EVILCUTOFF])
   OR(2)
   !StateCheck(Myself,STATE_INVISIBLE)
@@ -553,7 +553,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action adds the active creature to the party. If the party is currently full the ‘select party members’ dialog is shown. JoinParty clears the ActionQueue of the active creature.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([PC])
   Global("KRJOINPARTY","GLOBAL",0)
 THEN
@@ -594,7 +594,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to leave the party. This action calls DropInventory() as part of its execution.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HappinessLT(Myself,-299)
 THEN
   RESPONSE #100
@@ -617,7 +617,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to move to the specified object. The action does not update the current position of the actor, saved in ARE files. The example script shows the creature moving towards the nearest enemy.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(NearestEnemyOf())
   !Range(NearestEnemyOf(),4)
 THEN
@@ -638,7 +638,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to move to the specified coordinates. The action will update the position of creatures as stored in ARE files (first by setting the coordinates of the destination point, then by setting the coordinates of the current point once the destination is reached).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -662,7 +662,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to move randomly around the screen.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HPPercentLT(Myself,15)
 THEN
   RESPONSE #100
@@ -682,7 +682,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to attempt to pickpocket the target. This action can be used for any creature (not just thieves) though success in pick pocketing is dependent on points in the Pickpocket skill. Note that a failed pickpocket attempt is treated as an attack, hence the Attacked() trigger will return true if a pickpocket attempt is failed.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([ANYONE])
   OR(2)
   Class(Myself,THIEF_ALL)
@@ -705,7 +705,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action will cause the active creature to play the specified sound. Both WAV and WAVC files can be played by the action.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -725,7 +725,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to guard the specified point, staying within the specified range.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -745,7 +745,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to attempt to disarm the specified trap. This action can be used for any creature (not just thieves) though success in disarming is dependent on points in the Disarm Trap skill.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See("Trap01")
   Class(Myself,THIEF_ALL)
 THEN
@@ -766,7 +766,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to run away from the specified creature, for the specified time. The time parameter is measured in AI updates, which default to 15 updates per second. Occasionally, fleeing creatures stop to attack another creature.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HPPercentLT(Myself,30)
 THEN
   RESPONSE #100
@@ -794,7 +794,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action sets a variable (specified by name) in the scope (specified by area) to the value (specified by value). See the <a href="../../appendices/variables.htm">variable type</a> appendix for details on variables.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("KRINAREA","AR0400",0)
 THEN
   RESPONSE #100
@@ -815,7 +815,7 @@ END
       </a><span class="label label-warning" title="This action may not be reliable">unreliable</span></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF])
   !InParty([EVILCUTOFF])
   !HasBounceEffects([ EVILCUTOFF])//like cloak of mirroring or spell deflection
@@ -883,7 +883,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action turns any undead creatures within range of the active creature. This action can be used for any creature (not just paladins/clerics) though success in turning is dependent on the Turn Undead level of the creature, which is only calculated for paladins and clerics. The chance to successfully turn undead is based on creatures level and class. Paladins turn at 2 levels less than clerics of the same level. An undead creature will be destroyed/controlled if its level is more than 7 levels below the active creatures turn undead level. An undead creature may be turned (i.e. forced to flee) is its level is equal to, or up to 4 levels below, the active creatures turn undead level.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF])
   General([EVILCUTOFF],UNDEAD)
   LevelGT(Mysel f,12)
@@ -916,7 +916,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to use the specified item (object) on the specified target (target). This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature’s inventory (though it need not be equipped).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HPPercentLT(Myself,50)
   HasItem("potn52",Myself)
 THEN
@@ -966,7 +966,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(NearestEnemyOf())
   !InParty(NearestEnemyOf())
 THEN
@@ -1004,7 +1004,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to play the swing weapon animation. Note that some objects do not have this animation.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -1024,7 +1024,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to play the recoil animation. Note that some objects do not have this animation.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   TookDamage()
 THEN
   RESPONSE #100
@@ -1044,7 +1044,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to “play dead”, i.e. to lay on the ground, for the specified interval (measured in AI updates per second (AI updates default to 15 per second). If used on a PC, the player can override the action by issuing a standard move command.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HPPercentLT(Myself,30)
 THEN
   RESPONSE #100
@@ -1064,7 +1064,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action can used to make the active creature follow the creature specified by the leader parameter, maintain a relative position determined by the offset parameter.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   CombatCounter(0)
   Allegiance(Myself,NEUTRAL)
 THEN
@@ -1085,7 +1085,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instantly moves the active creature to the specified point.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -1124,7 +1124,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action scrolls the view point (i.e. the area of the current map being displayed onscreen) to the target object ([x.y] at the specified speed. Speeds are taken from <a href="../../files/ids/bg1/scroll.htm">scroll.ids</a> (VERY_FAST is equivalent to normal walking speed). The example script is from a cutscene; CUT03C.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -1298,7 +1298,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the assigned script file for the active creature. The new script name is specified in the scriptfile parameter. The level parameter dictates the script level to change - values are from <a href="../../files/ids/bg1/scrlev.htm">scrlev.ids</a>. Scripts can be set for any scriptable object (container, creature, door etc.), but are not persisted.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF.0.DOG])
 THEN
   RESPONSE #100
@@ -1318,7 +1318,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action starts a timer local to the active creature. The timer is measured in seconds, and the timer value is not saved in save games. The timer is checked with the TimerExpired trigger.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("KRDEAD","LOCALS",0 )
   Dead("Shadra01")
 THEN
@@ -1360,7 +1360,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes a delay in script processing. The time is measured in seconds.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(Player1)
   See(Player6)
 THEN
@@ -1384,7 +1384,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action resets the fog of war for the area the active creature is in.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -1404,7 +1404,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action removes the fog of war for the area the active creature is in.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -1424,7 +1424,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the time of day. The time parameter is taken from <a href="../../files/ids/bg1/time.htm">time.ids</a>, though a direct number can be specified. The example script is from when Irenicus leaves his dungeon.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("AmaWaukeen","GLOBAL",1)
 THEN
   RESPONSE #100
@@ -1449,7 +1449,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the weather. The action only works in outdoors areas that have weather enabled in the ARE file. Values for the weather parameter are from <a href="../../files/ids/bg1/weather.htm">weather.ids</a>. Note that the fog weather type does not work.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("KRSTORM","GLOBAL",0)
 THEN
   RESPONSE #100
@@ -1474,7 +1474,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action calls lightning from the sky against the specified target.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -1652,7 +1652,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action creates the specified item (resref) on the active creature. The usage parameters determine the number of items created or the number of charges on the item, depending on the item type being created. If this action is used on a container (via ActionOverride) the item will not be created in the container - it will be placed on the ground next to it. The example script is from AR0602.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("BG1Pantaloons","GLOBAL",0)
   PartyHasItem("MISC47")
 THEN
@@ -1679,7 +1679,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action is similar to <a href="#63">Wait()</a>, it causes a delay in script processing. The time is measured in AI updates (which default to 15 per second)</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(NearestEnemyOf())
 THEN
   RESPONSE #100
@@ -1705,7 +1705,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to face the specified direction. Directions run from 0-15 with 0 being south and moving clockwise. Negative values cause object to rotate continuously.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("BeholderBehavior","LOCALS",0)
   See([PC])
   HPGT(Myself,65)
@@ -1733,7 +1733,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to walk randomly. The example script is blbear.bcs; it instructs bears to walk rather than fight if the nearest enemy is a druid.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Delay(5)
   See(NearestEnemyOf(Myself))
   Class(NearestEnemyOf(Myself),DRUID)
@@ -1760,7 +1760,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action sets whether a creature can be interrupted while carrying out script actions.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(Player2)
   !Range(Player2,4)
 THEN
@@ -1783,7 +1783,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to protect the specified creature (i.e. attack any enemies of the creature), while staying within the specified range. The example script is from IWD, 4003bsg.bcs and controls the zombies guarding Presio.(4003BSG.bcs).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -1867,7 +1867,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to select the specified slot, and use the ability in the extended header specified by the ability parameter. The example script is from ankheg.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(NearestEnemyOf(Myself))
   Range(NearestEnemyOf(Myself),5)
   Delay(12)
@@ -1922,7 +1922,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The example script is from andris.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("AndrisBehavior","AR1009",0)
   See(NearestEnemyOf(Myself))
 THEN
@@ -1987,7 +1987,7 @@ END
   </span></div>
     <div class="indent1 action_body"><p></p><p>This action applies the benefits of resting (i.e. healing, restoring spells and restoring abilities) to the active creature. The action does not play the rest movie or advance game time. The example script is from cut28a.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -2086,7 +2086,7 @@ THEN
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action gives the appearance of flying - the active creature is able to pass over impassable areas. The example script is from randfly.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -2130,7 +2130,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action alters the morale of the target by the specified amount. The change amount can be positive or negative. The example script is from bardsh.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   AttackedBy([GOODCUTOFF],DEFAULT)
   Allegiance(Myself,NEUTRAL)
   Global("PlayerAttackedActors","GLOBAL",0)
@@ -2166,7 +2166,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to attack the specified target for one round.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(NearestEnemyOf())
 THEN
   RESPONSE #100
@@ -2194,7 +2194,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action is used to shout the specified number. The action is used in conjunction with the Heard trigger. A silenced creature cannot shout.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   StateCheck(Myself,STATE_POISONED)
 THEN
   RESPONSE #100
@@ -2202,7 +2202,7 @@ THEN
 END
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Heard([GOODCUTOFF],4010)
   HaveSpell(CLERIC_SLOW_POISON)
 THEN
@@ -2239,7 +2239,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to leave the current area, either by walking, or, if the path is blocked, by simply disappearing. The action is uninterruptable; actions listed this one in a script may not execute as intended.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HPPercentLT(Myself,35)
 THEN
   RESPONSE #100
@@ -2271,7 +2271,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action alters the specified variable, in the specified scope, by the amount indicated. The amount can be positive or negative. Variables in the local scope cannot be changed with this action.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF]
   !Specifics(LastSeenBy(),160)
   !Inparty(LastSeenBy())
@@ -2307,7 +2307,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the current area.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("MissionPackSave","GLOBAL",0)
 THEN
   RESPONSE #100
@@ -2333,7 +2333,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action removes the active creature from the game. No death variable is set. The example script is from the Irenicus cutscene at the beginning of the game.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -2372,7 +2372,7 @@ END
       </a><span class="label label-warning" title="This action may not be reliable">unreliable</span></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The example script is from suelfw9.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("Scene2","AR2800",2)
   See([ENEMY])
   Global("Fight","LOCALS",2)
@@ -2414,7 +2414,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("AndrisBehavior","AR1009",0)
   See(NearestEnemyOf(Myself))
 THEN
@@ -2461,7 +2461,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action sets a global timer. The timer is checked by the GlobalTimerExpired trigger or GlobalTimerNotExpired trigger.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   GlobalTimerExpired("Areana","GLOBAL")
   !Exists("TorLobo")
   !Dead("TorLobo")
@@ -2488,13 +2488,13 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). Characters are checked in current party order. The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). All slots are checked; inventory slots are checked in the following order</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0, 2, 4, 6, 8, 10, 12, 14
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0, 2, 4, 6, 8, 10, 12, 14
 1, 3, 5, 7, 9, 11, 13, 15
 </code></pre></div></div>
 
 <p>The example is from AR0516.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("ThrallOrb","GLOBAL",2)
   PartyHasItem("MISC7Y")
 THEN
@@ -2535,7 +2535,7 @@ END
     <div class="indent1 action_body"><p></p><p>This action takes the specified amount of gold from the party. If performed by a party member, the gold is transferred to that characters gold stat (in the CRE file) and re-added to the party pot when the character re-joins the party.
 The example script is from AR0602.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("TakeImportItems","AR0602",0)
 THEN
   RESPONSE #100
@@ -2576,7 +2576,7 @@ THEN
   </span></div>
     <div class="indent1 action_body"><p></p><p>This action gives the specified amount of gold to the party. The active creature must have the gold in its “money variable”.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   G("KRGIVEGOLD",0)
 THEN
   RESPONSE #100
@@ -2597,7 +2597,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to drop all its inventory items. The example script is from the cutscene with Mazzy fighting the ogre; cut16a.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -2622,11 +2622,11 @@ THEN
     <div class="indent1 action_body"><p></p><p>This action starts a cutscene; a cinematic sequence that removes the GUI and player control. The cutscene parameter is the script name to run.
 The second variant can enable condition checking (trigger evaluation, off by default) when the second parameter is set to TRUE.</p>
 
-<p>The example script is from cutscene BDCUT17B.bcs and shows how they can be reused. With <code class="highlighter-rouge">StartCutSceneEx("BDCUT17B",TRUE)</code> it executes
-only one script block depending on the specified conditions. With <code class="highlighter-rouge">StartCutSceneEx("BDCUT17B",FALSE)</code> it will execute both blocks
+<p>The example script is from cutscene BDCUT17B.bcs and shows how they can be reused. With <code class="language-plaintext highlighter-rouge">StartCutSceneEx("BDCUT17B",TRUE)</code> it executes
+only one script block depending on the specified conditions. With <code class="language-plaintext highlighter-rouge">StartCutSceneEx("BDCUT17B",FALSE)</code> it will execute both blocks
 regardless of condition.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   GlobalLT("bd_cut17b_cycle","bd1000",10)
   !NearLocation(Player1,4535,550,30)
 THEN
@@ -2670,7 +2670,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action starts a cutscene. Player control is removed, and scripts stop running. Note that actions already in the action list are not cleared without an explicit call to ClearAllActions. The example script is from are0507.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("AmsiHouse","GLOBAL",3)
   !Dead("amsi")
 THEN
@@ -2693,7 +2693,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action ends a cutscene, and restores the GUI and player control. The example script is from ar0800.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   GlobalGT("BodhiJob","GLOBAL",0)
   Global("Movie02","GLOBAL",0)
 THEN
@@ -2723,7 +2723,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action clears any queued actions for all creatures in the area. The example script is from ar0507.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("AmsiHouse","GLOBAL",3)
   !Dead("amsi")
 THEN
@@ -2782,7 +2782,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action is used internally in a cutscene to make the object with the specified death variable perform actions. The action appears to only work from a creature script. The example script is from cut01.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -2836,7 +2836,7 @@ THEN
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to turn in a random direction. The example script is from waitturn.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   True()
 THEN
   RESPONSE #100
@@ -2856,7 +2856,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the target creature to die, dropping any droppable items they are carrying.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("KillArntra04","AR0307",1)
 THEN
   RESPONSE #100
@@ -2882,7 +2882,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action plays a sound linked to the object.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Delay(2)
   HPPercentLT(Myself,35)
 THEN
@@ -2912,7 +2912,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action clears the action list of the specified object. The example script is from ar2400.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   GlobalTimerExpired("udWaitOgreDoor","GLOBAL")
   Global("HaveOgreOpenDoor","AR2400",0)
   Global("udGithDead","AR2400",0)
@@ -2949,7 +2949,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to attack the target for the specified time (ReevaluationPeriod) which is measured in AI updates (which default to 15 per second).The script will then run again, checking for other true conditions.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF])
   Range(LastSeenBy(),4)
   !InParty(LastSeenBy())
@@ -2975,7 +2975,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action locks the screen on the active creature, preventing the screen from being scrolled away. The action only works from a creature script.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   CombatCounter(0)
 THEN
   RESPONSE #100
@@ -2995,7 +2995,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action unlocks the screen if it has been locked.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   OR(2)
   HotKey(H)
   !CombatCounter(0)
@@ -3017,7 +3017,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to start the specified dialog with the specified target. The dialog can be initiated from a distance and must have at least one state with all its top level conditions true else it will not initiate. The active creature has its dialog file permanently set to the file specified by the DialogFile parameter.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([PC])
   NumTimesTalkedTo(0)
 THEN
@@ -3042,7 +3042,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action sets the dialog file of the active creature to the specified file. SetDialogue(“”) will set the dialog file to nothing.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   AttackedBy([GOODCUTOFF],DEFAULT)
   Global("KR_CHANGE_DIALOG","LOCALS",0)
 THEN
@@ -3088,7 +3088,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action creates the item specified by the resref parameter on the creature specified by the object parameter, with quantity/charges controlled by the usage parameters.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   GlobalTimerExpired("dwVith","GLOBAL")
   Global("dwVithal","GLOBAL",3)
 THEN
@@ -3145,7 +3145,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action will open the specified door. If the door is locked the creature must possess the correct key. Some doors central to the plot doors cannot be opened. The active creature can stick on this action if it fails.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See("Door01"
   OpenState("Door01",FALSE)
   !See([GOODCUTOFF])
@@ -3170,7 +3170,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action closes the specified door. The example script is from ar0300.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   OR(2)
   Global("LyrosJob","GLOBAL",3)
   Dead("lyros")
@@ -3209,7 +3209,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to change animation to the specified animation (values from <a href="../../files/ids/bg1/animate.htm">animate.ids</a>)</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   !InPartyAllowDead("Aerie")
   !Dead("Aerie")
   !GlobalGT("AerieTransform","GLOBAL",0)
@@ -3242,7 +3242,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action removes one memorised indtance of the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in <a href="../../files/ids/bg1/spell.htm">spell.ids</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("KR_ANTI_PALADIN_CHANGE","LOCALS",1)
 THEN
   RESPONSE #100
@@ -3285,7 +3285,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to equip the most damaging melee weapon from those available in the quickslots. Damage is calculated on the THAC0 bonus and damage - special bonuses versus creature types and elemental damages are not checked.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF])
 THEN
   RESPONSE #100
@@ -3306,7 +3306,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action starts the specified store with the specified object.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("KRSTART_STORE","LOCALS",1)
 THEN
   RESPONSE #100
@@ -3326,7 +3326,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action displays the strref specified by the StrRef parameter in the message window, attributing the text to the specified object.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   HasItem("potn52",Myself)
   HPPercentLT((),50)
 THEN
@@ -3368,7 +3368,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the EA status of the target creature to the specified value. Values are from <a href="../../files/ids/bg1/ea.htm">ea.ids</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global"KR_ENEMYALLY_CHANGE","LOCALS",0)
 THEN
   RESPONSE #100
@@ -3389,7 +3389,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the general status of the target creature to the specified value. Values are from <a href="../../files/ids/bg1/general.htm">general.ids</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global"KR_GENERAL_CHANGE","LOCALS" ,0)
 THEN
   RESPONSE #100
@@ -3410,7 +3410,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the race of the target creature to the specified value. Values are from <a href="../../files/ids/bg1/race.htm">race.ids</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global"KR_RACE_CHANGE","LOCALS",0)
 THEN
   RESPONSE #100
@@ -3431,7 +3431,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the class of the target creature to the specified value. Values are from <a href="../../files/ids/bg1/class.htm">class.ids</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global"KR_CLASS_CHANGE","LOCALS",0)
 THEN
   RESPONSE #100
@@ -3452,7 +3452,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the specific status of the target creature to the specified value. Values are from <a href="../../files/ids/bg1/specific.htm">specific.ids</a>. The action produces inconsistent results when used on player characters in multiplayer games. The specific value is represented by one byte, and so is limited to values 0-255. The example script assigns a script to a newly created simulacrum.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([ALLY])
   !InParty(LastSeenBy(Myself))
   !Gender(LastSeenBy(Myself),SUMMONED)
@@ -3486,7 +3486,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the gender of the target creature to the specified value. Values are from <a href="../../files/ids/bg1/gender.htm">gender.ids</a>. The example script changes the gender of summoned creatures to neither, to bypass the 5 concurrent summoned creatures limit.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([ALLY])
   !InParty(LastSeenBy(Myself))
   Gender(LastS eenBy(Myself),SUMMONED)
@@ -3510,7 +3510,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action changes the alignment of the target creature to the specified value. Values are from <a href="../../files/ids/bg1/align.htm">align.ids</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("KR_ALIGN_CHANGE","LOCALS",0)
 THEN
   RESPONSE #100
@@ -3531,7 +3531,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by ApplySpell use a single dice value. The example script is used to mimic a contingency from mage18y.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(NearestEnemyOf(Myself))
   Global("Prep","LOCALS",0)
 THEN
@@ -3607,7 +3607,7 @@ END
   </span></div>
     <div class="indent1 action_body"><p></p><p>This action is used to increment the chapter, and display a text screen (specified by the resref parameter - a 2DA file). The example script is from ar1803.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Dead("Davaeorn")
   Global("Chapter","GLOBAL",4)
 THEN
@@ -3629,7 +3629,7 @@ END
         162 ReputationSet(I:Reputation*)
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action sets the reputation to the specified value.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("KRGOODDEED","GLOBAL",0)
 THEN
   RESPONSE #100
@@ -3650,7 +3650,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action alters the reputation by the specified value (which can be either negative or positive). The example script is from baldur.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   InParty("Viconia")
   Global("ViconiaJoinedParty","GLOBAL",0)
 THEN
@@ -3671,7 +3671,7 @@ END
         164 AddExperienceParty(I:XP*)
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action gives the specified amount of experience to the party. The XP amount is distributed among all current living party members. The example script is from ar1300.bcs.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   OpenState("Bridge01",TRUE)
   Global("BridgeOpen","GLOBAL",0)
   !Dead("Torgal")
@@ -3706,7 +3706,7 @@ THEN
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action adds experience to the party, with the amount corresponding to a global variable.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("MyXP","GLOBAL",0)
 THEN
   RESPONSE #100
@@ -3727,7 +3727,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action sets the number of times the active creature has been talked to (by player characters). The example script is from ar0103.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("BrielbaraMove","GLOBAL",1)
   !Exists("Brielbara")
   !Dead("Brielbara")
@@ -3750,7 +3750,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action is used to a play a movie (MVE file). The example script is from ar108.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("EnteredPalace","GLOBAL",0)
 THEN
   RESPONSE #100
@@ -3771,7 +3771,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action is used to initiate banter between NPCs. The example script is from edwin.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   InParty(Myself)
   Gender(Myself,FEMALE)
   InParty("Aerie")
@@ -3808,7 +3808,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action removes a single instance of the specified item from the active creature, unless the item exists in a stack, in which case the entire stack is removed. The example script is from ar1000.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("CerndBaby","GLOBAL",1)
   Global("CerndBabyTake","AR1000",0)
 THEN
@@ -3835,7 +3835,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action reveals an area on the worldmap, enabling travelling to it.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Dead("Davaeorn")
   Global("Chapter","GLOBAL",4)
 THEN
@@ -3862,7 +3862,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action gives the specified amount of gold to the party. The active creature need not have the gold in its “money variable”. A negative amount will remove gold from the active creature.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   NumTimesTalkedTo(30)
 THEN
   RESPONSE #100
@@ -3895,7 +3895,7 @@ END
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action adds an entry into the journal. The entry parameter is the strref to add, and the JourType is the type of entry (i.e. the location within the journal to add the entry to) - values are from jourtype.ids. The example script is from ar0511.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Dead("JanGith1")
   Dead("JanGith2")
   Global("ThumbSeeker","GLOBAL",2)
@@ -3942,7 +3942,7 @@ END
   </span></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to a ranged weapon from the weapons available in the quickslots.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See([EVILCUTOFF])
   !Range([EVILCUTOFF],4)
   OR(28)
@@ -4008,7 +4008,7 @@ END
   </span></div>
     <div class="indent1 action_body"><p></p><p>This action sets the dialog for the active creature to their leave dialog.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   !InParty(Myself)
   HPGT(Myself,0)
 THEN
@@ -5162,7 +5162,7 @@ END
   </span></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to follow the target object, in the specified formation, taking up the specified position. The Formation parameter represents the formation type (e.g. two lines, arrowhead, single line). The position should be in the range [0,5]. The example script is from dlsctc02.bcs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   !Range("DLSCTC02",12)
   Global("DontFollow","DL0302",0)
 THEN

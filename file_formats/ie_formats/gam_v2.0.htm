@@ -103,7 +103,7 @@ title: "GAM file format"
           <tr>
             <td>0x001c</td>
             <td>2 (word)</td>
-            <td>Count of <a href="#GAMEV2_0_NPC">NPC structs for party members</a> (excluding Protagonist)</td>
+            <td>Use active area from party member (0=Player1, 1=Player2, ... 5=Player6, -1=Not in party). This overrides current area at offset 0x0058.</td>
           </tr>
           <tr>
             <td>0x001e</td>
@@ -262,8 +262,33 @@ title: "GAM file format"
           </tr>
           <tr>
             <td>0x0080</td>
-            <td>52 (bytes)</td>
-            <td>Unused</td>
+            <td>4 (dword)</td>
+            <td>EE: Zoom level (in percent), 0 or 100: default zoom level, &gt;100: zoomed out, &lt;100: zoomed in.</td>
+          </tr>
+          <tr>
+            <td>0x0084</td>
+            <td>8 (resref)</td>
+            <td>EE: Random encounter area set by script action ForceRandomEncounter() or ForceRandomEncounterEntry().</td>
+          </tr>
+          <tr>
+            <td>0x008c</td>
+            <td>8 (resref)</td>
+            <td>EE: Current worldmap</td>
+          </tr>
+          <tr>
+            <td>0x0094</td>
+            <td>8 (char array)</td>
+            <td>EE: Current campaign (e.g. "SOD" for Siege of Dragonspear)</td>
+          </tr>
+          <tr>
+            <td>0x009c</td>
+            <td>4 (dword)</td>
+            <td>EE: Familiar owner (0=Player1, 1=Player2, ..., 5=Player6), used in IWDEE</td>
+          </tr>
+          <tr>
+            <td>0x00a0</td>
+            <td>20 (char array)</td>
+            <td>EE: Random encounter entry set by script action ForceRandomEncounterEntry().</td>
           </tr>
         </tbody>
       </table>

@@ -14,13 +14,26 @@ Applies the modifier value specified by the 'Statistic Modifier' field in the st
 <br/>The engine allows values for 'Statistic Modifier' from 0 (immobile) to 255 (instantaneous), though behaviour
  is only consistent in the range 0 - 30.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Movement = Movement + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Movement = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Movement = (Movement * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0   Cumulative Modifier &rightarrow; Movement = Movement + 'Statistic Modifier' value</li>
+	<li>1   Flat Value Modifier &rightarrow; Movement = 'Statistic Modifier' value</li>
+	<li>2   Percentage Modifier &rightarrow; Movement = (Movement * 'Statistic Modifier' value) / 100</li>
+	<li>5   Multiplicative Stacking Percentage Modifier &rightarrow; Movement = Movement * ('Statistic Modifier' value / 100) (EE only)</li>
+</ul>
 
 {% capture note %}
 BG1 does not support the cumulative modifier and will behave as if in flat modifier mode.
 {% endcapture %}
 
 {% include note.html %}
+
+{% capture note %}
+A couple of examples about 'Multiplicative Stacking Percentage Modifier':
+<ul>
+	<li>50% * 50% = 25%</li>
+	<li>150% * 150% = 225%</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
 

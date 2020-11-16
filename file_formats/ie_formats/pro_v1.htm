@@ -71,9 +71,10 @@ title: "PRO file format"
               <li>bit 1: Use z coordinate</li>
               <li>bit 2: Loop sound (0x10)</li>
               <li>bit 3: Loop sound (0x18)</li>
-              <li>bit 4: Do not affect direct target</li>
+              <li>bit 4: Do not affect direct target (a.k.a. exclude caster)</li>
               <li>bit 5: Draw below animate objects</li>
               <li>bit 6: Allow saving game (EE)</li>
+              <li>bit 7: Loop spread animation (EE)</li>
             </ul>
             Further bits are unused.
           </td>
@@ -137,7 +138,13 @@ title: "PRO file format"
               <li>Bit 7: Pillar</li>
               <li>Bit 8: Semi-transparent trail puff VEF</li>
               <li>Bit 9: Tinted trail puff VEF</li>
-              <li>Bit 10: Multiple projectiles</li>
+              <li>Bit 10: Multiple projectiles
+                <ul>
+                  <li>When this flag is set, the game looks at the projectile entry one number less. If that projectile also has it set, it looks at the projectile entry one number less again, until it finds a projectile without that flag set. All projectiles it finds are fired at the target.</li>
+                  <li>The speed of the last projectile it finds determines the overall speed of the projectile, while the speed of the specified projectile determines the "arc" (strength) of all of the projectiles.</li>
+                  <li>Certain other flags in the projectile effectively disable the "Multiple proj. - BIT10" flag (such as being Area-Effect or a lined-up AoE (like Agannazar's Scorcher)), and those projectiles will be treated as if the flag wasn't set.</li>
+                </ul>
+              </li>
               <li>Bit 11: Default spell on missed</li>
               <li>Bit 12: Falling path</li>
               <li>Bit 13: Comet</li>
@@ -157,8 +164,24 @@ title: "PRO file format"
               <li>Bit 27: Use either IDS</li>
               <li>Bit 28: Delayed payload</li>
               <li>Bit 29: Limited path count</li>
-              <li>Bit 30: IWD-style check (use entries from splprot.2da for first and second creature target)</li>
-              <li>Bit 31: Caster affected</li>
+              <li>Bit 30: IWD-style check (use entries from splprot.2da for first and second creature target). It works similar to op<a href="../../../opcodes/bgee.htm#op318">318</a>/<a href="../../../opcodes/bgee.htm#op326">326</a>, depending on the other related flags:
+                <ul>
+                  <li>Default: Exclude objects matching A (@ 0x3E) and matching B (@ 0x42)</li>
+                  <li>"Use Either IDS" (BIT27 @ 2C):  Exclude objects matching A (@ 0x3E) or matching B (@ 0x42)</li>
+                  <li>"Neg.IDS1" (BIT25 @ 0x2C): Exclude objects not matching A (@ 0x3E) and matching B (@ 0x42)</li>
+                  <li>"Neg.IDS2" (BIT26 @ 0x2C): Exclude objects matching A (@ 0x3E) and not matching B (@ 0x42)</li>
+                  <li>"Neg.IDS1" + "Use Either": Exclude objects not matching A (@ 0x3E) and matching B (@ 0x42)</li>
+                  <li>"Neg.IDS2" + "Use Either": Exclude objects matching A (@ 0x3E) and not matching B (@ 0x42)</li>
+                  <li>"Neg.IDS1" + "Neg.IDS2": Exclude objects matching A (@ 0x3E) or matching B (@ 0x42)</li>
+                  <li>"Neg.IDS1" + "Neg.IDS2" + "Use Either": Exclude objects matching A (@ 0x3E) and matching B (@ 0x42)</li>
+                </ul>
+              </li>
+              <li>Bit 31: Caster affected – This is related to effect target 9 (Original Caster).
+                <ul>
+                  <li>If this flag is set, the original caster is affected once for every target.</li>
+                  <li>Without this flag, the original caster is affected only once, but only if there is at least one target.</li>
+                </ul>
+              </li>
             </ul>
           </td>
         </tr>
@@ -474,14 +497,26 @@ title: "PRO file format"
             <li><span class="unknown"> bit 1: Triggered by inanimate objects (e.g. doors) </span></li>
             <li>bit 2: Triggered on condition</li>
             <li>bit 3: Trigger during delay</li>
-            <li>bit 4: Use secondary projectile</li>
+            <li>bit 4: Use secondary projectile
+              <ul>
+                <li>Without "Bounce from Walls" (BIT0 @ 0x2C): the projectile it fires is strictly aesthetic, it carries no effects from the spell/item. A variety of projectiles use these to generate their explosion animation (via another projectile), instead of using a VVC. For instance, all of the "Sparkle Area (color) (party/not)" projectiles do this.</li>
+                <li>With "Bounce from Walls" (BIT0 @ 0x2C): the projectile it fires is fully functional, except that it originates from the target, not the caster. In order to hit anything, it must itself be an Area-Effect projectile (or Pass-Target projectile). This mode only functions when the target of the spell/item is a creature (not a point), and it will only fire on that creature, not all targets in range.</li>
+                <li>Either way, the Secondary Projectile is only practical for single-trigger projectiles (the Sparkle Areas or a Fireball, but not something like Web or Entangle), as the projectile is fired every tick of the projectile's duration. (Unless you want to flood the screen with visuals).</li>
+                <li>The Secondary Projectile does not fire until the projectile explodes.</li>
+              </ul>
+            </li>
             <li>bit 5: Use fragment graphics</li>
             <li>bit 6: Target selection*</li>
             <li>bit 7: Target selection*</li>
             <li>bit 8: Number of triggers equal to cast mage level</li>
             <li>bit 9: Number of triggers equal to cast cleric level</li>
             <li>bit 10: Use VVC</li>
-            <li>bit 11: Cone shape</li>
+            <li>bit 11: Cone shape
+              <ul>
+                <li>It requires all targets to be in the caster's line of sight.</li>
+                <li>Cone-shaped projectiles automatically exclude the caster.</li>
+              </ul>
+            </li>
             <li>bit 12: Affect objects through wall, mountain, building, and off-area</li>
             <li>bit 13: Check triggers from animation frame 30 (req. bit 0)</li>
             <li>bit 14: Delayed explosion</li>
@@ -499,14 +534,29 @@ title: "PRO file format"
         </td>
       </tr>
       <tr>
+        <td>0x00202</td>
+        <td>2 (word)</td>
+        <td>Ray count (EE only...?)
+          <ul>
+            <li>Suppresses the "Secondary Projectile" flag (BIT4 @ 0x200).</li>
+            <li>It causes the Explosion Projectile to be fired (Ray count) amount of times, starting at 135 degrees (South-East), and increasing by (Cone Width) degrees each time. For instance, 4 Rays at 90 Cone Width fires the Explosion Projectile SE, SW, NW, and NE.</li>
+            <li>The Explosion Projectile must be either Area-Effect or Pass-Target (BIT1 @ 0x2C) to affect anything.</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
         <td>0x00204</td>
         <td>2 (word)</td>
-        <td>Trigger radius (divide by approx 8.5 to receive diameter in feet)</td>
+        <td>Trigger radius/Trap Size (divide by approx 8.5 to receive diameter in feet)<br><br>
+          It is generally set equal to Explosion Size, unless you're using the "Rectangular AoE" flag (Wall spells) or the "Triggered by Condition" flag (actual Traps).
+        </td>
       </tr>
       <tr>
         <td>0x00206</td>
         <td>2 (word)</td>
-        <td>Area of effect (divide by approx 8.5 to receive diameter in feet)</td>
+        <td>Area of effect/Explosion Size (divide by approx 8.5 to receive diameter in feet)<br><br>
+          It defines the radius of the projectile, 16 units = 1 foot. Default visual range = 448. 
+        </td>
       </tr>
       <tr>
         <td>0x00208</td>
@@ -516,7 +566,10 @@ title: "PRO file format"
       <tr>
         <td>0x00210</td>
         <td>2 (word)</td>
-        <td>Explosion delay</td>
+        <td>Explosion delay (Frequency)<br><br>
+          It is a measure of the number of ticks between target checks, where 100 = 1 round.<br>
+          Subsequently, it also determines how long an Area-Effect projectile lasts, as the total duration is generally "Frequency * #Repetitions (@ 0x216)".
+        </td>
       </tr>
       <tr>
         <td>0x00212</td>
@@ -601,12 +654,22 @@ title: "PRO file format"
             <li>Bit 7: <span class="unknown"> Unused </span></li>
             <li>Bit 8: <span class="unknown"> Unused </span></li>
             <li>Bit 9: Oriented fireball puffs</li>
-            <li>Bit 10: Use hit dice lookup</li>
+            <li>Bit 10: Use hit dice lookup<br><br>
+              <ul>
+                <li>Each explosion will only affect targets whose HD/level is equal to or less than XdY, where X = (0x244|# Targeting Dice), and Y = (0x246|Targeting Dice Size).</li>
+                <li>(BUG, at least on EE games) Regardless of Dice values, it cannot affect creatures whose HD/Level is 9 or greater (hardcoded for Death Spell).</li>
+              </ul>
+            </li>
             <li>Bit 11: <span class="unknown"> Unused </span></li>
             <li>Bit 12: <span class="unknown"> Unused </span></li>
             <li>Bit 13: Blended area/ring animation</li>
             <li>Bit 14: Glowing area/ring animation</li>
-            <li>Bit 15: Hit point limit</li>
+            <li>Bit 15: Hit point limit – Used in combination with Area Flag(BIT15|Single Target) and Extended Area Flag(BIT10|Use HD Lookup):
+              <ul>
+                <li>Each explosion will only affect targets whose current Hit Points are equal or less than (0x246|Targeting Dice Size).</li>
+                <li>Each explosion will only affect a total number of targets whose current Hit Point total is equal or less than (0x244|# Targeting Dice).</li>
+              </ul>
+            </li>
           </ul>
         </td>
       </tr>

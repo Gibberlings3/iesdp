@@ -12,16 +12,27 @@ pst: 0
 ---
 Sets the script type specified by the 'Type' value to the contents of the resource key.
 <br/>Known values for 'Type' are:
-<br/>0   OVERRIDE
-<br/>1   AREA
-<br/>2   SPECIFICS
-<br/>4   CLASS
-<br/>5   RACE
-<br/>6   GENERAL
-<br/>7   DEFAULT
+<ul>
+	<li>0 &longrightarrow; OVERRIDE</li>
+	<li>1 &longrightarrow; AREA</li>
+	<li>2 &longrightarrow; SPECIFICS</li>
+	<li>4 &longrightarrow; CLASS</li>
+	<li>5 &longrightarrow; RACE</li>
+	<li>6 &longrightarrow; GENERAL</li>
+	<li>7 &longrightarrow; DEFAULT</li>
+</ul>
 
 {% capture note %}
 This effect can unset scripts from a creature, which can break the game.
 {% endcapture %}
 
 {% include warning.html %}
+
+{% capture note %}
+<ul>
+	<li>Effect is always instantaneous/delayed.</li>
+	<li>AREA and SPECIFICS can only be set on non-global creatures (not potential party members or familiars), and are lost upon saving/reload.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

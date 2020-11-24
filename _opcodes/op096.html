@@ -12,12 +12,26 @@ pst: 1
 ---
 Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Level = Level + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Level = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Level = (Level * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Level = Level + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Level = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Level = (Level * 'Statistic Modifier' value) / 100</li>
+</ul>
 
 {% capture note %}
 In IWD2 the class to receive the change is specified at 0x2C
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+Timing modes 1/4/7 permanently alters the creature's level, leaving no removable effect.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+Can only modify the <a href="../files/ids/bgee/stats.htm#34">first class level</a>, it cannot modify second (68|LEVEL2) or third (69|LEVEL3) class levels.
 {% endcapture %}
 
 {% include note.html %}

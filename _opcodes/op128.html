@@ -10,4 +10,22 @@ iwd1: 1
 iwd2: 1
 pst: 1
 ---
-Applies the confusion effect the targeted creature(s). The creature will run around uncontrollable, randomly attacking.
+Applies the confusion effect to the targeted creature(s). The creature will run around uncontrollable, randomly attacking.
+
+{% capture note %}
+Timing Mode 1 will set <a href="../files/ids/bgee/state.htm#BIT31">STATE_CONFUSED</a> without leaving behind a removable effect.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+<a href="../files/ids/bgee/state.htm#BIT31">STATE_CONFUSED</a> specs:
+<ul>
+	<li>Creature is unseletectable, Inventory is disabled.</li>
+	<li>The creature's AI scripts are disabled.</li>
+	<li>The creature will randomly execute actions <a href="../scripting/actions/bgeeactions.htm#134">AttackReevaluate(NearestEnemyOf(Myself),15)</a>, <a href="../scripting/actions/bgeeactions.htm#85">RandomWalk()</a>, or <a href="../scripting/actions/bgeeactions.htm#0">NoAction()</a>.</li>
+	<li>Disables Saving while affecting a Party Member (displayed message: "You do not control all your Party Members")</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

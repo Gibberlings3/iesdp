@@ -32,7 +32,17 @@ As a result, it will clear all Polymorph effects if param#2 = "-1", else it will
 {% include note.html %}
 
 {% capture note %}
-The creature you're polymorphing into cannot have STATE_SLEEPING, STATE_FROZEN_DEATH, STATE_STONE_DEATH, STATE_FLAME_DEATH, or STATE_DEAD set in its CRE file, or the game will crash.
+<ul>
+	<li>"Parameter3" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>): Circle Size</li>
+	<li>"Parameter4" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>): Animation (from <a href="../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)</li>
+</ul>
+These two values are not functional (changing them does nothing), but they do get set on the effect.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+The creature you're polymorphing into cannot have <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a>, <a href="../files/ids/bgee/state.htm#BIT6">STATE_FROZEN_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT7">STATE_STONE_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT9">STATE_FLAME_DEATH</a>, or <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a> set in its <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file, or the game will crash.
 {% endcapture %}
 
 {% include warning.html %}

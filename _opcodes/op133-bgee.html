@@ -1,0 +1,31 @@
+---
+n: 133
+name: "Spell Effect: Luck Non-Cumulative"
+param1: "Statistic Modifier"
+param2: "Irrelevant"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Applies the luck effect to the targeted creature(s).<br />
+This opcode should point to <a href="#op22">opcode 22</a> for the effects of "Luck" (or repeat them). It still maintains its own separate <a href="../files/ids/bgee/state.htm#BIT26">STATE</a> though.
+
+{% capture note %}
+<ul>
+	<li>While this opcode is "Non-Cumulative" (it sets values rather than increment), what it really does is stack in reverse standard order.</li>
+	<li>The base <a href="../files/ids/bgee/state.htm#BIT26">STATE</a> set on the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file will override any effect applied to them (defaulting to a value of zero).</li>
+	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
+	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+'Statistic Modifier' only reads the first byte for its value, the last 3 bytes are ignored.
+{% endcapture %}
+
+{% include note.html %}

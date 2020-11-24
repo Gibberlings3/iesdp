@@ -4,4 +4,11 @@ name: RandomWalkTime
 params:
   - name: Time
     type: i
-unknown: true
+desc: |-
+  It is the same as [RandomWalk()](#85), where the time parameter represents how many times the action will be ticked before terminating (Actions are normally ticked once per second at 30FPS).
+
+  {% capture note %}
+  While this action is [Wait()](#63)'ing, it won't be ticked.
+  Thus, a "RandomWalkTime(1)" can technically go into a 10 second [Wait()](#63) immediately, and be blocking the action list for much longer than a second.
+  If the parameter was 5, for instance, this "5" wouldn't be counting down while the script is waiting.
+  {% endcapture %} {% include note.html %}

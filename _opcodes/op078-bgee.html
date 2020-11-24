@@ -15,20 +15,20 @@ pst: 0
 Set the 'Amount' parameter as the amount of damage, and the Disease Type parameter as how the disease functions.
 <br/>Known values for 'Type' are:
 <ul>
-	<li>0 => Inflict 1 HP per second ('Frequency Multiplier' is ignored – 'Amount' needs to be non-zero)</li>
-	<li>1 => Inflict 1 HP per second (for best results, leave 'Frequency Multiplier' at zero, 'Amount' between 1 and 101)</li>
-	<li>2 => Deal 'Amount' damage every 'Frequency Multiplier' second(s)</li>
-	<li>3 => Deal one damage every 'Amount' * 'Frequency Multiplier' second(s)</li>
-	<li>4 => Reduce Strength score by 'Amount'</li>
-	<li>5 => Reduce Dexterity score by 'Amount'</li>
-	<li>6 => Reduce Constitution score by 'Amount'</li>
-	<li>7 => Reduce Intelligence score by 'Amount'</li>
-	<li>8 => Reduce Wisdom score by 'Amount'</li>
-	<li>9 => Reduce Charisma score by 'Amount'</li>
-	<li>10 => Slow Effect</li>
-	<li>11 => Mold touch/Single</li>
-	<li>12 => Mold touch/Decrement</li>
-	<li>13 => Contagion</li>
+	<li>0 &longrightarrow; Inflict 1 HP per second ('Frequency Multiplier' is ignored – 'Amount' needs to be non-zero)</li>
+	<li>1 &longrightarrow; Inflict 1 HP per second (for best results, leave 'Frequency Multiplier' at zero, 'Amount' between 1 and 101)</li>
+	<li>2 &longrightarrow; Deal 'Amount' damage every 'Frequency Multiplier' second(s)</li>
+	<li>3 &longrightarrow; Deal one damage every 'Amount' * 'Frequency Multiplier' second(s)</li>
+	<li>4 &longrightarrow; Reduce Strength score by 'Amount'</li>
+	<li>5 &longrightarrow; Reduce Dexterity score by 'Amount'</li>
+	<li>6 &longrightarrow; Reduce Constitution score by 'Amount'</li>
+	<li>7 &longrightarrow; Reduce Intelligence score by 'Amount'</li>
+	<li>8 &longrightarrow; Reduce Wisdom score by 'Amount'</li>
+	<li>9 &longrightarrow; Reduce Charisma score by 'Amount'</li>
+	<li>10 &longrightarrow; Slow Effect</li>
+	<li>11 &longrightarrow; Mold touch/Single</li>
+	<li>12 &longrightarrow; Mold touch/Decrement</li>
+	<li>13 &longrightarrow; Contagion</li>
 </ul>
 <br/><br/>'Amount' can be positive (penalty) or negative (bonus).
 <br/><br/>
@@ -83,6 +83,8 @@ In particular:
 	<li>If 'Type'=11, then the damage dealt is always 1</li>
 	<li>if 'Type'=12, then the damage dealt depends on the game:
 		<ul>
+			<li>In <a href="../file_formats/ie_formats/spl_v1.htm">Spells</a>/<a href="../file_formats/ie_formats/itm_v1.htm">Items</a>, Damage and duration is calculated from Parameter1. Should always use Timing Mode 1 or 4, and only a non-zero duration if using timing mode 4.</li>
+			<li>In External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s, damage and duration is calculated from the effect duration (of <a href="#op177">op177</a>). Parameter1 must be non-zero, but isn't otherwise used.</li>
 			<li>IWD:EE uses 'Amount' for 'x', and calculates 'duration' as 6 * 'Amount'.</li>
 			<li>BG:EE calculates 'x' from 'duration' / 6. (It's reasonable to assume that BG2:EE uses this one as well).</li>
 			<li>If you set 'duration' = 6 * 'Amount', it should junction the same in both games.</li>
@@ -91,11 +93,17 @@ In particular:
 </ul>
 'Frequency Multiplier' determines whether it deals damage every second or every round, and whether it deals x or xd6 damage.
 <ul>
-	<li>'Frequency Multiplier' = 0 => xd6 per round</li>
-	<li>'Frequency Multiplier' = 65536 or greater (must be even) => x per round</li>
-	<li>'Frequency Multiplier' = 65537 or greater (must be odd) => x per second</li>
+	<li>'Frequency Multiplier' = 0 &longrightarrow; xd6 per round</li>
+	<li>'Frequency Multiplier' = 65536 or greater (must be even) &longrightarrow; x per second</li>
+	<li>'Frequency Multiplier' = 65537 or greater (must be odd) &longrightarrow; x per round</li>
 </ul>
 Regardless, the value of x decrements only once per round.
 {% endcapture %}
 
 {% include note.html %}
+
+{% capture note %}
+Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(250|DISEASED)</a> on the target.
+{% endcapture %}
+
+{% include info.html %}

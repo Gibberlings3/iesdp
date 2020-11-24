@@ -11,11 +11,32 @@ iwd2: 0
 pst: 0
 ---
 The creature type specified by the 'Stat Type' field will be affected by the spell in the 'Resource' field. See <a href="#op324">opcode #324</a> for more information.<br/>
-The spell specified by the resource field is cast at the same level as "this" effect was cast, regardless of spell type.
-<br/>
+The spell specified by the resource field is cast at the same level as the current effect, regardless of spell type.<br/><br/>
+
+Unlike <a href="#op146">opcode #146</a>, when targeting "Self" or "Original Caster", the resource is still cast on the ability target, not the caster.<br/><br/>
+
+For the purpose of dispelling effects only, the opcode target (not necessarily the caster) determines the caster level for effects in it's resource.  It also determines the "Caster location" saved to the V2 effect on creatures.  It doesn't transfer full ownership though - the caster is still credited for damage. <br/><br/>
+
+If the resource uses projectile 0 (default):
+<ul>
+  <li>the resource will ignore its projectile field, defaulting to use projectile #(1|None) for all effects,</li>
+  <li>effects in the resource that target "Self", "Preset Target", or "Original Caster" will all affect the target of this effect,</li>
+  <li>if this effect is reflected/turned, the target of effects in the resource is reflected.</li>
+</ul>
+Otherwise:
+<ul>
+  <li>effects in the resource that target "Self" will affect the target of this effect, not the caster, </li>
+  <li>if this effect is reflected/turned, only effects in the resource targeting "Original Caster" will be affected, now affecting the target. </li>
+</ul>
 
 {% capture note %}
 If this effect is applied through <a href="#op177">opcode #177</a>, the spell is cast at the level specified at offset 0xc8 (Caster level) of the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+Effects in the resource will also bypass Magic Resistance, of every target, as if the caster targeted themselves, regardless of who they target with the spell or this effect.
 {% endcapture %}
 
 {% include note.html %}

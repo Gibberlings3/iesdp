@@ -76,18 +76,48 @@ When the 'Type' field is 1:
 {% include note.html %}
 
 {% capture note %}
-Mold touch is complicated and not consistent across the EE games.
-The general idea is that it deals x or xd6 damage and applies the SPL file specified by the resource key (default: "original resource" + B) every (round or second) for either 1 round (single) or across multiple rounds dealing less each round (decrement).
+Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(250|DISEASED)</a> on the target.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+Mold touch is complicated: the general idea is that it deals x or xd6 damage and applies the SPL file specified by the resource key (default: "original resource" + B) every (round or second) for either 1 round (single) or across multiple rounds dealing less each round (decrement).
 In particular:
 <ul>
-	<li>If 'Type'=11, then the damage dealt is always 1</li>
-	<li>if 'Type'=12, then the damage dealt depends on the game:
+	<li>If 'Type'=11:
 		<ul>
-			<li>In <a href="../file_formats/ie_formats/spl_v1.htm">Spells</a>/<a href="../file_formats/ie_formats/itm_v1.htm">Items</a>, Damage and duration is calculated from Parameter1. Should always use Timing Mode 1 or 4, and only a non-zero duration if using timing mode 4.</li>
-			<li>In External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s, damage and duration is calculated from the effect duration (of <a href="#op177">op177</a>). Parameter1 must be non-zero, but isn't otherwise used.</li>
-			<li>IWD:EE uses 'Amount' for 'x', and calculates 'duration' as 6 * 'Amount'.</li>
-			<li>BG:EE calculates 'x' from 'duration' / 6. (It's reasonable to assume that BG2:EE uses this one as well).</li>
-			<li>If you set 'duration' = 6 * 'Amount', it should junction the same in both games.</li>
+			<li>Timing Mode should be 3 (with no duration).</li>
+			<li>In <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s, it always causes 1d6 damage.</li>
+			<li>In external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s it functions identically to 'Mold Touch/Decrement', in every way (see below for further details).</li>
+		</ul>
+	</li>
+	<li>if 'Type'=12:
+		<ul>
+			<li>
+				The first hit doesn't occur immediately, but instead at 80 ticks (exactly), the second hit occurs at 90 ticks (6 seconds), then later hits occur 1 round apart. So:<br />
+				1st hit: 5.33s(80t), 2nd hit: 6s(90t), 3rd hit: 12s(180t), etc...<br />
+				Oddly, this effect measures rounds as 6 seconds (90 ticks) intervals, not 100 ticks.
+			</li>
+			<li>
+				As far as damage dealt is concerned, in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s:
+				<ul>
+					<li><code>x = 'Amount'(d6)</code>, decrementing the amount by 1 die every round, until zero.</li>
+					<li>Should always use Timing Mode 1, 3 or 4, and only a non-zero duration if using Timing Mode 4.</li>
+					<li>If Timing Mode is 1 or 4, the portrait icon, and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> remain until cured/death.</li>
+					<li>If Timing Mode is 3 (with no duration), it will expire 1 round after the final damage (when it realizes the amount has reached zero). Timing Mode 3 and <code>duration = 0</code> should be the "default" setting for this mode right now.</li>
+				</ul>
+			</li>
+			<li>
+				As far as damage dealt is concerned, in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
+				<ul>
+					<li><code>x = (remaining Duration / 6)(d6)</code>, or just <code>(remaining Duration / 6)</code> if 'Frequency Multiplier' >= 65536.</li>
+					<li>The damage dice is rounded down.</li>
+					<li>Because the first hit doesn't occur until 80 ticks, any duration shorter will have no triggers.</li>
+					<li>The Portrait Icon and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> will remain for the full specified duration.</li>
+				</ul>
+			</li>
+			<li>The SPL resource is applied at the same/every time as the damage, though the damage occurs first.</li>
 		</ul>
 	</li>
 </ul>
@@ -98,12 +128,6 @@ In particular:
 	<li>'Frequency Multiplier' = 65537 or greater (must be odd) &longrightarrow; x per round</li>
 </ul>
 Regardless, the value of x decrements only once per round.
-{% endcapture %}
-
-{% include note.html %}
-
-{% capture note %}
-Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(250|DISEASED)</a> on the target.
 {% endcapture %}
 
 {% include info.html %}

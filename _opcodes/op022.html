@@ -24,7 +24,7 @@ Effects of Luck:
 	<li>Modifies a creature's weapon damage die rolls (up/down to its maximum/minimum).</li>
 	<li>Modifies a creatures's attack roll [1d20] (up/down to its maximum/minimum).</li>
 	<li>Modifies non-weapon damage die rolls dealt to the creature (up/down to its maximum/minimum).</li>
-	<li>Modifies a creatures's initiative roll [1d6 - 4] for weapon attacks (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's initiative roll [1d6 - 4] for weapon attacks (up/down to its maximum/minimum). See <a href="#op190">opcode #190</a> for further details about weapon/attack speed.</li>
 	<li>Modifies a creatures's initiative roll [1d8 - 1] for movement (up/down to its maximum/minimum).</li>
 	<li>Modifies a creatures's skill roll [1d100] for Hiding in Shadows (up/down to its maximum/minimum).</li>
 	<li>Modifies a creatures's skill roll [1d100] for Set Traps (up/down to its maximum/minimum).</li>
@@ -32,6 +32,33 @@ Effects of Luck:
 	<li>Modifies a creatures's skill roll [1d10] for Bash Doors (up/down to its maximum/minimum).</li>
 	<li>Modifies a creatures's skill roll [1d10] for Disarm Trap (up/down to its maximum/minimum).</li>
 	<li>Modifies the chance for a Mirror Image to be struck, chance = ('number of images' + 'Statistic Modifier') / ('number of images' + 1).</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+Here's more info about "initiative roll for movement":
+<ul>
+	<li>
+		Apparently, there is intentionally a random wait time between when a creature attempts to move to another creature, and when they will actually start pathing. Luck helps with this...
+		<pre>
+			Wait Time = 0, when roll = 0
+			Wait Time = (8 - roll), when roll != 0
+		</pre>
+	</li>
+	<li>The natural roll range is [0,7], but like many other rolls Luck alters this slightly. For every point in Luck the highest bound of the roll is converted into the lower bound.</li>
+	<li>So with 1 Luck the roll becomes [0,6], with 0 having a probability of 25% instead of 12.5%. Negative luck works the same, but in reverse.</li>
+	<li>
+		1 is the worst roll you can get, yet it is neither of the extremes. So, -1 Luck is bad because it prevents you from bypassing the wait time, (rolling a 0), but <b>if Luck must be negative, the lower the better</b>.
+		<ul>
+			<li><code>Luck = "-1"</code>: Worst roll possible is a 1, you will be waiting for 7 AI updates (or, if you prefer, 7/15ths of a second).</li>
+			<li><code>Luck = "-7"</code>: Worst roll possible is a 7, you will be waiting for 1 AI update (or, if you prefer, 1/15th of a second)!!</li>
+		</ul>
+	</li>
+	<li>Positive Luck will always increase the likelihood of instantaneous pathing.</li>
+	<li>Note that this wait time is only applied to creature-to-creature pathing, and never to on-the-ground destinations.</li>
+	<li>Also, every creature rolls for their own delay when they go to target a creature.</li>
 </ul>
 {% endcapture %}
 

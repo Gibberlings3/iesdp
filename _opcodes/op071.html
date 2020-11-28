@@ -5,7 +5,7 @@ param1: "Gender Modifier"
 param2: "Type"
 bg1: 1
 bg2: 1
-bgee: 0
+bgee: 1
 iwd1: 1
 iwd2: 1
 pst: 1
@@ -18,3 +18,15 @@ Alters the gender of the targetted creature(s) to the value specified by the 'Ge
 </ul>
 
 <br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#193">SEX_CHANGED</a>.
+
+{% capture note %}
+<ul>
+	<li>'Reverse Gender' also switches the second BIT of the lower BYTE of the creature's animation, which (for PC races), will switch between their male/female animations (0x6000 &LongLeftRightArrow; 0x6010).</li>
+	<li>
+		Other races can be setup this way, but do not occupy the necessary animation slots by default.<br />
+		For instance, VAMPIRE is 0x7F12, VAMPIRE_FEMALE is 0x7F22. (Male should be 0x7F02 and female 0x7F12 for it to work).
+	</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

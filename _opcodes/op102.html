@@ -5,13 +5,19 @@ param1: "Spell Level"
 param2: "Irrelevant"
 bg1: 1
 bg2: 1
-bgee: 0
+bgee: 1
 iwd1: 1
 iwd2: 1
 pst: 1
 ---
-Gives the targeted creature(s) protection from spells up to the level specified by the 'Spell Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Spell Level' parameter in the extended header that is being called.
-<br/>Known values for 'Spell Level' are:
-<br/>1
-<br/>..
-<br/>9
+Gives the targeted creature(s) protection from effects (opcodes) whose 'Power' attribute is equal to 'Spell Level'.
+<br/>Valid 'Spell Level' (Power) levels range: 0 – 9.
+
+{% capture note %}
+<ul>
+	<li>Each application of this opcode only protects against its specified 'Spell Level', not "up to" it.</li>
+	<li>Each effect in a spell/item is checked separately by this opcode.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

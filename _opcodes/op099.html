@@ -5,19 +5,32 @@ param1: "Duration Modifier"
 param2: "Type"
 bg1: 1
 bg2: 1
-bgee: 0
+bgee: 1
 iwd1: 1
 iwd2: 1
 pst: 1
 ---
 Alters spell durations of the targeted creature(s), to the percentage specified by the 'Duration Modifier' field, affecting the spell type specified by the 'Type' field. Timing mode 0 is the only timing mode reliably affected. Timings handled through PRO files are ignored.
-<br/>eg.
-<br/>'Duration Modifier' = 0   -> Spells have no duration
-<br/>'Duration Modifier' = 100 -> Spells have normal duration
-<br/>'Duration Modifier' = 200 -> Spells have double duration
+<br/>For instance:
+<ul>
+	<li>'Duration Modifier' = 0 &longrightarrow; Spells have no duration</li>
+	<li>'Duration Modifier' = 100 &longrightarrow; Spells have normal duration</li>
+	<li>'Duration Modifier' = 200 &longrightarrow; Spells have double duration</li>
+</ul>
+<br/>
+
 <br/>Known values for 'Type' are:
-<br/>0   Mage
-<br/>1   Priest
+<ul>
+	<li>0 &longrightarrow; Mage</li>
+	<li>1 &longrightarrow; Priest</li>
+	<li>2 &longrightarrow; Bard Song (EE only)</li>
+</ul>
+
+{% capture note %}
+Durations handled by <a href="#op333">Static Charge</a> are unaffected (EE only).
+{% endcapture %}
+
+{% include note.html %}
 
 {% capture note %}
 Not seen to work in BG1.

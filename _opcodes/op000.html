@@ -14,9 +14,20 @@ Applies the modifier value specified by the 'AC Modifier' field to the category 
  by the 'Type' field.<br/><br/>
 
 Known values for 'Type' are:
-<br/>0   All<br/>1   Crushing<br/>2   Missile<br/>4   Piercing<br/>8   Slashing<br/>
-16  Base AC setting (sets the targets AC to the value specified by the 'AC Modifier' field.
- If the targets AC is already 'AC Modifier' or below, this effect will do nothing).
+<ul>
+	<li>0 &longrightarrow; All</li>
+	<li>1 &longrightarrow; Crushing</li>
+	<li>2 &longrightarrow; Missile</li>
+	<li>4 &longrightarrow; Piercing</li>
+	<li>8 &longrightarrow; Slashing</li>
+	<li>
+		16 &longrightarrow; Base AC setting
+		<ul>
+			<li>Sets the targets AC to the value specified by the 'AC Modifier' field. If the targets AC is already 'AC Modifier' or below, this effect will do nothing.</li>
+		</ul>
+	</li>
+</ul>
+<br/>
 
 <p>
 Each modifier type to AC from this opcode is capped to the range [-20, 20]. Each AC type total is capped to the range [-32768,32767].
@@ -26,6 +37,61 @@ Each modifier type to AC from this opcode is capped to the range [-20, 20]. Each
 IWD1 and PST use a slightly different version. The "Base AC" sets to <strong>field - 1</strong> 
 instead.<br>
 IWD2 uses different parameters altogether.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+With Timing Modes 1/4/7, alters creature's base stat, leaving behind no removable effect.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+<ul>
+	<li>
+		'Type'=0:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Armor Class (CRE@0x46, "Natural AC", not "Effective AC")</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=1:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#3">ACCRUSHINGMOD</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Crushing AC (CRE@0x4A)</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=2:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#4">ACMISSILEMOD</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Missile AC (CRE@0x4C)</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=4:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#5">ACPIERCINGMOD</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Piercing AC (CRE@0x4E)</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=8:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#6">ACSLASHINGMOD</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Slashing AC (CRE@0x50)</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=16:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Armor Class (CRE@0x46, "Natural AC", not "Effective AC"), still subject to "only if better/lower", checked against base value, not current effective value.</li>
+		</ul>
+	</li>
+</ul>
 {% endcapture %}
 
 {% include note.html %}

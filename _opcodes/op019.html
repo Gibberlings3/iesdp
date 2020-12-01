@@ -12,10 +12,30 @@ pst: 0
 ---
 Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Intelligence = Intelligence + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Intelligence = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Intelligence = (Intelligence * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Intelligence = Intelligence + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Intelligence = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Intelligence = (Intelligence * 'Statistic Modifier' value) / 100</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
+
 <br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Intelligence raised permanently' will be shown.
+<ul>
+	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+</ul>
+
 <br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
 <br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+
+{% capture note %}
+With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+Final values for each are capped to the bound range (0 , 25) in game.
+{% endcapture %}
+
+{% include info.html %}

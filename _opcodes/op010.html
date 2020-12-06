@@ -20,13 +20,28 @@ Applies the modifier value specified by the 'Statistic Modifier' field in the st
 
 <br/><br/>'Statistic Modifier' can be positive or negative.
 
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Constitution raised permanently' will be shown.
+{% capture note %}
+All games but EEs:
+<ul>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Constitution raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
+</ul>
+On EEs:
 <ul>
 	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+	<li>
+		The opcode itself provides no coloring anymore (it's been externalized through "UI.menu")
+		<ul>
+			<li>An effective value &gt; base value &longrightarrow; <font color="green">green</font>.</li>
+			<li>An effective value &lt; base value &longrightarrow; <font color="red">red</font>.</li>
+			<li>An effective value &equals; base value &longrightarrow; white/default.</li>
+		</ul>
+	</li>
 </ul>
+{% endcapture %}
 
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
-<br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+{% include info.html %}
 
 {% capture note %}
 With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
@@ -35,7 +50,7 @@ With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable e
 {% include important.html %}
 
 {% capture note %}
-Final values are capped to the bound range (0 , 25) in game (30 or more in IWD2).
+Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
 {% endcapture %}
 
 {% include info.html %}

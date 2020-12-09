@@ -20,6 +20,7 @@ Applies the modifier value specified by the 'Statistic Modifier' field in the st
 	<li>3 &longrightarrow; As 0 (does not affect current HP)</li>
 	<li>4 &longrightarrow; As 1 (does not affect current HP)</li>
 	<li>5 &longrightarrow; As 2 (does not affect current HP)</li>
+	<li>6 &longrightarrow; Non-cumulative Modifier: HP = HP + 'Statistic Modifier' value (affects current and max HP) (EE only...?)</li>
 </ul>
 
 <br/><br/>'Statistic Modifier' can be positive or negative.
@@ -35,6 +36,13 @@ Applies the modifier value specified by the 'Statistic Modifier' field in the st
 		</ul>
 	</li>
 </ul>
+
+{% capture note %}
+'Type'=6: This mode is applied by <a href="#op12">opcode #12</a> with either Special BIT3 or BIT4 (Drain to max HP), blocking further effects with those BITs from granting additional HP, but still allow them to deal damage.<br/>
+(This might change in v2.6, given the overhaul to the damage flags involved with it, as currently it further blocks both the Current and Maximum HP gain, when it should only block further Maximum HP gain.)
+{% endcapture %}
+
+{% include info.html %}
 
 {% capture note %}
 For non-permanent timing modes of 'Type' 2 or 5 use the base maximum HP value, and therefor override other 'Type' 2 or 5 modifiers.

@@ -58,10 +58,29 @@ When 'Type'=3:
 					<li>A Cleric with 16 base STR could only gain up to +2 from the effect each time.</li>
 				</ul>
 			</li>
-			<li>Warrior classes also gain a &percnt; Strength score, their maximum is actually 18/100. Every '/10' is counted as +1 from their die roll. Warriors will not exceed 18/100 though, as once they hit 18, the remaining dice roll converts to a &percnt; increase, preventing their score from exceeding 18/100 (18/100 + /10 doesn't convert to 19).</li>
+			<li>
+				Warrior classes also gain a &percnt; Strength score, their maximum is actually 18/100. Every '/10' is counted as +1 from their die roll. Warriors will not exceed 18/100 though, as once they hit 18, the remaining dice roll converts to a &percnt; increase, preventing their score from exceeding 18/100 (18/100 + /10 doesn't convert to 19).<br/>
+				For instance, if a PALADIN with 17 STR rolls, say, 5, he will end up with 18/40 STR.
+			</li>
 		</ul>
 	</li>
 	<li>Like the other modes, applying the effect with Timing Mode 1 will affect the creature's base stat, leaving no removable effect.</li>
+	<li>Once applied to a creature, 'Statistic Modifier' will store the exact STR increase granted, while the 'Special' field will store any Exceptional STR increase granted (only useful for lookup/editing through EEkeeper/NI).</li>
+	<li>
+		When you apply this effect in an External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>, (via <a href="#op177">op177</a> / <a href="#op283">op283</a>):
+		<ul>
+			<li>'Parameter1' in the EFF will determine the exact Strength increase (so it must be set manually, and ignores any limit).</li>
+			<li>
+				If 'Parameter1' is non-zero, Exceptional STR will still be rolled as normal (and only for appropriate Classes).
+				<ul>
+					<li>It will be equal to <code>10 * (Roll - (18 - Base))</code>, capped (0,100).</li>
+				</ul>
+			</li>
+			<li>If 'Parameter1' is zero, no Exceptional STR will be granted.</li>
+			<li>The actual increase for Exceptional STR will be stored in the 'Special' field of <a href="#op177">op177</a> / <a href="#op283">op283</a> (after it's been applied to the creature).</li>
+			<li>Basically, it works exactly like 'Type'=0, except that warriors will still gain a random Exceptional STR increase (of course it's only noticeable if their resulting STR is 18).</li>
+		</ul>
+	</li>
 </ul>
 {% endcapture %}
 

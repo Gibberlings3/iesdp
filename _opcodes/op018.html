@@ -3,6 +3,7 @@ n: 18
 name: "HP: Maximum HP Modifier"
 param1: "Statistic Modifier"
 param2: "Type"
+special: "Mode"
 bg1: 1
 bg2: 1
 bgee: 1
@@ -12,13 +13,36 @@ pst: 1
 ---
 Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> HP = HP + 'Statistic Modifier' value (affects current and max HP)
-<br/>1   Flat Value Modifier -> HP = 'Statistic Modifier' value (affects current and max HP)
-<br/>2   Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)
-<br/>3   As 0 (does not affect current HP)
-<br/>4   As 1 (does not affect current HP)
-<br/>5   As 2 (does not affect current HP)
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: HP = HP + 'Statistic Modifier' value (affects current and max HP)</li>
+	<li>1 &longrightarrow; Flat Value Modifier: HP = 'Statistic Modifier' value (affects current and max HP)</li>
+	<li>2 &longrightarrow; Percentage Modifier: HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)</li>
+	<li>3 &longrightarrow; As 0 (does not affect current HP)</li>
+	<li>4 &longrightarrow; As 1 (does not affect current HP)</li>
+	<li>5 &longrightarrow; As 2 (does not affect current HP)</li>
+	<li>6 &longrightarrow; Non-cumulative Modifier: HP = HP + 'Statistic Modifier' value (affects current and max HP) (EE only...?)</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
+
+<br/><br/>Known values for 'Mode' are:
+<ul>
+	<li>0 &longrightarrow; Normal: Effect functions as dictated by the 'Type' field.</li>
+	<li>
+		1 &longrightarrow; Do not update current HP.
+		<ul>
+			<li>This value is set automatically once the effect has been initially processed on a creature.</li>
+			<li>For normal operation, the special field MUST be zero.</li>
+		</ul>
+	</li>
+</ul>
+
+{% capture note %}
+'Type'=6: This mode is applied by <a href="#op12">opcode #12</a> with either Special BIT3 or BIT4 (Drain to max HP), blocking further effects with those BITs from granting additional HP, but still allow them to deal damage.<br/>
+(This might change in v2.6, given the overhaul to the damage flags involved with it, as currently it further blocks both the Current and Maximum HP gain, when it should only block further Maximum HP gain.)
+{% endcapture %}
+
+{% include info.html %}
 
 {% capture note %}
 For non-permanent timing modes of 'Type' 2 or 5 use the base maximum HP value, and therefor override other 'Type' 2 or 5 modifiers.
@@ -31,3 +55,66 @@ If 'Statistic Modifier' and the Dice values are both non-zero, the total HP chan
 {% endcapture %}
 
 {% include note.html %}
+
+{% capture note %}
+<ul>
+	<li>Maximum HP cannot be reduced below a creature's level/HD (average level rounded up for multiclasses).</li>
+	<li>It is still able to reduce current HP below the creature's level/HD, and has the same bugged death as <a href="#op17">opcode #17</a> if it reduces a creature to zero or less HP.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+The following can be considered bugs, though they may be internally necessary, so it could also be seen as a matter of DO NOT USE in this way.
+<ul>
+	<li>
+		When applied in spells/items, this effect, and all other existing op18 effects on the creature have their 'Statistic Modifier' value increased by their dice value (rerolled):
+		<ul>
+			<li>
+				Apply op18: +10d1, on CRE:<br/>
+				This effect p1 = 20 (10d1 + 10d1), total = +20
+			</li>
+			<li>
+				Apply op18: +5d1, on CRE:<br/>
+				This effect p1 = 10 (5d1 + 5d1).<br/>
+				Previous effect p1 now = 30 (20 + 10d1), total = +40
+			</li>
+			<li>
+				Apply op18: +10d1, on CRE:<br/>
+				This effect p1 = 20 (10d1 + 10d1).<br/>
+				First effect p1 now = 40 (30 + 10d1).<br/>
+				Second effect p1 now = 15 (10 + 5d1), total = +75
+			</li>
+			<li>
+				Apply op18: +1d1, on CRE:<br/>
+				This effect p1 = 2 (1d1 + 1d1).<br/>
+				First effect p1 now = 50 (40 + 10d1).<br/>
+				Second effect p1 now = 20 (15 + 5d1).<br/>
+				Third effect p1 now = 30 (20 + 10d1), total = +102
+			</li>
+			<li>Avoid using the dice fields in spells/items.</li>
+		</ul>
+	</li>
+	<li>
+		When applied in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
+		<ul>
+			<li>Dice Values are rerolled if you save/reload while the effect is still active.</li>
+			<li>Avoid using the dice fields in external EFFs.</li>
+		</ul>
+	</li>
+	<li>
+		When applied in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
+		<ul>
+			<li>Current Hit Points are increased by twice the specified amount, plus the cumulative total of all other op18 effects applied through external EFFs currently active on the creature. Maximum Hit Points are increased as normal.</li>
+			<li>Apply EFF with p1=10, p2=0, Current HP: +20, Maximum HP: +10</li>
+			<li>Apply it again before the previous expires: Current HP: +30, Maximum HP: +10</li>
+			<li>Apply it again before either previous expires: Current HP: +40, Maximum HP: +10</li>
+			<li>Avoid using the "Update current HP" modes in external EFFs.</li>
+			<li>This works similar to using the dice fields in items/spells, except it affects Current Hit Points instead of Maximum. Though since Current Hit Point modifiers don't leave any effect behind, cannot actually verify that's how the mechanic works.</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include warning.html %}

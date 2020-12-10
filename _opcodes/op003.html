@@ -11,15 +11,43 @@ iwd2: 0
 pst: 1
 ---
 Applies the berserk effect to the targeted creature(s) in the style specified by the 'Type' field.
+
 <br/>Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.
+
 <br/>Known values for 'Type' are:
-<br/>0 Default/In Combat -> Only berserk while in combat.
-<br/>1 Constant -> always berserk, sets SPELLSTATE 39 - ANIMAL_RAGE (only in EEs).
-<br/>2 Blood Rage -> this is probably not implemented. It should be linked to SPELLSTATE 35 - SUPPRESS_HP_INFO. (only in EEs)
+<ul>
+	<li>0 &longrightarrow; Default/In Combat: only berserk while in combat.</li>
+	<li>1 &longrightarrow; Constant: always berserk, maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE</a> 33 – BERSERK_ALWAYS_ACTIVE (only in EEs).</li>
+	<li>2 &longrightarrow; Blood Rage: doesn't exist in EE's, values 2+ function the same as "0".</li>
+</ul>
 
 <p>
-The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag.
-</p> 
+This opcode sets the <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> flag.
+</p>
+
+{% capture note %}
+Being "in combat" is reliant upon the presence of visible, non-sleeping enemies, but they will attack anyone they can see (including sleeping creatures), ally, neutral, or enemy, without preference (beyond whom is closer).
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+<a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> specs:
+<ul>
+	<li>Grants a +2 bonus to THAC0 and Damage.</li>
+	<li>
+		While "in combat" or "Constant":
+		<ul>
+			<li>Creature is unseletectable, Inventory is disabled.</li>
+			<li>The creature's AI scripts are disabled.</li>
+			<li>The creature will randomly execute action ~ <a href="../scripting/actions/bgeeactions.htm#134">AttackReevaluate([ANYONE],15)</a> (or similar, not sure exactly which attack action).</li>
+			<li>Disables Saving while affecting a Party Member (Displayed message: "You do not control all your Party Members")</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
 
 {% capture note %}
 Forces creature(s) to use a melee weapon if possible.
@@ -28,7 +56,7 @@ Forces creature(s) to use a melee weapon if possible.
 {% include note.html %}
 
 {% capture note %}
-This effect only affects party members.
+This effect only affects party members (this is not true for EE games, it works fine on non-party creatures.)
 {% endcapture %}
 
 {% include note.html %}
@@ -40,7 +68,13 @@ The second paragraph hasn't been verified for PST and BG1 yet, but likely holds.
 {% include note.html %}
 
 {% capture note %}
-Used with timing modes 1/4/7 results in setting STATE_BERSERK when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
+Used with timing modes 1/4/7 results in setting <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
 {% endcapture %}
 
 {% include important.html %}
+
+{% capture note %}
+"Morale Failure: Berserk" does NOT use this or any of the other berserk opcodes, nor does it set <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a>.
+{% endcapture %}
+
+{% include note.html %}

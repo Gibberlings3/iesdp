@@ -10,4 +10,26 @@ iwd1: 1
 iwd2: 1
 pst: 0
 ---
-Applies a bless effect, a bonus to HP and a bonus to saving throws to the targeted creature(s). The bonus is a number of 8-sided dice, with the number of dice controlled by the 'Statistic Modifier' value.
+Applies a bless effect to the targeted creature(s).<br />
+In particular:
+<ul>
+	<li>Grants a bonus/penalty to all Saving Throws equal to 'Statistic Modifier'.</li>
+	<li>Grants a bonus/penalty to Current and Maximum Hit Points equal to 'Statistic Modifier'd8.</li>
+	<li>Grants a bonus/penalty to base <a href="../files/ids/bgee/stats.htm#7">THAC0</a> equal to 'Statistic Modifier'.</li>
+	<li>Grants a bonus/penalty to base <a href="../files/ids/bgee/stats.htm#50">weapon damage</a> equal to 'Statistic Modifier'.</li>
+	<li>Saving throws, THAC0, and Damage modifiers read only the first byte of 'Statistic Modifier' for their value, the last 3 bytes are ignored.</li>
+	<li>HP modifier uses the whole 4 bytes of 'Statistic Modifier'.</li>
+	<li>HP modifier is always positive (negative values become zero), but because Max HP itself is not bounded, it can overflow into negative amounts (Max HP is 32767).</li>
+	<li>When used in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s, 'Parameter2' controls the exact amount of HP gained.</li>
+</ul>
+
+{% capture note %}
+<ul>
+	<li>While this opcode is "Non-Cumulative" (it sets values rather than increment), what it really does is stack in reverse standard order.</li>
+	<li>The base <a href="../files/ids/bgee/state.htm#BIT27">STATE</a> set on the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file will override any effect applied to them (defaulting to a value of zero).</li>
+	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
+	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

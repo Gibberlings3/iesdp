@@ -12,11 +12,25 @@ pst: 1
 ---
 Casts the spell specified by the resource key, at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.
 <br/>Known values for 'Type' are:
-<br/>0   Normal Casting
-<br/>1   Cast Instantly
+<ul>
+	<li>0 &LongRightArrow; Normal Casting</li>
+	<li>1 &longrightarrow; Cast Instantly (ignore 'Casting Level')</li>
+</ul>
 
 {% capture note %}
 This opcode does not work if the target is a container in non-ee versions.
 {% endcapture %}
 
 {% include note.html %}
+
+{% capture note %}
+This opcode should generally target "Self". In particular:
+<ul>
+	<li>The projectile of the subspell will originate from the target(s) of op148.</li>
+	<li>If the SPL/ITM with op148 targets a location, and doesn't have an area-effect projectile, there will be no target to cast on.</li>
+	<li>If the SPL/ITM with op148 has an area-effect projectile, the spell in op148 would be cast once for every valid target.</li>
+	<li>If this opcode uses the "Cast Instantly" option, then the target, not the caster, would cast the spell in op148.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

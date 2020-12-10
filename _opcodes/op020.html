@@ -11,31 +11,66 @@ iwd2: 0
 pst: 0
 ---
 Applies the invisibility effect, in the style specified by the 'Type' value.
-<br/>Known values for 'Type' are :
-<br/>0   Normal Invisibility   -> affected creature makes the first attack with +4
-<br/>1   Improved Invisibility -> affected creature stays invisible after attack
-<br/>2   Weak Invisibility -> EE: It's the same type of invisibility as 'Improved Invisibility' after you take a hostile action and reveal yourself.
+<br/>Known values for 'Type' are:
+<ul>
+	<li>0 &longrightarrow; Normal Invisibility</li>
+	<li>1 &longrightarrow; Improved Invisibility</li>
+	<li>2 &longrightarrow; Weak Invisibility (EE only)</li>
+</ul>
 
 {% capture note %}
-'Improved Invisibility' does not provide saving throw bonuses outside EEs, where it provides a bonus of 4 to all. The same holds for 'Weak Invisibility'.
-{% endcapture %}
-
-{% include note.html %}
-
-{% capture note %}
-'Improved Invisibility' lingers after the duration is spent and act as permanent if used as a 'While Equipped' effect
-{% endcapture %}
-
-{% include note.html %}
-
-{% capture note %}
-'Weak Invisibility' is not by itself sufficient to trigger backstabs.
-{% endcapture %}
-
-{% include note.html %}
-
-{% capture note %}
-Creatures attacking an invisible creature suffer a -4 penalty to hit, unless they are affected by <a href="#op193">opcode #193</a> Invisible Detection by Script. Moreover, you cannot target an improved/weak invisible creature with spells unless you're affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures.
+<ul>
+	<li>
+		Normal Invisibility:
+		<ul>
+			<li>Grants a +4 bonus to melee attacks only.</li>
+			<li>Applying "Normal" Invisibility with Timing Modes other than 1/4/7 in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
+			<li>Applying "Normal" Invisibility with Timing Mode 1/4/7 will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
+		</ul>
+	</li>
+	<li>
+		Improved Invisibility:
+		<ul>
+			<li>Affected creature stays invisible after attack.</li>
+			<li>Does not provide saving throw bonuses outside EEs, where it provides a bonus of 4 to all.</li>
+			<li>Lingers after the duration is spent and act as permanent if used as a 'While Equipped' effect.</li>
+			<li>Applying "Improved" invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility. There's no reason to apply both "Normal" and "Improved" invisibility in the same spell/item (unless you want them to have different probabilities/hd limits).</li>
+			<li>Applying "Improved" Invisibility with Timing Mode 1/4/7 will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>, and because it duplicates itself as "Normal" invisibility, <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> as well, while still leaving behind a removable (but irrelevant) effect for each. These states are not cleared on death.</li>
+			<li>The effects that remain when setting the base STATEs are irrelevant, at least in-game, because everything that can remove the STATEs will also remove the effect. The STATEs can however be removed separately through NI or EEkeeper, at which point the effect will once again reapply its STATE immediately upon loading the game.</li>
+		</ul>
+	</li>
+	<li>
+		Weak Invisibility:
+		<ul>
+			<li>It's the same type of invisibility as 'Improved Invisibility' after you take a hostile action and reveal yourself.</li>
+			<li>Applying "Weak" Invisibility with Timing Mode 1/4/7 will function no differently than Timing Mode 0, aside from having no natural expiration timer.</li>
+			<li>Applying "Weak" Invisibility is otherwise the same as "Improved" invisibility, except it doesn't duplicate itself with a "Normal" version, which is why it doesn't quality for backstabs.</li>
+		</ul>
+	</li>
+</ul>
 {% endcapture %}
 
 {% include info.html %}
+
+{% capture note %}
+The "Stealth" modal ability of Thieves/Rangers/Monks applies this effect with the following values:
+<ul>
+	<li>Parameter1 = 1 (unknown if any purpose)</li>
+	<li>Parameter2 = 0</li>
+	<li>Duration = 20</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+Creatures attacking an invisible creature suffer a -4 penalty to hit, unless they are affected by <a href="#op193">opcode #193</a>. Moreover, you cannot target an improved/weak invisible creature with spells unless you're affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures (<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT24</a>).
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+This opcode itself just sets or maintains (with a duration) the relevant STATEs. Everything else is a feature of <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> and/or <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>.
+{% endcapture %}
+
+{% include note.html %}

@@ -17,3 +17,27 @@ CELESTIAL 1
   </div>
 </div>
 
+{% capture note %}
+<ul>
+  <li>
+    When the engine is summoning any creature, it checks for existing creatures that match:<br />
+    <pre>(EA <= 15 and EA != FAMILIAR) and (GENDER == SUMMONED or GENDER == SUMMONED_DEMON)</pre><br />
+    and holds them to the NORMAL limit.
+  </li>
+  <li>
+    When engine is summoning a creature with one of the following hardcoded resrefs, ["DEVAGOOD", "DEVAEVIL", "PLANGOOD", "PLANEVIL"], additionally checks for existing creatures that match:<br />
+    <pre>(EA <= 15 and EA != FAMILIAR) and (GENDER == BOTH) and (animationID == 0x7F3B or animationID == 0x7F3C)</pre><br />
+    and holds them to the CELESTIAL limit.
+  </li>
+  <li>In both cases, these limits hold only for the Party.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+A CELESTIAL will be blocked if the NORMAL limit has already been reached, but the NORMAL limit won't be blocked if the CELESTIAL limit has already been reached.<br />
+A.k.a. if you summon your planetar first, you can have 5 NORMAL + 1 CELESTIAL. If you summon your planetar last, you can only have 4 NORMAL + 1 CELESTIAL.
+{% endcapture %}
+
+{% include note.html %}

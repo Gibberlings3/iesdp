@@ -1,0 +1,52 @@
+---
+title: "BG(2):EE 2DA Files : clssplab.2da"
+---
+    <div class="title_main">clssplab.2da</div>
+<br />
+
+For use with <a href="../../../opcodes/bgee.htm#op15">opcode #15</a> and <a href="../../../opcodes/bgee.htm#op44">opcode #44</a>.
+<br /><br />
+
+In IWD:EE we have:<br />
+
+<pre>
+2DA V1.0
+6
+                    DEX		STR
+UNUSED              6		8
+MAGE                6		4
+FIGHTER             6		8
+CLERIC              4		6
+THIEF               8		6
+BARD                8		6
+PALADIN             6		8
+FIGHTER_MAGE        6		8
+FIGHTER_CLERIC      6		8
+FIGHTER_THIEF       8		8
+FIGHTER_MAGE_THIEF  8		8
+DRUID               4		6
+RANGER              6		8
+MAGE_THIEF          8		6
+CLERIC_MAGE         6		6
+CLERIC_THIEF        8		6
+FIGHTER_DRUID       6		8
+FIGHTER_MAGE_CLERIC 6		8
+CLERIC_RANGER       6		8
+SORCERER            6		4
+MONK                4		6
+
+</pre>
+<br />
+
+{% capture note %}
+<ul>
+    <li>The listed values represent Dicesize (Dicenumber is hardcoded to 1).</li>
+    <li>An unset Class would match UNUSED.</li>
+    <li>
+        Classes actually use the row# associated with their <a href="../../ids/bgee/class.htm">CLASS.IDS</a> index, so for instance ANKHEG would have to be added on row 101 (excluding the header rows). This is why the first row is labeled "UNUSED" instead of MAGE, to account for CLASS #0.<br/>
+        Also note that in this case rows #22 – #100 would need filling in. Duplicating row 0, "UNUSED 6 8", 79 times at the bottom before appending ANKHEG would suffice.
+    </li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

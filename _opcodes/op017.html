@@ -12,13 +12,22 @@ pst: 1
 ---
 Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> HP = HP + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> HP = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: HP = HP + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: HP = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: HP = (HP * 'Statistic Modifier' value) / 100</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
 
 {% capture note %}
 If 'Statistic Modifier' and the Dice values are both non-zero, the total HP change is: 'Statistic Modifier' + Dice value.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+Unlike <a href="#op12">opcode #12</a>, this opcode does not apply any death effect (<a href="#op13">opcode #13</a>) to the creature if it reduces their hit points to zero or less. The creature will remain in a bugged state (no HP but not dead) until they take further damage, or the game is saved & reloaded, at which point they will die properly.
 {% endcapture %}
 
 {% include note.html %}

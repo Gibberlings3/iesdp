@@ -66,29 +66,28 @@ Damages the target by the value specified by the 'Damage Amount' field, with the
 <br/>134217729   Stunning Set to Value
 <br/>134217730   Stunning Set to Percentage
 <br/>134217731   Stunning Reduce by Percentage
-<br/>268435456   Soul Eater
-<br/>268435457   Soul Eater Set to Value
-<br/>268435458   Soul Eater Set to Percentage
-<br/>268435459   Soul Eater Reduce by Percentage
-<br/>1073741824  Disease
-<br/>1073741825  Disease Set to Value
-<br/>1073741826  Disease Set to Percentage
-<br/>1073741827  Disease Reduce by Percentage
+
 <br/><br/>The Dice values can be used to inflict varying damage amounts - e.g. 2d6 would do 2-12 damage (Damage type is still specified by the 'Type' value).
+
 <br/><br/>Useful bit values for 'Save Type' are:
-<br/>Bit 10 - Ignore primary target - Line AoE projectile doesn't affect end target
-<br/>Bit 11 - Ignore secondary target - Line AoE projectile doesn't affect bystanders
-<br/>Bit 24 - Bypass 'mirror image'
-<br/>Bit 25 - Ignore difficulty - It refers to the damage multiplier to party members based on difficulty.
+<ul>
+  <li>Bit 10 &longrightarrow; Ignore primary target: Line AoE projectile doesn't affect end target</li>
+  <li>Bit 11 &longrightarrow; Ignore secondary target: Line AoE projectile doesn't affect bystanders</li>
+  <li>Bit 24 &longrightarrow; Bypass 'mirror image'</li>
+  <li>Bit 25 &longrightarrow; Ignore difficulty: It refers to the damage multiplier to party members based on difficulty.</li>
+</ul>
+
 <br/><br/>Known bit values for 'Flags' are:
-<br/>Bit 0 - Drain HP to caster
-<br/>Bit 1 - Transfer HP to target
-<br/>Bit 2 - Fist damage only
-<br/>Bit 3 - Drain to max. HP of caster
-<br/>Bit 5 - Suppress combat log feedback string
-<br/>Bit 8 - Save for half
-<br/>Bit 9 - Made save
-<br/>Bit 10 - Does not wake sleepers
+<ul>
+  <li>Bit 0 &longrightarrow; Drain HP to caster</li>
+  <li>Bit 1 &longrightarrow; Transfer HP to target</li>
+  <li>Bit 2 &longrightarrow; Fist damage only</li>
+  <li>Bit 3 &longrightarrow; Drain to max. HP of caster</li>
+  <li>Bit 5 &longrightarrow; Suppress combat log feedback string</li>
+  <li>Bit 8 &longrightarrow; Save for half</li>
+  <li>Bit 9 &longrightarrow; Fail for half: A failed (or lack of) saving throw results in half damage.</li>
+  <li>Bit 10 &longrightarrow; Does not wake sleepers</li>
+</ul>
 
 <p>
 'Damage Amount' can be positive or negative (though the damage sound will play in either case).
@@ -120,3 +119,20 @@ If this effect reduces target to -20 (Allegiance: [PC]) or -9 (any other Allegia
 {% endcapture %}
 
 {% include note.html %}
+
+{% capture note %}
+Just in case anyone is doing UI feedback text replacement, these are the hex colors for the various damage types:<br />
+^0xaabbggrr ("aa" = alpha/transparency, "bb" = Blue, "gg" = Green, "rr" = Red)
+
+<ul>
+  <li>Crushing, Slashing, Piercing, Missile, Non-lethal: 0xffbed7d7</li>
+  <li>Poison: 0xff76e4c7</li>
+  <li>Fire, Magic Fire: 0xff002a9c</li>
+  <li>Cold, Magic Cold: 0xffffbf00</li>
+  <li>Electricity: 0xfffff97d</li>
+  <li>Acid: 0xff19bba8</li>
+  <li>Magic: 0xff00d7ff</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

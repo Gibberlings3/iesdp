@@ -12,6 +12,21 @@ pst: 1
 ---
 Alters the gender of the targetted creature(s) to the value specified by the 'Gender.ids' field, in the style specified by the 'Type' value.
 <br/>Known values for 'Type' are:
-<br/>0 Reverse Gender
-<br/>1 Flat Value Modifier -> Gender = 'Statistic Modifier' value (values from gender.ids)
-<br/><br/>The effect modifies stat 193.
+<ul>
+	<li>0 &longrightarrow; Reverse Gender</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Gender = 'Statistic Modifier' value (values from <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a>)</li>
+</ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#193">SEX_CHANGED</a>.
+
+{% capture note %}
+<ul>
+	<li>'Reverse Gender' also switches the second BIT of the lower BYTE of the creature's animation, which (for PC races), will switch between their male/female animations (0x6000 &LongLeftRightArrow; 0x6010).</li>
+	<li>
+		Other races can be setup this way, but do not occupy the necessary animation slots by default.<br />
+		For instance, VAMPIRE is 0x7F12, VAMPIRE_FEMALE is 0x7F22. (Male should be 0x7F02 and female 0x7F12 for it to work).
+	</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

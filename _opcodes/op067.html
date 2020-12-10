@@ -12,16 +12,38 @@ pst: 0
 ---
 Summons a creature, with EA set to the 'Control' field. The Resource key should be set to the filename of the creature to summon.
 <br/>Known values for 'Control' are:
-<br/>0    Match target (hostile if no target)
-<br/>1    Match target (hostile if no target)  
-<br/>2    As creature file
-<br/>3    Match target (hostile if no target)
-<br/>4    As creature file
-<br/>5    Hostile to target
-<br/>6    As creature file
-<br/>8    As creature file
-<br/>255  As creature file
-<br/><br/>If effect's target is set as 'Original Caster' then the 'Control' parameter covers 'Location' as well as control. In this case, nown values for 'Control' are:
-<br/>2   = Summoned at location of target creature
-<br/>4   = Summoned at location of caster
-<br/>6   = Summoned at location of caster
+<ul>
+	<li>0 &longrightarrow; Match target (hostile if no target)</li>
+	<li>1 &longrightarrow; Match target (hostile if no target)</li>
+	<li>2 &longrightarrow; As creature file</li>
+	<li>3 &longrightarrow; Match target (hostile if no target)</li>
+	<li>4 &longrightarrow; As creature file</li>
+	<li>5 &longrightarrow; Hostile to target</li>
+	<li>6 &longrightarrow; As creature file</li>
+	<li>8 &longrightarrow; As creature file</li>
+	<li>255 &longrightarrow; As creature file</li>
+</ul>
+
+{% capture note %}
+<ul>
+	<li>'Control' values 0 and 1 are identical, 4 and 6 are identical, 3 and 5 are each unique, all other values are identical with each other.</li>
+	<li>'Control' values 3, 4, 5, and 6 summon the creature at the location of the effect target. All other values summon the creature at the location of the ability target.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+<ul>
+	<li>(EE only) "Resource2" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
+		Default is a hardcoded VVC using "SPBOOM.BAM" and palette #65. This is generally used as the "portal" animation.
+	</li>
+	<li>(EE only) "Resource3" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
+	<li>Applies an <a href="#op271">op271</a> to the summoned creature based on the duration of the "Resource2" (not exact). Creature will not appear/spawn until this animation finishes.</li>
+	<li>Applies a delayed <a href="#op215">op215</a> with resource "SPGFLSH1" to the summoned creature, delayed duration = 5 ticks less than the <a href="#op271">op271</a>.</li>
+	<li>Applies a delayed <a href="#op68">op68</a> to the summoned creature based on effect duration (unless permanent).</li>
+	<li>When summoned, any temporary changes (such as from equipped items) to the creature's <a href="../files/ids/bgee/gender.htm">gender</a> are made permanent.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

@@ -12,12 +12,24 @@ pst: 1
 ---
 Unsummons a creature, with feedback controlled by 'Text Notification'.
 <br/>Known values for 'Text Notification' are:
-<br/>0   No text notification
-<br/>1   Show text notification
+<ul>
+	<li>0 &longrightarrow; No text notification</li>
+	<li>1 &longrightarrow; Show text notification</li>
+</ul>
 
 {% capture note %}
 At least in BG2 and EEs, the Resource key should be set to the filename of the
- animation to play when unsummoning the creature, and defaults to SPGFLSH1 if left empty.
+ animation to play when unsummoning the creature, and defaults to "SPGFLSH1" if left empty.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+<ul>
+	<li>Has no effect on Party Members.</li>
+	<li>Moves the targeted creature(s) to area ".ARE" (a non-existant area). This deletes non-global creatures from the game.</li>
+	<li>Global creatures can still be recovered through scripts actions, such as <a href="../scripting/actions/bgeeactions.htm#291">MoveGlobalObject()</a>.</li>
+</ul>
 {% endcapture %}
 
 {% include note.html %}

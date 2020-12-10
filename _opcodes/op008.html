@@ -12,28 +12,114 @@ pst: 0
 ---
 Alters the colour of the area specified by the 'Location' field, to the colour specified by the 'RGB colour' field.
 <br/>The 'RGB Colour' field is handled as follows:
-<br/>Second byte = Red (0-255)
-<br/>Third byte     = Green (0-255)
-<br/>Fourth byte   = Blue (0-255)
+<ul>
+	<li>Second byte = Red (0–255)</li>
+	<li>Third byte = Green (0–255)</li>
+	<li>Fourth byte = Blue (0–255)</li>
+</ul>
+
 <br/>Known values for 'Location' are:
-<br/>00   Belt Buckle (on armour) or amulets (on robes) - entire body for some animations
-<br/>01   Minor colour
-<br/>02   Major colour
-<br/>03   Skin colour
-<br/>04   Strap colour (on armour) or minor trimming (on robes - the centre strip down a robe and the hem on some robes)
-<br/>05   Armor colour (and major trimming on robe - cross trim and cape trim on  robe of archmagi)
-<br/>06   Hair colour
-<br/>16   Quillons or Crossguard
-<br/>20   Grip (usually not visible as it's in the characters hand)
-<br/>21   Blade or major portion of weapon
-<br/>32   Shield hub
-<br/>33   Shield interior
-<br/>34   Shield panelling
-<br/>34   Helmet misc
-<br/>37   Shield rim
-<br/>48   Helm ornamentation - i.e. wings
-<br/>49   Helm ornamentation - i.e. feathers/horsehair
-<br/>50   Helm ornamentation - i.e. feathers/horsehair
-<br/>52   Helm face
-<br/>53   Helm - the main covering
-<br/>255  Whole Body (at least in IWD2)
+<ul>
+	<li>
+		0 – 6: Avatar/Armor
+		<ul>
+			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) – entire body for some animations</li>
+			<li>01 &longrightarrow; Minor colour</li>
+			<li>02 &longrightarrow; Major colour</li>
+			<li>03 &longrightarrow; Skin colour</li>
+			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes – the centre strip down a robe and the hem on some robes)</li>
+			<li>05 &longrightarrow; Armor colour (and major trimming on robe – cross trim and cape trim on Robe of Archmagi)</li>
+			<li>06 &longrightarrow; Hair colour</li>
+		</ul>
+	</li>
+	<li>
+		16 – 22: Weapon
+		<ul>
+			<li>16 &longrightarrow; Quillons or Crossguard</li>
+			<li>20 &longrightarrow; Grip (usually not visible as it's in the characters hand)</li>
+			<li>21 &longrightarrow; Blade or major portion of weapon</li>
+		</ul>
+	</li>
+	<li>
+		32 – 40: Shield
+		<ul>
+			<li>32 &longrightarrow; Shield hub</li>
+			<li>33 &longrightarrow; Shield interior</li>
+			<li>34 &longrightarrow; Shield panelling</li>
+			<li>37 &longrightarrow; Shield rim</li>
+		</ul>
+	</li>
+	<li>
+		48 – 54: Helmet
+		<ul>
+			<li>48 &longrightarrow; Helm ornamentation – i.e. wings</li>
+			<li>49 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>50 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>52 &longrightarrow; Helm face</li>
+			<li>53 &longrightarrow; Helm – the main covering</li>
+		</ul>
+	</li>
+	<li>255 &longrightarrow; Whole Body (at least in IWD2 and EEs)</li>
+</ul>
+
+{% capture note %}
+Other values crash immediately or when opening or manipulating Inventory.
+{% endcapture %}
+
+{% include warning.html %}
+
+{% capture note %}
+<ul>
+	<li>Each Item Type has 7 slots/locations, corresponding to a different set of Palette indexes that they will replace.</li>
+	<li>Near Infinity lists them as Grey, Cyan/Teal, Magenta/Pink, Yellow, Red, Blue, and Green.<br/>
+		While these colors are arbitrary, they best represent the palette used in animation/paperdoll BAMs by default (before being recolored), so you can look at the BAM file and know which colors will be replaced.
+	</li>
+	<li>
+		0=Grey, 1=Cyan, 2=Magenta, 3=Yellow, 4=Red, 5=Blue, 6=Green.<br/>
+		+16 for weapons, +32 for shields, +48 for helmets.
+	</li>
+	<li>The names already listed for some of these locations in IESDP are accurate, as they correspond to their general use in the vanilla game, but all 7 slots can be used for each item, provided their BAM file makes use of them.</li>
+	<li>
+		Palette indexes will be replaced by the gradient specified for those locations:
+		<ul>
+			<li>Index 0–3 are reserved for Transparency and Shadows, they are not replaced.</li>
+			<li>Index 4–15: Grey</li>
+			<li>Index 16–27: Cyan</li>
+			<li>Index 28–39: Pink</li>
+			<li>Index 40–51: Yellow</li>
+			<li>Index 52–63: Red</li>
+			<li>Index 64–75: Blue</li>
+			<li>
+				Index 76–87: Green<br/>
+				(7 groups of 12 indexes, each exclusive to one location)
+			</li>
+			<li>Index 88–95: (Grey + Cyan)</li>
+			<li>Index 96–103: (Grey + Magenta)</li>
+			<li>Index 104–111: (Grey + Yellow)</li>
+			<li>Index 112–119: (Grey + Red)</li>
+			<li>Index 120–127: (Grey + Blue)</li>
+			<li>Index 128–135: (Grey + Green)</li>
+			<li>Index 136–143: (Cyan + Magenta)</li>
+			<li>Index 144–151: (Cyan + Yellow)</li>
+			<li>Index 152–159: (Cyan + Red)</li>
+			<li>Index 160–167: (Cyan + Blue)</li>
+			<li>Index 168–175: (Cyan + Green)</li>
+			<li>Index 176–183: (Magenta + Yellow)</li>
+			<li>Index 184–191: (Magenta + Red)</li>
+			<li>Index 192–199: (Magenta + Blue)</li>
+			<li>Index 200–207: (Magenta + Green)</li>
+			<li>Index 208–215: (Yellow + Red)</li>
+			<li>Index 216–223: (Yellow + Blue)</li>
+			<li>Index 224–231: (Yellow + Green)</li>
+			<li>Index 232–239: (Red + Blue)</li>
+			<li>Index 240–247: (Red + Green)</li>
+			<li>
+				Index 248–255: (Blue + Green)<br/>
+				(21 groups of 8 indexes, each shared by a different combination of two locations)
+			</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

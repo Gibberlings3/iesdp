@@ -15,20 +15,20 @@ pst: 0
 Set the 'Amount' parameter as the amount of damage, and the Disease Type parameter as how the disease functions.
 <br/>Known values for 'Type' are:
 <ul>
-	<li>0 => Inflict 1 HP per second ('Frequency Multiplier' is ignored – 'Amount' needs to be non-zero)</li>
-	<li>1 => Inflict 1 HP per second (for best results, leave 'Frequency Multiplier' at zero, 'Amount' between 1 and 101)</li>
-	<li>2 => Deal 'Amount' damage every 'Frequency Multiplier' second(s)</li>
-	<li>3 => Deal one damage every 'Amount' * 'Frequency Multiplier' second(s)</li>
-	<li>4 => Reduce Strength score by 'Amount'</li>
-	<li>5 => Reduce Dexterity score by 'Amount'</li>
-	<li>6 => Reduce Constitution score by 'Amount'</li>
-	<li>7 => Reduce Intelligence score by 'Amount'</li>
-	<li>8 => Reduce Wisdom score by 'Amount'</li>
-	<li>9 => Reduce Charisma score by 'Amount'</li>
-	<li>10 => Slow Effect</li>
-	<li>11 => Mold touch/Single</li>
-	<li>12 => Mold touch/Decrement</li>
-	<li>13 => Contagion</li>
+	<li>0 &longrightarrow; Inflict 1 HP per second ('Frequency Multiplier' is ignored – 'Amount' needs to be non-zero)</li>
+	<li>1 &longrightarrow; Inflict 1 HP per second (for best results, leave 'Frequency Multiplier' at zero, 'Amount' between 1 and 101)</li>
+	<li>2 &longrightarrow; Deal 'Amount' damage every 'Frequency Multiplier' second(s)</li>
+	<li>3 &longrightarrow; Deal one damage every 'Amount' * 'Frequency Multiplier' second(s)</li>
+	<li>4 &longrightarrow; Reduce Strength score by 'Amount'</li>
+	<li>5 &longrightarrow; Reduce Dexterity score by 'Amount'</li>
+	<li>6 &longrightarrow; Reduce Constitution score by 'Amount'</li>
+	<li>7 &longrightarrow; Reduce Intelligence score by 'Amount'</li>
+	<li>8 &longrightarrow; Reduce Wisdom score by 'Amount'</li>
+	<li>9 &longrightarrow; Reduce Charisma score by 'Amount'</li>
+	<li>10 &longrightarrow; Slow Effect</li>
+	<li>11 &longrightarrow; Mold touch/Single</li>
+	<li>12 &longrightarrow; Mold touch/Decrement</li>
+	<li>13 &longrightarrow; Contagion</li>
 </ul>
 <br/><br/>'Amount' can be positive (penalty) or negative (bonus).
 <br/><br/>
@@ -76,26 +76,58 @@ When the 'Type' field is 1:
 {% include note.html %}
 
 {% capture note %}
-Mold touch is complicated and not consistent across the EE games.
-The general idea is that it deals x or xd6 damage and applies the SPL file specified by the resource key every (round or second) for either 1 round (single) or across multiple rounds dealing less each round (decrement).
+Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(250|DISEASED)</a> on the target.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+Mold touch is complicated: the general idea is that it deals x or xd6 damage and applies the SPL file specified by the resource key (default: "original resource" + B) every (round or second) for either 1 round (single) or across multiple rounds dealing less each round (decrement).
 In particular:
 <ul>
-	<li>If 'Type'=11, then the damage dealt is always 1</li>
-	<li>if 'Type'=12, then the damage dealt depends on the game:
+	<li>If 'Type'=11:
 		<ul>
-			<li>IWD:EE uses 'Amount' for 'x', and calculates 'duration' as 6 * 'Amount'.</li>
-			<li>BG:EE calculates 'x' from 'duration' / 6. (It's reasonable to assume that BG2:EE uses this one as well).</li>
-			<li>If you set 'duration' = 6 * 'Amount', it should junction the same in both games.</li>
+			<li>Timing Mode should be 3 (with no duration).</li>
+			<li>In <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s, it always causes 1d6 damage.</li>
+			<li>In external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s it functions identically to 'Mold Touch/Decrement', in every way (see below for further details).</li>
+		</ul>
+	</li>
+	<li>if 'Type'=12:
+		<ul>
+			<li>
+				The first hit doesn't occur immediately, but instead at 80 ticks (exactly), the second hit occurs at 90 ticks (6 seconds), then later hits occur 1 round apart. So:<br />
+				1st hit: 5.33s(80t), 2nd hit: 6s(90t), 3rd hit: 12s(180t), etc...<br />
+				Oddly, this effect measures rounds as 6 seconds (90 ticks) intervals, not 100 ticks.
+			</li>
+			<li>
+				As far as damage dealt is concerned, in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s:
+				<ul>
+					<li><code>x = 'Amount'(d6)</code>, decrementing the amount by 1 die every round, until zero.</li>
+					<li>Should always use Timing Mode 1, 3 or 4, and only a non-zero duration if using Timing Mode 4.</li>
+					<li>If Timing Mode is 1 or 4, the portrait icon, and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> remain until cured/death.</li>
+					<li>If Timing Mode is 3 (with no duration), it will expire 1 round after the final damage (when it realizes the amount has reached zero). Timing Mode 3 and <code>duration = 0</code> should be the "default" setting for this mode right now.</li>
+				</ul>
+			</li>
+			<li>
+				As far as damage dealt is concerned, in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
+				<ul>
+					<li><code>x = (remaining Duration / 6)(d6)</code>, or just <code>(remaining Duration / 6)</code> if 'Frequency Multiplier' >= 65536.</li>
+					<li>The damage dice is rounded down.</li>
+					<li>Because the first hit doesn't occur until 80 ticks, any duration shorter will have no triggers.</li>
+					<li>The Portrait Icon and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> will remain for the full specified duration.</li>
+				</ul>
+			</li>
+			<li>The SPL resource is applied at the same/every time as the damage, though the damage occurs first.</li>
 		</ul>
 	</li>
 </ul>
 'Frequency Multiplier' determines whether it deals damage every second or every round, and whether it deals x or xd6 damage.
 <ul>
-	<li>'Frequency Multiplier' = 0 => xd6 per round</li>
-	<li>'Frequency Multiplier' = 65536 or greater (must be even) => x per round</li>
-	<li>'Frequency Multiplier' = 65537 or greater (must be odd) => x per second</li>
+	<li>'Frequency Multiplier' = 0 &longrightarrow; xd6 per round</li>
+	<li>'Frequency Multiplier' = 65536 or greater (must be even) &longrightarrow; x per second</li>
+	<li>'Frequency Multiplier' = 65537 or greater (must be odd) &longrightarrow; x per round</li>
 </ul>
 Regardless, the value of x decrements only once per round.
 {% endcapture %}
 
-{% include note.html %}
+{% include info.html %}

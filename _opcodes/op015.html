@@ -12,10 +12,69 @@ pst: 0
 ---
 Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Dexterity = Dexterity + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Dexterity = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Dexterity = (Dexterity * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Dexterity = Dexterity + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Dexterity = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Dexterity = (Dexterity * 'Statistic Modifier' value) / 100</li>
+	<li>3 &longrightarrow; Cat's Grace (EE only)</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Dexterity raised permanently' will be shown.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
-<br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+
+{% capture note %}
+All games but EEs:
+<ul>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Dexterity raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
+</ul>
+On EEs:
+<ul>
+	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+	<li>
+		The opcode itself provides no coloring anymore (it's been externalized through "UI.menu")
+		<ul>
+			<li>An effective value &gt; base value &longrightarrow; <font color="green">green</font>.</li>
+			<li>An effective value &lt; base value &longrightarrow; <font color="red">red</font>.</li>
+			<li>An effective value &equals; base value &longrightarrow; white/default.</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+When 'Type'=3:
+<ul>
+	<li>'Statistic Modifier' is unused: it uses the value listed in <a href="../files/2da/2da_bgee/clssplab.htm">CLSSPLAB.2da</a> for the creature's base class, or defaults to '1' if the file isn't present (it only exists by default in IWDEE).</li>
+	<li>
+		A single instance of this opcode (using 'Type'=3) cannot raise Dexterity above 20 (hardcoded), but multiple instances of it can.
+		<ul>
+			<li>This is because it only checks the limit against the creature's base score, not its effective score.</li>
+		</ul>
+	</li>
+	<li>Like the other modes, applying the effect with Timing Mode 1 will affect the creature's base stat, leaving no removable effect.</li>
+	<li>Once applied to a creature, 'Statistic Modifier' will store the exact DEX increase granted (only useful for lookup/editing through EEkeeper/NI).</li>
+	<li>
+		When you apply this effect in an External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>, (via <a href="#op177">op177</a> / <a href="#op283">op283</a>):
+		<ul>
+			<li>'Parameter1' in the EFF will determine the exact Dexterity increase (so it must be set manually, and ignores any limit).</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+{% endcapture %}
+
+{% include info.html %}

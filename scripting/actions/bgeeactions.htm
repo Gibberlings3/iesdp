@@ -1821,6 +1821,18 @@ THEN
     RandomWalk()
 END
 </code></pre></div></div>
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li>This action will never stop, (unless interrupted in specific situations), and thus never leave the action list.</li>
+  <li>Executes <a href="#63">Wait()</a> for a random amount of time, (1–40 seconds), if the creature goes off-screen.</li>
+  <li>Has a 50/50 chance to <a href="#23">MoveToPoint()</a>, or do a pass of <a href="#130">RandomTurn()</a>, (including <a href="#130">RandomTurn()</a>’s wait time).</li>
+</ul>
+
+
+  </div>
+</div>
 
     </div>
   
@@ -2998,6 +3010,19 @@ THEN
 END
 </code></pre></div></div>
 
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li>This action will never stop, (unless interrupted in specific situations), and thus never leave the action list.</li>
+  <li>Executes <a href="#63">Wait()</a> for a random amount of time, (1–40 seconds), if the creature goes off-screen.</li>
+  <li>Waits 1–10 seconds between each evaluation.</li>
+</ul>
+
+
+  </div>
+</div>
+
     </div>
   
 
@@ -3121,13 +3146,13 @@ END
   <li>The creature has been chasing target for the time specified by the ‘ReevaluationPeriod’ parameter</li>
 </ul>
 
-On the other hand, object selectors (e.g., ‘FifthNearest([EVILCUTOFF.PLANT])’, ‘[PC]’, ‘NearestEnemyOfType([0.0.0.IMP])’ and so forth) constantly reevaluate the target, not being affected by the ‘ReevaluationPeriod’ at all.
+On the other hand, object selectors (e.g., ‘FifthNearest([EVILCUTOFF.PLANT])’, ‘[PC]’, ‘SecondNearest([0.0.0.IMP])’ and so forth) constantly reevaluate the target, not being affected by the ‘ReevaluationPeriod’ at all.
 
   </div>
 </div>
 <div class="note info">
   <div>
-    <strong>Note:</strong> The only natural end condition for the action is if it can’t find any valid objects to attack, either initially, or after a reeval has been triggered. This means that the script trigger ‘ActionListEmpty()’ will not return TRUE once ‘ReevaluationPeriod’ is up.
+    <strong>Note:</strong> The only natural end condition for the action is if it can’t find any valid objects to attack, either initially, or after a reeval has been triggered. This means that the script trigger <a href="../triggers/bgeetriggers.htm#0x402B">ActionListEmpty()</a> will not return TRUE once ‘ReevaluationPeriod’ is up.
 
   </div>
 </div>
@@ -5241,6 +5266,14 @@ END
 
   </span></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to walk randomly, without pausing.</p>
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait removed and no <a href="#130">RandomTurn()</a> chance.
+
+  </div>
+</div>
 
     </div>
   
@@ -12952,7 +12985,7 @@ END
     <div class="actionHeader">
       <a id="410" class="action_name">
         410 RandomWalkTime(I:Time*)
-      </a><span class="label label-info" title="It is unknown whether this action does anything">unknown</span><span class="action_sisters">
+      </a><span class="action_sisters">
     
     Variants:
     <span class="avariants">
@@ -12968,7 +13001,7 @@ END
     
 
   </span></div>
-    <div class="indent1 action_body"><p></p>
+    <div class="indent1 action_body"><p></p><p>It is the same as <a href="#85">RandomWalk()</a>, where the time parameter represents a limit on how many times the action will result in walking. Turning or waiting does not count against this limit. Since it is random, there is no guarantee movement will be immediate.</p>
 
     </div>
   
@@ -12979,7 +13012,7 @@ END
     <div class="actionHeader">
       <a id="411" class="action_name">
         411 RandomWalkContinuousTime(I:Time*)
-      </a><span class="label label-info" title="It is unknown whether this action does anything">unknown</span><span class="action_sisters">
+      </a><span class="action_sisters">
     
     Variants:
     <span class="avariants">
@@ -12995,7 +13028,8 @@ END
     
 
   </span></div>
-    <div class="indent1 action_body"><p></p>
+    <div class="indent1 action_body"><p></p><p>It is the same as <a href="#200">RandomWalkContinuous()</a>, where the time parameter represents how many times the action will be ticked before terminating (Actions are normally ticked once per second at 30FPS).
+See <a href="#410">RandomWalkTime()</a> for further details about the time parameter.</p>
 
     </div>
   

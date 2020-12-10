@@ -79,53 +79,217 @@ The file is partially extensible; new states cannot be created though existing s
 STATEs are cumulative: all those STATEs that aren't a power of 2 are combinations of other STATEs. In particular, you can BOR (bitwise OR) the base STATEs (i.e., all those listed at offset 0x0020 of a CRE file) to form all the others. For instance, STATE_HARMLESS is STATE_FEEBLEMINDED | STATE_CHARMED | STATE_IMMOBILE... and STATE_IMMOBILE is STATE_HELPLESS | STATE_STUNNED | STATE_SLEEPING.<br />
 <br />
 
-<pre>
-IDS V1.0
-0x00000000 STATE_NORMAL
-0x00000001 STATE_SLEEPING
-0x00000002 STATE_BERSERK
-0x00000004 STATE_PANIC
-0x00000008 STATE_STUNNED
-0x00000010 STATE_INVISIBLE
-0x00000020 STATE_HELPLESS
-0x00000029 STATE_IMMOBILE
-0x00000040 STATE_FROZEN_DEATH
-0x00000080 STATE_STONE_DEATH
-0x00000100 STATE_EXPLODING_DEATH
-0x00000200 STATE_FLAME_DEATH
-0x00000400 STATE_ACID_DEATH
-0x00000800 STATE_DEAD
-0x00000FC0 STATE_REALLY_DEAD
-0x00001000 STATE_SILENCED
-0x00002000 STATE_CHARMED
-0x00004000 STATE_POISONED
-0x00008000 STATE_HASTED
-0x00010000 STATE_SLOWED
-0x00020000 STATE_INFRAVISION
-0x00040000 STATE_BLIND
-0x00080000 STATE_DISEASED
-0x00100000 STATE_FEEBLEMINDED
-0x00102029 STATE_HARMLESS
-0x00200000 STATE_NONDETECTION
-0x00400000 STATE_IMPROVEDINVISIBILITY
-0x00400010 STATE_NOT_TARGETABLE
-0x00800000 STATE_BLESS
-0x01000000 STATE_CHANT
-0x02000000 STATE_DRAWUPONHOLYMIGHT
-0x04000000 STATE_LUCK
-0x08000000 STATE_AID
-0x10000000 STATE_CHANTBAD
-0x20000000 STATE_BLUR
-0x40000000 STATE_MIRRORIMAGE
-0x60400010 STATE_ILLUSIONS
-0x80000000 STATE_CONFUSED
-0x80040004 STATE_RANGED_TARGET
-0x80101FEF CD_STATE_NOTVALID
-0x8010202D STATE_DISABLED
-0x8010302D STATE_DISABLED_CASTING
-0x8015302D STATE_DEBUFF
-0x80002006 STATE_NOT_APPROACHABLE
-</pre>
+0x00000000 STATE_NORMAL<br />
+<br />
+
+<div class="idsHeader"><a name="BIT0">0x00000001 STATE_SLEEPING</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op39">opcode #39</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT1">0x00000002 STATE_BERSERK</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op3">opcode #3</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT2">0x00000004 STATE_PANIC</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op24">opcode #24</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT3">0x00000008 STATE_STUNNED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op45">opcode #45</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT4">0x00000010 STATE_INVISIBLE</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op20">opcode #20</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT5">0x00000020 STATE_HELPLESS</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op109">opcode #109</a>, <a href="../../../opcodes/bgee.htm#op157">opcode #157</a>, <a href="../../../opcodes/bgee.htm#op175">opcode #175</a> and <a href="../../../opcodes/bgee.htm#op185">opcode #185</a>
+</div>
+<br />
+
+0x00000029 STATE_IMMOBILE<br />
+<br />
+
+<div class="idsHeader"><a name="BIT6">0x00000040 STATE_FROZEN_DEATH</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op13">opcode #13</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT7">0x00000080 STATE_STONE_DEATH</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op13">opcode #13</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT8">0x00000100 STATE_EXPLODING_DEATH</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op13">opcode #13</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT9">0x00000200 STATE_FLAME_DEATH</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op13">opcode #13</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT10">0x00000400 STATE_ACID_DEATH</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op13">opcode #13</a>
+</div>
+<br />
+
+0x00000800 STATE_DEAD<br />
+0x00000FC0 STATE_REALLY_DEAD<br />
+<br />
+
+<div class="idsHeader"><a name="BIT12">0x00001000 STATE_SILENCED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op38">opcode #38</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT13">0x00002000 STATE_CHARMED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op5">opcode #5</a> and <a href="../../../opcodes/bgee.htm#op241">opcode #241</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT14">0x00004000 STATE_POISONED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op25">opcode #25</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT15">0x00008000 STATE_HASTED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op16">opcode #16</a> and <a href="../../../opcodes/bgee.htm#op317">opcode #317</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT16">0x00010000 STATE_SLOWED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op40">opcode #40</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT17">0x00020000 STATE_INFRAVISION</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op63">opcode #63</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT18">0x00040000 STATE_BLIND</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op74">opcode #74</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT19">0x00080000 STATE_DISEASED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op78">opcode #78</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT20">0x00100000 STATE_FEEBLEMINDED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op76">opcode #76</a>
+</div>
+<br />
+
+0x00102029 STATE_HARMLESS<br />
+<br />
+
+<div class="idsHeader"><a name="BIT21">0x00200000 STATE_NONDETECTION</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op69">opcode #69</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT22">0x00400000 STATE_IMPROVEDINVISIBILITY</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op20">opcode #20</a>
+</div>
+<br />
+
+0x00400010 STATE_NOT_TARGETABLE<br />
+<br />
+
+<div class="idsHeader"><a name="BIT23">0x00800000 STATE_BLESS</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op130">opcode #130</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT24">0x01000000 STATE_CHANT</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op131">opcode #131</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT25">0x02000000 STATE_DRAWUPONHOLYMIGHT</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op132">opcode #132</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT26">0x04000000 STATE_LUCK</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op133">opcode #133</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT27">0x08000000 STATE_AID</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op129">opcode #129</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT28">0x10000000 STATE_CHANTBAD</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op137">opcode #137</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT29">0x20000000 STATE_BLUR</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op65">opcode #65</a>
+</div>
+<br />
+
+<div class="idsHeader"><a name="BIT30">0x40000000 STATE_MIRRORIMAGE</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op159">opcode #159</a>
+</div>
+<br />
+
+0x60400010 STATE_ILLUSIONS<br />
+<br />
+
+<div class="idsHeader"><a name="BIT31">0x80000000 STATE_CONFUSED</a></div>
+<div class="indent1">
+Set by <a href="../../../opcodes/bgee.htm#op128">opcode #128</a>
+</div>
+<br />
+
+0x80040004 STATE_RANGED_TARGET<br />
+0x80101FEF CD_STATE_NOTVALID<br />
+0x8010202D STATE_DISABLED<br />
+0x8010302D STATE_DISABLED_CASTING<br />
+0x8015302D STATE_DEBUFF<br />
+0x80002006 STATE_NOT_APPROACHABLE<br />
 
 <a href="#" class="go-up">
   &nbsp;

@@ -114,9 +114,20 @@
  by the 'Type' field.<br/><br/>
 
 Known values for 'Type' are:
-<br/>0   All<br/>1   Crushing<br/>2   Missile<br/>4   Piercing<br/>8   Slashing<br/>
-16  Base AC setting (sets the targets AC to the value specified by the 'AC Modifier' field.
- If the targets AC is already 'AC Modifier' or below, this effect will do nothing).
+<ul>
+	<li>0 &longrightarrow; All</li>
+	<li>1 &longrightarrow; Crushing</li>
+	<li>2 &longrightarrow; Missile</li>
+	<li>4 &longrightarrow; Piercing</li>
+	<li>8 &longrightarrow; Slashing</li>
+	<li>
+		16 &longrightarrow; Base AC setting
+		<ul>
+			<li>Sets the targets AC to the value specified by the 'AC Modifier' field. If the targets AC is already 'AC Modifier' or below, this effect will do nothing.</li>
+		</ul>
+	</li>
+</ul>
+<br/>
 
 <p>
 Each modifier type to AC from this opcode is capped to the range [-20, 20]. Each AC type total is capped to the range [-32768,32767].
@@ -130,6 +141,71 @@ Each modifier type to AC from this opcode is capped to the range [-20, 20]. Each
 IWD1 and PST use a slightly different version. The “Base AC” sets to <strong>field - 1</strong> 
 instead.<br />
 IWD2 uses different parameters altogether.
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+With Timing Modes 1/4/7, alters creature's base stat, leaving behind no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>
+		'Type'=0:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Armor Class (CRE@0x46, "Natural AC", not "Effective AC")</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=1:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#3">ACCRUSHINGMOD</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Crushing AC (CRE@0x4A)</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=2:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#4">ACMISSILEMOD</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Missile AC (CRE@0x4C)</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=4:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#5">ACPIERCINGMOD</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Piercing AC (CRE@0x4E)</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=8:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#6">ACSLASHINGMOD</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Slashing AC (CRE@0x50)</li>
+		</ul>
+	</li>
+	<li>
+		'Type'=16:
+		<ul>
+			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
+			<li>With Timing Modes 1/4/7, alters target's base Armor Class (CRE@0x46, "Natural AC", not "Effective AC"), still subject to "only if better/lower", checked against base value, not current effective value.</li>
+		</ul>
+	</li>
+</ul>
 
   </div>
 </div>
@@ -212,6 +288,17 @@ PST does not support Type 3, while BG(2)EE uses it differently.
   </div>
 </div>
 
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Timing Modes 1/4/7 alters the creature's base APR stat, leaving behind no removable effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -238,7 +325,7 @@ PST does not support Type 3, while BG(2)EE uses it differently.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes <a href="#op39">opcode #39</a> effects and the STATE_SLEEPING flag from the targeted creature(s).
+		<div class="descriptiondata"> Removes <a href="#op39">opcode #39</a> effects and the <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a> flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -246,7 +333,7 @@ PST does not support Type 3, while BG(2)EE uses it differently.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Does not remove the STATE_HELPLESS flag.
+Does not remove the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag.
 
   </div>
 </div>
@@ -298,15 +385,53 @@ At least in EEs, it can remove <a href="#op177">opcode #177</a> effects targetin
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the berserk effect to the targeted creature(s) in the style specified by the 'Type' field.
+
 <br/>Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures.
+
 <br/>Known values for 'Type' are:
-<br/>0 Default/In Combat -> Only berserk while in combat.
-<br/>1 Constant -> always berserk, sets SPELLSTATE 39 - ANIMAL_RAGE (only in EEs).
-<br/>2 Blood Rage -> this is probably not implemented. It should be linked to SPELLSTATE 35 - SUPPRESS_HP_INFO. (only in EEs)
+<ul>
+	<li>0 &longrightarrow; Default/In Combat: only berserk while in combat.</li>
+	<li>1 &longrightarrow; Constant: always berserk, maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE</a> 33 – BERSERK_ALWAYS_ACTIVE (only in EEs).</li>
+	<li>2 &longrightarrow; Blood Rage: doesn't exist in EE's, values 2+ function the same as "0".</li>
+</ul>
 
 <p>
-The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag.
-</p> 
+This opcode sets the <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> flag.
+</p>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Being “in combat” is reliant upon the presence of visible, non-sleeping enemies, but they will attack anyone they can see (including sleeping creatures), ally, neutral, or enemy, without preference (beyond whom is closer).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> specs:
+<ul>
+	<li>Grants a +2 bonus to THAC0 and Damage.</li>
+	<li>
+		While "in combat" or "Constant":
+		<ul>
+			<li>Creature is unseletectable, Inventory is disabled.</li>
+			<li>The creature's AI scripts are disabled.</li>
+			<li>The creature will randomly execute action ~ <a href="../scripting/actions/bgeeactions.htm#134">AttackReevaluate([ANYONE],15)</a> (or similar, not sure exactly which attack action).</li>
+			<li>Disables Saving while affecting a Party Member (Displayed message: "You do not control all your Party Members")</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
 
 
 
@@ -324,7 +449,7 @@ Forces creature(s) to use a melee weapon if possible.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-This effect only affects party members.
+This effect only affects party members (this is not true for EE games, it works fine on non-party creatures.)
 
   </div>
 </div>
@@ -346,7 +471,18 @@ The second paragraph hasn’t been verified for PST and BG1 yet, but likely hold
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Used with timing modes 1/4/7 results in setting STATE_BERSERK when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
+Used with timing modes 1/4/7 results in setting <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+“Morale Failure: Berserk” does NOT use this or any of the other berserk opcodes, nor does it set <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a>.
 
   </div>
 </div>
@@ -377,7 +513,7 @@ Used with timing modes 1/4/7 results in setting STATE_BERSERK when it triggers (
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes <a href="#op3">opcode #3</a> effects and STATE_BERSERK from the targeted creature(s). Does not remove <a href="#op245">opcode #245</a>, <a href="#op246">opcode #246</a> and <a href="#op247">opcode #247</a> effects.
+		<div class="descriptiondata"> Removes <a href="#op3">opcode #3</a> effects and <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> from the targeted creature(s). Does not remove <a href="#op245">opcode #245</a>, <a href="#op246">opcode #246</a> and <a href="#op247">opcode #247</a> effects.
 <br/>This effect ignores durations attributed to it.
 
 
@@ -594,13 +730,63 @@ In EEs, the “Dice Thrown” parameter can be used to override the maintained E
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Charisma = Charisma + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Charisma = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Charisma = (Charisma * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Charisma = Charisma + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Charisma = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Charisma = (Charisma * 'Statistic Modifier' value) / 100</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Charisma raised permanently' will be shown.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
-<br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+All games but EEs:
+<ul>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Charisma raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
+</ul>
+On EEs:
+<ul>
+	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+	<li>
+		The opcode itself provides no coloring anymore (it's been externalized through "UI.menu")
+		<ul>
+			<li>An effective value &gt; base value &longrightarrow; <font color="green">green</font>.</li>
+			<li>An effective value &lt; base value &longrightarrow; <font color="red">red</font>.</li>
+			<li>An effective value &equals; base value &longrightarrow; white/default.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -636,29 +822,122 @@ In EEs, the “Dice Thrown” parameter can be used to override the maintained E
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Alters the colour of the area specified by the 'Location' field, to the colour gradient specified by the 'Gradient Number' field.
+		<div class="descriptiondata"> Alters the colour of the area specified by the 'Location' field, to the <a href="../appendices/colourgradients.htm">colour gradient</a> specified by the 'Gradient Number' field.
 <br/>Known values for 'Location' are:
-<br/>00   Belt Buckle (on armour) or amulets (on robes) - entire body for some animations
-<br/>01   Minor colour
-<br/>02   Major colour
-<br/>03   Skin colour
-<br/>04   Strap colour (on armour) or minor trimming (on robes - the centre strip down a robe and the hem on some robes)
-<br/>05   Armor colour (and major trimming on robe - cross trim and cape trim on  robe of archmagi)
-<br/>06   Hair colour
-<br/>16   Quillons or Crossguard
-<br/>20   Grip (usually not visible as it's in the characters hand)
-<br/>21   Blade or major portion of weapon
-<br/>32   Shield hub
-<br/>33   Shield interior
-<br/>34   Shield panelling
-<br/>34   Helmet misc
-<br/>37   Shield rim
-<br/>48   Helm ornamentation - i.e. wings
-<br/>49   Helm ornamentation - i.e. feathers/horsehair
-<br/>50   Helm ornamentation - i.e. feathers/horsehair
-<br/>52   Helm face
-<br/>53   Helm - the main covering
-<br/>255  Whole Body (at least in IWD2)
+<ul>
+	<li>
+		0 – 6: Avatar/Armor
+		<ul>
+			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) – entire body for some animations</li>
+			<li>01 &longrightarrow; Minor colour</li>
+			<li>02 &longrightarrow; Major colour</li>
+			<li>03 &longrightarrow; Skin colour</li>
+			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes – the centre strip down a robe and the hem on some robes)</li>
+			<li>05 &longrightarrow; Armor colour (and major trimming on robe – cross trim and cape trim on Robe of Archmagi)</li>
+			<li>06 &longrightarrow; Hair colour</li>
+		</ul>
+	</li>
+	<li>
+		16 – 22: Weapon
+		<ul>
+			<li>16 &longrightarrow; Quillons or Crossguard</li>
+			<li>20 &longrightarrow; Grip (usually not visible as it's in the characters hand)</li>
+			<li>21 &longrightarrow; Blade or major portion of weapon</li>
+		</ul>
+	</li>
+	<li>
+		32 – 40: Shield
+		<ul>
+			<li>32 &longrightarrow; Shield hub</li>
+			<li>33 &longrightarrow; Shield interior</li>
+			<li>34 &longrightarrow; Shield panelling</li>
+			<li>37 &longrightarrow; Shield rim</li>
+		</ul>
+	</li>
+	<li>
+		48 – 54: Helmet
+		<ul>
+			<li>48 &longrightarrow; Helm ornamentation – i.e. wings</li>
+			<li>49 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>50 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>52 &longrightarrow; Helm face</li>
+			<li>53 &longrightarrow; Helm – the main covering</li>
+		</ul>
+	</li>
+	<li>255 &longrightarrow; Whole Body (at least in IWD2 and EEs)</li>
+</ul>
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Other values crash immediately or when opening or manipulating Inventory.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each Item Type has 7 slots/locations, corresponding to a different set of Palette indexes that they will replace.</li>
+	<li>Near Infinity lists them as Grey, Cyan/Teal, Magenta/Pink, Yellow, Red, Blue, and Green.<br />
+		While these colors are arbitrary, they best represent the palette used in animation/paperdoll BAMs by default (before being recolored), so you can look at the BAM file and know which colors will be replaced.
+	</li>
+	<li>
+		0=Grey, 1=Cyan, 2=Magenta, 3=Yellow, 4=Red, 5=Blue, 6=Green.<br />
+		+16 for weapons, +32 for shields, +48 for helmets.
+	</li>
+	<li>The names already listed for some of these locations in IESDP are accurate, as they correspond to their general use in the vanilla game, but all 7 slots can be used for each item, provided their BAM file makes use of them.</li>
+	<li>
+		Palette indexes will be replaced by the gradient specified for those locations:
+		<ul>
+			<li>Index 0–3 are reserved for Transparency and Shadows, they are not replaced.</li>
+			<li>Index 4–15: Grey</li>
+			<li>Index 16–27: Cyan</li>
+			<li>Index 28–39: Pink</li>
+			<li>Index 40–51: Yellow</li>
+			<li>Index 52–63: Red</li>
+			<li>Index 64–75: Blue</li>
+			<li>
+				Index 76–87: Green<br />
+				(7 groups of 12 indexes, each exclusive to one location)
+			</li>
+			<li>Index 88–95: (Grey + Cyan)</li>
+			<li>Index 96–103: (Grey + Magenta)</li>
+			<li>Index 104–111: (Grey + Yellow)</li>
+			<li>Index 112–119: (Grey + Red)</li>
+			<li>Index 120–127: (Grey + Blue)</li>
+			<li>Index 128–135: (Grey + Green)</li>
+			<li>Index 136–143: (Cyan + Magenta)</li>
+			<li>Index 144–151: (Cyan + Yellow)</li>
+			<li>Index 152–159: (Cyan + Red)</li>
+			<li>Index 160–167: (Cyan + Blue)</li>
+			<li>Index 168–175: (Cyan + Green)</li>
+			<li>Index 176–183: (Magenta + Yellow)</li>
+			<li>Index 184–191: (Magenta + Red)</li>
+			<li>Index 192–199: (Magenta + Blue)</li>
+			<li>Index 200–207: (Magenta + Green)</li>
+			<li>Index 208–215: (Yellow + Red)</li>
+			<li>Index 216–223: (Yellow + Blue)</li>
+			<li>Index 224–231: (Yellow + Green)</li>
+			<li>Index 232–239: (Red + Blue)</li>
+			<li>Index 240–247: (Red + Green)</li>
+			<li>
+				Index 248–255: (Blue + Green)<br />
+				(21 groups of 8 indexes, each shared by a different combination of two locations)
+			</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -708,31 +987,127 @@ In EEs, the “Dice Thrown” parameter can be used to override the maintained E
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the colour of the area specified by the 'Location' field, to the colour specified by the 'RGB colour' field.
 <br/>The 'RGB Colour' field is handled as follows:
-<br/>Second byte = Red (0-255)
-<br/>Third byte     = Green (0-255)
-<br/>Fourth byte   = Blue (0-255)
+<ul>
+	<li>Second byte = Red (0–255)</li>
+	<li>Third byte = Green (0–255)</li>
+	<li>Fourth byte = Blue (0–255)</li>
+</ul>
+
 <br/>Known values for 'Location' are:
-<br/>00   Belt Buckle (on armour) or amulets (on robes) - entire body for some animations
-<br/>01   Minor colour
-<br/>02   Major colour
-<br/>03   Skin colour
-<br/>04   Strap colour (on armour) or minor trimming (on robes - the centre strip down a robe and the hem on some robes)
-<br/>05   Armor colour (and major trimming on robe - cross trim and cape trim on  robe of archmagi)
-<br/>06   Hair colour
-<br/>16   Quillons or Crossguard
-<br/>20   Grip (usually not visible as it's in the characters hand)
-<br/>21   Blade or major portion of weapon
-<br/>32   Shield hub
-<br/>33   Shield interior
-<br/>34   Shield panelling
-<br/>34   Helmet misc
-<br/>37   Shield rim
-<br/>48   Helm ornamentation - i.e. wings
-<br/>49   Helm ornamentation - i.e. feathers/horsehair
-<br/>50   Helm ornamentation - i.e. feathers/horsehair
-<br/>52   Helm face
-<br/>53   Helm - the main covering
-<br/>255  Whole Body (at least in IWD2)
+<ul>
+	<li>
+		0 – 6: Avatar/Armor
+		<ul>
+			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) – entire body for some animations</li>
+			<li>01 &longrightarrow; Minor colour</li>
+			<li>02 &longrightarrow; Major colour</li>
+			<li>03 &longrightarrow; Skin colour</li>
+			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes – the centre strip down a robe and the hem on some robes)</li>
+			<li>05 &longrightarrow; Armor colour (and major trimming on robe – cross trim and cape trim on Robe of Archmagi)</li>
+			<li>06 &longrightarrow; Hair colour</li>
+		</ul>
+	</li>
+	<li>
+		16 – 22: Weapon
+		<ul>
+			<li>16 &longrightarrow; Quillons or Crossguard</li>
+			<li>20 &longrightarrow; Grip (usually not visible as it's in the characters hand)</li>
+			<li>21 &longrightarrow; Blade or major portion of weapon</li>
+		</ul>
+	</li>
+	<li>
+		32 – 40: Shield
+		<ul>
+			<li>32 &longrightarrow; Shield hub</li>
+			<li>33 &longrightarrow; Shield interior</li>
+			<li>34 &longrightarrow; Shield panelling</li>
+			<li>37 &longrightarrow; Shield rim</li>
+		</ul>
+	</li>
+	<li>
+		48 – 54: Helmet
+		<ul>
+			<li>48 &longrightarrow; Helm ornamentation – i.e. wings</li>
+			<li>49 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>50 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>52 &longrightarrow; Helm face</li>
+			<li>53 &longrightarrow; Helm – the main covering</li>
+		</ul>
+	</li>
+	<li>255 &longrightarrow; Whole Body (at least in IWD2 and EEs)</li>
+</ul>
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Other values crash immediately or when opening or manipulating Inventory.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each Item Type has 7 slots/locations, corresponding to a different set of Palette indexes that they will replace.</li>
+	<li>Near Infinity lists them as Grey, Cyan/Teal, Magenta/Pink, Yellow, Red, Blue, and Green.<br />
+		While these colors are arbitrary, they best represent the palette used in animation/paperdoll BAMs by default (before being recolored), so you can look at the BAM file and know which colors will be replaced.
+	</li>
+	<li>
+		0=Grey, 1=Cyan, 2=Magenta, 3=Yellow, 4=Red, 5=Blue, 6=Green.<br />
+		+16 for weapons, +32 for shields, +48 for helmets.
+	</li>
+	<li>The names already listed for some of these locations in IESDP are accurate, as they correspond to their general use in the vanilla game, but all 7 slots can be used for each item, provided their BAM file makes use of them.</li>
+	<li>
+		Palette indexes will be replaced by the gradient specified for those locations:
+		<ul>
+			<li>Index 0–3 are reserved for Transparency and Shadows, they are not replaced.</li>
+			<li>Index 4–15: Grey</li>
+			<li>Index 16–27: Cyan</li>
+			<li>Index 28–39: Pink</li>
+			<li>Index 40–51: Yellow</li>
+			<li>Index 52–63: Red</li>
+			<li>Index 64–75: Blue</li>
+			<li>
+				Index 76–87: Green<br />
+				(7 groups of 12 indexes, each exclusive to one location)
+			</li>
+			<li>Index 88–95: (Grey + Cyan)</li>
+			<li>Index 96–103: (Grey + Magenta)</li>
+			<li>Index 104–111: (Grey + Yellow)</li>
+			<li>Index 112–119: (Grey + Red)</li>
+			<li>Index 120–127: (Grey + Blue)</li>
+			<li>Index 128–135: (Grey + Green)</li>
+			<li>Index 136–143: (Cyan + Magenta)</li>
+			<li>Index 144–151: (Cyan + Yellow)</li>
+			<li>Index 152–159: (Cyan + Red)</li>
+			<li>Index 160–167: (Cyan + Blue)</li>
+			<li>Index 168–175: (Cyan + Green)</li>
+			<li>Index 176–183: (Magenta + Yellow)</li>
+			<li>Index 184–191: (Magenta + Red)</li>
+			<li>Index 192–199: (Magenta + Blue)</li>
+			<li>Index 200–207: (Magenta + Green)</li>
+			<li>Index 208–215: (Yellow + Red)</li>
+			<li>Index 216–223: (Yellow + Blue)</li>
+			<li>Index 224–231: (Yellow + Green)</li>
+			<li>Index 232–239: (Red + Blue)</li>
+			<li>Index 240–247: (Red + Green)</li>
+			<li>
+				Index 248–255: (Blue + Green)<br />
+				(21 groups of 8 indexes, each shared by a different combination of two locations)
+			</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -770,6 +1145,12 @@ In EEs, the “Dice Thrown” parameter can be used to override the maintained E
 		
 			
 				
+			
+			
+			
+				<a class="opvariant" href="bgee.htm#op9">BGEE</a>
+			
+		
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">RGB Colour</span><br />
@@ -782,35 +1163,135 @@ In EEs, the “Dice Thrown” parameter can be used to override the maintained E
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Pulses the area specified by the 'Location and Speed' field, at the rate specified by the 'Location and Speed' field, with the colour specified by the 'RGB Colour' field. If the colour values are all set to 0, the glow effect only occurs if the creature is in darkness; outside at night, inside a building, or standing in shadows.
 <br/>The 'RGB Colour' field is handled as follows:
-<br/>Second byte = Red (0-255)
-<br/>Third byte     = Green (0-255)
-<br/>Fourth byte   = Blue (0-255)
-<br/>The 'Location' field is handled as follows:
-<br/>First byte = Location
-<br/>Third byte  = Speed (0-255)
+<ul>
+	<li>Second byte = Red (0–255)</li>
+	<li>Third byte = Green (0–255)</li>
+	<li>Fourth byte = Blue (0–255)</li>
+</ul>
+
+<br/>The 'Location and Speed' field is handled as follows:
+<ul>
+	<li>First byte = Location</li>
+	<li>Third byte = Speed (0–255)</li>
+</ul>
+
 <br/>A speed of 0 does not pulsate. A speed of 1 is fastest, and a speed of 255 is slowest.
+
 <br/>Known values for 'Location' are:
-<br/>00   Belt Buckle (on armour) or amulets (on robes) - entire body for some animations
-<br/>01   Minor colour
-<br/>02   Major colour
-<br/>03   Skin colour
-<br/>04   Strap colour (on armour) or minor trimming (on robes - the centre strip down a robe and the hem on some robes)
-<br/>05   Armor colour (and major trimming on robe - cross trim and cape trim on  robe of archmagi)
-<br/>06   Hair colour
-<br/>16   Quillons or Crossguard
-<br/>20   Grip (usually not visible as it's in the characters hand)
-<br/>21   Blade or major portion of weapon
-<br/>32   Shield hub
-<br/>33   Shield interior
-<br/>34   Shield panelling
-<br/>34   Helmet misc
-<br/>37   Shield rim
-<br/>48   Helm ornamentation - i.e. wings
-<br/>49   Helm ornamentation - i.e. feathers/horsehair
-<br/>50   Helm ornamentation - i.e. feathers/horsehair
-<br/>52   Helm face
-<br/>53   Helm - the main covering
-<br/>255  Whole Body (at least in IWD2)
+<ul>
+	<li>
+		0 – 6: Avatar/Armor
+		<ul>
+			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) – entire body for some animations</li>
+			<li>01 &longrightarrow; Minor colour</li>
+			<li>02 &longrightarrow; Major colour</li>
+			<li>03 &longrightarrow; Skin colour</li>
+			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes – the centre strip down a robe and the hem on some robes)</li>
+			<li>05 &longrightarrow; Armor colour (and major trimming on robe – cross trim and cape trim on Robe of Archmagi)</li>
+			<li>06 &longrightarrow; Hair colour</li>
+		</ul>
+	</li>
+	<li>
+		16 – 22: Weapon
+		<ul>
+			<li>16 &longrightarrow; Quillons or Crossguard</li>
+			<li>20 &longrightarrow; Grip (usually not visible as it's in the characters hand)</li>
+			<li>21 &longrightarrow; Blade or major portion of weapon</li>
+		</ul>
+	</li>
+	<li>
+		32 – 40: Shield
+		<ul>
+			<li>32 &longrightarrow; Shield hub</li>
+			<li>33 &longrightarrow; Shield interior</li>
+			<li>34 &longrightarrow; Shield panelling</li>
+			<li>37 &longrightarrow; Shield rim</li>
+		</ul>
+	</li>
+	<li>
+		48 – 54: Helmet
+		<ul>
+			<li>48 &longrightarrow; Helm ornamentation – i.e. wings</li>
+			<li>49 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>50 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>52 &longrightarrow; Helm face</li>
+			<li>53 &longrightarrow; Helm – the main covering</li>
+		</ul>
+	</li>
+	<li>255 &longrightarrow; Whole Body (at least in IWD2 and EEs)</li>
+</ul>
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Other values crash immediately or when opening or manipulating Inventory.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each Item Type has 7 slots/locations, corresponding to a different set of Palette indexes that they will replace.</li>
+	<li>Near Infinity lists them as Grey, Cyan/Teal, Magenta/Pink, Yellow, Red, Blue, and Green.<br />
+		While these colors are arbitrary, they best represent the palette used in animation/paperdoll BAMs by default (before being recolored), so you can look at the BAM file and know which colors will be replaced.
+	</li>
+	<li>
+		0=Grey, 1=Cyan, 2=Magenta, 3=Yellow, 4=Red, 5=Blue, 6=Green.<br />
+		+16 for weapons, +32 for shields, +48 for helmets.
+	</li>
+	<li>The names already listed for some of these locations in IESDP are accurate, as they correspond to their general use in the vanilla game, but all 7 slots can be used for each item, provided their BAM file makes use of them.</li>
+	<li>
+		Palette indexes will be replaced by the gradient specified for those locations:
+		<ul>
+			<li>Index 0–3 are reserved for Transparency and Shadows, they are not replaced.</li>
+			<li>Index 4–15: Grey</li>
+			<li>Index 16–27: Cyan</li>
+			<li>Index 28–39: Pink</li>
+			<li>Index 40–51: Yellow</li>
+			<li>Index 52–63: Red</li>
+			<li>Index 64–75: Blue</li>
+			<li>
+				Index 76–87: Green<br />
+				(7 groups of 12 indexes, each exclusive to one location)
+			</li>
+			<li>Index 88–95: (Grey + Cyan)</li>
+			<li>Index 96–103: (Grey + Magenta)</li>
+			<li>Index 104–111: (Grey + Yellow)</li>
+			<li>Index 112–119: (Grey + Red)</li>
+			<li>Index 120–127: (Grey + Blue)</li>
+			<li>Index 128–135: (Grey + Green)</li>
+			<li>Index 136–143: (Cyan + Magenta)</li>
+			<li>Index 144–151: (Cyan + Yellow)</li>
+			<li>Index 152–159: (Cyan + Red)</li>
+			<li>Index 160–167: (Cyan + Blue)</li>
+			<li>Index 168–175: (Cyan + Green)</li>
+			<li>Index 176–183: (Magenta + Yellow)</li>
+			<li>Index 184–191: (Magenta + Red)</li>
+			<li>Index 192–199: (Magenta + Blue)</li>
+			<li>Index 200–207: (Magenta + Green)</li>
+			<li>Index 208–215: (Yellow + Red)</li>
+			<li>Index 216–223: (Yellow + Blue)</li>
+			<li>Index 224–231: (Yellow + Green)</li>
+			<li>Index 232–239: (Red + Blue)</li>
+			<li>Index 240–247: (Red + Green)</li>
+			<li>
+				Index 248–255: (Blue + Green)<br />
+				(21 groups of 8 indexes, each shared by a different combination of two locations)
+			</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -854,13 +1335,63 @@ In EEs, the “Dice Thrown” parameter can be used to override the maintained E
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Constitution = Constitution + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Constitution = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Constitution = (Constitution * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Constitution = Constitution + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Constitution = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Constitution = (Constitution * 'Statistic Modifier' value) / 100</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Constitution raised permanently' will be shown.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
-<br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+All games but EEs:
+<ul>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Constitution raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
+</ul>
+On EEs:
+<ul>
+	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+	<li>
+		The opcode itself provides no coloring anymore (it's been externalized through "UI.menu")
+		<ul>
+			<li>An effective value &gt; base value &longrightarrow; <font color="green">green</font>.</li>
+			<li>An effective value &lt; base value &longrightarrow; <font color="red">red</font>.</li>
+			<li>An effective value &equals; base value &longrightarrow; white/default.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -887,7 +1418,7 @@ In EEs, the “Dice Thrown” parameter can be used to override the maintained E
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes <a href="#op25">opcode #25</a> poison effects and STATE_POISON from the targeted creature(s).
+		<div class="descriptiondata"> Removes <a href="#op25">opcode #25</a> poison effects and <a href="../files/ids/bgee/state.htm#BIT14">STATE_POISONED</a> from the targeted creature(s).
 
 
 
@@ -1096,87 +1627,119 @@ Using ‘Magic Fire’ or ‘Magic Cold’ as a damage type will result the game
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Instantly kills the targeted creature(s), in the style specified by the 'Death Type' value.
 <br/>Known values for 'Text Notification' are:
-<br/>0   Show death message
-<br/>1   Don't show death message
+<ul>
+  <li>0 &longrightarrow; Show death message</li>
+  <li>1 &longrightarrow; Don't show death message</li>
+</ul>
+<br />
+
 <br/>Known values for 'Death Type' are:
-<br/>0   Acid death
-  <ul>
-    <li>Sets state STATE_ACID_DEATH (0x00000400), STATE_DEAD (0x00000800)</li>
-    <li>Kicked from party, drops inventory</li>
-  </ul>
-<br/>1   Burning death
-  <ul>
-    <li>Sets state STATE_FLAME_DEATH (0x00000200), STATE_DEAD (0x00000800)</li>
-    <li>Character Tint Solid, character color ~[0x00404040] (Darkens avatar)</li>
-    <li>Kicked from party, drops inventory</li>
-  </ul>
-<br/>2   Crushed death
-  <ul>
-    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
-    <li>Kicked from party, drops inventory</li>
-  </ul>
-<br/>4   Normal death
-  <ul>
-    <li>Sets state STATE_DEAD (0x00000800)</li>
-    <li>Drops inventory</li>
-  </ul>
-<br/>8   Chunked death
-  <ul>
-    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
-    <li>Sets ANIMATE[0x230][EXPLODING_TORSO]</li>
-    <li>Plays sound ("GORE.WAV")/("GORE2.WAV")</li>
-    <li>Kicked from party, drops inventory, sets all color indexes to 70</li>
-  </ul>
-<br/>16  Stoned death
-  <ul>
-    <li>Sets state STATE_STONE_DEATH (0x00000080)</li>
-    <li>Any hostile action against the creature(s) applies an Exploding Stoned Death to them</li>
-    <li>Kicked from party, retains inventory, overlay's color index 72</li>
-  </ul>
-<br/>32  Freezing death
-  <ul>
-    <li>Applies Exploding Freezing Death to the target with a (random) 0-5 second delay</li>
-    <li>Sets state STATE_FROZEN_DEATH (0x00000040)</li>
-    <li>Any hostile action against the creature applies an Exploding Freezing Death to the target</li>
-    <li>Kicked from party, retains inventory, overlay's color index 71</li>
-  </ul>
-<br/>64  Exploding stoned death/Level Drain death
-  <ul>
-    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
-    <li>Sets ANIMATE[0x100][CHUNKS]</li>
-    <li>Kicked from party, retains inventory, sets all color indexes to 72</li>
-  </ul>
-<br/>128 Exploding freezing death
-  <ul>
-    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
-    <li>Sets ANIMATE[0x100][CHUNKS]</li>
-    <li>Kicked from party, retains inventory, sets all color indexes to 71</li>
-  </ul>
-<br/>256 Electrified death
-  <ul>
-    <li>Sets state STATE_FLAMING_DEATH (0x00000200), STATE_DEAD (0x00000800)</li>
-    <li>Character Tint Solid, character color ~[0x00404040] (Darkens avatar)</li>
-    <li>Kicked from party, drops inventory</li>
-  </ul>
-<br/>512 Disintegration death
-  <ul>
-    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
-    <li>Sets ANIMATE[0x100][CHUNKS]</li>
-    <li>Kicked from party, retains inventory, sets all color indexes to 72</li>
-  </ul>
-<br/>1024 Destruction (in IWD2)
-  <ul>
-    <li>Sets state STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
-    <li>Sets ANIMATE[0x230][EXPLODING_TORSO]</li>
-    <li>Plays sound ("GORE.WAV")/("GORE2.WAV")</li>
-    <li>Kicked from party, retains inventory, sets all color indexes to 70</li>
-  </ul>
-<br/>Other
-  <ul>
-    <li>Removes all death states, but does not restore HP</li>
-    <li>Drops inventory</li>
-  </ul>
-<br/>Any -> Removes death states that they do not set (e.g, a normal Death will remove STATE_FROZEN_DEATH).
+<ul>
+  <li>0 &longrightarrow; Acid death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT10">STATE_ACID_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Kicked from party, drops inventory</li>
+    </ul>
+  </li>
+
+  <li>1 &longrightarrow; Burning death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT9">STATE_FLAME_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Character Tint Solid, character color ~[0x00404040] (Darkens avatar)</li>
+      <li>Kicked from party, drops inventory</li>
+    </ul>
+  </li>
+
+  <li>2 &longrightarrow; Crushed death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT8">STATE_EXPLODING_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Kicked from party, drops inventory</li>
+    </ul>
+  </li>
+
+  <li>4 &longrightarrow; Normal death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Drops inventory</li>
+    </ul>
+  </li>
+
+  <li>8 &longrightarrow; Chunked death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT8">STATE_EXPLODING_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Sets ANIMATE[0x230][EXPLODING_TORSO]</li>
+      <li>Plays sound ("GORE.WAV")/("GORE2.WAV")</li>
+      <li>Kicked from party, drops inventory, sets all color indexes to 70</li>
+    </ul>
+  </li>
+
+  <li>16 &longrightarrow; Stoned death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT7">STATE_STONE_DEATH</a></li>
+      <li>Any hostile action against the creature(s) applies an Exploding Stoned Death to them</li>
+      <li>Kicked from party, retains inventory, overlay's color index 72</li>
+    </ul>
+  </li>
+
+  <li>32 &longrightarrow; Freezing death
+    <ul>
+      <li>Applies Exploding Freezing Death to the target with a (random) 0-5 second delay</li>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT6">STATE_FROZEN_DEATH</a></li>
+      <li>Any hostile action against the creature applies an Exploding Freezing Death to the target</li>
+      <li>Kicked from party, retains inventory, overlay's color index 71</li>
+    </ul>
+  </li>
+
+  <li>64 &longrightarrow; Exploding stoned death/Level Drain death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT8">STATE_EXPLODING_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Sets ANIMATE[0x100][CHUNKS]</li>
+      <li>Kicked from party, retains inventory, sets all color indexes to 72</li>
+    </ul>
+  </li>
+
+  <li>128 &longrightarrow; Exploding freezing death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT8">STATE_EXPLODING_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Sets ANIMATE[0x100][CHUNKS]</li>
+      <li>Kicked from party, retains inventory, sets all color indexes to 71</li>
+    </ul>
+  </li>
+
+  <li>256 &longrightarrow; Electrified death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT9">STATE_FLAME_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Character Tint Solid, character color ~[0x00404040] (Darkens avatar)</li>
+      <li>Kicked from party, drops inventory</li>
+    </ul>
+  </li>
+
+  <li>512 &longrightarrow; Disintegration death
+    <ul>
+      <li>Sets <a href="../files/ids/bgee/state.htm#BIT8">STATE_EXPLODING_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a></li>
+      <li>Sets ANIMATE[0x100][CHUNKS]</li>
+      <li>Kicked from party, retains inventory, sets all color indexes to 72</li>
+    </ul>
+  </li>
+
+  <li>1024 &longrightarrow; Destruction (in IWD2)
+    <ul>
+      <li>Sets STATE_EXPLODING_DEATH (0x00000100), STATE_DEAD (0x00000800)</li>
+      <li>Sets ANIMATE[0x230][EXPLODING_TORSO]</li>
+      <li>Plays sound ("GORE.WAV")/("GORE2.WAV")</li>
+      <li>Kicked from party, retains inventory, sets all color indexes to 70</li>
+    </ul>
+  </li>
+
+  <li>Other
+    <ul>
+      <li>Removes all death states, but does not restore HP</li>
+      <li>Drops inventory</li>
+    </ul>
+  </li>
+
+  <li>Any -> Removes death states that they do not set (e.g, a normal Death will remove <a href="../files/ids/bgee/state.htm#BIT6">STATE_FROZEN_DEATH</a>).</li>
+</ul>
  </div>
 		<hr />
 
@@ -1268,13 +1831,92 @@ Using ‘Magic Fire’ or ‘Magic Cold’ as a damage type will result the game
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Dexterity = Dexterity + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Dexterity = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Dexterity = (Dexterity * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Dexterity = Dexterity + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Dexterity = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Dexterity = (Dexterity * 'Statistic Modifier' value) / 100</li>
+	<li>3 &longrightarrow; Cat's Grace (EE only)</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Dexterity raised permanently' will be shown.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
-<br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+All games but EEs:
+<ul>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Dexterity raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
+</ul>
+On EEs:
+<ul>
+	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+	<li>
+		The opcode itself provides no coloring anymore (it's been externalized through "UI.menu")
+		<ul>
+			<li>An effective value &gt; base value &longrightarrow; <font color="green">green</font>.</li>
+			<li>An effective value &lt; base value &longrightarrow; <font color="red">red</font>.</li>
+			<li>An effective value &equals; base value &longrightarrow; white/default.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+When ‘Type’=3:
+<ul>
+	<li>'Statistic Modifier' is unused: it uses the value listed in <a href="../files/2da/2da_bgee/clssplab.htm">CLSSPLAB.2da</a> for the creature's base class, or defaults to '1' if the file isn't present (it only exists by default in IWDEE).</li>
+	<li>
+		A single instance of this opcode (using 'Type'=3) cannot raise Dexterity above 20 (hardcoded), but multiple instances of it can.
+		<ul>
+			<li>This is because it only checks the limit against the creature's base score, not its effective score.</li>
+		</ul>
+	</li>
+	<li>Like the other modes, applying the effect with Timing Mode 1 will affect the creature's base stat, leaving no removable effect.</li>
+	<li>Once applied to a creature, 'Statistic Modifier' will store the exact DEX increase granted (only useful for lookup/editing through EEkeeper/NI).</li>
+	<li>
+		When you apply this effect in an External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>, (via <a href="#op177">op177</a> / <a href="#op283">op283</a>):
+		<ul>
+			<li>'Parameter1' in the EFF will determine the exact Dexterity increase (so it must be set manually, and ignores any limit).</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -1312,22 +1954,26 @@ Using ‘Magic Fire’ or ‘Magic Cold’ as a damage type will result the game
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the Haste effect, in the style specified by the 'Type' value.
 <br/>Known values for 'Type' are:
-<br/>0   Normal Haste - double the movement rate and grants an additional Attack Per Round (APR), rounded down (capped at 6)
-<br/>1   Improved Haste - double the movement rate and doubles APR (capped at 10)
-<br/>2   Weak Haste – Speed haste without attack bonuses, round APR up (capped at 5)
-<br/><br/>All of them set STATE_HASTED. Improved/Weak function by setting an additional STAT value, which modifies the behavior of STATE_HASTED:
 <ul>
-	<li>STAT 155 – IMPROVEDHASTE.</li>
-	<li>STAT 185 – ANIMATION_ONLY_HASTE.</li>
+	<li>0 &longrightarrow; Normal Haste - double the movement rate and grants an additional Attack Per Round (APR), rounded down (capped at 6)</li>
+	<li>1 &longrightarrow; Improved Haste - double the movement rate and doubles APR (capped at 10)</li>
+	<li>2 &longrightarrow; Weak Haste – Speed haste without attack bonuses, round APR up (capped at 5)</li>
+</ul>
+
+<br/><br/>All of them set <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a>. Improved/Weak function by setting an additional STAT value, which modifies the behavior of <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a>:
+<ul>
+	<li><a href="../files/ids/bgee/stats.htm#155">IMPROVEDHASTE</a>.</li>
+	<li><a href="../files/ids/bgee/stats.htm#185">ANIMATION_ONLY_HASTE</a>.</li>
 </ul>
 
 <p>
-The normal and improved haste types grant a -2 initiative (weapon speed) bonus. All types:<br/>
-- grant portrait icons<br/>
-- increase the creature's animation speed and the animation speed of Opcode 140 effects<br/>
-- halve the creature's round timer used by attacks, modal abilities and "Auto-Pause: End of Round"<br/>
-- increase frequency of application of <a href="#op25">poison</a>, <a href="#op78">disease</a>,
- <a href="#op98">regeneration</a>, <a href="#op232">Cast on Condition</a> and <a href="#op272">Use EFF File (at Frequency)</a>, but not below 1s
+The Normal and Improved haste types grant a -2 initiative (weapon speed) bonus. All types:
+<ul>
+	<li>grant portrait icons</li>
+	<li>increase the creature's animation speed and the animation speed of <a href="#op140">opcode 140</a> effects</li>
+	<li>halve the creature's round timer used by attacks, modal abilities and "Auto-Pause: End of Round"</li>
+	<li>increase frequency of application of <a href="#op25">poison</a>, <a href="#op78">disease</a>, <a href="#op98">regeneration</a>, <a href="#op232">Cast on Condition</a> and <a href="#op272">Use EFF File (at Frequency)</a>, but not below 1s</li>
+</ul>
 </p>
 
 
@@ -1347,10 +1993,8 @@ This effect will cancel out the <a href="#op40">slow opcode</a>.
   <div>
     <strong>Warning:</strong> 
 BG1 only supports haste type 0.<br /><br />
-This opcode will set the STATE_HASTED flag and nothing else when applied with timing mode 1,
- and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.
-This only works when applying normal/improved haste (there’s no difference, since the STAT for
- improved haste doesn’t get set this way), weak haste does not do anything with timing mode 1.
+This opcode will set the <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a> flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.<br />
+This only works when applying Normal/Improved haste (there’s no difference, since the STAT for Improved haste doesn’t get set this way), Weak haste does not do anything with timing mode 1.
 
   </div>
 </div>
@@ -1442,17 +2086,47 @@ If ‘Statistic Modifier’ and the Dice values are both non-zero, the total HP 
 		
 		
 		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Mode</span><br />
+		
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> HP = HP + 'Statistic Modifier' value (affects current and max HP)
-<br/>1   Flat Value Modifier -> HP = 'Statistic Modifier' value (affects current and max HP)
-<br/>2   Percentage Modifier -> HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)
-<br/>3   As 0 (does not affect current HP)
-<br/>4   As 1 (does not affect current HP)
-<br/>5   As 2 (does not affect current HP)
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: HP = HP + 'Statistic Modifier' value (affects current and max HP)</li>
+	<li>1 &longrightarrow; Flat Value Modifier: HP = 'Statistic Modifier' value (affects current and max HP)</li>
+	<li>2 &longrightarrow; Percentage Modifier: HP = (HP * 'Statistic Modifier' value) / 100 (affects current and max HP)</li>
+	<li>3 &longrightarrow; As 0 (does not affect current HP)</li>
+	<li>4 &longrightarrow; As 1 (does not affect current HP)</li>
+	<li>5 &longrightarrow; As 2 (does not affect current HP)</li>
+	<li>6 &longrightarrow; Non-cumulative Modifier: HP = HP + 'Statistic Modifier' value (affects current and max HP) (EE only...?)</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
+
+<br/><br/>Known values for 'Mode' are:
+<ul>
+	<li>0 &longrightarrow; Normal: Effect functions as dictated by the 'Type' field.</li>
+	<li>
+		1 &longrightarrow; Do not update current HP.
+		<ul>
+			<li>This value is set automatically once the effect has been initially processed on a creature.</li>
+			<li>For normal operation, the special field MUST be zero.</li>
+		</ul>
+	</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+‘Type’=6: This mode is applied by <a href="#op12">opcode #12</a> with either Special BIT3 or BIT4 (Drain to max HP), blocking further effects with those BITs from granting additional HP, but still allow them to deal damage.<br />
+(This might change in v2.6, given the overhaul to the damage flags involved with it, as currently it further blocks both the Current and Maximum HP gain, when it should only block further Maximum HP gain.)
+
+  </div>
+</div>
+
 
 
 
@@ -1471,6 +2145,79 @@ For non-permanent timing modes of ‘Type’ 2 or 5 use the base maximum HP valu
   <div>
     <strong>Note:</strong> 
 If ‘Statistic Modifier’ and the Dice values are both non-zero, the total HP change is: ‘Statistic Modifier’ + Dice value.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>Maximum HP cannot be reduced below a creature's level/HD (average level rounded up for multiclasses).</li>
+	<li>It is still able to reduce current HP below the creature's level/HD, and has the same bugged death as <a href="#op17">opcode #17</a> if it reduces a creature to zero or less HP.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+The following can be considered bugs, though they may be internally necessary, so it could also be seen as a matter of DO NOT USE in this way.
+<ul>
+	<li>
+		When applied in spells/items, this effect, and all other existing op18 effects on the creature have their 'Statistic Modifier' value increased by their dice value (rerolled):
+		<ul>
+			<li>
+				Apply op18: +10d1, on CRE:<br />
+				This effect p1 = 20 (10d1 + 10d1), total = +20
+			</li>
+			<li>
+				Apply op18: +5d1, on CRE:<br />
+				This effect p1 = 10 (5d1 + 5d1).<br />
+				Previous effect p1 now = 30 (20 + 10d1), total = +40
+			</li>
+			<li>
+				Apply op18: +10d1, on CRE:<br />
+				This effect p1 = 20 (10d1 + 10d1).<br />
+				First effect p1 now = 40 (30 + 10d1).<br />
+				Second effect p1 now = 15 (10 + 5d1), total = +75
+			</li>
+			<li>
+				Apply op18: +1d1, on CRE:<br />
+				This effect p1 = 2 (1d1 + 1d1).<br />
+				First effect p1 now = 50 (40 + 10d1).<br />
+				Second effect p1 now = 20 (15 + 5d1).<br />
+				Third effect p1 now = 30 (20 + 10d1), total = +102
+			</li>
+			<li>Avoid using the dice fields in spells/items.</li>
+		</ul>
+	</li>
+	<li>
+		When applied in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
+		<ul>
+			<li>Dice Values are rerolled if you save/reload while the effect is still active.</li>
+			<li>Avoid using the dice fields in external EFFs.</li>
+		</ul>
+	</li>
+	<li>
+		When applied in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
+		<ul>
+			<li>Current Hit Points are increased by twice the specified amount, plus the cumulative total of all other op18 effects applied through external EFFs currently active on the creature. Maximum Hit Points are increased as normal.</li>
+			<li>Apply EFF with p1=10, p2=0, Current HP: +20, Maximum HP: +10</li>
+			<li>Apply it again before the previous expires: Current HP: +30, Maximum HP: +10</li>
+			<li>Apply it again before either previous expires: Current HP: +40, Maximum HP: +10</li>
+			<li>Avoid using the "Update current HP" modes in external EFFs.</li>
+			<li>This works similar to using the dice fields in items/spells, except it affects Current Hit Points instead of Maximum. Though since Current Hit Point modifiers don't leave any effect behind, cannot actually verify that's how the mechanic works.</li>
+		</ul>
+	</li>
+</ul>
 
   </div>
 </div>
@@ -1512,13 +2259,63 @@ If ‘Statistic Modifier’ and the Dice values are both non-zero, the total HP 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Intelligence = Intelligence + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Intelligence = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Intelligence = (Intelligence * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Intelligence = Intelligence + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Intelligence = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Intelligence = (Intelligence * 'Statistic Modifier' value) / 100</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Intelligence raised permanently' will be shown.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
-<br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+All games but EEs:
+<ul>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Intelligence raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
+</ul>
+On EEs:
+<ul>
+	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+	<li>
+		The opcode itself provides no coloring anymore (it's been externalized through "UI.menu")
+		<ul>
+			<li>An effective value &gt; base value &longrightarrow; <font color="green">green</font>.</li>
+			<li>An effective value &lt; base value &longrightarrow; <font color="red">red</font>.</li>
+			<li>An effective value &equals; base value &longrightarrow; white/default.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -1573,50 +2370,85 @@ If ‘Statistic Modifier’ and the Dice values are both non-zero, the total HP 
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the invisibility effect, in the style specified by the 'Type' value.
-<br/>Known values for 'Type' are :
-<br/>0   Normal Invisibility   -> affected creature makes the first attack with +4
-<br/>1   Improved Invisibility -> affected creature stays invisible after attack
-<br/>2   Weak Invisibility -> EE: It's the same type of invisibility as 'Improved Invisibility' after you take a hostile action and reveal yourself.
-
-
-
-<div class="note info">
-  <div>
-    <strong>Note:</strong> 
-‘Improved Invisibility’ does not provide saving throw bonuses outside EEs, where it provides a bonus of 4 to all. The same holds for ‘Weak Invisibility’.
-
-  </div>
-</div>
-
-
-
-
-<div class="note info">
-  <div>
-    <strong>Note:</strong> 
-‘Improved Invisibility’ lingers after the duration is spent and act as permanent if used as a ‘While Equipped’ effect
-
-  </div>
-</div>
-
-
-
-
-<div class="note info">
-  <div>
-    <strong>Note:</strong> 
-‘Weak Invisibility’ is not by itself sufficient to trigger backstabs.
-
-  </div>
-</div>
-
+<br/>Known values for 'Type' are:
+<ul>
+	<li>0 &longrightarrow; Normal Invisibility</li>
+	<li>1 &longrightarrow; Improved Invisibility</li>
+	<li>2 &longrightarrow; Weak Invisibility (EE only)</li>
+</ul>
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Creatures attacking an invisible creature suffer a -4 penalty to hit, unless they are affected by <a href="#op193">opcode #193</a> Invisible Detection by Script. Moreover, you cannot target an improved/weak invisible creature with spells unless you’re affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures.
+<ul>
+	<li>
+		Normal Invisibility:
+		<ul>
+			<li>Grants a +4 bonus to melee attacks only.</li>
+			<li>Applying "Normal" Invisibility with Timing Modes other than 1/4/7 in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
+			<li>Applying "Normal" Invisibility with Timing Mode 1/4/7 will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
+		</ul>
+	</li>
+	<li>
+		Improved Invisibility:
+		<ul>
+			<li>Affected creature stays invisible after attack.</li>
+			<li>Does not provide saving throw bonuses outside EEs, where it provides a bonus of 4 to all.</li>
+			<li>Lingers after the duration is spent and act as permanent if used as a 'While Equipped' effect.</li>
+			<li>Applying "Improved" invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility. There's no reason to apply both "Normal" and "Improved" invisibility in the same spell/item (unless you want them to have different probabilities/hd limits).</li>
+			<li>Applying "Improved" Invisibility with Timing Mode 1/4/7 will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>, and because it duplicates itself as "Normal" invisibility, <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> as well, while still leaving behind a removable (but irrelevant) effect for each. These states are not cleared on death.</li>
+			<li>The effects that remain when setting the base STATEs are irrelevant, at least in-game, because everything that can remove the STATEs will also remove the effect. The STATEs can however be removed separately through NI or EEkeeper, at which point the effect will once again reapply its STATE immediately upon loading the game.</li>
+		</ul>
+	</li>
+	<li>
+		Weak Invisibility:
+		<ul>
+			<li>It's the same type of invisibility as 'Improved Invisibility' after you take a hostile action and reveal yourself.</li>
+			<li>Applying "Weak" Invisibility with Timing Mode 1/4/7 will function no differently than Timing Mode 0, aside from having no natural expiration timer.</li>
+			<li>Applying "Weak" Invisibility is otherwise the same as "Improved" invisibility, except it doesn't duplicate itself with a "Normal" version, which is why it doesn't quality for backstabs.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The “Stealth” modal ability of Thieves/Rangers/Monks applies this effect with the following values:
+<ul>
+	<li>Parameter1 = 1 (unknown if any purpose)</li>
+	<li>Parameter2 = 0</li>
+	<li>Duration = 20</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Creatures attacking an invisible creature suffer a -4 penalty to hit, unless they are affected by <a href="#op193">opcode #193</a>. Moreover, you cannot target an improved/weak invisible creature with spells unless you’re affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures (<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT24</a>).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This opcode itself just sets or maintains (with a duration) the relevant STATEs. Everything else is a feature of <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> and/or <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>.
 
   </div>
 </div>
@@ -1714,11 +2546,69 @@ This effect does not work with Timing Mode 1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect does not set STATE_LUCK.
+		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect does not set <a href="../files/ids/bgee/state.htm#BIT26">STATE_LUCK</a>.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Luck = Luck + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Luck = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Luck = (Luck * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Luck = Luck + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Luck = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Luck = (Luck * 'Statistic Modifier' value) / 100</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Effects of Luck:
+<ul>
+	<li>Modifies a creature's weapon damage die rolls (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's attack roll [1d20] (up/down to its maximum/minimum).</li>
+	<li>Modifies non-weapon damage die rolls dealt to the creature (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's initiative roll [1d6 - 4] for weapon attacks (up/down to its maximum/minimum). See <a href="#op190">opcode #190</a> for further details about weapon/attack speed.</li>
+	<li>Modifies a creatures's initiative roll [1d8 - 1] for movement (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll [1d100] for Hiding in Shadows (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll [1d100] for Set Traps (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll [1d10] for Open Locks (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll [1d10] for Bash Doors (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll [1d10] for Disarm Trap (up/down to its maximum/minimum).</li>
+	<li>Modifies the chance for a Mirror Image to be struck, chance = ('number of images' + 'Statistic Modifier') / ('number of images' + 1).</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Here’s more info about “initiative roll for movement”:
+<ul>
+	<li>
+		Apparently, there is intentionally a random wait time between when a creature attempts to move to another creature, and when they will actually start pathing. Luck helps with this...
+		<pre>
+			Wait Time = 0, when roll = 0
+			Wait Time = (8 - roll), when roll != 0
+		</pre>
+	</li>
+	<li>The natural roll range is [0,7], but like many other rolls Luck alters this slightly. For every point in Luck the highest bound of the roll is converted into the lower bound.</li>
+	<li>So with 1 Luck the roll becomes [0,6], with 0 having a probability of 25% instead of 12.5%. Negative luck works the same, but in reverse.</li>
+	<li>
+		1 is the worst roll you can get, yet it is neither of the extremes. So, -1 Luck is bad because it prevents you from bypassing the wait time, (rolling a 0), but <b>if Luck must be negative, the lower the better</b>.
+		<ul>
+			<li><code>Luck = "-1"</code>: Worst roll possible is a 1, you will be waiting for 7 AI updates (or, if you prefer, 7/15ths of a second).</li>
+			<li><code>Luck = "-7"</code>: Worst roll possible is a 7, you will be waiting for 1 AI update (or, if you prefer, 1/15th of a second)!!</li>
+		</ul>
+	</li>
+	<li>Positive Luck will always increase the likelihood of instantaneous pathing.</li>
+	<li>Note that this wait time is only applied to creature-to-creature pathing, and never to on-the-ground destinations.</li>
+	<li>Also, every creature rolls for their own delay when they go to target a creature.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -1919,7 +2809,7 @@ The 'Damage Amount' parameter should be set to a positive value.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes cursed items from the targeted creature(s).
+		<div class="descriptiondata"> Removes cursed items in addition to all <a href="#op283">opcode #283</a> effects from the targeted creature(s).
  </div>
 		<hr />
 
@@ -2153,15 +3043,90 @@ The 'Damage Amount' parameter should be set to a positive value.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Restore creature animation</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Raises the targeted creature(s) from the dead.
+		<div class="descriptiondata"> Raises the targeted creature(s) from the dead.<br/>
+
+Known values for 'Restore creature animation' are:
+<ul>
+	<li>0 &longrightarrow; No</li>
+	<li>1 &longrightarrow; Yes</li>
+</ul>
+
 <br/>This effect ignores durations attributed to it.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+The new animation is selected just as it would be at Character Generation.<br />
+Base Animation = 0x6000
+<ul>
+	<li>
+		+ Class:
+		<ul>
+			<li>0x0000 (Cleric/Druid/Shaman/Default)</li>
+			<li>0x0100 (Fighter/Paladin/Ranger)</li>
+			<li>0x0200 (Mage/Sorcerer)</li>
+			<li>0x0300 (Thief/Bard)</li>
+			<li>0x0500 (Monk)</li>
+			<li>Mutliclasses prioritize (Warrior &gt; Priest &gt; Rogue &gt; Wizard)</li>
+		</ul>
+	</li>
+	<li>
+		+ Gender:
+		<ul>
+			<li>0x0000 (Male/Default)</li>
+			<li>0x0010 (Female)</li>
+		</ul>
+	</li>
+	<li>
+		+ Race:
+		<ul>
+			<li>0x0000 (Human/Default)</li>
+			<li>0x0001 (Elf/Half-Elf/Tiefling)</li>
+			<li>0x0002 (Dwarf)</li>
+			<li>0x0003 (Halfling)</li>
+			<li>0x0004 (Gnome)</li>
+			<li>0x0005 (Halforc)</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>This opcode will only restore life to creatures with <a href="../files/ids/bgee/state.htm">STATE</a>(BIT11|STATE_DEAD). Frozen and Petrified creatures do not qualify until after they shatter (at which point you can no longer target them outside of scripts, so it doesn't really matter).</li>
+	<li>The animation reset is not dependent on the target's death state.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+The presence of this opcode in any of a spell’s ability headers will force any Wild Surge of that spell to use the “Cast Normally” result.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2456,7 +3421,7 @@ Known values for 'Wake on Damage' are (only in EEs):
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-A permanent timing mode will set the STATE_HELPLESS flag. In such a case, that flag cannot be removed in-game.
+A permanent timing mode will set the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag. In such a case, that flag cannot be removed in-game.
 
   </div>
 </div>
@@ -2516,7 +3481,7 @@ This effect doubles the casting time of all spells. Not verified for IWD2.
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-This opcode will set the STATE_SLOWED flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
+This opcode will set the <a href="../files/ids/bgee/state.htm#BIT16">STATE_SLOWED</a> flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
 
   </div>
 </div>
@@ -2740,13 +3705,111 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Strength = Strength + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Strength = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Strength = (Strength * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Strength = Strength + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Strength = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Strength = (Strength * 'Statistic Modifier' value) / 100</li>
+	<li>3 &longrightarrow; Bull's Strength (EE only)</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Strength raised permanently' will be shown.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
-<br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+All games but EEs:
+<ul>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Strength raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
+</ul>
+On EEs:
+<ul>
+	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+	<li>
+		The opcode itself provides no coloring anymore (it's been externalized through "UI.menu")
+		<ul>
+			<li>An effective value &gt; base value &longrightarrow; <font color="green">green</font>.</li>
+			<li>An effective value &lt; base value &longrightarrow; <font color="red">red</font>.</li>
+			<li>An effective value &equals; base value &longrightarrow; white/default.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+When ‘Type’=3:
+<ul>
+	<li>'Statistic Modifier' is unused: it uses the value listed in <a href="../files/2da/2da_bgee/clssplab.htm">CLSSPLAB.2da</a> for the creature's base class, or defaults to '1' if the file isn't present (it only exists by default in IWDEE).</li>
+	<li>
+		A single instance of this opcode (using 'Type'=3) cannot raise Strength above 18 (hardcoded), but multiple instances of it can.
+		<ul>
+			<li>
+				This is because it only checks the limit against the creature's base score, not its effective score.
+				<ul>
+					<li>A Cleric with 12 base STR could gain up to +6 from the effect each time. Two max roll effects would take them to 24 STR.</li>
+					<li>A Cleric with 16 base STR could only gain up to +2 from the effect each time.</li>
+				</ul>
+			</li>
+			<li>
+				Warrior classes also gain a &percnt; Strength score, their maximum is actually 18/100. Every '/10' is counted as +1 from their die roll. Warriors will not exceed 18/100 though, as once they hit 18, the remaining dice roll converts to a &percnt; increase, preventing their score from exceeding 18/100 (18/100 + /10 doesn't convert to 19).<br />
+				For instance, if a PALADIN with 17 STR rolls, say, 5, he will end up with 18/40 STR.
+			</li>
+		</ul>
+	</li>
+	<li>Like the other modes, applying the effect with Timing Mode 1 will affect the creature's base stat, leaving no removable effect.</li>
+	<li>Once applied to a creature, 'Statistic Modifier' will store the exact STR increase granted, while the 'Special' field will store any Exceptional STR increase granted (only useful for lookup/editing through EEkeeper/NI).</li>
+	<li>
+		When you apply this effect in an External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>, (via <a href="#op177">op177</a> / <a href="#op283">op283</a>):
+		<ul>
+			<li>'Parameter1' in the EFF will determine the exact Strength increase (so it must be set manually, and ignores any limit).</li>
+			<li>
+				If 'Parameter1' is non-zero, Exceptional STR will still be rolled as normal (and only for appropriate Classes).
+				<ul>
+					<li>It will be equal to <code>10 * (Roll - (18 - Base))</code>, capped (0,100).</li>
+				</ul>
+			</li>
+			<li>If 'Parameter1' is zero, no Exceptional STR will be granted.</li>
+			<li>The actual increase for Exceptional STR will be stored in the 'Special' field of <a href="#op177">op177</a> / <a href="#op283">op283</a> (after it's been applied to the creature).</li>
+			<li>Basically, it works exactly like 'Type'=0, except that warriors will still gain a random Exceptional STR increase (of course it's only noticeable if their resulting STR is 18).</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2940,13 +4003,63 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Wisdom = Wisdom + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Wisdom = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Wisdom = (Wisdom * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Wisdom = Wisdom + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Wisdom = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Wisdom = (Wisdom * 'Statistic Modifier' value) / 100</li>
+</ul>
+
 <br/><br/>'Statistic Modifier' can be positive or negative.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Wisdom raised permanently' will be shown.
-<br/>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.
-<br/>With all other Timing Modes, the statistic will alter and be shown in red text.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+All games but EEs:
+<ul>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Wisdom raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
+</ul>
+On EEs:
+<ul>
+	<li>There's no feedback message about stat being raised permanently in the EE's – it must be done separately with <a href="#op139">opcode #139</a>.</li>
+	<li>
+		The opcode itself provides no coloring anymore (it's been externalized through "UI.menu")
+		<ul>
+			<li>An effective value &gt; base value &longrightarrow; <font color="green">green</font>.</li>
+			<li>An effective value &lt; base value &longrightarrow; <font color="red">red</font>.</li>
+			<li>An effective value &equals; base value &longrightarrow; white/default.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -2993,7 +4106,7 @@ Both parameters should be 0 (zero).
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">RGB Colour</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Speed</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Location and Speed</span><br />
 
 		
 		
@@ -3002,12 +4115,135 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) entire animation glows the colour specified by the 'RGB Colour' field, at the speed specified by the (3rd byte of the) 'Speed' field.
 <br/>The 'RGB Colour' field is handled as follows:
-<br/>Second byte = Red (0-255)
-<br/>Third byte  = Green (0-255)
-<br/>Fourth byte = Blue (0-255)
-<br/>The 'Speed' field is handled as follows:
-<br/>Third byte  = Speed (0-255)
+<ul>
+	<li>Second byte = Red (0–255)</li>
+	<li>Third byte = Green (0–255)</li>
+	<li>Fourth byte = Blue (0–255)</li>
+</ul>
+
+<br/>The 'Location and Speed' field is handled as follows:
+<ul>
+	<li>First byte = Location</li>
+	<li>Third byte = Speed (0–255)</li>
+</ul>
+
 <br/>A speed of 0 does not pulsate. A speed of 1 is fastest, and a speed of 255 is slowest. The duration of the effect is controlled by the 'Speed' field.
+
+<br/>Known values for 'Location' are:
+<ul>
+	<li>
+		0 – 6: Avatar/Armor
+		<ul>
+			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) – entire body for some animations</li>
+			<li>01 &longrightarrow; Minor colour</li>
+			<li>02 &longrightarrow; Major colour</li>
+			<li>03 &longrightarrow; Skin colour</li>
+			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes – the centre strip down a robe and the hem on some robes)</li>
+			<li>05 &longrightarrow; Armor colour (and major trimming on robe – cross trim and cape trim on Robe of Archmagi)</li>
+			<li>06 &longrightarrow; Hair colour</li>
+		</ul>
+	</li>
+	<li>
+		16 – 22: Weapon
+		<ul>
+			<li>16 &longrightarrow; Quillons or Crossguard</li>
+			<li>20 &longrightarrow; Grip (usually not visible as it's in the characters hand)</li>
+			<li>21 &longrightarrow; Blade or major portion of weapon</li>
+		</ul>
+	</li>
+	<li>
+		32 – 40: Shield
+		<ul>
+			<li>32 &longrightarrow; Shield hub</li>
+			<li>33 &longrightarrow; Shield interior</li>
+			<li>34 &longrightarrow; Shield panelling</li>
+			<li>37 &longrightarrow; Shield rim</li>
+		</ul>
+	</li>
+	<li>
+		48 – 54: Helmet
+		<ul>
+			<li>48 &longrightarrow; Helm ornamentation – i.e. wings</li>
+			<li>49 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>50 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>52 &longrightarrow; Helm face</li>
+			<li>53 &longrightarrow; Helm – the main covering</li>
+		</ul>
+	</li>
+	<li>255 &longrightarrow; Whole Body (at least in IWD2 and EEs)</li>
+</ul>
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Other values crash immediately or when opening or manipulating Inventory.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each Item Type has 7 slots/locations, corresponding to a different set of Palette indexes that they will replace.</li>
+	<li>Near Infinity lists them as Grey, Cyan/Teal, Magenta/Pink, Yellow, Red, Blue, and Green.<br />
+		While these colors are arbitrary, they best represent the palette used in animation/paperdoll BAMs by default (before being recolored), so you can look at the BAM file and know which colors will be replaced.
+	</li>
+	<li>
+		0=Grey, 1=Cyan, 2=Magenta, 3=Yellow, 4=Red, 5=Blue, 6=Green.<br />
+		+16 for weapons, +32 for shields, +48 for helmets.
+	</li>
+	<li>The names already listed for some of these locations in IESDP are accurate, as they correspond to their general use in the vanilla game, but all 7 slots can be used for each item, provided their BAM file makes use of them.</li>
+	<li>
+		Palette indexes will be replaced by the gradient specified for those locations:
+		<ul>
+			<li>Index 0–3 are reserved for Transparency and Shadows, they are not replaced.</li>
+			<li>Index 4–15: Grey</li>
+			<li>Index 16–27: Cyan</li>
+			<li>Index 28–39: Pink</li>
+			<li>Index 40–51: Yellow</li>
+			<li>Index 52–63: Red</li>
+			<li>Index 64–75: Blue</li>
+			<li>
+				Index 76–87: Green<br />
+				(7 groups of 12 indexes, each exclusive to one location)
+			</li>
+			<li>Index 88–95: (Grey + Cyan)</li>
+			<li>Index 96–103: (Grey + Magenta)</li>
+			<li>Index 104–111: (Grey + Yellow)</li>
+			<li>Index 112–119: (Grey + Red)</li>
+			<li>Index 120–127: (Grey + Blue)</li>
+			<li>Index 128–135: (Grey + Green)</li>
+			<li>Index 136–143: (Cyan + Magenta)</li>
+			<li>Index 144–151: (Cyan + Yellow)</li>
+			<li>Index 152–159: (Cyan + Red)</li>
+			<li>Index 160–167: (Cyan + Blue)</li>
+			<li>Index 168–175: (Cyan + Green)</li>
+			<li>Index 176–183: (Magenta + Yellow)</li>
+			<li>Index 184–191: (Magenta + Red)</li>
+			<li>Index 192–199: (Magenta + Blue)</li>
+			<li>Index 200–207: (Magenta + Green)</li>
+			<li>Index 208–215: (Yellow + Red)</li>
+			<li>Index 216–223: (Yellow + Blue)</li>
+			<li>Index 224–231: (Yellow + Green)</li>
+			<li>Index 232–239: (Red + Blue)</li>
+			<li>Index 240–247: (Red + Green)</li>
+			<li>
+				Index 248–255: (Blue + Green)<br />
+				(21 groups of 8 indexes, each shared by a different combination of two locations)
+			</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3057,30 +4293,128 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the colour of the area specified by the 'Location and Speed' field, to the colour specified by the 'RGB Colour' field.
 <br/>The 'RGB Colour' field is handled as follows:
-<br/>Second byte = Red (0-255)
-<br/>Third byte  = Green (0-255)
-<br/>Fourth byte = Blue (0-255)
+<ul>
+	<li>Second byte = Red (0–255)</li>
+	<li>Third byte = Green (0–255)</li>
+	<li>Fourth byte = Blue (0–255)</li>
+</ul>
+
 <br/><br/>Known values for 'Location' are:
-<br/>00   Belt Buckle (on armour) or amulets (on robes) - entire body for some animations
-<br/>01   Minor colour
-<br/>02   Major colour
-<br/>03   Skin colour
-<br/>04   Strap colour (on armour) or minor trimming (on robes - the centre strip down a robe and the hem on some robes)
-<br/>05   Armor colour (and major trimming on robe - cross trim and cape trim on  robe of archmagi)
-<br/>06   Hair colour
-<br/>16   Quillons or Crossguard
-<br/>20   Grip (usually not visible as it's in the characters hand)
-<br/>21   Blade or major portion of weapon
-<br/>32   Shield hub
-<br/>33   Shield interior
-<br/>34   Shield panelling
-<br/>34   Helmet misc
-<br/>37   Shield rim
-<br/>48   Helm ornamentation - i.e. wings
-<br/>49   Helm ornamentation - i.e. feathers/horsehair
-<br/>50   Helm ornamentation - i.e. feathers/horsehair
-<br/>52   Helm face
-<br/>53   Helm - the main covering
+<br/>Known values for 'Location' are:
+<ul>
+	<li>
+		0 – 6: Avatar/Armor
+		<ul>
+			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) – entire body for some animations</li>
+			<li>01 &longrightarrow; Minor colour</li>
+			<li>02 &longrightarrow; Major colour</li>
+			<li>03 &longrightarrow; Skin colour</li>
+			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes – the centre strip down a robe and the hem on some robes)</li>
+			<li>05 &longrightarrow; Armor colour (and major trimming on robe – cross trim and cape trim on Robe of Archmagi)</li>
+			<li>06 &longrightarrow; Hair colour</li>
+		</ul>
+	</li>
+	<li>
+		16 – 22: Weapon
+		<ul>
+			<li>16 &longrightarrow; Quillons or Crossguard</li>
+			<li>20 &longrightarrow; Grip (usually not visible as it's in the characters hand)</li>
+			<li>21 &longrightarrow; Blade or major portion of weapon</li>
+		</ul>
+	</li>
+	<li>
+		32 – 40: Shield
+		<ul>
+			<li>32 &longrightarrow; Shield hub</li>
+			<li>33 &longrightarrow; Shield interior</li>
+			<li>34 &longrightarrow; Shield panelling</li>
+			<li>37 &longrightarrow; Shield rim</li>
+		</ul>
+	</li>
+	<li>
+		48 – 54: Helmet
+		<ul>
+			<li>48 &longrightarrow; Helm ornamentation – i.e. wings</li>
+			<li>49 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>50 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>52 &longrightarrow; Helm face</li>
+			<li>53 &longrightarrow; Helm – the main covering</li>
+		</ul>
+	</li>
+	<li>255 &longrightarrow; Whole Body (at least in IWD2 and EEs)</li>
+</ul>
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Other values crash immediately or when opening or manipulating Inventory.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each Item Type has 7 slots/locations, corresponding to a different set of Palette indexes that they will replace.</li>
+	<li>Near Infinity lists them as Grey, Cyan/Teal, Magenta/Pink, Yellow, Red, Blue, and Green.<br />
+		While these colors are arbitrary, they best represent the palette used in animation/paperdoll BAMs by default (before being recolored), so you can look at the BAM file and know which colors will be replaced.
+	</li>
+	<li>
+		0=Grey, 1=Cyan, 2=Magenta, 3=Yellow, 4=Red, 5=Blue, 6=Green.<br />
+		+16 for weapons, +32 for shields, +48 for helmets.
+	</li>
+	<li>The names already listed for some of these locations in IESDP are accurate, as they correspond to their general use in the vanilla game, but all 7 slots can be used for each item, provided their BAM file makes use of them.</li>
+	<li>
+		Palette indexes will be replaced by the gradient specified for those locations:
+		<ul>
+			<li>Index 0–3 are reserved for Transparency and Shadows, they are not replaced.</li>
+			<li>Index 4–15: Grey</li>
+			<li>Index 16–27: Cyan</li>
+			<li>Index 28–39: Pink</li>
+			<li>Index 40–51: Yellow</li>
+			<li>Index 52–63: Red</li>
+			<li>Index 64–75: Blue</li>
+			<li>
+				Index 76–87: Green<br />
+				(7 groups of 12 indexes, each exclusive to one location)
+			</li>
+			<li>Index 88–95: (Grey + Cyan)</li>
+			<li>Index 96–103: (Grey + Magenta)</li>
+			<li>Index 104–111: (Grey + Yellow)</li>
+			<li>Index 112–119: (Grey + Red)</li>
+			<li>Index 120–127: (Grey + Blue)</li>
+			<li>Index 128–135: (Grey + Green)</li>
+			<li>Index 136–143: (Cyan + Magenta)</li>
+			<li>Index 144–151: (Cyan + Yellow)</li>
+			<li>Index 152–159: (Cyan + Red)</li>
+			<li>Index 160–167: (Cyan + Blue)</li>
+			<li>Index 168–175: (Cyan + Green)</li>
+			<li>Index 176–183: (Magenta + Yellow)</li>
+			<li>Index 184–191: (Magenta + Red)</li>
+			<li>Index 192–199: (Magenta + Blue)</li>
+			<li>Index 200–207: (Magenta + Green)</li>
+			<li>Index 208–215: (Yellow + Red)</li>
+			<li>Index 216–223: (Yellow + Blue)</li>
+			<li>Index 224–231: (Yellow + Green)</li>
+			<li>Index 232–239: (Red + Blue)</li>
+			<li>Index 240–247: (Red + Green)</li>
+			<li>
+				Index 248–255: (Blue + Green)<br />
+				(21 groups of 8 indexes, each shared by a different combination of two locations)
+			</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3136,30 +4470,127 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the colour of the area specified by the 'Location' field, to the colour specified by the 'RGB Colour' field.
 <br/>The 'RGB Colour' field is handled as follows:
-<br/>Second byte = Red (0-255)
-<br/>Third byte  = Green (0-255)
-<br/>Fourth byte = Blue (0-255)
+<ul>
+	<li>Second byte = Red (0–255)</li>
+	<li>Third byte = Green (0–255)</li>
+	<li>Fourth byte = Blue (0–255)</li>
+</ul>
+
 <br/><br/>Known values for 'Location' are:
-<br/>00   Belt Buckle (on armour) or amulets (on robes) - entire body for some animations
-<br/>01   Minor colour
-<br/>02   Major colour
-<br/>03   Skin colour
-<br/>04   Strap colour (on armour) or minor trimming (on robes - the centre strip down a robe and the hem on some robes)
-<br/>05   Armor colour (and major trimming on robe - cross trim and cape trim on  robe of archmagi)
-<br/>06   Hair colour
-<br/>16   Quillons or Crossguard
-<br/>20   Grip (usually not visible as it's in the characters hand)
-<br/>21   Blade or major portion of weapon
-<br/>32   Shield hub
-<br/>33   Shield interior
-<br/>34   Shield panelling
-<br/>34   Helmet misc
-<br/>37   Shield rim
-<br/>48   Helm ornamentation - i.e. wings
-<br/>49   Helm ornamentation - i.e. feathers/horsehair
-<br/>50   Helm ornamentation - i.e. feathers/horsehair
-<br/>52   Helm face
-<br/>53   Helm - the main covering
+<ul>
+	<li>
+		0 – 6: Avatar/Armor
+		<ul>
+			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) – entire body for some animations</li>
+			<li>01 &longrightarrow; Minor colour</li>
+			<li>02 &longrightarrow; Major colour</li>
+			<li>03 &longrightarrow; Skin colour</li>
+			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes – the centre strip down a robe and the hem on some robes)</li>
+			<li>05 &longrightarrow; Armor colour (and major trimming on robe – cross trim and cape trim on Robe of Archmagi)</li>
+			<li>06 &longrightarrow; Hair colour</li>
+		</ul>
+	</li>
+	<li>
+		16 – 22: Weapon
+		<ul>
+			<li>16 &longrightarrow; Quillons or Crossguard</li>
+			<li>20 &longrightarrow; Grip (usually not visible as it's in the characters hand)</li>
+			<li>21 &longrightarrow; Blade or major portion of weapon</li>
+		</ul>
+	</li>
+	<li>
+		32 – 40: Shield
+		<ul>
+			<li>32 &longrightarrow; Shield hub</li>
+			<li>33 &longrightarrow; Shield interior</li>
+			<li>34 &longrightarrow; Shield panelling</li>
+			<li>37 &longrightarrow; Shield rim</li>
+		</ul>
+	</li>
+	<li>
+		48 – 54: Helmet
+		<ul>
+			<li>48 &longrightarrow; Helm ornamentation – i.e. wings</li>
+			<li>49 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>50 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>52 &longrightarrow; Helm face</li>
+			<li>53 &longrightarrow; Helm – the main covering</li>
+		</ul>
+	</li>
+	<li>255 &longrightarrow; Whole Body (at least in IWD2 and EEs)</li>
+</ul>
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+Other values crash immediately or when opening or manipulating Inventory.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each Item Type has 7 slots/locations, corresponding to a different set of Palette indexes that they will replace.</li>
+	<li>Near Infinity lists them as Grey, Cyan/Teal, Magenta/Pink, Yellow, Red, Blue, and Green.<br />
+		While these colors are arbitrary, they best represent the palette used in animation/paperdoll BAMs by default (before being recolored), so you can look at the BAM file and know which colors will be replaced.
+	</li>
+	<li>
+		0=Grey, 1=Cyan, 2=Magenta, 3=Yellow, 4=Red, 5=Blue, 6=Green.<br />
+		+16 for weapons, +32 for shields, +48 for helmets.
+	</li>
+	<li>The names already listed for some of these locations in IESDP are accurate, as they correspond to their general use in the vanilla game, but all 7 slots can be used for each item, provided their BAM file makes use of them.</li>
+	<li>
+		Palette indexes will be replaced by the gradient specified for those locations:
+		<ul>
+			<li>Index 0–3 are reserved for Transparency and Shadows, they are not replaced.</li>
+			<li>Index 4–15: Grey</li>
+			<li>Index 16–27: Cyan</li>
+			<li>Index 28–39: Pink</li>
+			<li>Index 40–51: Yellow</li>
+			<li>Index 52–63: Red</li>
+			<li>Index 64–75: Blue</li>
+			<li>
+				Index 76–87: Green<br />
+				(7 groups of 12 indexes, each exclusive to one location)
+			</li>
+			<li>Index 88–95: (Grey + Cyan)</li>
+			<li>Index 96–103: (Grey + Magenta)</li>
+			<li>Index 104–111: (Grey + Yellow)</li>
+			<li>Index 112–119: (Grey + Red)</li>
+			<li>Index 120–127: (Grey + Blue)</li>
+			<li>Index 128–135: (Grey + Green)</li>
+			<li>Index 136–143: (Cyan + Magenta)</li>
+			<li>Index 144–151: (Cyan + Yellow)</li>
+			<li>Index 152–159: (Cyan + Red)</li>
+			<li>Index 160–167: (Cyan + Blue)</li>
+			<li>Index 168–175: (Cyan + Green)</li>
+			<li>Index 176–183: (Magenta + Yellow)</li>
+			<li>Index 184–191: (Magenta + Red)</li>
+			<li>Index 192–199: (Magenta + Blue)</li>
+			<li>Index 200–207: (Magenta + Green)</li>
+			<li>Index 208–215: (Yellow + Red)</li>
+			<li>Index 216–223: (Yellow + Blue)</li>
+			<li>Index 224–231: (Yellow + Green)</li>
+			<li>Index 232–239: (Red + Blue)</li>
+			<li>Index 240–247: (Red + Green)</li>
+			<li>
+				Index 248–255: (Blue + Green)<br />
+				(21 groups of 8 indexes, each shared by a different combination of two locations)
+			</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3852,19 +5283,51 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Summons a creature, with EA set to the 'Control' field. The Resource key should be set to the filename of the creature to summon.
 <br/>Known values for 'Control' are:
-<br/>0    Match target (hostile if no target)
-<br/>1    Match target (hostile if no target)  
-<br/>2    As creature file
-<br/>3    Match target (hostile if no target)
-<br/>4    As creature file
-<br/>5    Hostile to target
-<br/>6    As creature file
-<br/>8    As creature file
-<br/>255  As creature file
-<br/><br/>If effect's target is set as 'Original Caster' then the 'Control' parameter covers 'Location' as well as control. In this case, nown values for 'Control' are:
-<br/>2   = Summoned at location of target creature
-<br/>4   = Summoned at location of caster
-<br/>6   = Summoned at location of caster
+<ul>
+	<li>0 &longrightarrow; Match target (hostile if no target)</li>
+	<li>1 &longrightarrow; Match target (hostile if no target)</li>
+	<li>2 &longrightarrow; As creature file</li>
+	<li>3 &longrightarrow; Match target (hostile if no target)</li>
+	<li>4 &longrightarrow; As creature file</li>
+	<li>5 &longrightarrow; Hostile to target</li>
+	<li>6 &longrightarrow; As creature file</li>
+	<li>8 &longrightarrow; As creature file</li>
+	<li>255 &longrightarrow; As creature file</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>'Control' values 0 and 1 are identical, 4 and 6 are identical, 3 and 5 are each unique, all other values are identical with each other.</li>
+	<li>'Control' values 3, 4, 5, and 6 summon the creature at the location of the effect target. All other values summon the creature at the location of the ability target.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>(EE only) "Resource2" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
+		Default is a hardcoded VVC using "SPBOOM.BAM" and palette #65. This is generally used as the "portal" animation.
+	</li>
+	<li>(EE only) "Resource3" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
+	<li>Applies an <a href="#op271">op271</a> to the summoned creature based on the duration of the "Resource2" (not exact). Creature will not appear/spawn until this animation finishes.</li>
+	<li>Applies a delayed <a href="#op215">op215</a> with resource "SPGFLSH1" to the summoned creature, delayed duration = 5 ticks less than the <a href="#op271">op271</a>.</li>
+	<li>Applies a delayed <a href="#op68">op68</a> to the summoned creature based on effect duration (unless permanent).</li>
+	<li>When summoned, any temporary changes (such as from equipped items) to the creature's <a href="../files/ids/bgee/gender.htm">gender</a> are made permanent.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3893,8 +5356,10 @@ Both parameters should be 0 (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Unsummons a creature, with feedback controlled by 'Text Notification'.
 <br/>Known values for 'Text Notification' are:
-<br/>0   No text notification
-<br/>1   Show text notification
+<ul>
+	<li>0 &longrightarrow; No text notification</li>
+	<li>1 &longrightarrow; Show text notification</li>
+</ul>
 
 
 
@@ -3902,7 +5367,22 @@ Both parameters should be 0 (zero).
   <div>
     <strong>Note:</strong> 
 At least in BG2 and EEs, the Resource key should be set to the filename of the
- animation to play when unsummoning the creature, and defaults to SPGFLSH1 if left empty.
+ animation to play when unsummoning the creature, and defaults to “SPGFLSH1” if left empty.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>Has no effect on Party Members.</li>
+	<li>Moves the targeted creature(s) to area ".ARE" (a non-existant area). This deletes non-global creatures from the game.</li>
+	<li>Global creatures can still be recovered through scripts actions, such as <a href="../scripting/actions/bgeeactions.htm#291">MoveGlobalObject()</a>.</li>
+</ul>
 
   </div>
 </div>
@@ -3933,7 +5413,18 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the non-detection effect to the targeted creature(s), setting STATE_NONDETECTION while active. This effect is negated by effect #70 Cure: Non-Detection. While in the non-detection state, the creature is immune to effects #47: Cure Invisibility and #116: Remove invisibilty, though they are affected by effects that remove illusionary protections by school or secondary type.
+		<div class="descriptiondata"> Applies the non-detection effect to the targeted creature(s), setting <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> while active. This effect is negated by <a href="#op70">opcode 70</a>. While in the non-detection state, the creature is immune to <a href="#op47">opcode 47</a> and <a href="#op116">opcode 116</a>, though they are affected by effects that remove illusionary protections by school or secondary type.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> flag, leaving no removable effect. This flag is not cleared on death.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -3975,7 +5466,7 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the Non-Detection effect from the targeted creature(s).
+		<div class="descriptiondata"> Removes <a href="#op69">opcode 69</a> and the <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
  </div>
 		<hr />
@@ -4005,9 +5496,29 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the gender of the targetted creature(s) to the value specified by the 'Gender.ids' field, in the style specified by the 'Type' value.
 <br/>Known values for 'Type' are:
-<br/>0 Reverse Gender
-<br/>1 Flat Value Modifier -> Gender = 'Statistic Modifier' value (values from gender.ids)
-<br/><br/>The effect modifies stat 193.
+<ul>
+	<li>0 &longrightarrow; Reverse Gender</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Gender = 'Statistic Modifier' value (values from <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a>)</li>
+</ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#193">SEX_CHANGED</a>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>'Reverse Gender' also switches the second BIT of the lower BYTE of the creature's animation, which (for PC races), will switch between their male/female animations (0x6000 &LongLeftRightArrow; 0x6010).</li>
+	<li>
+		Other races can be setup this way, but do not occupy the necessary animation slots by default.<br />
+		For instance, VAMPIRE is 0x7F12, VAMPIRE_FEMALE is 0x7F22. (Male should be 0x7F02 and female 0x7F12 for it to work).
+	</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4057,13 +5568,29 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the IDS state of the targeted creature(s) specified by the 'IDS File' field, to the value specified by the 'IDS Entry' field.
 <br/>Known values for 'IDS File' are:
-<br/>0   EA
-<br/>1   Generic / General
-<br/>2   Race
-<br/>3   Class
-<br/>4   Specific
-<br/>5   Gender
-<br/>6   Align / Alignmen (iwd1, pst)
+<ul>
+	<li>0 &longrightarrow; <a href="../files/ids/bgee/ea.htm">EA</a></li>
+	<li>1 &longrightarrow; <a href="../files/ids/bgee/general.htm">Generic / General</a></li>
+	<li>2 &longrightarrow; <a href="../files/ids/bgee/race.htm">Race</a></li>
+	<li>3 &longrightarrow; <a href="../files/ids/bgee/class.htm">Class</a></li>
+	<li>4 &longrightarrow; <a href="../files/ids/bgee/specific.htm">Specific</a></li>
+	<li>5 &longrightarrow; <a href="../files/ids/bgee/gender.htm">Gender</a></li>
+	<li>6 &longrightarrow; <a href="../files/ids/bgee/align.htm">Align / Alignmen</a> (iwd1, pst)</li>
+</ul>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+<ul>
+	<li>Only reliable timing mode is Timing Mode 1 (all others are bugged and can convert to this timing mode under various circumstances).</li>
+	<li>Timing modes 1/4/7 will permanently set the creature(s) IDS value, leaving no removable effect.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4150,7 +5677,19 @@ PST treats all Type values above 1 as 1 - it does not support the percentage mod
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the blindness effect to the targeted creature(s). This sets VISUALRANGE to 2, sets STATE_BLIND to true and incurs a cummulative 10 point base THAC0 penalty (unverified in PST).
+		<div class="descriptiondata"> Applies the blindness effect to the targeted creature(s). This sets <a href="../files/ids/bgee/stats.htm#147">VISUALRANGE</a> to 2, sets <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> to true and incurs a cummulative 10 point base THAC0 penalty (4 on EE games, plus a cumulative 4 point base AC penalty. All of that is unverified in PST).
+Maintains its own portrait icon <a href="../files/2da/2da_bgee/statdesc.htm">(#8|"Blind")</a>.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> flag, leaving no removable effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4177,7 +5716,7 @@ PST treats all Type values above 1 as 1 - it does not support the percentage mod
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the blindness effect from the targeted creature(s).
+		<div class="descriptiondata"> Removes the <a href="#op74">blindness effect</a> and the <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -4225,8 +5764,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat.
-<br/>This effect ignores durations attributed to it.
+		<div class="descriptiondata"> Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat. Maintains the target's Intelligence to 3 (stacks normally with <a href="#op19">opcode #19</a>).
 
 
 
@@ -4264,7 +5802,7 @@ A creature's scripts do not run while the creature is feebleminded.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the feeblemind effect from the targeted creature(s).
+		<div class="descriptiondata"> Removes the <a href="#op76">feeblemind effect</a> and the <a href="../files/ids/bgee/state.htm#BIT20">STATE_FEEBLEMINDED</a> flag from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -4429,7 +5967,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the Deafness effect on the targeted creature(s) - creatures suffer a casting failure rate of 50% (20% in bg1, unknown in iwd1). This is cumulative with Miscast Magic.
+		<div class="descriptiondata"> Applies the Deafness effect on the targeted creature(s) - creatures suffer a casting failure rate of 50% (20% in bg1, unknown in iwd1). The casting failure rate refers to Wizard and Priest spells only. This is cumulative with Miscast Magic.
 
 
 
@@ -4437,6 +5975,17 @@ Both parameters should be 0 (zero).
   <div>
     <strong>Warning:</strong> 
 PST: it is unclear if this effect exist or does anything!
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(38|DEAFENED)</a> on the target (EE only).
 
   </div>
 </div>
@@ -4528,13 +6077,15 @@ PST: it is unclear if this effect exists or does anything!
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Sets the script type specified by the 'Type' value to the contents of the resource key.
 <br/>Known values for 'Type' are:
-<br/>0   OVERRIDE
-<br/>1   AREA
-<br/>2   SPECIFICS
-<br/>4   CLASS
-<br/>5   RACE
-<br/>6   GENERAL
-<br/>7   DEFAULT
+<ul>
+	<li>0 &longrightarrow; OVERRIDE</li>
+	<li>1 &longrightarrow; AREA</li>
+	<li>2 &longrightarrow; SPECIFICS</li>
+	<li>4 &longrightarrow; CLASS</li>
+	<li>5 &longrightarrow; RACE</li>
+	<li>6 &longrightarrow; GENERAL</li>
+	<li>7 &longrightarrow; DEFAULT</li>
+</ul>
 
 
 
@@ -4542,6 +6093,20 @@ PST: it is unclear if this effect exists or does anything!
   <div>
     <strong>Warning:</strong> 
 This effect can unset scripts from a creature, which can break the game.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>Effect is always instantaneous/delayed.</li>
+	<li>AREA and SPECIFICS can only be set on non-global creatures (not potential party members or familiars), and are lost upon saving/reload.</li>
+</ul>
 
   </div>
 </div>
@@ -4592,15 +6157,33 @@ This effect can unset scripts from a creature, which can break the game.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Projectile Index</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) immunity to the weapon type specified by the 'Type' value.
-<br/>Values for 'Type' are taken from projectl.ids.
+		<div class="descriptiondata"> Protects the targeted creatures(s) from any effect(s) delivered by the specified projectile.
+<br/>Values for 'Projectile Index' are taken from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<table>
+  <tbody>
+    <tr>
+      <td>Cannot protect against the projectile used by Melee weapon attacks (this is contrast to <a href="#op197">op197</a>, which CAN reflect them (by specifying projectile #0</td>
+      <td>NONE)).</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4881,9 +6464,33 @@ This effect can unset scripts from a creature, which can break the game.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Skill = Skill + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Skill = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Skill = (Skill * 'Statistic Modifier' value) / 100</li>
+</ul>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Timing modes 1/4/7 permanently alters the creature's Open Locks score, leaving no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+(EE only) When ‘Type’ = 0 and ‘Timing Mode’ = 9, it modifies <a href="../files/ids/bgee/stats.htm#176">LOCKPICKINGMTPBONUS</a>. The final value for this stat is mutiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range [0,255], before being included in the creature’s Open Locks score.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4912,9 +6519,33 @@ This effect can unset scripts from a creature, which can break the game.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Skill = Skill + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Skill = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Skill = (Skill * 'Statistic Modifier' value) / 100</li>
+</ul>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Timing modes 1/4/7 permanently alters the creature's Find Traps score, leaving no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+(EE only) When ‘Type’ = 0 and ‘Timing Mode’ = 9, it modifies <a href="../files/ids/bgee/stats.htm#178">TRAPSMTPBONUS</a>. The final value for this stat is mutiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range [0,255], before being included in the creature’s Find Traps score.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -4943,9 +6574,33 @@ This effect can unset scripts from a creature, which can break the game.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Skill = Skill + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Skill = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Skill = (Skill * 'Statistic Modifier' value) / 100</li>
+</ul>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+(EE only) When ‘Type’ = 0 and ‘Timing Mode’ = 9, it modifies <a href="../files/ids/bgee/stats.htm#179">PICKPOCKETMTPBONUS</a>. The final value for this stat is mutiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range [0,255], before being included in the creature’s Pick Pockets score.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5076,9 +6731,11 @@ This effect can unset scripts from a creature, which can break the game.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
 <br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Level = Level + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Level = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Level = (Level * 'Statistic Modifier' value) / 100
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: Level = Level + 'Statistic Modifier' value</li>
+	<li>1 &longrightarrow; Flat Value Modifier: Level = 'Statistic Modifier' value</li>
+	<li>2 &longrightarrow; Percentage Modifier: Level = (Level * 'Statistic Modifier' value) / 100</li>
+</ul>
 
 
 
@@ -5086,6 +6743,36 @@ This effect can unset scripts from a creature, which can break the game.
   <div>
     <strong>Note:</strong> 
 In IWD2 the class to receive the change is specified at 0x2C
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Timing modes 1/4/7 permanently alters the creature's level, leaving no removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<table>
+  <tbody>
+    <tr>
+      <td>Can only modify the <a href="../files/ids/bgee/stats.htm#34">first class level</a>, it cannot modify second (68</td>
+      <td>LEVEL2) or third (69</td>
+      <td>LEVEL3) class levels.</td>
+    </tr>
+  </tbody>
+</table>
 
   </div>
 </div>
@@ -5237,13 +6924,31 @@ Permanent timing modes require a duration for this effect to work.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters spell durations of the targeted creature(s), to the percentage specified by the 'Duration Modifier' field, affecting the spell type specified by the 'Type' field. Timing mode 0 is the only timing mode reliably affected. Timings handled through PRO files are ignored.
-<br/>eg.
-<br/>'Duration Modifier' = 0   -> Spells have no duration
-<br/>'Duration Modifier' = 100 -> Spells have normal duration
-<br/>'Duration Modifier' = 200 -> Spells have double duration
+<br/>For instance:
+<ul>
+	<li>'Duration Modifier' = 0 &longrightarrow; Spells have no duration</li>
+	<li>'Duration Modifier' = 100 &longrightarrow; Spells have normal duration</li>
+	<li>'Duration Modifier' = 200 &longrightarrow; Spells have double duration</li>
+</ul>
+<br/>
+
 <br/>Known values for 'Type' are:
-<br/>0   Mage
-<br/>1   Priest
+<ul>
+	<li>0 &longrightarrow; Mage</li>
+	<li>1 &longrightarrow; Priest</li>
+	<li>2 &longrightarrow; Bard Song (EE only)</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Durations handled by <a href="#op333">Static Charge</a> are unaffected (EE only).
+
+  </div>
+</div>
+
 
 
 
@@ -5355,11 +7060,22 @@ Not seen to work in BG1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) protection from spells up to the level specified by the 'Spell Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Spell Level' parameter in the extended header that is being called.
-<br/>Known values for 'Spell Level' are:
-<br/>1
-<br/>..
-<br/>9
+		<div class="descriptiondata"> Gives the targeted creature(s) protection from effects (opcodes) whose 'Power' attribute is equal to 'Spell Level'.
+<br/>Valid 'Spell Level' (Power) levels range: 0 – 9.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>Each application of this opcode only protects against its specified 'Spell Level', not "up to" it.</li>
+	<li>Each effect in a spell/item is checked separately by this opcode.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -5801,6 +7517,12 @@ The resource field should not be empty, or the game will crash (not consistently
 				
 			
 			
+				<a class="opvariant" href="bgee.htm#op114">BGEE</a>
+			
+		
+			
+			
+			
 				<a class="opvariant" href="iwd1totl.htm#op114">IWD1</a>
 			
 		
@@ -5949,7 +7671,7 @@ Both parameters should be 0 (zero).
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-This does not remove the fog of war.
+It does not remove the fog of war.
 
   </div>
 </div>
@@ -6025,7 +7747,37 @@ This does not remove the fog of war.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the mirror image effect to the targeted creature(s). The number of images is dicated by the level of the caster.
+		<div class="descriptiondata"> Applies the <a href="#op159">Mirror Image effect</a> to the targeted creature(s). The number of images is dicated by the level of the caster.<br />
+The exact formula is <code>'Parameter1' = 2 + ('Caster Level of the spell containing op119' / 3)</code>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>A Wizard spell with op119 will use the caster's Wizard Casting Level.</li>
+	<li>A Priest spell with op119 will use the caster's Priest Casting Level.</li>
+	<li>An Innate spell with op119 will use the caster's Innate Casting Level.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+A side note about non-spellcaster classes:<br /><br />
+
+A Mirror Image scroll used by a Thief with HLA Use Any Item will use the level 10 duration, but the level 1 Image count.<br />
+The scroll casts the spell at level 10, but the opcode checks the caster’s Wizard Caster Level (which for a Thief is 1).
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6034,7 +7786,7 @@ This does not remove the fog of war.
 	<div id="op120" class="opcode">
 		<span class="opnumberdata">#120 (0x78)</span>
 
-		<span class="opnamedata">Protection: from Melee Weapons</span>
+		<span class="opnamedata">Protection: from Weapons</span>
 
 		
 		
@@ -6052,20 +7804,39 @@ This does not remove the fog of war.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) immunity to melee weapons as specified by the 'Type' field. The 'Enchantment' field is used if 'Type' is set to 0.
+		<div class="descriptiondata"> Gives the targeted creature(s) immunity to weapons as specified by the 'Type' field. The 'Enchantment' field is used if 'Type' is set to 0.
 <br/>Known values for 'Type' are:
-<br/>0  Enchantment
-<br/>1  Magical
-<br/>2  Non-Magical
-<br/>3  Silver
-<br/>4  Non-Silver
-<br/>5  Silver / Non-Magical
-<br/>6  Two-Handed
-<br/>7  Non Two-Handed
-<br/>8  Cursed
-<br/>9  Non-Cursed
-<br/>10 Cold-Iron
-<br/>11 Non Cold-Iron
+<ul>
+	<li>0 &longrightarrow; Enchanted</li>
+	<li>1 &longrightarrow; Magical</li>
+	<li>2 &longrightarrow; Non-Magical</li>
+	<li>3 &longrightarrow; Silver</li>
+	<li>4 &longrightarrow; Non-Silver</li>
+	<li>5 &longrightarrow; Non-Silver / Non-Magical</li>
+	<li>6 &longrightarrow; Two-Handed</li>
+	<li>7 &longrightarrow; One-Handed</li>
+	<li>8 &longrightarrow; Cursed</li>
+	<li>9 &longrightarrow; Non-Cursed</li>
+	<li>10 &longrightarrow; Cold Iron</li>
+	<li>11 &longrightarrow; Non Cold Iron</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Keep in mind that:
+<ul>
+	<li>Protected weapons will still trigger <a href="../scripting/triggers/bgeetriggers.htm#0x0020">HitBy()</a>, but will not interact with Mirror Image or Stone skins.</li>
+	<li>Blocks weapon damage, on-hit effects of the weapon, <a href="#op248">opcode 248</a> and <a href="#op249">opcode 249</a>, regardless of the effects target.</li>
+	<li>Does NOT block effects from <a href="#op341">opcode 341</a> or <a href="#op361">opcode 361</a> from triggering.</li>
+	<li>Area-effect projectiles (Arrow of Detonation) only check for Weapon Immunity on the attacked target, and use that result for all caught within their area of effect.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6134,7 +7905,21 @@ This does not remove the fog of war.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates the item specified by the resource key. The number of items created is controlled by the 'Charges' field. The number of secondary charge is determined by P3. The number of tertiary charges is determined by P4 (external eff's). The item is created in the Inventory.
+		<div class="descriptiondata"> Creates the item specified by the resource key. The number of items created is controlled by the 'Charges' field. The number of secondary charge is determined by P3. The number of tertiary charges is determined by P4 (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s). The item is created in the Inventory.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>(EE only) "Resource2" and "Resource3" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): item to be created is randomly chosen from resource fields 1–3 that are not empty.</li>
+	<li>Applies a delayed <a href="#op123">opcode #123</a> effect to remove the item (based on specified 'duration')</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6161,7 +7946,12 @@ This does not remove the fog of war.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s).  This effect should be used to remove inventory items (use <a href="#op112">opcode #112</a> for equipped items).
+		<div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s). This effect should be used to remove inventory items (use <a href="#op112">opcode #112</a> for equipped items).
+<ul>
+	<li>Removes all item(s) in the first slot containing the specified resource key from the targeted creature(s).</li>
+	<li>Items in container items (e.g. Bags of Holding) will not be removed.</li>
+	<li>Inventory slots are checked in numerical order from <a href="../files/ids/bgee/slots.htm">SLOTS.IDS</a>.</li>
+</ul>
  </div>
 		<hr />
 
@@ -6182,7 +7972,7 @@ This does not remove the fog of war.
 				
 			
 			
-				<a class="opvariant" href="bgee.htm#op124">BGEE</a>
+				<a class="opvariant" href="iwd1totl.htm#op124">IWD1</a>
 			
 		
 			
@@ -6203,7 +7993,25 @@ This does not remove the fog of war.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Teleports the targeted creature(s).
+		<div class="descriptiondata"> Teleports the targeted creature(s) in the style specified by the 'Type' field.
+<br/>Known values for 'Type' are:
+<ul>
+	<li>0 &longrightarrow; Default</li>
+	<li>1 &longrightarrow; Source to Target</li>
+	<li>2 &longrightarrow; Return to Saved Location</li>
+	<li>3 &longrightarrow; Exchanged Source and Target</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+‘Return to Saved Location’: Teleport effect target to the coordinates stored by <a href="../scripting/actions/bgeeactions.htm#261">SetHomeLocation(P:Point*)</a> for that creature. Defaults to (0.0) if not set.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6238,6 +8046,17 @@ This does not remove the fog of war.
   <div>
     <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+It is automatically successful but only works on locks that can normally be picked with the Open Locks skill.
 
   </div>
 </div>
@@ -6415,7 +8234,35 @@ A couple of examples about ‘Multiplicative Stacking Percentage Modifier’:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the confusion effect the targeted creature(s). The creature will run around uncontrollable, randomly attacking.
+		<div class="descriptiondata"> Applies the confusion effect to the targeted creature(s). The creature will run around uncontrollable, randomly attacking.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Timing Mode 1 will set <a href="../files/ids/bgee/state.htm#BIT31">STATE_CONFUSED</a> without leaving behind a removable effect.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<a href="../files/ids/bgee/state.htm#BIT31">STATE_CONFUSED</a> specs:
+<ul>
+	<li>Creature is unseletectable, Inventory is disabled.</li>
+	<li>The creature's AI scripts are disabled.</li>
+	<li>The creature will randomly execute actions <a href="../scripting/actions/bgeeactions.htm#134">AttackReevaluate(NearestEnemyOf(Myself),15)</a>, <a href="../scripting/actions/bgeeactions.htm#85">RandomWalk()</a>, or <a href="../scripting/actions/bgeeactions.htm#0">NoAction()</a>.</li>
+	<li>Disables Saving while affecting a Party Member (displayed message: "You do not control all your Party Members")</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6451,7 +8298,34 @@ A couple of examples about ‘Multiplicative Stacking Percentage Modifier’:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies a bless effect, a bonus to HP and a bonus to saving throws to the targeted creature(s). The bonus is a number of 8-sided dice, with the number of dice controlled by the 'Statistic Modifier' value.
+		<div class="descriptiondata"> Applies a bless effect to the targeted creature(s).<br />
+In particular:
+<ul>
+	<li>Grants a bonus/penalty to all Saving Throws equal to 'Statistic Modifier'.</li>
+	<li>Grants a bonus/penalty to Current and Maximum Hit Points equal to 'Statistic Modifier'd8.</li>
+	<li>Grants a bonus/penalty to base <a href="../files/ids/bgee/stats.htm#7">THAC0</a> equal to 'Statistic Modifier'.</li>
+	<li>Grants a bonus/penalty to base <a href="../files/ids/bgee/stats.htm#50">weapon damage</a> equal to 'Statistic Modifier'.</li>
+	<li>Saving throws, THAC0, and Damage modifiers read only the first byte of 'Statistic Modifier' for their value, the last 3 bytes are ignored.</li>
+	<li>HP modifier uses the whole 4 bytes of 'Statistic Modifier'.</li>
+	<li>HP modifier is always positive (negative values become zero), but because Max HP itself is not bounded, it can overflow into negative amounts (Max HP is 32767).</li>
+	<li>When used in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s, 'Parameter2' controls the exact amount of HP gained.</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>While this opcode is "Non-Cumulative" (it sets values rather than increment), what it really does is stack in reverse standard order.</li>
+	<li>The base <a href="../files/ids/bgee/state.htm#BIT27">STATE</a> set on the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file will override any effect applied to them (defaulting to a value of zero).</li>
+	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
+	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6487,7 +8361,40 @@ A couple of examples about ‘Multiplicative Stacking Percentage Modifier’:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Modifies the THAC0, damage and morale of the target creature(s) by the amount specified by the 'Modifier' parameter.
+		<div class="descriptiondata"> Modifies the THAC0, damage and morale of the target creature(s) by the amount specified by the 'Modifier' parameter.<br />
+In particular:
+<ul>
+	<li>Modifies <a href="../files/ids/bgee/stats.htm#7">THAC0</a></li>
+	<li>Modifies <a href="../files/ids/bgee/stats.htm#50">DAMAGEBONUS</a></li>
+	<li>Morale is a 5 point bonus.</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>While this opcode is "Non-Cumulative" (it sets values rather than increment), what it really does is stack in reverse standard order.</li>
+	<li>The base <a href="../files/ids/bgee/state.htm#BIT23">STATE</a> set on the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file will override any effect applied to them (defaulting to a value of zero).</li>
+	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
+	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+‘Modifier’ only reads the first byte for its value, the last 3 bytes are ignored.
+
+  </div>
+</div>
+
 
 
 
@@ -6535,8 +8442,9 @@ In IWD2 the effect is non-cumulative and also removes any Bane effects.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the chant effect to the targeted creature(s). Chant affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. The effect sets STATE_CHANT.
-<br/>'Modifier' must be in the [-6,5] range.
+		<div class="descriptiondata"> Applies the chant effect to the targeted creature(s).<br />
+This opcode has the same effects as <a href="#op22">opcode #22</a>, but maintains its own separate <a href="../files/ids/bgee/state.htm#BIT24">STATE</a>.<br/>
+This opcode modifies <a href="../files/ids/bgee/stats.htm#32">LUCK</a>.
 
 
 
@@ -6544,6 +8452,33 @@ In IWD2 the effect is non-cumulative and also removes any Bane effects.
   <div>
     <strong>Note:</strong> 
 Multiple chant effects are not cumulative.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>While this opcode is "Non-Cumulative" (it sets values rather than increment), what it really does is stack in reverse standard order.</li>
+	<li>The base <a href="../files/ids/bgee/state.htm#BIT24">STATE</a> set on the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file will override any effect applied to them (defaulting to a value of zero).</li>
+	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
+	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+‘Modifier’ only reads the first byte for its value, the last 3 bytes are ignored.
 
   </div>
 </div>
@@ -6575,6 +8510,33 @@ Multiple chant effects are not cumulative.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Raises the strength, constitution and dexterity of the targeted creature(s) by the value specified by the 'Statistic Modifier' field. A negative value of 'Statistic Modifier' sets the strength, constitution and dexterity of the targeted creature(s) to 25.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>While this opcode is "Non-Cumulative" (it sets values rather than increment), what it really does is stack in reverse standard order.</li>
+	<li>The base <a href="../files/ids/bgee/state.htm#BIT25">STATE</a> set on the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file will override any effect applied to them (defaulting to a value of zero).</li>
+	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
+	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+‘Statistic Modifier’ only reads the first byte for its value, the last 3 bytes are ignored.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6601,7 +8563,36 @@ Multiple chant effects are not cumulative.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field to the targetted creatures luck. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect sets STATE_LUCK.
+		<div class="descriptiondata"> Applies the luck effect to the targeted creature(s).<br />
+This opcode has the same effects as <a href="#op22">opcode #22</a>, but maintains its own separate <a href="../files/ids/bgee/state.htm#BIT26">STATE</a>.<br/>
+This opcode modifies <a href="../files/ids/bgee/stats.htm#32">LUCK</a>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>While this opcode is "Non-Cumulative" (it sets values rather than increment), what it really does is stack in reverse standard order.</li>
+	<li>The base <a href="../files/ids/bgee/state.htm#BIT26">STATE</a> set on the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file will override any effect applied to them (defaulting to a value of zero).</li>
+	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
+	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+‘Statistic Modifier’ only reads the first byte for its value, the last 3 bytes are ignored.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6636,6 +8627,37 @@ Multiple chant effects are not cumulative.
   <div>
     <strong>Important:</strong> 
 Both parameters should be 0 (zero).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Does not remove any other death STATEs from the creature (as <a href="#op13">opcode 13</a> does).<br />
+While the end result is otherwise the same as “Stoned Death” applied by <a href="#op13">opcode 13</a>, this opcode does not actually utilize <a href="#op13">opcode 13</a> (internally or otherwise), unlike most (all?) other forms of death.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<a href="../files/ids/bgee/state.htm#BIT7">STATE_STONE_DEATH</a> specs:
+<ul>
+	<li>Creature is NOT helpless – they still require an attack roll to be hit.</li>
+	<li>Creature is unselectable, Inventory is disabled.</li>
+	<li>Disables the creature's SPECIFIC script.</li>
+	<li>Creature may only take actions listed in both <a href="../files/ids/bgee/actsleep.htm">ACTSLEEP.IDS</a> and <a href="../files/ids/bgee/instant.htm">INSTANT.IDS</a>.</li>
+	<li>Any hostile action against the creature(s) applies an Exploding Stoned Death to them.</li>
+	<li>Kicked from party, retains Inventory, Overlay's Color Index 72 on the entire creature.</li>
+</ul>
 
   </div>
 </div>
@@ -6720,10 +8742,25 @@ As a result, it will clear all Polymorph effects if param#2 = “-1”, else it 
 
 
 
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>"Parameter3" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>): Circle Size</li>
+	<li>"Parameter4" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>): Animation (from <a href="../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)</li>
+</ul>
+These two values are not functional (changing them does nothing), but they do get set on the effect.
+
+  </div>
+</div>
+
+
+
+
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-The creature you’re polymorphing into cannot have STATE_SLEEPING, STATE_FROZEN_DEATH, STATE_STONE_DEATH, STATE_FLAME_DEATH, or STATE_DEAD set in its CRE file, or the game will crash.
+The creature you’re polymorphing into cannot have <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a>, <a href="../files/ids/bgee/state.htm#BIT6">STATE_FROZEN_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT7">STATE_STONE_DEATH</a>, <a href="../files/ids/bgee/state.htm#BIT9">STATE_FLAME_DEATH</a>, or <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a> set in its <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file, or the game will crash.
 
   </div>
 </div>
@@ -6804,9 +8841,39 @@ Leave both parameters at zero for this effect to work.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the chant effect to the targeted creature(s).
-<br/>
-<br/>This effect works as the reverse of chant. The effect sets STATE_CHANTBAD.
+		<div class="descriptiondata"> Applies the chant effect to the targeted creature(s).<br/>
+This opcode has the same effects as <a href="#op22">opcode #22</a>, but maintains its own separate <a href="../files/ids/bgee/state.htm#BIT28">STATE</a>.<br/>
+This opcode modifies <a href="../files/ids/bgee/stats.htm#32">LUCK</a>.
+<br/><br/>
+
+This opcode works as the reverse of <a href="#op131">Chant</a> (positive values decrease Luck, negative values increase Luck).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li>While this opcode is "Non-Cumulative" (it sets values rather than increment), what it really does is stack in reverse standard order.</li>
+	<li>The base <a href="../files/ids/bgee/state.htm#BIT28">STATE</a> set on the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file will override any effect applied to them (defaulting to a value of zero).</li>
+	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
+	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+‘Statistic Modifier’ only reads the first byte for its value, the last 3 bytes are ignored.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -7610,11 +9677,32 @@ When using a non-permanent timing mode, it applies a delayed <a href="#op123">op
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Casts the spell specified by the resource key at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.
 <br/>Known values for 'Type' are:
-<br/>0   Normal Casting at specified level (0 for caster level), non-interruptible
-<br/>1   Cast Instantly at caster level
-<br/>2   Cast Instantly at specified level (EE-only)
-<br/>If the target is a container, the Type parameter is ignored and treated as 0
+<ul>
+	<li>0 &longrightarrow; Normal Casting at specified level (0 for caster level), non-interruptible</li>
+	<li>1 &longrightarrow; Cast Instantly at caster level</li>
+	<li>2 &longrightarrow; Cast Instantly at specified level (EE-only)</li>
+</ul>
 
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+If the target is a container, the Type parameter is ignored and treated as 0.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="#op326">opcode #326</a> for some peculiarities of projectile behaviour for Type 2.
+
+  </div>
+</div>
 
  </div>
 		<hr />
@@ -7694,8 +9782,10 @@ When using a non-permanent timing mode, it applies a delayed <a href="#op123">op
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Casts the spell specified by the resource key, at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.
 <br/>Known values for 'Type' are:
-<br/>0   Normal Casting
-<br/>1   Cast Instantly
+<ul>
+	<li>0 &LongRightArrow; Normal Casting</li>
+	<li>1 &longrightarrow; Cast Instantly (ignore 'Casting Level')</li>
+</ul>
 
 
 
@@ -7703,6 +9793,23 @@ When using a non-permanent timing mode, it applies a delayed <a href="#op123">op
   <div>
     <strong>Note:</strong> 
 This opcode does not work if the target is a container in non-ee versions.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+This opcode should generally target “Self”. In particular:
+<ul>
+	<li>The projectile of the subspell will originate from the target(s) of op148.</li>
+	<li>If the SPL/ITM with op148 targets a location, and doesn't have an area-effect projectile, there will be no target to cast on.</li>
+	<li>If the SPL/ITM with op148 has an area-effect projectile, the spell in op148 would be cast once for every valid target.</li>
+	<li>If this opcode uses the "Cast Instantly" option, then the target, not the caster, would cast the spell in op148.</li>
+</ul>
 
   </div>
 </div>
@@ -8404,7 +10511,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the mirror image effect to the targeted creature(s), creating a number of images equal to the 'Amount' value.
+		<div class="descriptiondata"> Applies the mirror image effect to the targeted creature(s), creating a number of images equal to the 'Amount' value. Sets <a href="../files/ids/bgee/state.htm#BIT30">STATE_MIRRORIMAGE</a> to true.
  </div>
 		<hr />
 
@@ -9485,17 +11592,17 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 		<div class="descriptiondata"> Applies a yellow fade in graphic effect to the targeted creature(s), and shows the 'Held' icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.
 <br/>Known values for 'IDS File' are:
 <ul>
-	<li>2 => <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
-	<li>3 => <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
-	<li>4 => <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
-	<li>5 => <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
-	<li>6 => <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
-	<li>7 => <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
-	<li>8 => <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
-	<li>9 => <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+	<li>2 &longrightarrow; <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
+	<li>3 &longrightarrow; <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
+	<li>4 &longrightarrow; <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
+	<li>5 &longrightarrow; <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
+	<li>6 &longrightarrow; <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
+	<li>7 &longrightarrow; <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
+	<li>8 &longrightarrow; <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
+	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
 </ul>
 
-<br/>This effect sets <a href="../files/ids/bgee/stats.htm#58">STAT #58</a> to 1. It also sets the STATE_HELPLESS flag.
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#58">STAT #58</a> to 1. It also sets the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag.
 
 
 
@@ -10103,17 +12210,17 @@ IWD2: Don’t use.
 <br/>This effect is not removed by <a href="#op162">effect #162</a>.
 <br/>Known values for 'IDS File' are:
 <ul>
-	<li>2 => <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
-	<li>3 => <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
-	<li>4 => <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
-	<li>5 => <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
-	<li>6 => <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
-	<li>7 => <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
-	<li>8 => <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
-	<li>9 => <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+	<li>2 &longrightarrow; <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
+	<li>3 &longrightarrow; <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
+	<li>4 &longrightarrow; <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
+	<li>5 &longrightarrow; <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
+	<li>6 &longrightarrow; <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
+	<li>7 &longrightarrow; <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
+	<li>8 &longrightarrow; <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
+	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
 </ul>
 
-<br/>This effect sets <a href="../files/ids/bgee/stats.htm#58">STAT #58</a> to 1. It also sets the STATE_HELPLESS flag.
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#58">STAT #58</a> to 1. It also sets the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag.
 
 
 
@@ -10373,7 +12480,7 @@ Param#2==2 was tested only for BGEE and might not work on non-EE.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Alters the weapon's attack speed by the value specified by the 'Speed Modifier' field. This effect is not cumulative. Attack speed ranges from 0 (good) to 10 (bad). This effect acts as a bonus, so a high 'Speed Modifier' is good.
-<br/>This effect sets stat #78 (PHYSICALSPEED) to param #1.
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#78">PHYSICALSPEED</a> to param #1.
  </div>
 		<hr />
 
@@ -13861,7 +15968,7 @@ This effect works in SoA but not ToB
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect enables a 1% chance of the targetted creature(s) going berserk on each attack it makes. This affect sets the berserk stat changes and then attaches affect 246.
+		<div class="descriptiondata"> This effect enables a 1% chance of the targetted creature(s) going berserk on each attack it makes. This affect sets the berserk stat changes and then attaches <a href="#op246">effect 246</a>.
  </div>
 		<hr />
 
@@ -13903,7 +16010,7 @@ This effect works in SoA but not ToB
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect appears to be a combination of opcode #3 and the berserking portrait icon. This affect attaches affect 247.
+		<div class="descriptiondata"> This effect appears to be a combination of <a href="#op3">opcode #3</a> and the berserking portrait icon. This effect attaches <a href="#op247">effect #247</a>.
  </div>
 		<hr />
 
@@ -13942,7 +16049,7 @@ This effect works in SoA but not ToB
 		<div class="descriptiondata"> Applies the attack nearest creature effect on the targeted creature(s).
 <br/>This effect causes the targeted creature(s) to attack the nearest creature. The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. Unlike opcode #3, this one can affect enemies as well.
 <br/>
-<br/>This effect sets stat #144 (BERSERKSTAGE2) to param #2. It also sets the STATE_BERSERK flag.
+<br/>This effect sets stat <a href="../files/ids/bgee/stats.htm#144">BERSERKSTAGE2</a> to param #2. It also sets the <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> flag.
 
 
 

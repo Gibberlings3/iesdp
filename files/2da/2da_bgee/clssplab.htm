@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>BG(2):EE 2DA Files : summlimt.2da</title>
+  <title>BG(2):EE 2DA Files : clssplab.2da</title>
   <meta name="description" content="The IESDP (Infinity Engine Structures Description Project) is an effort to research the workings of the Bioware Infinity Engine(R), and act as a collective resource for those interested in such workings.
 ">
 
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="../../../css/main.css">
 
 <!--
-  <link rel="canonical" href="https://gibberlings3.github.io/iesdp/files/2da/2da_bgee/summlimt.htm">
+  <link rel="canonical" href="https://gibberlings3.github.io/iesdp/files/2da/2da_bgee/clssplab.htm">
   <link rel="alternate" type="application/rss+xml" title="IESDP" href="https://gibberlings3.github.io/iesdp/feed.xml">
 -->
 </head>
@@ -66,21 +66,42 @@
 <div id="nonFooter">
   <div id="content">
 
-    <div class="title_main"> summlimt.2da</div>
+    <div class="title_main">clssplab.2da</div>
 <br />
-This file externalizes the summoning caps.<br />
-<br />
-In BG2EE we have:<br />
+
+For use with <a href="../../../opcodes/bgee.htm#op15">opcode #15</a> and <a href="../../../opcodes/bgee.htm#op44">opcode #44</a>.
+<br /><br />
+
+In IWD:EE we have:<br />
 
 <pre>
 2DA V1.0
-0
-          LIMIT
-NORMAL    5
-CELESTIAL 1
+6
+                    DEX		STR
+UNUSED              6		8
+MAGE                6		4
+FIGHTER             6		8
+CLERIC              4		6
+THIEF               8		6
+BARD                8		6
+PALADIN             6		8
+FIGHTER_MAGE        6		8
+FIGHTER_CLERIC      6		8
+FIGHTER_THIEF       8		8
+FIGHTER_MAGE_THIEF  8		8
+DRUID               4		6
+RANGER              6		8
+MAGE_THIEF          8		6
+CLERIC_MAGE         6		6
+CLERIC_THIEF        8		6
+FIGHTER_DRUID       6		8
+FIGHTER_MAGE_CLERIC 6		8
+CLERIC_RANGER       6		8
+SORCERER            6		4
+MONK                4		6
+
 </pre>
-  </div>
-</div>
+<br />
 
 
 
@@ -88,30 +109,13 @@ CELESTIAL 1
   <div>
     <strong>Info:</strong> 
 <ul>
-  <li>
-    When the engine is summoning any creature, it checks for existing creatures that match:<br />
-    <pre>(EA &lt;= 15 and EA != FAMILIAR) and (GENDER == SUMMONED or GENDER == SUMMONED_DEMON)</pre><br />
-    and holds them to the NORMAL limit.
-  </li>
-  <li>
-    When engine is summoning a creature with one of the following hardcoded resrefs, ["DEVAGOOD", "DEVAEVIL", "PLANGOOD", "PLANEVIL"], additionally checks for existing creatures that match:<br />
-    <pre>(EA &lt;= 15 and EA != FAMILIAR) and (GENDER == BOTH) and (animationID == 0x7F3B or animationID == 0x7F3C)</pre><br />
-    and holds them to the CELESTIAL limit.
-  </li>
-  <li>In both cases, these limits hold only for the Party.</li>
+    <li>The listed values represent Dicesize (Dicenumber is hardcoded to 1).</li>
+    <li>An unset Class would match UNUSED.</li>
+    <li>
+        Classes actually use the row# associated with their <a href="../../ids/bgee/class.htm">CLASS.IDS</a> index, so for instance ANKHEG would have to be added on row 101 (excluding the header rows). This is why the first row is labeled "UNUSED" instead of MAGE, to account for CLASS #0.<br />
+        Also note that in this case rows #22 – #100 would need filling in. Duplicating row 0, "UNUSED 6 8", 79 times at the bottom before appending ANKHEG would suffice.
+    </li>
 </ul>
-
-  </div>
-</div>
-
-
-
-
-<div class="note info">
-  <div>
-    <strong>Note:</strong> 
-A CELESTIAL will be blocked if the NORMAL limit has already been reached, but the NORMAL limit won’t be blocked if the CELESTIAL limit has already been reached.<br />
-A.k.a. if you summon your planetar first, you can have 5 NORMAL + 1 CELESTIAL. If you summon your planetar last, you can only have 4 NORMAL + 1 CELESTIAL.
 
   </div>
 </div>
@@ -147,7 +151,7 @@ window.addEventListener("scroll", function(event) {
 </span>
 </a>
 
-      <a href="https://github.com/gibberlings3/iesdp//blob/master/files/2da/2da_bgee/summlimt.htm">Edit this page</a>
+      <a href="https://github.com/gibberlings3/iesdp//blob/master/files/2da/2da_bgee/clssplab.htm">Edit this page</a>
     </div>
 
     <div class="">

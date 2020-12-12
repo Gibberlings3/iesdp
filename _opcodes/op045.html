@@ -10,10 +10,31 @@ iwd1: 0
 iwd2: 0
 pst: 1
 ---
-Stuns the targeted creature(s).
+Stuns the targeted creature(s). In particular:
+<ul>
+	<li>Maintains Portrait Icon <a href="../files/2da/2da_bgee/statdesc.htm">#55|"Stun"</a> (EE only).</li>
+	<li>Immobilizes the creature, limiting it to instantaneous actions (<a href="../files/ids/bgee/instant.htm">INSTANT.IDS</a>).</li>
+	<li>
+		Maintains <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a>.
+		<ul>
+			<li>Renders the creature unselectable and disable the Inventory.</li>
+		</ul>
+	</li>
+	<li>
+		Maintains <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a>.
+		<ul>
+			<li>Renders the creature unselectable and disable the Inventory.</li>
+			<li>Causes all attacks against the creature to automatically hit, disabling Critical Hits and misses.</li>
+		</ul>
+	</li>
+</ul>
 
 {% capture note %}
-At least in EEs, this opcode automatically provides the 'Stun' portrait icon.
+Applied with Timing Modes 1/4/7: will set the creature's base <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> flag, while still leaving behind a separate removable effect.
+<ul>
+	<li>Should you remove the effect without removing the state (through means other than <a href="#op46">opcode #46</a>), the creature will be fully functional, just not controllable by the player (if it was).</li>
+	<li>By itself, <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> does not disable any scripts or limit which actions the creature may take. It needs its opcode's immobilization effect as well as <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> to fully work.</li>
+</ul>
 {% endcapture %}
 
 {% include note.html %}

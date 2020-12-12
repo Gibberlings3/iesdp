@@ -10,9 +10,26 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Alters the animation of the targeted creature(s) to the animation specified by the 'Animation ID' field, in the style specified by the 'Type' field.
-<br/>Known values for Animation ID' are: (from <a href="../files/ids/bgee/animate.htm">ANIMATE.IDS</a> - in decimal)
-<br/>Known values for 'Type' are:
-<br/>0   Change animation - non-permanently
-<br/>1   Remove any non-permanent animation change ('Animation ID' is unused)
-<br/>2   Change animation - permanently
+Alters the animation of the targeted creature(s) to the animation specified by the <code>Animation ID</code> field, in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Animation ID</code> are: (from <a href="../files/ids/bgee/animate.htm">ANIMATE.IDS</a> – in decimal)
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Change target's animation to <code>Animation ID</code> (Low Priority)</li>
+	<li>1 &longrightarrow; Change target's animation to Source's Base Animation (Low Priority)
+		<ul>
+			<li>Normally used targeting oneself to reassert their base animation over previous <code>op53,p2=0</code> effects.</li>
+		</ul>
+	</li>
+	<li>
+		2 &longrightarrow; Change target's animation to <code>Animation ID</code> (High Priority)
+		<ul>
+			<li>Has priority over other <code>op53</code> effects using either <code>p2=0</code> or <code>p2=1</code>, regardless of stacking order.</li>
+		</ul>
+	</li>
+</ul>
+
+{% capture note %}
+Applied with Timing Mode 1/4/7, sets the creature's base animation, leaving no removable effect.
+{% endcapture %}
+
+{% include important.html %}

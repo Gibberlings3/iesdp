@@ -10,15 +10,35 @@ iwd1: 0
 iwd2: 0
 pst: 1
 ---
-Alters the number of priest spell slots available to the targeted creature(s), as specified by the 'Slot Amount Modifier' field, at the level specified by the 'Spell Level' field.
-<br/>Known values for 'Spell Level' are:
-<br/>0   Double spells
-<br/>1   Level 1
-<br/>2   Level 2
-<br/>4   Level 3
-<br/>8   Level 4
-<br/>16  Level 5
-<br/>32  Level 6
-<br/>64  Level 7
-<br/>For a 'Spell Level' of 0, the amount of spell slots is doubled for the level specified by the 'Slot Amount Modifier' value and all levels below. The target creature(s) must have at least 1 slot at the selected level to have their slot count changed. If the resultant slot count is negative, the creature is given 12 slots.
-<br/><br/>'Statistic Modifier' can be positive or negative.
+Alters the number of priest spell slots available to the targeted creature(s), as specified by the <code>Slot Amount Modifier</code> field, at the level specified by the <code>Spell Level</code> field.
+<br/>Known values for <code>Spell Level</code> are:
+<ul>
+	<li>0 &longrightarrow; Double spells</li>
+	<li>1 &longrightarrow; Level 1</li>
+	<li>2 &longrightarrow; Level 2</li>
+	<li>4 &longrightarrow; Level 3</li>
+	<li>8 &longrightarrow; Level 4</li>
+	<li>16 &longrightarrow; Level 5</li>
+	<li>32 &longrightarrow; Level 6</li>
+	<li>64 &longrightarrow; Level 7</li>
+</ul>
+
+<br/>For a <code>Spell Level</code> of 0, the amount of spell slots is doubled for the level specified by the <code>Slot Amount Modifier</code> value and all levels below. The target creature(s) must have at least 1 slot at the selected level to have their slot count changed. If the resultant slot count is negative, the creature is given 12 slots.
+
+<br/><br/><code>Slot Amount Modifier</code> can be positive or negative.
+
+{% capture note %}
+<ul>
+	<li>
+		If the number of current spell slots is 1:
+		<ul>
+			<li>applying a <code>-1</code> modifier will result in zero current slots and prevent further applications of this opcode from altering spell slots (until this effect terminates or is removed, or the base amount changes).</li>
+			<li>applying a <code>-2</code> modifier instead would bypass zero and result in <code>65535 (-1)</code>. Then applying a <code>+1</code> modifier would result in zero current slots and a repeat of the above.</li>
+		</ul>
+	</li>
+	<li>Regardless of whether the value can be altered, the effect is still attached to the creature, rather than being discarded entirely. They can still take effect should the creature's base spell slots be altered (such as from leveling up).</li>
+	<li>Applying multiple effects in increments of <code>-1</code> will insure that spell slots do not go below zero (and thus will not wrap around to maximum).</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

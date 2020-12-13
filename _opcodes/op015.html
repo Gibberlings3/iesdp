@@ -10,22 +10,22 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
+Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
 <ul>
-	<li>0 &longrightarrow; Cumulative Modifier: Dexterity = Dexterity + 'Statistic Modifier' value</li>
-	<li>1 &longrightarrow; Flat Value Modifier: Dexterity = 'Statistic Modifier' value</li>
-	<li>2 &longrightarrow; Percentage Modifier: Dexterity = (Dexterity * 'Statistic Modifier' value) / 100</li>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Dexterity = Dexterity + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Dexterity = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Dexterity = (Dexterity * 'Statistic Modifier' value) / 100</code></li>
 	<li>3 &longrightarrow; Cat's Grace (EE only)</li>
 </ul>
 
-<br/><br/>'Statistic Modifier' can be positive or negative.
+<br/><br/><code>statistic modifier</code> can be positive or negative.
 
 {% capture note %}
 All games but EEs:
 <ul>
-	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Dexterity raised permanently' will be shown.</li>
-	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if <code>Type</code> is <code>0</code> and <code>Statistic Modifier</code> is positive, the statistic will alter and remain shown in white text, and a message 'Dexterity raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if <code>Type</code> is <code>1</code> or <code>2</code>, or <code>Statistic Modifier</code> is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
 	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
 </ul>
 On EEs:
@@ -45,21 +45,21 @@ On EEs:
 {% include info.html %}
 
 {% capture note %}
-When 'Type'=3:
+When <code>Type=3</code>:
 <ul>
-	<li>'Statistic Modifier' is unused: it uses the value listed in <a href="../files/2da/2da_bgee/clssplab.htm">CLSSPLAB.2da</a> for the creature's base class, or defaults to '1' if the file isn't present (it only exists by default in IWDEE).</li>
+	<li><code>Statistic Modifier</code> is unused: it uses the value listed in <a href="../files/2da/2da_bgee/clssplab.htm">CLSSPLAB.2da</a> for the creature's base class, or defaults to <code>1</code> if the file isn't present (it only exists by default in IWDEE).</li>
 	<li>
-		A single instance of this opcode (using 'Type'=3) cannot raise Dexterity above 20 (hardcoded), but multiple instances of it can.
+		A single instance of this opcode (using <code>Type=3</code>) cannot raise Dexterity above 20 (hardcoded), but multiple instances of it can.
 		<ul>
 			<li>This is because it only checks the limit against the creature's base score, not its effective score.</li>
 		</ul>
 	</li>
 	<li>Like the other modes, applying the effect with Timing Mode 1 will affect the creature's base stat, leaving no removable effect.</li>
-	<li>Once applied to a creature, 'Statistic Modifier' will store the exact DEX increase granted (only useful for lookup/editing through EEkeeper/NI).</li>
+	<li>Once applied to a creature, <code>Statistic Modifier</code> will store the exact DEX increase granted (only useful for lookup/editing through EEkeeper/NI).</li>
 	<li>
 		When you apply this effect in an External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>, (via <a href="#op177">op177</a> / <a href="#op283">op283</a>):
 		<ul>
-			<li>'Parameter1' in the EFF will determine the exact Dexterity increase (so it must be set manually, and ignores any limit).</li>
+			<li><code>Parameter1</code> in the EFF will determine the exact Dexterity increase (so it must be set manually, and ignores any limit).</li>
 		</ul>
 	</li>
 </ul>

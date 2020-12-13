@@ -10,22 +10,22 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
+Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
 <ul>
-	<li>0 &longrightarrow; Cumulative Modifier: Strength = Strength + 'Statistic Modifier' value</li>
-	<li>1 &longrightarrow; Flat Value Modifier: Strength = 'Statistic Modifier' value</li>
-	<li>2 &longrightarrow; Percentage Modifier: Strength = (Strength * 'Statistic Modifier' value) / 100</li>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Strength = Strength + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Strength = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Strength = (Strength * 'Statistic Modifier' value) / 100</code></li>
 	<li>3 &longrightarrow; Bull's Strength (EE only)</li>
 </ul>
 
-<br/><br/>'Statistic Modifier' can be positive or negative.
+<br/><br/><code>Statistic Modifier</code> can be positive or negative.
 
 {% capture note %}
 All games but EEs:
 <ul>
-	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 0 and 'Statistic Modifier' is positive, the statistic will alter and remain shown in white text, and a message 'Strength raised permanently' will be shown.</li>
-	<li>With a Timing Modes of Permanent or Delayed, if 'Type' is 1 or 2, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if <code>Type</code> is <code>0</code> and <code>Statistic Modifier</code> is positive, the statistic will alter and remain shown in white text, and a message 'Strength raised permanently' will be shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if <code>Type</code> is <code>1</code> or <code>2</code>, or <code>Statistic Modifier</code> is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
 	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
 </ul>
 On EEs:
@@ -45,11 +45,11 @@ On EEs:
 {% include info.html %}
 
 {% capture note %}
-When 'Type'=3:
+When <code>Type=3</code>:
 <ul>
-	<li>'Statistic Modifier' is unused: it uses the value listed in <a href="../files/2da/2da_bgee/clssplab.htm">CLSSPLAB.2da</a> for the creature's base class, or defaults to '1' if the file isn't present (it only exists by default in IWDEE).</li>
+	<li><code>Statistic Modifier</code> is unused: it uses the value listed in <a href="../files/2da/2da_bgee/clssplab.htm">CLSSPLAB.2da</a> for the creature's base class, or defaults to <code>1</code> if the file isn't present (it only exists by default in IWDEE).</li>
 	<li>
-		A single instance of this opcode (using 'Type'=3) cannot raise Strength above 18 (hardcoded), but multiple instances of it can.
+		A single instance of this opcode (using <code>Type=3</code>) cannot raise Strength above 18 (hardcoded), but multiple instances of it can.
 		<ul>
 			<li>
 				This is because it only checks the limit against the creature's base score, not its effective score.
@@ -59,26 +59,26 @@ When 'Type'=3:
 				</ul>
 			</li>
 			<li>
-				Warrior classes also gain a &percnt; Strength score, their maximum is actually 18/100. Every '/10' is counted as +1 from their die roll. Warriors will not exceed 18/100 though, as once they hit 18, the remaining dice roll converts to a &percnt; increase, preventing their score from exceeding 18/100 (18/100 + /10 doesn't convert to 19).<br/>
-				For instance, if a PALADIN with 17 STR rolls, say, 5, he will end up with 18/40 STR.
+				Warrior classes also gain a &percnt; Strength score, their maximum is actually <code>18/100</code>. Every <code>/10</code> is counted as <code>+1</code> from their die roll. Warriors will not exceed <code>18/100</code> though, as once they hit <code>18</code>, the remaining dice roll converts to a &percnt; increase, preventing their score from exceeding <code>18/100</code> (<code>18/100 + /10</code> doesn't convert to <code>19</code>).<br/>
+				For instance, if a PALADIN with <code>17</code> STR rolls, say, <code>5</code>, he will end up with <code>18/40</code> STR.
 			</li>
 		</ul>
 	</li>
 	<li>Like the other modes, applying the effect with Timing Mode 1 will affect the creature's base stat, leaving no removable effect.</li>
-	<li>Once applied to a creature, 'Statistic Modifier' will store the exact STR increase granted, while the 'Special' field will store any Exceptional STR increase granted (only useful for lookup/editing through EEkeeper/NI).</li>
+	<li>Once applied to a creature, <code>Statistic Modifier</code> will store the exact STR increase granted, while the <code>Special</code> field will store any Exceptional STR increase granted (only useful for lookup/editing through EEkeeper/NI).</li>
 	<li>
 		When you apply this effect in an External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>, (via <a href="#op177">op177</a> / <a href="#op283">op283</a>):
 		<ul>
-			<li>'Parameter1' in the EFF will determine the exact Strength increase (so it must be set manually, and ignores any limit).</li>
+			<li><code>Parameter1</code> in the EFF will determine the exact Strength increase (so it must be set manually, and ignores any limit).</li>
 			<li>
-				If 'Parameter1' is non-zero, Exceptional STR will still be rolled as normal (and only for appropriate Classes).
+				If <code>Parameter1</code> is non-zero, Exceptional STR will still be rolled as normal (and only for appropriate Classes).
 				<ul>
 					<li>It will be equal to <code>10 * (Roll - (18 - Base))</code>, capped (0,100).</li>
 				</ul>
 			</li>
-			<li>If 'Parameter1' is zero, no Exceptional STR will be granted.</li>
-			<li>The actual increase for Exceptional STR will be stored in the 'Special' field of <a href="#op177">op177</a> / <a href="#op283">op283</a> (after it's been applied to the creature).</li>
-			<li>Basically, it works exactly like 'Type'=0, except that warriors will still gain a random Exceptional STR increase (of course it's only noticeable if their resulting STR is 18).</li>
+			<li>If <code>Parameter1</code> is zero, no Exceptional STR will be granted.</li>
+			<li>The actual increase for Exceptional STR will be stored in the <code>Special</code> field of <a href="#op177">op177</a> / <a href="#op283">op283</a> (after it's been applied to the creature).</li>
+			<li>Basically, it works exactly like <code>Type=0</code>, except that warriors will still gain a random Exceptional STR increase (of course it's only noticeable if their resulting STR is 18).</li>
 		</ul>
 	</li>
 </ul>

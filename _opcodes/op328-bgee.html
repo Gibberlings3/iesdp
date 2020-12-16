@@ -11,15 +11,66 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Sets the state of the targetted creature(s) to the value specified by the 'Type' field.
-<br/>These effects could be detected by the gamescript trigger ExtendedStateCheck. (see extstate.ids).
-<br/>Known values for 'Type' are:
-<br/>0   Chaotic Command
-<br/>1   Miscast Magic
-<br/>2   Pain
-<br/>3   Greater Malison
-<br/>4   Blood Rage
-<br/>5   Cats Grace
-<br/>6   Mold Touch
-<br/>7   Shroud of Flame
-<br/>If 'Mode' was set to 1, then this effect behaves like IWD2 Set State effect. (see splstate.ids)
+Sets the state of the targetted creature(s) to the value specified by the <code>Type</code> field.
+<br/>These effects could be detected by the gamescript trigger <a href="../scripting/triggers/bgeetriggers.htm#0x40E1">ExtendedStateCheck()</a> (see <a href="../files/ids/bgee/extstate.htm">EXTSTATE.IDS</a>).
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Chaotic Command</li>
+	<li>1 &longrightarrow; Miscast Magic</li>
+	<li>2 &longrightarrow; Pain</li>
+	<li>3 &longrightarrow; Greater Malison</li>
+	<li>4 &longrightarrow; Blood Rage</li>
+	<li>5 &longrightarrow; Cat's Grace</li>
+	<li>6 &longrightarrow; Mold Touch</li>
+	<li>7 &longrightarrow; Shroud of Flame</li>
+</ul>
+
+<br/>If <code>Mode</code> is set to <code>1</code>, then this effect behaves like IWD2 Set State effect (see <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>).
+
+{% capture note %}
+<ul>
+	<li>
+		The <code>IWD mode</code> Spell States are interchangeable with their <code>IWD2 mode</code> counterparts.
+		<ul>
+			<li>However, keep in mind that the values do not match. Let us consider "Shroud of Flame" as an example. You must use <code>7</code> with <code>IWD mode</code> and <code>47</code> with <code>IWD2 mode</code>.</li>
+		</ul>
+	</li>
+	<li>The <code>IWD mode</code> states are bits <code>18–25</code> from <a href="../files/ids/bgee/extstate.htm">EXTSTATE.IDS</a>, all of which are hardcoded.</li>
+	<li>
+		Each EXTSTATE has a hard-coded two-way mapping to a SPLSTATE, even though you can't actually set most of the EXTSTATEs directly:<br /><br />
+		<code>
+			Hex Value		Bit			Label								SPLSTATE
+			[0x00000001]	[BIT0]		[STATE_PRAYER]						SPLSTATE[14|BENEFICIAL_RECITATION]
+			[0x00000002]	[BIT1]		[STATE_PRAYER_BAD]					SPLSTATE[15|DETRIMENTAL_RECITATION]
+			[0x00000004]	[BIT2]		[STATE_RECITATION]					SPLSTATE[16|ALLIED_RIGHTEOUS_WRATH_OF_THE_FAITHFUL]
+			[0x00000008]	[BIT3]		[STATE_RECITATION_BAD]				SPLSTATE[18|STONESKIN]
+			[0x00000010]	[BIT4]		[STATE_EYE_OF_THE_MIND]				SPLSTATE[48|EYE_OF_THE_MIND]
+			[0x00000020]	[BIT5]		[STATE_EYE_OF_THE_SWORD]			SPLSTATE[49|EYE_OF_THE_SWORD]
+			[0x00000040]	[BIT6]		[STATE_EYE_OF_THE_MAGE]				SPLSTATE[50|EYE_OF_THE_MAGE]
+			[0x00000080]	[BIT7]		[STATE_EYE_OF_VENOM]				SPLSTATE[51|EYE_OF_VENOM]
+			[0x00000100]	[BIT8]		[STATE_EYE_OF_THE_SPIRIT]			SPLSTATE[52|EYE_OF_THE_SPIRIT]
+			[0x00000200]	[BIT9]		[STATE_EYE_OF_FORTITUDE]			SPLSTATE[53|EYE_OF_FORTITUDE]
+			[0x00000400]	[BIT10]		[STATE_EYE_OF_STONE]				SPLSTATE[54|EYE_OF_STONE]
+			[0x00000800]	[BIT11]		[STATE_ANIMAL_RAGE]					SPLSTATE[39|ANIMAL_RAGE]
+			[0x00001000]	[BIT12]		[STATE_SUPPRESS_HP_INFO]			SPLSTATE[35|SUPPRESS_HP_INFO]
+			[0x00002000]	[BIT13]		[STATE_BERSERK_ALWAYS_ACTIVE]		SPLSTATE[33|BERSERK_ALWAYS_ACTIVE]
+			[0x00004000]	[BIT14]		[STATE_SNEAK_ATTACK_IMMUNITY]		SPLSTATE[40|SNEAK_ATTACK_IMMUNITY]
+			[0x00008000]	[BIT15]		[STATE_CYNICISM_EQUIPPED]			SPLSTATE[255|CYNICISM_EQUIPPED]
+			[0x00010000]	[BIT16]		[STATE_UNSTUN_ON_DAMAGE]			SPLSTATE[37|UNSTUN_ON_DAMAGE]
+			[0x00020000]	[BIT17]		[STATE_DEAFENED]					SPLSTATE[38|DEAFENED]
+			[0x00040000]	[BIT18]		[STATE_CHAOTIC_COMMANDS]			SPLSTATE[41|CHAOTIC_COMMANDS]
+			[0x00080000]	[BIT19]		[STATE_MISCAST_MAGIC]				SPLSTATE[42|MISCAST_MAGIC]
+			[0x00100000]	[BIT20]		[STATE_PAIN]						SPLSTATE[43|PAIN]
+			[0x00200000]	[BIT21]		[STATE_MALISON]						SPLSTATE[44|MALISON]
+			[0x00400000]	[BIT22]		[STATE_BLOOD_RAGE]					SPLSTATE[34|BLOOD_RAGE]
+			[0x00800000]	[BIT23]		[STATE_CATS_GRACE]					SPLSTATE[45|CATS_GRACE]
+			[0x01000000]	[BIT24]		[STATE_MOLD_TOUCH]					SPLSTATE[46|MOLD_TOUCH]
+			[0x02000000]	[BIT25]		[STATE_SHROUD_OF_FLAME]				SPLSTATE[47|SHROUD_OF_FLAME]
+			[0x04000000]	[BIT26]		[STATE_STATIC_CHARGE]				SPLSTATE[116|STATIC_CHARGE]
+			[0x08000000]	[BIT27]		[STATE_DOESNT_AWAKEN_ON_DAMAGE]		SPLSTATE[36|DOESNT_AWAKEN_ON_DAMAGE]
+		</code>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

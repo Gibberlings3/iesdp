@@ -12,64 +12,76 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Set the 'Amount' parameter as the amount of damage, and the Disease Type parameter as how the disease functions.
-<br/>Known values for 'Type' are:
+Set the <code>Amount</code> parameter as the amount of damage, and the <code>Type</code> parameter as how the disease functions.
+<br/>Known values for <code>Type</code> are:
 <ul>
-	<li>0 &longrightarrow; Inflict 1 HP per second ('Frequency Multiplier' is ignored – 'Amount' needs to be non-zero)</li>
-	<li>1 &longrightarrow; Inflict 1 HP per second (for best results, leave 'Frequency Multiplier' at zero, 'Amount' between 1 and 101)</li>
-	<li>2 &longrightarrow; Deal 'Amount' damage every 'Frequency Multiplier' second(s)</li>
-	<li>3 &longrightarrow; Deal one damage every 'Amount' * 'Frequency Multiplier' second(s)</li>
-	<li>4 &longrightarrow; Reduce Strength score by 'Amount'</li>
-	<li>5 &longrightarrow; Reduce Dexterity score by 'Amount'</li>
-	<li>6 &longrightarrow; Reduce Constitution score by 'Amount'</li>
-	<li>7 &longrightarrow; Reduce Intelligence score by 'Amount'</li>
-	<li>8 &longrightarrow; Reduce Wisdom score by 'Amount'</li>
-	<li>9 &longrightarrow; Reduce Charisma score by 'Amount'</li>
+	<li>
+		0 &longrightarrow; Inflict 1 HP per second
+		<ul>
+			<li><code>Frequency Multiplier</code> is ignored – <code>Amount</code> needs to be non-zero)</li>
+		</ul>
+	</li>
+	<li>
+		1 &longrightarrow; Inflict 1 HP per second
+		<ul>
+			<li>for best results, leave <code>Frequency Multiplier</code> at <code>0</code>, <code>Amount</code> between <code>1</code> 1 and <code>101</code></li>
+		</ul>
+	</li>
+	<li>2 &longrightarrow; Deal <code>Amount</code> damage every <code>Frequency Multiplier</code> second(s)</li>
+	<li>3 &longrightarrow; Deal one damage every <code>'Amount' * 'Frequency Multiplier'</code> second(s)</li>
+	<li>4 &longrightarrow; Reduce Strength score by <code>Amount</code></li>
+	<li>5 &longrightarrow; Reduce Dexterity score by <code>Amount</code></li>
+	<li>6 &longrightarrow; Reduce Constitution score by <code>Amount</code></li>
+	<li>7 &longrightarrow; Reduce Intelligence score by <code>Amount</code></li>
+	<li>8 &longrightarrow; Reduce Wisdom score by <code>Amount</code></li>
+	<li>9 &longrightarrow; Reduce Charisma score by <code>Amount</code></li>
 	<li>10 &longrightarrow; Slow Effect</li>
 	<li>11 &longrightarrow; Mold touch/Single</li>
 	<li>12 &longrightarrow; Mold touch/Decrement</li>
 	<li>13 &longrightarrow; Contagion</li>
 </ul>
-<br/><br/>'Amount' can be positive (penalty) or negative (bonus).
+
+<br/><br/><code>Amount</code> can be positive (penalty) or negative (bonus).
+
 <br/><br/>
-'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is none (no icon).
+<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is <code>none (no icon)</code>.
 <br/>
 
 {% capture note %}
-Permanent timing modes require a duration for this effect to work.
+<code>Permanent</code> timing modes require a <code>duration</code> for this effect to work.
 {% endcapture %}
 
 {% include important.html %}
 
 {% capture note %}
-This opcode deals "Poison" damage, except Mold Touches, which deal "Magic" damage.
+This opcode deals <code>POISON</code> damage, except Mold Touches, which deal <code>MAGIC</code> damage.
 {% endcapture %}
 
 {% include info.html %}
 
 {% capture note %}
-If 'Frequency Multiplier' = 0, its value is treated as 1. This is the default value for SPL/ITM effects.
+If <code>Frequency Multiplier = 0</code>, its value is treated as <code>1</code>. This is the default value for SPL/ITM effects.
 {% endcapture %}
 
 {% include info.html %}
 
 {% capture note %}
-The Slow effect is no different from that caused by <a href="#op40">opcode #40</a> (Slow), including its stacking interaction with Haste, except that it is blocked/removed as a disease, not as a slow effect.
+The <code>Slow</code> effect is no different from that caused by <a href="#op40">opcode #40</a> (Slow), including its stacking interaction with <a href="#op16">Haste</a>, except that it is blocked/removed as a disease, not as a slow effect.
 {% endcapture %}
 
 {% include info.html %}
 
 {% capture note %}
-Contagion is a composite of Strength, Dexterity, Charisma drain and the Slow effect, each ability score reduced by 'Amount'.
+<code>Contagion</code> is a composite of Strength, Dexterity, Charisma drain and the <a href="#op40">Slow effect</a>, each ability score reduced by <code>Amount</code>.
 {% endcapture %}
 
 {% include info.html %}
 
 {% capture note %}
-When the 'Type' field is 1:
+When the <code>Type</code> field is <code>1</code>:
 <ul>
-	<li>if the 'Frequency Multiplier' field is non-zero, damage is always dealt.</li>
-	<li>if the 'Amount' field is less than 256, damage is dealt while HP > 100 / 'Amount'.</li>
+	<li>if the <code>Frequency Multiplier</code> field is non-zero, damage is always dealt.</li>
+	<li>if the <code>Amount</code> field is less than <code>256</code>, damage is dealt while <code>HP > 100 / 'Amount'</code>.</li>
 </ul>
 {% endcapture %}
 
@@ -82,17 +94,17 @@ Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(250|DISEASED)</a> on
 {% include info.html %}
 
 {% capture note %}
-Mold touch is complicated: the general idea is that it deals x or xd6 damage and applies the SPL file specified by the resource key (default: "original resource" + B) every (round or second) for either 1 round (single) or across multiple rounds dealing less each round (decrement).
+<code>Mold Touch</code> is complicated: the general idea is that it deals <code>x</code> or <code>xd6</code> damage and applies the SPL file specified by the <code>resource</code> key (default: <code>"original resource" + B</code>) every (round or second) for either 1 round (single) or across multiple rounds dealing less each round (decrement).
 In particular:
 <ul>
-	<li>If 'Type'=11:
+	<li>If <code>Type=11</code>:
 		<ul>
-			<li>Timing Mode should be 3 (with no duration).</li>
-			<li>In <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s, it always causes 1d6 damage.</li>
+			<li><code>Timing Mode</code> should be <code>3</code> (with no duration).</li>
+			<li>In <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s, it always causes <code>1d6</code> damage.</li>
 			<li>In external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s it functions identically to 'Mold Touch/Decrement', in every way (see below for further details).</li>
 		</ul>
 	</li>
-	<li>if 'Type'=12:
+	<li>if <code>Type=12</code>:
 		<ul>
 			<li>
 				The first hit doesn't occur immediately, but instead at 80 ticks (exactly), the second hit occurs at 90 ticks (6 seconds), then later hits occur 1 round apart. So:<br />
@@ -103,15 +115,15 @@ In particular:
 				As far as damage dealt is concerned, in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s:
 				<ul>
 					<li><code>x = 'Amount'(d6)</code>, decrementing the amount by 1 die every round, until zero.</li>
-					<li>Should always use Timing Mode 1, 3 or 4, and only a non-zero duration if using Timing Mode 4.</li>
-					<li>If Timing Mode is 1 or 4, the portrait icon, and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> remain until cured/death.</li>
-					<li>If Timing Mode is 3 (with no duration), it will expire 1 round after the final damage (when it realizes the amount has reached zero). Timing Mode 3 and <code>duration = 0</code> should be the "default" setting for this mode right now.</li>
+					<li>Should always use <code>Timing Mode</code> <code>1</code>, <code>3</code> or <code>4</code>, and only a non-zero duration if using <code>Timing Mode 4</code>.</li>
+					<li>If <code>Timing Mode</code> is <code>1</code> or <code>4</code>, the portrait icon, and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> remain until cured/death.</li>
+					<li>If <code>Timing Mode</code> is <code>3</code> (with no duration), it will expire 1 round after the final damage (when it realizes the amount has reached zero). <code>Timing Mode 3</code> and <code>duration = 0</code> should be the "default" setting for this mode right now.</li>
 				</ul>
 			</li>
 			<li>
 				As far as damage dealt is concerned, in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
 				<ul>
-					<li><code>x = (remaining Duration / 6)(d6)</code>, or just <code>(remaining Duration / 6)</code> if 'Frequency Multiplier' >= 65536.</li>
+					<li><code>x = (remaining 'Duration' / 6)(d6)</code>, or just <code>(remaining 'Duration' / 6)</code> if <code>Frequency Multiplier >= 65536</code>.</li>
 					<li>The damage dice is rounded down.</li>
 					<li>Because the first hit doesn't occur until 80 ticks, any duration shorter will have no triggers.</li>
 					<li>The Portrait Icon and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> will remain for the full specified duration.</li>
@@ -121,13 +133,13 @@ In particular:
 		</ul>
 	</li>
 </ul>
-'Frequency Multiplier' determines whether it deals damage every second or every round, and whether it deals x or xd6 damage.
+<code>Frequency Multiplier</code> determines whether it deals damage every second or every round, and whether it deals <code>x</code> x or <code>xd6</code> damage.
 <ul>
-	<li>'Frequency Multiplier' = 0 &longrightarrow; xd6 per round</li>
-	<li>'Frequency Multiplier' = 65536 or greater (must be even) &longrightarrow; x per second</li>
-	<li>'Frequency Multiplier' = 65537 or greater (must be odd) &longrightarrow; x per round</li>
+	<li><code>Frequency Multiplier = 0</code> &longrightarrow; <code>xd6</code> per round</li>
+	<li><code>Frequency Multiplier = 65536</code> or greater (must be even) &longrightarrow; <code>x</code> per second</li>
+	<li><code>Frequency Multiplier = 65537</code> or greater (must be odd) &longrightarrow; <code>x</code> per round</li>
 </ul>
-Regardless, the value of x decrements only once per round.
+Regardless, the value of <code>x</code> decrements only once per round.
 {% endcapture %}
 
 {% include info.html %}

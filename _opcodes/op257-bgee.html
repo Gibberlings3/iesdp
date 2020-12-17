@@ -11,35 +11,35 @@ iwd2: 0
 pst: 0
 ---
 Creates a custom spell sequencer, storing a certain number of spells for later use.<br/>
-It applies <a href="#op256">opcode #256</a> to the caster upon completing the spell selection process, and at the same time it grants you the -D or -P subspell (via <a href="#op171">opcode #171</a>). In particular:
+It applies <a href="#op256">opcode #256</a> to the caster upon completing the spell selection process, and at the same time it grants you the <code>-D</code> or <code>-P</code> subspell (via <a href="#op171">opcode #171</a>). In particular:
 
 <ul>
-	<li>if all of the sequenced spells use ability target 4 (Target Point), it will grant spell 'Parent' + 'P' (provided such a spell exists – for instance: SPWI420P),</li>
-	<li>otherwise it will grant spell 'Parent' + 'D' (for instance: SPWI420D).</li>
+	<li>if all of the sequenced spells use <code>Ability Target 4 (Target Point)</code>, it will grant spell <code>'Parent' + 'P'</code> (provided such a spell exists – for instance: <code>SPWI420P</code>),</li>
+	<li>otherwise it will grant spell <code>'Parent' + 'D'</code> (for instance: <code>SPWI420D</code>).</li>
 </ul>
 
-The chosen spells are stored using <a href="#op256">opcode #256</a>, using 'Timing Mode' 1 (regardless of timing mode for <a href="#op257">opcode #257</a>) and 'Parameter3' set to 1.
+The chosen spells are stored using <a href="#op256">opcode #256</a>, using <code>Timing Mode 1</code> (regardless of timing mode for <a href="#op257">opcode #257</a>) and <code>Parameter3</code> set to <code>1</code>.
 
-<br/>The 'Maximum Level' field indicates the maximum spell level that can be used in the sequencer. The 'Amount' field indicates the number of spells that can be used in the sequencer.
+<br/>The <code>Maximum Level</code> field indicates the maximum spell level that can be used in the sequencer. The <code>Amount</code> field indicates the number of spells that can be used in the sequencer.
 <br/><br/>
 
-When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, 'Parent Type' (Source Type) may be manually set to influence its behavior. Known values for 'Parent Type' are:
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, <code>Parent Type (Source Type)</code> may be manually set to influence its behavior. Known values for <code>Parent Type</code> are:
 <ul>
-	<li>0 = None – Allows further effects with a matching "Parent Resource" to affect the target.</li>
-	<li>1 = Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string ENGINEST[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log.</li>
-	<li>2 = Item – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+	<li>0 &longrightarrow; None – Allows further effects with a matching "Parent Resource" to affect the target.</li>
+	<li>1 &longrightarrow; Spell – Any further effects with a matching "Parent Resource" will be blocked by the engine and string ENGINEST[42|STRREF_ERROR_CAN_NOT_CAST_TWO_CONT] is returned to the combat log.</li>
+	<li>2 &longrightarrow; Item – Allows further effects with a matching "Parent Resource" to affect the target.</li>
 </ul>
 
-When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, "Parent Resource" (Activation key) must be manually set to influence its behavior.<br/>
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, <code>Parent Resource (Activation Key)</code> must be manually set to influence its behavior.<br/>
 When set manually, it cannot contain lowercase characters, it MUST be in ALLCAPS, numbers, and/or symbols, or the sequencer cannot be activated.
 <br/><br/>
 
-If not used in an external EFF, the 'Activation Key' will be the "Parent Resource".<br/>
-If used in an external EFF, the 'Activation Key' must be explicitly specified, but doesn't need to match its actual "Parent Resource".<br/>
-For the vanilla spells, the 'Activation Key' is always the parent spell of <a href="#op257">opcode #257</a>.
+If not used in an external EFF, the <code>Activation Key</code> will be the "Parent Resource".<br/>
+If used in an external EFF, the <code>Activation Key</code> must be explicitly specified, but doesn't need to match its actual "Parent Resource".<br/>
+For the vanilla spells, the <code>Activation Key</code> is always the parent spell of <a href="#op257">opcode #257</a>.
 
 {% capture note %}
-As of v2.3, an entry for the "Parent Resource" or "Activation Key" must be added to the 'mageBookStrings{}' lua table, or the game will crash upon use.
+As of v2.3, an entry for the "Parent Resource" or "Activation Key" must be added to the <code>mageBookStrings{}</code> lua table, or the game will crash upon use.
 {% endcapture %}
 
 {% include important.html %}
@@ -57,7 +57,7 @@ The presence of this effect in any of a spell's ability headers will force any W
 {% include note.html %}
 
 {% capture note %}
-'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="#op256">256</a>/<a href="#op257">257</a> and <a href="#op258">258</a>/<a href="#op260">260</a>) use the exact same string.
+<code>Activation Key</code> does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="#op256">256</a>/<a href="#op257">257</a> and <a href="#op258">258</a>/<a href="#op260">260</a>) use the exact same string.
 {% endcapture %}
 
 {% include note.html %}

@@ -10,10 +10,20 @@ iwd1: 1
 iwd2: 1
 pst: 1
 ---
-Applies the blur effect to the targeted creature(s). Graphical displacement is affected by movement rate.
+Applies the blur effect to the targeted creature(s) and sets <a href="../files/ids/bgee/state.htm#BIT29">STATE_BLUR</a>. Graphical displacement is affected by movement rate.
 
 {% capture note %}
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 {% endcapture %}
 
 {% include important.html %}
+
+{% capture note %}
+<ul>
+	<li><a href="../files/ids/bgee/state.htm#BIT29">STATE_BLUR</a> will maintain the effects of this opcode, once this opcode expires, but only until you save &amp; reload.</li>
+	<li>If you set <a href="../files/ids/bgee/state.htm#BIT29">STATE_BLUR</a> on a <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file, it won't do anything by itself.</li>
+	<li>If you later apply <a href="#op65">opcode #65</a> to the creature, once it expires, the blur visual will remain until you save &amp; reload, but will no longer update based on your movement rate (it will remain stuck at whatever it was when the opcode expired).</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

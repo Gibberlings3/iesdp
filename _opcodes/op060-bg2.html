@@ -17,12 +17,18 @@ The targeted creature(s) will fail to cast the type of spell specified by the <c
 	<li>1 &longrightarrow; Cleric Spells</li>
 	<li>2 &longrightarrow; Innate Abilities</li>
 	<li>3 &longrightarrow; Mage Spells</li>
-	<li>4 &longrightarrow; Mage Spells</li>
+	<li>4 &longrightarrow; Cleric Spells</li>
 	<li>5 &longrightarrow; Innate Abilities</li>
 </ul>
 
-<br/><code>Type</code> values of <code>0</code>,<code>1</code> or <code>2</code> display a message – "Spell Failed: casting failure"
-<br/><code>Type</code> values of <code>3</code>,<code>4</code> or <code>5</code> display a message – "Spell failed due to dead magic"
+This opcode increments <a href="../files/ids/bgee/stats.htm#51">SPELLFAILUREMAGE</a>, <a href="../files/ids/bgee/stats.htm#52">SPELLFAILUREPRIEST</a> and <a href="../files/ids/bgee/stats.htm#194">SPELL_FAILURE_INNATE</a>, each of which is capped <code>0 – 100</code>.
+
+<br/><br/><code>Type</code> values of <code>0</code>,<code>1</code> or <code>2</code> display a message – "Spell Failed: casting failure" (on EE games, this string is specified by <code>STRREF_FEEDBACK_SPELLFAILED_CASTFAILURE</code> in <a href="../files/2da/2da_bgee/enginest.htm">ENGINEST.2DA</a>)
+
+<br/><br/><code>Type</code> values of <code>3</code>,<code>4</code> or <code>5</code> display a message – "Spell failed due to dead magic" (on EE games, this string is specified by <code>STRREF_FEEDBACK_SPELLFAILED_CASTFAILUREDEAD</code> in <a href="../files/2da/2da_bgee/enginest.htm">ENGINEST.2DA</a>)
+<ul>
+	<li>Additionally, it sets <a href="../files/ids/bgee/stats.htm#196">DEAD_MAGIC</a> to <code>1</code>.</li>
+</ul>
 
 {% capture note %}
 <ul>

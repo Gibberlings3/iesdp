@@ -12,15 +12,19 @@ iwd2: 0
 pst: 0
 ---
 Applies the unconsciousness effect to the targeted creature(s).<br />
-Known values for 'Wake on Damage' are (only in EEs):
+Known values for <code>Wake on Damage</code> are (only in EEs):
 <ul>
-	<li>0 => Yes</li>
-	<li>1 => No</li>
+	<li>0 &longrightarrow; Yes</li>
+	<li>1 &longrightarrow; No</li>
 </ul>
-'Icon' defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only).
+<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only).
+<br/><br/>
+
+This opcode sets the <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a> flag.
 
 {% capture note %}
-A permanent timing mode will set the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag. In such a case, that flag cannot be removed in-game.
+Timing modes 1/4/7 will set the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag. In such a case, this flag cannot be removed in-game.<br/>
+Moreover, they will also set <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a>, which works as the <code>Wake on Hit</code> option. It's just not usable because of the irremovable <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a>.
 {% endcapture %}
 
 {% include note.html %}

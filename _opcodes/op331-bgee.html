@@ -11,30 +11,30 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Each <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> files has a Creature Power Level number (at 0x18). This effect summons a number of monsters depending on this value, the special parameter and if it is used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.<br>
-<br/>When used in SPL/ITM, known value for 'Mode' are:
+Each <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file has a <code>Creature Power Level</code> number (at 0x18). This effect summons a number of monsters depending on this value, the <code>special</code> parameter and if it is used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.<br>
+<br/>When used in SPL/ITM, known value for <code>Mode</code> are:
 <ul>
-	<li>0 => Summon amount equal to ('Count' + Dice rolls)</li>
-	<li>1 => Summon amount equal to ('Count' + Dice rolls)</li>
-	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level"</li>
+	<li>0 &longrightarrow; Summon amount equal to <code>'Count' + Dice rolls</code></li>
+	<li>1 &longrightarrow; Summon amount equal to <code>'Count' + Dice rolls</code></li>
+	<li>2 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds Caster Level</li>
 </ul>
 
-<br/>When used in <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> known value for 'Mode' are:
+<br/>When used in <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> known value for <code>Mode</code> are:
 <ul>
-	<li>0 => Summon until Creature Power Level equals/exceeds 'Count'</li>
-	<li>1 => Summon amount equal to ('Count' + Dice rolls)</li>
-	<li>2 => Summon until Creature Power Level equals/exceeds "Caster Level" field of <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> (located at offset 0xc8)</li>
+	<li>0 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds <code>Count</code> 'Count'</li>
+	<li>1 &longrightarrow; Summon amount equal to <code>'Count' + Dice rolls</code></li>
+	<li>2 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds <code>Caster Level</code> field of <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> (located at offset 0xc8)</li>
 </ul>
 
-<br/>The 'Type' field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are listed in <a href="../files/2da/2da_bgee/smtables.htm">SMTABLES.2DA</a>.
-<br/>If the resource field is filled, it will use a custom .2da to determine which monsters to summon.
+<br/>The <code>Type</code> field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are listed in <a href="../files/2da/2da_bgee/smtables.htm">SMTABLES.2DA</a>.
+<br/>If the <code>resource</code> field is filled, it will use a custom .2da to determine which monsters to summon.
 <br/>If used from an external effect (.eff), the vvc field controls the bam/vvc file played over the creatures when summoning.
 <br/>If used from an external effect (.eff), the second vvc field controls the bam file played over the target area when summoning.<br>
 
 {% capture note %}
 As far as the <a href="../files/ids/bgee/ea.htm">allegiance</a> of the summoned creatures
 is concerned, this opcode uses "Match Target", which sets the summoned creature's
-allegiance to one of 4 (Ally), 128 (Neutral), or 255 (Enemy), based on the
+allegiance to one of <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, based on the
 summoner (whichever group the summoner belongs to).
 {% endcapture %}
 

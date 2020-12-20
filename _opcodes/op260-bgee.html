@@ -11,17 +11,17 @@ iwd2: 0
 pst: 0
 ---
 Activates a spell sequencer at a target point.<br/>
-Activates any <a href="#op256">opcode #256</a> with a matching resource ('Activation Key') of the targeted creature(s).<br/>
+Activates any <a href="#op256">opcode #256</a> with a matching resource (<code>Activation Key</code>) of the targeted creature(s).<br/>
 
 When used in combination with <a href="#op257">opcode #257</a> (Spell Sequencer Creation):
 
 <ul>
-	<li>The resource key must be set to the filename of the spell which contains the Spell Sequencer Creation effect.</li>
+	<li>The <code>resource</code> key must be set to the filename of the spell which contains the Spell Sequencer Creation effect.</li>
 	<li>The spell which contains the Spell Sequencer Creation effect can have a maximum filename of 7 characters.</li>
-	<li>The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the P character, and should be an innate ability. For instance:
+	<li>The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the <code>P</code> character, and should be an innate ability. For instance:
 		<ul>
-			<li>Spell Sequencer Creation filename = SPWI420</li>
-			<li>Spell Sequencer Activation filename = SPWI420P</li>
+			<li>Spell Sequencer Creation filename = <code>SPWI420</code></li>
+			<li>Spell Sequencer Activation filename = <code>SPWI420P</code></li>
 		</ul>
 	</li>
 </ul>
@@ -31,10 +31,10 @@ Those spells are cast by the targeted creature(s) at "this" ability's target.<br
 For each stored spell, "this" ability's target must be within range of that spell, or it will fail.
 <br/><br/>
 
-All <a href="#op256">opcode #256</a> effects with a matching 'Activation Key' are removed if their 'Parameter3' = 1 (those created by <a href="#op257">opcode #257</a> / <a href="#op234">opcode #234</a> have this value set to '1' by default).
+All <a href="#op256">opcode #256</a> effects with a matching <code>Activation Key</code> are removed if their <code>Parameter3 = 1</code> (those created by <a href="#op257">opcode #257</a> / <a href="#op234">opcode #234</a> have this value set to <code>1</code> by default).
 
 {% capture note %}
-'Activation Key' does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="#op256">256</a>/<a href="#op257">257</a> and <a href="#op258">258</a>/<a href="#op260">260</a>) use the exact same string.
+<code>Activation Key</code> does not have to reference an actual spell or item resource, it can be any valid string, so long as the effects involved (<a href="#op256">256</a>/<a href="#op257">257</a> and <a href="#op258">258</a>/<a href="#op260">260</a>) use the exact same string.
 {% endcapture %}
 
 {% include note.html %}

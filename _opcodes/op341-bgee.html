@@ -2,9 +2,9 @@
 n: 341
 name: "Spell Effect: Change Critical Hit Effect"
 param1: "Irrelevant"
-param2: "Use"
+param2: "Condition"
 param3: "Weapon Category"
-special: "Weapon Type"
+special: "Attack Type"
 bg1: 0
 bg2: 0
 bgee: 1
@@ -13,16 +13,21 @@ iwd2: 0
 pst: 0
 ---
 Sets the Critical Hit effect of the targetted creature to the spell specified by the resource key.
-<br/>Known values for 'Use' are:
-<br/>0 - Use spell for critical hits of both hands
-<br/>1 - Use spell for critical hit only by this weapon
-<br />
-<br/>Known values for 'Weapon Type' are:
-<br/>0  All Weapons
-<br/>1  Melee Weapon only
-<br/>2  Ranged Weapon only
-<br />
-<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode #301</a>.
+<br/>Known values for <code>Condition</code> are:
+<ul>
+	<li>0 &longrightarrow; Apply Critical Miss chance for both hands</li>
+	<li>1 &longrightarrow; Apply Critical Miss chance only for this weapon</li>
+</ul>
+
+<br/>Known values for <code>Attack Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Any attack type</li>
+	<li>1 &longrightarrow; Melee attack only</li>
+	<li>2 &longrightarrow; Ranged attack only</li>
+	<li>3 &longrightarrow; Magical attack only</li>
+</ul>
+
+<br/>(External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s) Known values for <code>Weapon Category</code> are defined in <a href="../files/ids/bgee/itemcat.htm">ITEMCAT.IDS</a>.
 
 {% capture note %}
 This effect is not blocked from triggering by <a href="#op120">opcode #120</a> (Immunity to weapons).

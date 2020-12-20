@@ -2,9 +2,9 @@
 n: 301
 name: "Stat: Critical Hit Modifier"
 param1: "Statistic Modifier"
-param2: "Irrelevant"
+param2: "Condition"
 param3: "Weapon Category"
-special: "Weapon Type"
+special: "Attack Type"
 bg1: 0
 bg2: 0
 bgee: 1
@@ -13,35 +13,22 @@ iwd2: 0
 pst: 0
 ---
 This effect improves the Critical Hit chances. 
-<br/>Critical hits will occur on a roll (on a 1d20) greater or equal to:
-<br/>20 - 'Statistic Modifier'
-<br/>
-<br/>Known values for 'Weapon Type' are:
-<br/>0  All Weapons
-<br/>1  Melee Weapon only
-<br/>2  Ranged Weapon only
-<br/>
-<br/>Known values for 'Weapon Category' are (based on values from <a href="../files/ids/bgee/itemcat.htm">itemcat.ids</a>):
-<br/>0  Any category
-<br/>5  ARROW
-<br/>14 BULLET
-<br/>15 BOW
-<br/>16 DAGGER
-<br/>17 MACE
-<br/>18 SLING
-<br/>19 SMSWORD
-<br/>20 BGSWORD
-<br/>21 HAMMER
-<br/>22 MSTAR
-<br/>23 FLAIL
-<br/>24 DART
-<br/>25 AXE
-<br/>26 STAFF
-<br/>27 XBOW
-<br/>28 FIST
-<br/>29 SPEAR
-<br/>30 POLEARM
-<br/>31 BOLT
+<br/>Critical hits will occur on a roll (on a <code>1d20</code>) greater or equal to: <code>20 - 'Statistic Modifier'</code>.
+<br/>Known values for <code>Condition</code> are:
+<ul>
+	<li>0 &longrightarrow; Apply Critical Hit chance for both hands</li>
+	<li>1 &longrightarrow; Apply Critical Hit chance only for this weapon</li>
+</ul>
+
+<br/>Known values for <code>Attack Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Any attack type</li>
+	<li>1 &longrightarrow; Melee attack only</li>
+	<li>2 &longrightarrow; Ranged attack only</li>
+	<li>3 &longrightarrow; Magical attack only</li>
+</ul>
+
+<br/>(External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s) Known values for <code>Weapon Category</code> are defined in <a href="../files/ids/bgee/itemcat.htm">ITEMCAT.IDS</a>.
 
 {% capture note %}
 In v2.3 and prior, only the latest instance of this opcode applies. In v2.5+, all instances stack together.

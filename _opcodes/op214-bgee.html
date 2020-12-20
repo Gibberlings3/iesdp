@@ -10,31 +10,31 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Uses the 2da specified by the resource key to display multiple spell options, based on the 'Type' field.
-<br/>Known values for 'Type' are:
+Uses the 2da specified by the <code>resource</code> key to display multiple spell options, based on the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
 <ul>
-	<li>0 => Use "resource" 2da list</li>
-	<li>1 => Known mage spells, except Identify (SPWI110), and Nahal's Reckless Dweomer (SPWI124)</li>
-	<li>2 => Known mage spells, except the above, and those with <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">spell flag</a> BIT15 "Ignore Wild Surge"</li>
+	<li>0 &longrightarrow; Use <code>resource</code> 2da list</li>
+	<li>1 &longrightarrow; Known mage spells, except Identify (<code>SPWI110</code>), and Nahal's Reckless Dweomer (<code>SPWI124</code>)</li>
+	<li>2 &longrightarrow; Known mage spells, except the above, and those with <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">spell flag</a> BIT15 "Ignore Wild Surge"</li>
 </ul>
 
-When 'Type' is 0, the 2da file must follow the following format:<br/>
+When <code>Type</code> is <code>0</code>, the 2da file must follow the following format:<br/>
 <pre>
 2DA V1.0
 ****
 ResRef		Type
-(name)		(RESREF)			(Casting Type)
-(name)		(RESREF)			(Casting Type)
+name		RESREF			Casting Type
+name		RESREF			Casting Type
 </pre>
 <br/>
 
-(name) can be any string of characters/numbers without any whitespace, and does not need to be unique. (RESREF) is the filename of the spell without its [.SPL] extension.<br/>
-As far as (Casting Types) is concerned:
+<code>name</code> can be any string of characters/numbers without any whitespace, and does not need to be unique. <code>RESREF</code> is the filename of the spell without its <code>.SPL</code> extension.<br/>
+As far as <code>Casting Type</code> is concerned:
 <ul>
-	<li>0/1 => Spell completely mimics the mechanics of casting a spell from a quick-cast slot (including requiring and expending a memorization of the spell)</li>
-	<li>3 => Ignores Spells/Round rule, ignores memorization.</li>
-	<li>4 => Ignores Spells/Round rule, ignores memorization, spellcasting cannot be interrupted by damage.</li>
-	<li>5 => Ignores Spells/Round rule, cast instantly, even if the game is paused, can be cast without memorization, but will decrement memorization if exists.</li>
+	<li>0/1 &longrightarrow; Spell completely mimics the mechanics of casting a spell from a quick-cast slot (including requiring and expending a memorization of the spell)</li>
+	<li>3 &longrightarrow; Ignores Spells/Round rule, ignores memorization.</li>
+	<li>4 &longrightarrow; Ignores Spells/Round rule, ignores memorization, spellcasting cannot be interrupted by damage.</li>
+	<li>5 &longrightarrow; Ignores Spells/Round rule, cast instantly, even if the game is paused, can be cast without memorization, but will decrement memorization if exists.</li>
 </ul>
 
 {% capture note %}

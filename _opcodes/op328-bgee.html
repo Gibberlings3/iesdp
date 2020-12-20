@@ -11,15 +11,247 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Sets the state of the targetted creature(s) to the value specified by the 'Type' field.
-<br/>These effects could be detected by the gamescript trigger ExtendedStateCheck. (see extstate.ids).
-<br/>Known values for 'Type' are:
-<br/>0   Chaotic Command
-<br/>1   Miscast Magic
-<br/>2   Pain
-<br/>3   Greater Malison
-<br/>4   Blood Rage
-<br/>5   Cats Grace
-<br/>6   Mold Touch
-<br/>7   Shroud of Flame
-<br/>If 'Mode' was set to 1, then this effect behaves like IWD2 Set State effect. (see splstate.ids)
+Sets the state of the targetted creature(s) to the value specified by the <code>Type</code> field.
+<br/>These effects could be detected by the gamescript trigger <a href="../scripting/triggers/bgeetriggers.htm#0x40E1">ExtendedStateCheck()</a> (see <a href="../files/ids/bgee/extstate.htm">EXTSTATE.IDS</a>).
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Chaotic Command</li>
+	<li>1 &longrightarrow; Miscast Magic</li>
+	<li>2 &longrightarrow; Pain</li>
+	<li>3 &longrightarrow; Greater Malison</li>
+	<li>4 &longrightarrow; Blood Rage</li>
+	<li>5 &longrightarrow; Cat's Grace</li>
+	<li>6 &longrightarrow; Mold Touch</li>
+	<li>7 &longrightarrow; Shroud of Flame</li>
+</ul>
+
+<br/>If <code>Mode</code> is set to <code>1</code>, then this effect behaves like IWD2 Set State effect (see <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>).
+
+{% capture note %}
+<ul>
+	<li>
+		The <code>IWD mode</code> Spell States are interchangeable with their <code>IWD2 mode</code> counterparts.
+		<ul>
+			<li>However, keep in mind that the values do not match. Let us consider "Shroud of Flame" as an example. You must use <code>7</code> with <code>IWD mode</code> and <code>47</code> with <code>IWD2 mode</code>.</li>
+		</ul>
+	</li>
+	<li>The <code>IWD mode</code> states are bits <code>18–25</code> from <a href="../files/ids/bgee/extstate.htm">EXTSTATE.IDS</a>, all of which are hardcoded.</li>
+	<li>
+		Each EXTSTATE has a hard-coded two-way mapping to a SPLSTATE, even though you can't actually set most of the EXTSTATEs directly:<br />
+		<table border="1" width="98%">
+			<colgroup>
+				<col width="5%" />
+				<col width="12%" />
+				<col width="*" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Hex value</th>
+					<th>Bit</th>
+					<th>Label</th>
+					<th>Spell state</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>0x00000001</td>
+					<td>BIT0</td>
+					<td>STATE_PRAYER</td>
+					<td>12 – BENEFICIAL_PRAYER</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000002</td>
+					<td>BIT1</td>
+					<td>STATE_PRAYER_BAD</td>
+					<td>13 – DETRIMENTAL_PRAYER</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000004</td>
+					<td>BIT2</td>
+					<td>STATE_RECITATION</td>
+					<td>14 – BENEFICIAL_RECITATION</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000008</td>
+					<td>BIT3</td>
+					<td>STATE_RECITATION_BAD</td>
+					<td>15 – DETRIMENTAL_RECITATION</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000010</td>
+					<td>BIT4</td>
+					<td>STATE_EYE_OF_THE_MIND</td>
+					<td>48 – EYE_OF_THE_MIND</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000020</td>
+					<td>BIT5</td>
+					<td>STATE_EYE_OF_THE_SWORD</td>
+					<td>49 – EYE_OF_THE_SWORD</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000040</td>
+					<td>BIT6</td>
+					<td>STATE_EYE_OF_THE_MAGE</td>
+					<td>50 – EYE_OF_THE_MAGE</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000080</td>
+					<td>BIT7</td>
+					<td>STATE_EYE_OF_VENOM</td>
+					<td>51 – EYE_OF_VENOM</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000100</td>
+					<td>BIT8</td>
+					<td>STATE_EYE_OF_THE_SPIRIT</td>
+					<td>52 – EYE_OF_THE_SPIRIT</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000200</td>
+					<td>BIT9</td>
+					<td>STATE_EYE_OF_FORTITUDE</td>
+					<td>53 – EYE_OF_FORTITUDE</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000400</td>
+					<td>BIT10</td>
+					<td>STATE_EYE_OF_STONE</td>
+					<td>54 – EYE_OF_STONE</td>
+				</tr>
+		
+				<tr>
+					<td>0x00000800</td>
+					<td>BIT11</td>
+					<td>STATE_ANIMAL_RAGE</td>
+					<td>39 – ANIMAL_RAGE</td>
+				</tr>
+		
+				<tr>
+					<td>0x00001000</td>
+					<td>BIT12</td>
+					<td>STATE_SUPPRESS_HP_INFO</td>
+					<td>35 – SUPPRESS_HP_INFO</td>
+				</tr>
+		
+				<tr>
+					<td>0x00002000</td>
+					<td>BIT13</td>
+					<td>STATE_BERSERK_ALWAYS_ACTIVE</td>
+					<td>33 – BERSERK_ALWAYS_ACTIVE</td>
+				</tr>
+		
+				<tr>
+					<td>0x00004000</td>
+					<td>BIT14</td>
+					<td>STATE_SNEAK_ATTACK_IMMUNITY</td>
+					<td>40 – SNEAK_ATTACK_IMMUNITY</td>
+				</tr>
+		
+				<tr>
+					<td>0x00008000</td>
+					<td>BIT15</td>
+					<td>STATE_CYNICISM_EQUIPPED</td>
+					<td>255 – CYNICISM_EQUIPPED</td>
+				</tr>
+		
+				<tr>
+					<td>0x00010000</td>
+					<td>BIT16</td>
+					<td>STATE_UNSTUN_ON_DAMAGE</td>
+					<td>37 – UNSTUN_ON_DAMAGE</td>
+				</tr>
+		
+				<tr>
+					<td>0x00020000</td>
+					<td>BIT17</td>
+					<td>STATE_DEAFENED</td>
+					<td>38 – DEAFENED</td>
+				</tr>
+		
+				<tr>
+					<td>0x00040000</td>
+					<td>BIT18</td>
+					<td>STATE_CHAOTIC_COMMANDS</td>
+					<td>41 – CHAOTIC_COMMANDS</td>
+				</tr>
+		
+				<tr>
+					<td>0x00080000</td>
+					<td>BIT19</td>
+					<td>STATE_MISCAST_MAGIC</td>
+					<td>42 – MISCAST_MAGIC</td>
+				</tr>
+		
+				<tr>
+					<td>0x00100000</td>
+					<td>BIT20</td>
+					<td>STATE_PAIN</td>
+					<td>43 – PAIN</td>
+				</tr>
+		
+				<tr>
+					<td>0x00200000</td>
+					<td>BIT21</td>
+					<td>STATE_MALISON</td>
+					<td>44 – MALISON</td>
+				</tr>
+		
+				<tr>
+					<td>0x00400000</td>
+					<td>BIT22</td>
+					<td>STATE_BLOOD_RAGE</td>
+					<td>34 – BLOOD_RAGE</td>
+				</tr>
+		
+				<tr>
+					<td>0x00800000</td>
+					<td>BIT23</td>
+					<td>STATE_CATS_GRACE</td>
+					<td>45 – CATS_GRACE</td>
+				</tr>
+		
+				<tr>
+					<td>0x01000000</td>
+					<td>BIT24</td>
+					<td>STATE_MOLD_TOUCH</td>
+					<td>46 – MOLD_TOUCH</td>
+				</tr>
+		
+				<tr>
+					<td>0x02000000</td>
+					<td>BIT25</td>
+					<td>STATE_SHROUD_OF_FLAME</td>
+					<td>47 – SHROUD_OF_FLAME</td>
+				</tr>
+		
+				<tr>
+					<td>0x04000000</td>
+					<td>BIT26</td>
+					<td>STATE_STATIC_CHARGE</td>
+					<td>116 – STATIC_CHARGE</td>
+				</tr>
+		
+				<tr>
+					<td>0x08000000</td>
+					<td>BIT27</td>
+					<td>STATE_DOESNT_AWAKEN_ON_DAMAGE</td>
+					<td>36 – DOESNT_AWAKEN_ON_DAMAGE</td>
+				</tr>
+			</tbody>
+		</table>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

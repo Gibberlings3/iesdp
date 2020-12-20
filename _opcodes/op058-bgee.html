@@ -1,0 +1,49 @@
+---
+n: 58
+name: "Cure: Dispellable Effects (Dispel Magic)"
+param1: "Level"
+param2: "Dispel Type & Magic Weapon Dispel Type"
+bg1: 0
+bg2: 0
+bgee: 1
+iwd1: 0
+iwd2: 0
+pst: 0
+---
+Dispels magic from the targeted creature(s). Depending on the value of the <code>Type</code> field, the <code>Level</code> field can be used to set the level of the effect.
+<br/>The <code>Dispel Type & Magic Weapon Dispel Type</code> field is handled as follows:
+<ul>
+	<li>
+		First word = Dispel Type
+		<ul>
+			<li>0 &longrightarrow; Always dispel</li>
+			<li>1 &longrightarrow; Use Caster Level</li>
+			<li>2 &longrightarrow; Use <code>Level</code> field</li>
+		</ul>
+	</li>
+	<li>
+		Second word = Magic Weapon Dispel Type
+		<ul>
+			<li>0 &longrightarrow; Always dispel</li>
+			<li>1 &longrightarrow; Never Dispel</li>
+			<li>2 &longrightarrow; Use Caster Level</li>
+		</ul>
+	</li>
+</ul>
+
+{% capture note %}
+When <code>Type=1</code> or <code>Type=2</code> (Level-based Dispel):
+<ul>
+	<li>
+		Base chance is 49&percnt;.
+		<ul>
+			<li>This chance is modified by the relative levels of the dispeller to the caster. Each level below gives a -10&percnt; chance, each level above gives a +5&percnt; chance.</li>
+		</ul>
+	</li>
+	<li>Maximum is 99&percnt; chance to dispel.</li>
+	<li>There is no minimum threshold for succeeding the dispel check, at 5 levels or more below it will always fail.</li>
+	<li>Effects with caster levels 1932735279 to 1932735534 (as impractical as they may be), corresponding to levels 0 – 255, effectively use an inverted success/failure rate, due to overflow.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

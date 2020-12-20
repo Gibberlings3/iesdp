@@ -10,10 +10,27 @@ iwd1: 1
 iwd2: 1
 pst: 1
 ---
-Gives the targeted creature(s) infravision.
+Gives the targeted creature(s) infravision and sets <a href="../files/ids/bgee/state.htm#BIT17">STATE_INFRAVISION</a>.
 
 {% capture note %}
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 {% endcapture %}
 
 {% include important.html %}
+
+{% capture note %}
+<a href="../files/ids/bgee/state.htm#BIT17">STATE_INFRAVISION</a> specs:<br/>
+While a creature with Infravision is currently selected,
+<ul>
+	<li>all visible creatures with <code>body heat</code> that are currently in a "shadowed" part of the area receive a "warm" (red-shifted) overlay</li>
+	<li><code>body heat</code> is determined by a creature's animation (<code>INI</code> file) using <code>detected_by_infravision=1</code>, or by <a href="#op342">opcode #342</a> (<code>p1=1</code> &amp; <code>p2=1</code>)</li>
+	<li>
+		"shadowed" is determined by each area's Light Map <code>"AR####LM.BMP"</code>
+		<ul>
+			<li>Some areas have a separate Light Map for "nighttime" hours, <code>"AR####LN.BMP"</code></li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

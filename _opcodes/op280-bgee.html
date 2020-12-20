@@ -12,20 +12,21 @@ pst: 0
 ---
 Applies the wild magic effect to the targeted creature(s).
 <br/>This effect causes other spells to be subject to wild magic throws.
-<br/>Known values for 'Type' are:
-<br/>1   Affect next spell cast
-<br/>2   Affect all spells cast for effect duration
-<br/>
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>1 &longrightarrow; Affect next spell cast</li>
+	<li>2 &longrightarrow; Affect all spells cast for effect duration</li>
+</ul>
 
 {% capture note %}
 Can only force Wild Surges on spells that are normally valid for them.<br/>
-In particular, it doesn't work for SPLs whose BIT14 (located at offset <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">0x18</a>) is set to 1, subspells, as well as certain script actions – mostly the "instant-cast" ones.
+In particular, it doesn't work for <code>SPL</code>s whose <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT14</a> (located at offset <code>0x18</code>) is set to <code>1</code>, subspells, as well as certain script actions – mostly the "instant-cast" ones.
 {% endcapture %}
 
 {% include note.html %}
 
 {% capture note %}
-'Type' = 1 also maintains <a href="../files/ids/bgee/stats.htm#153">STAT #153</a> to 1.
+<code>Type = 1</code> also maintains <a href="../files/ids/bgee/stats.htm#153">FORCESURGE</a> to <code>1</code>.
 {% endcapture %}
 
 {% include info.html %}

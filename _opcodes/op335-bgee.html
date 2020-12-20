@@ -11,20 +11,20 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-When the opcode is applied, it checks if the creature currently has the spellstate specified by 'Spellstate' set. Known values for 'Spellstate' are defined in <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>.
+When the opcode is applied, it checks if the creature currently has the spellstate specified by <code>Spellstate</code> set. Known values for <code>Spellstate</code> are defined in <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>.
 <br/>
 
 <ul>
 	<li>If it's already set, this opcode is NOT applied, nothing happens.</li>
-	<li>Otherwise, the opcode is attached, the spellstate becomes set (for the duration of the effect), and the 'Resource' specified by the resource key (if any!) is granted to the character (as if through <a href="#op171">opcode #171</a>)</li>
+	<li>Otherwise, the opcode is attached, the spellstate becomes set (for the duration of the effect), and the "Resource" specified by the <code>resource</code> key (if any!) is granted to the character (as if through <a href="#op171">opcode #171</a>)</li>
 </ul>
 <br/>
 
-The next time the row number specified by 'Row#' of <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a> is triggered (blocks an effect), this effect will terminate, remove the spell it granted (as if through <a href="#op172">opcode #172</a>) and decrement <a href="#op336">opcode #336</a> effects according to their 'Eye Group' (parameter2 for op#336, special field for op#335).
+The next time the row number specified by <code>Row#</code> of <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a> is triggered (blocks an effect), this effect will terminate, remove the spell it granted (as if through <a href="#op172">opcode #172</a>) and decrement <a href="#op336">opcode #336</a> effects according to their <code>Eye Group</code> (<code>parameter2</code> for <a href="#op336">opcode #336</a>, <code>special</code> field for op#335).
 <br/>
 
 {% capture note %}
-Setting 'Row#' = "-1" will effectively have it last its full duration, blocking every effect listed for that spellstate in 7EYES.2DA.
+Setting <code>Row# = "-1"</code> will effectively have it last its full duration, blocking every effect listed for that spellstate in <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a>.
 {% endcapture %}
 
 {% include note.html %}

@@ -10,27 +10,27 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Applies the Haste effect, in the style specified by the 'Type' value.
-<br/>Known values for 'Type' are:
+Applies the Haste effect, in the style specified by the <code>Type</code> value.
+<br/>Known values for <code>Type</code> are:
 <ul>
-	<li>0 &longrightarrow; Normal Haste - double the movement rate and grants an additional Attack Per Round (APR), rounded down (capped at 6)</li>
-	<li>1 &longrightarrow; Improved Haste - double the movement rate and doubles APR (capped at 10)</li>
-	<li>2 &longrightarrow; Weak Haste – Speed haste without attack bonuses, round APR up (capped at 5)</li>
+	<li>0 &longrightarrow; Normal Haste – double the movement rate and grants an additional Attack Per Round (APR), rounded down (capped at <code>6</code>)</li>
+	<li>1 &longrightarrow; Improved Haste – double the movement rate and doubles APR (capped at <code>10</code>)</li>
+	<li>2 &longrightarrow; Weak Haste – Speed haste without attack bonuses, round APR up (capped at <code>5</code>)</li>
 </ul>
 
-<br/><br/>All of them set <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a>. Improved/Weak function by setting an additional STAT value, which modifies the behavior of <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a>:
+<br/><br/>All of them set <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a>. <code>Improved/Weak</code> function by setting an additional <code>STAT</code> value, which modifies the behavior of <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a>:
 <ul>
 	<li><a href="../files/ids/bgee/stats.htm#155">IMPROVEDHASTE</a>.</li>
 	<li><a href="../files/ids/bgee/stats.htm#185">ANIMATION_ONLY_HASTE</a>.</li>
 </ul>
 
 <p>
-The Normal and Improved haste types grant a -2 initiative (weapon speed) bonus. All types:
+The <code>Normal</code> and <code>Improved</code> haste types grant a <code>-2</code> initiative (Weapon Speed) bonus. All types:
 <ul>
 	<li>grant portrait icons</li>
 	<li>increase the creature's animation speed and the animation speed of <a href="#op140">opcode 140</a> effects</li>
 	<li>halve the creature's round timer used by attacks, modal abilities and "Auto-Pause: End of Round"</li>
-	<li>increase frequency of application of <a href="#op25">poison</a>, <a href="#op78">disease</a>, <a href="#op98">regeneration</a>, <a href="#op232">Cast on Condition</a> and <a href="#op272">Use EFF File (at Frequency)</a>, but not below 1s</li>
+	<li>increase frequency of application of <a href="#op25">poison</a>, <a href="#op78">disease</a>, <a href="#op98">regeneration</a>, <a href="#op232">Cast on Condition</a> and <a href="#op272">Use EFF File (at Frequency)</a>, but not below <code>1s</code></li>
 </ul>
 </p>
 
@@ -41,9 +41,9 @@ This effect will cancel out the <a href="#op40">slow opcode</a>.
 {% include info.html %}
 
 {% capture note %}
-BG1 only supports haste type 0.<br/><br/>
-This opcode will set the <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a> flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.<br />
-This only works when applying Normal/Improved haste (there's no difference, since the STAT for Improved haste doesn't get set this way), Weak haste does not do anything with timing mode 1.
+BG1 only supports haste type <code>0</code>.<br/><br/>
+This opcode will set the <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a> flag and nothing else when applied with <code>timing mode 1</code>, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.<br />
+This only works when applying <code>Normal/Improved</code> haste (there's no difference, since the <code>STAT</code> for <code>Improved</code> haste doesn't get set this way), <code>Weak</code> haste does not do anything with <code>timing mode 1</code>.
 {% endcapture %}
 
 {% include warning.html %}

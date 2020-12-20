@@ -10,13 +10,31 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-The targeted creature(s) will fail to cast the type of spell specified by the 'Type' field, 'Percent Chance' percent of the time.
-<br/>Known values for 'Type' are:
-<br/>0   Mage Spells
-<br/>1   Cleric Spells
-<br/>2   Innate
-<br/>3   Mage Spells
-<br/>4   Cleric Spells
-<br/>5   Innate
-<br/>'Type' values of 0,1 or 2 display a message -'Spell Failed: casting failure'
-<br/>'Type' values of 3,4 or 5 display a message -'Spell failed due to dead magic'
+The targeted creature(s) will fail to cast the type of spell specified by the <code>Type</code> field, <code>Percent Chance</code> percent of the time.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Mage Spells</li>
+	<li>1 &longrightarrow; Cleric Spells</li>
+	<li>2 &longrightarrow; Innate Abilities</li>
+	<li>3 &longrightarrow; Mage Spells</li>
+	<li>4 &longrightarrow; Cleric Spells</li>
+	<li>5 &longrightarrow; Innate Abilities</li>
+</ul>
+
+This opcode increments <a href="../files/ids/bgee/stats.htm#51">SPELLFAILUREMAGE</a>, <a href="../files/ids/bgee/stats.htm#52">SPELLFAILUREPRIEST</a> and <a href="../files/ids/bgee/stats.htm#194">SPELL_FAILURE_INNATE</a>, each of which is capped <code>0 – 100</code>.
+
+<br/><br/><code>Type</code> values of <code>0</code>,<code>1</code> or <code>2</code> display a message – "Spell Failed: casting failure" (on EE games, this string is specified by <code>STRREF_FEEDBACK_SPELLFAILED_CASTFAILURE</code> in <a href="../files/2da/2da_bgee/enginest.htm">ENGINEST.2DA</a>)
+
+<br/><br/><code>Type</code> values of <code>3</code>,<code>4</code> or <code>5</code> display a message – "Spell failed due to dead magic" (on EE games, this string is specified by <code>STRREF_FEEDBACK_SPELLFAILED_CASTFAILUREDEAD</code> in <a href="../files/2da/2da_bgee/enginest.htm">ENGINEST.2DA</a>)
+<ul>
+	<li>Additionally, it sets <a href="../files/ids/bgee/stats.htm#196">DEAD_MAGIC</a> to <code>1</code>.</li>
+</ul>
+
+{% capture note %}
+<ul>
+	<li>This opcode is cumulative with itself and the <a href="#op80">Deafness</a> effect.</li>
+	<li>Spells with <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT14|Ignore Dead/Wild Magic</a> ignore the spell failure chance from this effect (regardless of using the <code>Dead Magic</code> mode).</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

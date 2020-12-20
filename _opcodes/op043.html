@@ -10,10 +10,19 @@ iwd1: 1
 iwd2: 1
 pst: 1
 ---
-Changes the targeted creature(s) from stone to flesh.
+Removes <a href="../files/ids/bgee/state.htm#BIT7">STATE_STONE_DEATH</a> from the targeted creatures and restores them to 1 HP. Does not affect creatures without <a href="../files/ids/bgee/state.htm#BIT7">STATE_STONE_DEATH</a>.
 
 {% capture note %}
 Both parameters should be 0 (zero).
 {% endcapture %}
 
 {% include important.html %}
+
+{% capture note %}
+<ul>
+	<li>Will not remove a currently delayed (untriggered) <a href="#op134">Petrification</a> effect.</li>
+	<li>Nor will it remove the False Petrification mode of <a href="#op109">opcode #109</a>.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

@@ -10,60 +10,62 @@ iwd1: 1
 iwd2: 0
 pst: 0
 ---
-Creates the item specified by the resource key in the slot specified by the 'Slot' field, on the targeted creature(s).
-<br/>Known values for 'Slot' (from slots.ids) are:
-<br/>0   AMULET
-<br/>1   ARMOR
-<br/>2   BELT
-<br/>3   BOOTS
-<br/>4   CLOAK
-<br/>5   GAUNTLETS
-<br/>6   HELMET
-<br/>7   RING_LEFT
-<br/>8   RING_RIGHT
-<br/>9   SHIELD
-<br/>10  FIST
-<br/>11  AMMO
-<br/>15  MISC
-<br/>35  WEAPON
-<br/>11  AMMO0
-<br/>12  AMMO1
-<br/>13  AMMO2
-<br/>14  AMMO3
-<br/>15  MISC0
-<br/>16  MISC1
-<br/>17  MISC2
-<br/>18  MISC3
-<br/>19  MISC4
-<br/>20  MISC5
-<br/>21  MISC6
-<br/>22  MISC7
-<br/>23  MISC8
-<br/>24  MISC9
-<br/>25  MISC10
-<br/>26  MISC11
-<br/>27  MISC12
-<br/>28  MISC13
-<br/>29  MISC14
-<br/>30  MISC15
-<br/>31  MISC16
-<br/>32  MISC17
-<br/>33  MISC18
-<br/>34  MISC19 – Magical Weapon slot
-<br/>35  WEAPON0
-<br/>36  WEAPON1
-<br/>37  WEAPON2
-<br/>38  WEAPON3
+Creates the item specified by the <code>resource</code> key in the slot specified by the <code>Slot</code> field, on the targeted creature(s).
+<br/>Known values for <code>Slot</code> (from <a href="../files/ids/bgee/slots.htm">SLOTS.IDS</a>) are:
+<ul>
+	<li>0 &longrightarrow; AMULET</li>
+	<li>1 &longrightarrow; ARMOR</li>
+	<li>2 &longrightarrow; BELT</li>
+	<li>3 &longrightarrow; BOOTS</li>
+	<li>4 &longrightarrow; CLOAK</li>
+	<li>5 &longrightarrow; GAUNTLETS</li>
+	<li>6 &longrightarrow; HELMET</li>
+	<li>7 &longrightarrow; RING_LEFT</li>
+	<li>8 &longrightarrow; RING_RIGHT</li>
+	<li>9 &longrightarrow; SHIELD</li>
+	<li>10 &longrightarrow; FIST</li>
+	<li>11 &longrightarrow; AMMO</li>
+	<li>15 &longrightarrow; MISC</li>
+	<li>35 &longrightarrow; WEAPON</li>
+	<li>11 &longrightarrow; AMMO0</li>
+	<li>12 &longrightarrow; AMMO1</li>
+	<li>13 &longrightarrow; AMMO2</li>
+	<li>14 &longrightarrow; AMMO3</li>
+	<li>15 &longrightarrow; MISC0</li>
+	<li>16 &longrightarrow; MISC1</li>
+	<li>17 &longrightarrow; MISC2</li>
+	<li>18 &longrightarrow; MISC3</li>
+	<li>19 &longrightarrow; MISC4</li>
+	<li>20 &longrightarrow; MISC5</li>
+	<li>21 &longrightarrow; MISC6</li>
+	<li>22 &longrightarrow; MISC7</li>
+	<li>23 &longrightarrow; MISC8</li>
+	<li>24 &longrightarrow; MISC9</li>
+	<li>25 &longrightarrow; MISC10</li>
+	<li>26 &longrightarrow; MISC11</li>
+	<li>27 &longrightarrow; MISC12</li>
+	<li>28 &longrightarrow; MISC13</li>
+	<li>29 &longrightarrow; MISC14</li>
+	<li>30 &longrightarrow; MISC15</li>
+	<li>31 &longrightarrow; MISC16</li>
+	<li>32 &longrightarrow; MISC17</li>
+	<li>33 &longrightarrow; MISC18</li>
+	<li>34 &longrightarrow; MISC19 – Magical Weapon slot</li>
+	<li>35 &longrightarrow; WEAPON0</li>
+	<li>36 &longrightarrow; WEAPON1</li>
+	<li>37 &longrightarrow; WEAPON2</li>
+	<li>38 &longrightarrow; WEAPON3</li>
+</ul>
 
 {% capture note %}
-The Magical Weapon slot does not allow Item Abilities (header_type = 3).<br>
+The Magical Weapon slot does not allow <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">Item Abilities</a> (<code>header_type = 3</code>).<br>
 Moreover, unlike <a href="#op111">opcode #111</a>, this opcode will not "equip" the item that's created in this particular slot.
 {% endcapture %}
 
 {% include important.html %}
 
 {% capture note %}
-When using a non-permanent timing mode, it applies a delayed <a href="#op123">opcode #123</a> effect based on the duration, but with an empty resource field, resulting in nothing being removed.
+When using a non-permanent <code>timing mode</code>, it applies a delayed <a href="#op123">opcode #123</a> effect based on the duration, but with an empty <code>resource</code> field, resulting in nothing being removed.
 {% endcapture %}
 
 {% include note.html %}

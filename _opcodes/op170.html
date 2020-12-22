@@ -10,15 +10,39 @@ iwd1: 1
 iwd2: 1
 pst: 0
 ---
-Plays the damage animation specified by the 'Animation' field.
-<br/>Known values for 'Type' are:
-<br/>0   Blood (behind)
-<br/>1   Blood (front)
-<br/>2   Blood (left)
-<br/>3   Blood (right)
-<br/>4   Fire 1
-<br/>5   Fire 2
-<br/>6   Fire 3
-<br/>7   Electricity 1
-<br/>8   Electricity 2
-<br/>9   Electricity 3
+Plays the damage animation specified by the <code>Animation</code> field.
+<br/>It just plays a visual effect, like a far more limited version of <a href="#op215">opcode #215</a>, and is always instantaneous.
+<br/>Known values for <code>Animation</code> are:
+<ul>
+	<li>
+		0 &longrightarrow; Blood (behind)
+		<ul>
+			<li>(EEs) Doesn't display any animation.</li>
+		</ul>
+	</li>
+	<li>1 &longrightarrow; <code>"BLOODS.BAM"</code> Blood (small)</li>
+	<li>2 &longrightarrow; <code>"BLOODM.BAM"</code> Blood (medium)</li>
+	<li>3 &longrightarrow; <code>"BLOODL.BAM"</code> Blood (large)</li>
+	<li>4 &longrightarrow; <code>"SPFIRIMP.BAM"</code> Fire 1</li>
+	<li>5 &longrightarrow; <code>"SPFIRIMP.BAM"</code> Fire 2</li>
+	<li>6 &longrightarrow; <code>"SPFIRIMP.BAM"</code> Fire 2</li>
+	<li>7 &longrightarrow; <code>"SPSHKIMP.BAM"</code> Electricity 1</li>
+	<li>8 &longrightarrow; <code>"SPSHKIMP.BAM"</code> Electricity 2</li>
+	<li>9 &longrightarrow; <code>"SPSHKIMP.BAM"</code> Electricity 3</li>
+</ul>
+
+{% capture note %}
+On EE games:
+<ul>
+	<li>
+		For <code>Animation=4/5/6</code> and <code>Animation=7/8/9</code>, this opcode actually pulls the animation from <a href="../files/2da/2da_bgee/dmgtypes.htm">DMGTYPES.2DA</a>, each playing both <code>ANIMATION1</code> (those listed above) and <code>ANIMATION2</code>, for <code>FIRE</code> and <code>ELECTRICITY</code>, respectively. Does not play the <code>SOUND</code> associated with them though.
+		<ul>
+			<li><code>ANIMATION1</code> is the initial animation, <code>ANIMATION2</code> is the lingering animation.</li>
+		</ul>
+	</li>
+	<li>BGEE/BG2EE use the default <code>*</code> (hardcoded) entries for all damage types, but they can be overridden by setting entries in <a href="../files/2da/2da_bgee/dmgtypes.htm">DMGTYPES.2DA</a>, as IWDEE does.</li>
+	<li>The animations for <code>Animation=1/2/3</code> are not pulled from <a href="../files/2da/2da_bgee/dmgtypes.htm">DMGTYPES.2DA</a>, they're most likely fully hardcoded.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

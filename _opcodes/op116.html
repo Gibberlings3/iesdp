@@ -10,11 +10,22 @@ iwd1: 1
 iwd2: 1
 pst: 1
 ---
-Removes invisibility from the targeted creature(s).
+Removes invisibility from the targeted creature(s). Also removes <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> and <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>.
 <br/>This effect ignores durations attributed to it.
 
 {% capture note %}
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 {% endcapture %}
 
 {% include important.html %}
+
+{% capture note %}
+<ul>
+	<li>The only difference between this opcode and <a href="#op47">opcode #47</a> is their index – you can block one with <a href="#op101">opcode #101</a> without blocking the other. That's it.</li>
+	<li>Both remove the same effects/<code>STATE</code>s, both are blocked by <a href="#op69">opcode #69</a>.</li>
+	<li>They might have been intended for identical function, different uses, similar to opcodes <a href="#op5">#5</a>/<a href="#op241">#241</a> (Charm), but it never happened.</li>
+	<li><a href="#op116">Opcode #116</a> is used extensively because the original BG1 used it, and didn't use <a href="#op47">opcode #47</a> at all.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}

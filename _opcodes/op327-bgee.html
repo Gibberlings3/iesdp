@@ -2,7 +2,7 @@
 n: 327
 name: "Graphics: Icewind Visual Spell Hit (plays sound)"
 param1: "Target"
-param2: "Type"
+param2: "Projectile Index"
 bg1: 0
 bg2: 0
 bgee: 1
@@ -10,6 +10,25 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Shows the lighting effect specified by the 'Type' value. These effects are usually used for spell hits based on the spell school.
-<br/>If Target is non-zero then the effect will be played in the original target point (ignores spell target).
-<br/>Known values of type are listed in projectl.ids starting at offset 0x1000.
+Shows the lighting effect specified by the <code>Projectile Index</code> value. These effects are usually used for spell hits based on the spell school.
+<br/>Functions similar to <a href="#op140">opcode #140</a>, with the <code>Use Projectile</code> option, except its <code>Projectile Index</code> is <code>4096 (0x1000)</code> less, instead of the usual <code>+1</code>. It can't display projectiles <code>0 – 4095</code>.
+
+<br/>Known values for <code>Target</code> are:
+<ul>
+	<li>0 &longrightarrow; Launch projectile at effect target (doesn't work in Area-Effect spells)</li>
+	<li>1 &longrightarrow; Affected targets launch projectile at ability target (<code>creature</code> or <code>location</code>). Use <code>Self</code> to generate just one projectile.</li>
+</ul>
+
+<code>Parameter2: Projectile Index (-4096)</code>
+
+{% capture note %}
+Like <a href="#op140">opcode #140</a>/<a href="#op141">opcode #141</a>, it doesn't deliver any effects. Not affected by <a href="#op16">Haste</a>/<a href="#op40">Slow</a>.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+It looks like the <code>Special</code> field is meant to override <code>Projectile Index</code>, using values straight from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> (without the <code>4096</code> offset), but it's not actually implemented.
+{% endcapture %}
+
+{% include note.html %}

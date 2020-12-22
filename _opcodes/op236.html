@@ -10,20 +10,83 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Creates an image of the caster, in the style specified by the 'Type' field. The type can be accessed via CheckStat, stat ID: PUPPETTYPE.
+Creates an image (duplicate) of the caster, in the style specified by the <code>Type</code> field.
+<br/>In particular:
+<ul>
+	<li>The Image inherits any/only effects attached to the creature using <code>Timing Mode 9</code>.</li>
+	<li>The Image has duplicates of all of the targeted creature(s) items that are flagged with <code><a href="../files/ids/bgee/itemflag.htm">BIT2|DROPPABLE</a></code> and not flagged with <code><a href="../files/ids/bgee/invitem.htm">BIT3|NONDROPABLE</a></code>.</li>
+	<li>All items on the Image are flagged with <code><a href="../files/ids/bgee/invitem.htm">BIT3|NONDROPABLE</a></code>, so an image created by another image will have no items.</li>
+	<li>If the targeted creature(s) is not a party memeber, saving is disabled so long as the image exists.</li>
+</ul>
 
-{% capture note %}
-When creating an image for use as in Mislead, the image will have a script assigned, with scriptname of 'CASTERSCRIPTM' where CASTERERSCRIPT is the death variable of the casting creature.
-{% endcapture %}
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>
+		0 &longrightarrow; Clone – Image created with the targeted creature(s) Current Hit Points and the following (in order)
+		<ul>
+			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
+			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
+			<li>The creature is not immediately controllable, but will become controllable (if allied) after saving &amp; reloading.</li>
+		</ul>
+	</li>
 
-{% include note.html %}
+	<li>
+		1 &longrightarrow; Mislead – Image created with the targeted creature(s) Maximum Hit Points and the following (in order)
+		<ul>
+			<li>Allegiance set to <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, depending on target allegiance.</li>
+			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
+			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
+			<li>
+				If the clone's allegiance is not <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <code>Class Script</code> is set to <code>'Original Class Script' + 'M'</code>.
+				<ul>
+					<li>And the <code>Class Script</code> is only set if it wasn't originally null/empty – it will never be just <code>"M"</code>.</li>
+				</ul>
+			</li>
+			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
+			<li><code><a href="#op237">Opcode #237</a>*1</code>: Puppet Stats, Mislead</li>
+			<li><code><a href="#op145">Opcode #145</a>*0</code>: Disable Spell Casting, Wizard</li>
+			<li><code><a href="#op145">Opcode #145</a>*1</code>: Disable Spell Casting, Priest</li>
+			<li><code><a href="#op145">Opcode #145</a>*2</code>: Disable Spell Casting, Innate</li>
+			<li><code><a href="#op144">Opcode #144</a>*8</code>: Disable Button (Use Item)</li>
+			<li><code><a href="#op144">Opcode #144</a>*9</code>: Disable Button (Quick Item 1)</li>
+			<li><code><a href="#op144">Opcode #144</a>*11</code>: Disable Button (Quick Item 2)</li>
+			<li><code><a href="#op144">Opcode #144</a>*12</code>: Disable Button (Quick Item 3)</li>
+			<li><code><a href="#op144">Opcode #144</a>*8</code>: Disable Button (Special Ability)</li>
+			<li>Applies <code>"MISLEAD.SPL"</code></li>
+		</ul>
+	</li>
 
-<br/>Known values for 'Type' are:
-<br/>0   Talkative, uncontrollable
-<br/>1   Can not attack, can not cast spells (Mislead.spl is cast on the creature)
-<br/>2   Can attack, can not cast spells (ProjImag.spl is cast on the creature)
-<br/>3   Can attack, can cast spells (Simulacr.spl is cast on the creature)
-<br/>4+  As 0
+	<li>
+		2 &longrightarrow; Project Image – Image is created with the targeted creature(s) Current Hit Points and the following (in order)
+		<ul>
+			<li>Allegiance set to <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, depending on target allegiance.</li>
+			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
+			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
+			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
+			<li><code><a href="#op237">Opcode #237</a>*2</code>: Puppet Stats, Project Image</li>
+			<li>Applies <code>"PROJIMAG.SPL"</code></li>
+		</ul>
+	</li>
+
+	<li>
+		3 &longrightarrow; Simulacrum – Image is created with the targeted creature(s) Current Hit Points and the following (in order)
+		<ul>
+			<li>Allegiance set to <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, depending on target allegiance.</li>
+			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
+			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
+			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
+			<li><a href="#op216">Opcode #216</a> (amount should be 60&percnt; of character level, but doesn't compute dual-classes correctly).</li>
+			<li><code><a href="#op237">Opcode #237</a>*3</code>: Puppet Stats, Simulacrum</li>
+			<li>Applies <code>"SIMULACR.SPL"</code></li>
+		</ul>
+	</li>
+
+	<li>4&plus; &longrightarrow; As <code>0</code></li>
+</ul>
 
 {% capture note %}
 Keep in mind that if the caster is equipped with an irremovable item (e.g., Edwin's Amulet), then its images will not inherit any bonuses/maluses from that specific item.

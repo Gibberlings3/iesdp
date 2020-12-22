@@ -10,8 +10,8 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Applies the invisibility effect, in the style specified by the 'Type' value.
-<br/>Known values for 'Type' are:
+Applies the invisibility effect, in the style specified by the <code>Type</code> value.
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Normal Invisibility</li>
 	<li>1 &longrightarrow; Improved Invisibility</li>
@@ -23,7 +23,7 @@ Applies the invisibility effect, in the style specified by the 'Type' value.
 	<li>
 		Normal Invisibility:
 		<ul>
-			<li>Grants a +4 bonus to melee attacks only.</li>
+			<li>Grants a <code>+4</code> bonus to melee attacks only.</li>
 			<li>Applying "Normal" Invisibility with Timing Modes other than 1/4/7 in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
 			<li>Applying "Normal" Invisibility with Timing Mode 1/4/7 will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
 		</ul>
@@ -32,7 +32,7 @@ Applies the invisibility effect, in the style specified by the 'Type' value.
 		Improved Invisibility:
 		<ul>
 			<li>Affected creature stays invisible after attack.</li>
-			<li>Does not provide saving throw bonuses outside EEs, where it provides a bonus of 4 to all.</li>
+			<li>Does not provide saving throw bonuses outside EEs, where it provides a bonus of <code>4</code> to all.</li>
 			<li>Lingers after the duration is spent and act as permanent if used as a 'While Equipped' effect.</li>
 			<li>Applying "Improved" invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility. There's no reason to apply both "Normal" and "Improved" invisibility in the same spell/item (unless you want them to have different probabilities/hd limits).</li>
 			<li>Applying "Improved" Invisibility with Timing Mode 1/4/7 will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>, and because it duplicates itself as "Normal" invisibility, <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> as well, while still leaving behind a removable (but irrelevant) effect for each. These states are not cleared on death.</li>
@@ -55,16 +55,16 @@ Applies the invisibility effect, in the style specified by the 'Type' value.
 {% capture note %}
 The "Stealth" modal ability of Thieves/Rangers/Monks applies this effect with the following values:
 <ul>
-	<li>Parameter1 = 1 (unknown if any purpose)</li>
-	<li>Parameter2 = 0</li>
-	<li>Duration = 20</li>
+	<li><code>Parameter1 = 1</code> (unknown if any purpose)</li>
+	<li><code>Parameter2 = 0</code></li>
+	<li><code>Duration = 20</code></li>
 </ul>
 {% endcapture %}
 
 {% include note.html %}
 
 {% capture note %}
-Creatures attacking an invisible creature suffer a -4 penalty to hit, unless they are affected by <a href="#op193">opcode #193</a>. Moreover, you cannot target an improved/weak invisible creature with spells unless you're affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures (<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT24</a>).
+Creatures attacking an invisible creature suffer a <code>-4</code> penalty to hit, unless they are affected by <a href="#op193">opcode #193</a>. Moreover, you cannot target an improved/weak invisible creature with spells unless you're affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures (<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT24</a>).
 {% endcapture %}
 
 {% include note.html %}

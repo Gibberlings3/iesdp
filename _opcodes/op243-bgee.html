@@ -1,8 +1,8 @@
 ---
 n: 243
 name: "Item: Drain Item Charges"
-param1: "Item Type"
-param2: "Number to Drain"
+param1: "Amount to Drain"
+param2: "Unused"
 bg1: 0
 bg2: 0
 bgee: 1
@@ -10,8 +10,12 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Magical items matching the 'Item Type' value on the targeted creature(s) will have their charges drained by Number to Drain. Non-recharging items drained of all their charges are destroyed.
-<br/>Known values for 'Item Type' are:
-<br/>0 Magical items excluding weapons
-<br/>1 Magical items including weapons
-<br/>Charges are only drained from extended headers with of type magical (i.e. 3), for magical, displayable items. Items that do not that recharge are not destroyed. Items flagged as unsellable are not drained.
+Items will have their charges drained by <code>Amount to Drain</code>.
+<br/>In particular:
+<ul>
+	<li>Only <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">item abilities</a> of <code>Type 3 – Magical</code> are drained.</li>
+	<li>Only items with flag <code><a href="../files/ids/bgee/itemcat.htm">BIT6|MAGICAL</a></code> can be drained.</li>
+	<li>Items flagged as <code><a href="../files/ids/bgee/itemcat.htm">BIT0|INDESTRUCTIBLE</a></code> are not drained.</li>
+	<li>Items with a <code>Maximum Stack Size</code> (located at offset <code>0x38</code>) greater than <code>1</code> are not drained.</li>
+	<li>Items drained of all charges behave as dictated by their first <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">ability</a> that is fully drained (the <code>when drained</code> field).</li>
+</ul>

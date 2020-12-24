@@ -2,7 +2,7 @@
 n: 237
 name: "Spell Effect: Puppet ID"
 param1: "Master ID"
-param2: "ID Number"
+param2: "Image Type"
 bg1: 0
 bg2: 1
 bgee: 1
@@ -10,9 +10,54 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-This effect stores information in a Projected Image/Simulacrum. The type can be accessed via CheckStat, stat PUPPETMASTERTYPE. Applying this effect to a non-image creature will set that creature to behave as an image (e.g. image casting, invisibility and talking behaviour).
-<br/>Known values for 'ID Number' are:
-<br/>1  Mislead
-<br/>2  Project Image
-<br/>3  Simulacrum
-<br/>The 'Master ID' field stores a value (0-5) representing the owning party member.
+This effect stores information for images created by <a href="#op236">opcode #236</a>.
+<br/>Known values for <code>Master ID</code> are:
+<ul>
+	<li>-1 &longrightarrow; Not Party Member (Disables saving while in effect)</li>
+	<li>0 &longrightarrow; Player1</li>
+	<li>1 &longrightarrow; Player2</li>
+	<li>2 &longrightarrow; Player3</li>
+	<li>3 &longrightarrow; Player4</li>
+	<li>4 &longrightarrow; Player5</li>
+	<li>5 &longrightarrow; Player6</li>
+</ul>
+
+Known values for <code>Image Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Clone</li>
+
+	<li>
+		1 &longrightarrow; Mislead
+		<ul>
+			<li>Maintains <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> on <code>Master ID</code>. This state is constantly reapplied whenever removed or terminated.</li>
+		</ul>
+	</li>
+
+	<li>
+		2 &longrightarrow; Project Image
+		<ul>
+			<li>Maintains <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> on <code>Master ID</code>. This state is constantly reapplied whenever removed or terminated.</li>
+			<li>If <code>Master ID</code> triggers <code><a href="../scripting/triggers/bgeetriggers.htm#0x0020">HitBy([ANYONE],0)</a></code>, this creature is moved to area <code>"NO_AREA.ARE"</code>. This will delete non-global creatures from the game, unless such an area has been added to the game.</li>
+		</ul>
+	</li>
+
+	<li>3 &longrightarrow; Simulacrum</li>
+</ul>
+<br/>
+
+Modifies <a href="../files/ids/bgee/stats.htm#138">PUPPETMASTERID</a> to the <code>Object ID</code> of a projected image's Master. <code>Object ID</code> is the 4 byte long number stored at offset <code>0x27c</code> of the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file, and can change.
+<br/><br/>
+
+Modifies <a href="../files/ids/bgee/stats.htm#139">PUPPETMASTERTYPE</a>, to a value of <code>Parameter2</code>, on the creature specified by <a href="../files/ids/bgee/stats.htm#138">PUPPETMASTERID</a>:
+<ul>
+	<li>Stores the image type (Mislead, Projection, Simulacrum) of a creature's most recently created clone.</li>
+</ul>
+<br/><br/>
+
+Modifies <a href="../files/ids/bgee/stats.htm#140">PUPPETTYPE</a>, to a value of <code>Image Type</code>:
+<ul>
+	<li>Stores the image type (Mislead, Projection, Simulacrum) of a such a creature.</li>
+</ul>
+<br/><br/>
+
+<a href="../files/ids/bgee/stats.htm#141">PUPPETID</a> is likewise set on the <code>Master ID</code>, to the image's <code>Object ID</code> (likely whichever image is most recent, if they have multiple images).

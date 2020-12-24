@@ -38,9 +38,20 @@ Creates an image (duplicate) of the caster, in the style specified by the <code>
 			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
 			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
 			<li>
-				If the clone's allegiance is not <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <code>Class Script</code> is set to <code>'Original Class Script' + 'M'</code>.
+				If the clone's allegiance is not <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <code>Class Script</code> is set to <code>'Original Class Script' + 'M'</code>. The script has to already exist (as a separate <a href="../file_formats/ie_formats/bcs.htm">BCS</a> file).
 				<ul>
 					<li>And the <code>Class Script</code> is only set if it wasn't originally null/empty – it will never be just <code>"M"</code>.</li>
+					<li>If <code>Original Class Script</code> is 8 characters long, the last letter will be replaced with <code>"M"</code>.</li>
+					<li>
+						If you look in BG2EE, you will see these files:
+						<ul>
+							<li><code>MAGE18A.BCS -> MAGE18AM.BCS</code></li>
+							<li><code>MAGE18B.BCS -> MAGE18BM.BCS</code></li>
+							<li><code>MAGE18C.BCS -> MAGE18CM.BCS</code></li>
+							<li><code>MAGE18D.BCS -> MAGE18DM.BCS</code></li>
+						</ul>
+						The caster uses the first one, their Mislead clone uses the second one.
+					</li>
 				</ul>
 			</li>
 			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>

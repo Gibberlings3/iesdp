@@ -2,9 +2,9 @@
 n: 361
 name: "Cast spell on critical miss"
 param1: "Unused"
-param2: "Use"
+param2: "Current Weapon Only?"
 param3: "Weapon Category"
-special: "Weapon Type"
+special: "Attack Type"
 bg1: 0
 bg2: 0
 bgee: 1
@@ -12,18 +12,22 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Applies the spell specified by the resource key when the target suffers a critical miss. The target of the critical miss effect is the attacker.
-<br/>Known values for 'Use' are:
-<br/>0 - Apply Critical Miss chance for both hands
-<br/>1 - Apply Critical Miss chance only for this weapon
-<br />
-<br/>Known values for 'Weapon Type' are:
-<br/>0  All Weapons
-<br/>1  Melee Weapon only
-<br/>2  Ranged Weapon only
-<br />
-<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode #301</a>
-<br/>
+Applies the spell specified by the <code>resource</code> key when the target suffers a critical miss. The target of the critical miss effect is the attacker.
+<br/>Known values for <code>Current Weapon Only?</code> are:
+<ul>
+	<li>0 &longrightarrow; No</li>
+	<li>1 &longrightarrow; Yes</li>
+</ul>
+
+<br/>Known values for <code>Attack Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Any attack type</li>
+	<li>1 &longrightarrow; Melee attack only</li>
+	<li>2 &longrightarrow; Ranged attack only</li>
+	<li>3 &longrightarrow; Magical attack only</li>
+</ul>
+
+<br/>(External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s) Known values for <code>Weapon Category</code> are defined in <a href="../files/ids/bgee/itemcat.htm">ITEMCAT.IDS</a>.
 
 {% capture note %}
 This effect is not blocked from triggering by <a href="#op120">opcode #120</a> (Immunity to weapons).

@@ -131,7 +131,7 @@ Known values for <code>Type</code> are:
 <br/>
 
 <p>
-Each modifier type to AC from this opcode is capped to the range [-20, 20]. Each AC type total is capped to the range [-32768,32767].
+Each modifier type to AC from this opcode is capped to the range <code>[-20,20]</code>. Each AC type total is capped to the range <code>[-32768,32767]</code>.
 </p>
 
 
@@ -152,7 +152,7 @@ IWD2 uses different parameters altogether.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With Timing Modes 1/4/7, alters creature's base stat, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, alters creature's base stat, leaving behind no removable effect.
 
   </div>
 </div>
@@ -168,42 +168,42 @@ With Timing Modes 1/4/7, alters creature's base stat, leaving behind no removabl
 		<code>Type=0</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC")</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC")</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=1</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#3">ACCRUSHINGMOD</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Crushing AC (CRE@0x4A)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Crushing AC (CRE@0x4A)</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=2</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#4">ACMISSILEMOD</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Missile AC (CRE@0x4C)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Missile AC (CRE@0x4C)</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=4</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#5">ACPIERCINGMOD</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Piercing AC (CRE@0x4E)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Piercing AC (CRE@0x4E)</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=8</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#6">ACSLASHINGMOD</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Slashing AC (CRE@0x50)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Slashing AC (CRE@0x50)</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=16</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC"), still subject to "only if better/lower", checked against base value, not current effective value.</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC"), still subject to "only if better/lower", checked against base value, not current effective value.</li>
 		</ul>
 	</li>
 </ul>
@@ -346,7 +346,17 @@ When this opcode is stacked, the number of attacks are stacked, not the values o
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-<code>Type=3</code> (Set Final): Only functions when using Timing Modes 2/5/8 (even in spells).
+<code>Type=3</code> (Set Final):
+<ul>
+	<li>Only functions when using <code>Timing Mode</code>s <code>2/5/8</code> (even in spells).</li>
+	<li><a href="#op16">Haste</a> and <a href="#op40">Slow</a> affect it as normal, though the displayed APR in the Record Screen won't change.</li>
+	<li>
+		Overrides base, <code>Type=0</code>, <code>Type=1</code>, <code>Type=2</code>, proficiency and warrior class APR bonuses.
+		<ul>
+			<li><code>Type=1</code> just overrides the base and previous <code>Type=1</code> and <code>Type=2</code> effects.</li>
+		</ul>
+	</li>
+</ul>
 
   </div>
 </div>
@@ -357,7 +367,7 @@ When this opcode is stacked, the number of attacks are stacked, not the values o
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing Modes 1/4/7 alters the creature's base APR stat, leaving behind no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> alters the creature's base APR stat, leaving behind no removable effect.
 
   </div>
 </div>
@@ -454,7 +464,7 @@ At least in EEs, it can remove <a href="#op177">opcode #177</a> effects targetin
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Default/In Combat: only berserk while in combat.</li>
-	<li>1 &longrightarrow; Constant: always berserk, maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE</a> <code>33 – BERSERK_ALWAYS_ACTIVE</code> (only in EEs).</li>
+	<li>1 &longrightarrow; Constant: always berserk, maintains <a href="../files/ids/bgee/splstate.htm#33">BERSERK_ALWAYS_ACTIVE</a> (only in EEs).</li>
 	<li>2 &longrightarrow; Blood Rage: doesn't exist in EE's, values <code>2+</code> function the same as <code>0</code>.</li>
 </ul>
 
@@ -534,7 +544,7 @@ The second paragraph hasn’t been verified for PST and BG1 yet, but likely hold
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Used with timing modes 1/4/7 results in setting <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
+Used with <code>Timing Mode</code>s <code>1/4/7</code> results in setting <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
 
   </div>
 </div>
@@ -584,7 +594,7 @@ Used with timing modes 1/4/7 results in setting <a href="../files/ids/bgee/state
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -837,7 +847,9 @@ In EEs, the <code>Dice Thrown</code> parameter can be used to override the maint
 	<li>2 &longrightarrow; Percentage Modifier: <code>Charisma = (Charisma * 'Statistic Modifier' value) / 100</code></li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#42">CHR</a>.
 
 
 
@@ -872,7 +884,7 @@ On EEs:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -883,7 +895,7 @@ With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable e
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+Final values are capped to the bound range <code>(0,25)</code> in game (<code>40</code> in IWD2).
 
   </div>
 </div>
@@ -1316,7 +1328,9 @@ See <a href="#op7">opcode #7</a> for further details about this topic.
 	<li>2 &longrightarrow; Percentage Modifier: <code>Constitution = (Constitution * 'Statistic Modifier' value) / 100</code></li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#41">CON</a>.
 
 
 
@@ -1326,7 +1340,7 @@ See <a href="#op7">opcode #7</a> for further details about this topic.
 All games but EEs:
 <ul>
 	<li>With a Timing Modes of Permanent or Delayed, if <code>Type = 0</code> and <code>Statistic Modifier</code> is positive, the statistic will alter and remain shown in white text, and a message 'Constitution raised permanently' will be shown.</li>
-	<li>With a Timing Modes of Permanent or Delayed, if <code>Type</code> is <code>1</code> or <code>2</code>, or 'Statistic Modifier' is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
+	<li>With a Timing Modes of Permanent or Delayed, if <code>Type</code> is <code>1</code> or <code>2</code>, or <code>Statistic Modifier</code> is negative, the statistic will alter and remain shown in white text, though no message is shown.</li>
 	<li>With all other Timing Modes, the statistic will alter and be shown in red text.</li>
 </ul>
 On EEs:
@@ -1351,7 +1365,7 @@ On EEs:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -1362,7 +1376,7 @@ With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable e
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+Final values are capped to the bound range <code>(0,25)</code> in game (<code>40</code> in IWD2).
 
   </div>
 </div>
@@ -1883,7 +1897,9 @@ Just in case anyone is doing UI feedback text replacement, these are the hex col
 	<li>3 &longrightarrow; Cat's Grace (EE only)</li>
 </ul>
 
-<br/><br/><code>statistic modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#40">DEX</a>.
 
 
 
@@ -1946,7 +1962,7 @@ When <code>Type=3</code>:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -1957,7 +1973,7 @@ With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable e
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+Final values are capped to the bound range <code>(0,25)</code> in game (<code>40</code> in IWD2).
 
   </div>
 </div>
@@ -2326,7 +2342,9 @@ The following can be considered bugs, though they may be internally necessary, s
 	<li>2 &longrightarrow; Percentage Modifier: <code>Intelligence = (Intelligence * 'Statistic Modifier' value) / 100</code></li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#38">INT</a>.
 
 
 
@@ -2361,7 +2379,7 @@ On EEs:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -2372,7 +2390,7 @@ With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable e
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+Final values are capped to the bound range <code>(0,25)</code> in game (<code>40</code> in IWD2).
 
   </div>
 </div>
@@ -2430,8 +2448,8 @@ Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the invisibility effect, in the style specified by the 'Type' value.
-<br/>Known values for 'Type' are:
+		<div class="descriptiondata"> Applies the invisibility effect, in the style specified by the <code>Type</code> value.
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Normal Invisibility</li>
 	<li>1 &longrightarrow; Improved Invisibility</li>
@@ -2447,27 +2465,27 @@ Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
 	<li>
 		Normal Invisibility:
 		<ul>
-			<li>Grants a +4 bonus to melee attacks only.</li>
-			<li>Applying "Normal" Invisibility with Timing Modes other than 1/4/7 in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
-			<li>Applying "Normal" Invisibility with Timing Mode 1/4/7 will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
+			<li>Grants a <code>+4</code> bonus to melee attacks only.</li>
+			<li>Applying "Normal" Invisibility with <code>Timing Mode</code>s other than <code>1/4/7</code> in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
+			<li>Applying "Normal" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
 		</ul>
 	</li>
 	<li>
 		Improved Invisibility:
 		<ul>
 			<li>Affected creature stays invisible after attack.</li>
-			<li>Does not provide saving throw bonuses outside EEs, where it provides a bonus of 4 to all.</li>
+			<li>Does not provide saving throw bonuses outside EEs, where it provides a bonus of <code>4</code> to all.</li>
 			<li>Lingers after the duration is spent and act as permanent if used as a 'While Equipped' effect.</li>
 			<li>Applying "Improved" invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility. There's no reason to apply both "Normal" and "Improved" invisibility in the same spell/item (unless you want them to have different probabilities/hd limits).</li>
-			<li>Applying "Improved" Invisibility with Timing Mode 1/4/7 will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>, and because it duplicates itself as "Normal" invisibility, <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> as well, while still leaving behind a removable (but irrelevant) effect for each. These states are not cleared on death.</li>
-			<li>The effects that remain when setting the base STATEs are irrelevant, at least in-game, because everything that can remove the STATEs will also remove the effect. The STATEs can however be removed separately through NI or EEkeeper, at which point the effect will once again reapply its STATE immediately upon loading the game.</li>
+			<li>Applying "Improved" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>, and because it duplicates itself as "Normal" invisibility, <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> as well, while still leaving behind a removable (but irrelevant) effect for each. These states are not cleared on death.</li>
+			<li>The effects that remain when setting the base <code>STATE</code>s are irrelevant, at least in-game, because everything that can remove the <code>STATE</code>s will also remove the effect. The <code>STATE</code>s can however be removed separately through NI or EEkeeper, at which point the effect will once again reapply its <code>STATE</code> immediately upon loading the game.</li>
 		</ul>
 	</li>
 	<li>
 		Weak Invisibility:
 		<ul>
 			<li>It's the same type of invisibility as 'Improved Invisibility' after you take a hostile action and reveal yourself.</li>
-			<li>Applying "Weak" Invisibility with Timing Mode 1/4/7 will function no differently than Timing Mode 0, aside from having no natural expiration timer.</li>
+			<li>Applying "Weak" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will function no differently than <code>Timing Mode 0</code>, aside from having no natural expiration timer.</li>
 			<li>Applying "Weak" Invisibility is otherwise the same as "Improved" invisibility, except it doesn't duplicate itself with a "Normal" version, which is why it doesn't quality for backstabs.</li>
 		</ul>
 	</li>
@@ -2484,9 +2502,9 @@ Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
     <strong>Note:</strong> 
 The “Stealth” modal ability of Thieves/Rangers/Monks applies this effect with the following values:
 <ul>
-	<li>Parameter1 = 1 (unknown if any purpose)</li>
-	<li>Parameter2 = 0</li>
-	<li>Duration = 20</li>
+	<li><code>Parameter1 = 1</code> (unknown if any purpose)</li>
+	<li><code>Parameter2 = 0</code></li>
+	<li><code>Duration = 20</code></li>
 </ul>
 
   </div>
@@ -2498,7 +2516,7 @@ The “Stealth” modal ability of Thieves/Rangers/Monks applies this effect wit
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Creatures attacking an invisible creature suffer a -4 penalty to hit, unless they are affected by <a href="#op193">opcode #193</a>. Moreover, you cannot target an improved/weak invisible creature with spells unless you’re affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures (<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT24</a>).
+Creatures attacking an invisible creature suffer a <code>-4</code> penalty to hit, unless they are affected by <a href="#op193">opcode #193</a>. Moreover, you cannot target an improved/weak invisible creature with spells unless you’re affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures (<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT24</a>).
 
   </div>
 </div>
@@ -2549,19 +2567,24 @@ This opcode itself just sets or maintains (with a duration) the relevant STATEs.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Lore = Lore + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Lore = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Lore = (Lore * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Lore = Lore + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Lore = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Lore = (Lore * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#25">LORE</a>.
 
 
 
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-This effect does not work with Timing Mode 1.
+This effect does not work with <code>Timing Mode 1</code>.
 
   </div>
 </div>
@@ -2623,16 +2646,16 @@ This effect does not work with Timing Mode 1.
 Effects of Luck:
 <ul>
 	<li>Modifies a creature's weapon damage die rolls (up/down to its maximum/minimum).</li>
-	<li>Modifies a creatures's attack roll [1d20] (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's attack roll <code>[1d20]</code> (up/down to its maximum/minimum).</li>
 	<li>Modifies non-weapon damage die rolls dealt to the creature (up/down to its maximum/minimum).</li>
-	<li>Modifies a creatures's initiative roll [1d6 - 4] for weapon attacks (up/down to its maximum/minimum). See <a href="#op190">opcode #190</a> for further details about weapon/attack speed.</li>
-	<li>Modifies a creatures's initiative roll [1d8 - 1] for movement (up/down to its maximum/minimum).</li>
-	<li>Modifies a creatures's skill roll [1d100] for Hiding in Shadows (up/down to its maximum/minimum).</li>
-	<li>Modifies a creatures's skill roll [1d100] for Set Traps (up/down to its maximum/minimum).</li>
-	<li>Modifies a creatures's skill roll [1d10] for Open Locks (up/down to its maximum/minimum).</li>
-	<li>Modifies a creatures's skill roll [1d10] for Bash Doors (up/down to its maximum/minimum).</li>
-	<li>Modifies a creatures's skill roll [1d10] for Disarm Trap (up/down to its maximum/minimum).</li>
-	<li>Modifies the chance for a Mirror Image to be struck, chance = ('number of images' + 'Statistic Modifier') / ('number of images' + 1).</li>
+	<li>Modifies a creatures's initiative roll <code>[1d6 - 4]</code> for weapon attacks (up/down to its maximum/minimum). See <a href="#op190">opcode #190</a> for further details about weapon/attack speed.</li>
+	<li>Modifies a creatures's initiative roll <code>[1d8 - 1]</code> for movement (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d100]</code> for Hiding in Shadows (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d100]</code> for Set Traps (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d10]</code> for Open Locks (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d10]</code> for Bash Doors (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d10]</code> for Disarm Trap (up/down to its maximum/minimum).</li>
+	<li>Modifies the chance for a Mirror Image to be struck, <code>chance = ('number of images' + 'Statistic Modifier') / ('number of images' + 1)</code>.</li>
 </ul>
 
   </div>
@@ -2651,8 +2674,8 @@ Here’s more info about <i>initiative roll for movement</i>:
 		<code>Wait Time = 0, when roll = 0</code><br />
 		<code>Wait Time = (8 - roll), when roll != 0</code>
 	</li>
-	<li>The natural roll range is [0,7], but like many other rolls Luck alters this slightly. For every point in Luck the highest bound of the roll is converted into the lower bound.</li>
-	<li>So with <code>1</code> Luck the roll becomes [0,6], with 0 having a probability of 25&percnt; instead of 12.5&percnt;. Negative luck works the same, but in reverse.</li>
+	<li>The natural roll range is <code>[0,7]</code>, but like many other rolls Luck alters this slightly. For every point in Luck the highest bound of the roll is converted into the lower bound.</li>
+	<li>So with <code>1</code> Luck the roll becomes <code>[0,6]</code>, with <code>0</code> having a probability of 25&percnt; instead of 12.5&percnt;. Negative luck works the same, but in reverse.</li>
 	<li>
 		<code>1</code> is the worst roll you can get, yet it is neither of the extremes. So, <code>-1</code> Luck is bad because it prevents you from bypassing the wait time, (rolling a <code>0</code>), but <b>if Luck must be negative, the lower the better</b>.
 		<ul>
@@ -2705,20 +2728,29 @@ Here’s more info about <i>initiative roll for movement</i>:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Morale = Morale + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Morale = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Morale = (Morale * 'Statistic Modifier' value) / 100
-
-<br/>At least in EEs, known values for 'Mode' are:
-<br/>0   BG2 mode -> It's hardcoded to fill the following values:
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
 <ul>
-  <li>param #1 = 10</li>
-  <li>param #2 = 1</li>
-  <li>m_done = 1 (internal field that immediately removes the effect from creature, no matter duration)</li>
-</ul><br/>In addition, it checks if the creature is berserking, and if it is, it returns without doing anything.
-<br/>1   BG1 mode -> Default (functions as expected)
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Morale = Morale + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Morale = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Morale = (Morale * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>At least in EEs, known values for <code>Mode</code> are:
+<ul>
+	<li>
+    0 &longrightarrow; BG2 mode – It's hardcoded to fill the following values:
+    <ul>
+      <li><code>Statistic Modifier = 10</code></li>
+      <li><code>Type = 1</code></li>
+      <li><code>m_done = 1</code> (internal field that immediately removes the effect from creature, no matter <code>duration</code>)</li>
+      <li>In addition, it checks if the creature is berserking, and if it is, it returns without doing anything.</li>
+    </ul>
+  </li>
+	<li>1 &longrightarrow; BG1 mode – Default (functions as expected)</li>
+</ul>
 
 
 
@@ -2765,10 +2797,12 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the 'Type' field, which is suspected to be an EE extension.
-<br/>Known values for 'Type' are:
-<br/>0 -> Default
-<br/>Non-zero -> Bypass <a href="#op101">opcode #101</a> (Immunity to effect)
+		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the <code>Type</code> field, which is suspected to be an EE extension.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Default</li>
+	<li>Non-zero &longrightarrow; Bypass <a href="#op101">opcode #101</a> (Immunity to effect)</li>
+</ul>
  </div>
 		<hr />
 
@@ -2974,12 +3008,17 @@ When the <code>Type</code> field is <code>1</code>:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#17">RESISTACID</a>.
  </div>
 		<hr />
 
@@ -3015,12 +3054,17 @@ When the <code>Type</code> field is <code>1</code>:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#15">RESISTCOLD</a>.
  </div>
 		<hr />
 
@@ -3056,12 +3100,17 @@ When the <code>Type</code> field is <code>1</code>:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#16">RESISTELECTRICITY</a>.
  </div>
 		<hr />
 
@@ -3097,12 +3146,17 @@ When the <code>Type</code> field is <code>1</code>:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#14">RESISTFIRE</a>.
  </div>
 		<hr />
 
@@ -3138,12 +3192,17 @@ When the <code>Type</code> field is <code>1</code>:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#73">MAGICDAMAGERESISTANCE</a>.
  </div>
 		<hr />
 
@@ -3181,7 +3240,7 @@ When the <code>Type</code> field is <code>1</code>:
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Raises the targeted creature(s) from the dead.<br/>
 
-Known values for 'Restore creature animation' are:
+Known values for <code>Restore creature animation</code> are:
 <ul>
 	<li>0 &longrightarrow; No</li>
 	<li>1 &longrightarrow; Yes</li>
@@ -3195,35 +3254,35 @@ Known values for 'Restore creature animation' are:
   <div>
     <strong>Info:</strong> 
 The new animation is selected just as it would be at Character Generation.<br />
-Base Animation = 0x6000
+<code>Base Animation = 0x6000</code>
 <ul>
 	<li>
 		+ Class:
 		<ul>
-			<li>0x0000 (Cleric/Druid/Shaman/Default)</li>
-			<li>0x0100 (Fighter/Paladin/Ranger)</li>
-			<li>0x0200 (Mage/Sorcerer)</li>
-			<li>0x0300 (Thief/Bard)</li>
-			<li>0x0500 (Monk)</li>
+			<li><code>0x0000</code> (Cleric/Druid/Shaman/Default)</li>
+			<li><code>0x0100</code> (Fighter/Paladin/Ranger)</li>
+			<li><code>0x0200</code> (Mage/Sorcerer)</li>
+			<li><code>0x0300</code> (Thief/Bard)</li>
+			<li><code>0x0500</code> (Monk)</li>
 			<li>Mutliclasses prioritize (Warrior &gt; Priest &gt; Rogue &gt; Wizard)</li>
 		</ul>
 	</li>
 	<li>
 		+ Gender:
 		<ul>
-			<li>0x0000 (Male/Default)</li>
-			<li>0x0010 (Female)</li>
+			<li><code>0x0000</code> (Male/Default)</li>
+			<li><code>0x0010</code> (Female)</li>
 		</ul>
 	</li>
 	<li>
 		+ Race:
 		<ul>
-			<li>0x0000 (Human/Default)</li>
-			<li>0x0001 (Elf/Half-Elf/Tiefling)</li>
-			<li>0x0002 (Dwarf)</li>
-			<li>0x0003 (Halfling)</li>
-			<li>0x0004 (Gnome)</li>
-			<li>0x0005 (Halforc)</li>
+			<li><code>0x0000</code> (Human/Default)</li>
+			<li><code>0x0001</code> (Elf/Half-Elf/Tiefling)</li>
+			<li><code>0x0002</code> (Dwarf)</li>
+			<li><code>0x0003</code> (Halfling)</li>
+			<li><code>0x0004</code> (Gnome)</li>
+			<li><code>0x0005</code> (Halforc)</li>
 		</ul>
 	</li>
 </ul>
@@ -3238,7 +3297,7 @@ Base Animation = 0x6000
   <div>
     <strong>Note:</strong> 
 <ul>
-	<li>This opcode will only restore life to creatures with <a href="../files/ids/bgee/state.htm">STATE</a>(BIT11|STATE_DEAD). Frozen and Petrified creatures do not qualify until after they shatter (at which point you can no longer target them outside of scripts, so it doesn't really matter).</li>
+	<li>This opcode will only restore life to creatures with <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a>. Frozen and Petrified creatures do not qualify until after they shatter (at which point you can no longer target them outside of scripts, so it doesn't really matter).</li>
 	<li>The animation reset is not dependent on the target's death state.</li>
 </ul>
 
@@ -3301,14 +3360,16 @@ The presence of this opcode in any of a spell’s ability headers will force any
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#9">SAVEVSDEATH</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -3358,14 +3419,16 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#10">SAVEVSWANDS</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -3415,14 +3478,16 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#11">SAVEVSPOLY</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -3472,14 +3537,16 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#12">SAVEVSBREATH</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -3529,14 +3596,16 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#13">SAVEVSSPELL</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -3567,12 +3636,12 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the silence effect to the targeted creature(s). 
-A silenced creature cannot cast spells, use special abilities or initiate dialog.
+		<div class="descriptiondata"> Applies the silence effect to the targeted creature(s). Sets <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> to true.<br/>
+A silenced creature cannot cast spells, use special abilities or initiate dialog.<br/>
 The engine is hard-coded to allow these spells to be cast by a silenced creature:
 <ul>
-<li>SPWI219 (Vocalize)</li>
-<li>SPIN649 (Teleport to Pocket Plane) in BG2/BGEE</li>
+	<li><code>"SPWI219"</code> (Vocalize)</li>
+	<li><code>"SPIN649"</code> (Teleport to Pocket Plane) in BG2/BGEE</li>
 </ul>
  </div>
 		<hr />
@@ -3633,7 +3702,7 @@ This opcode sets the <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Timing modes 1/4/7 will set the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag. In such a case, this flag cannot be removed in-game.<br />
+<code>Timing Mode</code>s <code>1/4/7</code> will set the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag. In such a case, this flag cannot be removed in-game.<br />
 Moreover, they will also set <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a>, which works as the <code>Wake on Hit</code> option. It’s just not usable because of the irremovable <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a>.
 
   </div>
@@ -3967,7 +4036,9 @@ Both parameters should be 0 (zero).
 	<li>3 &longrightarrow; Bull's Strength (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#36">STR</a>.
 
 
 
@@ -4049,7 +4120,7 @@ When <code>Type=3</code>:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -4060,7 +4131,7 @@ With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable e
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+Final values are capped to the bound range <code>(0,25)</code> in game (<code>40</code> in IWD2).
 
   </div>
 </div>
@@ -4124,7 +4195,7 @@ Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Applied with Timing Modes 1/4/7: will set the creature’s base <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> flag, while still leaving behind a separate removable effect.
+Applied with <code>Timing Mode</code>s <code>1/4/7</code>: will set the creature’s base <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> flag, while still leaving behind a separate removable effect.
 <ul>
 	<li>Should you remove the effect without removing the state (through means other than <a href="#op46">opcode #46</a>), the creature will be fully functional, just not controllable by the player (if it was).</li>
 	<li>By itself, <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> does not disable any scripts or limit which actions the creature may take. It needs its opcode's immobilization effect as well as <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> to fully work.</li>
@@ -4234,7 +4305,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the silence effect and the silenced state from the targeted creature(s).
+		<div class="descriptiondata"> Removes the silence effect and <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
  </div>
 		<hr />
@@ -4285,7 +4356,9 @@ Both parameters should be 0 (zero).
 	<li>2 &longrightarrow; Percentage Modifier: <code>Wisdom = (Wisdom * 'Statistic Modifier' value) / 100</code></li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#39">WIS</a>.
 
 
 
@@ -4320,7 +4393,7 @@ On EEs:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -4331,7 +4404,7 @@ With Timing Mode 1/4/7, base attribute is altered, leaving behind no removable e
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Final values are capped to the bound range (0 , 25) in game (40 in IWD2).
+Final values are capped to the bound range <code>(0,25)</code> in game (<code>40</code> in IWD2).
 
   </div>
 </div>
@@ -4756,7 +4829,7 @@ See <a href="#op7">opcode #7</a> for further details about this topic.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Applied with <code>Timing Mode 1/4/7</code>, sets the creature's base animation, leaving no removable effect.
+Applied with <code>Timing Mode</code>s <code>1/4/7</code>, sets the creature's base animation, leaving no removable effect.
 
   </div>
 </div>
@@ -5020,7 +5093,7 @@ Both parameters should be <code>0</code> (zero).
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>Type=1</code> or <code>Type=2</code> (Level-based Dispel):
+When <code>Dispel Type = 1</code> or <code>Dispel Type = 2</code> (Level-based Dispel):
 <ul>
 	<li>
 		Base chance is 49&percnt;.
@@ -5030,7 +5103,7 @@ When <code>Type=1</code> or <code>Type=2</code> (Level-based Dispel):
 	</li>
 	<li>Maximum is 99&percnt; chance to dispel.</li>
 	<li>There is no minimum threshold for succeeding the dispel check, at 5 levels or more below it will always fail.</li>
-	<li>Effects with caster levels 1932735279 to 1932735534 (as impractical as they may be), corresponding to levels 0 – 255, effectively use an inverted success/failure rate, due to overflow.</li>
+	<li>Effects with caster levels <code>1932735279</code> to <code>1932735534</code> (as impractical as they may be), corresponding to levels <code>0 – 255</code>, effectively use an inverted success/failure rate, due to overflow.</li>
 </ul>
 
   </div>
@@ -5086,7 +5159,7 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing Modes 1/4/7 permanently alters the creature's Move Silently score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alter the creature's Move Silently score, leaving no removable effect.
 
   </div>
 </div>
@@ -5574,8 +5647,8 @@ Both parameters should be <code>0</code> (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Summons a creature, with EA set to the 'Control' field. The Resource key should be set to the filename of the creature to summon.
-<br/>Known values for 'Control' are:
+		<div class="descriptiondata"> Summons a creature, with EA set to the <code>Control</code> field. The <code>Resource</code> key should be set to the filename of the creature to summon.
+<br/>Known values for <code>Control</code> are:
 <ul>
 	<li>0 &longrightarrow; Match target (hostile if no target)</li>
 	<li>1 &longrightarrow; Match target (hostile if no target)</li>
@@ -5594,8 +5667,8 @@ Both parameters should be <code>0</code> (zero).
   <div>
     <strong>Note:</strong> 
 <ul>
-	<li>'Control' values 0 and 1 are identical, 4 and 6 are identical, 3 and 5 are each unique, all other values are identical with each other.</li>
-	<li>'Control' values 3, 4, 5, and 6 summon the creature at the location of the effect target. All other values summon the creature at the location of the ability target.</li>
+	<li><code>Control</code> values <code>0</code> and <code>1</code> are identical, <code>4</code> and <code>6</code> are identical, <code>3</code> and <code>5</code> are each unique, all other values are identical with each other.</li>
+	<li><code>Control</code> values <code>3</code>, <code>4</code>, <code>5</code>, and <code>6</code> summon the creature at the location of the effect target. All other values summon the creature at the location of the ability target.</li>
 </ul>
 
   </div>
@@ -5608,13 +5681,13 @@ Both parameters should be <code>0</code> (zero).
   <div>
     <strong>Info:</strong> 
 <ul>
-	<li>(EE only) "Resource2" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
-		Default is a hardcoded VVC using "SPBOOM.BAM" and palette #65. This is generally used as the "portal" animation.
+	<li>(EE only) <code>Resource2</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
+		Default is a hardcoded VVC using <code>"SPBOOM.BAM"</code> and palette <code>#65</code>. This is generally used as the "portal" animation.
 	</li>
-	<li>(EE only) "Resource3" (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
-	<li>Applies an <a href="#op271">op271</a> to the summoned creature based on the duration of the "Resource2" (not exact). Creature will not appear/spawn until this animation finishes.</li>
-	<li>Applies a delayed <a href="#op215">op215</a> with resource "SPGFLSH1" to the summoned creature, delayed duration = 5 ticks less than the <a href="#op271">op271</a>.</li>
-	<li>Applies a delayed <a href="#op68">op68</a> to the summoned creature based on effect duration (unless permanent).</li>
+	<li>(EE only) <code>Resource3</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
+	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code>Resource2</code> (not exact). Creature will not appear/spawn until this animation finishes.</li>
+	<li>Applies a delayed <a href="#op215">opcode #215</a> with resource <code>"SPGFLSH1"</code> to the summoned creature, <code>delayed duration = 5 ticks less</code> than the <a href="#op271">opcode #271</a>.</li>
+	<li>Applies a delayed <a href="#op68">opcode #68</a> to the summoned creature based on effect duration (unless permanent).</li>
 	<li>When summoned, any temporary changes (such as from equipped items) to the creature's <a href="../files/ids/bgee/gender.htm">gender</a> are made permanent.</li>
 </ul>
 
@@ -5647,8 +5720,8 @@ Both parameters should be <code>0</code> (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unsummons a creature, with feedback controlled by 'Text Notification'.
-<br/>Known values for 'Text Notification' are:
+		<div class="descriptiondata"> Unsummons a creature, with feedback controlled by <code>Text Notification</code>.
+<br/>Known values for <code>Text Notification</code> are:
 <ul>
 	<li>0 &longrightarrow; No text notification</li>
 	<li>1 &longrightarrow; Show text notification</li>
@@ -5659,8 +5732,8 @@ Both parameters should be <code>0</code> (zero).
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in BG2 and EEs, the Resource key should be set to the filename of the
- animation to play when unsummoning the creature, and defaults to “SPGFLSH1” if left empty.
+At least in BG2 and EEs, the <code>Resource</code> key should be set to the filename of the
+ animation to play when unsummoning the creature, and defaults to <code>"SPGFLSH1"</code> if left empty.
 
   </div>
 </div>
@@ -5673,7 +5746,7 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
     <strong>Note:</strong> 
 <ul>
 	<li>Has no effect on Party Members.</li>
-	<li>Moves the targeted creature(s) to area ".ARE" (a non-existant area). This deletes non-global creatures from the game.</li>
+	<li>Moves the targeted creature(s) to area <code>".ARE"</code> (a non-existant area). This deletes non-global creatures from the game.</li>
 	<li>Global creatures can still be recovered through scripts actions, such as <a href="../scripting/actions/bgeeactions.htm#291">MoveGlobalObject()</a>.</li>
 </ul>
 
@@ -5706,14 +5779,14 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the non-detection effect to the targeted creature(s), setting <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> while active. This effect is negated by <a href="#op70">opcode 70</a>. While in the non-detection state, the creature is immune to <a href="#op47">opcode 47</a> and <a href="#op116">opcode 116</a>, though they are affected by effects that remove illusionary protections by school or secondary type.
+		<div class="descriptiondata"> Applies the non-detection effect to the targeted creature(s), setting <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> while active. This effect is negated by <a href="#op70">opcode 70</a>. While in the non-detection state, the creature is immune to <a href="#op47">opcode #47</a> and <a href="#op116">opcode #116</a>, though they are affected by effects that remove illusionary protections by school or secondary type.
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> flag, leaving no removable effect. This flag is not cleared on death.
+<code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> flag, leaving no removable effect. This flag is not cleared on death.
 
   </div>
 </div>
@@ -5787,11 +5860,11 @@ Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bge
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Alters the gender of the targetted creature(s) to the value specified by the 'Gender.ids' field, in the style specified by the 'Type' value.
-<br/>Known values for 'Type' are:
+		<div class="descriptiondata"> Alters the gender of the targetted creature(s) to the value specified by the <code>Gender Modifier</code> field, in the style specified by the <code>Type</code> value.
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Reverse Gender</li>
-	<li>1 &longrightarrow; Flat Value Modifier: Gender = 'Statistic Modifier' value (values from <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a>)</li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Gender = 'Statistic Modifier' value</code> (values from <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a>)</li>
 </ul>
 
 <br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#193">SEX_CHANGED</a>.
@@ -5802,10 +5875,10 @@ Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bge
   <div>
     <strong>Note:</strong> 
 <ul>
-	<li>'Reverse Gender' also switches the second BIT of the lower BYTE of the creature's animation, which (for PC races), will switch between their male/female animations (0x6000 &LongLeftRightArrow; 0x6010).</li>
+	<li><code>Reverse Gender</code> also switches the second BIT of the lower BYTE of the creature's animation, which (for <code>PC</code> races), will switch between their male/female animations (<code>0x6000</code> &LongLeftRightArrow; <code>0x6010</code>).</li>
 	<li>
 		Other races can be setup this way, but do not occupy the necessary animation slots by default.<br />
-		For instance, VAMPIRE is 0x7F12, VAMPIRE_FEMALE is 0x7F22. (Male should be 0x7F02 and female 0x7F12 for it to work).
+		For instance, <code>VAMPIRE</code> is <code>0x7F12</code>, <code>VAMPIRE_FEMALE</code> is <code>0x7F22</code> (Male should be <code>0x7F02</code> and female <code>0x7F12</code> for it to work).
 	</li>
 </ul>
 
@@ -5877,8 +5950,8 @@ Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bge
   <div>
     <strong>Important:</strong> 
 <ul>
-	<li>Only reliable timing mode is Timing Mode 1 (all others are bugged and can convert to this timing mode under various circumstances).</li>
-	<li>Timing modes 1/4/7 will permanently set the creature(s) IDS value, leaving no removable effect.</li>
+	<li>Only reliable timing mode is <code>Timing Mode 1</code> (all others are bugged and can convert to this timing mode under various circumstances).</li>
+	<li><code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature(s) IDS value, leaving no removable effect.</li>
 </ul>
 
   </div>
@@ -5972,7 +6045,7 @@ PST treats all Type values above <code>1</code> as <code>1</code> – it does no
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the blindness effect to the targeted creature(s). This sets <a href="../files/ids/bgee/stats.htm#147">VISUALRANGE</a> to 2, sets <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> to true and incurs a cummulative 10 point base THAC0 penalty (4 on EE games, plus a cumulative 4 point base AC penalty. All of that is unverified in PST).
+		<div class="descriptiondata"> Applies the blindness effect to the targeted creature(s). This sets <a href="../files/ids/bgee/stats.htm#147">VISUALRANGE</a> to 2, sets <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> to true and incurs a cummulative <code>10</code> point base THAC0 penalty (<code>4</code> on EE games, plus a cumulative <code>4</code> point base AC penalty. All of that is unverified in PST).
 Maintains its own portrait icon <a href="../files/2da/2da_bgee/statdesc.htm">(#8|"Blind")</a>.
 
 
@@ -5980,7 +6053,7 @@ Maintains its own portrait icon <a href="../files/2da/2da_bgee/statdesc.htm">(#8
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> flag, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> flag, leaving no removable effect.
 
   </div>
 </div>
@@ -5991,7 +6064,7 @@ Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bge
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-In the EE’s, the -4 penalties it applies are not cumulative.
+In the EE’s, the <code>-4</code> penalties it applies are not cumulative.
 
   </div>
 </div>
@@ -6030,7 +6103,7 @@ In the EE’s, the -4 penalties it applies are not cumulative.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -6070,7 +6143,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat. Maintains the target's Intelligence to 3 (stacks normally with <a href="#op19">opcode #19</a>).
+		<div class="descriptiondata"> Applies the feeblemind effect to the targeted creature(s) – creatures are unselectable, immobile and do not respond to combat. Maintains the target's Intelligence to 3 (stacks normally with <a href="#op19">opcode #19</a>).
 
 
 
@@ -6116,7 +6189,7 @@ A creature's scripts do not run while the creature is feebleminded.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -6288,7 +6361,7 @@ When the <code>Type</code> field is <code>1</code>:
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(250|DISEASED)</a> on the target.
+Maintains <a href="../files/ids/bgee/splstate.htm#250">DISEASED</a> on the target.
 
   </div>
 </div>
@@ -6321,7 +6394,7 @@ In particular:
 				<ul>
 					<li><code>x = 'Amount'(d6)</code>, decrementing the amount by 1 die every round, until zero.</li>
 					<li>Should always use <code>Timing Mode</code> <code>1</code>, <code>3</code> or <code>4</code>, and only a non-zero duration if using <code>Timing Mode 4</code>.</li>
-					<li>If <code>Timing Mode</code> is <code>1</code> or <code>4</code>, the portrait icon, and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> remain until cured/death.</li>
+					<li>If <code>Timing Mode</code> is <code>1</code> or <code>4</code>, the portrait icon, and <a href="../files/ids/bgee/splstate.htm#250">DISEASED</a> remain until cured/death.</li>
 					<li>If <code>Timing Mode</code> is <code>3</code> (with no duration), it will expire 1 round after the final damage (when it realizes the amount has reached zero). <code>Timing Mode 3</code> and <code>duration = 0</code> should be the "default" setting for this mode right now.</li>
 				</ul>
 			</li>
@@ -6331,7 +6404,7 @@ In particular:
 					<li><code>x = (remaining 'Duration' / 6)(d6)</code>, or just <code>(remaining 'Duration' / 6)</code> if <code>Frequency Multiplier &gt;= 65536</code>.</li>
 					<li>The damage dice is rounded down.</li>
 					<li>Because the first hit doesn't occur until 80 ticks, any duration shorter will have no triggers.</li>
-					<li>The Portrait Icon and <a href="../files/ids/bgee/splstate.htm">SPLSTATE DISEASED</a> will remain for the full specified duration.</li>
+					<li>The Portrait Icon and <a href="../files/ids/bgee/splstate.htm#250">DISEASED</a> will remain for the full specified duration.</li>
 				</ul>
 			</li>
 			<li>The SPL resource is applied at the same/every time as the damage, though the damage occurs first.</li>
@@ -6383,7 +6456,7 @@ Regardless, the value of <code>x</code> decrements only once per round.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -6423,7 +6496,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the Deafness effect on the targeted creature(s) - creatures suffer a casting failure rate of 50% (20% in bg1, unknown in iwd1). The casting failure rate refers to Wizard and Priest spells only. This is cumulative with Miscast Magic.
+		<div class="descriptiondata"> Applies the Deafness effect on the targeted creature(s) – creatures suffer a casting failure rate of 50&percnt; (20&percnt; in bg1, unknown in iwd1). The casting failure rate refers to Wizard and Priest spells only. This is cumulative with Miscast Magic.
 
 
 
@@ -6441,7 +6514,7 @@ PST: it is unclear if this effect exist or does anything!
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(38|DEAFENED)</a> on the target (EE only).
+Maintains <a href="../files/ids/bgee/splstate.htm#38">DEAFENED</a> on the target (EE only).
 
   </div>
 </div>
@@ -6480,7 +6553,7 @@ Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(38|DEAFENED)</a> on 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -6531,7 +6604,7 @@ PST: it is unclear if this effect exists or does anything!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Sets the script type specified by the <code>Type</code> value to the contents of the resource key.
+		<div class="descriptiondata"> Sets the script type specified by the <code>Type</code> value to the contents of the <code>resource</code> key.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; OVERRIDE</li>
@@ -6621,21 +6694,14 @@ This effect can unset scripts from a creature, which can break the game.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Protects the targeted creatures(s) from any effect(s) delivered by the specified projectile.
-<br/>Values for 'Projectile Index' are taken from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>.
+<br/>Values for <code>Projectile Index</code> are taken from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-<table>
-  <tbody>
-    <tr>
-      <td>Cannot protect against the projectile used by Melee weapon attacks (this is contrast to <a href="#op197">op197</a>, which CAN reflect them (by specifying projectile #0</td>
-      <td>NONE)).</td>
-    </tr>
-  </tbody>
-</table>
+Cannot protect against the projectile used by Melee weapon attacks (this is contrast to <a href="#op197">opcode #197</a>, which CAN reflect them (by specifying projectile <code>#0|NONE</code>)).
 
   </div>
 </div>
@@ -6681,11 +6747,17 @@ This effect can unset scripts from a creature, which can break the game.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#19">RESISTMAGICFIRE</a>.
  </div>
 		<hr />
 
@@ -6727,11 +6799,17 @@ This effect can unset scripts from a creature, which can break the game.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#20">RESISTMAGICCOLD</a>.
  </div>
 		<hr />
 
@@ -6767,11 +6845,17 @@ This effect can unset scripts from a creature, which can break the game.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#21">RESISTSLASHING</a>.
  </div>
 		<hr />
 
@@ -6807,11 +6891,17 @@ This effect can unset scripts from a creature, which can break the game.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#22">RESISTCRUSHING</a>.
  </div>
 		<hr />
 
@@ -6847,11 +6937,17 @@ This effect can unset scripts from a creature, which can break the game.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#23">RESISTPIERCING</a>.
  </div>
 		<hr />
 
@@ -6887,11 +6983,17 @@ This effect can unset scripts from a creature, which can break the game.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#24">RESISTMISSILE</a>.
  </div>
 		<hr />
 
@@ -6931,7 +7033,7 @@ This effect can unset scripts from a creature, which can break the game.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 permanently alters the creature's Open Locks score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Open Locks score, leaving no removable effect.
 
   </div>
 </div>
@@ -6986,7 +7088,7 @@ Timing modes 1/4/7 permanently alters the creature's Open Locks score, leaving n
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 permanently alters the creature's Find Traps score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Find Traps score, leaving no removable effect.
 
   </div>
 </div>
@@ -7041,7 +7143,7 @@ Timing modes 1/4/7 permanently alters the creature's Find Traps score, leaving n
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Pick Pockets score, leaving no removable effect.
 
   </div>
 </div>
@@ -7083,11 +7185,17 @@ Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Fatigue = Fatigue + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Fatigue = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Fatigue = (Fatigue * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#30">FATIGUE</a>.
  </div>
 		<hr />
 
@@ -7114,11 +7222,17 @@ Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Drunkenness = Drunkenness + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Drunkenness = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Drunkenness = (Drunkenness * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#31">INTOXICATION</a>.
  </div>
 		<hr />
 
@@ -7145,11 +7259,17 @@ Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Skill = Skill + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Skill = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Skill = (Skill * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#33">TRACKING</a>.
  </div>
 		<hr />
 
@@ -7209,7 +7329,7 @@ In IWD2 the class to receive the change is specified at 0x2C
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 permanently alters the creature's level, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alter the creature's level, leaving no removable effect.
 
   </div>
 </div>
@@ -7233,7 +7353,7 @@ Can only modify the <a href="../files/ids/bgee/stats.htm#34">first class level</
 	<div id="op97" class="opcode">
 		<span class="opnumberdata">#97 (0x61)</span>
 
-		<span class="opnamedata">Stat: Strength-Bonus Modifier</span>
+		<span class="opnamedata">Stat: Exceptional Strength Modifier</span>
 
 		
 		
@@ -7251,11 +7371,17 @@ Can only modify the <a href="../files/ids/bgee/stats.htm#34">first class level</
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Bonus = Bonus + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Bonus = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Bonus = (Bonus * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Exceptional Strength = Exceptional Strength + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Exceptional Strength = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Exceptional Strength = (Exceptional Strength * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#37">STREXTRA</a>.
  </div>
 		<hr />
 
@@ -7416,21 +7542,23 @@ When the <code>Type</code> field is <code>1</code>:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Alters spell durations of the targeted creature(s), to the percentage specified by the 'Duration Modifier' field, affecting the spell type specified by the 'Type' field. Timing mode 0 is the only timing mode reliably affected. Timings handled through PRO files are ignored.
+		<div class="descriptiondata"> Alters spell durations of the targeted creature(s), to the percentage specified by the <code>Duration Modifier</code> field, affecting the spell type specified by the <code>Type</code> field. <code>Timing mode 0</code> is the only timing mode reliably affected. Timings handled through <a href="../file_formats/ie_formats/pro_v1.htm">PRO</a> files are ignored.
 <br/>For instance:
 <ul>
-	<li>'Duration Modifier' = 0 &longrightarrow; Spells have no duration</li>
-	<li>'Duration Modifier' = 100 &longrightarrow; Spells have normal duration</li>
-	<li>'Duration Modifier' = 200 &longrightarrow; Spells have double duration</li>
+	<li><code>Duration Modifier = 0</code> &longrightarrow; Spells have no duration</li>
+	<li><code>Duration Modifier = 100</code> &longrightarrow; Spells have normal duration</li>
+	<li><code>Duration Modifier = 200</code> &longrightarrow; Spells have double duration</li>
 </ul>
 <br/>
 
-<br/>Known values for 'Type' are:
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Mage</li>
 	<li>1 &longrightarrow; Priest</li>
 	<li>2 &longrightarrow; Bard Song (EE only)</li>
 </ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#53">SPELLDURATIONMODMAGE</a> and <a href="../files/ids/bgee/stats.htm#54">SPELLDURATIONMODPRIEST</a>.
 
 
 
@@ -7629,6 +7757,8 @@ Not seen to work in BG1.
 	<li>1 &longrightarrow; Flat Value Modifier: <code>XP = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Percentage Modifier: <code>XP = (XP * 'Statistic Modifier' value) / 100</code></li>
 </ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#44">XP</a>.
  </div>
 		<hr />
 
@@ -7671,6 +7801,8 @@ Not seen to work in BG1.
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Gold = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Percentage Modifier: <code>Gold = (Gold * 'Statistic Modifier' value) / 100</code></li>
 </ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#45">GOLD</a>.
 
 
 
@@ -7715,6 +7847,8 @@ Not seen to work in BG1.
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Morale Break = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Percentage Modifier: <code>Morale Break = (Morale Break * 'Statistic Modifier' value) / 100</code></li>
 </ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#46">MORALEBREAK</a>.
  </div>
 		<hr />
 
@@ -8129,7 +8263,7 @@ Affected creature will be visible, targetable, and if controlled, selectable and
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes invisibility from the targeted creature(s).
+		<div class="descriptiondata"> Removes invisibility from the targeted creature(s). Also removes <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> and <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>.
 <br/>This effect ignores durations attributed to it.
 
 
@@ -8137,7 +8271,23 @@ Affected creature will be visible, targetable, and if controlled, selectable and
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>The only difference between this opcode and <a href="#op47">opcode #47</a> is their index – you can block one with <a href="#op101">opcode #101</a> without blocking the other. That's it.</li>
+	<li>Both remove the same effects/<code>STATE</code>s, both are blocked by <a href="#op69">opcode #69</a>.</li>
+	<li>They might have been intended for identical function, different uses, similar to opcodes <a href="#op5">#5</a>/<a href="#op241">#241</a> (Charm), but it never happened.</li>
+	<li><a href="#op116">Opcode #116</a> is used extensively because the original BG1 used it, and didn't use <a href="#op47">opcode #47</a> at all.</li>
+</ul>
 
   </div>
 </div>
@@ -8317,8 +8467,8 @@ The scroll casts the spell at level <code>10</code>, but the opcode checks the c
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) immunity to weapons as specified by the 'Type' field. The 'Enchantment' field is used if 'Type' is set to 0.
-<br/>Known values for 'Type' are:
+		<div class="descriptiondata"> Gives the targeted creature(s) immunity to weapons as specified by the <code>Type</code> field. The <code>Enchantment</code> field is used if <code>Type</code> is set to <code>0</code>.
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Enchanted</li>
 	<li>1 &longrightarrow; Magical</li>
@@ -8418,7 +8568,7 @@ Keep in mind that:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates the item specified by the <code>resource</code> key. The number of items created is controlled by the <code>Charges</code> field. The number of secondary charge is determined by P3. The number of tertiary charges is determined by P4 (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s). The item is created in the Inventory.
+		<div class="descriptiondata"> Creates the item specified by the <code>resource</code> key. The number of items created is controlled by the <code>Charges</code> field. The number of secondary charge is determined by <code>Parameter3</code>. The number of tertiary charges is determined by <code>Parameter4</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s). The item is created in the Inventory.
 
 
 
@@ -9541,18 +9691,18 @@ At least in EE games, it is possible to colorize the string. In order to do so, 
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Creates the specified projectile at the targeted creature's location. These effects are usually used for casting glows based on the spell school.
-<br/>Known values for 'Type' are:
+<br/>Known values for <code>Type</code> are:
 <ul>
-	<li>0 => Use 'Projectile Index' projectile value.</li>
-	<li>1 .. 8 => Crash</li>
-	<li>9 => PROJECTL[110], Default file: "CGNECROM.PRO"</li>
-	<li>10 => PROJECTL[111], Default file: 'CGALTERA.PRO'</li>
-	<li>11 => PROJECTL[112], Default file: 'CGENCHAN.PRO'</li>
-	<li>12 => PROJECTL[113], Default file: 'CGABJURA.PRO'</li>
-	<li>13 => PROJECTL[114], Default file: 'CGILLUSI.PRO'</li>
-	<li>14 => PROJECTL[115], Default file: 'CGCONJUR.PRO'</li>
-	<li>15 => PROJECTL[116], Default file: 'CGINVOCA.PRO'</li>
-	<li>16 => PROJECTL[117], Default file: 'CGDIVINA.PRO'</li>
+	<li>0 &longrightarrow; Use <code>Projectile Index</code> projectile value.</li>
+	<li>1 .. 8 &longrightarrow; Crash</li>
+	<li>9 &longrightarrow; <code><a href="../files/ids/bgee/projectl.htm">PROJECTL</a>[110]</code>, Default file: <code>"CGNECROM.PRO"</code></li>
+	<li>10 &longrightarrow; <code><a href="../files/ids/bgee/projectl.htm">PROJECTL</a>[111]</code>, Default file: <code>"CGALTERA.PRO"</code></li>
+	<li>11 &longrightarrow; <code><a href="../files/ids/bgee/projectl.htm">PROJECTL</a>[112]</code>, Default file: <code>"CGENCHAN.PRO"</code></li>
+	<li>12 &longrightarrow; <code><a href="../files/ids/bgee/projectl.htm">PROJECTL</a>[113]</code>, Default file: <code>"CGABJURA.PRO"</code></li>
+	<li>13 &longrightarrow; <code><a href="../files/ids/bgee/projectl.htm">PROJECTL</a>[114]</code>, Default file: <code>"CGILLUSI.PRO"</code></li>
+	<li>14 &longrightarrow; <code><a href="../files/ids/bgee/projectl.htm">PROJECTL</a>[115]</code>, Default file: <code>"CGCONJUR.PRO"</code></li>
+	<li>15 &longrightarrow; <code><a href="../files/ids/bgee/projectl.htm">PROJECTL</a>[116]</code>, Default file: <code>"CGINVOCA.PRO"</code></li>
+	<li>16 &longrightarrow; <code><a href="../files/ids/bgee/projectl.htm">PROJECTL</a>[117]</code>, Default file: <code>"CGDIVINA.PRO"</code></li>
 </ul>
 
 
@@ -9560,7 +9710,7 @@ At least in EE games, it is possible to colorize the string. In order to do so, 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-‘Projectile Index’ must be treated as in spells, i.e.: value in <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> + 1
+<code>Projectile Index</code> must be treated as in spells, i.e.: value in <code><a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> + 1</code>
 
   </div>
 </div>
@@ -9971,8 +10121,8 @@ The speed of the projectiles animations ARE NOT affected by <a href="../files/id
 
 <table border="1" width="98%">
 	<colgroup>
-		<col width="5%" />
-		<col width="12%" />
+		<col width="10%" />
+		<col width="10%" />
 		<col width="*" />
 	</colgroup>
 	<thead>
@@ -11760,7 +11910,7 @@ This opcode should generally target “Self”. In particular:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -12765,6 +12915,8 @@ Both parameters should be <code>0</code>.
 	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
 </ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#18">RESISTMAGIC</a>.
  </div>
 		<hr />
 
@@ -12920,1309 +13072,7 @@ Both parameters should be <code>0</code> (zero).
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Prevents the icon specified by the <code>Icon</code> field from being displayed.
 <br/>All values are drawn directly from "STATES.BAM" in the "GUIBam.bif" starting at sequence <code>65</code>.
-<br/><br/>
-
-<table border="1" width="98%">
-	<colgroup>
-		<col width="5%" />
-		<col width="12%" />
-		<col width="*" />
-	</colgroup>
-	<thead>
-		<tr>
-			<th><code>Icon</code> value</th>
-			<th>BG2</th>
-			<th>BG(2):EE</th>
-			<th>IWD:EE</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>0</td>
-			<td>Charm</td>
-			<td>Charm</td>
-			<td>Charm</td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>Dire Charm</td>
-			<td>Dire Charm</td>
-			<td>Dire Charm</td>
-		</tr>
-		<tr>
-			<td>2</td>
-			<td>Rigid Thinking</td>
-			<td>Rigid Thinking</td>
-			<td>Rigid Thinking</td>
-		</tr>
-		<tr>
-			<td>3</td>
-			<td>Confused</td>
-			<td>Confused</td>
-			<td>Confused</td>
-		</tr>
-		<tr>
-			<td>4</td>
-			<td>Berserk</td>
-			<td>Berserk</td>
-			<td>Berserk</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>Intoxicated</td>
-			<td>Intoxicated</td>
-			<td>Intoxicated</td>
-		</tr>
-		<tr>
-			<td>6</td>
-			<td>Poisoned</td>
-			<td>Poisoned</td>
-			<td>Poisoned</td>
-		</tr>
-		<tr>
-			<td>7</td>
-			<td>Diseased</td>
-			<td>Diseased</td>
-			<td>Diseased</td>
-		</tr>
-		<tr>
-			<td>8</td>
-			<td>Blind</td>
-			<td>Blind</td>
-			<td>Blind</td>
-		</tr>
-		<tr>
-			<td>9</td>
-			<td>Protection From Evil</td>
-			<td>Protection From Evil</td>
-			<td>Protection From Evil</td>
-		</tr>
-		<tr>
-			<td>10</td>
-			<td>Protection From Petrification</td>
-			<td>Protection From Petrification</td>
-			<td>Protection From Petrification</td>
-		</tr>
-		<tr>
-			<td>11</td>
-			<td>Protection From Missiles</td>
-			<td>Protection From Missiles</td>
-			<td>Protection From Missiles</td>
-		</tr>
-		<tr>
-			<td>12</td>
-			<td>Magic Armor</td>
-			<td>Magic Armor</td>
-			<td>Magic Armor</td>
-		</tr>
-		<tr>
-			<td>13</td>
-			<td>Held</td>
-			<td>Held</td>
-			<td>Held</td>
-		</tr>
-		<tr>
-			<td>14</td>
-			<td>Sleep</td>
-			<td>Sleep</td>
-			<td>Sleep</td>
-		</tr>
-		<tr>
-			<td>15</td>
-			<td>Shielded</td>
-			<td>Shielded</td>
-			<td>Shielded</td>
-		</tr>
-		<tr>
-			<td>16</td>
-			<td>Protection From Fire</td>
-			<td>Protection From Fire</td>
-			<td>Protection From Fire</td>
-		</tr>
-		<tr>
-			<td>17</td>
-			<td>Blessed</td>
-			<td>Blessed</td>
-			<td>Blessed</td>
-		</tr>
-		<tr>
-			<td>18</td>
-			<td>Chant</td>
-			<td>Chant</td>
-			<td>Chant</td>
-		</tr>
-		<tr>
-			<td>19</td>
-			<td>Free Action</td>
-			<td>Free Action</td>
-			<td>Free Action</td>
-		</tr>
-		<tr>
-			<td>20</td>
-			<td>Barkskin</td>
-			<td>Barkskin</td>
-			<td>Barkskin</td>
-		</tr>
-		<tr>
-			<td>21</td>
-			<td>Strength</td>
-			<td>Strength</td>
-			<td>Strength</td>
-		</tr>
-		<tr>
-			<td>22</td>
-			<td>Heroism</td>
-			<td>Heroism</td>
-			<td>Heroism</td>
-		</tr>
-		<tr>
-			<td>23</td>
-			<td>Invulnerable</td>
-			<td>Invulnerable</td>
-			<td>Invulnerable</td>
-		</tr>
-		<tr>
-			<td>24</td>
-			<td>Protection From Acid</td>
-			<td>Protection From Acid</td>
-			<td>Protection From Acid</td>
-		</tr>
-		<tr>
-			<td>25</td>
-			<td>Protection From Cold</td>
-			<td>Protection From Cold</td>
-			<td>Protection From Cold</td>
-		</tr>
-		<tr>
-			<td>26</td>
-			<td>Resist Fire/Cold</td>
-			<td>Resist Fire/Cold</td>
-			<td>Resist Fire/Cold</td>
-		</tr>
-		<tr>
-			<td>27</td>
-			<td>Protection From Electricity</td>
-			<td>Protection From Electricity</td>
-			<td>Protection From Electricity</td>
-		</tr>
-		<tr>
-			<td>28</td>
-			<td>Protection From Magic</td>
-			<td>Protection From Magic</td>
-			<td>Protection From Magic</td>
-		</tr>
-		<tr>
-			<td>29</td>
-			<td>Protection From Undead</td>
-			<td>Protection From Undead</td>
-			<td>Protection From Undead</td>
-		</tr>
-		<tr>
-			<td>30</td>
-			<td>Protection From Poison</td>
-			<td>Protection From Poison</td>
-			<td>Protection From Poison</td>
-		</tr>
-		<tr>
-			<td>31</td>
-			<td>Non-detectable</td>
-			<td>Non-detectable</td>
-			<td>Non-detectable</td>
-		</tr>
-		<tr>
-			<td>32</td>
-			<td>Good Luck</td>
-			<td>Good Luck</td>
-			<td>Good Luck</td>
-		</tr>
-		<tr>
-			<td>33</td>
-			<td>Bad Luck</td>
-			<td>Bad Luck</td>
-			<td>Bad Luck</td>
-		</tr>
-		<tr>
-			<td>34</td>
-			<td>Silenced</td>
-			<td>Silenced</td>
-			<td>Silenced</td>
-		</tr>
-		<tr>
-			<td>35</td>
-			<td>Cursed</td>
-			<td>Cursed</td>
-			<td>Cursed</td>
-		</tr>
-		<tr>
-			<td>36</td>
-			<td>Panic</td>
-			<td>Panic</td>
-			<td>Panic</td>
-		</tr>
-		<tr>
-			<td>37</td>
-			<td>Resist Fear</td>
-			<td>Resist Fear</td>
-			<td>Resist Fear</td>
-		</tr>
-		<tr>
-			<td>38</td>
-			<td>Haste</td>
-			<td>Haste</td>
-			<td>Haste</td>
-		</tr>
-		<tr>
-			<td>39</td>
-			<td>Fatigue</td>
-			<td>Fatigue</td>
-			<td>Fatigue</td>
-		</tr>
-		<tr>
-			<td>40</td>
-			<td>Bard Song</td>
-			<td>Bard Song</td>
-			<td>Bard Song</td>
-		</tr>
-		<tr>
-			<td>41</td>
-			<td>Slow</td>
-			<td>Slow</td>
-			<td>Slow</td>
-		</tr>
-		<tr>
-			<td>42</td>
-			<td>Regenerate</td>
-			<td>Regenerate</td>
-			<td>Regenerate</td>
-		</tr>
-		<tr>
-			<td>43</td>
-			<td>Domination</td>
-			<td>Domination</td>
-			<td>Domination</td>
-		</tr>
-		<tr>
-			<td>44</td>
-			<td>Hopelessness</td>
-			<td>Hopelessness</td>
-			<td>Hopelessness</td>
-		</tr>
-		<tr>
-			<td>45</td>
-			<td>Greater Malison</td>
-			<td>Greater Malison</td>
-			<td>Greater Malison</td>
-		</tr>
-		<tr>
-			<td>46</td>
-			<td>Spirit Armor</td>
-			<td>Spirit Armor</td>
-			<td>Spirit Armor</td>
-		</tr>
-		<tr>
-			<td>47</td>
-			<td>Chaos</td>
-			<td>Chaos</td>
-			<td>Chaos</td>
-		</tr>
-		<tr>
-			<td>48</td>
-			<td>Feebleminded</td>
-			<td>Feebleminded</td>
-			<td>Feebleminded</td>
-		</tr>
-		<tr>
-			<td>49</td>
-			<td>Defensive Harmony</td>
-			<td>Defensive Harmony</td>
-			<td>Defensive Harmony</td>
-		</tr>
-		<tr>
-			<td>50</td>
-			<td>Champion's Strength</td>
-			<td>Champion's Strength</td>
-			<td>Champion's Strength</td>
-		</tr>
-		<tr>
-			<td>51</td>
-			<td>Dying</td>
-			<td>Dying</td>
-			<td>Dying</td>
-		</tr>
-		<tr>
-			<td>52</td>
-			<td>Mind Shield</td>
-			<td>Mind Shield</td>
-			<td>Mind Shield</td>
-		</tr>
-		<tr>
-			<td>53</td>
-			<td>Energy Drain</td>
-			<td>Energy Drain</td>
-			<td>Energy Drain</td>
-		</tr>
-		<tr>
-			<td>54</td>
-			<td>Polymorph Self</td>
-			<td>Polymorph Self</td>
-			<td>Polymorph Self</td>
-		</tr>
-		<tr>
-			<td>55</td>
-			<td>Stun</td>
-			<td>Stun</td>
-			<td>Stun</td>
-		</tr>
-		<tr>
-			<td>56</td>
-			<td>Regeneration</td>
-			<td>Regeneration</td>
-			<td>Regeneration</td>
-		</tr>
-		<tr>
-			<td>57</td>
-			<td>Perception</td>
-			<td>Perception</td>
-			<td>Perception</td>
-		</tr>
-		<tr>
-			<td>58</td>
-			<td>Master Thievery</td>
-			<td>Master Thievery</td>
-			<td>Master Thievery</td>
-		</tr>
-		<tr>
-			<td>59</td>
-			<td>Energy Drain</td>
-			<td>Energy Drain</td>
-			<td>Energy Drain</td>
-		</tr>
-		<tr>
-			<td>60</td>
-			<td>Holy Power</td>
-			<td>Holy Power</td>
-			<td>Holy Power</td>
-		</tr>
-		<tr>
-			<td>61</td>
-			<td>Cloak of Fear</td>
-			<td>Cloak of Fear</td>
-			<td>Cloak of Fear</td>
-		</tr>
-		<tr>
-			<td>62</td>
-			<td>Iron Skins</td>
-			<td>Iron Skins</td>
-			<td>Iron Skins</td>
-		</tr>
-		<tr>
-			<td>63</td>
-			<td>Magic Resistance</td>
-			<td>Magic Resistance</td>
-			<td>Magic Resistance</td>
-		</tr>
-		<tr>
-			<td>64</td>
-			<td>Righteous Magic</td>
-			<td>Righteous Magic</td>
-			<td>Righteous Magic</td>
-		</tr>
-		<tr>
-			<td>65</td>
-			<td>Spell Turning</td>
-			<td>Spell Turning</td>
-			<td>Spell Turning</td>
-		</tr>
-		<tr>
-			<td>66</td>
-			<td>Repulsing Undead</td>
-			<td>Repulsing Undead</td>
-			<td>Repulsing Undead</td>
-		</tr>
-		<tr>
-			<td>67</td>
-			<td>Spell Deflection</td>
-			<td>Spell Deflection</td>
-			<td>Spell Deflection</td>
-		</tr>
-		<tr>
-			<td>68</td>
-			<td>Fireshield Red</td>
-			<td>Fireshield Red</td>
-			<td>Fireshield Red</td>
-		</tr>
-		<tr>
-			<td>69</td>
-			<td>Fireshield Blue</td>
-			<td>Fireshield Blue</td>
-			<td>Fireshield Blue</td>
-		</tr>
-		<tr>
-			<td>70</td>
-			<td>Protection from Normal Weapon</td>
-			<td>Protection from Normal Weapon</td>
-			<td>Protection from Normal Weapon</td>
-		</tr>
-		<tr>
-			<td>71</td>
-			<td>Protection from Magic Weapon</td>
-			<td>Protection from Magic Weapon</td>
-			<td>Protection from Magic Weapon</td>
-		</tr>
-		<tr>
-			<td>72</td>
-			<td>Tenser's Transformation</td>
-			<td>Tenser's Transformation</td>
-			<td>Tenser's Transformation</td>
-		</tr>
-		<tr>
-			<td>73</td>
-			<td>Protection from Magical Energy</td>
-			<td>Spell Shield</td>
-			<td>Spell Shield</td>
-		</tr>
-		<tr>
-			<td>74</td>
-			<td>Mislead</td>
-			<td>Mislead</td>
-			<td>Mislead</td>
-		</tr>
-		<tr>
-			<td>75</td>
-			<td>Contingency Active</td>
-			<td>Contingency Active</td>
-			<td>Contingency Active</td>
-		</tr>
-		<tr>
-			<td>76</td>
-			<td>Protected from the Elements</td>
-			<td>Protected from the Elements</td>
-			<td>Protected from the Elements</td>
-		</tr>
-		<tr>
-			<td>77</td>
-			<td>Projected Image</td>
-			<td>Projected Image</td>
-			<td>Projected Image</td>
-		</tr>
-		<tr>
-			<td>78</td>
-			<td>Maze</td>
-			<td>Maze</td>
-			<td>Maze</td>
-		</tr>
-		<tr>
-			<td>79</td>
-			<td>Imprisonment</td>
-			<td>Imprisonment</td>
-			<td>Imprisonment</td>
-		</tr>
-		<tr>
-			<td>80</td>
-			<td>Stoneskin</td>
-			<td>Stoneskin</td>
-			<td>Stoneskin</td>
-		</tr>
-		<tr>
-			<td>81</td>
-			<td>KAI</td>
-			<td>KAI</td>
-			<td>KAI</td>
-		</tr>
-		<tr>
-			<td>82</td>
-			<td>Called Shot</td>
-			<td>Called Shot</td>
-			<td>Called Shot</td>
-		</tr>
-		<tr>
-			<td>83</td>
-			<td>Spell Failure</td>
-			<td>Spell Failure</td>
-			<td>Spell Failure</td>
-		</tr>
-		<tr>
-			<td>84</td>
-			<td>Offensive Spin</td>
-			<td>Offensive Spin</td>
-			<td>Offensive Spin</td>
-		</tr>
-		<tr>
-			<td>85</td>
-			<td>Defensive Spin</td>
-			<td>Defensive Spin</td>
-			<td>Defensive Spin</td>
-		</tr>
-		<tr>
-			<td>86</td>
-			<td>Intelligence drained by mind flayer</td>
-			<td>Intelligence drained by mind flayer</td>
-			<td>Intelligence drained by mind flayer</td>
-		</tr>
-		<tr>
-			<td>87</td>
-			<td>Regenerating</td>
-			<td>Regenerating</td>
-			<td>Regenerating</td>
-		</tr>
-		<tr>
-			<td>88</td>
-			<td>In Dialog</td>
-			<td>In Dialog</td>
-			<td>In Dialog</td>
-		</tr>
-		<tr>
-			<td>89</td>
-			<td>In Store</td>
-			<td>In Store</td>
-			<td>In Store</td>
-		</tr>
-		<tr>
-			<td>90</td>
-			<td>Negative Plane Protection</td>
-			<td>Negative Plane Protection</td>
-			<td>Negative Plane Protection</td>
-		</tr>
-		<tr>
-			<td>91</td>
-			<td>Ability Score Drained</td>
-			<td>Ability Score Drained</td>
-			<td>Ability Score Drained</td>
-		</tr>
-		<tr>
-			<td>92</td>
-			<td>Spell Sequencer Active</td>
-			<td>Spell Sequencer Active</td>
-			<td>Spell Sequencer Active</td>
-		</tr>
-		<tr>
-			<td>93</td>
-			<td>Protected from Energy</td>
-			<td>Protected from Energy</td>
-			<td>Protected from Energy</td>
-		</tr>
-		<tr>
-			<td>94</td>
-			<td>Magnetized</td>
-			<td>Magnetized</td>
-			<td>Magnetized</td>
-		</tr>
-		<tr>
-			<td>95</td>
-			<td>Able to Poison Weapons</td>
-			<td>Able to Poison Weapons</td>
-			<td>Able to Poison Weapons</td>
-		</tr>
-		<tr>
-			<td>96</td>
-			<td>Setting Trap</td>
-			<td>Setting Trap</td>
-			<td>Setting Trap</td>
-		</tr>
-		<tr>
-			<td>97</td>
-			<td>Glass Dust</td>
-			<td>Glass Dust</td>
-			<td>Glass Dust</td>
-		</tr>
-		<tr>
-			<td>98</td>
-			<td>Blade Barrier</td>
-			<td>Blade Barrier</td>
-			<td>Blade Barrier</td>
-		</tr>
-		<tr>
-			<td>99</td>
-			<td>Death Ward</td>
-			<td>Death Ward</td>
-			<td>Death Ward</td>
-		</tr>
-		<tr>
-			<td>100</td>
-			<td>Doom</td>
-			<td>Doom</td>
-			<td>Doom</td>
-		</tr>
-		<tr>
-			<td>101</td>
-			<td>Decaying</td>
-			<td>Decaying</td>
-			<td>Decaying</td>
-		</tr>
-		<tr>
-			<td>102</td>
-			<td>Acid</td>
-			<td>Acid</td>
-			<td>Acid</td>
-		</tr>
-		<tr>
-			<td>103</td>
-			<td>Vocalize</td>
-			<td>Vocalize</td>
-			<td>Vocalize</td>
-		</tr>
-		<tr>
-			<td>104</td>
-			<td>Mantle</td>
-			<td>Mantle</td>
-			<td>Mantle</td>
-		</tr>
-		<tr>
-			<td>105</td>
-			<td>Miscast Magic</td>
-			<td>Miscast Magic</td>
-			<td>Miscast Magic</td>
-		</tr>
-		<tr>
-			<td>106</td>
-			<td>Magic Resistance Lowered</td>
-			<td>Magic Resistance Lowered</td>
-			<td>Magic Resistance Lowered</td>
-		</tr>
-		<tr>
-			<td>107</td>
-			<td>Spell Immunity</td>
-			<td>Spell Immunity</td>
-			<td>Spell Immunity</td>
-		</tr>
-		<tr>
-			<td>108</td>
-			<td>True Seeing</td>
-			<td>True Seeing</td>
-			<td>True Seeing</td>
-		</tr>
-		<tr>
-			<td>109</td>
-			<td>Detecting Traps</td>
-			<td>Detecting Traps / Illusions</td>
-			<td>Detecting Traps</td>
-		</tr>
-		<tr>
-			<td>110</td>
-			<td>Improved Haste</td>
-			<td>Improved Haste</td>
-			<td>Improved Haste</td>
-		</tr>
-		<tr>
-			<td>111</td>
-			<td>Spell Trigger</td>
-			<td>Spell Trigger</td>
-			<td>Spell Trigger</td>
-		</tr>
-		<tr>
-			<td>112</td>
-			<td>Deaf</td>
-			<td>Deaf</td>
-			<td>Deaf</td>
-		</tr>
-		<tr>
-			<td>113</td>
-			<td>Enfeebled</td>
-			<td>Enfeebled</td>
-			<td>Enfeebled</td>
-		</tr>
-		<tr>
-			<td>114</td>
-			<td>Infravision</td>
-			<td>Infravision</td>
-			<td>Infravision</td>
-		</tr>
-		<tr>
-			<td>115</td>
-			<td>Friends</td>
-			<td>Friends</td>
-			<td>Friends</td>
-		</tr>
-		<tr>
-			<td>116</td>
-			<td>Shield of the Archons</td>
-			<td>Shield of the Archons</td>
-			<td>Shield of the Archons</td>
-		</tr>
-		<tr>
-			<td>117</td>
-			<td>Spell Trap</td>
-			<td>Spell Trap</td>
-			<td>Spell Trap</td>
-		</tr>
-		<tr>
-			<td>118</td>
-			<td>Absolute Immunity</td>
-			<td>Absolute Immunity</td>
-			<td>Absolute Immunity</td>
-		</tr>
-		<tr>
-			<td>119</td>
-			<td>Improved Mantle</td>
-			<td>Improved Mantle</td>
-			<td>Improved Mantle</td>
-		</tr>
-		<tr>
-			<td>120</td>
-			<td>Farsight</td>
-			<td>Farsight</td>
-			<td>Farsight</td>
-		</tr>
-		<tr>
-			<td>121</td>
-			<td>Globe of Invulnerability</td>
-			<td>Globe of Invulnerability</td>
-			<td>Globe of Invulnerability</td>
-		</tr>
-		<tr>
-			<td>122</td>
-			<td>Minor Globe Of Invulnerability</td>
-			<td>Minor Globe Of Invulnerability</td>
-			<td>Minor Globe Of Invulnerability</td>
-		</tr>
-		<tr>
-			<td>123</td>
-			<td>Spell Shield</td>
-			<td>Protected from Magical Energy</td>
-			<td>Protected from Magical Energy</td>
-		</tr>
-		<tr>
-			<td>124</td>
-			<td>Polymorphed</td>
-			<td>Polymorphed</td>
-			<td>Polymorphed</td>
-		</tr>
-		<tr>
-			<td>125</td>
-			<td>Otiluke's Resilient Sphere</td>
-			<td>Otiluke's Resilient Sphere</td>
-			<td>Otiluke's Resilient Sphere</td>
-		</tr>
-		<tr>
-			<td>126</td>
-			<td>Nauseated</td>
-			<td>Nauseated</td>
-			<td>Nauseated</td>
-		</tr>
-		<tr>
-			<td>127</td>
-			<td>Ghost Armor</td>
-			<td>Ghost Armor</td>
-			<td>Ghost Armor</td>
-		</tr>
-		<tr>
-			<td>128</td>
-			<td>Glitterdust</td>
-			<td>Glitterdust</td>
-			<td>Glitterdust</td>
-		</tr>
-		<tr>
-			<td>129</td>
-			<td>Webbed</td>
-			<td>Webbed</td>
-			<td>Webbed</td>
-		</tr>
-		<tr>
-			<td>130</td>
-			<td>Unconscious</td>
-			<td>Unconscious</td>
-			<td>Unconscious</td>
-		</tr>
-		<tr>
-			<td>131</td>
-			<td>Mental Combat</td>
-			<td>Mental Combat</td>
-			<td>Mental Combat</td>
-		</tr>
-		<tr>
-			<td>132</td>
-			<td>Physical Mirror</td>
-			<td>Physical Mirror</td>
-			<td>Physical Mirror</td>
-		</tr>
-		<tr>
-			<td>133</td>
-			<td>Repulse Undead</td>
-			<td>Repulse Undead</td>
-			<td>Repulse Undead</td>
-		</tr>
-		<tr>
-			<td>134</td>
-			<td>Chaotic Commands</td>
-			<td>Chaotic Commands</td>
-			<td>Chaotic Commands</td>
-		</tr>
-		<tr>
-			<td>135</td>
-			<td>Draw Upon Holy Might</td>
-			<td>Draw Upon Holy Might</td>
-			<td>Draw Upon Holy Might</td>
-		</tr>
-		<tr>
-			<td>136</td>
-			<td>Strength of One</td>
-			<td>Strength of One</td>
-			<td>Strength of One</td>
-		</tr>
-		<tr>
-			<td>137</td>
-			<td>Bleeding</td>
-			<td>Bleeding</td>
-			<td>Bleeding</td>
-		</tr>
-		<tr>
-			<td>138</td>
-			<td>Rage</td>
-			<td>Rage</td>
-			<td>Rage</td>
-		</tr>
-		<tr>
-			<td>139</td>
-			<td>Boon of Lathander</td>
-			<td>Boon of Lathander</td>
-			<td>Boon of Lathander</td>
-		</tr>
-		<tr>
-			<td>140</td>
-			<td>Storm Shield</td>
-			<td>Storm Shield</td>
-			<td>Storm Shield</td>
-		</tr>
-		<tr>
-			<td>141</td>
-			<td>Enraged</td>
-			<td>Enraged</td>
-			<td>Enraged</td>
-		</tr>
-		<tr>
-			<td>142</td>
-			<td>Stunning Blow</td>
-			<td>Stunning Blow</td>
-			<td>Stunning Blow</td>
-		</tr>
-		<tr>
-			<td>143</td>
-			<td>Quivering Palm</td>
-			<td>Quivering Palm</td>
-			<td>Quivering Palm</td>
-		</tr>
-		<tr>
-			<td>144</td>
-			<td>Entangled</td>
-			<td>Entangled</td>
-			<td>Entangled</td>
-		</tr>
-		<tr>
-			<td>145</td>
-			<td>Grease</td>
-			<td>Grease</td>
-			<td>Grease</td>
-		</tr>
-		<tr>
-			<td>146</td>
-			<td>Smite</td>
-			<td>Smite</td>
-			<td>Smite</td>
-		</tr>
-		<tr>
-			<td>147</td>
-			<td>Hardiness</td>
-			<td>Hardiness</td>
-			<td>Hardiness</td>
-		</tr>
-		<tr>
-			<td>148</td>
-			<td>Power Attack</td>
-			<td>Power Attack</td>
-			<td>Power Attack</td>
-		</tr>
-		<tr>
-			<td>149</td>
-			<td>Whirlwind Attack</td>
-			<td>Whirlwind Attack</td>
-			<td>Whirlwind Attack</td>
-		</tr>
-		<tr>
-			<td>150</td>
-			<td>Greater Whirlwind Attack</td>
-			<td>Greater Whirlwind Attack</td>
-			<td>Greater Whirlwind Attack</td>
-		</tr>
-		<tr>
-			<td>151</td>
-			<td>Magic Flute</td>
-			<td>Magic Flute</td>
-			<td>Chaos of Battle</td>
-		</tr>
-		<tr>
-			<td>152</td>
-			<td>Critical Strike</td>
-			<td>Critical Strike</td>
-			<td>Critical Strike</td>
-		</tr>
-		<tr>
-			<td>153</td>
-			<td>Greater Deathblow</td>
-			<td>Greater Deathblow</td>
-			<td>Greater Deathblow</td>
-		</tr>
-		<tr>
-			<td>154</td>
-			<td>Deathblow</td>
-			<td>Deathblow</td>
-			<td>Deathblow</td>
-		</tr>
-		<tr>
-			<td>155</td>
-			<td>Avoid Death</td>
-			<td>Avoid Death</td>
-			<td>Avoid Death</td>
-		</tr>
-		<tr>
-			<td>156</td>
-			<td>Assassination</td>
-			<td>Assassination</td>
-			<td>Assassination</td>
-		</tr>
-		<tr>
-			<td>157</td>
-			<td>Evasion</td>
-			<td>Evasion</td>
-			<td>Evasion</td>
-		</tr>
-		<tr>
-			<td>158</td>
-			<td>Greater Evasion</td>
-			<td>Greater Evasion</td>
-			<td>Greater Evasion</td>
-		</tr>
-		<tr>
-			<td>159</td>
-			<td>Improved Alacrity</td>
-			<td>Improved Alacrity</td>
-			<td>Improved Alacrity</td>
-		</tr>
-		<tr>
-			<td>160</td>
-			<td>Aura of Flaming Death</td>
-			<td>Aura of Flaming Death</td>
-			<td>Aura of Flaming Death</td>
-		</tr>
-		<tr>
-			<td>161</td>
-			<td>Globe of Blades</td>
-			<td>Globe of Blades</td>
-			<td>Globe of Blades</td>
-		</tr>
-		<tr>
-			<td>162</td>
-			<td>Improved Chaos Shield</td>
-			<td>Improved Chaos Shield</td>
-			<td>Improved Chaos Shield</td>
-		</tr>
-		<tr>
-			<td>163</td>
-			<td>Chaos Shield</td>
-			<td>Chaos Shield</td>
-			<td>Chaos Shield</td>
-		</tr>
-		<tr>
-			<td>164</td>
-			<td>Fire Elemental Transformation</td>
-			<td>Fire Elemental Transformation</td>
-			<td>Fire Elemental Transformation</td>
-		</tr>
-		<tr>
-			<td>165</td>
-			<td>Earth Elemental Transformation</td>
-			<td>Earth Elemental Transformation</td>
-			<td>Earth Elemental Transformation</td>
-		</tr>
-		<tr>
-			<td>166</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Mind Blank</td>
-		</tr>
-		<tr>
-			<td>167</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Aid</td>
-		</tr>
-		<tr>
-			<td>168</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Phased</td>
-		</tr>
-		<tr>
-			<td>169</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Pain</td>
-		</tr>
-		<tr>
-			<td>170</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Impervious Sanctity of Mind</td>
-		</tr>
-		<tr>
-			<td>171</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Petrified</td>
-		</tr>
-		<tr>
-			<td>172</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Iron Body</td>
-		</tr>
-		<tr>
-			<td>173</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Animal Rage</td>
-		</tr>
-		<tr>
-			<td>174</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Exaltation</td>
-		</tr>
-		<tr>
-			<td>175</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Recitation</td>
-		</tr>
-		<tr>
-			<td>176</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Blood Rage</td>
-		</tr>
-		<tr>
-			<td>177</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>The Ballad of Three Heroes</td>
-		</tr>
-		<tr>
-			<td>178</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>The Tale of Curran Strongheart</td>
-		</tr>
-		<tr>
-			<td>179</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Tymora's Melody</td>
-		</tr>
-		<tr>
-			<td>180</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>The Song of Kaudies</td>
-		</tr>
-		<tr>
-			<td>181</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>The Siren's Yearning</td>
-		</tr>
-		<tr>
-			<td>182</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>War Chant of Sith</td>
-		</tr>
-		<tr>
-			<td>183</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Prayer</td>
-		</tr>
-		<tr>
-			<td>184</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Righteous Wrath of the Faithful</td>
-		</tr>
-		<tr>
-			<td>185</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Cat's Grace</td>
-		</tr>
-		<tr>
-			<td>186</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Hope</td>
-		</tr>
-		<tr>
-			<td>187</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Courage</td>
-		</tr>
-		<tr>
-			<td>188</td>
-			<td>Unknown</td>
-			<td>Enchanted Weapon</td>
-			<td>Unknown</td>
-		</tr>
-		<tr>
-			<td>189</td>
-			<td>Unknown</td>
-			<td>Spirit Ward</td>
-			<td>Spirit Ward</td>
-		</tr>
-		<tr>
-			<td>190</td>
-			<td>Unknown</td>
-			<td>Ether Gate</td>
-			<td>Ether Gate</td>
-		</tr>
-		<tr>
-			<td>191</td>
-			<td>Unknown</td>
-			<td>Shamanic Dance</td>
-			<td>Shamanic Dance</td>
-		</tr>
-		<tr>
-			<td>192</td>
-			<td>Unknown</td>
-			<td>Chaos of Battle</td>
-			<td>Repulsion</td>
-		</tr>
-		<tr>
-			<td>193</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Increased Movement Rate</td>
-		</tr>
-		<tr>
-			<td>194</td>
-			<td>Unknown</td>
-			<td>Repulsion</td>
-			<td>Immunity: Abjuration</td>
-		</tr>
-		<tr>
-			<td>195</td>
-			<td>Unknown</td>
-			<td>Increased Movement Rate</td>
-			<td>Immunity: Conjuration</td>
-		</tr>
-		<tr>
-			<td>196</td>
-			<td>Unknown</td>
-			<td>Immunity: Abjuration</td>
-			<td>Immunity: Divination</td>
-		</tr>
-		<tr>
-			<td>197</td>
-			<td>Unknown</td>
-			<td>Immunity: Conjuration</td>
-			<td>Immunity: Enchantment</td>
-		</tr>
-		<tr>
-			<td>198</td>
-			<td>Unknown</td>
-			<td>Immunity: Divination</td>
-			<td>Immunity: Illusion</td>
-		</tr>
-		<tr>
-			<td>199</td>
-			<td>Unknown</td>
-			<td>Immunity: Enchantment</td>
-			<td>Immunity: Evocation</td>
-		</tr>
-		<tr>
-			<td>200</td>
-			<td>Unknown</td>
-			<td>Immunity: Illusion</td>
-			<td>Immunity: Necromancy</td>
-		</tr>
-		<tr>
-			<td>201</td>
-			<td>Unknown</td>
-			<td>Immunity: Evocation</td>
-			<td>Immunity: Alteration</td>
-		</tr>
-		<tr>
-			<td>202</td>
-			<td>Unknown</td>
-			<td>Immunity: Necromancy</td>
-			<td>Enchanted Weapon</td>
-		</tr>
-		<tr>
-			<td>203</td>
-			<td>Unknown</td>
-			<td>Immunity: Alteration</td>
-			<td>Static Charge</td>
-		</tr>
-		<tr>
-			<td>204</td>
-			<td>Unknown</td>
-			<td>Flaming Fists</td>
-			<td>Entropy Shield</td>
-		</tr>
-		<tr>
-			<td>205</td>
-			<td>Unknown</td>
-			<td>Frozen Fist</td>
-			<td>Shield of Lathander</td>
-		</tr>
-		<tr>
-			<td>206</td>
-			<td>Unknown</td>
-			<td>Armor of Faith</td>
-			<td>Greater Shield of Lathander</td>
-		</tr>
-		<tr>
-			<td>207</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Beltyn's Burning Blood</td>
-		</tr>
-		<tr>
-			<td>208</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Shroud of Flame</td>
-		</tr>
-		<tr>
-			<td>209</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Antimagic Shell</td>
-		</tr>
-		<tr>
-			<td>210</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Flaming Fists</td>
-		</tr>
-		<tr>
-			<td>211</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Frozen Fist</td>
-		</tr>
-		<tr>
-			<td>212</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Circle of Bones</td>
-		</tr>
-		<tr>
-			<td>213</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Armor of Faith</td>
-		</tr>
-	</tbody>
-</table>
+<br/>Known values for <code>Icon</code> are: see <a href="#op142">opcode #142</a>.
 
 
 
@@ -14280,18 +13130,47 @@ In EE games, can also block <a href="#op177">opcode #177</a>/<a href="#op283">op
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Plays the damage animation specified by the 'Animation' field.
-<br/>Known values for 'Type' are:
-<br/>0   Blood (behind)
-<br/>1   Blood (front)
-<br/>2   Blood (left)
-<br/>3   Blood (right)
-<br/>4   Fire 1
-<br/>5   Fire 2
-<br/>6   Fire 3
-<br/>7   Electricity 1
-<br/>8   Electricity 2
-<br/>9   Electricity 3
+		<div class="descriptiondata"> Plays the damage animation specified by the <code>Animation</code> field.
+<br/>It just plays a visual effect, like a far more limited version of <a href="#op215">opcode #215</a>, and is always instantaneous.
+<br/>Known values for <code>Animation</code> are:
+<ul>
+	<li>
+		0 &longrightarrow; Blood (behind)
+		<ul>
+			<li>(EEs) Doesn't display any animation.</li>
+		</ul>
+	</li>
+	<li>1 &longrightarrow; <code>"BLOODS.BAM"</code> Blood (small)</li>
+	<li>2 &longrightarrow; <code>"BLOODM.BAM"</code> Blood (medium)</li>
+	<li>3 &longrightarrow; <code>"BLOODL.BAM"</code> Blood (large)</li>
+	<li>4 &longrightarrow; <code>"SPFIRIMP.BAM"</code> Fire 1</li>
+	<li>5 &longrightarrow; <code>"SPFIRIMP.BAM"</code> Fire 2</li>
+	<li>6 &longrightarrow; <code>"SPFIRIMP.BAM"</code> Fire 2</li>
+	<li>7 &longrightarrow; <code>"SPSHKIMP.BAM"</code> Electricity 1</li>
+	<li>8 &longrightarrow; <code>"SPSHKIMP.BAM"</code> Electricity 2</li>
+	<li>9 &longrightarrow; <code>"SPSHKIMP.BAM"</code> Electricity 3</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+On EE games:
+<ul>
+	<li>
+		For <code>Animation=4/5/6</code> and <code>Animation=7/8/9</code>, this opcode actually pulls the animation from <a href="../files/2da/2da_bgee/dmgtypes.htm">DMGTYPES.2DA</a>, each playing both <code>ANIMATION1</code> (those listed above) and <code>ANIMATION2</code>, for <code>FIRE</code> and <code>ELECTRICITY</code>, respectively. Does not play the <code>SOUND</code> associated with them though.
+		<ul>
+			<li><code>ANIMATION1</code> is the initial animation, <code>ANIMATION2</code> is the lingering animation.</li>
+		</ul>
+	</li>
+	<li>BGEE/BG2EE use the default <code>*</code> (hardcoded) entries for all damage types, but they can be overridden by setting entries in <a href="../files/2da/2da_bgee/dmgtypes.htm">DMGTYPES.2DA</a>, as IWDEE does.</li>
+	<li>The animations for <code>Animation=1/2/3</code> are not pulled from <a href="../files/2da/2da_bgee/dmgtypes.htm">DMGTYPES.2DA</a>, they're most likely fully hardcoded.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14420,8 +13299,9 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Sets the Poison Resistance of the target creature(s) to the value specified by <code>Statistic Modifier</code>.
-<br/>Also known as "Stat: Set Poison Resistance".
+		<div class="descriptiondata"> Modifies the Poison Resistance of the target creature(s) to the value specified by <code>Statistic Modifier</code>.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#74">RESISTPOISON</a>.
 
 
 
@@ -14712,7 +13592,7 @@ It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFF
 	<li>0 &longrightarrow; Cumulative Modifier: <code>Movement = Movement + 'Statistic Modifier' value</code></li>
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Movement = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Non-stacking Percentage Modifier: <code>Movement = (Movement * 'Statistic Modifier' value) / 100</code></li>
-	<li>5 &longrightarrow; Multiplicative Stacking Percentage Modifier: <code>Movement = (Movement 'Statistic Modifier' value) / 100</code> (EE only)</li>
+	<li>5 &longrightarrow; Multiplicative Stacking Percentage Modifier: <code>Movement = (Movement * 'Statistic Modifier' value) / 100</code> (EE only)</li>
 </ul>
 
 
@@ -14997,7 +13877,7 @@ This opcode uses a reverse stacking order: the “oldest” effect with matching
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creatures(s) cannot use the item specified by the resource key. The strref specified by the 'String Reference' field is displayed when an attempt to use the item is made.
+		<div class="descriptiondata"> The targeted creatures(s) cannot use the item specified by the <code>resource</code> key. The strref specified by the <code>String Reference</code> field is displayed when an attempt to use the item is made.
  </div>
 		<hr />
 
@@ -15059,11 +13939,14 @@ This opcode uses a reverse stacking order: the “oldest” effect with matching
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) cannot use the item type specified by the 'Item Type' field for the purpose specified by the 'Restriction' field. 
-<br/>Known values for 'Restriction' are:
-<br/>0   Equip
-<br/>1   Use
-<br/><br/>The message defined in 'Description note' will be displayed whenever this effect is triggered.
+		<div class="descriptiondata"> The targeted creature(s) cannot use the item type specified by the <code>Item Type</code> field for the purpose specified by the <code>Restriction</code> field. 
+<br/>Known values for <code>Restriction</code> are:
+<ul>
+	<li>0 &longrightarrow; Equip</li>
+	<li>1 &longrightarrow; Use</li>
+</ul>
+
+<br/>The message defined in <code>Description note</code> will be displayed whenever this effect is triggered.
  </div>
 		<hr />
 
@@ -15154,14 +14037,14 @@ PST: This effect doesn’t exist and always crashes the game.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the effect specified by the resource key to the targeted creature(s) when an item of the item type specified by the 'Type' field is equipped.
+		<div class="descriptiondata"> Applies the effect specified by the <code>resource</code> key to the targeted creature(s) when an item of the item type specified by the <code>Type</code> field is equipped.
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Ammo (i.e., Arrows(5), Bullets(14) and Bolts(31)) does not work well with this opcode. The Ammo Slots are always “Equipped”, even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
+Ammo (i.e., <code>Arrows(5)</code>, <code>Bullets(14)</code> and <code>Bolts(31)</code>) does not work well with this opcode. The Ammo Slots are always “Equipped”, even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
 <br />The offhand has the same issue – even when disabled, it’s detected by this opcode as equipped.
 <br />Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen).
 
@@ -15712,14 +14595,14 @@ The <code>Stat Value</code> parameter can take any value. If you set it to <code
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Allows invisible creatures to be attacked (via scripts) and makes it possible to target improved invisible creatures with spells.
-<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#81">STAT #81</a> to 'param2'.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#81">SEEINVISIBLE</a> to <code>Stat Value</code>.
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-The ‘Stat Value’ parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+The <code>Stat Value</code> parameter can take any value. If you set it to <code>0</code>, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -15772,14 +14655,14 @@ The ‘Stat Value’ parameter can take any value. If you set it to 0, you will 
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Allows the targeted creature(s) to carry on their actions during dialogs which pause action.
-<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#82">STAT #82</a> to 'param2'.
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#82">IGNOREDIALOGPAUSE</a> to <code>Stat Value</code>.
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-The ‘Stat Value’ parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
+The <code>Stat Value</code> parameter can take any value. If you set it to <code>0</code>, you will disable the effect (for its duration).
 
   </div>
 </div>
@@ -15928,8 +14811,8 @@ The effect should be set with a timing mode of 9.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will reflect the projectile specified by the 'Reflected Projectile' field back to the attacker.
-<br/>Values for 'Reflected Projectile' are taken from projectl.ids.
+		<div class="descriptiondata"> The targeted creature(s) will reflect the projectile specified by the <code>Reflected Projectile</code> field back to the attacker.
+<br/>Values for <code>Reflected Projectile</code> are taken from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>.
  </div>
 		<hr />
 
@@ -16482,7 +15365,7 @@ In order to do so, both the <code>Resource</code> field of op#206 and the <code>
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will reflect the spell specified by the resource key.
+		<div class="descriptiondata"> The targeted creature(s) will reflect the spell specified by the <code>resource</code> key.
  </div>
 		<hr />
 
@@ -16518,8 +15401,8 @@ In order to do so, both the <code>Resource</code> field of op#206 and the <code>
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) HP value will not drop below the value specified by the 'Minimum Value' field.
-<br/>This effect sets stat #83 (MINHITPOINTS) to param #1.
+		<div class="descriptiondata"> The targeted creature(s) HP value will not drop below the value specified by the <code>Minimum Value</code> field.
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a> to <code>Minimum Value</code>.
  </div>
 		<hr />
 
@@ -18325,75 +17208,329 @@ The presence of this effect in any of a spell’s ability headers will force any
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Sets the weapon proficiency points for the weapon type specified in the 'Type' field, to the value specified by the 'Amount' field, for the targeted creature(s).
+		<div class="descriptiondata"> Sets the weapon proficiency points for the weapon type specified in the <code>Type</code> field, to the value specified by the <code>Amount</code> field, for the targeted creature(s).
+<br/><br/>
+
+<table border="1" width="98%">
+	<colgroup>
+		<col width="10%" />
+		<col width="10%" />
+		<col width="*" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th><code>Type</code> value</th>
+			<th>BG2</th>
+			<th>BG:EE / IWD:EE</th>
+			<th>BG2:EE</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>89</td>
+			<td>PROFICIENCYBASTARDSWORD</td>
+			<td>PROFICIENCYBASTARDSWORD</td>
+			<td>PROFICIENCYBASTARDSWORD</td>
+		</tr>
+		<tr>
+			<td>90</td>
+			<td>PROFICIENCYLONGSWORD</td>
+			<td>PROFICIENCYLONGSWORD</td>
+			<td>PROFICIENCYLONGSWORD</td>
+		</tr>
+		<tr>
+			<td>91</td>
+			<td>PROFICIENCYSHORTSWORD</td>
+			<td>PROFICIENCYSHORTSWORD</td>
+			<td>PROFICIENCYSHORTSWORD</td>
+		</tr>
+		<tr>
+			<td>92</td>
+			<td>PROFICIENCYAXE</td>
+			<td>PROFICIENCYAXE</td>
+			<td>PROFICIENCYAXE</td>
+		</tr>
+		<tr>
+			<td>93</td>
+			<td>PROFICIENCYTWOHANDEDSWORD</td>
+			<td>PROFICIENCYTWOHANDEDSWORD</td>
+			<td>PROFICIENCYTWOHANDEDSWORD</td>
+		</tr>
+		<tr>
+			<td>94</td>
+			<td>PROFICIENCYKATANA</td>
+			<td>PROFICIENCYKATANA</td>
+			<td>PROFICIENCYKATANA</td>
+		</tr>
+		<tr>
+			<td>95</td>
+			<td>PROFICIENCYSCIMITARWAKISASHININJATO</td>
+			<td>PROFICIENCYSCIMITARWAKISASHININJATO</td>
+			<td>PROFICIENCYSCIMITARWAKISASHININJATO</td>
+		</tr>
+		<tr>
+			<td>96</td>
+			<td>PROFICIENCYDAGGER</td>
+			<td>PROFICIENCYDAGGER</td>
+			<td>PROFICIENCYDAGGER</td>
+		</tr>
+		<tr>
+			<td>97</td>
+			<td>PROFICIENCYWARHAMMER</td>
+			<td>PROFICIENCYWARHAMMER</td>
+			<td>PROFICIENCYWARHAMMER</td>
+		</tr>
+		<tr>
+			<td>98</td>
+			<td>PROFICIENCYSPEAR</td>
+			<td>PROFICIENCYSPEAR</td>
+			<td>PROFICIENCYSPEAR</td>
+		</tr>
+		<tr>
+			<td>99</td>
+			<td>PROFICIENCYHALBERD</td>
+			<td>PROFICIENCYHALBERD</td>
+			<td>PROFICIENCYHALBERD</td>
+		</tr>
+		<tr>
+			<td>100</td>
+			<td>PROFICIENCYFLAILMORNINGSTAR</td>
+			<td>PROFICIENCYFLAILMORNINGSTAR</td>
+			<td>PROFICIENCYFLAILMORNINGSTAR</td>
+		</tr>
+		<tr>
+			<td>101</td>
+			<td>PROFICIENCYMACE</td>
+			<td>PROFICIENCYMACE</td>
+			<td>PROFICIENCYMACE</td>
+		</tr>
+		<tr>
+			<td>102</td>
+			<td>PROFICIENCYQUARTERSTAFF</td>
+			<td>PROFICIENCYQUARTERSTAFF</td>
+			<td>PROFICIENCYQUARTERSTAFF</td>
+		</tr>
+		<tr>
+			<td>103</td>
+			<td>PROFICIENCYCROSSBOW</td>
+			<td>PROFICIENCYCROSSBOW</td>
+			<td>PROFICIENCYCROSSBOW</td>
+		</tr>
+		<tr>
+			<td>104</td>
+			<td>PROFICIENCYLONGBOW</td>
+			<td>PROFICIENCYLONGBOW</td>
+			<td>PROFICIENCYLONGBOW</td>
+		</tr>
+		<tr>
+			<td>105</td>
+			<td>PROFICIENCYSHORTBOW</td>
+			<td>PROFICIENCYSHORTBOW</td>
+			<td>PROFICIENCYSHORTBOW</td>
+		</tr>
+		<tr>
+			<td>106</td>
+			<td>PROFICIENCYDART</td>
+			<td>PROFICIENCYDART</td>
+			<td>PROFICIENCYDART</td>
+		</tr>
+		<tr>
+			<td>107</td>
+			<td>PROFICIENCYSLING</td>
+			<td>PROFICIENCYSLING</td>
+			<td>PROFICIENCYSLING</td>
+		</tr>
+		<tr>
+			<td>108</td>
+			<td>PROFICIENCYBLACKJACK</td>
+			<td>PROFICIENCYBLACKJACK</td>
+			<td>PROFICIENCYBLACKJACK</td>
+		</tr>
+		<tr>
+			<td>109</td>
+			<td>PROFICIENCYGUN</td>
+			<td>WEAPON_ENCHANTMENT<small><sup>*</sup></small></td>
+			<td>CLERIC_HALLOW<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>110</td>
+			<td>PROFICIENCYMARTIALARTS</td>
+			<td>CLERIC_ARMOR_OF_FAITH<small><sup>*</sup></small></td>
+			<td>CLERIC_ARMOR_OF_FAITH<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>111</td>
+			<td>PROFICIENCY2HANDED</td>
+			<td>PROFICIENCY2HANDED</td>
+			<td>PROFICIENCY2HANDED</td>
+		</tr>
+		<tr>
+			<td>112</td>
+			<td>PROFICIENCYSWORDANDSHIELD</td>
+			<td>PROFICIENCYSWORDANDSHIELD</td>
+			<td>PROFICIENCYSWORDANDSHIELD</td>
+		</tr>
+		<tr>
+			<td>113</td>
+			<td>PROFICIENCYSINGLEWEAPON</td>
+			<td>PROFICIENCYSINGLEWEAPON</td>
+			<td>PROFICIENCYSINGLEWEAPON</td>
+		</tr>
+		<tr>
+			<td>114</td>
+			<td>PROFICIENCY2WEAPON</td>
+			<td>PROFICIENCY2WEAPON</td>
+			<td>PROFICIENCY2WEAPON</td>
+		</tr>
+		<tr>
+			<td>115</td>
+			<td>EXTRAPROFICIENCY1</td>
+			<td>PROFICIENCYCLUB</td>
+			<td>PROFICIENCYCLUB</td>
+		</tr>
+		<tr>
+			<td>116</td>
+			<td>EXTRAPROFICIENCY2</td>
+			<td>WIZARD_SPELL_DEFLECTION<small><sup>*</sup></small></td>
+			<td>WIZARD_SPELL_DEFLECTION<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>117</td>
+			<td>EXTRAPROFICIENCY3</td>
+			<td>PROTECTION_FROM_EVIL<small><sup>*</sup></small></td>
+			<td>PROTECTION_FROM_EVIL<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>118</td>
+			<td>EXTRAPROFICIENCY4</td>
+			<td>TRUE_SIGHT<small><sup>*</sup></small></td>
+			<td>TRUE_SIGHT<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>119</td>
+			<td>EXTRAPROFICIENCY5</td>
+			<td>CLERIC_CHAOTIC_COMMANDS<small><sup>*</sup></small></td>
+			<td>CLERIC_CHAOTIC_COMMANDS<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>120</td>
+			<td>EXTRAPROFICIENCY6</td>
+			<td>CLERIC_INSECT_PLAGUE<small><sup>*</sup></small></td>
+			<td>CLERIC_INSECT_PLAGUE<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>121</td>
+			<td>EXTRAPROFICIENCY7</td>
+			<td>CLERIC_BLADE_BARRIER<small><sup>*</sup></small></td>
+			<td>CLERIC_BLADE_BARRIER<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>122</td>
+			<td>EXTRAPROFICIENCY8</td>
+			<td>CLERIC_PHYSICAL_MIRROR<small><sup>*</sup></small></td>
+			<td>CLERIC_PHYSICAL_MIRROR<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>123</td>
+			<td>EXTRAPROFICIENCY9</td>
+			<td>CLERIC_SHIELD_OF_THE_ARCHONS<small><sup>*</sup></small></td>
+			<td>CLERIC_SHIELD_OF_THE_ARCHONS<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>124</td>
+			<td>EXTRAPROFICIENCY10</td>
+			<td>CLERIC_REGENERATION<small><sup>*</sup></small></td>
+			<td>CLERIC_REGENERATION<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>125</td>
+			<td>EXTRAPROFICIENCY11</td>
+			<td>WIZARD_FIRE_SHIELD<small><sup>*</sup></small></td>
+			<td>WIZARD_FIRE_SHIELD<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>126</td>
+			<td>EXTRAPROFICIENCY12</td>
+			<td>WIZARD_PROTECTION_FROM_MAGIC_ENERGY<small><sup>*</sup></small></td>
+			<td>WIZARD_PROTECTION_FROM_MAGIC_ENERGY<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>127</td>
+			<td>EXTRAPROFICIENCY13</td>
+			<td>WIZARD_MISLEAD<small><sup>*</sup></small></td>
+			<td>WIZARD_MISLEAD<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>128</td>
+			<td>EXTRAPROFICIENCY14</td>
+			<td>WIZARD_PROTECTION_FROM_MAGIC_WEAPONS<small><sup>*</sup></small></td>
+			<td>WIZARD_PROTECTION_FROM_MAGIC_WEAPONS<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>129</td>
+			<td>EXTRAPROFICIENCY15</td>
+			<td>WIZARD_SPELL_TURNING<small><sup>*</sup></small></td>
+			<td>WIZARD_SPELL_TURNING<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>130</td>
+			<td>EXTRAPROFICIENCY16</td>
+			<td>WIZARD_PROTECTION_FROM_THE_ELEMENTS<small><sup>*</sup></small></td>
+			<td>WIZARD_PROTECTION_FROM_THE_ELEMENTS<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>131</td>
+			<td>EXTRAPROFICIENCY17</td>
+			<td>CLERIC_FREE_ACTION<small><sup>*</sup></small></td>
+			<td>CLERIC_FREE_ACTION<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>132</td>
+			<td>EXTRAPROFICIENCY18</td>
+			<td>WIZARD_KHELBENS_WARDING_WHIP<small><sup>*</sup></small></td>
+			<td>WIZARD_KHELBENS_WARDING_WHIP<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>133</td>
+			<td>EXTRAPROFICIENCY19</td>
+			<td>CLERIC_DEFENSIVE_HARMONY<small><sup>*</sup></small></td>
+			<td>CLERIC_DEFENSIVE_HARMONY<small><sup>*</sup></small></td>
+		</tr>
+		<tr>
+			<td>134</td>
+			<td>EXTRAPROFICIENCY20</td>
+			<td>EXTRAPROFICIENCY20</td>
+			<td>EXTRAPROFICIENCY20</td>
+		</tr>
+	</tbody>
+</table>
 
 
 
 <div class="note info">
   <div>
-    <strong>Note:</strong> 
-The Proficiency Modifier effect cannot increment or decrement proficiency points, it can only SET them.
-
-This is however not true for EEs, where param#2 (‘Type’) is split into two word subfields. By setting the second (high) one to 1 (INCREMENT), it’s possible to increment/decrement the proficiency points of the targeted creature(s) by the value specified by the ‘Amount’ parameter.
+    <strong>Info:</strong> 
+<ul>
+	<li>Every <code>STAT</code> from <code>89</code> to <code>134</code> is a weapon proficiency, even the weapon styles.</li>
+	<li>
+		Every one of those <code>STAT</code>s can be set as a weapon's proficiency and it will use that stat's value for proficiency bonuses.
+		<ul>
+			<li>This includes <code>STAT</code>s like <code>CLERIC_ARMOR_OF_FAITH</code>, even though they're used for an alternative purpose.</li>
+		</ul>
+	</li>
+	<li>The only thing stopping them from showing up during chargen/level-up proficiency selection is their entries (or lack there of) in <a href="../files/2da/2da_bgee/weapprof.htm">WEAPPROF.2DA</a>. A <code>NAME_REF</code> column of <code>4294967296 (-1)</code> is hardcoded to hide the proficiency during chargen/level-up. Aside from that it just needs a non-zero maximum for the current class/kit.</li>
+</ul>
 
   </div>
 </div>
 
-
-Known values for 'Type' are:
-<br/>Axe                          92
-<br/>Bastard Sword                89
-<br/>Blackjack                    108
-<br/>Club                         115
-<br/>Crossbow                     103
-<br/>Dagger                       96
-<br/>Darts                        106
-<br/>Flail/Morningstar            100
-<br/>Gun                          109
-<br/>Halberd                      99
-<br/>Katana                       94
-<br/>Long Bow                     104
-<br/>Long Sword                   90
-<br/>Mace                         101
-<br/>Martial Arts                 110
-<br/>Quarter Staff                102
-<br/>Scimitar/Wakizashi/Ninja-To  95
-<br/>Short Bow                    105
-<br/>Short Sword                  91
-<br/>Single Weapon Skill          113
-<br/>Sling                        107
-<br/>Spear                        98
-<br/>Sword and Shield Skill       112
-<br/>Two-Handed Sword             93
-<br/>Two-Handed Weapon Skill      111
-<br/>Two Weapon Skill             114
-<br/>War Hammer                   97
-<br/>Extra Proficiency 2(Unused)  116
-<br/>Extra Proficiency 3(Unused)  117
-<br/>Extra Proficiency 4(Unused)  118
-<br/>Extra Proficiency 5(Unused)  119
-<br/>Extra Proficiency 6(Unused)  120
-<br/>Extra Proficiency 7(Unused)  121
-<br/>Extra Proficiency 8(Unused)  122
-<br/>Extra Proficiency 9(Unused)  123
-<br/>Extra Proficiency 10(Unused) 124
-<br/>Extra Proficiency 11(Unused) 125
-<br/>Extra Proficiency 12(Unused) 126
-<br/>Extra Proficiency 13(Unused) 127
-<br/>Extra Proficiency 14(Unused) 128
-<br/>Extra Proficiency 15(Unused) 129
-<br/>Extra Proficiency 16(Unused) 130
-<br/>Extra Proficiency 17(Unused) 131
-<br/>Extra Proficiency 18(Unused) 132
-<br/>Extra Proficiency 19(Unused) 133
-<br/>Extra Proficiency 20(Unused) 134
 
 
 
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-In EE games, ‘Type’ 99 (Halberd) currently cannot use the “Increment” option without crashing (bug).
+In EE games, <code>Type 99 – PROFICIENCYHALBERD</code> currently cannot use the <code>Increment</code> option without crashing (bug).
 
   </div>
 </div>
@@ -18404,7 +17541,20 @@ In EE games, ‘Type’ 99 (Halberd) currently cannot use the “Increment” op
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-In EE games, the 'Special' field must currently be "zero", due to an incomplete (bugged) feature added by Beamdog (it wasn't used before anyway, so there was no point in it not being zero).
+In EE games, the <code>Special</code> field must currently be <code>0</code>, due to an incomplete (bugged) feature added by Beamdog (it wasn't used before anyway, so there was no point in it not being <code>0</code>).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The Proficiency Modifier effect cannot increment or decrement proficiency points, it can only SET them.
+<br /><br />
+This is however not true for EEs, where <code>param#2 ('Type')</code> is split into two word subfields. By setting the second (high) one to <code>1 (Increment)</code>, it’s possible to increment/decrement the proficiency points of the targeted creature(s) by the value specified by the <code>Amount</code> parameter.
 
   </div>
 </div>
@@ -18635,25 +17785,94 @@ Some animations are immune to this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates an image of the caster, in the style specified by the 'Type' field. The type can be accessed via CheckStat, stat ID: PUPPETTYPE.
+		<div class="descriptiondata"> Creates an image (duplicate) of the caster, in the style specified by the <code>Type</code> field.
+<br/>In particular:
+<ul>
+	<li>The Image inherits any/only effects attached to the creature using <code>Timing Mode 9</code>.</li>
+	<li>The Image has duplicates of all of the targeted creature(s) items that are flagged with <code><a href="../files/ids/bgee/itemflag.htm">BIT2|DROPPABLE</a></code> and not flagged with <code><a href="../files/ids/bgee/invitem.htm">BIT3|NONDROPABLE</a></code>.</li>
+	<li>All items on the Image are flagged with <code><a href="../files/ids/bgee/invitem.htm">BIT3|NONDROPABLE</a></code>, so an image created by another image will have no items.</li>
+	<li>If the targeted creature(s) is not a party memeber, saving is disabled so long as the image exists.</li>
+</ul>
 
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>
+		0 &longrightarrow; Clone – Image created with the targeted creature(s) Current Hit Points and the following (in order)
+		<ul>
+			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
+			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
+			<li>The creature is not immediately controllable, but will become controllable (if allied) after saving &amp; reloading.</li>
+		</ul>
+	</li>
 
+	<li>
+		1 &longrightarrow; Mislead – Image created with the targeted creature(s) Maximum Hit Points and the following (in order)
+		<ul>
+			<li>Allegiance set to <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, depending on target allegiance.</li>
+			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
+			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
+			<li>
+				If the clone's allegiance is not <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <code>Class Script</code> is set to <code>'Original Class Script' + 'M'</code>. The script has to already exist (as a separate <a href="../file_formats/ie_formats/bcs.htm">BCS</a> file).
+				<ul>
+					<li>And the <code>Class Script</code> is only set if it wasn't originally null/empty – it will never be just <code>"M"</code>.</li>
+					<li>If <code>Original Class Script</code> is 8 characters long, the last letter will be replaced with <code>"M"</code>.</li>
+					<li>
+						If you look in BG2EE, you will see these files:
+						<ul>
+							<li><code>MAGE18A.BCS -> MAGE18AM.BCS</code></li>
+							<li><code>MAGE18B.BCS -> MAGE18BM.BCS</code></li>
+							<li><code>MAGE18C.BCS -> MAGE18CM.BCS</code></li>
+							<li><code>MAGE18D.BCS -> MAGE18DM.BCS</code></li>
+						</ul>
+						The caster uses the first one, their Mislead clone uses the second one.
+					</li>
+				</ul>
+			</li>
+			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
+			<li><code><a href="#op237">Opcode #237</a>*1</code>: Puppet Stats, Mislead</li>
+			<li><code><a href="#op145">Opcode #145</a>*0</code>: Disable Spell Casting, Wizard</li>
+			<li><code><a href="#op145">Opcode #145</a>*1</code>: Disable Spell Casting, Priest</li>
+			<li><code><a href="#op145">Opcode #145</a>*2</code>: Disable Spell Casting, Innate</li>
+			<li><code><a href="#op144">Opcode #144</a>*8</code>: Disable Button (Use Item)</li>
+			<li><code><a href="#op144">Opcode #144</a>*9</code>: Disable Button (Quick Item 1)</li>
+			<li><code><a href="#op144">Opcode #144</a>*11</code>: Disable Button (Quick Item 2)</li>
+			<li><code><a href="#op144">Opcode #144</a>*12</code>: Disable Button (Quick Item 3)</li>
+			<li><code><a href="#op144">Opcode #144</a>*8</code>: Disable Button (Special Ability)</li>
+			<li>Applies <code>"MISLEAD.SPL"</code></li>
+		</ul>
+	</li>
 
-<div class="note info">
-  <div>
-    <strong>Note:</strong> 
-When creating an image for use as in Mislead, the image will have a script assigned, with scriptname of ‘CASTERSCRIPTM’ where CASTERERSCRIPT is the death variable of the casting creature.
+	<li>
+		2 &longrightarrow; Project Image – Image is created with the targeted creature(s) Current Hit Points and the following (in order)
+		<ul>
+			<li>Allegiance set to <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, depending on target allegiance.</li>
+			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
+			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
+			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
+			<li><code><a href="#op237">Opcode #237</a>*2</code>: Puppet Stats, Project Image</li>
+			<li>Applies <code>"PROJIMAG.SPL"</code></li>
+		</ul>
+	</li>
 
-  </div>
-</div>
+	<li>
+		3 &longrightarrow; Simulacrum – Image is created with the targeted creature(s) Current Hit Points and the following (in order)
+		<ul>
+			<li>Allegiance set to <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, depending on target allegiance.</li>
+			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
+			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
+			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
+			<li><a href="#op216">Opcode #216</a> (amount should be 60&percnt; of character level, but doesn't compute dual-classes correctly).</li>
+			<li><code><a href="#op237">Opcode #237</a>*3</code>: Puppet Stats, Simulacrum</li>
+			<li>Applies <code>"SIMULACR.SPL"</code></li>
+		</ul>
+	</li>
 
-
-<br/>Known values for 'Type' are:
-<br/>0   Talkative, uncontrollable
-<br/>1   Can not attack, can not cast spells (Mislead.spl is cast on the creature)
-<br/>2   Can attack, can not cast spells (ProjImag.spl is cast on the creature)
-<br/>3   Can attack, can cast spells (Simulacr.spl is cast on the creature)
-<br/>4+  As 0
+	<li>4&plus; &longrightarrow; As <code>0</code></li>
+</ul>
 
 
 
@@ -18699,19 +17918,64 @@ Keep in mind that if the caster is equipped with an irremovable item (e.g., Edwi
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Master ID</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">ID Number</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Image Type</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect stores information in a Projected Image/Simulacrum. The type can be accessed via CheckStat, stat PUPPETMASTERTYPE. Applying this effect to a non-image creature will set that creature to behave as an image (e.g. image casting, invisibility and talking behaviour).
-<br/>Known values for 'ID Number' are:
-<br/>1  Mislead
-<br/>2  Project Image
-<br/>3  Simulacrum
-<br/>The 'Master ID' field stores a value (0-5) representing the owning party member.
+		<div class="descriptiondata"> This effect stores information for images created by <a href="#op236">opcode #236</a>.
+<br/>Known values for <code>Master ID</code> are:
+<ul>
+	<li>-1 &longrightarrow; Not Party Member (Disables saving while in effect)</li>
+	<li>0 &longrightarrow; Player1</li>
+	<li>1 &longrightarrow; Player2</li>
+	<li>2 &longrightarrow; Player3</li>
+	<li>3 &longrightarrow; Player4</li>
+	<li>4 &longrightarrow; Player5</li>
+	<li>5 &longrightarrow; Player6</li>
+</ul>
+
+Known values for <code>Image Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Clone</li>
+
+	<li>
+		1 &longrightarrow; Mislead
+		<ul>
+			<li>Maintains <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> on <code>Master ID</code>. This state is constantly reapplied whenever removed or terminated.</li>
+		</ul>
+	</li>
+
+	<li>
+		2 &longrightarrow; Project Image
+		<ul>
+			<li>Maintains <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> on <code>Master ID</code>. This state is constantly reapplied whenever removed or terminated.</li>
+			<li>If <code>Master ID</code> triggers <code><a href="../scripting/triggers/bgeetriggers.htm#0x0020">HitBy([ANYONE],0)</a></code>, this creature is moved to area <code>"NO_AREA.ARE"</code>. This will delete non-global creatures from the game, unless such an area has been added to the game.</li>
+		</ul>
+	</li>
+
+	<li>3 &longrightarrow; Simulacrum</li>
+</ul>
+<br/>
+
+Modifies <a href="../files/ids/bgee/stats.htm#138">PUPPETMASTERID</a> to the <code>Object ID</code> of a projected image's Master. <code>Object ID</code> is the 4 byte long number stored at offset <code>0x27c</code> of the <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file, and can change.
+<br/><br/>
+
+Modifies <a href="../files/ids/bgee/stats.htm#139">PUPPETMASTERTYPE</a>, to a value of <code>Parameter2</code>, on the creature specified by <a href="../files/ids/bgee/stats.htm#138">PUPPETMASTERID</a>:
+<ul>
+	<li>Stores the image type (Mislead, Projection, Simulacrum) of a creature's most recently created clone.</li>
+</ul>
+<br/><br/>
+
+Modifies <a href="../files/ids/bgee/stats.htm#140">PUPPETTYPE</a>, to a value of <code>Image Type</code>:
+<ul>
+	<li>Stores the image type (Mislead, Projection, Simulacrum) of a such a creature.</li>
+</ul>
+<br/><br/>
+
+<a href="../files/ids/bgee/stats.htm#141">PUPPETID</a> is likewise set on the <code>Master ID</code>, to the image's <code>Object ID</code> (likely whichever image is most recent, if they have multiple images).
  </div>
 		<hr />
 
@@ -18852,1309 +18116,7 @@ Keep in mind that if the caster is equipped with an irremovable item (e.g., Edwi
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Removes the icon specified by the <code>Icon</code> field.
-<br/><br/>
-
-<table border="1" width="98%">
-	<colgroup>
-		<col width="5%" />
-		<col width="12%" />
-		<col width="*" />
-	</colgroup>
-	<thead>
-		<tr>
-			<th><code>Icon</code> value</th>
-			<th>BG2</th>
-			<th>BG(2):EE</th>
-			<th>IWD:EE</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>0</td>
-			<td>Charm</td>
-			<td>Charm</td>
-			<td>Charm</td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>Dire Charm</td>
-			<td>Dire Charm</td>
-			<td>Dire Charm</td>
-		</tr>
-		<tr>
-			<td>2</td>
-			<td>Rigid Thinking</td>
-			<td>Rigid Thinking</td>
-			<td>Rigid Thinking</td>
-		</tr>
-		<tr>
-			<td>3</td>
-			<td>Confused</td>
-			<td>Confused</td>
-			<td>Confused</td>
-		</tr>
-		<tr>
-			<td>4</td>
-			<td>Berserk</td>
-			<td>Berserk</td>
-			<td>Berserk</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>Intoxicated</td>
-			<td>Intoxicated</td>
-			<td>Intoxicated</td>
-		</tr>
-		<tr>
-			<td>6</td>
-			<td>Poisoned</td>
-			<td>Poisoned</td>
-			<td>Poisoned</td>
-		</tr>
-		<tr>
-			<td>7</td>
-			<td>Diseased</td>
-			<td>Diseased</td>
-			<td>Diseased</td>
-		</tr>
-		<tr>
-			<td>8</td>
-			<td>Blind</td>
-			<td>Blind</td>
-			<td>Blind</td>
-		</tr>
-		<tr>
-			<td>9</td>
-			<td>Protection From Evil</td>
-			<td>Protection From Evil</td>
-			<td>Protection From Evil</td>
-		</tr>
-		<tr>
-			<td>10</td>
-			<td>Protection From Petrification</td>
-			<td>Protection From Petrification</td>
-			<td>Protection From Petrification</td>
-		</tr>
-		<tr>
-			<td>11</td>
-			<td>Protection From Missiles</td>
-			<td>Protection From Missiles</td>
-			<td>Protection From Missiles</td>
-		</tr>
-		<tr>
-			<td>12</td>
-			<td>Magic Armor</td>
-			<td>Magic Armor</td>
-			<td>Magic Armor</td>
-		</tr>
-		<tr>
-			<td>13</td>
-			<td>Held</td>
-			<td>Held</td>
-			<td>Held</td>
-		</tr>
-		<tr>
-			<td>14</td>
-			<td>Sleep</td>
-			<td>Sleep</td>
-			<td>Sleep</td>
-		</tr>
-		<tr>
-			<td>15</td>
-			<td>Shielded</td>
-			<td>Shielded</td>
-			<td>Shielded</td>
-		</tr>
-		<tr>
-			<td>16</td>
-			<td>Protection From Fire</td>
-			<td>Protection From Fire</td>
-			<td>Protection From Fire</td>
-		</tr>
-		<tr>
-			<td>17</td>
-			<td>Blessed</td>
-			<td>Blessed</td>
-			<td>Blessed</td>
-		</tr>
-		<tr>
-			<td>18</td>
-			<td>Chant</td>
-			<td>Chant</td>
-			<td>Chant</td>
-		</tr>
-		<tr>
-			<td>19</td>
-			<td>Free Action</td>
-			<td>Free Action</td>
-			<td>Free Action</td>
-		</tr>
-		<tr>
-			<td>20</td>
-			<td>Barkskin</td>
-			<td>Barkskin</td>
-			<td>Barkskin</td>
-		</tr>
-		<tr>
-			<td>21</td>
-			<td>Strength</td>
-			<td>Strength</td>
-			<td>Strength</td>
-		</tr>
-		<tr>
-			<td>22</td>
-			<td>Heroism</td>
-			<td>Heroism</td>
-			<td>Heroism</td>
-		</tr>
-		<tr>
-			<td>23</td>
-			<td>Invulnerable</td>
-			<td>Invulnerable</td>
-			<td>Invulnerable</td>
-		</tr>
-		<tr>
-			<td>24</td>
-			<td>Protection From Acid</td>
-			<td>Protection From Acid</td>
-			<td>Protection From Acid</td>
-		</tr>
-		<tr>
-			<td>25</td>
-			<td>Protection From Cold</td>
-			<td>Protection From Cold</td>
-			<td>Protection From Cold</td>
-		</tr>
-		<tr>
-			<td>26</td>
-			<td>Resist Fire/Cold</td>
-			<td>Resist Fire/Cold</td>
-			<td>Resist Fire/Cold</td>
-		</tr>
-		<tr>
-			<td>27</td>
-			<td>Protection From Electricity</td>
-			<td>Protection From Electricity</td>
-			<td>Protection From Electricity</td>
-		</tr>
-		<tr>
-			<td>28</td>
-			<td>Protection From Magic</td>
-			<td>Protection From Magic</td>
-			<td>Protection From Magic</td>
-		</tr>
-		<tr>
-			<td>29</td>
-			<td>Protection From Undead</td>
-			<td>Protection From Undead</td>
-			<td>Protection From Undead</td>
-		</tr>
-		<tr>
-			<td>30</td>
-			<td>Protection From Poison</td>
-			<td>Protection From Poison</td>
-			<td>Protection From Poison</td>
-		</tr>
-		<tr>
-			<td>31</td>
-			<td>Non-detectable</td>
-			<td>Non-detectable</td>
-			<td>Non-detectable</td>
-		</tr>
-		<tr>
-			<td>32</td>
-			<td>Good Luck</td>
-			<td>Good Luck</td>
-			<td>Good Luck</td>
-		</tr>
-		<tr>
-			<td>33</td>
-			<td>Bad Luck</td>
-			<td>Bad Luck</td>
-			<td>Bad Luck</td>
-		</tr>
-		<tr>
-			<td>34</td>
-			<td>Silenced</td>
-			<td>Silenced</td>
-			<td>Silenced</td>
-		</tr>
-		<tr>
-			<td>35</td>
-			<td>Cursed</td>
-			<td>Cursed</td>
-			<td>Cursed</td>
-		</tr>
-		<tr>
-			<td>36</td>
-			<td>Panic</td>
-			<td>Panic</td>
-			<td>Panic</td>
-		</tr>
-		<tr>
-			<td>37</td>
-			<td>Resist Fear</td>
-			<td>Resist Fear</td>
-			<td>Resist Fear</td>
-		</tr>
-		<tr>
-			<td>38</td>
-			<td>Haste</td>
-			<td>Haste</td>
-			<td>Haste</td>
-		</tr>
-		<tr>
-			<td>39</td>
-			<td>Fatigue</td>
-			<td>Fatigue</td>
-			<td>Fatigue</td>
-		</tr>
-		<tr>
-			<td>40</td>
-			<td>Bard Song</td>
-			<td>Bard Song</td>
-			<td>Bard Song</td>
-		</tr>
-		<tr>
-			<td>41</td>
-			<td>Slow</td>
-			<td>Slow</td>
-			<td>Slow</td>
-		</tr>
-		<tr>
-			<td>42</td>
-			<td>Regenerate</td>
-			<td>Regenerate</td>
-			<td>Regenerate</td>
-		</tr>
-		<tr>
-			<td>43</td>
-			<td>Domination</td>
-			<td>Domination</td>
-			<td>Domination</td>
-		</tr>
-		<tr>
-			<td>44</td>
-			<td>Hopelessness</td>
-			<td>Hopelessness</td>
-			<td>Hopelessness</td>
-		</tr>
-		<tr>
-			<td>45</td>
-			<td>Greater Malison</td>
-			<td>Greater Malison</td>
-			<td>Greater Malison</td>
-		</tr>
-		<tr>
-			<td>46</td>
-			<td>Spirit Armor</td>
-			<td>Spirit Armor</td>
-			<td>Spirit Armor</td>
-		</tr>
-		<tr>
-			<td>47</td>
-			<td>Chaos</td>
-			<td>Chaos</td>
-			<td>Chaos</td>
-		</tr>
-		<tr>
-			<td>48</td>
-			<td>Feebleminded</td>
-			<td>Feebleminded</td>
-			<td>Feebleminded</td>
-		</tr>
-		<tr>
-			<td>49</td>
-			<td>Defensive Harmony</td>
-			<td>Defensive Harmony</td>
-			<td>Defensive Harmony</td>
-		</tr>
-		<tr>
-			<td>50</td>
-			<td>Champion's Strength</td>
-			<td>Champion's Strength</td>
-			<td>Champion's Strength</td>
-		</tr>
-		<tr>
-			<td>51</td>
-			<td>Dying</td>
-			<td>Dying</td>
-			<td>Dying</td>
-		</tr>
-		<tr>
-			<td>52</td>
-			<td>Mind Shield</td>
-			<td>Mind Shield</td>
-			<td>Mind Shield</td>
-		</tr>
-		<tr>
-			<td>53</td>
-			<td>Energy Drain</td>
-			<td>Energy Drain</td>
-			<td>Energy Drain</td>
-		</tr>
-		<tr>
-			<td>54</td>
-			<td>Polymorph Self</td>
-			<td>Polymorph Self</td>
-			<td>Polymorph Self</td>
-		</tr>
-		<tr>
-			<td>55</td>
-			<td>Stun</td>
-			<td>Stun</td>
-			<td>Stun</td>
-		</tr>
-		<tr>
-			<td>56</td>
-			<td>Regeneration</td>
-			<td>Regeneration</td>
-			<td>Regeneration</td>
-		</tr>
-		<tr>
-			<td>57</td>
-			<td>Perception</td>
-			<td>Perception</td>
-			<td>Perception</td>
-		</tr>
-		<tr>
-			<td>58</td>
-			<td>Master Thievery</td>
-			<td>Master Thievery</td>
-			<td>Master Thievery</td>
-		</tr>
-		<tr>
-			<td>59</td>
-			<td>Energy Drain</td>
-			<td>Energy Drain</td>
-			<td>Energy Drain</td>
-		</tr>
-		<tr>
-			<td>60</td>
-			<td>Holy Power</td>
-			<td>Holy Power</td>
-			<td>Holy Power</td>
-		</tr>
-		<tr>
-			<td>61</td>
-			<td>Cloak of Fear</td>
-			<td>Cloak of Fear</td>
-			<td>Cloak of Fear</td>
-		</tr>
-		<tr>
-			<td>62</td>
-			<td>Iron Skins</td>
-			<td>Iron Skins</td>
-			<td>Iron Skins</td>
-		</tr>
-		<tr>
-			<td>63</td>
-			<td>Magic Resistance</td>
-			<td>Magic Resistance</td>
-			<td>Magic Resistance</td>
-		</tr>
-		<tr>
-			<td>64</td>
-			<td>Righteous Magic</td>
-			<td>Righteous Magic</td>
-			<td>Righteous Magic</td>
-		</tr>
-		<tr>
-			<td>65</td>
-			<td>Spell Turning</td>
-			<td>Spell Turning</td>
-			<td>Spell Turning</td>
-		</tr>
-		<tr>
-			<td>66</td>
-			<td>Repulsing Undead</td>
-			<td>Repulsing Undead</td>
-			<td>Repulsing Undead</td>
-		</tr>
-		<tr>
-			<td>67</td>
-			<td>Spell Deflection</td>
-			<td>Spell Deflection</td>
-			<td>Spell Deflection</td>
-		</tr>
-		<tr>
-			<td>68</td>
-			<td>Fireshield Red</td>
-			<td>Fireshield Red</td>
-			<td>Fireshield Red</td>
-		</tr>
-		<tr>
-			<td>69</td>
-			<td>Fireshield Blue</td>
-			<td>Fireshield Blue</td>
-			<td>Fireshield Blue</td>
-		</tr>
-		<tr>
-			<td>70</td>
-			<td>Protection from Normal Weapon</td>
-			<td>Protection from Normal Weapon</td>
-			<td>Protection from Normal Weapon</td>
-		</tr>
-		<tr>
-			<td>71</td>
-			<td>Protection from Magic Weapon</td>
-			<td>Protection from Magic Weapon</td>
-			<td>Protection from Magic Weapon</td>
-		</tr>
-		<tr>
-			<td>72</td>
-			<td>Tenser's Transformation</td>
-			<td>Tenser's Transformation</td>
-			<td>Tenser's Transformation</td>
-		</tr>
-		<tr>
-			<td>73</td>
-			<td>Protection from Magical Energy</td>
-			<td>Spell Shield</td>
-			<td>Spell Shield</td>
-		</tr>
-		<tr>
-			<td>74</td>
-			<td>Mislead</td>
-			<td>Mislead</td>
-			<td>Mislead</td>
-		</tr>
-		<tr>
-			<td>75</td>
-			<td>Contingency Active</td>
-			<td>Contingency Active</td>
-			<td>Contingency Active</td>
-		</tr>
-		<tr>
-			<td>76</td>
-			<td>Protected from the Elements</td>
-			<td>Protected from the Elements</td>
-			<td>Protected from the Elements</td>
-		</tr>
-		<tr>
-			<td>77</td>
-			<td>Projected Image</td>
-			<td>Projected Image</td>
-			<td>Projected Image</td>
-		</tr>
-		<tr>
-			<td>78</td>
-			<td>Maze</td>
-			<td>Maze</td>
-			<td>Maze</td>
-		</tr>
-		<tr>
-			<td>79</td>
-			<td>Imprisonment</td>
-			<td>Imprisonment</td>
-			<td>Imprisonment</td>
-		</tr>
-		<tr>
-			<td>80</td>
-			<td>Stoneskin</td>
-			<td>Stoneskin</td>
-			<td>Stoneskin</td>
-		</tr>
-		<tr>
-			<td>81</td>
-			<td>KAI</td>
-			<td>KAI</td>
-			<td>KAI</td>
-		</tr>
-		<tr>
-			<td>82</td>
-			<td>Called Shot</td>
-			<td>Called Shot</td>
-			<td>Called Shot</td>
-		</tr>
-		<tr>
-			<td>83</td>
-			<td>Spell Failure</td>
-			<td>Spell Failure</td>
-			<td>Spell Failure</td>
-		</tr>
-		<tr>
-			<td>84</td>
-			<td>Offensive Spin</td>
-			<td>Offensive Spin</td>
-			<td>Offensive Spin</td>
-		</tr>
-		<tr>
-			<td>85</td>
-			<td>Defensive Spin</td>
-			<td>Defensive Spin</td>
-			<td>Defensive Spin</td>
-		</tr>
-		<tr>
-			<td>86</td>
-			<td>Intelligence drained by mind flayer</td>
-			<td>Intelligence drained by mind flayer</td>
-			<td>Intelligence drained by mind flayer</td>
-		</tr>
-		<tr>
-			<td>87</td>
-			<td>Regenerating</td>
-			<td>Regenerating</td>
-			<td>Regenerating</td>
-		</tr>
-		<tr>
-			<td>88</td>
-			<td>In Dialog</td>
-			<td>In Dialog</td>
-			<td>In Dialog</td>
-		</tr>
-		<tr>
-			<td>89</td>
-			<td>In Store</td>
-			<td>In Store</td>
-			<td>In Store</td>
-		</tr>
-		<tr>
-			<td>90</td>
-			<td>Negative Plane Protection</td>
-			<td>Negative Plane Protection</td>
-			<td>Negative Plane Protection</td>
-		</tr>
-		<tr>
-			<td>91</td>
-			<td>Ability Score Drained</td>
-			<td>Ability Score Drained</td>
-			<td>Ability Score Drained</td>
-		</tr>
-		<tr>
-			<td>92</td>
-			<td>Spell Sequencer Active</td>
-			<td>Spell Sequencer Active</td>
-			<td>Spell Sequencer Active</td>
-		</tr>
-		<tr>
-			<td>93</td>
-			<td>Protected from Energy</td>
-			<td>Protected from Energy</td>
-			<td>Protected from Energy</td>
-		</tr>
-		<tr>
-			<td>94</td>
-			<td>Magnetized</td>
-			<td>Magnetized</td>
-			<td>Magnetized</td>
-		</tr>
-		<tr>
-			<td>95</td>
-			<td>Able to Poison Weapons</td>
-			<td>Able to Poison Weapons</td>
-			<td>Able to Poison Weapons</td>
-		</tr>
-		<tr>
-			<td>96</td>
-			<td>Setting Trap</td>
-			<td>Setting Trap</td>
-			<td>Setting Trap</td>
-		</tr>
-		<tr>
-			<td>97</td>
-			<td>Glass Dust</td>
-			<td>Glass Dust</td>
-			<td>Glass Dust</td>
-		</tr>
-		<tr>
-			<td>98</td>
-			<td>Blade Barrier</td>
-			<td>Blade Barrier</td>
-			<td>Blade Barrier</td>
-		</tr>
-		<tr>
-			<td>99</td>
-			<td>Death Ward</td>
-			<td>Death Ward</td>
-			<td>Death Ward</td>
-		</tr>
-		<tr>
-			<td>100</td>
-			<td>Doom</td>
-			<td>Doom</td>
-			<td>Doom</td>
-		</tr>
-		<tr>
-			<td>101</td>
-			<td>Decaying</td>
-			<td>Decaying</td>
-			<td>Decaying</td>
-		</tr>
-		<tr>
-			<td>102</td>
-			<td>Acid</td>
-			<td>Acid</td>
-			<td>Acid</td>
-		</tr>
-		<tr>
-			<td>103</td>
-			<td>Vocalize</td>
-			<td>Vocalize</td>
-			<td>Vocalize</td>
-		</tr>
-		<tr>
-			<td>104</td>
-			<td>Mantle</td>
-			<td>Mantle</td>
-			<td>Mantle</td>
-		</tr>
-		<tr>
-			<td>105</td>
-			<td>Miscast Magic</td>
-			<td>Miscast Magic</td>
-			<td>Miscast Magic</td>
-		</tr>
-		<tr>
-			<td>106</td>
-			<td>Magic Resistance Lowered</td>
-			<td>Magic Resistance Lowered</td>
-			<td>Magic Resistance Lowered</td>
-		</tr>
-		<tr>
-			<td>107</td>
-			<td>Spell Immunity</td>
-			<td>Spell Immunity</td>
-			<td>Spell Immunity</td>
-		</tr>
-		<tr>
-			<td>108</td>
-			<td>True Seeing</td>
-			<td>True Seeing</td>
-			<td>True Seeing</td>
-		</tr>
-		<tr>
-			<td>109</td>
-			<td>Detecting Traps</td>
-			<td>Detecting Traps / Illusions</td>
-			<td>Detecting Traps</td>
-		</tr>
-		<tr>
-			<td>110</td>
-			<td>Improved Haste</td>
-			<td>Improved Haste</td>
-			<td>Improved Haste</td>
-		</tr>
-		<tr>
-			<td>111</td>
-			<td>Spell Trigger</td>
-			<td>Spell Trigger</td>
-			<td>Spell Trigger</td>
-		</tr>
-		<tr>
-			<td>112</td>
-			<td>Deaf</td>
-			<td>Deaf</td>
-			<td>Deaf</td>
-		</tr>
-		<tr>
-			<td>113</td>
-			<td>Enfeebled</td>
-			<td>Enfeebled</td>
-			<td>Enfeebled</td>
-		</tr>
-		<tr>
-			<td>114</td>
-			<td>Infravision</td>
-			<td>Infravision</td>
-			<td>Infravision</td>
-		</tr>
-		<tr>
-			<td>115</td>
-			<td>Friends</td>
-			<td>Friends</td>
-			<td>Friends</td>
-		</tr>
-		<tr>
-			<td>116</td>
-			<td>Shield of the Archons</td>
-			<td>Shield of the Archons</td>
-			<td>Shield of the Archons</td>
-		</tr>
-		<tr>
-			<td>117</td>
-			<td>Spell Trap</td>
-			<td>Spell Trap</td>
-			<td>Spell Trap</td>
-		</tr>
-		<tr>
-			<td>118</td>
-			<td>Absolute Immunity</td>
-			<td>Absolute Immunity</td>
-			<td>Absolute Immunity</td>
-		</tr>
-		<tr>
-			<td>119</td>
-			<td>Improved Mantle</td>
-			<td>Improved Mantle</td>
-			<td>Improved Mantle</td>
-		</tr>
-		<tr>
-			<td>120</td>
-			<td>Farsight</td>
-			<td>Farsight</td>
-			<td>Farsight</td>
-		</tr>
-		<tr>
-			<td>121</td>
-			<td>Globe of Invulnerability</td>
-			<td>Globe of Invulnerability</td>
-			<td>Globe of Invulnerability</td>
-		</tr>
-		<tr>
-			<td>122</td>
-			<td>Minor Globe Of Invulnerability</td>
-			<td>Minor Globe Of Invulnerability</td>
-			<td>Minor Globe Of Invulnerability</td>
-		</tr>
-		<tr>
-			<td>123</td>
-			<td>Spell Shield</td>
-			<td>Protected from Magical Energy</td>
-			<td>Protected from Magical Energy</td>
-		</tr>
-		<tr>
-			<td>124</td>
-			<td>Polymorphed</td>
-			<td>Polymorphed</td>
-			<td>Polymorphed</td>
-		</tr>
-		<tr>
-			<td>125</td>
-			<td>Otiluke's Resilient Sphere</td>
-			<td>Otiluke's Resilient Sphere</td>
-			<td>Otiluke's Resilient Sphere</td>
-		</tr>
-		<tr>
-			<td>126</td>
-			<td>Nauseated</td>
-			<td>Nauseated</td>
-			<td>Nauseated</td>
-		</tr>
-		<tr>
-			<td>127</td>
-			<td>Ghost Armor</td>
-			<td>Ghost Armor</td>
-			<td>Ghost Armor</td>
-		</tr>
-		<tr>
-			<td>128</td>
-			<td>Glitterdust</td>
-			<td>Glitterdust</td>
-			<td>Glitterdust</td>
-		</tr>
-		<tr>
-			<td>129</td>
-			<td>Webbed</td>
-			<td>Webbed</td>
-			<td>Webbed</td>
-		</tr>
-		<tr>
-			<td>130</td>
-			<td>Unconscious</td>
-			<td>Unconscious</td>
-			<td>Unconscious</td>
-		</tr>
-		<tr>
-			<td>131</td>
-			<td>Mental Combat</td>
-			<td>Mental Combat</td>
-			<td>Mental Combat</td>
-		</tr>
-		<tr>
-			<td>132</td>
-			<td>Physical Mirror</td>
-			<td>Physical Mirror</td>
-			<td>Physical Mirror</td>
-		</tr>
-		<tr>
-			<td>133</td>
-			<td>Repulse Undead</td>
-			<td>Repulse Undead</td>
-			<td>Repulse Undead</td>
-		</tr>
-		<tr>
-			<td>134</td>
-			<td>Chaotic Commands</td>
-			<td>Chaotic Commands</td>
-			<td>Chaotic Commands</td>
-		</tr>
-		<tr>
-			<td>135</td>
-			<td>Draw Upon Holy Might</td>
-			<td>Draw Upon Holy Might</td>
-			<td>Draw Upon Holy Might</td>
-		</tr>
-		<tr>
-			<td>136</td>
-			<td>Strength of One</td>
-			<td>Strength of One</td>
-			<td>Strength of One</td>
-		</tr>
-		<tr>
-			<td>137</td>
-			<td>Bleeding</td>
-			<td>Bleeding</td>
-			<td>Bleeding</td>
-		</tr>
-		<tr>
-			<td>138</td>
-			<td>Rage</td>
-			<td>Rage</td>
-			<td>Rage</td>
-		</tr>
-		<tr>
-			<td>139</td>
-			<td>Boon of Lathander</td>
-			<td>Boon of Lathander</td>
-			<td>Boon of Lathander</td>
-		</tr>
-		<tr>
-			<td>140</td>
-			<td>Storm Shield</td>
-			<td>Storm Shield</td>
-			<td>Storm Shield</td>
-		</tr>
-		<tr>
-			<td>141</td>
-			<td>Enraged</td>
-			<td>Enraged</td>
-			<td>Enraged</td>
-		</tr>
-		<tr>
-			<td>142</td>
-			<td>Stunning Blow</td>
-			<td>Stunning Blow</td>
-			<td>Stunning Blow</td>
-		</tr>
-		<tr>
-			<td>143</td>
-			<td>Quivering Palm</td>
-			<td>Quivering Palm</td>
-			<td>Quivering Palm</td>
-		</tr>
-		<tr>
-			<td>144</td>
-			<td>Entangled</td>
-			<td>Entangled</td>
-			<td>Entangled</td>
-		</tr>
-		<tr>
-			<td>145</td>
-			<td>Grease</td>
-			<td>Grease</td>
-			<td>Grease</td>
-		</tr>
-		<tr>
-			<td>146</td>
-			<td>Smite</td>
-			<td>Smite</td>
-			<td>Smite</td>
-		</tr>
-		<tr>
-			<td>147</td>
-			<td>Hardiness</td>
-			<td>Hardiness</td>
-			<td>Hardiness</td>
-		</tr>
-		<tr>
-			<td>148</td>
-			<td>Power Attack</td>
-			<td>Power Attack</td>
-			<td>Power Attack</td>
-		</tr>
-		<tr>
-			<td>149</td>
-			<td>Whirlwind Attack</td>
-			<td>Whirlwind Attack</td>
-			<td>Whirlwind Attack</td>
-		</tr>
-		<tr>
-			<td>150</td>
-			<td>Greater Whirlwind Attack</td>
-			<td>Greater Whirlwind Attack</td>
-			<td>Greater Whirlwind Attack</td>
-		</tr>
-		<tr>
-			<td>151</td>
-			<td>Magic Flute</td>
-			<td>Magic Flute</td>
-			<td>Chaos of Battle</td>
-		</tr>
-		<tr>
-			<td>152</td>
-			<td>Critical Strike</td>
-			<td>Critical Strike</td>
-			<td>Critical Strike</td>
-		</tr>
-		<tr>
-			<td>153</td>
-			<td>Greater Deathblow</td>
-			<td>Greater Deathblow</td>
-			<td>Greater Deathblow</td>
-		</tr>
-		<tr>
-			<td>154</td>
-			<td>Deathblow</td>
-			<td>Deathblow</td>
-			<td>Deathblow</td>
-		</tr>
-		<tr>
-			<td>155</td>
-			<td>Avoid Death</td>
-			<td>Avoid Death</td>
-			<td>Avoid Death</td>
-		</tr>
-		<tr>
-			<td>156</td>
-			<td>Assassination</td>
-			<td>Assassination</td>
-			<td>Assassination</td>
-		</tr>
-		<tr>
-			<td>157</td>
-			<td>Evasion</td>
-			<td>Evasion</td>
-			<td>Evasion</td>
-		</tr>
-		<tr>
-			<td>158</td>
-			<td>Greater Evasion</td>
-			<td>Greater Evasion</td>
-			<td>Greater Evasion</td>
-		</tr>
-		<tr>
-			<td>159</td>
-			<td>Improved Alacrity</td>
-			<td>Improved Alacrity</td>
-			<td>Improved Alacrity</td>
-		</tr>
-		<tr>
-			<td>160</td>
-			<td>Aura of Flaming Death</td>
-			<td>Aura of Flaming Death</td>
-			<td>Aura of Flaming Death</td>
-		</tr>
-		<tr>
-			<td>161</td>
-			<td>Globe of Blades</td>
-			<td>Globe of Blades</td>
-			<td>Globe of Blades</td>
-		</tr>
-		<tr>
-			<td>162</td>
-			<td>Improved Chaos Shield</td>
-			<td>Improved Chaos Shield</td>
-			<td>Improved Chaos Shield</td>
-		</tr>
-		<tr>
-			<td>163</td>
-			<td>Chaos Shield</td>
-			<td>Chaos Shield</td>
-			<td>Chaos Shield</td>
-		</tr>
-		<tr>
-			<td>164</td>
-			<td>Fire Elemental Transformation</td>
-			<td>Fire Elemental Transformation</td>
-			<td>Fire Elemental Transformation</td>
-		</tr>
-		<tr>
-			<td>165</td>
-			<td>Earth Elemental Transformation</td>
-			<td>Earth Elemental Transformation</td>
-			<td>Earth Elemental Transformation</td>
-		</tr>
-		<tr>
-			<td>166</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Mind Blank</td>
-		</tr>
-		<tr>
-			<td>167</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Aid</td>
-		</tr>
-		<tr>
-			<td>168</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Phased</td>
-		</tr>
-		<tr>
-			<td>169</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Pain</td>
-		</tr>
-		<tr>
-			<td>170</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Impervious Sanctity of Mind</td>
-		</tr>
-		<tr>
-			<td>171</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Petrified</td>
-		</tr>
-		<tr>
-			<td>172</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Iron Body</td>
-		</tr>
-		<tr>
-			<td>173</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Animal Rage</td>
-		</tr>
-		<tr>
-			<td>174</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Exaltation</td>
-		</tr>
-		<tr>
-			<td>175</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Recitation</td>
-		</tr>
-		<tr>
-			<td>176</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Blood Rage</td>
-		</tr>
-		<tr>
-			<td>177</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>The Ballad of Three Heroes</td>
-		</tr>
-		<tr>
-			<td>178</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>The Tale of Curran Strongheart</td>
-		</tr>
-		<tr>
-			<td>179</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Tymora's Melody</td>
-		</tr>
-		<tr>
-			<td>180</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>The Song of Kaudies</td>
-		</tr>
-		<tr>
-			<td>181</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>The Siren's Yearning</td>
-		</tr>
-		<tr>
-			<td>182</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>War Chant of Sith</td>
-		</tr>
-		<tr>
-			<td>183</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Prayer</td>
-		</tr>
-		<tr>
-			<td>184</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Righteous Wrath of the Faithful</td>
-		</tr>
-		<tr>
-			<td>185</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Cat's Grace</td>
-		</tr>
-		<tr>
-			<td>186</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Hope</td>
-		</tr>
-		<tr>
-			<td>187</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Courage</td>
-		</tr>
-		<tr>
-			<td>188</td>
-			<td>Unknown</td>
-			<td>Enchanted Weapon</td>
-			<td>Unknown</td>
-		</tr>
-		<tr>
-			<td>189</td>
-			<td>Unknown</td>
-			<td>Spirit Ward</td>
-			<td>Spirit Ward</td>
-		</tr>
-		<tr>
-			<td>190</td>
-			<td>Unknown</td>
-			<td>Ether Gate</td>
-			<td>Ether Gate</td>
-		</tr>
-		<tr>
-			<td>191</td>
-			<td>Unknown</td>
-			<td>Shamanic Dance</td>
-			<td>Shamanic Dance</td>
-		</tr>
-		<tr>
-			<td>192</td>
-			<td>Unknown</td>
-			<td>Chaos of Battle</td>
-			<td>Repulsion</td>
-		</tr>
-		<tr>
-			<td>193</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Increased Movement Rate</td>
-		</tr>
-		<tr>
-			<td>194</td>
-			<td>Unknown</td>
-			<td>Repulsion</td>
-			<td>Immunity: Abjuration</td>
-		</tr>
-		<tr>
-			<td>195</td>
-			<td>Unknown</td>
-			<td>Increased Movement Rate</td>
-			<td>Immunity: Conjuration</td>
-		</tr>
-		<tr>
-			<td>196</td>
-			<td>Unknown</td>
-			<td>Immunity: Abjuration</td>
-			<td>Immunity: Divination</td>
-		</tr>
-		<tr>
-			<td>197</td>
-			<td>Unknown</td>
-			<td>Immunity: Conjuration</td>
-			<td>Immunity: Enchantment</td>
-		</tr>
-		<tr>
-			<td>198</td>
-			<td>Unknown</td>
-			<td>Immunity: Divination</td>
-			<td>Immunity: Illusion</td>
-		</tr>
-		<tr>
-			<td>199</td>
-			<td>Unknown</td>
-			<td>Immunity: Enchantment</td>
-			<td>Immunity: Evocation</td>
-		</tr>
-		<tr>
-			<td>200</td>
-			<td>Unknown</td>
-			<td>Immunity: Illusion</td>
-			<td>Immunity: Necromancy</td>
-		</tr>
-		<tr>
-			<td>201</td>
-			<td>Unknown</td>
-			<td>Immunity: Evocation</td>
-			<td>Immunity: Alteration</td>
-		</tr>
-		<tr>
-			<td>202</td>
-			<td>Unknown</td>
-			<td>Immunity: Necromancy</td>
-			<td>Enchanted Weapon</td>
-		</tr>
-		<tr>
-			<td>203</td>
-			<td>Unknown</td>
-			<td>Immunity: Alteration</td>
-			<td>Static Charge</td>
-		</tr>
-		<tr>
-			<td>204</td>
-			<td>Unknown</td>
-			<td>Flaming Fists</td>
-			<td>Entropy Shield</td>
-		</tr>
-		<tr>
-			<td>205</td>
-			<td>Unknown</td>
-			<td>Frozen Fist</td>
-			<td>Shield of Lathander</td>
-		</tr>
-		<tr>
-			<td>206</td>
-			<td>Unknown</td>
-			<td>Armor of Faith</td>
-			<td>Greater Shield of Lathander</td>
-		</tr>
-		<tr>
-			<td>207</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Beltyn's Burning Blood</td>
-		</tr>
-		<tr>
-			<td>208</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Shroud of Flame</td>
-		</tr>
-		<tr>
-			<td>209</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Antimagic Shell</td>
-		</tr>
-		<tr>
-			<td>210</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Flaming Fists</td>
-		</tr>
-		<tr>
-			<td>211</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Frozen Fist</td>
-		</tr>
-		<tr>
-			<td>212</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Circle of Bones</td>
-		</tr>
-		<tr>
-			<td>213</td>
-			<td>Unknown</td>
-			<td>Unknown</td>
-			<td>Armor of Faith</td>
-		</tr>
-	</tbody>
-</table>
+<br/>Known values for <code>Icon</code> are: see <a href="#op142">opcode #142</a>.
 
 
 
@@ -20300,19 +18262,23 @@ In EE games, can also remove <a href="#op177">opcode #177</a>/<a href="#op283">o
 		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Item Type</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Number to Drain</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount to Drain</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unused</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Magical items matching the 'Item Type' value on the targeted creature(s) will have their charges drained by Number to Drain. Non-recharging items drained of all their charges are destroyed.
-<br/>Known values for 'Item Type' are:
-<br/>0 Magical items excluding weapons
-<br/>1 Magical items including weapons
-<br/>Charges are only drained from extended headers with of type magical (i.e. 3), for magical, displayable items. Items that do not that recharge are not destroyed. Items flagged as unsellable are not drained.
+		<div class="descriptiondata"> Items will have their charges drained by <code>Amount to Drain</code>.
+<br/>In particular:
+<ul>
+	<li>Only <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">item abilities</a> of <code>Type 3 – Magical</code> are drained.</li>
+	<li>Only items with flag <code><a href="../files/ids/bgee/itemcat.htm">BIT6|MAGICAL</a></code> can be drained.</li>
+	<li>Items flagged as <code><a href="../files/ids/bgee/itemcat.htm">BIT0|INDESTRUCTIBLE</a></code> are not drained.</li>
+	<li>Items with a <code>Maximum Stack Size</code> (located at offset <code>0x38</code>) greater than <code>1</code> are not drained.</li>
+	<li>Items drained of all charges behave as dictated by their first <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">ability</a> that is fully drained (the <code>when drained</code> field).</li>
+</ul>
  </div>
 		<hr />
 
@@ -20541,16 +18507,16 @@ At least in EEs, the only difference between opcodes <a href="#op3">#3</a> and #
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Sets the effect specified by the resource key as a melee effect.
+		<div class="descriptiondata"> Sets the effect specified by the <code>resource</code> key as a melee effect.
 <br/>The specified effect will be applied to the target of each successful melee attack.
-<br/>The resource key references a <a href="../file_formats/ie_formats/eff_v2.htm">.EFF</a> not a <a href="../file_formats/ie_formats/spl_v1.htm">.SPL</a>.
+<br/>The <code>resource</code> key references a <a href="../file_formats/ie_formats/eff_v2.htm">.EFF</a> not a <a href="../file_formats/ie_formats/spl_v1.htm">.SPL</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in EEs, setting parameter2 to 4 (i.e., BIT2) results in restricting this effect to fists only. If you leave it at 0, then all melee weapons are eligible (including fists).
+At least in EEs, setting <code>parameter2</code> to <code>4</code> (i.e., <code>BIT2</code>) results in restricting this effect to fists only. If you leave it at <code>0</code>, then all melee weapons are eligible (including fists).
 
   </div>
 </div>
@@ -20618,9 +18584,9 @@ This opcode applies its effect inbetween base weapon damage and the on-hit effec
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Sets the effect specified by the resource key as a ranged effect.
+		<div class="descriptiondata"> Sets the effect specified by the <code>resource</code> key as a ranged effect.
 <br/>The specified effect will be applied to the target of each successful ranged attack.
-<br/>The resource key references a <a href="../file_formats/ie_formats/eff_v2.htm">.EFF</a> not a <a href="../file_formats/ie_formats/spl_v1.htm">.SPL</a>.
+<br/>The <code>resource</code> key references a <a href="../file_formats/ie_formats/eff_v2.htm">.EFF</a> not a <a href="../file_formats/ie_formats/spl_v1.htm">.SPL</a>.
 
 
 
@@ -20673,14 +18639,16 @@ At least in EEs, this opcode applies its effect after both the base weapon damag
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the 'Damage Modifier' value to the damage caused by the targetted creature(s). The effect works as a minimum damage value, i.e. at least 'Damage Modifier' damage will always be caused (on a successful hit).
+		<div class="descriptiondata"> Applies the <code>Damage Modifier</code> value to the damage caused by the targetted creature(s). The effect works as a minimum damage value, i.e. at least <code>Damage Modifier</code> damage will always be caused (on a successful hit).
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#145">DAMAGELUCK</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-This opcode works in the same manner as luck (and stacks with it), except that it only affects base weapon damage. It can be positive or negative.
+This opcode works in the same manner as <a href="#op22">luck</a> (and stacks with it), except that it only affects base weapon damage. It can be positive or negative.
 
   </div>
 </div>
@@ -20851,7 +18819,7 @@ Feedback from this effect is only given when used by party members.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the set map marker effect.
-<br/>The String Reference parameter is a string reference to the dialog.tlk file that sets what the marker says when the marker is read. The Target of this effect should be set to Self to function correctly.
+<br/>The <code>String Reference</code> parameter is a string reference to the dialog.tlk file that sets what the marker says when the marker is read. The <code>Target</code> of this effect should be set to <code>Self</code> to function correctly.
 
 
 
@@ -22522,7 +20490,7 @@ At least in EEs, the final value is added to the inherint level-based bonus of t
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Modifies Scripting state to the given value. Scripting State range from <code>0</code> to <code>35</code>. The scripting state can be checked via scripts (see <a href="../files/ids/bgee/stats.htm">STATS.IDS</a>) subtract <code>156</code> from the stat value to get the scripting state.
+		<div class="descriptiondata"> Modifies <code>Scripting State</code> to the given value. <code>Scripting State</code> range from <code>0</code> to <code>35</code>. The scripting state can be checked via scripts (see <a href="../files/ids/bgee/stats.htm">STATS.IDS</a>) subtract <code>156</code> from the stat value to get the scripting state.
 <br/>
 
 
@@ -23394,7 +21362,7 @@ The effect modifies <a href="../files/ids/bgee/stats.htm#189">CHAOS_SHIELD</a>.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-It displays animation “SPTURNI2.BAM” (Spell Turning Disk).
+It displays animation <code>"SPTURNI2.BAM"</code> (Spell Turning Disk).
 
   </div>
 </div>
@@ -23506,6 +21474,8 @@ The <code>Stat Value</code> parameter can take any value. If you set it to <code
 </ul>
 
 <br/>(External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s) Known values for <code>Weapon Category</code> are defined in <a href="../files/ids/bgee/itemcat.htm">ITEMCAT.IDS</a>.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#146">CRITICALHITBONUS</a>.
 
 
 
@@ -24760,16 +22730,45 @@ The only meaningful timing modes for this opcode are: Instant/Limited(0) with 0 
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Target</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Projectile Index</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Shows the lighting effect specified by the 'Type' value. These effects are usually used for spell hits based on the spell school.
-<br/>If Target is non-zero then the effect will be played in the original target point (ignores spell target).
-<br/>Known values of type are listed in projectl.ids starting at offset 0x1000.
+		<div class="descriptiondata"> Shows the lighting effect specified by the <code>Projectile Index</code> value. These effects are usually used for spell hits based on the spell school.
+<br/>Functions similar to <a href="#op140">opcode #140</a>, with the <code>Use Projectile</code> option, except its <code>Projectile Index</code> is <code>4096 (0x1000)</code> less, instead of the usual <code>+1</code>. It can't display projectiles <code>0 – 4095</code>.
+
+<br/>Known values for <code>Target</code> are:
+<ul>
+	<li>0 &longrightarrow; Launch projectile at effect target (doesn't work in Area-Effect spells)</li>
+	<li>1 &longrightarrow; Affected targets launch projectile at ability target (<code>creature</code> or <code>location</code>). Use <code>Self</code> to generate just one projectile.</li>
+</ul>
+
+<code>Parameter2: Projectile Index (-4096)</code>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Like <a href="#op140">opcode #140</a>/<a href="#op141">opcode #141</a>, it doesn’t deliver any effects. Not affected by <a href="#op16">Haste</a>/<a href="#op40">Slow</a>.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It looks like the <code>Special</code> field is meant to override <code>Projectile Index</code>, using values straight from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> (without the <code>4096</code> offset), but it’s not actually implemented.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -25148,7 +23147,7 @@ About <code>Cynicism</code> option:
 <ul>
 	<li>Uses a random String Reference from between <code>24916 – 24940</code>.</li>
 	<li>Triggers at random intervals throughout its duration.</li>
-	<li>Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE</a>[255|CYNICISM_EQUIPPED] on the targeted creature(s).</li>
+	<li>Maintains <a href="../files/ids/bgee/splstate.htm#255">CYNICISM_EQUIPPED</a> on the targeted creature(s).</li>
 </ul>
 
 If used from an external effect (<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>), <code>Strref</code> is set to <code>0</code> and <code>Type</code> to <code>1</code>, the third parameter will
@@ -25642,11 +23641,11 @@ If the game option ‘3E Sneak Attacks’ is enabled, the targeted creature will
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Sets the Critical Hit effect of the targetted creature to the spell specified by the resource key.
+		<div class="descriptiondata"> Sets the Critical Hit effect of the targetted creature to the spell specified by the <code>resource</code> key.
 <br/>Known values for <code>Condition</code> are:
 <ul>
-	<li>0 &longrightarrow; Apply Critical Miss chance for both hands</li>
-	<li>1 &longrightarrow; Apply Critical Miss chance only for this weapon</li>
+	<li>0 &longrightarrow; Always (both hands)</li>
+	<li>1 &longrightarrow; By this weapon only</li>
 </ul>
 
 <br/>Known values for <code>Attack Type</code> are:
@@ -25795,7 +23794,8 @@ This effect is always instantaneous.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Known values for <code>IDS File</code> are:
+		<div class="descriptiondata"> Alters the targeted creature(s) Enchantment against the creature type specified by the <code>IDS Entry</code> field in the specified <code>IDS File</code>.
+<br/>Known values for <code>IDS File</code> are:
 <ul>
 	<li>2 &longrightarrow; <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
 	<li>3 &longrightarrow; <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
@@ -25807,10 +23807,13 @@ This effect is always instantaneous.
 	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a></li>
 </ul>
 
-<br/>Known values for 'Weapon Slot' are:
-<br/>0  All Weapons
-<br/>1  Melee Weapon only
-<br/>2  Ranged Weapon only
+<br/>When used in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s, known values for <code>Weapon Slot</code> are:
+<ul>
+	<li>0 &longrightarrow; Current weapon (the one to which this opcode is attached as an equipped effect)</li>
+	<li>1 &longrightarrow; Main hand weapon</li>
+	<li>2 &longrightarrow; Off-hand weapon</li>
+	<li>3 &longrightarrow; Both weapons</li>
+</ul>
 
 <br/>(External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s) Values for <code>Weapon Category</code> are taken from <a href="../files/ids/bgee/itemcat.htm">ITEMCAT.IDS</a>.
  </div>
@@ -25841,7 +23844,8 @@ This effect is always instantaneous.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Known values for <code>Type</code> are:
+		<div class="descriptiondata"> Gives the targeted creature(s) an Enchantment bonus to weapons as specified by the <code>Type</code> field. The <code>Enchantment Level</code> field is used if <code>Type</code> is set to <code>0</code>.
+Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Magical weapons (<code>Enchantment Level</code> and below)</li>
 	<li>1 &longrightarrow; Magical weapons (all)</li>
@@ -26319,29 +24323,33 @@ This effect is always instantaneous.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unused</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Use</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Current Weapon Only?</span><br />
 
 		
 			<span class="parameterheading">Parameter #3:</span> <span class="parameterdata">Weapon Category</span><br />
 		
 		
 		
-			<span class="parameterheading">Special:</span> <span class="parameterdata">Weapon Type</span><br />
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Attack Type</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the spell specified by the resource key when the target suffers a critical miss. The target of the critical miss effect is the attacker.
-<br/>Known values for 'Use' are:
-<br/>0 - Apply Critical Miss chance for both hands
-<br/>1 - Apply Critical Miss chance only for this weapon
-<br />
-<br/>Known values for 'Weapon Type' are:
-<br/>0  All Weapons
-<br/>1  Melee Weapon only
-<br/>2  Ranged Weapon only
-<br />
-<br/>Known values for 'Weapon Category' are: see <a href="#op301">opcode #301</a>
-<br/>
+		<div class="descriptiondata"> Applies the spell specified by the <code>resource</code> key when the target suffers a critical miss. The target of the critical miss effect is the attacker.
+<br/>Known values for <code>Current Weapon Only?</code> are:
+<ul>
+	<li>0 &longrightarrow; No</li>
+	<li>1 &longrightarrow; Yes</li>
+</ul>
+
+<br/>Known values for <code>Attack Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Any attack type</li>
+	<li>1 &longrightarrow; Melee attack only</li>
+	<li>2 &longrightarrow; Ranged attack only</li>
+	<li>3 &longrightarrow; Magical attack only</li>
+</ul>
+
+<br/>(External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s) Known values for <code>Weapon Category</code> are defined in <a href="../files/ids/bgee/itemcat.htm">ITEMCAT.IDS</a>.
 
 
 
@@ -26371,7 +24379,7 @@ This effect is not blocked from triggering by <a href="#op120">opcode #120</a> (
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Statistic Modifier</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Condition</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Current Weapon Only?</span><br />
 
 		
 			<span class="parameterheading">Parameter #3:</span> <span class="parameterdata">Weapon Category</span><br />
@@ -26383,10 +24391,10 @@ This effect is not blocked from triggering by <a href="#op120">opcode #120</a> (
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This effect increases the chance of suffering a Critical Miss. Critical Misses will occur on a roll (on a <code>1d20</code>) lower or equal to: <code>1 + 'Statistic Modifier'</code>.
-<br/>Known values for <code>Condition</code> are:
+<br/>Known values for <code>Current Weapon Only?</code> are:
 <ul>
-	<li>0 &longrightarrow; Apply Critical Miss chance for both hands</li>
-	<li>1 &longrightarrow; Apply Critical Miss chance only for this weapon</li>
+	<li>0 &longrightarrow; No</li>
+	<li>1 &longrightarrow; Yes</li>
 </ul>
 
 <br/>Known values for <code>Attack Type</code> are:

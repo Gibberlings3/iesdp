@@ -129,7 +129,7 @@ Known values for <code>Type</code> are:
 <br/>
 
 <p>
-Each modifier type to AC from this opcode is capped to the range [-20, 20]. Each AC type total is capped to the range [-32768,32767].
+Each modifier type to AC from this opcode is capped to the range <code>[-20,20]</code>. Each AC type total is capped to the range <code>[-32768,32767]</code>.
 </p>
 
 
@@ -150,7 +150,7 @@ IWD2 uses different parameters altogether.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With Timing Modes 1/4/7, alters creature's base stat, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, alters creature's base stat, leaving behind no removable effect.
 
   </div>
 </div>
@@ -166,42 +166,42 @@ With Timing Modes 1/4/7, alters creature's base stat, leaving behind no removabl
 		<code>Type=0</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC")</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC")</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=1</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#3">ACCRUSHINGMOD</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Crushing AC (CRE@0x4A)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Crushing AC (CRE@0x4A)</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=2</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#4">ACMISSILEMOD</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Missile AC (CRE@0x4C)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Missile AC (CRE@0x4C)</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=4</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#5">ACPIERCINGMOD</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Piercing AC (CRE@0x4E)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Piercing AC (CRE@0x4E)</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=8</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#6">ACSLASHINGMOD</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Slashing AC (CRE@0x50)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Slashing AC (CRE@0x50)</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=16</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
-			<li>With Timing Modes 1/4/7, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC"), still subject to "only if better/lower", checked against base value, not current effective value.</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC"), still subject to "only if better/lower", checked against base value, not current effective value.</li>
 		</ul>
 	</li>
 </ul>
@@ -439,7 +439,7 @@ At least in EEs, it can remove <a href="#op177">opcode #177</a> effects targetin
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Default/In Combat: only berserk while in combat.</li>
-	<li>1 &longrightarrow; Constant: always berserk, maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE</a> <code>33 – BERSERK_ALWAYS_ACTIVE</code> (only in EEs).</li>
+	<li>1 &longrightarrow; Constant: always berserk, maintains <a href="../files/ids/bgee/splstate.htm#33">BERSERK_ALWAYS_ACTIVE</a> (only in EEs).</li>
 	<li>2 &longrightarrow; Blood Rage: doesn't exist in EE's, values <code>2+</code> function the same as <code>0</code>.</li>
 </ul>
 
@@ -519,7 +519,7 @@ The second paragraph hasn’t been verified for PST and BG1 yet, but likely hold
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Used with timing modes 1/4/7 results in setting <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
+Used with <code>Timing Mode</code>s <code>1/4/7</code> results in setting <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
 
   </div>
 </div>
@@ -569,7 +569,7 @@ Used with timing modes 1/4/7 results in setting <a href="../files/ids/bgee/state
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -1667,19 +1667,24 @@ This effect will not work with a timing mode of Duration or Permanent. All other
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Lore = Lore + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Lore = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Lore = (Lore * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Lore = Lore + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Lore = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Lore = (Lore * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#25">LORE</a>.
 
 
 
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-This effect does not work with Timing Mode 1.
+This effect does not work with <code>Timing Mode 1</code>.
 
   </div>
 </div>
@@ -1767,20 +1772,29 @@ This effect does not work with Timing Mode 1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Morale = Morale + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Morale = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Morale = (Morale * 'Statistic Modifier' value) / 100
-
-<br/>At least in EEs, known values for 'Mode' are:
-<br/>0   BG2 mode -> It's hardcoded to fill the following values:
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
 <ul>
-  <li>param #1 = 10</li>
-  <li>param #2 = 1</li>
-  <li>m_done = 1 (internal field that immediately removes the effect from creature, no matter duration)</li>
-</ul><br/>In addition, it checks if the creature is berserking, and if it is, it returns without doing anything.
-<br/>1   BG1 mode -> Default (functions as expected)
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Morale = Morale + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Morale = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Morale = (Morale * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>At least in EEs, known values for <code>Mode</code> are:
+<ul>
+	<li>
+    0 &longrightarrow; BG2 mode – It's hardcoded to fill the following values:
+    <ul>
+      <li><code>Statistic Modifier = 10</code></li>
+      <li><code>Type = 1</code></li>
+      <li><code>m_done = 1</code> (internal field that immediately removes the effect from creature, no matter <code>duration</code>)</li>
+      <li>In addition, it checks if the creature is berserking, and if it is, it returns without doing anything.</li>
+    </ul>
+  </li>
+	<li>1 &longrightarrow; BG1 mode – Default (functions as expected)</li>
+</ul>
 
 
 
@@ -1827,10 +1841,12 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the 'Type' field, which is suspected to be an EE extension.
-<br/>Known values for 'Type' are:
-<br/>0 -> Default
-<br/>Non-zero -> Bypass <a href="#op101">opcode #101</a> (Immunity to effect)
+		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the <code>Type</code> field, which is suspected to be an EE extension.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Default</li>
+	<li>Non-zero &longrightarrow; Bypass <a href="#op101">opcode #101</a> (Immunity to effect)</li>
+</ul>
  </div>
 		<hr />
 
@@ -1969,12 +1985,17 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#17">RESISTACID</a>.
  </div>
 		<hr />
 
@@ -2010,12 +2031,17 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#15">RESISTCOLD</a>.
  </div>
 		<hr />
 
@@ -2051,12 +2077,17 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#16">RESISTELECTRICITY</a>.
  </div>
 		<hr />
 
@@ -2092,12 +2123,17 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#14">RESISTFIRE</a>.
  </div>
 		<hr />
 
@@ -2133,12 +2169,17 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Resistance = Resistance + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Resistance = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Resistance = (Resistance * 'Statistic Modifier' value) / 100
-<br/><br/>'Statistic Modifier' can be positive or negative.
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#73">MAGICDAMAGERESISTANCE</a>.
  </div>
 		<hr />
 
@@ -2176,7 +2217,7 @@ Any Morale-based effect (i.e. Panic) may be added or removed by this effect.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Raises the targeted creature(s) from the dead.<br/>
 
-Known values for 'Restore creature animation' are:
+Known values for <code>Restore creature animation</code> are:
 <ul>
 	<li>0 &longrightarrow; No</li>
 	<li>1 &longrightarrow; Yes</li>
@@ -2190,35 +2231,35 @@ Known values for 'Restore creature animation' are:
   <div>
     <strong>Info:</strong> 
 The new animation is selected just as it would be at Character Generation.<br />
-Base Animation = 0x6000
+<code>Base Animation = 0x6000</code>
 <ul>
 	<li>
 		+ Class:
 		<ul>
-			<li>0x0000 (Cleric/Druid/Shaman/Default)</li>
-			<li>0x0100 (Fighter/Paladin/Ranger)</li>
-			<li>0x0200 (Mage/Sorcerer)</li>
-			<li>0x0300 (Thief/Bard)</li>
-			<li>0x0500 (Monk)</li>
+			<li><code>0x0000</code> (Cleric/Druid/Shaman/Default)</li>
+			<li><code>0x0100</code> (Fighter/Paladin/Ranger)</li>
+			<li><code>0x0200</code> (Mage/Sorcerer)</li>
+			<li><code>0x0300</code> (Thief/Bard)</li>
+			<li><code>0x0500</code> (Monk)</li>
 			<li>Mutliclasses prioritize (Warrior &gt; Priest &gt; Rogue &gt; Wizard)</li>
 		</ul>
 	</li>
 	<li>
 		+ Gender:
 		<ul>
-			<li>0x0000 (Male/Default)</li>
-			<li>0x0010 (Female)</li>
+			<li><code>0x0000</code> (Male/Default)</li>
+			<li><code>0x0010</code> (Female)</li>
 		</ul>
 	</li>
 	<li>
 		+ Race:
 		<ul>
-			<li>0x0000 (Human/Default)</li>
-			<li>0x0001 (Elf/Half-Elf/Tiefling)</li>
-			<li>0x0002 (Dwarf)</li>
-			<li>0x0003 (Halfling)</li>
-			<li>0x0004 (Gnome)</li>
-			<li>0x0005 (Halforc)</li>
+			<li><code>0x0000</code> (Human/Default)</li>
+			<li><code>0x0001</code> (Elf/Half-Elf/Tiefling)</li>
+			<li><code>0x0002</code> (Dwarf)</li>
+			<li><code>0x0003</code> (Halfling)</li>
+			<li><code>0x0004</code> (Gnome)</li>
+			<li><code>0x0005</code> (Halforc)</li>
 		</ul>
 	</li>
 </ul>
@@ -2233,7 +2274,7 @@ Base Animation = 0x6000
   <div>
     <strong>Note:</strong> 
 <ul>
-	<li>This opcode will only restore life to creatures with <a href="../files/ids/bgee/state.htm">STATE</a>(BIT11|STATE_DEAD). Frozen and Petrified creatures do not qualify until after they shatter (at which point you can no longer target them outside of scripts, so it doesn't really matter).</li>
+	<li>This opcode will only restore life to creatures with <a href="../files/ids/bgee/state.htm#BIT11">STATE_DEAD</a>. Frozen and Petrified creatures do not qualify until after they shatter (at which point you can no longer target them outside of scripts, so it doesn't really matter).</li>
 	<li>The animation reset is not dependent on the target's death state.</li>
 </ul>
 
@@ -2296,14 +2337,16 @@ The presence of this opcode in any of a spell’s ability headers will force any
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#9">SAVEVSDEATH</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -2353,14 +2396,16 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#10">SAVEVSWANDS</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -2410,14 +2455,16 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#11">SAVEVSPOLY</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -2467,14 +2514,16 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#12">SAVEVSBREATH</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -2524,14 +2573,16 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 	<li>3 &longrightarrow; Increment Instantly: <code>Save = Save + 'Statistic Modifier' value</code> (EE only)</li>
 </ul>
 
-<br/><br/><code>Statistic Modifier</code> can be positive or negative.
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#13">SAVEVSSPELL</a>.
 
 
 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-When <code>'Type' = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>'Type' = 0</code>, it processes after.
+When <code>Type = 3</code>, this opcode processes before saving throws are checked for effects proceeding it in the same effect stack; when <code>Type = 0</code>, it processes after.
 
   </div>
 </div>
@@ -2562,12 +2613,12 @@ When <code>'Type' = 3</code>, this opcode processes before saving throws are che
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the silence effect to the targeted creature(s). 
-A silenced creature cannot cast spells, use special abilities or initiate dialog.
+		<div class="descriptiondata"> Applies the silence effect to the targeted creature(s). Sets <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> to true.<br/>
+A silenced creature cannot cast spells, use special abilities or initiate dialog.<br/>
 The engine is hard-coded to allow these spells to be cast by a silenced creature:
 <ul>
-<li>SPWI219 (Vocalize)</li>
-<li>SPIN649 (Teleport to Pocket Plane) in BG2/BGEE</li>
+	<li><code>"SPWI219"</code> (Vocalize)</li>
+	<li><code>"SPIN649"</code> (Teleport to Pocket Plane) in BG2/BGEE</li>
 </ul>
  </div>
 		<hr />
@@ -2936,7 +2987,7 @@ Both parameters should be 0 (zero).
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Applied with Timing Modes 1/4/7: will set the creature’s base <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> flag, while still leaving behind a separate removable effect.
+Applied with <code>Timing Mode</code>s <code>1/4/7</code>: will set the creature’s base <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> flag, while still leaving behind a separate removable effect.
 <ul>
 	<li>Should you remove the effect without removing the state (through means other than <a href="#op46">opcode #46</a>), the creature will be fully functional, just not controllable by the player (if it was).</li>
 	<li>By itself, <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> does not disable any scripts or limit which actions the creature may take. It needs its opcode's immobilization effect as well as <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> to fully work.</li>
@@ -3056,7 +3107,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the silence effect and the silenced state from the targeted creature(s).
+		<div class="descriptiondata"> Removes the silence effect and <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
  </div>
 		<hr />
@@ -3698,7 +3749,7 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing Modes 1/4/7 permanently alters the creature's Move Silently score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alter the creature's Move Silently score, leaving no removable effect.
 
   </div>
 </div>
@@ -4180,8 +4231,8 @@ This effect REQUIRES a Bam file named SPBOOM in a bif or the override folder for
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unsummons a creature, with feedback controlled by 'Text Notification'.
-<br/>Known values for 'Text Notification' are:
+		<div class="descriptiondata"> Unsummons a creature, with feedback controlled by <code>Text Notification</code>.
+<br/>Known values for <code>Text Notification</code> are:
 <ul>
 	<li>0 &longrightarrow; No text notification</li>
 	<li>1 &longrightarrow; Show text notification</li>
@@ -4192,8 +4243,8 @@ This effect REQUIRES a Bam file named SPBOOM in a bif or the override folder for
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in BG2 and EEs, the Resource key should be set to the filename of the
- animation to play when unsummoning the creature, and defaults to “SPGFLSH1” if left empty.
+At least in BG2 and EEs, the <code>Resource</code> key should be set to the filename of the
+ animation to play when unsummoning the creature, and defaults to <code>"SPGFLSH1"</code> if left empty.
 
   </div>
 </div>
@@ -4206,7 +4257,7 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
     <strong>Note:</strong> 
 <ul>
 	<li>Has no effect on Party Members.</li>
-	<li>Moves the targeted creature(s) to area ".ARE" (a non-existant area). This deletes non-global creatures from the game.</li>
+	<li>Moves the targeted creature(s) to area <code>".ARE"</code> (a non-existant area). This deletes non-global creatures from the game.</li>
 	<li>Global creatures can still be recovered through scripts actions, such as <a href="../scripting/actions/bgeeactions.htm#291">MoveGlobalObject()</a>.</li>
 </ul>
 
@@ -4239,14 +4290,14 @@ At least in BG2 and EEs, the Resource key should be set to the filename of the
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the non-detection effect to the targeted creature(s), setting <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> while active. This effect is negated by <a href="#op70">opcode 70</a>. While in the non-detection state, the creature is immune to <a href="#op47">opcode 47</a> and <a href="#op116">opcode 116</a>, though they are affected by effects that remove illusionary protections by school or secondary type.
+		<div class="descriptiondata"> Applies the non-detection effect to the targeted creature(s), setting <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> while active. This effect is negated by <a href="#op70">opcode 70</a>. While in the non-detection state, the creature is immune to <a href="#op47">opcode #47</a> and <a href="#op116">opcode #116</a>, though they are affected by effects that remove illusionary protections by school or secondary type.
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> flag, leaving no removable effect. This flag is not cleared on death.
+<code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> flag, leaving no removable effect. This flag is not cleared on death.
 
   </div>
 </div>
@@ -4319,11 +4370,11 @@ Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bge
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Alters the gender of the targetted creature(s) to the value specified by the 'Gender.ids' field, in the style specified by the 'Type' value.
-<br/>Known values for 'Type' are:
+		<div class="descriptiondata"> Alters the gender of the targetted creature(s) to the value specified by the <code>Gender Modifier</code> field, in the style specified by the <code>Type</code> value.
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Reverse Gender</li>
-	<li>1 &longrightarrow; Flat Value Modifier: Gender = 'Statistic Modifier' value (values from <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a>)</li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Gender = 'Statistic Modifier' value</code> (values from <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a>)</li>
 </ul>
 
 <br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#193">SEX_CHANGED</a>.
@@ -4334,10 +4385,10 @@ Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bge
   <div>
     <strong>Note:</strong> 
 <ul>
-	<li>'Reverse Gender' also switches the second BIT of the lower BYTE of the creature's animation, which (for PC races), will switch between their male/female animations (0x6000 &LongLeftRightArrow; 0x6010).</li>
+	<li><code>Reverse Gender</code> also switches the second BIT of the lower BYTE of the creature's animation, which (for <code>PC</code> races), will switch between their male/female animations (<code>0x6000</code> &LongLeftRightArrow; <code>0x6010</code>).</li>
 	<li>
 		Other races can be setup this way, but do not occupy the necessary animation slots by default.<br />
-		For instance, VAMPIRE is 0x7F12, VAMPIRE_FEMALE is 0x7F22. (Male should be 0x7F02 and female 0x7F12 for it to work).
+		For instance, <code>VAMPIRE</code> is <code>0x7F12</code>, <code>VAMPIRE_FEMALE</code> is <code>0x7F22</code> (Male should be <code>0x7F02</code> and female <code>0x7F12</code> for it to work).
 	</li>
 </ul>
 
@@ -4488,7 +4539,7 @@ PST treats all Type values above <code>1</code> as <code>1</code> – it does no
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the blindness effect to the targeted creature(s). This sets <a href="../files/ids/bgee/stats.htm#147">VISUALRANGE</a> to 2, sets <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> to true and incurs a cummulative 10 point base THAC0 penalty (4 on EE games, plus a cumulative 4 point base AC penalty. All of that is unverified in PST).
+		<div class="descriptiondata"> Applies the blindness effect to the targeted creature(s). This sets <a href="../files/ids/bgee/stats.htm#147">VISUALRANGE</a> to 2, sets <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> to true and incurs a cummulative <code>10</code> point base THAC0 penalty (<code>4</code> on EE games, plus a cumulative <code>4</code> point base AC penalty. All of that is unverified in PST).
 Maintains its own portrait icon <a href="../files/2da/2da_bgee/statdesc.htm">(#8|"Blind")</a>.
 
 
@@ -4496,7 +4547,7 @@ Maintains its own portrait icon <a href="../files/2da/2da_bgee/statdesc.htm">(#8
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> flag, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> flag, leaving no removable effect.
 
   </div>
 </div>
@@ -4507,7 +4558,7 @@ Timing modes 1/4/7 will permanently set the creature's <a href="../files/ids/bge
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-In the EE’s, the -4 penalties it applies are not cumulative.
+In the EE’s, the <code>-4</code> penalties it applies are not cumulative.
 
   </div>
 </div>
@@ -4546,7 +4597,7 @@ In the EE’s, the -4 penalties it applies are not cumulative.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -4586,7 +4637,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat. Maintains the target's Intelligence to 3 (stacks normally with <a href="#op19">opcode #19</a>).
+		<div class="descriptiondata"> Applies the feeblemind effect to the targeted creature(s) – creatures are unselectable, immobile and do not respond to combat. Maintains the target's Intelligence to 3 (stacks normally with <a href="#op19">opcode #19</a>).
 
 
 
@@ -4632,7 +4683,7 @@ A creature's scripts do not run while the creature is feebleminded.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -4748,7 +4799,7 @@ Permanent timing modes require a duration for this effect to work.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -4788,7 +4839,7 @@ Both parameters should be 0 (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the Deafness effect on the targeted creature(s) - creatures suffer a casting failure rate of 50% (20% in bg1, unknown in iwd1). The casting failure rate refers to Wizard and Priest spells only. This is cumulative with Miscast Magic.
+		<div class="descriptiondata"> Applies the Deafness effect on the targeted creature(s) – creatures suffer a casting failure rate of 50&percnt; (20&percnt; in bg1, unknown in iwd1). The casting failure rate refers to Wizard and Priest spells only. This is cumulative with Miscast Magic.
 
 
 
@@ -4806,7 +4857,7 @@ PST: it is unclear if this effect exist or does anything!
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(38|DEAFENED)</a> on the target (EE only).
+Maintains <a href="../files/ids/bgee/splstate.htm#38">DEAFENED</a> on the target (EE only).
 
   </div>
 </div>
@@ -4845,7 +4896,7 @@ Maintains <a href="../files/ids/bgee/splstate.htm">SPLSTATE(38|DEAFENED)</a> on 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -5029,11 +5080,17 @@ PST: it is unclear if this effect exists or does anything!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#19">RESISTMAGICFIRE</a>.
  </div>
 		<hr />
 
@@ -5075,11 +5132,17 @@ PST: it is unclear if this effect exists or does anything!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#20">RESISTMAGICCOLD</a>.
  </div>
 		<hr />
 
@@ -5115,11 +5178,17 @@ PST: it is unclear if this effect exists or does anything!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#21">RESISTSLASHING</a>.
  </div>
 		<hr />
 
@@ -5155,11 +5224,17 @@ PST: it is unclear if this effect exists or does anything!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#22">RESISTCRUSHING</a>.
  </div>
 		<hr />
 
@@ -5195,11 +5270,17 @@ PST: it is unclear if this effect exists or does anything!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#23">RESISTPIERCING</a>.
  </div>
 		<hr />
 
@@ -5235,11 +5316,17 @@ PST: it is unclear if this effect exists or does anything!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Damage = Damage + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Damage = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Damage = (Damage * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Resistance = Resistance + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Resistance = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Resistance = (Resistance * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#24">RESISTMISSILE</a>.
  </div>
 		<hr />
 
@@ -5279,7 +5366,7 @@ PST: it is unclear if this effect exists or does anything!
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 permanently alters the creature's Open Locks score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Open Locks score, leaving no removable effect.
 
   </div>
 </div>
@@ -5334,7 +5421,7 @@ Timing modes 1/4/7 permanently alters the creature's Open Locks score, leaving n
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 permanently alters the creature's Find Traps score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Find Traps score, leaving no removable effect.
 
   </div>
 </div>
@@ -5389,7 +5476,7 @@ Timing modes 1/4/7 permanently alters the creature's Find Traps score, leaving n
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Pick Pockets score, leaving no removable effect.
 
   </div>
 </div>
@@ -5431,11 +5518,17 @@ Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Fatigue = Fatigue + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Fatigue = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Fatigue = (Fatigue * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#30">FATIGUE</a>.
  </div>
 		<hr />
 
@@ -5462,11 +5555,17 @@ Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Drunkenness = Drunkenness + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Drunkenness = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Drunkenness = (Drunkenness * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#31">INTOXICATION</a>.
  </div>
 		<hr />
 
@@ -5493,11 +5592,17 @@ Timing modes 1/4/7 permanently alters the creature's Pick Pockets score, leaving
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Skill = Skill + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Skill = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Skill = (Skill * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Skill = Skill + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Skill = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Skill = (Skill * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#33">TRACKING</a>.
  </div>
 		<hr />
 
@@ -5557,7 +5662,7 @@ In IWD2 the class to receive the change is specified at 0x2C
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Timing modes 1/4/7 permanently alters the creature's level, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alter the creature's level, leaving no removable effect.
 
   </div>
 </div>
@@ -5581,7 +5686,7 @@ Can only modify the <a href="../files/ids/bgee/stats.htm#34">first class level</
 	<div id="op97" class="opcode">
 		<span class="opnumberdata">#97 (0x61)</span>
 
-		<span class="opnamedata">Stat: Strength-Bonus Modifier</span>
+		<span class="opnamedata">Stat: Exceptional Strength Modifier</span>
 
 		
 		
@@ -5599,11 +5704,17 @@ Can only modify the <a href="../files/ids/bgee/stats.htm#34">first class level</
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Bonus = Bonus + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Bonus = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Bonus = (Bonus * 'Statistic Modifier' value) / 100
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Exceptional Strength = Exceptional Strength + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Exceptional Strength = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Exceptional Strength = (Exceptional Strength * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><code>Statistic Modifier</code> can be positive or negative.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#37">STREXTRA</a>.
  </div>
 		<hr />
 
@@ -5705,21 +5816,23 @@ Permanent timing modes require a duration for this effect to work.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Alters spell durations of the targeted creature(s), to the percentage specified by the 'Duration Modifier' field, affecting the spell type specified by the 'Type' field. Timing mode 0 is the only timing mode reliably affected. Timings handled through PRO files are ignored.
+		<div class="descriptiondata"> Alters spell durations of the targeted creature(s), to the percentage specified by the <code>Duration Modifier</code> field, affecting the spell type specified by the <code>Type</code> field. <code>Timing mode 0</code> is the only timing mode reliably affected. Timings handled through <a href="../file_formats/ie_formats/pro_v1.htm">PRO</a> files are ignored.
 <br/>For instance:
 <ul>
-	<li>'Duration Modifier' = 0 &longrightarrow; Spells have no duration</li>
-	<li>'Duration Modifier' = 100 &longrightarrow; Spells have normal duration</li>
-	<li>'Duration Modifier' = 200 &longrightarrow; Spells have double duration</li>
+	<li><code>Duration Modifier = 0</code> &longrightarrow; Spells have no duration</li>
+	<li><code>Duration Modifier = 100</code> &longrightarrow; Spells have normal duration</li>
+	<li><code>Duration Modifier = 200</code> &longrightarrow; Spells have double duration</li>
 </ul>
 <br/>
 
-<br/>Known values for 'Type' are:
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Mage</li>
 	<li>1 &longrightarrow; Priest</li>
 	<li>2 &longrightarrow; Bard Song (EE only)</li>
 </ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#53">SPELLDURATIONMODMAGE</a> and <a href="../files/ids/bgee/stats.htm#54">SPELLDURATIONMODPRIEST</a>.
 
 
 
@@ -5918,6 +6031,8 @@ Not seen to work in BG1.
 	<li>1 &longrightarrow; Flat Value Modifier: <code>XP = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Percentage Modifier: <code>XP = (XP * 'Statistic Modifier' value) / 100</code></li>
 </ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#44">XP</a>.
  </div>
 		<hr />
 
@@ -6013,6 +6128,8 @@ PST does not support the percentage modifier type (unknown what it actually does
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Morale Break = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Percentage Modifier: <code>Morale Break = (Morale Break * 'Statistic Modifier' value) / 100</code></li>
 </ul>
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#46">MORALEBREAK</a>.
  </div>
 		<hr />
 
@@ -6373,7 +6490,7 @@ This effect has never been seen to work.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes invisibility from the targeted creature(s).
+		<div class="descriptiondata"> Removes invisibility from the targeted creature(s). Also removes <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> and <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>.
 <br/>This effect ignores durations attributed to it.
 
 
@@ -6381,7 +6498,23 @@ This effect has never been seen to work.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>The only difference between this opcode and <a href="#op47">opcode #47</a> is their index – you can block one with <a href="#op101">opcode #101</a> without blocking the other. That's it.</li>
+	<li>Both remove the same effects/<code>STATE</code>s, both are blocked by <a href="#op69">opcode #69</a>.</li>
+	<li>They might have been intended for identical function, different uses, similar to opcodes <a href="#op5">#5</a>/<a href="#op241">#241</a> (Charm), but it never happened.</li>
+	<li><a href="#op116">Opcode #116</a> is used extensively because the original BG1 used it, and didn't use <a href="#op47">opcode #47</a> at all.</li>
+</ul>
 
   </div>
 </div>
@@ -6572,8 +6705,8 @@ The scroll casts the spell at level <code>10</code>, but the opcode checks the c
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) immunity to weapons as specified by the 'Type' field. The 'Enchantment' field is used if 'Type' is set to 0.
-<br/>Known values for 'Type' are:
+		<div class="descriptiondata"> Gives the targeted creature(s) immunity to weapons as specified by the <code>Type</code> field. The <code>Enchantment</code> field is used if <code>Type</code> is set to <code>0</code>.
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Enchanted</li>
 	<li>1 &longrightarrow; Magical</li>
@@ -6673,7 +6806,7 @@ Keep in mind that:
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Creates the item specified by the <code>resource</code> key. The number of items created is controlled by the <code>Charges</code> field. The number of secondary charge is determined by P3. The number of tertiary charges is determined by P4 (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s). The item is created in the Inventory.
+		<div class="descriptiondata"> Creates the item specified by the <code>resource</code> key. The number of items created is controlled by the <code>Charges</code> field. The number of secondary charge is determined by <code>Parameter3</code>. The number of tertiary charges is determined by <code>Parameter4</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s). The item is created in the Inventory.
 
 
 
@@ -8130,7 +8263,7 @@ This opcode should generally target “Self”. In particular:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -9287,7 +9420,7 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 	<li>0 &longrightarrow; Cumulative Modifier: <code>Movement = Movement + 'Statistic Modifier' value</code></li>
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Movement = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Non-stacking Percentage Modifier: <code>Movement = (Movement * 'Statistic Modifier' value) / 100</code></li>
-	<li>5 &longrightarrow; Multiplicative Stacking Percentage Modifier: <code>Movement = (Movement 'Statistic Modifier' value) / 100</code> (EE only)</li>
+	<li>5 &longrightarrow; Multiplicative Stacking Percentage Modifier: <code>Movement = (Movement * 'Statistic Modifier' value) / 100</code> (EE only)</li>
 </ul>
 
 

@@ -10,17 +10,40 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Sets the Bard Song of the targeted creature to the spell specified by the resource key.
-<br/>Note: The default Bard Song applies the following effects:
-<br/>  All effects are added to the entire party with timing 4096 (end at ticks) and duration (nGameTime + 100)
-<br/>  Display Special Effect Icon (0x8E)
-<br/>  param2 (Icon) = 40 Bard Song
-<br/>  Morale Modifier (0x17) - Sets the Morale stat of the targetted creature(s) to 10.
-<br/>  param1 (Ignored) = 10
-<br/>  param2 (Ignored) = 0
-<br/>  Cure Horror (0xA1)
-<br/>  param1 (Irrelevant) = 1
-<br/>  param2 (Irrelevant) = 0
-<br/>  Protection from Opcode (0x65)
-<br/>  param1 (Irrelevant) = 1
-<br/>  param2 (Opcode) = 24 (State: Horror)
+Sets the Bard Song of the targeted creature to the spell specified by the <code>resource</code> key.
+<br/>On non-EE games, the default Bard Song applies the following effects:
+<ul>
+	<li>All effects are added to the entire party with <code>Timing Mode 4096</code> (end at ticks) and <code>duration = nGameTime + 100</code></li>
+	<li>
+		<a href="#op142">Display Special Effect Icon</a>
+		<ul>
+			<li><code>param2 (Icon) = 40 Bard Song</code></li>
+		</ul>
+	</li>
+
+	<li>
+		<a href="#op23">Morale Modifier</a> – Sets the Morale stat of the targetted creature(s) to <code>10</code>.
+		<ul>
+			<li><code>param1 (Ignored) = 10</code></li>
+			<li><code>param2 (Ignored) = 0</code></li>
+		</ul>
+	</li>
+
+	<li>
+		<a href="#op161">Cure Horror</a>
+		<ul>
+			<li><code>param1 (Irrelevant) = 1</code></li>
+			<li><code>param2 (Irrelevant) = 0</code></li>
+		</ul>
+	</li>
+
+	<li>
+		<a href="#op101">Protection from Opcode</a>
+		<ul>
+			<li><code>param1 (Irrelevant) = 1</code></li>
+			<li><code>param2 (Opcode) = 24 (State: Horror)</code></li>
+		</ul>
+	</li>
+</ul>
+
+<br/>On EE games, the default bardsong has been externalized to <code>"BARDSONG.SPL"</code>.

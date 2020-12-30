@@ -10,15 +10,38 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Summons a familiar for the Protagonist player. The familiar summoned is based on the alignment of the Protagonist, and values stored in the GAM file.
-<br/>The 'Upgrade Marker' field is used internally to indicate the familiar has received the ToB upgrades.
-<br/>Default creatures for familiars are:
-<br/>Lawful Good     Pseudo Dragon (FAMPSD)
-<br/>Lawful Neutral  Ferret (FAMFER)
-<br/>Lawful Evil     Imp (FAMIMP)
-<br/>Neutral Good    Pseudo Dragon (FAMPSD)
-<br/>True Neutral    Rabbit (FAMRAB)
-<br/>Neutral Evil    Dust Mephit (FAMDUST)
-<br/>Chaotic Good    Fairy Dragon (FAMFAIR)
-<br/>Chaotic Neutral Cat (FAMCAT)
-<br/>Chaotic Evil    Quasit (FAMQUAS)
+Applies <a href="#op195">opcode #195</a>, <a href="#op196">opcode #196</a>, and <a href="#op268">opcode #268</a> to the summoned familiar.<br/>
+On non-EE games, the Familiar summoned is based on the alignment of the Protagonist, and values stored in the <a href="../file_formats/ie_formats/gam_v2.0.htm">GAM</a> file.
+<br/>On non-EE games, the <code>Upgrade Marker</code> field is used internally to indicate the familiar has received the ToB upgrades.
+<ul>
+	<li>On EE games, if there is an <code>Upgrade Marker</code>, it isn't on <a href="#op192">opcode #192</a> (needs researching...).</li>
+</ul>
+<br/>On non-EE games, default creatures for familiars are:
+<ul>
+	<li>Lawful Good &longrightarrow; Pseudo Dragon (<code>FAMPSD</code>)</li>
+	<li>Lawful Neutral &longrightarrow; Ferret (<code>FAMFER</code>)</li>
+	<li>Lawful Evil &longrightarrow; Imp (<code>FAMIMP</code>)</li>
+	<li>Neutral Good &longrightarrow; Pseudo Dragon (<code>FAMPSD</code>)</li>
+	<li>True Neutral &longrightarrow; Rabbit (<code>FAMRAB</code>)</li>
+	<li>Neutral Evil &longrightarrow; Dust Mephit (<code>FAMDUST</code>)</li>
+	<li>Chaotic Good &longrightarrow; Fairy Dragon (<code>FAMFAIR</code>)</li>
+	<li>Chaotic Neutral &longrightarrow; Cat (<code>FAMCAT</code>)</li>
+	<li>Chaotic Evil &longrightarrow; Quasit (<code>FAMQUAS</code>)</li>
+</ul>
+
+On EE games, the Familiar summoned is determined by <a href="../files/2da/2da_bgee/familiar.htm">FAMILIAR.2DA</a> and caster's alignment.
+<ul>
+	<li>The familiars (<a href="../file_formats/ie_formats/cre_v1.htm">CRE</a>) available are locked in once a new game begins (any changes to <a href="../files/2da/2da_bgee/familiar.htm">FAMILIAR.2DA</a> must occur before starting a new game).</li>
+</ul>
+
+{% capture note %}
+Max HP boost for summoning a familiar (and eventually loss when it dies) is &frac12; the familiar's Max HP (including any CON bonus) at the time of summoning.
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+The familiar restriction to <code>&lt;CHARNAME&gt;</code> is game-specific. IWDEE has no such restriction, but still only allows a single character to have a familiar at a time. It's unclear if it's a specific flag in the <a href="../file_formats/ie_formats/gam_v2.0.htm">GAM</a> file or if it's engine-side.
+{% endcapture %}
+
+{% include note.html %}

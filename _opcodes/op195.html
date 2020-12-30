@@ -1,8 +1,9 @@
 ---
 n: 195
-name: "Spell Effect: Death Dependent Constitution Loss"
-param1: "HP Modifier"
-param2: "Undefined"
+name: "Spell Effect: Death Dependent Constitution Loss (Familiar Bond)"
+param1: "Max HP Modifier"
+param2: "Unused"
+param3: "Master ID (owner)"
 bg1: 0
 bg2: 1
 bgee: 1
@@ -10,6 +11,47 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-When a creature with this effect applied to it dies, the Protagonist enacts the damage animation, loses 1 Constitution point, and has their HP modified as dictated by the 'HP Modifier' field.
-<br/>If 'HP Modifier' is positive, Maximum and Current HP are increased by 'HP Modifier' (though the message ' - was immune to my damage' is displayed).
-<br/>If 'HP Modifier' is negative, Maximum HP is lowered by 'HP Modifier', and Current HP is lowered by twice 'HP Modifier'.
+When this creature dies, the following is applied to <code>Master ID</code>:
+<ul>
+	<li>Floats Text String <a href="../files/2da/2da_bgee/enginest.htm#990">STRREF_GUI_MIXED_FAMILIARDIED</a>.</li>
+	<li><a href="#op10">Opcode #10</a>: <code>Statistic Modifier = -1</code>, <code>Type = 0</code>, <code>Timing Mode 1</code>.</li>
+	<li>
+		<a href="#op18">Opcode #18</a>: <code>Statistic Modifier = Max HP Modifier</code>, <code>Type = 0</code>, <code>Timing Mode 1</code>.
+		<ul>
+			<li><a href="#op192">Opcode #192</a> sets <code>Max HP Modifier</code> to <code>-&frac12; the familiar's Max HP</code></li>
+		</ul>
+	</li>
+	<li>
+		<a href="#op12">Opcode #12</a>: <code>Damage Amount = 'this creature's Max HP'</code>, <code>Type = MAGIC</code>, <code>Timing Mode 1</code>, <code>Save Type = Bypass Mirror Image</code>.
+		<ul>
+			<li>
+				Normally, Maximum HP of <code>Master ID</code> is lowered by <code>Max HP Modifier</code>, and Current HP is lowered by twice <code>Max HP Modifier</code> (since <code>Max Hp Modifier = &frac12; familiar's Max HP</code>).<br/>
+				It won't be if the familiar's Max HP is increased (or decreased) permanently after it is summoned (temporary changes to Max HP will be removed by death before it deals damage, and so they won't affect the amount).<br/>
+				Permanent changes to the familiar's Constitution, enough to alter the bonus HP it grants, will have similar results.
+			</li>
+		</ul>
+	</li>
+</ul>
+
+Known values for <code>Master ID</code> are:
+<ul>
+	<li>-1 &longrightarrow; Not Party Member</li>
+	<li>0 &longrightarrow; Player1</li>
+	<li>1 &longrightarrow; Player2</li>
+	<li>2 &longrightarrow; Player3</li>
+	<li>3 &longrightarrow; Player4</li>
+	<li>4 &longrightarrow; Player5</li>
+	<li>5 &longrightarrow; Player6</li>
+</ul>
+
+{% capture note %}
+Needs <code>Timing Mode 9</code>, otherwise it will be removed (by death) before it fully triggers.
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+<code>Parameter2</code> is possibly intended to be <code>Damage Type</code>. It uses the same format as <a href="#op12">opcode #12</a> (<a href="#op192">opcode #192</a> sets it to <code>0x400000 – MAGIC</code>), but changing it has no effect.
+{% endcapture %}
+
+{% include note.html %}

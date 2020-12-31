@@ -49,7 +49,7 @@ title: "PRO file format"
         <tr>
           <td>0x00008</td>
           <td>2 (word)</td>
-          <td><a name="0x8">Projectile Type</a><br />
+          <td><b><a name="0x8">Projectile Type</a></b><br />
             <ul>
               <li>1 no BAM</li>
               <li>2 single target</li>
@@ -60,7 +60,7 @@ title: "PRO file format"
         <tr>
           <td>0x0000a</td>
           <td>2 (word)</td>
-          <td><a name="0xA">Projectile Speed</a> (0x01 to 0xFF)</td>
+          <td><b><a name="0xA">Projectile Speed</a></b> (<code>0x01 to 0xFF</code>)</td>
         </tr>
         <tr>
           <td>0x0000c</td>
@@ -68,7 +68,7 @@ title: "PRO file format"
           <td>Sparking flags
             <ul>
               <li>bit 0: Show sparkle</li>
-              <li>bit 1: <a name="#Behavior_BIT1">Use z coordinate</a></li>
+              <li>bit 1: <b><a name="#Behavior_BIT1">Use z coordinate</a></b></li>
               <li>bit 2: Loop sound (0x10)</li>
               <li>bit 3: Loop sound (0x18)</li>
               <li>bit 4: Do not affect direct target (a.k.a. exclude caster)</li>
@@ -121,7 +121,7 @@ title: "PRO file format"
         <tr>
           <td>0x0002a</td>
           <td>2 (word)</td>
-          <td><a name="0x2A">Projectile Width</a></td>
+          <td><b><a name="0x2A">Projectile Width</a></b></td>
         </tr>
         <tr>
           <td>0x0002c</td>
@@ -129,7 +129,7 @@ title: "PRO file format"
           <td>Extended flags
             <ul>
               <li>
-                Bit 0: <a name="ExtFlags_BIT0">Bounce from walls</a>
+                Bit 0: <b><a name="ExtFlags_BIT0">Bounce from walls</a></b>
                 <ul>
                   <li>
                     When <a href="#0x8">Projectile Type</a> is <code>2|Single Target</code>:
@@ -147,7 +147,7 @@ title: "PRO file format"
                           <li>Alters the <code><a href="#0x214">Secondary Projectile</a></code> to originate from the targeted creature, rather than the caster.</li>
                           <li>The <code><a href="#0x214">Secondary Projectile</a></code> still requires <code><a href="#AreaFlags_BIT4">Secondary Projectile</a></code>.</li>
                           <li>The <code><a href="#0x214">Secondary Projectile</a></code> will be oriented in a random direction.</li>
-                          <li>Compatibility: with <code><a href="#AreaFlags_BIT11">Cone Shaped</a></code>, the <code><a href="#0x214">Secondary Projectile</a></code> will instead target the caster's location (but not the caster directly).</li>
+                          <li>Compatibility: with <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code>, the <code><a href="#0x214">Secondary Projectile</a></code> will instead target the caster's location (but not the caster directly).</li>
                           <li>
                             The Traveling Projectile of the <code><a href="#0x214">Secondary Projectile</a></code> will terminate after a number of ticks equal to <code><a href="#0x210">Explosion Frequency</a></code>.
                             <ul>
@@ -163,14 +163,14 @@ title: "PRO file format"
               </li>
 
               <li>
-                Bit 1: <a name="ExtFlags_BIT1">Pass target</a>
+                Bit 1: <b><a name="ExtFlags_BIT1">Pass target</a></b>
                 <ul>
                   <li>Projectile travels in straight line (is not homing), hitting all creatures within range of its current location every <code>2</code> ticks.</li>
                   <li>Compatibility: <code><a href="#ExtFlags_BIT10">Multiple Projectile</a></code> functions as normal except that it will not arc this projectile.</li>
                   <li>
                     Priority:
                     <ul>
-                      <li>Suppressed by <code><a href="#AreaFlags_BIT11">Cone Shaped</a></code></li>
+                      <li>Suppressed by <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code></li>
                       <li>Suppressed by or incompatible with <code><a href="#ExtFlags_BIT12">Falling Path</a></code> or <code><a href="#ExtFlags_BIT13">Comet</a></code></li>
                     </ul>
                   </li>
@@ -178,11 +178,11 @@ title: "PRO file format"
                     Suppresses:
                     <ul>
                       <li><code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code>, <code><a href="#ExtFlags_BIT21">Random Path</a></code></li>
-                      <li>(<code>0x200 – 0x2ff</code>): all Area Effect fields except <code><a href="#AreaFlags_BIT11">Cone Shaped</a></code></li>
+                      <li>(<code>0x200 – 0x2ff</code>): all Area Effect fields except <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code></li>
                     </ul>
                   </li>
                   <li><code><a href="#0x8">Projectile Type</a></code> must be either <code>2|Single Target</code> or <code>3|Area Effect</code></li>
-                  <li>Effect Radius: <code><a href="#0x2A">Projectile Width</a> + 2 pixels (1:horizontal, 3/4:vertical)</code></li>
+                  <li>Effect Radius: <code><a href="#0x2A">Projectile Width</a> + 2 pixels (1:horizontal, &frac34;:vertical)</code></li>
                   <li>Duration: Projectile continues until reaching map edge.</li>
                   <li>Example: (Smashing Wave – IWDEE) &longrightarrow; <code>"SWAVE.PRO"</code></li>
                   <li>Option: <code><a href="#ExtFlags_BIT29">Limited Path Count</a></code> – Projectile terminates upon traveling originally targeted distance.</li>
@@ -217,10 +217,10 @@ title: "PRO file format"
                 </ul>
               </li>
 
-              <li>Bit 2: <a name="ExtFlags_BIT2">Draw centre VVC once</a></li>
+              <li>Bit 2: <b><a name="ExtFlags_BIT2">Draw centre VVC once</a></b></li>
 
               <li>
-                Bit 3: <a name="ExtFlags_BIT3">Hit immediately</a>
+                Bit 3: <b><a name="ExtFlags_BIT3">Hit immediately</a></b>
                 <ul>
                   <li><code><a href="#0x8">Projectile Type</a></code> must be either <code>2|Single Target</code> or <code>3|Area Effect</code>.</li>
                   <li>Travelling Projectile hits instantly, but is still displayed momentarily.</li>
@@ -231,7 +231,7 @@ title: "PRO file format"
               </li>
 
               <li>
-                Bit 4: <a name="ExtFlags_BIT4">Face target</a>
+                Bit 4: <b><a name="ExtFlags_BIT4">Face target</a></b>
                 <ul>
                   <li>Dependency: Activated by <code><a href="#AreaFlags_BIT10">Draw Animation</a></code></li>
                   <li>
@@ -246,18 +246,18 @@ title: "PRO file format"
               </li>
 
               <li>
-                Bit 5: <a name="ExtFlags_BIT5">Curved path</a> (Unknown – still "not implemented" on EE games)
+                Bit 5: <b><a name="ExtFlags_BIT5">Curved path</a></b> (Unknown – still "not implemented" on EE games)
                 <ul>
                   <li>Not required for the curved arc of <code><a href="#ExtFlags_BIT10">Multiple Projectile</a></code></li>
                 </ul>
               </li>
 
-              <li>Bit 6: <a name="ExtFlags_BIT6">Start random frame</a></li>
-              <li>Bit 7: <a name="ExtFlags_BIT7">Pillar</a></li>
-              <li>Bit 8: <a name="ExtFlags_BIT8">Semi-transparent trail puff VEF</a></li>
-              <li>Bit 9: <a name="ExtFlags_BIT9">Tinted trail puff VEF</a></li>
+              <li>Bit 6: <b><a name="ExtFlags_BIT6">Start random frame</a></b></li>
+              <li>Bit 7: <b><a name="ExtFlags_BIT7">Pillar</a></b></li>
+              <li>Bit 8: <b><a name="ExtFlags_BIT8">Semi-transparent trail puff VEF</a></b></li>
+              <li>Bit 9: <b><a name="ExtFlags_BIT9">Tinted trail puff VEF</a></b></li>
 
-              <li>Bit 10: <a name="ExtFlags_BIT10">Multiple projectiles</a>
+              <li>Bit 10: <b><a name="ExtFlags_BIT10">Multiple projectiles</a></b>
                 <ul>
                   <li>
                     When this flag is set, the game looks at the projectile entry one number less. If that projectile also has it set, it looks at the projectile entry one number less again, until it finds a projectile without that flag set. All projectiles it finds are fired at the target.
@@ -283,10 +283,10 @@ title: "PRO file format"
                 </ul>
               </li>
 
-              <li>Bit 11: <a name="ExtFlags_BIT11">Default spell on missed</a></li>
+              <li>Bit 11: <b><a name="ExtFlags_BIT11">Default spell on missed</a></b></li>
 
               <li>
-                Bit 12: <a name="ExtFlags_BIT12">Falling path</a>
+                Bit 12: <b><a name="ExtFlags_BIT12">Falling path</a></b>
                 <ul>
                   <li>Traveling Projectile originates from target, instead of caster. (Near Instant hit)</li>
                   <li>Compatibility: Not viable with <code><a href="#ExtFlags_BIT1">Pass Target</a></code></li>
@@ -295,7 +295,7 @@ title: "PRO file format"
               </li>
 
               <li>
-                Bit 13: <a name="ExtFlags_BIT13">Comet</a>
+                Bit 13: <b><a name="ExtFlags_BIT13">Comet</a></b>
                 <ul>
                   <li>Affects: Traveling Projectile.</li>
                   <li>Projectile originates from upper-right or upper-left relative to target.</li>
@@ -310,7 +310,7 @@ title: "PRO file format"
                   <li>
                     Compatibility:
                     <ul>
-                      <li>Not usable with <code><a href="#AreaFlags_BIT11">Cone Shaped</a></code>. All other Area Flags work normally.</li>
+                      <li>Not usable with <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code>. All other Area Flags work normally.</li>
                       <li>Not viable with <code><a href="#ExtFlags_BIT1">Pass Target</a></code></li>
                       <li>Not viable with <code><a href="#ExtFlags_BIT7">Pillar</a></code> – Projectile may terminate before reaching destination.</li>
                     </ul>
@@ -342,7 +342,7 @@ title: "PRO file format"
               </li>
 
               <li>
-                Bit 14: <a name="ExtFlags_BIT14">Lined up area of effect</a>
+                Bit 14: <b><a name="ExtFlags_BIT14">Lined up area of effect</a></b>
                 <ul>
                   <li>A line of Traveling Projectiles extends between the caster and the target, lasting one round.</li>
                   <li>
@@ -432,7 +432,7 @@ title: "PRO file format"
               </li>
 
               <li>
-                Bit 15: <a name="ExtFlags_BIT15">Rectangular area of effect</a>
+                Bit 15: <b><a name="ExtFlags_BIT15">Rectangular area of effect</a></b>
                 <ul>
                   <li>
                     Affects target(s) in range every tick for its duration. Total number of target checks:
@@ -505,13 +505,13 @@ title: "PRO file format"
                 </ul>
               </li>
 
-              <li>Bit 16: <a name="ExtFlags_BIT16">Draw behind target</a></li>
-              <li>Bit 17: <a name="ExtFlags_BIT17">Casting glow effect</a></li>
-              <li>Bit 18: <a name="ExtFlags_BIT18">Travel door</a></li>
-              <li>Bit 19: <a name="ExtFlags_BIT19">Stop/fade after hit</a></li>
+              <li>Bit 16: <b><a name="ExtFlags_BIT16">Draw behind target</a></b></li>
+              <li>Bit 17: <b><a name="ExtFlags_BIT17">Casting glow effect</a></b></li>
+              <li>Bit 18: <b><a name="ExtFlags_BIT18">Travel door</a></b></li>
+              <li>Bit 19: <b><a name="ExtFlags_BIT19">Stop/fade after hit</a></b></li>
 
               <li>
-                Bit 20: <a name="ExtFlags_BIT20">Display message</a>
+                Bit 20: <b><a name="ExtFlags_BIT20">Display message</a></b>
                 <ul>
                   <li>Activates: <code><a href="#0x30">String</a></code></li>
                   <li>
@@ -525,7 +525,7 @@ title: "PRO file format"
               </li>
 
               <li>
-                Bit 21: <a name="ExtFlags_BIT21">Random path</a>
+                Bit 21: <b><a name="ExtFlags_BIT21">Random path</a></b>
                 <ul>
                   <li>Traveling Projectile stutters towards the intended target, moving in random directions as it moves.</li>
                   <li>Priority: Suppressed by <code><a href="#ExtFlags_BIT1">Pass Target</a></code> and/or <code><a href="#ExtFlags_BIT14">Lined up AoE</a></code></li>
@@ -544,16 +544,16 @@ title: "PRO file format"
                 </ul>
               </li>
 
-              <li>Bit 22: <a name="ExtFlags_BIT22">Start random sequence</a></li>
-              <li>Bit 23: <a name="ExtFlags_BIT23">Colour pulse on hit</a></li>
-              <li>Bit 24: <a name="ExtFlags_BIT24">Touch projectile</a></li>
-              <li>Bit 25: <a name="ExtFlags_BIT25">Negate first creature target</a></li>
-              <li>Bit 26: <a name="ExtFlags_BIT26">Negate second creature target</a></li>
-              <li>Bit 27: <a name="ExtFlags_BIT27">Use either IDS</a></li>
-              <li>Bit 28: <a name="ExtFlags_BIT28">Delayed payload</a></li>
-              <li>Bit 29: <a name="ExtFlags_BIT29">Limited path count</a></li>
+              <li>Bit 22: <b><a name="ExtFlags_BIT22">Start random sequence</a></b></li>
+              <li>Bit 23: <b><a name="ExtFlags_BIT23">Colour pulse on hit</a></b></li>
+              <li>Bit 24: <b><a name="ExtFlags_BIT24">Touch projectile</a></b></li>
+              <li>Bit 25: <b><a name="ExtFlags_BIT25">Negate first creature target</a></b></li>
+              <li>Bit 26: <b><a name="ExtFlags_BIT26">Negate second creature target</a></b></li>
+              <li>Bit 27: <b><a name="ExtFlags_BIT27">Use either IDS</a></b></li>
+              <li>Bit 28: <b><a name="ExtFlags_BIT28">Delayed payload</a></b></li>
+              <li>Bit 29: <b><a name="ExtFlags_BIT29">Limited path count</a></b></li>
 
-              <li>Bit 30: <a name="ExtFlags_BIT30">IWD style check</a> (use entries from <a href="../../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a> for first and second creature target). It works similar to op<a href="../../../opcodes/bgee.htm#op318">318</a>/<a href="../../../opcodes/bgee.htm#op326">326</a>, depending on the other related flags:
+              <li>Bit 30: <b><a name="ExtFlags_BIT30">IWD style check</a></b> (use entries from <a href="../../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a> for first and second creature target). It works similar to op<a href="../../../opcodes/bgee.htm#op318">318</a>/<a href="../../../opcodes/bgee.htm#op326">326</a>, depending on the other related flags:
                 <ul>
                   <li>Default: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
                   <li><code><a href="#ExtFlags_BIT27">Use either IDS</a></code>:  Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> or matching <code><a href="#0x42">Creature type 2</a></code></li>
@@ -566,7 +566,7 @@ title: "PRO file format"
                 </ul>
               </li>
 
-              <li>Bit 31: <a name="ExtFlags_BIT31">Caster affected</a> – This is related to effect target <code>9 (Original Caster)</code>.
+              <li>Bit 31: <b><a name="ExtFlags_BIT31">Caster affected</a></b> – This is related to effect target <code>9 (Original Caster)</code>.
                 <ul>
                   <li>If this flag is set, the original caster is affected once for every target.</li>
                   <li>Without this flag, the original caster is affected only once, but only if there is at least one target.</li>
@@ -578,7 +578,7 @@ title: "PRO file format"
         <tr>
           <td>0x00030</td>
           <td>4 (strref)</td>
-          <td><a name="0x30">Displayed Message</a></td>
+          <td><b><a name="0x30">Displayed Message</a></b></td>
         </tr>
         <tr>
           <td>0x00034</td>
@@ -610,7 +610,7 @@ title: "PRO file format"
         <tr>
           <td>0x0003e</td>
           <td>2 (word)</td>
-          <td><a name="0x3E">Creature Type 1</a><br />
+          <td><b><a name="0x3E">Creature Type 1</a></b><br />
               <br />
               If Extended Flags bit 30 is unset: use IDS targets
               <ul>
@@ -634,7 +634,7 @@ title: "PRO file format"
         <tr>
           <td>0x00042</td>
           <td>2 (word)</td>
-          <td><a name="0x42">Creature Type 2</a></td>
+          <td><b><a name="0x42">Creature Type 2</a></b></td>
         </tr>
         <tr>
           <td>0x00044</td>
@@ -695,7 +695,7 @@ title: "PRO file format"
     </table>
     <br />
 
-    The following struct is added when the projectile is a single target or area effect projectile (see 'Projectile type' at offset 0x00008). It has 100h (256) bytes.<br />
+    The following struct is added when the projectile is a single target or area effect projectile (see <code><a href="#0x8">Projectile Type</a></code>). It has <code>100h</code> (<code>256</code>) bytes.<br />
     <br />
     <table border="1" width="98%">
       <colgroup>
@@ -717,53 +717,53 @@ title: "PRO file format"
           <td>BAM projectile flags
             <ul>
               <li>
-                bit 0: Enable BAM colouring (palette at 0x11c)
+                bit 0: <b><a name="Flags_BIT0">Enable BAM colouring</a></b> (palette at <code><a href="#0x11C">0x11c</a></code>)
                 <ul>
-                  <li>Activates "Projectile Color" fields (0x11c – 0x12a)</li>
+                  <li>Activates "Projectile Color" fields (<code>0x11c – 0x12a</code>)</li>
                 </ul>
               </li>
 
               <li>
-                bit 1: Enable smoke
+                bit 1: <b><a name="Flags_BIT1">Enable smoke</a></b>
                 <ul>
-                  <li>Activates "Smoke Puff Delay" field (0x12b)</li>
+                  <li>Activates <code><a href="#0x12B">Smoke Puff Delay</a></code></li>
                 </ul>
               </li>
 
               <li>
-                bit 2: Colored smoke
+                bit 2: <b><a name="Flags_BIT2">Colored smoke</a></b>
                 <ul>
                   <li>
-                    Activates "Smoke Puff Color" field (0x12c – 0x132)
+                    Activates "Smoke Puff Color" fields (<code>0x12c – 0x132</code>)
                     <ul>
-                      <li>The (0x134|Smoke Animation) must support (<code>false_color=1</code>) recoloring for these fields to do anything.</li>
+                      <li>The <code><a href="#0x134">Smoke Animation</a></code> must support (<code>false_color=1</code>) recoloring for these fields to do anything.</li>
                     </ul>
                   </li>
                 </ul>
               </li>
 
               <li>
-                bit 3: Enable area lighting usage / Not light source
+                bit 3: <b><a name="Flags_BIT3">Enable area lighting usage / Not light source</a></b>
                 <ul>
-                  <li>Darkens (0x104|Projectile Animation)</li>
+                  <li>Darkens <a href="#0x104">Projectile Animation</a></li>
                 </ul>
               </li>
 
-              <li>bit 4: Enable area height usage</li>
+              <li>bit 4: <b><a name="Flags_BIT4">Enable area height usage</a></b></li>
 
               <li>
-                bit 5: Enable shadow
+                bit 5: <b><a name="Flags_BIT5">Enable shadow</a></b>
                 <ul>
-                  <li>Activates "Shadow Animation" field (0x10c)</li>
+                  <li>Activates <code><a href="#0x10C">Shadow Animation</a></code></li>
                 </ul>
               </li>
 
               <li>
-                bit 6: Enable light spot
+                bit 6: <b><a name="Flags_BIT6">Enable light spot</a></b>
                 <ul>
-                  <li>Activates "Light Spot" fields (0x116 – 0x11b)</li>
+                  <li>Activates "Light Spot" fields (<code>0x116 – 0x11b</code>)</li>
                   <li>
-                    Compatibility: This lighting does not use the vertical offset of the Traveling projectile when using Extended Flag(BIT13|Comet).
+                    Compatibility: This lighting does not use the vertical offset of the Traveling projectile when using <code><a href="#ExtFlags_BIT13">Comet</a></code>.
                     <ul>
                       <li>It travels directly horizontal at the target's vertical location.</li>
                     </ul>
@@ -772,23 +772,23 @@ title: "PRO file format"
               </li>
 
               <li>
-                bit 7: Enable brighten flags
+                bit 7: <b><a name="Flags_BIT7">Enable brighten flags</a></b>
                 <ul>
-                  <li>Alters the appearance of the (0x104|Projectile Animation) and (0x10c|Shadow Animation).</li>
+                  <li>Alters the appearance of the <code><a href="#0x104">Projectile Animation</a></code> and <code><a href="#0x10C">Shadow Animation</a></code>.</li>
                 </ul>
               </li>
 
               <li>
-                bit 8: Low level brighten
+                bit 8: <b><a name="Flags_BIT8">Low level brighten</a></b>
                 <ul>
-                  <li>Alters the appearance of the (0x104|Projectile Animation) and (0x10c|Shadow Animation).</li>
+                  <li>Alters the appearance of the <code><a href="#0x104">Projectile Animation</a></code> and <code><a href="#0x10C">Shadow Animation</a></code>.</li>
                 </ul>
               </li>
 
               <li>
-                bit 9: High level brighten
+                bit 9: <b><a name="Flags_BIT9">High level brighten</a></b>
                 <ul>
-                  <li>Alters the appearance of the (0x104|Projectile Animation) and (0x10c|Shadow Animation).</li>
+                  <li>Alters the appearance of the <code><a href="#0x104">Projectile Animation</a></code> and <code><a href="#0x10C">Shadow Animation</a></code>.</li>
                 </ul>
               </li>
             </ul>
@@ -797,12 +797,12 @@ title: "PRO file format"
         <tr>
           <td>0x00104</td>
           <td>8 (resref)</td>
-          <td>Projectile animation (<a href="bam_v1.htm">BAM</a>)</td>
+          <td><b><a name="0x104">Projectile Animation</a></b> (<a href="bam_v1.htm">BAM</a>)</td>
         </tr>
         <tr>
           <td>0x0010c</td>
           <td>8 (resref)</td>
-          <td>Shadow animation (<a href="bam_v1.htm">BAM</a>)</td>
+          <td><b><a name="0x10C">Shadow Animation</a></b> (<a href="bam_v1.htm">BAM</a>)</td>
         </tr>
         <tr>
           <td>0x00114</td>
@@ -832,7 +832,7 @@ title: "PRO file format"
         <tr>
           <td>0x0011c</td>
           <td>8 (resref)</td>
-          <td>Palette (<a href="bmp.htm">BMP</a>)
+          <td><b><a name="0x11C">Palette</a></b> (<a href="bmp.htm">BMP</a>)
             <ul>
               <li>STTRAVL1 = Blue</li>
               <li>STTRAVL2 = Yellow</li>
@@ -853,30 +853,54 @@ title: "PRO file format"
         <tr>
           <td>0x0012b</td>
           <td>1 (byte)</td>
-          <td>Smoke puff period</td>
+          <td><b><a name="0x12B">Smoke Puff Delay</a></b></td>
         </tr>
         <tr>
           <td>0x0012c</td>
           <td>7 (bytes)</td>
           <td>Smoke colours</td>
         </tr>
+
         <tr>
           <td>0x00133</td>
           <td>1 (byte)</td>
-          <td> <div class="unknown">Face target granularity<br />
+          <td>Face target granularity / "Projectile Animation" Mirroring
             <ul>
-              <li>1  : Do not face target</li>
-              <li>5  : Mirrored eastern directions (reduced granularity)</li>
-              <li>9  : Mirrored eastern (full granularity)</li>
-              <li>16 : Mot mirrored, not reduced</li>
+              <ul>0 &longrightarrow; Do not mirror</ul>
+              <li>1 &longrightarrow; Do not face target (Do not mirror)</li>
+              <li>
+                5 &longrightarrow; Mirrored eastern directions (reduced granularity)
+                <ul>
+                  <li>First 5 Cycles are Mirrored (Horizontally and/or Vertically) to reach 16 directions.</li>
+                </ul>
+              </li>
+              <li>
+                9 &longrightarrow; Mirrored eastern (full granularity)
+                <ul>
+                  <li>First 9 Cycles are Mirrored Horizontally to reach 16 directions.</li>
+                </ul>
+              </li>
+              <li>
+                16 &longrightarrow; Mot mirrored, not reduced (Do not mirror)
+                <ul>
+                  <li>Animation contains all 16 directions.</li>
+                </ul>
+              </li>
             </ul>
           </div>
           </td>
         </tr>
+
         <tr>
           <td>0x00134</td>
           <td>2 (short)</td>
-          <td>Projectile smoke animation (<a href="../../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)</td>
+          <td>
+            <b><a name="0x134">Projectile smoke animation</a></b> (<a href="../../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)
+            <ul>
+              <li>Compatibility: Suppressed by <code><a href="#ExtFlags_BIT14">Lined up AoE</a></code>.</li>
+              <li>Compatibility: This animation follows the projectile's path when using <code><a href="#ExtFlags_BIT13">Comet</a></code>.</li>
+            </ul>
+          </td>
         </tr>
         <tr>
           <td>0x00136</td>
@@ -927,7 +951,7 @@ title: "PRO file format"
     </table>
     <br />
 
-    If the projectile is an area effect projectile then an additional struct is added to the file. It has 100h (256) bytes.<br />
+    If the projectile is an area effect projectile then an additional struct is added to the file. It has <code>100h</code> (<code>256</code>) bytes.<br />
     <br />
     <table border="1" width="98%">
       <colgroup>
@@ -948,63 +972,67 @@ title: "PRO file format"
         <td>4 (dword)</td>
         <td>Area projectile flags
           <ul>
-            <li>bit 0: Projectile remains visible at destination</li>
+            <li>bit 0: <b><a name="AreaFlags_BIT0">Trap Visible</a></b>
+              <ul>
+                <li>Projectile remains visible at destination</li>
+              </ul>
+            </li>
 
             <li>
-              bit 1: Triggered by inanimate objects
+              bit 1: <b><a name="AreaFlags_BIT1">Triggered by inanimate objects</a></b>
               <ul>
                 <li><a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Containers</a> and <a href="../ie_formats/are_v1.htm#formAREAV1_0_Info">Area Triggers</a> (Proximity/Info/Travel) within range are (also) valid targets.</li>
               </ul>
             </li>
 
             <li>
-              bit 2: Triggered on condition
+              bit 2: <b><a name="AreaFlags_BIT2">Triggered by Condition</a></b>
               <ul>
                 <li>
                   Projectile is a "Trap":
                   <ul>
-                    <li>It will only explode if a valid target is within its (0x204|Trap Size) and its (0x206|Explosion Size).</li>
-                    <li>It will explode a number of times equal to (0x216|# Repetitions).</li>
-                    <li>It will check for target's instantly and every (0x210|Explosion Frequency) ticks.</li>
+                    <li>It will only explode if a valid target is within its <code><a href="#0x204">Trap Size</a></code> and its <code><a href="#0x206">Explosion Size</a></code>.</li>
+                    <li>It will explode a number of times equal to <code><a href="#0x216"># Repetitions</a></code>.</li>
+                    <li>It will check for targets instantly and every <code><a href="#0x210">Explosion Frequency</a></code> ticks.</li>
                     <li>
-                      Option: Area Flag(BIT3|Delayed Trigger)
+                      Option: <code><a href="#AreaFlags_BIT3">Delayed Trigger</a></code>
                       <ul>
                         <li>Subsequent checks will only explode after two sequential checks are passed.</li>
                       </ul>
                     </li>
                     <li>
-                      Option: Area Flag(BIT11|Cone Shaped) – Does not create a traditional "Trap"
+                      Option: <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code> – Does not create a traditional "Trap"
                       <ul>
                         <li>It will only explode if a valid target is within its (0x206|Explosion Size) and (0x224|Cone Width)</li>
-                        <li>It will check for targets within its (0x206|Explosion Size) every (0x210|Explosion Frequency) ticks.</li>
-                        <li>Projectile terminates after a number of checks equal to its (0x216|# Repetitions), whether it explodes or not.</li>
+                        <li>It will check for targets within its <code><a href="#0x206">Explosion Size</a></code> every <code><a href="#0x210">Explosion Frequency</a></code> ticks.</li>
+                        <li>Projectile terminates after a number of checks equal to its <code><a href="#0x216"># Repetitions</a></code>, whether it explodes or not.</li>
                       </ul>
                     </li>
                   </ul>
                 </li>
-                <li>Compatibility: Suppressed by Extended Flag(BIT15|Rectangular AoE)</li>
+                <li>Compatibility: Suppressed by <code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code></li>
               </ul>
             </li>
 
             <li>
-              bit 3: Trigger during delay / Delayed trigger
+              bit 3: <b><a name="AreaFlags_BIT3">Delayed Trigger</a></b>
               <ul>
                 <li>
-                  Compatibility: Area Flag(BIT14|Skip First Condition)
+                  Compatibility: <code><a href="#AreaFlags_BIT14">Skip First Condition</a></code>
                   <ul>
-                    <li>First explosion is instead delayed by (0x210|Explosion Frequency) ticks.</li>
+                    <li>First explosion is instead delayed by <code><a href="#0x210">Explosion Frequency</a></code> ticks.</li>
                   </ul>
                 </li>
                 <li>
-                  Compatibility: Area Flag(BIT2|Triggered by Condition)
+                  Compatibility: <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code>
                   <ul>
                     <li>Target checks after the first will only explode after two sequential checks are passed.</li>
                   </ul>
                 </li>
                 <li>
-                  Compatibility: Extended Flag(BIT15|Rectangular AoE)
+                  Compatibility: <code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code>
                   <ul>
-                    <li>Forces this option to affect targets(s) in range (0x216|# Repetitions) times, checked every (0x210|Explosion Frequency) ticks.</li>
+                    <li>Forces this option to affect targets(s) in range <code><a href="#0x216"># Repetitions</a></code> times, checked every <code><a href="#0x210">Explosion Frequency</a></code> ticks.</li>
                     <li>Normally it would affect target(s) in range every tick for its duration.</li>
                     <li>This makes it trigger more similarly to other repeating Area Effect projectiles.</li>
                   </ul>
@@ -1012,51 +1040,51 @@ title: "PRO file format"
               </ul>
             </li>
 
-            <li>bit 4: Use secondary projectile
+            <li>bit 4: <b><a name="AreaFlags_BIT4">Use secondary projectile</a></b>
               <ul>
                 <li>
-                  Dependency: Spell Target(Creature)
+                  Dependency: Spell Target(<code>Creature</code>)
                   <ul>
-                    <li>Activates the (0x214|Secondary Projectile) field.</li>
-                    <li>Upon exploding, the (0x214|Secondary Projectile) is fired every tick at the targeted creature for the duration of the projectile.</li>
+                    <li>Activates the <code><a href="#0x214">Secondary Projectile</a></code> field.</li>
+                    <li>Upon exploding, the <code><a href="#0x214">Secondary Projectile</a></code> is fired every tick at the targeted creature for the duration of the projectile.</li>
                     <li>
-                      The (0x214|Secondary Projectile) normally does NOT deliver any effects.
+                      The <code><a href="#0x214">Secondary Projectile</a></code> normally does NOT deliver any effects.
                       <ul>
                         <li>It is strictly aesthetic, it carries no effects from the spell/item. A variety of projectiles use these to generate their explosion animation (via another projectile), instead of using a VVC. For instance, all of the "Sparkle Area (color) (party/not)" projectiles do this.</li>
                       </ul>
                     </li>
-                    <li>Duration is controlled by (0x216|# Repetitions), (0x210|Explosion Frequency), and Area Flag(BIT14|Skip First Condition).</li>
+                    <li>Duration is controlled by <code><a href="#0x216"># Repetitions</a></code>, <code><a href="#0x210">Explosion Frequency</a></code>, and <code><a href="#AreaFlags_BIT14">Skip First Condition</a></code>.</li>
                     <li>
-                      Total number of (0x214|Secondary Projectile)s fired:
+                      Total number of <code><a href="#0x214">Secondary Projectile</a></code>s fired:
                       <ul>
                         <li>
-                          <code>If (0x216|# Repetitions) < 2</code>:
+                          <code>If <a href="#0x216"># Repetitions</a> < 2</code>:
                           <ul>
-                            <li><code>If Area Flag(BIT14|Skip First Condition):	(0x210|Explosion Frequency) + 1</code></li>
+                            <li><code>If <a href="#AreaFlags_BIT14">Skip First Condition</a>: <a href="#0x210">Explosion Frequency</a> + 1</code></li>
                             <li><code>Else: 1</code></li>
                           </ul>
                         </li>
                         <li>
-                          <code>If (0x216|# Repetitions) > 1</code>:
+                          <code>If <a href="#0x216"># Repetitions</a> > 1</code>:
                           <ul>
-                            <li><code>If Area Flag(BIT14|Skip First Condition): ((0x210|Explosion Frequency) + 1) * (0x216|# Repetitions)</code></li>
-                            <li><code>Else: ((0x210|Explosion Frequency) + 1) * ((0x216|# Repetitions) - 1) + 1</code></li>
+                            <li><code>If <a href="#AreaFlags_BIT14">Skip First Condition</a>: (<a href="#0x210">Explosion Frequency</a> + 1) * <a href="#0x216"># Repetitions</a></code></li>
+                            <li><code>Else: (<a href="#0x210">Explosion Frequency</a> + 1) * (<a href="#0x216"># Repetitions</a> - 1) + 1</code></li>
                           </ul>
                         </li>
                       </ul>
                     </li>
                     <li>
-                      Option: Extended Flag(BIT0|Bounce from walls)
+                      Option: <code><a href="#ExtFlags_BIT0">Bounce from Walls</a></code>
                       <ul>
-                        <li>Alters the (0x214|Secondary Projectile) to deliver effects.</li>
-                        <li>Alters the (0x214|Secondary Projectile) to originate from the targeted creature, rather than the caster.</li>
-                        <li>The (0x214|Secondary Projectile) will be oriented in a random direction.</li>
-                        <li>Compatibility: With Area Flag(BIT11|Cone Shaped), the (0x214|Secondary Projectile) will instead target the caster's location (but not the caster directly).</li>
+                        <li>Alters the <code><a href="#0x214">Secondary Projectile</a></code> to deliver effects.</li>
+                        <li>Alters the <code><a href="#0x214">Secondary Projectile</a></code> to originate from the targeted creature, rather than the caster.</li>
+                        <li>The <code><a href="#0x214">Secondary Projectile</a></code> will be oriented in a random direction.</li>
+                        <li>Compatibility: With <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code>, the <code><a href="#0x214">Secondary Projectile</a></code> will instead target the caster's location (but not the caster directly).</li>
                         <li>
-                          The Traveling Projectile of the (0x214|Secondary Projectile) will terminate after a number of ticks equal to (0x210|Explosion Frequency).
+                          The Traveling Projectile of the <code><a href="#0x214">Secondary Projectile</a></code> will terminate after a number of ticks equal to <code><a href="#0x210">Explosion Frequency</a></code>.
                           <ul>
                             <li>In order to hit anything, it must itself be an Area-Effect projectile (or Pass-Target projectile). As already stated, this mode only functions when the target of the spell/item is a creature (not a point), and it will only fire on that creature, not all targets in range.</li>
-                            <li>Compatibility: Projectiles using Extended Flag(BIT29|Limited Path Count) travel for their normal distance/duration.</li>
+                            <li>Compatibility: Projectiles using <code><a href="#ExtFlags_BIT29">Limited Path Count</a></code> travel for their normal distance/duration.</li>
                           </ul>
                         </li>
                       </ul>
@@ -1068,17 +1096,17 @@ title: "PRO file format"
               </ul>
             </li>
 
-            <li>bit 5: Use fragment graphics</li>
+            <li>bit 5: <b><a name="AreaFlags_BIT5">Use fragment graphics</a></b></li>
 
             <li>
-              bit 6: Affect only enemies
+              bit 6: <b><a name="AreaFlags_BIT6">Affect only enemies</a></b>
               <ul>
-                <li>Activates Area Flag(BIT7|Affect only allies)</li>
+                <li>Activates <code><a href="#AreaFlags_BIT7">Affect only allies</a></code></li>
               </ul>
             </li>
 
             <li>
-              bit 7: Affect only allies
+              bit 7: <b><a name="AreaFlags_BIT7">Affect only allies</a></b>
               <ul>
                 <li>Flag Off: Projectile will only target enemies of the caster.</li>
                 <li>Flag On: Projectile will only target allies of the caster.</li>
@@ -1086,44 +1114,44 @@ title: "PRO file format"
             </li>
 
             <li>
-              bit 8: Number of triggers equal to cast mage level
+              bit 8: <b><a name="AreaFlags_BIT8">Mage-level duration</a></b>
               <ul>
-                <li>(0x216|# Repetitions) is replaced with the caster's Wizard Casting Level.</li>
+                <li><code><a href="#0x216"># Repetitions</a></code> is replaced with the caster's Wizard Casting Level.</li>
                 <li>This ignores <a href="../../opcodes/bgee.htm#op191">opcode #191</a>.</li>
                 <li>(Possibly ignores Wild Mages random casting level modifier as well)</li>
               </ul>
             </li>
 
             <li>
-              bit 9: Number of triggers equal to cast cleric level
+              bit 9: <b><a name="AreaFlags_BIT9">Cleric-level duration</a></b>
               <ul>
-                <li>(0x216|# Repetitions) is replaced with the caster's Priest Casting Level.</li>
+                <li><code><a href="#0x216"># Repetitions</a></code> is replaced with the caster's Priest Casting Level.</li>
                 <li>This ignores <a href="../../opcodes/bgee.htm#op191">opcode #191</a>.</li>
               </ul>
             </li>
 
             <li>bit 10: Use VVC</li>
 
-            <li>bit 11: Cone shape
+            <li>bit 11: <b><a name="AreaFlags_BIT11">Cone-shaped</a></b>
               <ul>
                 <li>It requires all targets to be in the caster's line of sight.</li>
                 <li>Cone-shaped projectiles automatically exclude the caster.</li>
-                <li>Compatibility: Not usable with Extended Flag(BIT13|Comet).</li>
+                <li>Compatibility: Not usable with <code><a href="#ExtFlags_BIT13">Comet</a></code>.</li>
                 <li>
                   Area: Restricted to arc oriented in direction of casting.
                   <ul>
-                    <li>Area radius remains = (0x206|Explosion Size) pixels.</li>
-                    <li><code>Arc Size = direction of casting +/- (0x224|Cone Width) / 2 degrees</code></li>
+                    <li>Area radius remains = <code><a href="#0x206">Explosion Size</a></code> pixels.</li>
+                    <li><code>Arc Size = direction of casting +/- <a href="#0x224">Cone Width</a> / 2 degrees</code></li>
                   </ul>
                 </li>
                 <li>
                   Projectile explodes instantly, at caster's location. The following originate from the caster's location:
                   <ul>
-                    <li>Area Flag(BIT0|Trap Visible), (0x21a|Explosion Projectile), (0x217|Explosion Effect), (0x21c|Explosion Animation)</li>
+                    <li><code><a href="#AreaFlags_BIT0">Trap Visible</a></code>, <code><a href="#0x21A">Explosion Projectile</a></code>, <code><a href="#0x217">Explosion Effect</a></code>, <code><a href="#0x21C">Explosion Animation</a></code></li>
                     <li>
-                      The instant explosion effectively suppresses the (0x100 – 0x1ff|Traveling Projectile Animation), and all flags/fields that affect it.
+                      The instant explosion effectively suppresses the <code>0x100 – 0x1ff|Traveling Projectile Animation</code>, and all flags/fields that affect it.
                       <ul>
-                        <li>Except as used by Area Flag(BIT0|Trap Visible).</li>
+                        <li>Except as used by <code><a href="#AreaFlags_BIT0">Trap Visible</a></code>.</li>
                       </ul>
                     </li>
                   </ul>
@@ -1131,76 +1159,76 @@ title: "PRO file format"
                 <li>
                   Compatibility:
                   <ul>
-                    <li>Extended Flag(BIT15|Rectangular AoE) will override the changes to the affected area, but not changes to the visual explosion.</li>
+                    <li><code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code> will override the changes to the affected area, but not changes to the visual explosion.</li>
                   </ul>
                 </li>
-                <li>Suppresses: Extended Flag(BIT1|Pass Target)</li>
+                <li>Suppresses: <code><a href="#ExtFlags_BIT1">Pass Target</a></code></li>
                 <li>
-                  Option: Area Flag(BIT2|Triggered By Condition) – Explosion only occurs if valid targets are within range when cast.
+                  Option: <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code> – Explosion only occurs if valid targets are within range when cast.
                   <ul>
                     <li>Does not create a traditional "Trap".</li>
-                    <li>Area Flag(BIT0|Trap Visible) still plays as normal.</li>
+                    <li><code><a href="#AreaFlags_BIT0">Trap Visible</a></code> still plays as normal.</li>
                   </ul>
                 </li>
                 <li>
-                  Option: Extended Flag(BIT3|Hit Immediately) – Explosion occurs at targeted location, instead of caster's location.
+                  Option: <code><a href="#ExtFlags_BIT3">Hit Immediately</a></code> – Explosion occurs at targeted location, instead of caster's location.
                   <ul>
                     <li>Caster is not affected by the explosion, even if they are in the affected area.</li>
-                    <li>Option: Spell Target(Creature) – Cone arc is oriented in the opposite direction of the targeted creature's current facing.</li>
-                    <li>Option: Spell Target(Location) – Cone arc is oriented to the Right/East.</li>
+                    <li>Option: Spell Target(<code>Creature</code>) – Cone arc is oriented in the opposite direction of the targeted creature's current facing.</li>
+                    <li>Option: Spell Target(<code>Location</code>) – Cone arc is oriented to the Right/East.</li>
                   </ul>
                 </li>
                 <li>
-                  Option: Extended Flag(BIT12|Falling Path) – Explosion occurs at targeted location, instead of caster's location.
+                  Option: <code><a href="#ExtFlags_BIT12">Falling Path</a></code> – Explosion occurs at targeted location, instead of caster's location.
                   <ul>
                     <li>Caster is not affected by the explosion, even if they are in the affected area.</li>
                     <li>Cone arc is oriented to the Right/East.</li>
-                    <li>Suppressed: Area Flag(BIT0|Trap Visible)</li>
+                    <li>Suppressed: <code><a href="#AreaFlags_BIT0">Trap Visible</a></code></li>
                   </ul>
                 </li>
               </ul>
             </li>
 
             <li>
-              bit 12: Affect objects through wall, mountain, building, and off-area
+              bit 12: <b><a name="AreaFlags_BIT12">Ignore LOS</a></b>
               <ul>
-                <li>Without this flag, (0x21c|Explosion Size) is blocked by walls.</li>
-                <li>With this flag, (0x21c|Explosion Size) is not blocked by walls.</li>
+                <li>Without this flag, <code><a href="#0x21C">Explosion Animation</a></code> is blocked by walls.</li>
+                <li>With this flag, <code><a href="#0x21C">Explosion Animation</a></code> is not blocked by walls.</li>
               </ul>
             </li>
 
-            <li>bit 13: Check triggers from animation frame 30 (req. bit 0)</li>
+            <li>bit 13: <b><a name="AreaFlags_BIT13">Delayed explosion</a></b></li>
 
             <li>
-              bit 14: Delayed explosion / Skip first condition
+              bit 14: <b><a name="AreaFlags_BIT14">Skip first condition</a></b>
               <ul>
-                <li>First explosion does not trigger any (0x21a|Explosion Projectile) (no one is affected), and does not count towards (0x216|# Repetitions).</li>
-                <li>Option: Area Flag(BIT3|Delayed Trigger) – First explosion is instead delayed (0x210|Explosion Frequency) ticks, and otherwise works as normal.</li>
+                <li>First explosion does not trigger any <code><a href="#0x21A">Explosion Projectile</a></code> (no one is affected), and does not count towards <code><a href="#0x216"># Repetitions</a></code>.</li>
+                <li>Option: <code><a href="#AreaExtFlags_BIT3">Delayed Trigger</a></code> – First explosion is instead delayed <code><a href="#0x210">Explosion Frequency</a></code> ticks, and otherwise works as normal.</li>
               </ul>
             </li>
 
             <li>
-              bit 15: Affect only one target
+              bit 15: <b><a name="AreaFlags_BIT15">Single target</a></b>
               <ul>
-                <li>Activates fields (0x244|# Targeting Dice) and (0x246|Targeting Dice Size).</li>
-                <li>Activates Area Extended Flag[(BIT10|Use HD Lookup) and (BIT15|Hit Point Limit)].</li>
-                <li>This field limits the number of valid targets for each explosion to <code>XdY</code>, where X = (0x244|# Targeting Dice), and Y = (0x246|Targeting Dice Size).</li>
+                <li>Activates fields <code><a href="#0x244"># dice for multiple targets</a></code> and <code><a href="#0x246">Dice size for multiple targets</a></code>.</li>
+                <li>Activates <code><a href="#AreaExtFlags_BIT10">Use HD lookup</a></code> and <code><a href="#AreaExtFlags_BIT15">Hit Point Limit</a></code>.</li>
+                <li>This field limits the number of valid targets for each explosion to <code>XdY</code>, where <code>X = <a href="#0x244"># dice for multiple targets</a></code>, and <code>Y = <a href="#0x246">Dice size for multiple targets</a></code>.</li>
                 <li>
-                  Option: Area Extended Flag(BIT10|Use HD Lookup)
+                  Option: <code><a href="#AreaExtFlags_BIT10">Use HD lookup</a></code>
                   <ul>
                     <li>
-                      Each explosion will only affect targets whose HD/level is equal to or less than <code>XdY</code>, where X = (0x244|# Targeting Dice), and Y = (0x246|Targeting Dice Size).
+                      Each explosion will only affect targets whose HD/level is equal to or less than <code>XdY</code>, where <code>X = <a href="#0x244"># dice for multiple targets</a></code>, and <code>Y = <a href="#0x246">Dice size for multiple targets</a></code>.
                       <ul>
-                        <li>(BUG, at least on EE games) Regardless of Dice values, it cannot affect creature's whose HD/Level is 9 or greater.</li>
+                        <li>(BUG, at least on EE games) Regardless of Dice values, it cannot affect creatures whose HD/Level is 9 or greater.</li>
                       </ul>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  Option: Area Extended Flag(BIT15|Hit Point Limit)
+                  Option: <code><a href="#AreaExtFlags_BIT15">Hit Point Limit</a></code>
                   <ul>
-                    <li>Each explosion will only affect targets whose current Hit Points are equal or less than (0x246|Targeting Dice Size).</li>
-                    <li>Each explosion will only affect a total number of targets whose current Hit Point total is equal or less than (0x244|# Targeting Dice).</li>
+                    <li>Each explosion will only affect targets whose current Hit Points are equal or less than <a href="#0x246">Dice size for multiple targets</a>.</li>
+                    <li>Each explosion will only affect a total number of targets whose current Hit Point total is equal or less than <code><a href="#0x244"># dice for multiple targets</a></code>.</li>
                   </ul>
                 </li>
               </ul>
@@ -1209,31 +1237,35 @@ title: "PRO file format"
           Further bits are unused
         </td>
       </tr>
+
       <tr>
         <td>0x00202</td>
         <td>2 (word)</td>
-        <td>Ray count (EE only...?)
+        <td><b><a name="0x202">Ray Count</a></b> (EE only...?)
           <ul>
-            <li>Suppresses the "Secondary Projectile" flag (BIT4 @ 0x200).</li>
-            <li>It causes the Explosion Projectile to be fired (Ray count) amount of times, starting at 135 degrees (South-East), and increasing by (Cone Width) degrees each time. For instance, 4 Rays at 90 Cone Width fires the Explosion Projectile SE, SW, NW, and NE.</li>
+            <li>Suppresses the <code><a href="#AreaFlags_BIT4">Secondary Projectile</a></code> flag.</li>
+            <li>It causes the Explosion Projectile to be fired (Ray Count) amount of times, starting at 135 degrees (South-East), and increasing by <code><a href="#0x224">Cone Width</a></code> degrees each time. For instance, 4 Rays at 90 Cone Width fires the Explosion Projectile SE, SW, NW, and NE.</li>
             <li>The Explosion Projectile must be either Area-Effect or Pass-Target (BIT1 @ 0x2c) to affect anything.</li>
           </ul>
         </td>
       </tr>
+
       <tr>
         <td>0x00204</td>
         <td>2 (word)</td>
-        <td>Trigger radius/Trap Size (divide by approx 8.5 to receive diameter in feet)<br><br>
+        <td><b><a name="0x204">Trigger Radius/Trap Size</a></b> (divide by approx 8.5 to receive diameter in feet)<br><br>
           It is generally set equal to Explosion Size, unless you're using the "Rectangular AoE" flag (Wall spells) or the "Triggered by Condition" flag (actual Traps).
         </td>
       </tr>
+
       <tr>
         <td>0x00206</td>
         <td>2 (word)</td>
-        <td>Area of effect/Explosion Size (divide by approx 8.5 to receive diameter in feet)<br><br>
+        <td><b><a name="0x206">Area of effect/Explosion Size</a></b> (divide by approx 8.5 to receive diameter in feet)<br><br>
           It defines the radius of the projectile, 16 units = 1 foot. Default visual range = 448. 
         </td>
       </tr>
+
       <tr>
         <td>0x00208</td>
         <td>8 (resref)</td>
@@ -1242,7 +1274,7 @@ title: "PRO file format"
       <tr>
         <td>0x00210</td>
         <td>2 (word)</td>
-        <td>Explosion delay (Frequency)<br><br>
+        <td><b><a name="0x210">Explosion delay (Frequency)</a></b><br><br>
           It is a measure of the number of ticks between target checks, where 100 = 1 round.<br>
           Subsequently, it also determines how long an Area-Effect projectile lasts, as the total duration is generally <code>Frequency * #Repetitions (@ 0x216)</code>.
         </td>
@@ -1255,22 +1287,22 @@ title: "PRO file format"
       <tr>
         <td>0x00214</td>
         <td>2 (word)</td>
-        <td>Secondary projectile (<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>-1)</td>
+        <td><b><a name="0x214">Secondary Projectile</a></b> (<code><a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> - 1</code>)</td>
       </tr>
       <tr>
         <td>0x00216</td>
         <td>1 (byte)</td>
-        <td>Trigger count (used if bits 8 and 9 at 0x200 are not set)</td>
+        <td><b><a name="0x216">Trigger Count/# Repetitions</a></b> (used if bits 8 and 9 at 0x200 are not set)</td>
       </tr>
       <tr>
         <td>0x00217</td>
         <td>1 (byte)</td>
-        <td>Explosion animation (<a href="../../files/ids/bgee/fireball.htm">FIREBALL.IDS</a>)</td>
+        <td><b><a name="0x217">Explosion Animation</a></b> (<a href="../../files/ids/bgee/fireball.htm">FIREBALL.IDS</a>)</td>
       </tr>
       <tr>
         <td>0x000218</td>
         <td>1 (byte)</td>
-        <td>Explosion colour</td>
+        <td><b><a name="0x218">Explosion Color</a></b></td>
       </tr>
       <tr>
         <td>0x000219</td>
@@ -1280,17 +1312,17 @@ title: "PRO file format"
       <tr>
         <td>0x00021a</td>
         <td>2 (bytes)</td>
-        <td>Explosion projectile (<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>), played on affected creatures</td>
+        <td><b><a name="0x21A">Explosion Projectile</a></b> (<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>), played on affected creatures</td>
       </tr>
       <tr>
         <td>0x00021c</td>
         <td>8 (resref)</td>
-        <td>Explosion animation (<a href="vvc_v1.htm">VVC</a>)</td>
+        <td><b><a name="0x21C">Explosion Animation</a></b> (<a href="vvc_v1.htm">VVC</a>)</td>
       </tr>
       <tr>
         <td>0x000224</td>
         <td>2 (word)</td>
-        <td>Cone width (1 to 359)</td>
+        <td><b><a name="0x224">Cone Width</a></b> (1 to 359)</td>
       </tr>
       <tr>
         <td colspan="3"><b>The following fields are used by Enhanced Editions games only:</b></td>
@@ -1303,12 +1335,12 @@ title: "PRO file format"
       <tr>
         <td>0x00228</td>
         <td>8 (resref)</td>
-        <td>Spread animation (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)</td>
+        <td><b><a name="0x228">Spread Animation</a></b> (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)</td>
       </tr>
       <tr>
         <td>0x00230</td>
         <td>8 (resref)</td>
-        <td>Ring animation (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)</td>
+        <td><b><a name="0x230">Ring Animation</a></b> (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)</td>
       </tr>
       <tr>
         <td>0x00238</td>
@@ -1321,44 +1353,44 @@ title: "PRO file format"
         <td>Extended flags
           <ul>
             <li>
-              Bit 0: Paletted ring
+              Bit 0: <b><a name="AreaExtFlags_BIT0">Paletted ring</a></b>
               <ul>
-                <li>(Defunct) Should cause (0x230|Ring Animation) to be recolored by the (0x218|Explosion Color) field, but instead just recolors it all black.</li>
+                <li>(Defunct) Should cause <code><a href="#0x230">Ring Animation</a></code> to be recolored by the <code><a href="#0x218">Explosion Color</a></code> field, but instead just recolors it all black.</li>
               </ul>
             </li>
 
             <li>
-              Bit 1: Random speed
+              Bit 1: <b><a name="AreaExtFlags_BIT1">Random speed</a></b>
               <ul>
                 <li>
-                  Affects expansion rate of (0x230|Ring Animation) and (0x228|Spread Animation), but not certain of how.
+                  Affects expansion rate of <code><a href="#0x230">Ring Animation</a></code> and <code><a href="#0x228">Spread Animation</a></code>, but not certain of how.
                   <ul>
-                    <li>Might require (BIT2|Start Scattered) and/or (BIT4|Repeat Scattering).</li>
+                    <li>Might require <code><a href="#AreaExtFlags_BIT2">Start Scattered</a></code> and/or <code><a href="#AreaExtFlags_BIT4">Repeat Scattering</a></code>.</li>
                   </ul>
                 </li>
               </ul>
             </li>
 
             <li>
-              Bit 2: Start scattered
+              Bit 2: <b><a name="AreaExtFlags_BIT2">Start scattered</a></b>
               <ul>
-                <li>Causes each of the (0x21c|Explosion Animation)s to play at random intervals instead of looping continuously throughout the duration.</li>
+                <li>Causes each of the <code><a href="#0x21C">Explosion Animation</a></code>s to play at random intervals instead of looping continuously throughout the duration.</li>
               </ul>
             </li>
 
             <li>
-              Bit 3: Paletted centre
+              Bit 3: <b><a name="AreaExtFlags_BIT3">Paletted center</a></b>
               <ul>
-                <li>Cause the (0x21c|Explosion Animation) to be recolored by the (0x218|Explosion Color) field.</li>
+                <li>Cause the <code><a href="#0x21C">Explosion Animation</a></code> to be recolored by the <code><a href="#0x218">Explosion Color</a></code> field.</li>
               </ul>
             </li>
 
-            <li>Bit 4: Repeat scattering</li>
+            <li>Bit 4: <b><a name="AreaExtFlags_BIT4">Repeat scattering</a></b></li>
 
             <li>
-              Bit 5: Paletted animation
+              Bit 5: <b><a name="AreaExtFlags_BIT5">Paletted animation</a></b>
               <ul>
-                <li>(Defunct) Should cause (0x228|Spread Animation) to be recolored by the (0x218|Explosion Color) field, but instead just recolors it all black.</li>
+                <li>(Defunct) Should cause <code><a href="#0x228">Spread Animation</a></code> to be recolored by the <code><a href="#0x218">Explosion Color</a></code> field, but instead just recolors it all black.</li>
               </ul>
             </li>
 
@@ -1367,17 +1399,17 @@ title: "PRO file format"
             <li>Bit 8: <span class="unknown"> Unused </span></li>
 
             <li>
-              Bit 9: Oriented fireball puffs
+              Bit 9: <b><a name="AreaExtFlags_BIT9">Oriented fireball puffs</a></b>
               <ul>
-                <li>Will orient the (0x230|Ring Animation) in the direction it's travelling.</li>
+                <li>Will orient the <code><a href="#0x230">Ring Animation</a></code> in the direction it's travelling.</li>
                 <li>It can only mirror horizontally, not vertically. The animation will need at least these 9 directions to be properly oriented: S, SSW, SW, WSW, W, WNW, NW, NNW, N</li>
               </ul>
             </li>
 
-            <li>Bit 10: Use hit dice lookup<br><br>
+            <li>Bit 10: <b><a name="AreaExtFlags_BIT10">Use hit dice lookup</a></b>
               <ul>
                 <li>
-                  Each explosion will only affect targets whose HD/level is equal to or less than <code>XdY</code>, where <code>X = (0x244|# Targeting Dice)</code>, and <code>Y = (0x246|Targeting Dice Size)</code>.
+                  Each explosion will only affect targets whose HD/level is equal to or less than <code>XdY</code>, where <code>X = <a href="#0x244"># dice for multiple targets</a></code>, and <code>Y = <a href="#0x246">Dice size for multiple targets</a></code>.
                   <ul>
                     <li>(BUG, at least on EE games) Regardless of Dice values, it cannot affect creatures whose HD/Level is 9 or greater (hardcoded for the 6th–level spell 'Death Spell').</li>
                   </ul>
@@ -1389,38 +1421,41 @@ title: "PRO file format"
             <li>Bit 12: <span class="unknown"> Unused </span></li>
 
             <li>
-              Bit 13: Blended area/ring animation
+              Bit 13: <b><a name="AreaExtFlags_BIT13">Blend area/ring animation</a></b>
               <ul>
-                <li>Will add transparency to the (0x21c|Explosion Animation), (0x228|Spread Animation), and (0x230|Ring Animation).</li>
+                <li>Will add transparency to the <code><a href="#0x21C">Explosion Animation</a></code>, <code><a href="#0x228">Spread Animation</a></code>, and <code><a href="#0x230">Ring Animation</a></code>.</li>
               </ul>
             </li>
 
             <li>
-              Bit 14: Glowing area/ring animation
+              Bit 14: <b><a name="AreaExtFlags_BIT14">Glow area/ring animation</a></b>
               <ul>
-                <li>Will brighten the (0x21c|Explosion Animation), (0x228|Spread Animation), and (0x230|Ring Animation). (Generally make it "glow")</li>
+                <li>Will brighten the <code><a href="#0x21C">Explosion Animation</a></code>, <code><a href="#0x228">Spread Animation</a></code>, and <code><a href="#0x230">Ring Animation</a></code>. (Generally make it "glow")</li>
               </ul>
             </li>
 
-            <li>Bit 15: Hit point limit – Used in combination with Area Flag(BIT15|Single Target) and Extended Area Flag(BIT10|Use HD Lookup):
+            <li>Bit 15: <b><a name="AreaExtFlags_BIT15">Hit point limit</a></b> – Used in combination with <code><a href="#AreaFlags_BIT15">Single Target</a></code> and <a href="#AreaExtFlags_BIT10">Use HD Lookup</a>:
               <ul>
-                <li>Each explosion will only affect targets whose current Hit Points are equal or less than (0x246|Targeting Dice Size).</li>
-                <li>Each explosion will only affect a total number of targets whose current Hit Point total is equal or less than (0x244|# Targeting Dice).</li>
+                <li>Each explosion will only affect targets whose current Hit Points are equal or less than <code><a href="#0x246">Dice size for multiple targets</a></code>.</li>
+                <li>Each explosion will only affect a total number of targets whose current Hit Point total is equal or less than <code><a href="#0x244"># dice for multiple targets</a></code>.</li>
               </ul>
             </li>
           </ul>
         </td>
       </tr>
+
       <tr>
         <td>0x00244</td>
         <td>2 (word)</td>
-        <td>Dice thrown for multiple targets</td>
+        <td><b><a name="0x244"># dice for multiple targets</a></b></td>
       </tr>
+
       <tr>
         <td>0x00246</td>
         <td>2 (word)</td>
-        <td>Dice sides for multiple targets</td>
+        <td><b><a name="0x246">Dice size for multiple targets</a></b></td>
       </tr>
+
       <tr>
         <td>0x00248</td>
         <td>2 (word)</td>

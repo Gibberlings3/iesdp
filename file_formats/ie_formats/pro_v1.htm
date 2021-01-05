@@ -67,62 +67,129 @@ title: "PRO file format"
           <td>4 (dword)</td>
           <td>Sparking flags
             <ul>
-              <li>bit 0: Show sparkle</li>
-              <li>bit 1: <b><a name="#Behavior_BIT1">Use z coordinate</a></b></li>
-              <li>bit 2: Loop sound (0x10)</li>
-              <li>bit 3: Loop sound (0x18)</li>
-              <li>bit 4: Do not affect direct target (a.k.a. exclude caster)</li>
-              <li>bit 5: Draw below animate objects</li>
-              <li>bit 6: Allow saving game (EE)</li>
-              <li>bit 7: Loop spread animation (EE)</li>
+              <li>
+                bit 0: <b><a name="Behavior_BIT0">Show sparkle</a></b>
+                <ul>
+                  <li>Sparks are identical in appearance to those created by <a href="../../opcodes/bgee.htm#op41">opcode #41</a>, using the <code>Shower</code> option.</li>
+                </ul>
+              </li>
+
+              <li>
+                bit 1: <b><a name="Behavior_BIT1">Use z coordinate</a></b>
+                <ul>
+                  <li>Traveling Projectile begins at caster's vertical height offset.</li>
+                </ul>
+              </li>
+
+              <li>
+                bit 2: <b><a name="Behavior_BIT2">Loop fire sound</a></b>
+                <ul>
+                  <li><code><a href="#0x10">Fire Sound</a></code> loops until all repetitions have fired.</li>
+                </ul>
+              </li>
+
+              <li>
+                bit 3: <b><a name="Behavior_BIT3">Loop impact sound</a></b>
+                <ul>
+                  <li><code><a href="#0x18">Impact Sound</a></code> loops until all frequencies have expired.</li>
+                </ul>
+              </li>
+
+              <li>
+                bit 4: <b><a name="Behavior_BIT4">Do not affect direct target / Ignore center</a></b>
+                <ul>
+                  <li>The Original Caster is not a valid target for "Explosion Projectile"s.</li>
+                </ul>
+              </li>
+
+              <li>bit 5: <b><a name="Behavior_BIT5">Draw below animate objects</a></b></li>
+
+              <li>
+                bit 6: <b><a name="Behavior_BIT6">Allow saving game</a></b> (EE)
+                <ul>
+                  <li>Prevents ongoing AoE projectiles from disabling Saving while they are active.</li>
+                </ul>
+              </li>
+
+              <li>bit 7: <b><a name="Behavior_BIT7">Loop spread animation</a></b> (EE)</li>
             </ul>
             Further bits are unused.
           </td>
         </tr>
+
         <tr>
           <td>0x00010</td>
           <td>8 (resref)</td>
-          <td><a href="wavc_v1.htm">WAVC file</a> (travelling)</td>
-        </tr>
-        <tr>
-          <td>0x00018</td>
-          <td>8 (resref)</td>
-          <td><a href="wavc_v1.htm">WAVC file</a> (explosion/reach destination)</td>
-        </tr>
-        <tr>
-          <td>0x00020</td>
-          <td>8 (resref)</td>
-          <td>Travelling <a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a></td>
-        </tr>
-        <tr>
-          <td>0x00028</td>
-          <td>2 (word)</td>
-          <td>Spark colour (from <a href="../../files/2da/2da_bgee/sprklclr.htm">SPRKCLR.2DA</a>)
+          <td>
+            <b><a name="0x10">Fire Sound</a></b> (<a href="wavc_v1.htm">WAVC file</a>) (travelling)
             <ul>
-              <li>0 = Crashes</li>
-              <li>1 = Black</li>
-              <li>2 = Blue</li>
-              <li>3 = Chromatic</li>
-              <li>4 = Gold</li>
-              <li>5 = Green</li>
-              <li>6 = Purple</li>
-              <li>7 = Red</li>
-              <li>8 = White</li>
-              <li>9 = Ice</li>
-              <li>10 = Stone</li>
-              <li>11 = Magenta</li>
-              <li>12 = Orange</li>
+              <li>Sound begins playing immediately.</li>
             </ul>
           </td>
         </tr>
+
+        <tr>
+          <td>0x00018</td>
+          <td>8 (resref)</td>
+          <td>
+            <b><a name="0x18">Impact Sound</a></b> (<a href="wavc_v1.htm">WAVC file</a>) (explosion/reach destination)
+            <ul>
+              <li>Sound begins playing when Traveling Projectile reaches target.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>0x00020</td>
+          <td>8 (resref)</td>
+          <td>
+            <b><a name="0x20">Source Animation</a></b> (<a href="vef_v1.htm">VEF</a> &gt; <a href="vvc_v1.htm">VVC</a> &gt; <a href="bam_v1.htm">BAM</a>)
+            <ul>
+              <li>Animation travels to targeted location at &plus;50&percnt; speed.</li>
+              <li>Animation plays only once, terminating when it ends.</li>
+              <li>Looping animations continue to play until they reach the target.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>0x00028</td>
+          <td>2 (word)</td>
+          <td>
+            <b><a name="0x28">Particle Color</a></b> (from <a href="../../files/2da/2da_bgee/sprklclr.htm">SPRKCLR.2DA</a>)
+            <ul>
+              <li>Color of Sparks created by <code><a href="#Behavior_BIT0">Show Sparks</a></code>.</li>
+            </ul>
+          </td>
+        </tr>
+
         <tr>
           <td colspan="3"><b>The following fields are used by Enhanced Editions games only:</b></td>
         </tr>
+
         <tr>
           <td>0x0002a</td>
           <td>2 (word)</td>
-          <td><b><a name="0x2A">Projectile Width</a></b></td>
+          <td>
+            <b><a name="0x2A">Projectile Width</a></b>
+            <ul>
+              <li>
+                w/ <code><a href="#ExtFlags_BIT1">Pass Target</a></code>: Proximity Radius (pixels) of Traveling Projectile.
+                <ul>
+                  <li>Value is Horizontal Pixels, &frac34; value is Vertical Pixels, <code>16 (12) = 1 foot</code>.</li>
+                  <li>Radius will be 2 more pixels than specified value.</li>
+                </ul>
+              </li>
+              <li>
+                w/ <code><a href="#ExtFlags_BIT13">Comet</a></code>: Relative horizontal offset of Traveling Projectile origin.
+                <ul>
+                  <li>The exact formula is unknown as of now...</li>
+                </ul>
+              </li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x0002c</td>
           <td>4 (dword)</td>
@@ -253,7 +320,35 @@ title: "PRO file format"
               </li>
 
               <li>Bit 6: <b><a name="ExtFlags_BIT6">Start random frame</a></b></li>
-              <li>Bit 7: <b><a name="ExtFlags_BIT7">Pillar</a></b></li>
+
+              <li>
+                Bit 7: <b><a name="ExtFlags_BIT7">Pillar</a></b>
+                <ul>
+                  <li>All cycles of <code><a href="#0x104">Projectile Animation</a></code> are displayed simultaneously, stacked vertically.</li>
+                  <li>
+                    Compatibility: <code><a href="#ExtFlags_BIT13">Comet</a></code> &longrightarrow; The Traveling Projectile does not use the vertical offset of the Comet trajectory.
+                    <ul>
+                      <li>Any Trailing animations of the Traveling Projectile will continue to use the Comet trajectory.</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <code><a href="#0x8">Projectile Type</a>: 2|Single Target</code>
+                    <ul>
+                      <li>The traveling projectile will terminate after one cycle of the animation, which may occur before reaching its target/destination.</li>
+                      <li><code><a href="#ExtFlags_BIT3">Hit Immediately</a></code> is recommended to avoid this.</li>
+                      <li>Suppresses: <code><a href="#ExtFlags_BIT14">Lined up AoE</a></code>, <code><a href="#0x11C">Palette</a></code>.</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <code><a href="#0x8">Projectile Type</a>: 3|Area Effect</code>
+                    <ul>
+                      <li>The animation will loop until the traveling projectile reaches its target/destination.</li>
+                      <li><code><a href="#0x11C">Palette</a></code> is not suppressed.</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
               <li>Bit 8: <b><a name="ExtFlags_BIT8">Semi-transparent trail puff VEF</a></b></li>
               <li>Bit 9: <b><a name="ExtFlags_BIT9">Tinted trail puff VEF</a></b></li>
 
@@ -545,24 +640,61 @@ title: "PRO file format"
               </li>
 
               <li>Bit 22: <b><a name="ExtFlags_BIT22">Start random sequence</a></b></li>
-              <li>Bit 23: <b><a name="ExtFlags_BIT23">Colour pulse on hit</a></b></li>
+
+              <li>
+                Bit 23: <b><a name="ExtFlags_BIT23">Colour pulse on hit</a></b>
+                <ul>
+                  <li>Activates: <code><a href="#0x34">Pulse Color</a></code> and <code><a href="#0x38">Color Pulse Speed</a></code>.</li>
+                  <li><code><a href="#0x8">Projectile Type</a></code> must be <code>2|Single Target</code>.</li>
+                  <li>Target pulses the specified color.</li>
+                  <li>Compatibility: Does not work with <code><a href="#ExtFlags_BIT1">Pass Target</a></code> or <code><a href="#ExtFlags_BIT14">Lined up AoE</a></code>.</li>
+                </ul>
+              </li>
+
               <li>Bit 24: <b><a name="ExtFlags_BIT24">Touch projectile</a></b></li>
-              <li>Bit 25: <b><a name="ExtFlags_BIT25">Negate first creature target</a></b></li>
-              <li>Bit 26: <b><a name="ExtFlags_BIT26">Negate second creature target</a></b></li>
-              <li>Bit 27: <b><a name="ExtFlags_BIT27">Use either IDS</a></b></li>
+
+              <li>
+                Bit 25: <b><a name="ExtFlags_BIT25">Negate first creature target</a></b>
+                <ul>
+                  <li>See <code><a href="#ExtFlags_BIT30">IWD style check</a></code>.</li>
+                </ul>
+              </li>
+
+              <li>
+                Bit 26: <b><a name="ExtFlags_BIT26">Negate second creature target</a></b>
+                <ul>
+                  <li>See <code><a href="#ExtFlags_BIT30">IWD style check</a></code>.</li>
+                </ul>
+              </li>
+
+              <li>
+                Bit 27: <b><a name="ExtFlags_BIT27">Use either IDS</a></b>
+                <ul>
+                  <li>See <code><a href="#ExtFlags_BIT30">IWD style check</a></code>.</li>
+                </ul>
+              </li>
+
               <li>Bit 28: <b><a name="ExtFlags_BIT28">Delayed payload</a></b></li>
               <li>Bit 29: <b><a name="ExtFlags_BIT29">Limited path count</a></b></li>
 
               <li>Bit 30: <b><a name="ExtFlags_BIT30">IWD style check</a></b> (use entries from <a href="../../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a> for first and second creature target). It works similar to op<a href="../../../opcodes/bgee.htm#op318">318</a>/<a href="../../../opcodes/bgee.htm#op326">326</a>, depending on the other related flags:
                 <ul>
-                  <li>Default: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
-                  <li><code><a href="#ExtFlags_BIT27">Use either IDS</a></code>:  Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> or matching <code><a href="#0x42">Creature type 2</a></code></li>
-                  <li><code><a href="#ExtFlags_BIT25">Neg. IDS1</a></code>: Exclude objects not matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
-                  <li><code><a href="#ExtFlags_BIT26">Neg. IDS2</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and not matching <code><a href="#0x42">Creature type 2</a></code></li>
-                  <li><code><a href="#ExtFlags_BIT25">Neg. IDS1</a> + <a href="#ExtFlags_BIT27">Use either IDS</a></code>: Exclude objects not matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
-                  <li><code><a href="#ExtFlags_BIT26">Neg. IDS2</a> + <a href="#ExtFlags_BIT27">Use either IDS</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and not matching <code><a href="#0x42">Creature type 2</a></code></li>
-                  <li><code><a href="#ExtFlags_BIT25">Neg. IDS1</a> + <a href="#ExtFlags_BIT26">Neg. IDS2</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> or matching <code><a href="#0x42">Creature type 2</a></code></li>
-                  <li><code><a href="#ExtFlags_BIT25">Neg. IDS1</a> + <a href="#ExtFlags_BIT26">Neg. IDS2</a> + <a href="#ExtFlags_BIT27">Use either IDS</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
+                  <li><code><a href="#0x8">Projectile Type</a></code> must be <code>3|Area Effect</code>.</li>
+                  <li>Activates: <code><a href="#0x3C">Creature value 1</a></code>, <code><a href="#0x3E">Creature type 1</a></code>, <code><a href="#0x40">Creature value 2</a></code>, <code><a href="#0x42">Creature type 2</a></code>.</li>
+                  <li>Activates: <code><a href="#ExtFlags_BIT25">Neg. IDS1</a></code>, <code><a href="#ExtFlags_BIT26">Neg. IDS2</a></code>, <code><a href="#ExtFlags_BIT27">Use either IDS</a></code>.</li>
+                  <li>
+                    Projectile excludes creatures as valid targets for its Area Effect if:
+                    <ul>
+                      <li>Default: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
+                      <li><code><a href="#ExtFlags_BIT27">Use either IDS</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> or matching <code><a href="#0x42">Creature type 2</a></code></li>
+                      <li><code><a href="#ExtFlags_BIT25">Neg. IDS1</a></code>: Exclude objects not matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
+                      <li><code><a href="#ExtFlags_BIT26">Neg. IDS2</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and not matching <code><a href="#0x42">Creature type 2</a></code></li>
+                      <li><code><a href="#ExtFlags_BIT25">Neg. IDS1</a> + <a href="#ExtFlags_BIT27">Use either IDS</a></code>: Exclude objects not matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
+                      <li><code><a href="#ExtFlags_BIT26">Neg. IDS2</a> + <a href="#ExtFlags_BIT27">Use either IDS</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and not matching <code><a href="#0x42">Creature type 2</a></code></li>
+                      <li><code><a href="#ExtFlags_BIT25">Neg. IDS1</a> + <a href="#ExtFlags_BIT26">Neg. IDS2</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> or matching <code><a href="#0x42">Creature type 2</a></code></li>
+                      <li><code><a href="#ExtFlags_BIT25">Neg. IDS1</a> + <a href="#ExtFlags_BIT26">Neg. IDS2</a> + <a href="#ExtFlags_BIT27">Use either IDS</a></code>: Exclude objects matching <code><a href="#0x3E">Creature type 1</a></code> and matching <code><a href="#0x42">Creature type 2</a></code></li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
 
@@ -575,67 +707,109 @@ title: "PRO file format"
             </ul>
           </td>
         </tr>
+
         <tr>
           <td>0x00030</td>
           <td>4 (strref)</td>
-          <td><b><a name="0x30">Displayed Message</a></b></td>
+          <td>
+            <b><a name="0x30">Displayed Message</a></b>
+            <ul>
+              <li>Dependency: Activated by <code><a href="#ExtFlags_BIT20">Display String</a></code>.</li>
+              <li>String is displayed (by caster) twice: once when spell is selected for targeting, and again when spell is successfully cast.</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x00034</td>
           <td>4 (dword)</td>
-          <td>Pulse colour (byte order: blue, green, red, unused) </td>
+          <td>
+            <b><a name="0x34">Pulse Color</a></b>
+            <ul>
+              <li>Dependency: Activated by <code><a href="#ExtFlags_BIT23">Color Pulse on hit</a></code>.</li>
+              <li>
+                Target pulses the specified color.
+                <ul>
+                  <li>Compatibility: Only works with <code><a href="#0x8">Projectile Type</a> – 2|Single Target</code>, but not with <code><a href="#ExtFlags_BIT1">Pass Target</a></code> or <code><a href="#ExtFlags_BIT14">Lined up AoE</a></code>.</li>
+                </ul>
+              </li>
+              <li>Color Value: <code>0x34|Red</code> – <code>0x35|Green</code> – <code>0x36|Blue</code> – <code>0x37|Alpha</code>, though <code>Alpha</code> is not used.</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x00038</td>
           <td>2 (word)</td>
-          <td>Colour speed</td>
+          <td>
+            <b><a name="0x38">Color speed</a></b>
+            <ul>
+              <li>Dependency: Activated by <code><a href="#ExtFlags_BIT23">Color Pulse on hit</a></code>.</li>
+              <li>Speed (in ticks) of Color Pulse (fades to color, then fades out, entire process takes twice as long as listed value).</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x0003a</td>
           <td>2 (word)</td>
-          <td>Screen shake amount</td>
+          <td>
+            <b><a name="0x3A">Screen shake amount</a></b>
+            <ul>
+              <li>Value identical to <a href="../../opcodes/bgee.htm#op269">opcode #269</a>.</li>
+              <li>Screen shake occurs when Traveling Projectile reaches its target.</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x0003c</td>
           <td>2 (word)</td>
-          <td>First creature target: Value<br />
-              <br />
-              If Extended Flags bit 30 is
-              <ul>
-                <li>unset: use IDS targets</li>
-                <li>set: use <a href="../../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a></li>
-              </ul>
+          <td>
+            <b><a name="0x3C">Creature Value 1</a></b>
+            <ul>
+              <li>Requires <code><a href="#ExtFlags_BIT30">IWD style check</a></code>.</li>
+              <li>When <code><a href="#ExtFlags_BIT30">IWD style check</a></code> is unset, it's unclear if IDS files work...</li>
+            </ul>
           </td>
         </tr>
+
         <tr>
           <td>0x0003e</td>
           <td>2 (word)</td>
-          <td><b><a name="0x3E">Creature Type 1</a></b><br />
-              <br />
-              If Extended Flags bit 30 is unset: use IDS targets
-              <ul>
-                <li>2 EA.IDS</li>
-                <li>3 GENERAL.IDS</li>
-                <li>4 RACE.IDS</li>
-                <li>5 CLASS.IDS</li>
-                <li>6 SPECIFIC.IDS</li>
-                <li>7 GENDER.IDS</li>
-                <li>8 ALIGNMEN.IDS</li>
-                <li>9 KIT.IDS</li>
-              </ul>
-              If Extended Flags bit 30 is set: use entries from <a href="../../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a>
+          <td>
+            <b><a name="0x3E">Creature Type 1</a></b>
+            <ul>
+              <li>Requires <code><a href="#ExtFlags_BIT30">IWD style check</a></code>.</li>
+              <li>When <code><a href="#ExtFlags_BIT30">IWD style check</a></code> is unset, it's unclear if IDS files work...</li>
+            </ul>
           </td>
         </tr>
+
         <tr>
           <td>0x00040</td>
           <td>2 (word)</td>
-          <td>Second creature target: Value</td>
+          <td>
+            <b><a name="0x40">Creature Value 2</a></b>
+            <ul>
+              <li>Requires <code><a href="#ExtFlags_BIT30">IWD style check</a></code>.</li>
+              <li>When <code><a href="#ExtFlags_BIT30">IWD style check</a></code> is unset, it's unclear if IDS files work...</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x00042</td>
           <td>2 (word)</td>
-          <td><b><a name="0x42">Creature Type 2</a></b></td>
+          <td>
+            <b><a name="0x42">Creature Type 2</a></b>
+            <ul>
+              <li>Requires <code><a href="#ExtFlags_BIT30">IWD style check</a></code>.</li>
+              <li>When <code><a href="#ExtFlags_BIT30">IWD style check</a></code> is unset, it's unclear if IDS files work...</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x00044</td>
           <td>8 (resref)</td>
@@ -794,11 +968,13 @@ title: "PRO file format"
             </ul>
           </td>
         </tr>
+
         <tr>
           <td>0x00104</td>
           <td>8 (resref)</td>
-          <td><b><a name="0x104">Projectile Animation</a></b> (<a href="bam_v1.htm">BAM</a>)</td>
+          <td><b><a name="0x104">Traveling Projectile Animation</a></b> (<a href="bam_v1.htm">BAM</a>)</td>
         </tr>
+
         <tr>
           <td>0x0010c</td>
           <td>8 (resref)</td>
@@ -1156,12 +1332,7 @@ title: "PRO file format"
                     </li>
                   </ul>
                 </li>
-                <li>
-                  Compatibility:
-                  <ul>
-                    <li><code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code> will override the changes to the affected area, but not changes to the visual explosion.</li>
-                  </ul>
-                </li>
+                <li>Compatibility: <code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code> will override the changes to the affected area, but not changes to the visual explosion.</li>
                 <li>Suppresses: <code><a href="#ExtFlags_BIT1">Pass Target</a></code></li>
                 <li>
                   Option: <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code> – Explosion only occurs if valid targets are within range when cast.

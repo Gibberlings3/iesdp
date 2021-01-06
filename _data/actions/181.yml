@@ -10,3 +10,8 @@ params:
     ids: spell
 desc: |-
   This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. This action does not work in the script round where the active creature has died.
+
+  {% capture note %}
+  Scripts can handle `RES` filenames with `+`, Dialogs and the console cannot. Same with the `~`, `` ` ``, `'`, `@`, `$`, `^`, and `&` characters, maybe some more.
+  - This action will default to a spell matching the first 7 characters in Dialogs/Console *IF* the 8th character isn't valid.
+  {% endcapture %} {% include note.html %}

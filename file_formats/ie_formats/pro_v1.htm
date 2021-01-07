@@ -52,7 +52,26 @@ title: "PRO file format"
           <td><b><a name="0x8">Projectile Type</a></b>
             <ul>
               <li>
+                0 &longrightarrow; <b><a name="0x8_0">No Projectile</a></b>
+                <ul>
+                  <li>Suppresses: All fields except <code><a href="#ExtFlags_BIT20">Display String</a></code> and <code><a href="#0x30">Displayed String</a></code>, which function as normal.</li>
+                  <li>No Traveling Projectile, hits instantly (truly instant – function during Time Stop).</li>
+                  <li>Dependency: Spell Target(<code>Creature</code>).</li>
+                  <li>
+                    This projectile type is functionally identical to the hardcoded projectile: <code>0|<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> / 1|<a href="../../files/ids/bgee/missile.htm">MISSILE.IDS</a></code>
+                    <ul>
+                      <li>This is projectile <code>1|None</code> in Near Infinity, not <code>0|Default</code>.</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+              <li>
                 1 &longrightarrow; <b><a name="0x8_1">No BAM</a></b>
+                <ul>
+                  <li>Suppresses: All fields except <code><a href="#ExtFlags_BIT20">Display String</a></code> and <code><a href="#0x30">Displayed String</a></code>, which function as normal.</li>
+                  <li>No Traveling Projectile, never impacts.</li>
+                </ul>
               </li>
 
               <li>

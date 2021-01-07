@@ -255,7 +255,7 @@ IDS V1.0
 <br /><br />
 
 {% capture note %}
-The following are unlisted in "PROJECTL.IDS", but are hardcoded: they have a projectile, just no resource to list, and most will ignore any entry in "PROJECTL.IDS" for their index anyway:<br />
+The following are unlisted in <a href="../bgee/projectl.htm">PROJECTL.IDS</a>, but are hardcoded: they have a projectile, just no resource to list, and most will ignore any entry in <a href="../bgee/projectl.htm">PROJECTL.IDS</a> for their index anyway:<br />
 <br />
 
 <pre>
@@ -287,7 +287,7 @@ PROJECTL.IDS index: <a href="../bgee/missile.htm">MISSILE.IDS</a> label
 {% include info.html %}
 
 {% capture note %}
-The rest of the unlisted (skipped) "PROJECTL.IDS" entries are just missing (no hardcoded projectile):<br />
+The rest of the unlisted (skipped) <a href="../bgee/projectl.htm">PROJECTL.IDS</a> entries are just missing (no hardcoded projectile):<br />
 <br />
 
 <pre>
@@ -313,6 +313,23 @@ PROJECTL.IDS index: <a href="../bgee/missile.htm">MISSILE.IDS</a> label
 <br /><br />
 
 You can treat any unlisted, unhardcoded value as being functionally identical to projectile <code>#1|None</code>, except in respects to <a href="../../../opcodes/bgee.htm#op83">opcode #83</a>/<a href="../../../opcodes/bgee.htm#op197">opcode #197</a> – but it would always be better to add a new custom projectile rather than using an unlisted entry if a functional duplicate of projectile <code>#1|None</code> was needed.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+A special note about what Near Infinity labels as Projectile <code>#0|Default</code>.
+<ul>
+    <li>Normally, the index for that Projectile, in <a href="../bgee/projectl.htm">PROJECTL.IDS</a> is <code>-1 // 0xffffffff</code>. It is simply an unlisted entry, no different from using projectile <code>#357343</code> (some random unlisted value).</li>
+    <li>
+        Adding an entry for it will cause the game to use that entry like any other projectile, except when it's in the subspell cast by one of these opcodes (<a href="../../../opcodes/bgee.htm#op326">326</a>/<a href="../../../opcodes/bgee.htm#op333">333</a>/<a href="../../../opcodes/bgee.htm#op146">146</a><code>*2</code>), where it does the following:
+        <ul>
+            <li>The impact projectile is replaced with projectile <code>#1|None</code>.</li>
+            <li>The target of the opcode (<a href="../../../opcodes/bgee.htm#op326">326</a>/<a href="../../../opcodes/bgee.htm#op333">333</a>/<a href="../../../opcodes/bgee.htm#op146">146</a><code>*2</code>) that cast the subspell becomes the target of any <code>Original Caster</code> effects in the subspell.</li>
+        </ul>
+    </li>
+</ul>
+In short – don't use projectile <code>#0|Default</code> in subspells, use projectile <code>#1|None</code>.
 {% endcapture %}
 
 {% include note.html %}

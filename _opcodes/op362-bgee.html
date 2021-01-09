@@ -30,6 +30,18 @@ This effect increases the chance of suffering a Critical Miss. Critical Misses w
 <br/>(External <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s) Known values for <code>Weapon Category</code> are defined in <a href="../files/ids/bgee/itemcat.htm">ITEMCAT.IDS</a>.
 
 {% capture note %}
+Keep in mind that Critical Hits have priority over Critical Misses.<br/>
+For instance, let us consider <a href="#op301">opcode #301</a> (<code>Statistic Modifier = 10</code>) and <a href="#op362">opcode #362</a> (<code>Statistic Modifier = 10</code>). You would have the following ranges:
+<ul>
+	<li>Critical hit: <code>10 – 20</code></li>
+	<li>Critical miss: <code>1 – 11</code></li>
+</ul>
+If you rolled a <code>10</code> or <code>11</code>, you would get a Critical hit, not a Critical miss.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
 In v2.3 and prior, only the latest instance of this opcode applies. In v2.5+, all instances stack together.
 {% endcapture %}
 

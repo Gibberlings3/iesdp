@@ -9,7 +9,7 @@ params:
     type: i
     ids: spell
 desc: |-
-  This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. Both actions apply the spell at the lowest casting level (they will even use a level `0` ability if the spell has one, which other actions cannot do) and ignore its projectile (i.e. they use projectile `#1|None`) - the casting level of the originating creature is ignored. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by `ApplySpell` use a single dice value. The example script is used to mimic a contingency from `mage18y.bcs`.
+  This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. Both actions apply the spell at the lowest casting level (they will even use a level `0` ability if the spell has one, which other actions cannot do) and ignore its projectile (i.e. they use projectile `#1|None`) - the casting level of the originating creature is ignored. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by `ApplySpell` use a single dice value. The example script is used to mimic a contingency from `"mage18y.bcs"`.
 
   ```
   IF
@@ -26,3 +26,8 @@ desc: |-
       SetGlobal("Prep","LOCALS",1)
   END
   ```
+
+  {% capture note %}
+  Scripts can handle `RES` filenames with `+`, Dialogs and the console cannot. Same with the `~`, `` ` ``, `'`, `@`, `$`, `^`, and `&` characters, maybe some more.
+  - This action will default to a spell matching the first 7 characters in Dialogs/Console *IF* the 8<sup>th</sup> character isn't valid.
+  {% endcapture %} {% include note.html %}

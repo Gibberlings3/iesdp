@@ -11,4 +11,9 @@ params:
     type: i
     ids: spell
 desc: |-
-  This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. The spell will be removed from the casters memory. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The example script is from andris.bcs.
+  This action causes the active creature to cast the specified spell at the specified point (`[x.y]`). The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. The spell will be removed from the casters memory. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The example script is from `"andris.bcs"`.
+
+  {% capture note %}
+  Scripts can handle `RES` filenames with `+`, Dialogs and the console cannot. Same with the `~`, `` ` ``, `'`, `@`, `$`, `^`, and `&` characters, maybe some more.
+  - This action will default to a spell matching the first 7 characters in Dialogs/Console *IF* the 8th character isn't valid.
+  {% endcapture %} {% include note.html %}

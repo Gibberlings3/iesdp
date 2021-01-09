@@ -83,29 +83,9 @@ Damages the target by the value specified by the <code>Damage Amount</code> fiel
 
 <br/><br/>The Dice values can be used to inflict varying damage amounts – e.g. <code>2d6</code> would do <code>2–12</code> damage (Damage type is still specified by the <code>Type</code> value).
 
-<br/><br/>Useful bit values for <code>Save Type</code> are:
-<ul>
-  <li>Bit 10 &longrightarrow; Ignore primary target: Line AoE projectile doesn't affect end target</li>
-  <li>Bit 11 &longrightarrow; Ignore secondary target: Line AoE projectile doesn't affect bystanders</li>
-  <li>Bit 24 &longrightarrow; Bypass Mirror Image</li>
-  <li>Bit 25 &longrightarrow; Ignore difficulty: It refers to the damage multiplier to party members based on difficulty.</li>
-</ul>
-
-<br/><br/>Known bit values for <code>Flags</code> are:
-<ul>
-  <li>Bit 0 &longrightarrow; Drain HP to caster</li>
-  <li>Bit 1 &longrightarrow; Transfer HP to target</li>
-  <li>Bit 2 &longrightarrow; Fist damage only</li>
-  <li>Bit 3 &longrightarrow; Drain to max. HP of caster</li>
-  <li>Bit 5 &longrightarrow; Suppress combat log feedback string</li>
-  <li>Bit 8 &longrightarrow; Save for half</li>
-  <li>Bit 9 &longrightarrow; Fail for half: A failed (or lack of) saving throw results in half damage.</li>
-  <li>Bit 10 &longrightarrow; Does not wake sleepers</li>
-</ul>
-
 <p>
-<code>Damage Amount</code> can be positive or negative (though the damage sound will play in either case).
-<br/>If <code>Damage Amount</code> and the Dice values are both non-zero, the total damage inflicted is: <code>'Damage Amount' + Dice value</code>.
+  <code>Damage Amount</code> can be positive or negative (though the damage sound will play in either case).
+  <br/>If <code>Damage Amount</code> and the Dice values are both non-zero, the total damage inflicted is: <code>'Damage Amount' + Dice value</code>.
 </p>
 
 {% capture note %}
@@ -114,14 +94,52 @@ Damages the target by the value specified by the <code>Damage Amount</code> fiel
 
 {% include note.html %}
 
+<br/><br/>Useful bit values for <code>Save Type</code> are:
+<ul>
+  <li>Bit 10 &longrightarrow; Ignore primary target: Line AoE projectile doesn't affect end target</li>
+  <li>Bit 11 &longrightarrow; Ignore secondary target: Line AoE projectile doesn't affect bystanders</li>
+  <li>Bit 24 &longrightarrow; Bypass Mirror Image</li>
+  <li>Bit 25 &longrightarrow; Ignore difficulty: It refers to the damage multiplier to party members based on difficulty.</li>
+</ul>
+
 {% capture note %}
 Damage type <code>POISON</code> automatically uses save flag <code>Bypass Mirror Image</code>.
 {% endcapture %}
 
 {% include note.html %}
 
+<br/><br/>Known bit values for <code>Flags</code> are:
+<ul>
+  <li>Bit 0 &longrightarrow; Drain HP to caster (cumulative)</li>
+  <li>Bit 1 &longrightarrow; Reversed HP Drain recipient and target (cumulative)</li>
+  <li>Bit 2 &longrightarrow; Fist damage only</li>
+  <li>Bit 3 &longrightarrow; Drain HP to caster (non-cumulative)</li>
+  <li>Bit 5 &longrightarrow; Suppress combat log feedback string</li>
+  <li>Bit 6 &longrightarrow; HP drain number limited to amount available by target (checks <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a>)</li>
+  <li>Bit 7 &longrightarrow; HP drain number limited to amount necessary to heal recipient to full HP</li>
+  <li>Bit 8 &longrightarrow; Save for half</li>
+  <li>Bit 9 &longrightarrow; Fail for half: A failed (or lack of) saving throw results in half damage.</li>
+  <li>Bit 10 &longrightarrow; Does not wake sleepers</li>
+</ul>
+
 {% capture note %}
-If this effect reduces target to -20 (Allegiance: <a href="../files/ids/bgee/ea.htm#2">PC</a>) or -9 (any other Allegiance value) hit points, it also applies <a href="#op13">opcode #13</a> of the specified type:
+<ul>
+  <li>Bits <code>0</code>, <code>1</code>, <code>3</code>, and <code>4</code> are mutually exclusive. Bit <code>7</code> prevents temporary HP gain.</li>
+  <li>
+    Notice there are essentially 2 modes the bonus temporary HP are calculated: <code>cumulative</code> and <code>non-cumulative</code>.
+    <ul>
+      <li><code>Cumulative</code> works as you'd imagine: extra HP are simply added on if recipient of the drain is at maximum HP (including any previous temporary HP).</li>
+      <li><code>Non-cumulative</code> HP drain calculates extra HP gain based on where the current HP of the recipient is relative to the normal (unextended by <code>non-cumulative</code> HP bonus) maximum. Furthermore, all <code>non-cumulative</code> HP drain effects are treated as a coexisting group, where the highest extra HP roll is added to the maximum hitpoints without dispelling any lower rolls. So the recipient will still benefit if the lower rolls have a longer duration than the higher roll.</li>
+      <li>Here's an example: if the caster gains <code>4</code> temporary HP from a previous <code>non-cumulative</code> HP drain, suffers <code>5</code> damage, then drains <code>2</code> hit points, (s)he will be cured <code>2</code> hitpoints of which <code>1</code> HP will be "stored" as an extra hitpoint for a certain duration set by the damage effect.</li>
+    </ul>
+  </li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+If this effect reduces target to <code>-20</code> (Allegiance: <a href="../files/ids/bgee/ea.htm#2">PC</a>) or <code>-9</code> (any other Allegiance value) hit points, it also applies <a href="#op13">opcode #13</a> of the specified type:
 <ul>
   <li><code>CRUSHING</code>/<code>SLASHING</code>/<code>PIERCING</code>: Exploding Death</li>
   <li><code>ACID</code>/Unlisted: Acid Death</li>

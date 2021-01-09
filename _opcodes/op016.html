@@ -27,7 +27,7 @@ Applies the Haste effect, in the style specified by the <code>Type</code> value.
 <p>
 The <code>Normal</code> and <code>Improved</code> haste types grant a <code>-2</code> initiative (Weapon Speed) bonus. All types:
 <ul>
-	<li>grant portrait icons</li>
+	<li>grant portrait icons (<code><a href="../files/2da/2da_bgee/statdesc.htm#38">Haste</a></code> / <code><a href="../files/2da/2da_bgee/statdesc.htm#110">Improved Haste</a></code>)</li>
 	<li>increase the creature's animation speed and the animation speed of <a href="#op140">opcode 140</a> effects</li>
 	<li>halve the creature's round timer used by attacks, modal abilities and "Auto-Pause: End of Round"</li>
 	<li>increase frequency of application of <a href="#op25">poison</a>, <a href="#op78">disease</a>, <a href="#op98">regeneration</a>, <a href="#op232">Cast on Condition</a> and <a href="#op272">Use EFF File (at Frequency)</a>, but not below <code>1s</code></li>
@@ -42,8 +42,8 @@ This effect will cancel out the <a href="#op40">slow opcode</a>.
 
 {% capture note %}
 BG1 only supports haste type <code>0</code>.<br/><br/>
-This opcode will set the <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a> flag and nothing else when applied with <code>timing mode 1</code>, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.<br />
-This only works when applying <code>Normal/Improved</code> haste (there's no difference, since the <code>STAT</code> for <code>Improved</code> haste doesn't get set this way), <code>Weak</code> haste does not do anything with <code>timing mode 1</code>.
+This opcode will set the <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a> flag and nothing else when applied with <code>Timing Mode 1</code>, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.<br />
+This only works when applying <code>Normal/Improved</code> haste (there's no difference, since the <code>STAT</code> for <code>Improved</code> haste doesn't get set this way), <code>Weak</code> haste does not do anything with <code>Timing Mode 1</code>.
 {% endcapture %}
 
 {% include warning.html %}

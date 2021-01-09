@@ -2818,7 +2818,7 @@ This effect doubles the casting time of all spells. Not verified for IWD2.
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-This opcode will set the <a href="../files/ids/bgee/state.htm#BIT16">STATE_SLOWED</a> flag and nothing else when applied with timing mode 1, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
+This opcode will set the <a href="../files/ids/bgee/state.htm#BIT16">STATE_SLOWED</a> flag and nothing else when applied with <code>Timing Mode 1</code>, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
 
   </div>
 </div>
@@ -3177,7 +3177,7 @@ Both parameters should be 0 (zero).
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -4359,7 +4359,7 @@ At least in BG2 and EEs, the <code>Resource</code> key should be set to the file
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the non-detection effect to the targeted creature(s), setting <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> while active. This effect is negated by <a href="#op70">opcode 70</a>. While in the non-detection state, the creature is immune to <a href="#op47">opcode #47</a> and <a href="#op116">opcode #116</a>, though they are affected by effects that remove illusionary protections by school or secondary type.
+		<div class="descriptiondata"> Applies the non-detection effect to the targeted creature(s), setting <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> while active. This effect is negated by <a href="#op70">opcode #70</a>. While in the non-detection state, the creature is immune to <a href="#op47">opcode #47</a> and <a href="#op116">opcode #116</a>, though they are affected by effects that remove illusionary protections by school or secondary type.
 
 
 
@@ -4615,7 +4615,7 @@ At least in BG2 and EEs, the <code>Resource</code> key should be set to the file
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the blindness effect to the targeted creature(s). This sets <a href="../files/ids/bgee/stats.htm#147">VISUALRANGE</a> to 2, sets <a href="../files/ids/bgee/state.htm#BIT18">STATE_BLIND</a> to true and incurs a cummulative <code>10</code> point base THAC0 penalty (<code>4</code> on EE games, plus a cumulative <code>4</code> point base AC penalty. All of that is unverified in PST).
-Maintains its own portrait icon <a href="../files/2da/2da_bgee/statdesc.htm">(#8|"Blind")</a>.
+Maintains its own portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#8">Blind</a></code>.
 
 
 
@@ -6032,14 +6032,14 @@ Not seen to work in BG1.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">opcode</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Opcode</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) protection from the opcode specified by the 'opcode' field.
+		<div class="descriptiondata"> Gives the targeted creature(s) protection from the opcode specified by the <code>Opcode</code> field.
  </div>
 		<hr />
 
@@ -6487,7 +6487,7 @@ The <code>resource</code> field should not be empty, or the game will crash (not
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the <code>resource</code> key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see <a href="../files/ids/bgee/slots.htm">SLOTS.IDS</a>) is removed. <code>EFF_M02</code> is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use <a href="#op123">opcode #123</a> for inventory items).
+		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the <code>resource</code> key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see <a href="../files/ids/bgee/slots.htm">SLOTS.IDS</a>) is removed. <code>"EFF_M02"</code> is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use <a href="#op123">opcode #123</a> for inventory items).
  </div>
 		<hr />
 
@@ -6756,6 +6756,17 @@ Both parameters should be 0 (zero).
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This opcode has no effect.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It is still processed, so it will still interact with <a href="#op200">Spell Turning</a>/<a href="#op201">Deflection</a>/etc… just like any other effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -6846,8 +6857,8 @@ Both parameters should be 0 (zero).
 Keep in mind that:
 <ul>
 	<li>Protected weapons will still trigger <a href="../scripting/triggers/bgeetriggers.htm#0x0020">HitBy()</a>, but will not interact with Mirror Image or Stone skins.</li>
-	<li>Blocks weapon damage, on-hit effects of the weapon, <a href="#op248">opcode 248</a> and <a href="#op249">opcode 249</a>, regardless of the effects target.</li>
-	<li>Does NOT block effects from <a href="#op341">opcode 341</a> or <a href="#op361">opcode 361</a> from triggering.</li>
+	<li>Blocks weapon damage, on-hit effects of the weapon, <a href="#op248">opcode #248</a> and <a href="#op249">opcode #249</a>, regardless of the effects target.</li>
+	<li>Does NOT block effects from <a href="#op341">opcode #341</a> or <a href="#op361">opcode #361</a> from triggering.</li>
 	<li>Area-effect projectiles (Arrow of Detonation) only check for Weapon Immunity on the attacked target, and use that result for all caught within their area of effect.</li>
 </ul>
 
@@ -6881,6 +6892,17 @@ Keep in mind that:
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This opcode has no effect. Sometimes known as "Graphics: (Visual Animation Effect)".
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It is still processed, so it will still interact with <a href="#op200">Spell Turning</a>/<a href="#op201">Deflection</a>/etc… just like any other effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -7049,7 +7071,7 @@ In IWD2 both parameters should be 0.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -8469,7 +8491,7 @@ At least in EE games, it is possible to colorize the string. In order to do so, 
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Casts the spell specified by the resource key, at the level specified by the <code>Casting Level</code> field, in the style specified by the <code>Type</code> field. A <code>Casting Level</code> of <code>0</code> casts at the level of the casting creature.
+		<div class="descriptiondata"> Casts the spell specified by the <code>resource</code> key, at the level specified by the <code>Casting Level</code> field, in the style specified by the <code>Type</code> field. A <code>Casting Level</code> of <code>0</code> casts at the level of the casting creature.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &LongRightArrow; Normal Casting</li>
@@ -8492,12 +8514,12 @@ This opcode does not work if the target is a container in non-ee versions.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-This opcode should generally target “Self”. In particular:
+This opcode should generally target <code>Self</code>. In particular:
 <ul>
 	<li>The projectile of the subspell will originate from the target(s) of op148.</li>
 	<li>If the SPL/ITM with op148 targets a location, and doesn't have an area-effect projectile, there will be no target to cast on.</li>
 	<li>If the SPL/ITM with op148 has an area-effect projectile, the spell in op148 would be cast once for every valid target.</li>
-	<li>If this opcode uses the "Cast Instantly" option, then the target, not the caster, would cast the spell in op148.</li>
+	<li>If this opcode uses the <code>Cast Instantly</code> option, then the target, not the caster, would cast the spell in op148.</li>
 </ul>
 
   </div>
@@ -8530,6 +8552,17 @@ This opcode should generally target “Self”. In particular:
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The use of this effect is unknown, and effect of its parameters are undefined.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+It is still processed, so it will still interact with <a href="#op200">Spell Turning</a>/<a href="#op201">Deflection</a>/etc… just like any other effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -9973,7 +10006,7 @@ PST: This effect doesn’t exist and always crashes the game.
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-A couple of examples about <i>Multiplicative Stacking Percentage Modifier</i>:
+A couple of examples about <code>Multiplicative Stacking Percentage Modifier</code>:
 <ul>
 	<li><code>50% * 50% = 25%</code></li>
 	<li><code>150% * 150% = 225%</code></li>

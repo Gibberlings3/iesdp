@@ -857,7 +857,10 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 <br />
 <div class="indent1">
   
-    Items can have several &quot;abilities&quot; that correspond to an action the item can do (e.g. melee attacks, projectile attacks, spell-casting etc.). Each of these abilities is specified through an extended header. Only the first three extended headers can have charges (extended headers further than this use the charges of the first extended header). Tooltips for item abilities are set through <a href=<br /><br />
+    Items can have several &quot;abilities&quot; that correspond to an action the item can do (e.g. melee attacks, projectile attacks, spell-casting etc.). Each of these abilities is specified through an extended header. Only the first three extended headers can have charges (extended headers further than this use the charges of the first extended header). Tooltips for item abilities are set through <a href='../../files/2da/2da_bgee/tooltip.htm'>TOOLTIP.2DA</a>.<br />
+    <br />
+    NB. For items to be stackable, they must contain at least one extension header, even if it is empty.<br />
+    NB. For an attack type of projectile, if the projectile type is set to 1,2 or 3, the weapon will use the attack speed of the ammunition.<br /><br />
     
   
   <table border="1" width="98%" class="offset_table">
@@ -1007,9 +1010,13 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
   <td><p>Target type</p>
 <ul>
   <li>0 = Invalid (cannot be selected)</li>
-  <li>1 = Creature</li>
+  <li>1 = Creature / Living actor</li>
   <li>2 = Crash</li>
-  <li>3 = Character potrait</li>
+  <li>3 = Dead actor
+    <ul>
+      <li>To be precise, it can target living and dead actors. It really just ignores any range requirement, including being in the same area.</li>
+    </ul>
+  </li>
   <li>4 = Area</li>
   <li>5 = Self</li>
   <li>6 = Crash</li>

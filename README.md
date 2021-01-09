@@ -4,9 +4,16 @@ Visible at: https://gibberlings3.github.io/iesdp/
 
 # How to deploy/test
 
-0. Install dependencies (jekyll, jekyll-liquify)
-1. Run: "jekyll serve --incremental" in the top dir of this repo
+0. Install dependencies ([jekyll](https://jekyllrb.com/docs/installation/), jekyll-liquify)
+1. Run: `jekyll serve --incremental` in the top dir of this repo
 2. Open the url it prints, usually http://127.0.0.1:4000/iesdp/
+
+---
+**NOTE**
+
+On macOS you might also need the gem `webrick`.
+
+---
 
 # How it works
 

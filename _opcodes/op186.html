@@ -10,7 +10,21 @@ iwd1: 1
 iwd2: 1
 pst: 0
 ---
-Marks the targetted creature(s) as travelling to the area specified by the resource key. The creature appears in the specified area after a delay (specified by the 'Delay' field), with the orientation specified by the 'Orientation' field. The creature appears at the point specified by the Target Point fields (external EFF files only).
+Marks the targetted creature(s) as travelling to the area specified by the <code>resource</code> key. The creature appears in the specified area after a delay (specified by the <code>Delay</code> field), with the orientation specified by the <code>Orientation</code> field.<br/>
+In particular:
+<ul>
+	<li>Global Creatures ignore the delay.</li>
+	<li>If the creature is already in the specified area, it will ignore the delay.</li>
+	<li>Non-global creatures currently in a different area than specified will use the delay.</li>
+	<li>Delay is measured in <small><sup>1</sup>&frasl;<sub>30</sub></small> seconds, (&frac12; tick), <code>600 = 20 seconds</code>.</li>
+	<li>
+		On non-EE games, the creature appears at the point specified by the Target Point fields (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files only).
+		<ul>
+			<li>On EE games, target(s) appear at Caster's Coordinates in new area (couldn't override through EFF).</li>
+		</ul>
+	</li>
+	<li>Creature is moved to the new area (instantly) and flagged <a href="../file_formats/ie_formats/cre_v1.htm#Flags_BIT14">Moving Between Areas</a> until their delay expires (if it's used). It won't be active until the delay expires (it's hidden, cannot be affected by Area-effect, doesn't occupy space). It can still be targeted by the various <code>Everyone</code> targeting modes in the new area while it's still inactive, but similar to <a href="#op213">maze</a>/<a href="#op211">imprisonment</a>, effects won't trigger (including <a href="#op25">poison</a> and similar) on them until they become active.</li>
+</ul>
 
 {% capture note %}
 IWD2: there was a note to not use this effect in older IESDP.<br/>
@@ -19,3 +33,8 @@ There is some confusion whether the Target (bg1, iwds) or the Caster point field
 
 {% include warning.html %}
 
+{% capture note %}
+Avoid saving during the delay (can lead to lost NPCs or crashes if you load while NPC's are still in transition).
+{% endcapture %}
+
+{% include important.html %}

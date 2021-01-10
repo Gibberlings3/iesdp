@@ -11,11 +11,31 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Modifies an area animation's Cycle and plays an area hit animation over it indexed by 'Projectile Type'.
-<br/>'Value' is the high word of the first parameter, 'Modifier' is a bitfield manipulation operation. 'Range' defines the range of effect.
-<br/>Known values for 'Modifier' are:
-<br/>0 - Set 'Value' - ignores original
-<br/>1 - And 'Value' - keeps bits
-<br/>2 - Or 'Value' - sets bits
-<br/>3 - Xor 'Value' - toggles bits
-<br/>4 - And not 'Value' - turns off bits
+Modifies an area animation's Cycle and plays an area hit animation over it indexed by <code>Projectile Type</code>.
+<br/><br/><code>Value</code> is the high word of the first parameter, <code>Modifier</code> is a bitfield manipulation operation.
+<br/>Known values for <code>Modifier</code> are:
+<ul>
+	<li>0 &longrightarrow; Set <code>Value</code> – ignores original</li>
+	<li>1 &longrightarrow; And <code>Value</code> – keeps bits</li>
+	<li>2 &longrightarrow; Or <code>Value</code> – sets bits</li>
+	<li>3 &longrightarrow; Xor <code>Value</code> – toggles bits</li>
+	<li>4 &longrightarrow; And not <code>Value</code> – turns off bits</li>
+</ul>
+
+<p>
+	<code>Range</code> is a radius around the targeted location that it will detect the specified animation (it will affect all within its radius). It's measured same as projectiles: <code>16 = 1ft radius</code>.
+</p>
+
+<p>
+	<code>Resource</code> should be the animation's label as listed in the <a href="../file_formats/ie_formats/are_v1.htm">ARE</a> file, not necessarily its filename.
+</p>
+
+<p>
+	<code>Projectile Type</code> displays a projectile over the animation's location similar to <a href="#op140">opcode #140</a>/<a href="#op141">opcode #141</a>.
+</p>
+
+{% capture note %}
+Examples can be found by looking at <code>"SPIN172.SPL"</code>, <code>"SPIN177.SPL"</code>, and <code>"AR1105.ARE"</code> (the area with those animations) in IWDEE.
+{% endcapture %}
+
+{% include info.html %}

@@ -21,7 +21,7 @@ title: "CRE file format"
         <li><a href="#CREV1_0_KnownSpell">Known spells section</a></li>
         <li><a href="#CREV1_0_MemSpellInfo">Spell memorization info</a></li>
         <li><a href="#CREV1_0_MemSpell">Memorized spells section</a></li>
-        <li><a href="eff_v2.htm">Effects</a></li>
+        <li><a href="#CREV1_0_Effects">Effects</a></li>
         <li><a href="#CREV1_0_Item">Items section</a></li>
         <li><a href="#CREV1_0_ItemSlots">&quot;Item slots&quot;</a></li>
       </ul>
@@ -84,7 +84,14 @@ title: "CRE file format"
                 <li>bit 11: Exportable</li>
                 <li><span class="unknown">bit 12: Hide injury status in tooltip</span></li>
                 <li>bit 13: Quest critical / affected by alternative damage</li>
-                <li><span class="unknown">bit 14: Can activate "Can not be used by NPC" triggers</span></li>
+
+                <li>
+                  bit 14 &longrightarrow; <b><a name="Flags_BIT14">Moving between areas</a></b>
+                  <ul>
+                    <li>See <a href="../../opcodes/bgee.htm#op186">opcode #186</a></li>
+                  </ul>
+                </li>
+
                 <li>bit 15: Been in Party</li>
                 <li><span class="unknown">bit 16: Restore item in hand</span></li>
                 <li><span class="unknown">bit 17: Un-sets bit 16</span></li>
@@ -113,7 +120,7 @@ title: "CRE file format"
           <tr>
             <td>0x0018</td>
             <td>4 (dword)</td>
-            <td>Creature Power Level (for summoning spells) / XP of the creature (for party members)</td>
+            <td><b><a name="0x18">Creature Power Level</a></b> (for summoning spells) / XP of the creature (for party members)</td>
           </tr>
           <tr>
             <td>0x001c</td>
@@ -187,8 +194,8 @@ title: "CRE file format"
             <td>1 (byte)</td>
             <td>Eff structure version
               <ul>
-                <li>0: Version 1 EFF</li>
-                <li>1: Version 2 EFF</li>
+                <li>0 &longrightarrow; Version 1 EFF</li>
+                <li>1 &longrightarrow; <b><a name="0x33_1">Version 2 EFF</a></b></li>
               </ul>
           </td>
           </tr>
@@ -1067,6 +1074,15 @@ TRANSMUTER          0x20000000</pre>
           </tr>
         </tbody>
       </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="CREV1_0_Effects">CRE V1.0 Effects</a></div>
+    <div class="indent1">
+      <br />
+      Unlike ordinary <a href="../ie_formats/eff_v2.htm">V2 EFF</a> files, <code><a href="#0x33_1">CRE effect V2</a></code> structures omit the 8-byte <code>EFF V2</code> header.<br />
+      As a result, their total length is <code>108h</code> instead of <code>110h</code> and all attributes (<code>Target</code>, <code>Power</code>, <code>Parameter1</code>, etc...) are located at the value listed there "minus 8" (e.g. <code>Opcode number</code> is at <code>0x8</code> instead of <code>0x10</code>).<br />
+      <br />
     </div>
     <br />
 

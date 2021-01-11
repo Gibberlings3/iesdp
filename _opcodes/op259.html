@@ -1,8 +1,8 @@
 ---
 n: 259
-name: "Protection: Spell Trap"
+name: "Trap: Effects (by Power Level, decrementing)"
 param1: "Amount"
-param2: "Level"
+param2: "Power Level"
 bg1: 0
 bg2: 1
 bgee: 1
@@ -10,4 +10,43 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Applies the spell-trap effect to the targeted creature(s), absorbing a number of spells as specified by the <code>Amount</code> field, of the level specified by the <code>Level</code> field, and recalling previously cast spells. A spell is assigned to a spell level by the power level of the first effect greater than the <code>Level</code> parameter in the extended header that is being called.
+Applies the spell-trap effect to the targeted creature(s), absorbing a number of effects as specified by the <code>Amount</code> field, of the level specified by the <code>Power Level</code> field, and recalling previously cast spells.
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's trap will determine how much this opcode's <code>Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+</p>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+{% capture note %}
+<ul>
+	<li>
+		CANNOT trap effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CANNOT trap EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode cannot trap effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT trap effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#117">Spell Trap</a></code> on the target.</li>
+	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+	<li>Only restores wizard spells, spells are restored through <a href="#op261">opcode #261</a>.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Trapping separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is trapped, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won't matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+{% endcapture %}
+
+{% include note.html %}

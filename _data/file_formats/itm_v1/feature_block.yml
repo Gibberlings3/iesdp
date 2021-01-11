@@ -44,16 +44,14 @@
 
     - bit 0: Can be dispelled, affected by magic resistance
     - bit 1: Ignores magic resistance (when used in combination with bit 0)
-    - bit 2: Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+ / external [EFF](../ie_formats/eff_v2.htm) files)
-    - bit 31: Effect was applied by an ITM (only present in EE games patched to v2.0+ / external [EFF](../ie_formats/eff_v2.htm) files). It is set by the engine if the effect's source ITM is identified. This bit is only used by [opcode #324](../../opcodes/bgee.htm#op324) which checks it to determine whether it should set STRREF_FEEDBACK_IMMUNE_RESOURCE (see [ENGINEST.2DA](../../files/2da/2da_bgee/enginest.htm)) to the ITM's general or identified name
-
-    The only difference between 0 and 2 is that 0 will automatically convert to 2 when targeting yourself.
 
     This can also be presented in the more traditional way:
     - 0 = Natural/Nonmagical
     - 1 = Can be dispelled/Affected by resistance
     - 2 = Cannot be dispelled/Ignores resistance
     - 3 = Can be dispelled/Ignores resistance
+
+    The only difference between `0` and `2` is that `0` will automatically convert to `2` when targeting yourself.
   type: char
 - desc: Duration
   type: dword

@@ -1,6 +1,6 @@
 ---
 n: 102
-name: "Protection: from Spell Levels"
+name: "Deflect: Effects (by Power level)"
 param1: "Spell Level"
 param2: "Irrelevant"
 bg1: 1
@@ -10,14 +10,35 @@ iwd1: 1
 iwd2: 1
 pst: 1
 ---
-Gives the targeted creature(s) protection from effects (opcodes) whose <code>Power</code> attribute is equal to <code>Spell Level</code>.
-<br/>Valid <code>Spell Level</code> (Power) levels range: <code>0 – 9</code>.
+Gives the targeted creature(s) protection from effects (opcodes) whose <code>Power</code> attribute is equal to <code>Spell Level</code> (<code>range: 0 – 9</code>).
 
 {% capture note %}
 <ul>
 	<li>Each application of this opcode only protects against its specified <code>Spell Level</code>, not "up to" it.</li>
 	<li>Each effect in a spell/item is checked separately by this opcode.</li>
+
+	<li>
+		CAN block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
 </ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won't matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
 {% endcapture %}
 
 {% include note.html %}

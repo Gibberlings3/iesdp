@@ -11,7 +11,17 @@ iwd2: 0
 pst: 0
 ---
 Applies the stun effect to the targeted creature(s), if the targeted creature(s) has less than 90 HP.
-<br/>The duration of the effect is:
-<br/>1 to 29  HP -> stunned for 4d4 rounds
-<br/>30 to 59 HP -> stunned for 2d4 rounds
-<br/>60 to 89 HP -> stunned for 1d4 rounds
+<br/>The <code>duration</code> of the effect is:
+<ul>
+	<li>1 to 29 HP &longrightarrow; stunned for 4d4 rounds</li>
+	<li>30 to 59 HP &longrightarrow; stunned for 2d4 rounds</li>
+	<li>60 to 89 HP &longrightarrow; stunned for 1d4 rounds</li>
+</ul>
+
+More specifically, it functions by applying <a href="#op45">opcode #45</a>.
+
+{% capture note %}
+<a href="#op101">Immunity</a> to <a href="#op45">opcode #45</a> is sufficient to block the stun effect, but without <a href="#op101">immunity</a> to <a href="#op210">opcode #210</a> it will still generate an erroneous <code>~Stunned~</code> string display.
+{% endcapture %}
+
+{% include note.html %}

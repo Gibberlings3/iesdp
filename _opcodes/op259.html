@@ -1,7 +1,7 @@
 ---
 n: 259
-name: "Trap: Effects (by Power Level, decrementing)"
-param1: "Amount"
+name: "Protection: Spell Trap (by Power Level, decrementing)"
+param1: "Total Amount"
 param2: "Power Level"
 bg1: 0
 bg2: 1
@@ -10,10 +10,10 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Applies the spell-trap effect to the targeted creature(s), absorbing a number of effects as specified by the <code>Amount</code> field, of the level specified by the <code>Power Level</code> field, and recalling previously cast spells.
+Applies the spell-trap effect to the targeted creature(s), absorbing a number of effects as specified by the <code>Total Amount</code> field, of the level specified by the <code>Power Level</code> field, and recalling previously cast spells.
 
 <p>
-	The <code>Power</code> level of the first effect to trigger any instance of this opcode's trap will determine how much this opcode's <code>Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's trap will determine how much this opcode's <code>Total Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
 </p>
 
 <p>
@@ -39,7 +39,12 @@ Applies the spell-trap effect to the targeted creature(s), absorbing a number of
 	<li>CANNOT trap effects from self.</li>
 	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#117">Spell Trap</a></code> on the target.</li>
 	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
-	<li>Only restores wizard spells, spells are restored through <a href="#op261">opcode #261</a>.</li>
+	<li>
+		When it traps an effect, it applies <a href="#op261">opcode #261</a> to the target.
+		<ul>
+			<li><code>Parameter1</code> is the <code>Power</code> level of the trapped effect, <code>Parameter2</code> is always <code>0|Wizard</code>.</li>
+		</ul>
+	</li>
 </ul>
 {% endcapture %}
 

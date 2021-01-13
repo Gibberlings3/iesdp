@@ -1,6 +1,6 @@
 ---
 n: 102
-name: "Deflect: Effects (by Power level)"
+name: "Spell: Immunity (by Power Level)"
 param1: "Spell Level"
 param2: "Irrelevant"
 bg1: 1
@@ -31,7 +31,12 @@ Gives the targeted creature(s) protection from effects (opcodes) whose <code>Pow
 		</ul>
 	</li>
 
-	<li>CANNOT block effects from self.</li>
+	<li>
+		CANNOT block non-hostile effects from self.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their non-hostile behavior from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT10">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#ExtHeader_Flags_BIT10">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x9C_BIT10">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
 </ul>
 {% endcapture %}
 

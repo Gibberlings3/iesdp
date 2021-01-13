@@ -10,10 +10,15 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Removes all effects with a matching <code>Secondary Type</code>, with a non-zero <code>Power Level</code> up to <code>Max Level</code>, of the first two valid <code>Parent Resources</code> from the targeted creature(s).
-<br/>Known values for <code>Secondary Type</code> are:
+Removes all effects with a matching <code>Secondary Type</code>, with a <code>Power Level</code> up to <code>Max Level</code>, of the first two valid <code>Parent Resource</code>s from the targeted creature(s).
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Secondary Type</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.
+</p>
+
+Known values for <code>Secondary Type</code> are:
 <ul>
-	<li>0 &longrightarrow; None</li>
+	<li>0 &longrightarrow; NONE</li>
 	<li>1 &longrightarrow; SPELLPROTECTIONS</li>
 	<li>2 &longrightarrow; SPECIFICPROTECTIONS</li>
 	<li>3 &longrightarrow; ILLUSIONARYPROTECTIONS</li>
@@ -27,26 +32,29 @@ Removes all effects with a matching <code>Secondary Type</code>, with a non-zero
 	<li>11 &longrightarrow; DISABLING</li>
 	<li>12 &longrightarrow; COMBINATION</li>
 	<li>13 &longrightarrow; NON-COMBAT</li>
-	<li>14 &longrightarrow; DORNS_SWORD</li>
 </ul>
 
-The first valid <code>Parent Resource</code> has a matching effect with a <code>Timing Mode</code> other than <code>(2/5/8)</code>, all such matching effects of this <code>Parent Resource</code> will be removed.
-<br/><br/>
+<p>
+	The first valid <code>Parent Resource</code> has a matching effect with a non-zero <code>Power Level</code> and a <code>Timing Mode</code> other than <code>2/5/8</code>, all such matching effects of this <code>Parent Resource</code> will be removed.
+</p>
 
-The second valid <code>Parent Resource</code> has a matching effect with a <code>Timing Mode (2/5/8)</code>, all such matching effects of this <code>Parent Resource</code> will be removed.
-<br/><br/>
+<p>
+	The second valid <code>Parent Resource</code> has a matching effect with a non-zero <code>Power Level</code> and a <code>Timing Mode</code> of <code>2/5/8</code>, all such matching effects of this <code>Parent Resource</code> will be removed.
+</p>
 
-If any effects are removed, the String Reference corresponding to the <code>Secondary Type</code> from <a href="../files/2da/2da_bgee/msectype.htm">MSECTYPE.2DA</a> is returned to the combat log.
+<p>
+	If any effects are removed, the String Reference corresponding to the <code>Secondary Type Type</code> from <code><a href="../files/2da/2da_bgee/msectype.htm">MSECTYPE.2DA</a></code> is returned to the combat log.
+</p>
 
 {% capture note %}
-Basically it removes one equipped resource effect list and one non-equipped resource effect list, except that equipped effects aren't removable while its item is equipped, so this behavior is not common.
+Basically it removes one equipped resource effect list and one non-equipped resource effect list, except that equipped effects aren't removable while its item is equipped, so this behavior is not common.<br/>
 The only way to really see this behavior (removing two separate resources) is to have a spell or item ability that only applies equipped effects.
 {% endcapture %}
 
 {% include info.html %}
 
 {% capture note %}
-Effects with a <code>Power Level</code> of <code>0</code> are completely ignored by this opcode.
+Effects with a <code>Power Level</code> of <code>0</code> are ignored when this opcode checks for effects, but will still be removed if another effect from its <code>Parent Resource</code> triggers removal.
 {% endcapture %}
 
 {% include note.html %}

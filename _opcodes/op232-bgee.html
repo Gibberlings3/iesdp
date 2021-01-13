@@ -46,7 +46,7 @@ Casts the spell specified by the <code>resource</code> field on the target speci
 	<li>21 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x40E2">CheckSpellState(Myself,<code>Extra</code>)</a> – Checked once per round</li>
 </ul>
 
-<br/><br/>The <code>Extra</code> field is used for the following <code>Target</code> values:
+<br/><br/>The <code>Extra</code> field is used for the following <code>Condition</code> values:
 <ul>
 	<li>13 &longrightarrow; Use value from <a href="../files/ids/bgee/timeoday.htm">TIMEODAY.IDS</a></li>
 	<li>14 &longrightarrow; Range in feet</li>
@@ -59,7 +59,7 @@ Casts the spell specified by the <code>resource</code> field on the target speci
 <br/><br/>For a <code>Condition</code> of <code>13</code>, the <code>Target</code> parameter must be <code>0</code>.
 <br/><br/>
 
-When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, <code>resource2</code> and <code>resource3</code> can also be specified – all spells will be cast when triggered.<br/><br/>
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">resource2</a></code> and <code><a href="../file_formats/ie_formats/eff_v2.htm#0x78">resource3</a></code> can also be specified – all spells will be cast when triggered.<br/><br/>
 
 When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, known values for <code>Parameter3</code> are:
 <ul>
@@ -67,7 +67,7 @@ When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>
 	<li>1 &longrightarrow; Real contingency (Maintains <code><a href="../files/2da/2da_bgee/statdesc.htm#75">Contingency</a></code> portrait icon, displays feedback message <code><a href="../files/2da/2da_bgee/enginest.htm#246">STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER</a></code> when triggered, and terminates this effect after first trigger. This value is always set when created by <a href="#op234">opcode #234</a>.</li>
 </ul>
 
-When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, <code>Parent Type (Source Type)</code> may be manually set to influence its behavior. Known values for <code>Parent Type</code> are:
+When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, <code><a href="../file_formats/ie_formats/eff_v2.htm#0x90">Parent Type (Source Type)</a></code> may be manually set to influence its behavior. Known values for <code>Parent Type</code> are:
 <ul>
 	<li>0 &longrightarrow; None – Allows further effects with a matching <code>Parent Resource</code> to affect the target.</li>
 	<li>1 &longrightarrow; Spell – Any further effects with a matching <code>Parent Resource</code> will be blocked by the engine and string <code><a href="../files/2da/2da_bgee/enginest.htm#42">STRREF_ERROR_CAN_NOT_CAST_TWO_CONT</a></code> is returned to the combat log. Spells must therefore either have this as the last effect, or use it in an EFF through <a href="#op177">opcode #177</a>, specifying a <code>Parent Type</code> of <code>0</code> or <code>2</code>.</li>

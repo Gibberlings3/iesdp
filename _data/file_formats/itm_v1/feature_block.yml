@@ -22,38 +22,43 @@
 - desc: |
     Timing Mode
 
-    - 0 = Duration
-    - 1 = Permanent
-    - 2 = While equipped
-    - 3 = Delayed Duration
-    - 4 = Delayed
-    - 5 = Delayed (transforms to 8)
-    - 6 = Duration?
-    - 7 = Permanent?
-    - 8 = Permanent (unsaved)
-    - 9 = Permanent (after Death)
-    - 10 = Trigger
-    - 4096 = Absolute duration
+    - 0 ⟶ <b><a name="0xC_0">Duration</a></b>
+      - This timing mode measures <code><a href="#0xE">duration</a></code> in seconds.
+    - 1 ⟶ Permanent
+    - 2 ⟶ While equipped
+    - 3 ⟶ Delayed Duration
+    - 4 ⟶ Delayed
+    - 5 ⟶ Delayed (transforms to 8)
+    - 6 ⟶ Duration?
+    - 7 ⟶ Permanent?
+    - 8 ⟶ Permanent (unsaved)
+    - 9 ⟶ Permanent (after Death)
+    - 10 ⟶ <b><a name="0xC_10">Trigger / Ticks</a></b>
+      - This timing mode just measures <code><a href="#0xE">duration</a></code> in ticks instead of seconds, there is nothing special about it beyond that. It allows for more accurate synchronization with mechanics that use the full `100 ticks = 1 round`.
+      - If <code><a href="#0xE">duration</a> = 0</code>, it won't function any differently from timing mode <code><a href="#0xC_0">0</a></code>.
+    - 4096 ⟶ <b><a name="0xC_4096">Absolute duration</a></b>
+      - This timing mode treats the <code><a href="#0xE">duration</a></code> field as the effect's expiration time (in ticks).
+        If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will expire when the game timer reaches 24 hours, or instantly if the game timer has already passed that point. `108000 = 300(1 hour) * 24 * 15 (ticks ➔ seconds)`.
 
-    NB. all effects except those with Timing mode '9' are removed by death.
+    NB. all effects except those with Timing mode `9` are removed by death.
   type: char
 - desc: |
     Resistance
 
     The default behaviour is that effects cannot be dispelled and ignore magic resistance.
 
-    - bit 0: Can be dispelled, affected by magic resistance
-    - bit 1: Ignores magic resistance (when used in combination with bit 0)
+    - bit 0 ⟶ Can be dispelled, affected by magic resistance
+    - bit 1 ⟶ Ignores magic resistance (when used in combination with bit 0)
 
     This can also be presented in the more traditional way:
-    - 0 = Natural/Nonmagical
-    - 1 = Can be dispelled/Affected by resistance
-    - 2 = Cannot be dispelled/Ignores resistance
-    - 3 = Can be dispelled/Ignores resistance
+    - 0 ⟶ Natural/Nonmagical
+    - 1 ⟶ Can be dispelled/Affected by resistance
+    - 2 ⟶ Cannot be dispelled/Ignores resistance
+    - 3 ⟶ Can be dispelled/Ignores resistance
 
     The only difference between `0` and `2` is that `0` will automatically convert to `2` when targeting yourself.
   type: char
-- desc: Duration
+- desc: <b><a name="0xE">Duration</a></b>
   type: dword
 - desc: Probability 1
   type: char

@@ -724,9 +724,30 @@ title: "PRO file format"
               </li>
 
               <li>Bit 28 &longrightarrow; <b><a name="ExtFlags_BIT28">Delayed payload</a></b></li>
-              <li>Bit 29 &longrightarrow; <b><a name="ExtFlags_BIT29">Limited path count</a></b></li>
 
-              <li>Bit 30 &longrightarrow; <b><a name="ExtFlags_BIT30">IWD style check</a></b> (use entries from <a href="../../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a> for first and second creature target). It works similar to op<a href="../../../opcodes/bgee.htm#op318">318</a>/<a href="../../../opcodes/bgee.htm#op326">326</a>, depending on the other related flags:
+              <li>
+                Bit 29 &longrightarrow; <b><a name="ExtFlags_BIT29">Limited path count</a></b>
+                <ul>
+                  <li>
+                    Traveling Projectile terminates after it has traveled for its originally calculated duration/distance (based on the targeted location), regardless of whether it has impacted its target or not.
+                    <ul>
+                      <li>For homing projectiles, this allows the target to "dodge" the projectile, by moving a bit in any direction (except directly towards the caster) before impact.</li>
+                      <li>Generally any distance that causes the projectile to "turn" or go beyond its original distance is enough to "dodge" it.</li>
+                    </ul>
+                  </li>
+                  <li>Compatibility: This behavior works the same with <code><a href="#ExtFlags_BIT1">Pass Target</a></code>, with or without <code><a href="#ExtFlags_BIT0">Bounce from Walls</a></code>.</li>
+                  <li>Compatibility: Projectile's arced by <code><a href="#ExtFlags_BIT10">Multiple Projectile</a></code> have a higher chance to terminate before impacting the target as the arc distance increases.</li>
+                  <li>
+                    Compatibility: Projectile's using <code><a href="#ExtFlags_BIT14">Lined up AoE</a></code> functions differently:
+                    <ul>
+                      <li>The projectile is limited to lasting only 1–2 seconds, preventing it from affecting any target a second time.</li>
+                    </ul>
+                  </li>
+                  <li>Special: All "VEF" projectiles (anything listed in <code><a href="../../files/ids/bgee/vefproj.htm">"VEFPROJ.IDS"</a></code>) effectively use this flag.</li>
+                </ul>
+              </li>
+
+              <li>Bit 30 &longrightarrow; <b><a name="ExtFlags_BIT30">IWD style check</a></b> (use entries from <a href="../../files/2da/2da_bgee/splprot.htm">SPLPROT.2DA</a> for first and second creature target). It works similar to op<a href="../../opcodes/bgee.htm#op318">318</a>/<a href="../../opcodes/bgee.htm#op326">326</a>, depending on the other related flags:
                 <ul>
                   <li><code><a href="#0x8">Projectile Type</a></code> must be <code><a href="#0x8_3">Area Effect</a></code>.</li>
                   <li>Activates: <code><a href="#0x3C">Creature value 1</a></code>, <code><a href="#0x3E">Creature type 1</a></code>, <code><a href="#0x40">Creature value 2</a></code>, <code><a href="#0x42">Creature type 2</a></code>.</li>
@@ -1027,18 +1048,46 @@ title: "PRO file format"
         <tr>
           <td>0x0010c</td>
           <td>8 (resref)</td>
-          <td><b><a name="0x10C">Shadow Animation</a></b> (<a href="bam_v1.htm">BAM</a>)</td>
+          <td>
+            <b><a name="0x10C">Shadow Animation</a></b> (<a href="bam_v1.htm">BAM</a>)
+            <ul>
+              <li>Not affected by <code><a href="#Behavior_BIT1">Use Height</a></code>.</li>
+              <li>This animation cannot be oriented.</li>
+              <li>Compatibility: Suppressed by <code><a href="#ExtFlags_BIT14">Lined up AoE</a></code>.</li>
+              <li>
+                Compatibility: This animation does not use the vertical offset of the Traveling projectile when using <code><a href="#ExtFlags_BIT13">Comet</a></code>.
+                <ul>
+                  <li>It travels directly horizontal at the target's vertical location.</li>
+                </ul>
+              </li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x00114</td>
           <td>1 (byte)</td>
-          <td>Projectile number (BAM sequence)</td>
+          <td>
+            <b><a name="0x114">Projectile number</a></b> (BAM sequence)
+            <ul>
+              <li><code><a href="#0x104">Projectile Animation</a></code> uses specified Cycle/Sequence of BAM file.</li>
+              <li>Defaults to <code>0</code> if value exceeds number of Cycles/Sequences in BAM file.</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x00115</td>
           <td>1 (byte)</td>
-          <td>Shadow number (BAM sequence)</td>
+          <td>
+            <b><a name="0x115">Shadow number</a></b> (BAM sequence)
+            <ul>
+              <li><code><a href="#0x10C">Projectile Animation Shadow</a></code> uses specified Cycle/Sequence of BAM file.</li>
+              <li>Defaults to <code>0</code> if value exceeds number of Cycles/Sequences in BAM file.</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>0x00116</td>
           <td>2 (word)</td>
@@ -1199,7 +1248,36 @@ title: "PRO file format"
           <ul>
             <li>bit 0 &longrightarrow; <b><a name="AreaFlags_BIT0">Trap Visible</a></b>
               <ul>
-                <li>Projectile remains visible at destination</li>
+                <li>
+                  <code><a href="#0x104">Projectile Animation</a></code> plays once where it explodes.
+                  <ul>
+                    <li>Option: <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code> – animation loops until the trap expends its triggers.</li>
+                    <li>Option: <code>If <a href="#0x216"># Repetitions</a> > 1</code>, animation loops until the Area Effect expires.</li>
+                    <li>Compatibility: Any flag that suppresses <code>0x100–0x1ff|Traveling Projectile Animation</code> will also suppress this animation.</li>
+                    <li>Compatibility: This animation ignores <code><a href="#ExtFlags_BIT7">Pillar</a></code>.</li>
+                    <li>
+                      Compatibility: When used with <code><a href="#AreaFlags_BIT13">Delayed Explosion</a></code>:
+                      <ul>
+                        <li>The projectile will not explode until the 30<sup>th</sup> frame of the animation created by <code><a href="#AreaFlags_BIT0">Trap Visible</a></code>.</li>
+                        <li>The <code><a href="#0x210">Explosion Frequency</a></code> is delayed until that time, after which it will explode as normal until the animation ends.</li>
+                        <li>The animation will then start over, <code><a href="#0x210">Explosion Frequency</a></code> will reset, and again be delayed until frame 30 of the animation.</li>
+                        <li>
+                          This delay applies even to explosions that are not controlled by the <code><a href="#0x210">Explosion Frequency</a></code>:
+                          <ul>
+                            <li>Such as when using <code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code> or when the target is in-between the <code><a href="#0x204">Trap Size</a></code> and <code><a href="#0x206">Explosion Size</a></code>.</li>
+                          </ul>
+                        </li>
+                        <li>
+                          This requires the <code><a href="#0x104">Projectile Animation</a></code> to have at least 30 frames – This is the animation used by <code><a href="#AreaFlags_BIT0">Trap Visible</a></code>.
+                          <ul>
+                            <li>Otherwise the projectile will never explode (but still disable saving as an active <code><a href="#0x8_3">Area Effect</a></code> projectile).</li>
+                          </ul>
+                        </li>
+                        <li>It is very likely that the 30<sup>th</sup> frame is a hardcoded value and cannot be changed.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
               </ul>
             </li>
 
@@ -1443,7 +1521,32 @@ title: "PRO file format"
               </ul>
             </li>
 
-            <li>bit 13 &longrightarrow; <b><a name="AreaFlags_BIT13">Delayed explosion</a></b></li>
+            <li>
+              bit 13 &longrightarrow; <b><a name="AreaFlags_BIT13">Delayed explosion</a></b>
+              <ul>
+                <li>
+                  Compatibility: When used with <code><a href="#AreaFlags_BIT0">Trap Visible</a></code>:
+                  <ul>
+                    <li>The projectile will not explode until the 30<sup>th</sup> frame of the animation created by <code><a href="#AreaFlags_BIT0">Trap Visible</a></code>.</li>
+                    <li>The <code><a href="#0x210">Explosion Frequency</a></code> is delayed until that time, after which it will explode as normal until the animation ends.</li>
+                    <li>The animation will then start over, <code><a href="#0x210">Explosion Frequency</a></code> will reset, and again be delayed until until frame 30 of the animation.</li>
+                    <li>
+                      This delay applies even to explosions that are not controlled by the <code><a href="#0x210">Explosion Frequency</a></code>:
+                      <ul>
+                        <li>Such as when using <code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code> or when the target is in-between the <code><a href="#0x204">Trap Size</a></code> and <code><a href="#0x206">Explosion Size</a></code>.</li>
+                      </ul>
+                    </li>
+                    <li>
+                      This requires the <code><a href="#0x104">Projectile Animation</a></code> to have at least 30 frames – This is the animation used by <code><a href="#AreaFlags_BIT0">Trap Visible</a></code>.
+                      <ul>
+                        <li>Otherwise the projectile will never explode (but still disable saving as an active <code><a href="#0x8_3">Area Effect</a></code> projectile).</li>
+                      </ul>
+                    </li>
+                    <li>It is very likely that the 30<sup>th</sup> frame is a hardcoded value and cannot be changed.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
 
             <li>
               bit 14 &longrightarrow; <b><a name="AreaFlags_BIT14">Skip first condition</a></b>
@@ -1473,7 +1576,7 @@ title: "PRO file format"
                 <li>
                   Option: <code><a href="#AreaExtFlags_BIT15">Hit Point Limit</a></code>
                   <ul>
-                    <li>Each explosion will only affect targets whose current Hit Points are equal or less than <a href="#0x246">Dice size for multiple targets</a>.</li>
+                    <li>Each explosion will only affect targets whose current Hit Points are equal or less than <code><a href="#0x246">Dice size for multiple targets</a></code>.</li>
                     <li>Each explosion will only affect a total number of targets whose current Hit Point total is equal or less than <code><a href="#0x244"># dice for multiple targets</a></code>.</li>
                   </ul>
                 </li>
@@ -1547,7 +1650,17 @@ title: "PRO file format"
       <tr>
         <td>0x00208</td>
         <td>8 (resref)</td>
-        <td>Trigger sound</td>
+        <td>
+          <b><a name="0x208">Explosion Sound</a></b>
+          <ul>
+            <li>
+              Sound is played each tick of the projectile's duration once it explodes.
+              <ul>
+                <li>Should only be used for one-shot projectiles (Fireball), not be used for repeating projectiles (Web).</li>
+              </ul>
+            </li>
+          </ul>
+        </td>
       </tr>
 
       <tr>
@@ -1577,16 +1690,91 @@ title: "PRO file format"
         <td>2 (short)</td>
         <td>Fragment animation (<a href="../../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)</td>
       </tr>
+
       <tr>
         <td>0x00214</td>
         <td>2 (word)</td>
-        <td><b><a name="0x214">Secondary Projectile</a></b> (<code><a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> - 1</code>)</td>
+        <td>
+          <b><a name="0x214">Secondary Projectile</a></b> (<code><a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> - 1</code>)
+          <ul>
+            <li>Dependency: Activated by <code><a href="#AreaFlags_BIT4">Secondary Projectile</a></code>.</li>
+            <li>Dependency: Spell Target(<code>Creature</code>).</li>
+            <li>
+              Upon exploding, this projectile is fired every tick at the targeted creature for the duration of the projectile.
+              <ul>
+                <li>The targeted creature does NOT need to be within either the <code><a href="#0x204">Trap Size</a></code> or <code><a href="#0x206">Explosion Size</a></code>.</li>
+              </ul>
+            </li>
+            <li>Duration is controlled by <code><a href="#0x216"># Repetitions</a></code>, <code><a href="#0x210">Explosion Frequency</a></code>, and <code><a href="#AreaFlags_BIT14">Skip First Condition</a></code>.</li>
+            <li>
+              Total number of <code><a href="#0x214">Secondary Projectile</a></code>s fired:
+              <ul>
+                <li>
+                  <code>If <a href="#0x216"># Repetitions</a> < 2</code>:
+                  <ul>
+                    <li><code>If <a href="#AreaFlags_BIT14">Skip First Condition</a>: <a href="#0x210">Explosion Frequency</a> + 1</code></li>
+                    <li><code>Else: 1</code></li>
+                  </ul>
+                </li>
+                <li>
+                  <code>If <a href="#0x216"># Repetitions</a> > 1</code>:
+                  <ul>
+                    <li><code>If <a href="#AreaFlags_BIT14">Skip First Condition</a>: (<a href="#0x210">Explosion Frequency</a> + 1) * <a href="#0x216"># Repetitions</a></code></li>
+                    <li><code>Else: (<a href="#0x210">Explosion Frequency</a> + 1) * (<a href="#0x216"># Repetitions</a> - 1) + 1</code></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              Option: <code><a href="#ExtFlags_BIT0">Bounce from walls</a></code>
+              <ul>
+                <li>Alters the <code><a href="#0x214">Secondary Projectile</a></code> to deliver effects.</li>
+                <li>Alters the <code><a href="#0x214">Secondary Projectile</a></code> to originate from the targeted creature, rather than the caster.</li>
+                <li>The <code><a href="#0x214">Secondary Projectile</a></code> will be oriented in a random direction.</li>
+                <li>Compatibility: With <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code>, the <code><a href="#0x214">Secondary Projectile</a></code> will instead target the caster's location (but not the caster directly).</li>
+                <li>
+                  The Traveling Projectile of the <code><a href="#0x214">Secondary Projectile</a></code> will terminate after a number of ticks equal to <code><a href="#0x210">Explosion Frequency</a></code>.
+                  <ul>
+                    <li>It will need to impact <code><a href="#0x8_2">Single Target</a></code> or explode <code><a href="#0x8_3">Area Effect</a></code> before then.</li>
+                    <li>Compatibility: Projectiles using <code><a href="#ExtFlags_BIT29">Limited Path Count</a></code> travel for their normal distance/duration.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </td>
       </tr>
+
       <tr>
         <td>0x00216</td>
         <td>1 (byte)</td>
-        <td><b><a name="0x216">Trigger Count/# Repetitions</a></b> (used if bits 8 and 9 at 0x200 are not set)</td>
+        <td>
+          <b><a name="0x216">Trigger Count / # Repetitions</a></b> (used if bits 8 and 9 at 0x200 are not set)
+          <ul>
+            <li>Along with <code><a href="#0x210">Explosion Frequency</a></code> and <code><a href="#AreaFlags_BIT2">Delayed Trigger</a></code> and <code><a href="#AreaFlags_BIT14">Skip First Condition</a></code>, determines the duration of the projectile.</li>
+            <li>A value of <code>0</code> and <code>1</code> are often (but not always) treated the same (as <code>1</code>) – still researching...</li>
+            <li>
+              Determines how many times the projectile checks for targets within its <code><a href="#0x204">Trap Size</a></code>.
+              <ul>
+                <li>Target(s) outside its <code><a href="#0x204">Trap Size</a></code> but within its <code><a href="#0x206">Explosion Size</a></code> are checked every tick of the duration.</li>
+              </ul>
+            </li>
+            <li>
+              Compatibility: When using <code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code>, it only determines check count when used with <code><a href="#AreaFlags_BIT3">Delayed Trigger</a></code>.
+              <ul>
+                <li>Projectiles using <code><a href="#ExtFlags_BIT15">Rectangular AoE</a></code> without <code><a href="#AreaFlags_BIT3">Delayed Trigger</a></code> check for targets every tick of their duration.</li>
+              </ul>
+            </li>
+            <li>
+              Compatibility: When using <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code>:
+              <ul>
+                <li>Projectile will remain until it has triggered this many times.</li>
+              </ul>
+            </li>
+          </ul>
+        </td>
       </tr>
+
       <tr>
         <td>0x00217</td>
         <td>1 (byte)</td>
@@ -1602,11 +1790,38 @@ title: "PRO file format"
         <td>1 (byte)</td>
         <td>Unused</td>
       </tr>
+
       <tr>
         <td>0x00021a</td>
         <td>2 (bytes)</td>
-        <td><b><a name="0x21A">Explosion Projectile</a></b> (<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>), played on affected creatures</td>
+        <td>
+          <b><a name="0x21A">Explosion Projectile</a></b> (<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>), played on affected creatures
+          <ul>
+            <li>
+              This projectile is fired, originating from the point of explosion, at every valid target within range, for every explosion.
+              <ul>
+                <li>The <code><a href="#0x21A">Explosion Projectile</a></code> will always target a <code>creature/object</code>, not a <code>location</code>.</li>
+              </ul>
+            </li>
+            <li>
+              Compatibility: When using <code><a href="#0x202">Ray Count</a></code>:
+              <ul>
+                <li>The <code><a href="#0x21A">Explosion Projectile</a></code> will always target a <code>location</code>, not a <code>creature/object</code>.</li>
+              </ul>
+            </li>
+            <li>For <code><a href="#0x8_3">Area Effect</a></code> projectiles, this is normally what delivers the <a href="../ie_formats/spl_v1.htm#splv1_Feature_Block">spell</a>/<a href="../ie_formats/itm_v1.htm#itmv1_Feature_Block">item</a> effects to their target.</li>
+            <li>Compatibility: Projectiles using <code><a href="#ExtFlags_BIT14">Lined up AoE</a></code> will NOT function as an Explosion Projectile.</li>
+            <li>
+              Compatibility: Projectiles using <code><a href="#ExtFlags_BIT10">Multiple Projectile</a></code> will ignore that flag when used as an Explosion Projectile.
+              <ul>
+                <li>This does NOT include the still hardcoded Magic Missile projectiles.</li>
+              </ul>
+            </li>
+            <li>The explosion projectile otherwise functions as normal for its parameters.</li>
+          </ul>
+        </td>
       </tr>
+
       <tr>
         <td>0x00021c</td>
         <td>8 (resref)</td>

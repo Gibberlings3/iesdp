@@ -1,6 +1,6 @@
 ---
 n: 198
-name: "Reflect: Effects (by Opcode)"
+name: "Spell: Bounce (by Opcode)"
 param1: "Irrelevant"
 param2: "Opcode"
 bg1: 0
@@ -11,6 +11,12 @@ iwd2: 0
 pst: 0
 ---
 The targeted creature(s) will reflect effects containing the opcode specified by the <code>Opcode</code> field.
+
+{% capture note %}
+This can cause a crash if two creatures end up reflecting to each other.
+{% endcapture %}
+
+{% include warning.html %}
 
 {% capture note %}
 <ul>
@@ -35,12 +41,6 @@ The targeted creature(s) will reflect effects containing the opcode specified by
 {% endcapture %}
 
 {% include info.html %}
-
-{% capture note %}
-This can cause a crash if two creatures end up reflecting to each other.
-{% endcapture %}
-
-{% include warning.html %}
 
 {% capture note %}
 <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won't matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.

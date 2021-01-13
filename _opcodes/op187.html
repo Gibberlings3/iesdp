@@ -10,15 +10,16 @@ iwd1: 0
 iwd2: 1
 pst: 0
 ---
-This effect stores a various data types, usually a variable in the 'variable' field.
-<br/>Resistance.param3: Point
-<br/>Param4: Float
-<br/>Param1: Int 
-<br/>Param2: Any
-<br/>Resource1+2+3: String
+This effect sets the variable specified by the <code><a href="../file_formats/ie_formats/eff_v2.htm#0xA8">Variable Name</a></code> field to the value specified by the <code>Value</code> field.
 
 {% capture note %}
-This effect can only be used in an external effect (ie. an eff file).
+This effect can only be used in an external effect (<a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Effects">CRE</a>/<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file).
 {% endcapture %}
 
 {% include important.html %}
+
+{% capture note %}
+This effect is always instantaneous (local variables are stored internally, not as effects, while the game is running). All local variables for a <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> are stored as <a href="#op187">opcode #187</a> effects on that <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> whenever the game is saved, which will trigger as soon as the game is loaded.
+{% endcapture %}
+
+{% include info.html %}

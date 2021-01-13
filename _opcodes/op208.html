@@ -12,3 +12,14 @@ pst: 0
 ---
 The targeted creature(s) HP value will not drop below the value specified by the <code>Minimum Value</code> field.
 <br/>This effect sets <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a> to <code>Minimum Value</code>.
+
+{% capture note %}
+<ul>
+	<li><code>Minimum Value</code> values <code>65536</code> to <code>98303</code> will set an only allowed hit point value (HP can't be higher or lower), each representing <code>'Minimum Value' value - 65536</code>, so <code>0</code> to <code>32767</code>.</li>
+	<li>Values <code>32768</code> to <code>65535</code> do this as well, but all result in negative HP amounts, so not usable, as they will result in the same bugged non-death as <a href="#op17">opcode #17</a> reducing HP to 0.</li>
+	<li>All values higher than <code>98303</code> just repeat loop over from <code>-32768</code> to <code>32767</code>.</li>
+	<li>Any positive value will also grant the creature immunity to directly applied <a href="#op13">opcode #13</a> effects. Those applied indirectly will still kill the creature, notably by opcodes <a href="#op55">#55</a>, <a href="#op134">#134</a>, <a href="#op151">#151</a>, <a href="#op209">#209</a>, and <a href="#op238">#238</a>.</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

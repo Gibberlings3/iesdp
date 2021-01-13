@@ -1,8 +1,8 @@
 ---
 n: 223
-name: "Spell Effect: Immunity School Decrement"
-param1: "Max Level"
-param2: "School Type"
+name: "Spell: Immunity (by School, decrementing)"
+param1: "Total Amount"
+param2: "School"
 bg1: 0
 bg2: 1
 bgee: 1
@@ -10,13 +10,61 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Known values for 'School Type' are:
-<br/>1   Abjurer
-<br/>2   Conjurer
-<br/>3   Diviner
-<br/>4   Enchanter
-<br/>5   Illusionist
-<br/>6   Invoker
-<br/>7   Necromancer
-<br/>8   Transmuter
-<br/>9   Generalist
+The targeted creature(s) will absorb a number of effects (specified by the <code>Total Amount</code> field) whose <code>Primary Type (School)</code> is equal to the one specified by the <code>School</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Primary Type (School)</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x25">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x17">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x4C">V2 effects</a> specify it manually.
+</p>
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's deflection will determine how much this opcode's <code>Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+</p>
+
+Known values for <code>School</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; ABJURATION</li>
+	<li>2 &longrightarrow; CONJURATION</li>
+	<li>3 &longrightarrow; DIVINATION</li>
+	<li>4 &longrightarrow; ENCHANTMENT</li>
+	<li>5 &longrightarrow; ILLUSION</li>
+	<li>6 &longrightarrow; EVOCATION</li>
+	<li>7 &longrightarrow; NECROMANCY</li>
+	<li>8 &longrightarrow; ALTERATION</li>
+	<li>9 &longrightarrow; GENERALIST</li>
+	<li>10 &longrightarrow; WILDMAGE</li>
+</ul>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+{% capture note %}
+<ul>
+	<li>
+		CANNOT block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#73">Spell Shield</a></code> on the target.</li>
+	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won't matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+{% endcapture %}
+
+{% include note.html %}

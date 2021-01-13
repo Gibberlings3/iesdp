@@ -10,18 +10,32 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Removes spells with a secondary type matching that specified by he 'Secondary Type' field from the targeted creature(s), up to the level specified by the 'Maximum level' field.
-<br/>Known values for 'Secondary Type' are:
-<br/>1   Spell Protections
-<br/>2   Specific Protections
-<br/>3   Illusionary Protections
-<br/>4   Magic Attack
-<br/>5   Divination Attack
-<br/>6   Conjuration
-<br/>7   Combat Protections
-<br/>8   Contingency
-<br/>9   Battleground
-<br/>10  Offensive Damage
-<br/>11  Disabling
-<br/>12  Combination
-<br/>13  Non-Combat
+For any effect that matches the specified <code>Secondary Type</code>, and has a <code>0 < Power Level <= Maximum Level</code>:
+<ul>
+	<li>All effects from that effect's <code>Parent Resource</code> with a <code>Power Level <= Maximum Level</code> that do not use <code>Timing Mode 9</code> will be removed.</li>
+	<li>An effect using <code>Timing Mode 9</code> can be used to match the type and power level to trigger its resource's removal, but that effect itself will not be removed.</li>
+	<li>An effect using <code>Power Level 0</code> cannot be used to match the type and power level to trigger its resource's removal, but it will be removed if the resource is triggered for removal by another effect.</li>
+	<li>If removal is triggered, the relevant string from <code><a href="../files/2da/2da_bgee/msectype.htm">MSECTYPE.2DA</a></code> is displayed in the combat log.</li>
+</ul>
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Secondary Type</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.
+</p>
+
+<br/>Known values for <code>Secondary Type</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; SPELLPROTECTIONS</li>
+	<li>2 &longrightarrow; SPECIFICPROTECTIONS</li>
+	<li>3 &longrightarrow; ILLUSIONARYPROTECTIONS</li>
+	<li>4 &longrightarrow; MAGICATTACK</li>
+	<li>5 &longrightarrow; DIVINATIONATTACK</li>
+	<li>6 &longrightarrow; CONJURATION</li>
+	<li>7 &longrightarrow; COMBATPROTECTIONS</li>
+	<li>8 &longrightarrow; CONTINGENCY</li>
+	<li>9 &longrightarrow; BATTLEGROUND</li>
+	<li>10 &longrightarrow; OFFENSIVEDAMAGE</li>
+	<li>11 &longrightarrow; DISABLING</li>
+	<li>12 &longrightarrow; COMBINATION</li>
+	<li>13 &longrightarrow; NON-COMBAT</li>
+</ul>

@@ -91,7 +91,8 @@
 
     Stacking IDs are unique to the opcode being applied. To maintain uniqueness of stacking IDs between different mods, one recommendation is to use the higher word of Special as the modder's Infinity Engine Community Prefix, then use the lower word as an identifying ID. For example, 0x41360001 ('A6' 0x0001).
   type: dword
-- desc: Primary type (school)
+- desc: |-
+    <b><a name="0x4C">Primary Type (School)</a></b>
   type: dword
 - desc: Unknown
   type: dword
@@ -106,14 +107,17 @@
     Resistance
 
     The default behaviour is that effects cannot be dispelled and ignore resistance.
-    - bit 0: Can be dispelled, affected by resistance
-    - bit 1: Ignores resistance (when used in combination with bit 0)
+    - bit 0 ⟶ Can be dispelled, affected by resistance
+    - bit 1 ⟶ Ignores resistance (when used in combination with bit 0)
+    - <b><a name="0x5C_BIT2">bit 2</a></b> ⟶ Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+)
+    - bit 31 ⟶ Effect was applied by an [ITM](../ie_formats/itm_v1.htm) (only present in EE games patched to v2.0+).
+      - It is set by the engine if the effect's source [ITM](../ie_formats/itm_v1.htm) is identified. This bit is only used by [opcode #324](../../opcodes/bgee.htm#op324) which checks it to determine whether it should set <code><a href="../../files/2da/2da_bgee/enginest.htm#128">STRREF_FEEDBACK_IMMUNE_RESOURCE</a></code> to the ITM's general or identified name.
 
     This can also be presented in the more traditional way:
-    - 0=Nonmagical
-    - 1=Can be dispelled/Affected by resistance
-    - 2=Cannot be dispelled/Ignores resistance
-    - 3=Can be dispelled/Ignores resistance
+    - 0 ⟶ Nonmagical
+    - 1 ⟶ Can be dispelled/Affected by resistance
+    - 2 ⟶ Cannot be dispelled/Ignores resistance
+    - 3 ⟶ Can be dispelled/Ignores resistance
   type: dword
 - desc: Parameter 3
   type: dword
@@ -123,9 +127,11 @@
   type: dword
 - desc: Parameter 6
   type: dword
-- desc: Resource 2 (VVC in many effects)
+- desc: |-
+    <b><a name="0x70">Resource 2</a></b> (VVC in many effects)
   type: resref
-- desc: Resource 3
+- desc: |-
+    <b><a name="0x78">Resource 3</a></b>
   type: resref
 - desc: Caster X coordinate
   type: dword
@@ -135,21 +141,34 @@
   type: dword
 - desc: Target Y coordinate
   type: dword
-- desc: Parent resource type (0=None, 1=Spell, 2=Item)
+- desc: |-
+    <b><a name="0x90">Parent resource type</a></b>
+    - 0 ⟶ <b><a name="0x90_0">None</a></b>
+    - 1 ⟶ <b><a name="0x90_1">Spell</a></b>
+    - 2 ⟶ <b><a name="0x90_2">Item</a></b>
   type: dword
-  unknown: 1
-- desc: Parent resource
+- desc: |-
+    <b><a name="0x94">Parent resource</a></b>
   type: resref
-- desc: Parent resource flags (from SPL 0x18 or ITM ext header 0x26)
+- desc: |-
+    <b><a name="0x9C">Parent resource flags</a></b>
+
+    - bit 10 ⟶ <b><a name="0x9C_BIT10">Hostile</a></b>
+    - bit 11 ⟶ No LOS required
+    - bit 12 ⟶ Allow spotting
+    - bit 13 ⟶ Outdoors only
+    - bit 14 ⟶ Non-magical ability
+    - bit 15 ⟶ Trigger/Contingency
+    - bit 16 ⟶ Non-combat ability
   type: dword
-  unknown: 1
-- desc: Projectile
+- desc: |-
+    <b><a name="0xA0">Projectile</a></b>
   type: dword
-  unknown: 1
 - desc: Parent resource slot
   type: dword
   unknown: 1
-- desc: Variable
+- desc: |-
+    <b><a name="0xA8">Variable name</a></b>
   type: bytes
   length: 32
 - desc: Caster level
@@ -158,7 +177,8 @@
 - desc: FirstApply (internal flag)
   type: dword
   unknown: 1
-- desc: Secondary Type
+- desc: |-
+    <b><a name="0xD0">Secondary Type</a></b>
   type: dword
 - desc: Unknown
   type: dword

@@ -1,8 +1,8 @@
 ---
 n: 202
-name: "Spell: Bounce Spell School"
+name: "Spell: Bounce (by School)"
 param1: "Irrelevant"
-param2: "Spell School"
+param2: "School"
 bg1: 0
 bg2: 1
 bgee: 1
@@ -10,13 +10,53 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-The targeted creature(s) will turn spells from the school specified by the 'Spell School' field.
-<br/>Known values for 'Spell School' are:
-<br/>1   Abjuration
-<br/>2   Conjuration
-<br/>3   Divination
-<br/>4   Enchantment
-<br/>5   Illusion
-<br/>6   Evocation
-<br/>7   Necromancy
-<br/>8   Alteration
+The targeted creature(s) will turn effects from the school specified by the <code>School</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Primary Type (School)</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x25">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x17">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x4C">V2 effects</a> specify it manually.
+</p>
+
+Known values for <code>School</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; ABJURATION</li>
+	<li>2 &longrightarrow; CONJURATION</li>
+	<li>3 &longrightarrow; DIVINATION</li>
+	<li>4 &longrightarrow; ENCHANTMENT</li>
+	<li>5 &longrightarrow; ILLUSION</li>
+	<li>6 &longrightarrow; EVOCATION</li>
+	<li>7 &longrightarrow; NECROMANCY</li>
+	<li>8 &longrightarrow; ALTERATION</li>
+	<li>9 &longrightarrow; GENERALIST</li>
+	<li>10 &longrightarrow; WILDMAGE</li>
+</ul>
+
+{% capture note %}
+<ul>
+	<li>
+		CANNOT reflect effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN reflect EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT reflect effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target (this is likely a bug).</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won't matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+{% endcapture %}
+
+{% include note.html %}

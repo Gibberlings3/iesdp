@@ -2,7 +2,7 @@
 n: 220
 name: "Removal: Remove School"
 param1: "Maximum Level"
-param2: "School Type"
+param2: "School"
 bg1: 0
 bg2: 1
 bgee: 1
@@ -10,14 +10,29 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Removes spells from the school specified by the 'School Type' field from the targeted creature(s), up to the level specified by the 'Maximum level' field.
-<br/>Known values for 'School Type' are:
-<br/>1   Abjurer
-<br/>2   Conjurer
-<br/>3   Diviner
-<br/>4   Enchanter
-<br/>5   Illusionist
-<br/>6   Invoker
-<br/>7   Necromancer
-<br/>8   Transmuter
-<br/>9   Generalist
+For any effect that matches the specified <code>School</code>, and has a <code>0 < Power Level <= Maximum Level</code>:
+<ul>
+	<li>All effects from that effect's <code>Parent Resource</code> with a <code>Power Level <= Maximum Level</code> that do not use <code>Timing Mode 9</code> will be removed.</li>
+	<li>An effect using <code>Timing Mode 9</code> can be used to match the type and power level to trigger its resource's removal, but that effect itself will not be removed.</li>
+	<li>An effect using <code>Power Level 0</code> cannot be used to match the type and power level to trigger its resource's removal, but it will be removed if the resource is triggered for removal by another effect.</li>
+	<li>If removal is triggered, the relevant string from <code><a href="../files/2da/2da_bgee/mschool.htm">MSCHOOL.2DA</a></code> is displayed in the combat log.</li>
+</ul>
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Primary Type (School)</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x25">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x17">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x4C">V2 effects</a> specify it manually.
+</p>
+
+Known values for <code>School</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; ABJURATION</li>
+	<li>2 &longrightarrow; CONJURATION</li>
+	<li>3 &longrightarrow; DIVINATION</li>
+	<li>4 &longrightarrow; ENCHANTMENT</li>
+	<li>5 &longrightarrow; ILLUSION</li>
+	<li>6 &longrightarrow; EVOCATION</li>
+	<li>7 &longrightarrow; NECROMANCY</li>
+	<li>8 &longrightarrow; ALTERATION</li>
+	<li>9 &longrightarrow; GENERALIST</li>
+	<li>10 &longrightarrow; WILDMAGE</li>
+</ul>

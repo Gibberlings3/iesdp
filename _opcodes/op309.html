@@ -10,7 +10,7 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Set both the local variable specified by the <code>resource</code> key to the value specified by the <code>Value</code> field.
+Modifies the local variable specified by the <code>resource</code> key to the value specified by the <code>Value</code> field.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Set Local (to <code>Value</code>)</li>
@@ -18,9 +18,30 @@ Set both the local variable specified by the <code>resource</code> key to the va
 </ul>
 
 {% capture note %}
-Since the <code>resource</code> key can only be 8 characters long maximum, you can not set a variable with this Effect that has a name longer than this amount.
-<br/>You can use the VVC field of external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files for an additional 8 characters of variable name.
-<br/>You can use the 3rd resource field of <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files for an additional 8 characters.
+<ul>
+	<li>
+		Since the <code>resource</code> key can only be 8 characters long maximum, you can not set a variable with this Effect that has a name longer than this amount.
+		<ul>
+			<li>
+				You can use the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> field of external EFF files for an additional 8 characters of variable name.
+				<ul>
+					<li>
+						You can use the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x78">Resource 3</a></code> field of external EFF files for an additional 8 characters of variable name.
+						<ul>
+							<li>As a result, it cannot modify variables more than 24 characters long.</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include info.html %}
+
+{% capture note %}
+This effect is always instantaneous (local variables are stored internally, not as effects, while the game is running). All local variables for a <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> are stored as <a href="#op187">opcode #187</a> effects on that <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> whenever the game is saved, which will trigger as soon as the game is loaded.
 {% endcapture %}
 
 {% include info.html %}

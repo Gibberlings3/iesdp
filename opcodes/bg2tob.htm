@@ -5037,9 +5037,9 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 
 This opcode increments <a href="../files/ids/bgee/stats.htm#51">SPELLFAILUREMAGE</a>, <a href="../files/ids/bgee/stats.htm#52">SPELLFAILUREPRIEST</a> and <a href="../files/ids/bgee/stats.htm#194">SPELL_FAILURE_INNATE</a>, each of which is capped <code>0 – 100</code>.
 
-<br/><br/><code>Type</code> values of <code>0</code>,<code>1</code> or <code>2</code> display a message – "Spell Failed: casting failure" (on EE games, this string is specified by <code><a href="../files/2da/2da_bgee/enginest.htm#467">STRREF_FEEDBACK_SPELLFAILED_CASTFAILURE</a></code>)
+<br/><br/><code>Type</code> values of <code>0</code>,<code>1</code> or <code>2</code> display a message – "Spell Failed: casting failure" (on EE games, this string is specified by <code><a href="../files/2da/2da_bgee/enginest.htm#178">STRREF_FEEDBACK_SPELLFAILED_CASTFAILURE</a></code>)
 
-<br/><br/><code>Type</code> values of <code>3</code>,<code>4</code> or <code>5</code> display a message – "Spell failed due to dead magic" (on EE games, this string is specified by <code><a href="../files/2da/2da_bgee/enginest.htm#70306">STRREF_FEEDBACK_SPELLFAILED_CASTFAILUREDEAD</a></code>)
+<br/><br/><code>Type</code> values of <code>3</code>,<code>4</code> or <code>5</code> display a message – "Spell failed due to dead magic" (on EE games, this string is specified by <code><a href="../files/2da/2da_bgee/enginest.htm#179">STRREF_FEEDBACK_SPELLFAILED_CASTFAILUREDEAD</a></code>)
 <ul>
 	<li>Additionally, it sets <a href="../files/ids/bgee/stats.htm#196">DEAD_MAGIC</a> to <code>1</code>.</li>
 </ul>
@@ -5489,12 +5489,12 @@ Both parameters should be <code>0</code> (zero).
   <div>
     <strong>Info:</strong> 
 <ul>
-	<li>(EE only) <code>Resource2</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
+	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
 		Default is a hardcoded VVC using <code>"SPBOOM.BAM"</code> and palette <code>#65</code>. This is generally used as the "portal" animation.
 	</li>
-	<li>(EE only) <code>Resource3</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
-	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code>Resource2</code> (not exact). Creature will not appear/spawn until this animation finishes.</li>
-	<li>Applies a delayed <a href="#op215">opcode #215</a> with resource <code>"SPGFLSH1"</code> to the summoned creature, <code>delayed duration = 5 ticks less</code> than the <a href="#op271">opcode #271</a>.</li>
+	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#0x78">Resource 3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
+	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> (not exact). Creature will not appear/spawn until this animation finishes.</li>
+	<li>Applies a delayed <a href="#op215">opcode #215</a> with <code>resource = "SPGFLSH1"</code> to the summoned creature, <code>delayed duration = 5 ticks less</code> than the <a href="#op271">opcode #271</a>.</li>
 	<li>Applies a delayed <a href="#op68">opcode #68</a> to the summoned creature based on effect duration (unless permanent).</li>
 	<li>When summoned, any temporary changes (such as from equipped items) to the creature's <a href="../files/ids/bgee/gender.htm">gender</a> are made permanent.</li>
 </ul>
@@ -6203,7 +6203,7 @@ Maintains <a href="../files/ids/bgee/splstate.htm#38">DEAFENED</a> on the target
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Remove the deafness effect from the targeted creature(s).
+		<div class="descriptiondata"> Removes the <a href="#op80">deafness</a> effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -6353,6 +6353,17 @@ This effect can unset scripts from a creature, which can break the game.
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Protects the targeted creatures(s) from any effect(s) delivered by the specified projectile.
 <br/>Values for <code>Projectile Index</code> are taken from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>.
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+<a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> projectiles only impact through their <a href="../file_formats/ie_formats/pro_v1.htm#0x21A">explosion</a> and/or <a href="../file_formats/ie_formats/pro_v1.htm#0x214">secondary</a> projectiles, so they are what must be specified in <code>Projectile Index</code>.
+
+  </div>
+</div>
+
 
 
 
@@ -7278,7 +7289,7 @@ Not seen to work in BG1.
 	<div id="op102" class="opcode">
 		<span class="opnumberdata">#102 (0x66)</span>
 
-		<span class="opnamedata">Protection: from Spell Levels</span>
+		<span class="opnamedata">Spell: Immunity (by Power Level)</span>
 
 		
 		
@@ -7296,18 +7307,49 @@ Not seen to work in BG1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) protection from effects (opcodes) whose <code>Power</code> attribute is equal to <code>Spell Level</code>.
-<br/>Valid <code>Spell Level</code> (Power) levels range: <code>0 – 9</code>.
+		<div class="descriptiondata"> Gives the targeted creature(s) protection from effects (opcodes) whose <code>Power</code> attribute is equal to <code>Spell Level</code> (<code>range: 0 – 9</code>).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each application of this opcode only protects against its specified <code>Spell Level</code>, not "up to" it.</li>
+	<li>Each effect in a spell/item is checked separately by this opcode.</li>
+
+	<li>
+		CAN block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>
+		CANNOT block non-hostile effects from self.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their non-hostile behavior from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT10">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#ExtHeader_Flags_BIT10">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x9C_BIT10">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-<ul>
-	<li>Each application of this opcode only protects against its specified <code>Spell Level</code>, not "up to" it.</li>
-	<li>Each effect in a spell/item is checked separately by this opcode.</li>
-</ul>
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
 
   </div>
 </div>
@@ -8227,7 +8269,7 @@ It is still processed, so it will still interact with <a href="#op200">Spell Tur
   <div>
     <strong>Info:</strong> 
 <ul>
-	<li>(EE only) <code>Resource2</code> and <code>Resource3</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): item to be created is randomly chosen from resource fields <code>1–3</code> that are not empty.</li>
+	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> and <code><a href="../file_formats/ie_formats/eff_v2.htm#0x78">Resource 3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): item to be created is randomly chosen from resource fields <code>1–3</code> that are not empty.</li>
 	<li>Applies a delayed <a href="#op123">opcode #123</a> effect to remove the item (based on specified <code>duration</code>)</li>
 </ul>
 
@@ -8489,19 +8531,19 @@ A couple of examples about <i>Multiplicative Stacking Percentage Modifier</i>:
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Summons a number of monsters.
-<br/>Each <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file has a <code>Creature Power Level</code> number (at <code>0x18</code>). The amount of monsters summoned by this effect depends on this value, the <code>special</code> parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
+<br/>Each CRE file has a <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> number. The amount of monsters summoned by this effect depends on this value, the <code>special</code> parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
 <br/>When used in SPL/ITM, known value for <code>Mode</code> are:
 <ul>
-	<li>0 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds <code>Number</code></li>
+	<li>0 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Number</code></li>
 	<li>1 &longrightarrow; Summon amount equal to <code>Number</code></li>
-	<li>2 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds "Caster Level"</li>
+	<li>2 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds "Caster Level"</li>
 </ul>
 
 <br/>When used in EFF, known value for <code>Mode</code> are:
 <ul>
-	<li>0 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds <code>Number</code></li>
+	<li>0 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Number</code></li>
 	<li>1 &longrightarrow; Summon amount equal to <code>'Number' + Dice rolls</code></li>
-	<li>2 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds <code>Caster Level</code> field of EFF (located at offset <code>0xc8</code>)</li>
+	<li>2 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Caster Level</code> field of EFF (located at offset <code>0xc8</code>)</li>
 </ul>
 
 <br/>The <code>Type</code> field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are <code>monsumX</code> and <code>anisumX</code>, where <code>X = 'Type' + 1</code>. <code>0–4</code> are allied , <code>5–9</code> are hostile. The specific 2da files used are:
@@ -8519,7 +8561,7 @@ A couple of examples about <i>Multiplicative Stacking Percentage Modifier</i>:
 </ul>
 
 <br/>A custom .2da file can be entered in the resource field (untested in bg1).
-<br/>If used from an external effect (.eff), the vvc field controls the bam file played when summoning.
+<br/>If used from an external effect (.eff), the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">vvc</a></code> field controls the bam file played when summoning.
  </div>
 		<hr />
 
@@ -12869,7 +12911,7 @@ Two 8 characters long keys that are identical up to the 7th character are indist
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in EEs, this opcode automatically displays string <code><a href="../files/2da/2da_bgee/enginest.htm#14102">STRREF_EFFECT_HOLD</a></code> in the combat log.
+At least in EEs, this opcode automatically displays string <code><a href="../files/2da/2da_bgee/enginest.htm#35">STRREF_EFFECT_HOLD</a></code> in the combat log.
 It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFFTEXT.2DA</a>.
 
   </div>
@@ -13493,7 +13535,7 @@ IWD2: Don’t use.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in EEs, this opcode automatically displays string <code><a href="../files/2da/2da_bgee/enginest.htm#14102">STRREF_EFFECT_HOLD</a></code> in the combat log.
+At least in EEs, this opcode automatically displays string <code><a href="../files/2da/2da_bgee/enginest.htm#35">STRREF_EFFECT_HOLD</a></code> in the combat log.
 It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFFTEXT.2DA</a>.
 
   </div>
@@ -13533,7 +13575,21 @@ It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFF
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Marks the targetted creature(s) as travelling to the area specified by the resource key. The creature appears in the specified area after a delay (specified by the 'Delay' field), with the orientation specified by the 'Orientation' field. The creature appears at the point specified by the Target Point fields (external EFF files only).
+		<div class="descriptiondata"> Marks the targetted creature(s) as travelling to the area specified by the <code>resource</code> key. The creature appears in the specified area after a delay (specified by the <code>Delay</code> field), with the orientation specified by the <code>Orientation</code> field.<br/>
+In particular:
+<ul>
+	<li>Global Creatures ignore the delay.</li>
+	<li>If the creature is already in the specified area, it will ignore the delay.</li>
+	<li>Non-global creatures currently in a different area than specified will use the delay.</li>
+	<li>Delay is measured in <small><sup>1</sup>&frasl;<sub>30</sub></small> seconds, (&frac12; tick), <code>600 = 20 seconds</code>.</li>
+	<li>
+		On non-EE games, the creature appears at the point specified by the Target Point fields (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files only).
+		<ul>
+			<li>On EE games, target(s) appear at Caster's Coordinates in new area (it does not seem to be possible to override through EFFs).</li>
+		</ul>
+	</li>
+	<li>Creature is moved to the new area (instantly) and flagged <a href="../file_formats/ie_formats/cre_v1.htm#Flags_BIT14">Moving Between Areas</a> until their delay expires (if it's used). It won't be active until the delay expires (it's hidden, cannot be affected by Area-effect, doesn't occupy space). It can still be targeted by the various <code>Everyone</code> targeting modes in the new area while it's still inactive, but similar to <a href="#op213">maze</a>/<a href="#op211">imprisonment</a>, effects won't trigger (including <a href="#op25">poison</a> and similar) on them until they become active.</li>
+</ul>
 
 
 
@@ -13546,6 +13602,16 @@ There is some confusion whether the Target (bg1, iwds) or the Caster point field
   </div>
 </div>
 
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Avoid saving during the delay (can lead to lost NPCs or crashes if you load while NPC's are still in transition).
+
+  </div>
+</div>
 
  </div>
 		<hr />
@@ -13588,19 +13654,25 @@ There is some confusion whether the Target (bg1, iwds) or the Caster point field
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect stores a various data types, usually a variable in the 'variable' field.
-<br/>Resistance.param3: Point
-<br/>Param4: Float
-<br/>Param1: Int 
-<br/>Param2: Any
-<br/>Resource1+2+3: String
+		<div class="descriptiondata"> This effect sets the variable specified by the <code><a href="../file_formats/ie_formats/eff_v2.htm#0xA8">Variable Name</a></code> field to the value specified by the <code>Value</code> field.
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-This effect can only be used in an external effect (ie. an eff file).
+This effect can only be used in an external effect (<a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Effects">CRE</a>/<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+This effect is always instantaneous (local variables are stored internally, not as effects, while the game is running). All local variables for a <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> are stored as <a href="#op187">opcode #187</a> effects on that <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> whenever the game is saved, which will trigger as soon as the game is loaded.
 
   </div>
 </div>
@@ -13640,7 +13712,8 @@ This effect can only be used in an external effect (ie. an eff file).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Set the <code>Stat Value</code> field to any non-zero value if you want no time needed between spells.
+		<div class="descriptiondata"> While ON, the creature displays string <code><a href="../files/2da/2da_bgee/enginest.htm#86">STRREF_FEEDBACK_AURA_CLEANSED</a></code> (EE games only) whenever they begin to cast a spell before their aura would normally clear (i.e. more than once/round). Does NOT affect item usage, only spellcasting.<br/>
+Set the <code>Stat Value</code> field to any non-zero value if you want no time needed between spells.
 <br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#76">AURACLEANSING</a> to <code>Stat Value</code>.
 
 
@@ -14079,7 +14152,7 @@ The <code>Stat Value</code> parameter can take any value. If you set it to <code
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> When this creature dies, the following is applied to <code>Master ID</code>:
 <ul>
-	<li>Floats Text String <a href="../files/2da/2da_bgee/enginest.htm#STRREF_GUI_MIXED_FAMILIARDIED">STRREF_GUI_MIXED_FAMILIARDIED</a>.</li>
+	<li>Floats Text String <a href="../files/2da/2da_bgee/enginest.htm#990">STRREF_GUI_MIXED_FAMILIARDIED</a>.</li>
 	<li><a href="#op10">Opcode #10</a>: <code>Statistic Modifier = -1</code>, <code>Type = 0</code>, <code>Timing Mode 1</code>.</li>
 	<li>
 		<a href="#op18">Opcode #18</a>: <code>Statistic Modifier = Max HP Modifier</code>, <code>Type = 0</code>, <code>Timing Mode 1</code>.
@@ -14192,7 +14265,7 @@ The effect should be set with a <code>Timing Mode</code> of <code>9</code>.
 	<div id="op197" class="opcode">
 		<span class="opnumberdata">#197 (0xC5)</span>
 
-		<span class="opnamedata">Spell: Bounce Projectile</span>
+		<span class="opnamedata">Spell: Bounce (by Impact Projectile)</span>
 
 		
 		
@@ -14224,15 +14297,72 @@ The effect should be set with a <code>Timing Mode</code> of <code>9</code>.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Reflected Projectile</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Impact Projectile</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will reflect the projectile specified by the <code>Reflected Projectile</code> field back to the attacker.
-<br/>Values for <code>Reflected Projectile</code> are taken from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>.
+		<div class="descriptiondata"> The targeted creature(s) will reflect effects whose <code>Projectile</code> is equal to the one specified by the <code>Impact Projectile</code> field back to the attacker.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Projectile</code> from the Extended Header (<a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x26">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x2A">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xA0">V2 effects</a> specify it manually.
+</p>
+
+<p>
+	Values for <code>Impact Projectile</code> are taken from <a href="../files/ids/bgee/projectl.htm">PROJECTL.IDS</a>.
+</p>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+<a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> projectiles only impact through their <a href="../file_formats/ie_formats/pro_v1.htm#0x21A">explosion</a> and/or <a href="../file_formats/ie_formats/pro_v1.htm#0x214">secondary</a> projectiles, so they are what must be specified in <code>Impact Projectile</code>.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT reflect effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN reflect EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT reflect effects from self.</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14241,7 +14371,7 @@ The effect should be set with a <code>Timing Mode</code> of <code>9</code>.
 	<div id="op198" class="opcode">
 		<span class="opnumberdata">#198 (0xC6)</span>
 
-		<span class="opnamedata">Spell: Bounce Opcode</span>
+		<span class="opnamedata">Spell: Bounce (by Opcode)</span>
 
 		
 		
@@ -14280,7 +14410,7 @@ The effect should be set with a <code>Timing Mode</code> of <code>9</code>.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will reflect attacks containing the opcode specified by the 'Opcode' field.
+		<div class="descriptiondata"> The targeted creature(s) will reflect effects containing the opcode specified by the <code>Opcode</code> field.
 
 
 
@@ -14288,6 +14418,46 @@ The effect should be set with a <code>Timing Mode</code> of <code>9</code>.
   <div>
     <strong>Warning:</strong> 
 This can cause a crash if two creatures end up reflecting to each other.
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT reflect effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN reflect EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target (this is likely a bug).</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
 
   </div>
 </div>
@@ -14300,7 +14470,7 @@ This can cause a crash if two creatures end up reflecting to each other.
 	<div id="op199" class="opcode">
 		<span class="opnumberdata">#199 (0xC7)</span>
 
-		<span class="opnamedata">Spell: Bounce Spell Level</span>
+		<span class="opnamedata">Spell: Bounce (by Power Level)</span>
 
 		
 		
@@ -14331,7 +14501,7 @@ This can cause a crash if two creatures end up reflecting to each other.
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Reflected Level</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Power Level</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
@@ -14339,7 +14509,46 @@ This can cause a crash if two creatures end up reflecting to each other.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will reflect spells from the spell level specified in the 'Reflected Level' field.
+		<div class="descriptiondata"> The targeted creature(s) will reflect effects whose <code>Power</code> attribute is equal to the one specified by the <code>Power Level</code> field (<code>range: 0 – 9</code>).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CANNOT block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode cannot reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target (this is likely a bug).</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14348,7 +14557,7 @@ This can cause a crash if two creatures end up reflecting to each other.
 	<div id="op200" class="opcode">
 		<span class="opnumberdata">#200 (0xC8)</span>
 
-		<span class="opnamedata">Spell: Decrementing Bounce Spells</span>
+		<span class="opnamedata">Spell: Bounce (by Power level, decrementing)</span>
 
 		
 		
@@ -14379,15 +14588,66 @@ This can cause a crash if two creatures end up reflecting to each other.
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Level</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Total Amount</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Power Level</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will reflect a number of spells (specified by the 'Amount' field), from the spell level specified in the 'Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Level' parameter in the extended header that is being called.
+		<div class="descriptiondata"> The targeted creature(s) will reflect a number of effects (specified by the <code>Total Amount</code> field) whose <code>Power</code> attribute is equal to the one specified by the <code>Power Level</code> field (<code>range: 0 – 9</code>).
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's reflection will determine how much this opcode's <code>Total Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+	<ul>
+		<li>Example – Minor Spell Turning applies <a href="#op200">opcode #200</a> 4 times, with <code>parameter2 = (1, 2, 3, and 4)</code>, and <code>parameter1</code> based on caster level. If any of them trigger, all of them will be decremented by the same amount. It doesn't matter that they come from the same spell. If you cast both Spell Turning and Minor Spell Turning, all instances of <a href="#op200">opcode #200</a> from both spells would be decremented, even if the spell(effect) triggering it was level 5–9 (above what Minor Spell Turning can reflect).</li>
+	</ul>
+</p>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CANNOT block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode cannot reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#65">Spell Turning</a></code> on the target.</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14396,7 +14656,7 @@ This can cause a crash if two creatures end up reflecting to each other.
 	<div id="op201" class="opcode">
 		<span class="opnumberdata">#201 (0xC9)</span>
 
-		<span class="opnamedata">Spell: Decrementing Spell Immunity</span>
+		<span class="opnamedata">Spell: Immunity (by Power Level, decrementing)</span>
 
 		
 		
@@ -14427,22 +14687,59 @@ This can cause a crash if two creatures end up reflecting to each other.
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Level</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Total Amount</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Power Level</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will absorb a number of spells (specified by the 'Amount' field), from the spell level specified in the 'Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Level' parameter in the extended header that is being called.
+		<div class="descriptiondata"> The targeted creature(s) will absorb a number of effects (specified by the <code>Total Amount</code> field) whose <code>Power</code> attribute is equal to the one specified by the <code>Power Level</code> field (<code>range: 0 – 9</code>).
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's deflection will determine how much this opcode's <code>Total Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+</p>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CANNOT block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode cannot deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target.</li>
+	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-It cannot deflect effects through AoE projectiles.
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
 
   </div>
 </div>
@@ -14454,7 +14751,7 @@ It cannot deflect effects through AoE projectiles.
 	<div id="op202" class="opcode">
 		<span class="opnumberdata">#202 (0xCA)</span>
 
-		<span class="opnamedata">Spell: Bounce Spell School</span>
+		<span class="opnamedata">Spell: Bounce (by School)</span>
 
 		
 		
@@ -14486,23 +14783,73 @@ It cannot deflect effects through AoE projectiles.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Spell School</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">School</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will turn spells from the school specified by the 'Spell School' field.
-<br/>Known values for 'Spell School' are:
-<br/>1   Abjuration
-<br/>2   Conjuration
-<br/>3   Divination
-<br/>4   Enchantment
-<br/>5   Illusion
-<br/>6   Evocation
-<br/>7   Necromancy
-<br/>8   Alteration
+		<div class="descriptiondata"> The targeted creature(s) will turn effects from the school specified by the <code>School</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Primary Type (School)</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x25">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x17">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x4C">V2 effects</a> specify it manually.
+</p>
+
+Known values for <code>School</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; ABJURATION</li>
+	<li>2 &longrightarrow; CONJURATION</li>
+	<li>3 &longrightarrow; DIVINATION</li>
+	<li>4 &longrightarrow; ENCHANTMENT</li>
+	<li>5 &longrightarrow; ILLUSION</li>
+	<li>6 &longrightarrow; EVOCATION</li>
+	<li>7 &longrightarrow; NECROMANCY</li>
+	<li>8 &longrightarrow; ALTERATION</li>
+	<li>9 &longrightarrow; GENERALIST</li>
+	<li>10 &longrightarrow; WILDMAGE</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT reflect effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN reflect EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT reflect effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target (this is likely a bug).</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14511,7 +14858,7 @@ It cannot deflect effects through AoE projectiles.
 	<div id="op203" class="opcode">
 		<span class="opnumberdata">#203 (0xCB)</span>
 
-		<span class="opnamedata">Spell: Bounce Secondary Type</span>
+		<span class="opnamedata">Spell: Bounce (by Secondary Type)</span>
 
 		
 		
@@ -14550,21 +14897,66 @@ It cannot deflect effects through AoE projectiles.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will turn spells with a secondary type matching that specified by the 'Secondary Type' field.
-<br/>Known values for 'Secondary Type' are:
-<br/>1   Spell Protections
-<br/>2   Specific Protections
-<br/>3   Illusionary Protections
-<br/>4   Magic Attack
-<br/>5   Divination Attack
-<br/>6   Conjuration
-<br/>7   Combat Protections
-<br/>8   Contingency
-<br/>9   Battleground
-<br/>10  Offensive Damage
-<br/>11  Disabling
-<br/>12  Combination
-<br/>13  Non-Combat
+		<div class="descriptiondata"> The targeted creature(s) will turn effects with a secondary type matching that specified by the <code>Secondary Type</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Secondary Type</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.
+</p>
+
+Known values for <code>Secondary Type</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; SPELLPROTECTIONS</li>
+	<li>2 &longrightarrow; SPECIFICPROTECTIONS</li>
+	<li>3 &longrightarrow; ILLUSIONARYPROTECTIONS</li>
+	<li>4 &longrightarrow; MAGICATTACK</li>
+	<li>5 &longrightarrow; DIVINATIONATTACK</li>
+	<li>6 &longrightarrow; CONJURATION</li>
+	<li>7 &longrightarrow; COMBATPROTECTIONS</li>
+	<li>8 &longrightarrow; CONTINGENCY</li>
+	<li>9 &longrightarrow; BATTLEGROUND</li>
+	<li>10 &longrightarrow; OFFENSIVEDAMAGE</li>
+	<li>11 &longrightarrow; DISABLING</li>
+	<li>12 &longrightarrow; COMBINATION</li>
+	<li>13 &longrightarrow; NON-COMBAT</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT reflect effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+	</li>
+
+	<li>
+		CAN reflect EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT reflect effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target (this is likely a bug).</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14573,7 +14965,7 @@ It cannot deflect effects through AoE projectiles.
 	<div id="op204" class="opcode">
 		<span class="opnumberdata">#204 (0xCC)</span>
 
-		<span class="opnamedata">Spell: Protection from Spell (School)</span>
+		<span class="opnamedata">Spell: Protection (by School)</span>
 
 		
 		
@@ -14605,23 +14997,72 @@ It cannot deflect effects through AoE projectiles.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Spell School</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">School</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) immunity to spells from the school specified by the 'Spell School' field.
-<br/>Known values for 'Spell School' are:
-<br/>1   Abjuration
-<br/>2   Conjuration
-<br/>3   Divination
-<br/>4   Enchantment
-<br/>5   Illusion
-<br/>6   Evocation
-<br/>7   Necromancy
-<br/>8   Alteration
+		<div class="descriptiondata"> Gives the targeted creature(s) immunity to effects from the school specified by the <code>School</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Primary Type (School)</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x25">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x17">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x4C">V2 effects</a> specify it manually.
+</p>
+
+Known values for <code>School</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; ABJURATION</li>
+	<li>2 &longrightarrow; CONJURATION</li>
+	<li>3 &longrightarrow; DIVINATION</li>
+	<li>4 &longrightarrow; ENCHANTMENT</li>
+	<li>5 &longrightarrow; ILLUSION</li>
+	<li>6 &longrightarrow; EVOCATION</li>
+	<li>7 &longrightarrow; NECROMANCY</li>
+	<li>8 &longrightarrow; ALTERATION</li>
+	<li>9 &longrightarrow; GENERALIST</li>
+	<li>10 &longrightarrow; WILDMAGE</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14630,7 +15071,7 @@ It cannot deflect effects through AoE projectiles.
 	<div id="op205" class="opcode">
 		<span class="opnumberdata">#205 (0xCD)</span>
 
-		<span class="opnamedata">Spell: Protection from Spell (Secondary Type)</span>
+		<span class="opnamedata">Spell: Protection (by Secondary Type)</span>
 
 		
 		
@@ -14662,28 +15103,70 @@ It cannot deflect effects through AoE projectiles.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Secondary Type</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) immunity to the spell type specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>1   Spell Protections
-<br/>2   Specific Protections
-<br/>3   Illusionary Protections
-<br/>4   Magic Attack
-<br/>5   Divination Attack
-<br/>6   Conjuration
-<br/>7   Combat Protections
-<br/>8   Contingency
-<br/>9   Battleground
-<br/>10  Offensive Damage
-<br/>11  Disabling
-<br/>12  Combination
-<br/>13  Non-Combat
+		<div class="descriptiondata"> Gives the targeted creature(s) immunity to effects from the secondary type specified by the <code>Secondary Type</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Secondary Type</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.
+</p>
+
+Known values for <code>Secondary Type</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; SPELLPROTECTIONS</li>
+	<li>2 &longrightarrow; SPECIFICPROTECTIONS</li>
+	<li>3 &longrightarrow; ILLUSIONARYPROTECTIONS</li>
+	<li>4 &longrightarrow; MAGICATTACK</li>
+	<li>5 &longrightarrow; DIVINATIONATTACK</li>
+	<li>6 &longrightarrow; CONJURATION</li>
+	<li>7 &longrightarrow; COMBATPROTECTIONS</li>
+	<li>8 &longrightarrow; CONTINGENCY</li>
+	<li>9 &longrightarrow; BATTLEGROUND</li>
+	<li>10 &longrightarrow; OFFENSIVEDAMAGE</li>
+	<li>11 &longrightarrow; DISABLING</li>
+	<li>12 &longrightarrow; COMBINATION</li>
+	<li>13 &longrightarrow; NON-COMBAT</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>CANNOT block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14733,7 +15216,7 @@ It cannot deflect effects through AoE projectiles.
   <div>
     <strong>Info:</strong> 
 At least in EEs, this opcode can block <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files too.<br />
-In order to do so, both the <code>Resource</code> field of <a href="#op206">opcode #206</a> and the <code>Parent resource</code> field (located at offset <code>0x94</code>) of the EFF file must be the same string (max. 8 character long); moreover, you must set the <code>Resource type</code> field (located at offset <code>0x90</code>) of the EFF file to <code>1</code> (<code>Spell</code>).
+In order to do so, both the <code>Resource</code> field of <a href="#op206">opcode #206</a> and the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x94">Parent Resource</a></code> field of the EFF file must be the same string (max. 8 character long); moreover, you must set the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x90">Resource Type</a></code> field of the EFF file to <code><a href="../file_formats/ie_formats/eff_v2.htm#0x90_1">Spell</a></code>.
 
   </div>
 </div>
@@ -14746,7 +15229,7 @@ In order to do so, both the <code>Resource</code> field of <a href="#op206">opco
 	<div id="op207" class="opcode">
 		<span class="opnumberdata">#207 (0xCF)</span>
 
-		<span class="opnamedata">Spell: Bounce Specified Spell</span>
+		<span class="opnamedata">Spell: Bounce (by Resource)</span>
 
 		
 		
@@ -14785,7 +15268,48 @@ In order to do so, both the <code>Resource</code> field of <a href="#op206">opco
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will reflect the spell specified by the <code>resource</code> key.
+		<div class="descriptiondata"> The targeted creature(s) will reflect the <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> file specified by the <code>resource</code> key.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Similar to <a href="#op206">opcode #206</a>, this can only reflect EFF files if their <code><a href="../file_formats/ie_formats/eff_v2.htm#0x90">Parent Type</a></code> is set to <code><a href="../file_formats/ie_formats/eff_v2.htm#0x90_1">Spell</a></code>.</li>
+	<li>
+		CANNOT reflect effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN reflect EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT reflect effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target (this is likely a bug).</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14823,6 +15347,22 @@ In order to do so, both the <code>Resource</code> field of <a href="#op206">opco
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) HP value will not drop below the value specified by the <code>Minimum Value</code> field.
 <br/>This effect sets <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a> to <code>Minimum Value</code>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li><code>Minimum Value</code> values <code>65536</code> to <code>98303</code> will set an only allowed hit point value (HP can't be higher or lower), each representing <code>'Minimum Value' value - 65536</code>, so <code>0</code> to <code>32767</code>.</li>
+	<li>Values <code>32768</code> to <code>65535</code> do this as well, but all result in negative HP amounts, so not usable, as they will result in the same bugged non-death as <a href="#op17">opcode #17</a> reducing HP to 0.</li>
+	<li>All values higher than <code>98303</code> just repeat loop over from <code>-32768</code> to <code>32767</code>.</li>
+	<li>Any positive value will also grant the creature immunity to directly applied <a href="#op13">opcode #13</a> effects. Those applied indirectly will still kill the creature, notably by opcodes <a href="#op55">#55</a>, <a href="#op134">#134</a>, <a href="#op151">#151</a>, <a href="#op209">#209</a>, and <a href="#op238">#238</a>.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14870,7 +15410,19 @@ In order to do so, both the <code>Resource</code> field of <a href="#op206">opco
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Instantly kills the targeted creature(s), if the targeted creature(s) has less than 60 HP.
+		<div class="descriptiondata"> Instantly kills the targeted creature(s), if the targeted creature(s) has less than 60 HP.<br/>
+More specifically, it functions by applying <a href="#op13">opcode #13</a> (<code>Death Type = 4 // Normal Death</code>).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="#op101">Immunity</a> to <a href="#op13">opcode #13</a> is not sufficient to block this effect unless it’s granted through <code><a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a></code>.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14913,10 +15465,25 @@ In order to do so, both the <code>Resource</code> field of <a href="#op206">opco
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the stun effect to the targeted creature(s), if the targeted creature(s) has less than 90 HP.
-<br/>The duration of the effect is:
-<br/>1 to 29  HP -> stunned for 4d4 rounds
-<br/>30 to 59 HP -> stunned for 2d4 rounds
-<br/>60 to 89 HP -> stunned for 1d4 rounds
+<br/>The <code>duration</code> of the effect is:
+<ul>
+	<li>1 to 29 HP &longrightarrow; stunned for 4d4 rounds</li>
+	<li>30 to 59 HP &longrightarrow; stunned for 2d4 rounds</li>
+	<li>60 to 89 HP &longrightarrow; stunned for 1d4 rounds</li>
+</ul>
+
+More specifically, it functions by applying <a href="#op45">opcode #45</a>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="#op101">Immunity</a> to <a href="#op45">opcode #45</a> is sufficient to block the stun effect, but without <a href="#op101">immunity</a> to <a href="#op210">opcode #210</a> it will still generate an erroneous <code>~Stunned~</code> string display.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -14965,7 +15532,27 @@ In order to do so, both the <code>Resource</code> field of <a href="#op206">opco
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the imprisonment effect to the targeted creature(s).
-<br/>The field at 0xcc can be used to prevent death related effects (e.g. removal from party) running on the targetted creature(s) – not verified on EE games.
+<br/>The field at <code>0xcc</code> can be used to prevent death related effects (e.g. removal from party) running on the targetted creature(s) – not verified on EE games (it is very likely that this was replaced by giving <a href="#op213">Maze</a> a specified <code>duration</code> option).
+<br/><br/>
+
+Aside from kicking from the party, or granting experience for a kill, the targeted creature(s) is suspended from the area:
+<ul>
+	<li>They can not be targeted by <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> projectiles, only with effect targets <code>Party</code> or <code>Everyone</code> or similar.</li>
+	<li>They are not detectable by any script triggers, though they may still be targeted with actions directly by scriptname or partyslot.</li>
+	<li>
+		Excluding Opcodes <a href="#op211">#211</a>/<a href="#op212">#212</a>/<a href="#op213">#213</a>:
+		<ul>
+			<li>All other effects on the creature are suppressed until this effect is removed.</li>
+		</ul>
+	</li>
+	<li>
+		Excluding <a href="#op212">opcode #212</a>:
+		<ul>
+			<li>Delayed effects that would trigger will be further delayed until this effect is removed.</li>
+			<li>Effects that would expire will not expire until this effect is removed.</li>
+		</ul>
+	</li>
+</ul>
  </div>
 		<hr />
 
@@ -15013,8 +15600,8 @@ In order to do so, both the <code>Resource</code> field of <a href="#op206">opco
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the freedom effect to the targeted creature(s).
-<br/>The freedom effect frees creatures trapped by the imprisonment effect.
+		<div class="descriptiondata"> Applies the freedom effect to the targeted creature(s).<br/>
+Removes <a href="#op211">Imprisonment</a> and <a href="#op213">Maze</a>, and <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files using those opcodes.
  </div>
 		<hr />
 
@@ -15059,6 +15646,11 @@ In order to do so, both the <code>Resource</code> field of <a href="#op206">opco
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the maze effect to the targeted creature(s).
+
+<p>
+	Suspends the creature in the same manner as <a href="#op211">Imprisonment</a>, disabling Inventory, but without kicking or granting exp. It actually removes itself with a delayed <a href="#op212">opcode #212</a> effect (that it also applies), not by expiring. Blocking the <a href="#op212">opcode #212</a> effect will prevent maze from ending.
+</p>
+
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Use intelligence based duration (via <a href="../files/2da/2da_bgee/intmod.htm">INTMOD.2DA</a>)</li>
@@ -15549,7 +16141,7 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the unconsciousness effect to the targeted creature(s), if the targeted creature(s) has less than 20 HP. The effect always lasts 5 rounds, and ignores the duration field.
+		<div class="descriptiondata"> Applies <a href="#op39">opcode #39</a> using <code>Sleep (Wake on Hit)</code> mode to the targeted creature(s), if the targeted creature(s) has less than 20 HP. The effect always lasts 5 rounds, and ignores the <code>duration</code> field.
  </div>
 		<hr />
 
@@ -15681,24 +16273,39 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Maximum Level</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">School Type</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">School</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes spells from the school specified by the 'School Type' field from the targeted creature(s), up to the level specified by the 'Maximum level' field.
-<br/>Known values for 'School Type' are:
-<br/>1   Abjurer
-<br/>2   Conjurer
-<br/>3   Diviner
-<br/>4   Enchanter
-<br/>5   Illusionist
-<br/>6   Invoker
-<br/>7   Necromancer
-<br/>8   Transmuter
-<br/>9   Generalist
+		<div class="descriptiondata"> For any effect that matches the specified <code>School</code>, and has a <code>0 < Power Level <= Maximum Level</code>:
+<ul>
+	<li>All effects from that effect's <code>Parent Resource</code> with a <code>Power Level <= Maximum Level</code> that do not use <code>Timing Mode 9</code> will be removed.</li>
+	<li>An effect using <code>Timing Mode 9</code> can be used to match the type and power level to trigger its resource's removal, but that effect itself will not be removed.</li>
+	<li>An effect using <code>Power Level 0</code> cannot be used to match the type and power level to trigger its resource's removal, but it will be removed if the resource is triggered for removal by another effect.</li>
+	<li>If removal is triggered, the relevant string from <code><a href="../files/2da/2da_bgee/mschool.htm">MSCHOOL.2DA</a></code> is displayed in the combat log.</li>
+</ul>
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Primary Type (School)</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x25">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x17">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x4C">V2 effects</a> specify it manually.
+</p>
+
+Known values for <code>School</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; ABJURATION</li>
+	<li>2 &longrightarrow; CONJURATION</li>
+	<li>3 &longrightarrow; DIVINATION</li>
+	<li>4 &longrightarrow; ENCHANTMENT</li>
+	<li>5 &longrightarrow; ILLUSION</li>
+	<li>6 &longrightarrow; EVOCATION</li>
+	<li>7 &longrightarrow; NECROMANCY</li>
+	<li>8 &longrightarrow; ALTERATION</li>
+	<li>9 &longrightarrow; GENERALIST</li>
+	<li>10 &longrightarrow; WILDMAGE</li>
+</ul>
  </div>
 		<hr />
 
@@ -15740,21 +16347,35 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes spells with a secondary type matching that specified by he 'Secondary Type' field from the targeted creature(s), up to the level specified by the 'Maximum level' field.
-<br/>Known values for 'Secondary Type' are:
-<br/>1   Spell Protections
-<br/>2   Specific Protections
-<br/>3   Illusionary Protections
-<br/>4   Magic Attack
-<br/>5   Divination Attack
-<br/>6   Conjuration
-<br/>7   Combat Protections
-<br/>8   Contingency
-<br/>9   Battleground
-<br/>10  Offensive Damage
-<br/>11  Disabling
-<br/>12  Combination
-<br/>13  Non-Combat
+		<div class="descriptiondata"> For any effect that matches the specified <code>Secondary Type</code>, and has a <code>0 < Power Level <= Maximum Level</code>:
+<ul>
+	<li>All effects from that effect's <code>Parent Resource</code> with a <code>Power Level <= Maximum Level</code> that do not use <code>Timing Mode 9</code> will be removed.</li>
+	<li>An effect using <code>Timing Mode 9</code> can be used to match the type and power level to trigger its resource's removal, but that effect itself will not be removed.</li>
+	<li>An effect using <code>Power Level 0</code> cannot be used to match the type and power level to trigger its resource's removal, but it will be removed if the resource is triggered for removal by another effect.</li>
+	<li>If removal is triggered, the relevant string from <code><a href="../files/2da/2da_bgee/msectype.htm">MSECTYPE.2DA</a></code> is displayed in the combat log.</li>
+</ul>
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Secondary Type</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.
+</p>
+
+<br/>Known values for <code>Secondary Type</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; SPELLPROTECTIONS</li>
+	<li>2 &longrightarrow; SPECIFICPROTECTIONS</li>
+	<li>3 &longrightarrow; ILLUSIONARYPROTECTIONS</li>
+	<li>4 &longrightarrow; MAGICATTACK</li>
+	<li>5 &longrightarrow; DIVINATIONATTACK</li>
+	<li>6 &longrightarrow; CONJURATION</li>
+	<li>7 &longrightarrow; COMBATPROTECTIONS</li>
+	<li>8 &longrightarrow; CONTINGENCY</li>
+	<li>9 &longrightarrow; BATTLEGROUND</li>
+	<li>10 &longrightarrow; OFFENSIVEDAMAGE</li>
+	<li>11 &longrightarrow; DISABLING</li>
+	<li>12 &longrightarrow; COMBINATION</li>
+	<li>13 &longrightarrow; NON-COMBAT</li>
+</ul>
  </div>
 		<hr />
 
@@ -15797,7 +16418,7 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the teleport field to the targeted creature(s).
-<br/>The 'Max Range' field sets the maximum range of the teleporting effect.
+<br/>The <code>Max Range</code> field sets the maximum range of the teleporting effect. Teleport is random direction up to specified range, range measured same as projectile radius, i.e.: <code>16 = 1 ft</code>.
  </div>
 		<hr />
 
@@ -15806,7 +16427,7 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 	<div id="op223" class="opcode">
 		<span class="opnumberdata">#223 (0xDF)</span>
 
-		<span class="opnamedata">Spell Effect: Immunity School Decrement</span>
+		<span class="opnamedata">Spell: Immunity (by School, decrementing)</span>
 
 		
 		
@@ -15831,24 +16452,82 @@ To make your own 2DA file for, use the SPWI510.2DA as a base.
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Max Level</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">School Type</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Total Amount</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">School</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Known values for 'School Type' are:
-<br/>1   Abjurer
-<br/>2   Conjurer
-<br/>3   Diviner
-<br/>4   Enchanter
-<br/>5   Illusionist
-<br/>6   Invoker
-<br/>7   Necromancer
-<br/>8   Transmuter
-<br/>9   Generalist
+		<div class="descriptiondata"> The targeted creature(s) will absorb a number of effects (specified by the <code>Total Amount</code> field) whose <code>Primary Type (School)</code> is equal to the one specified by the <code>School</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Primary Type (School)</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x25">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x17">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x4C">V2 effects</a> specify it manually.
+</p>
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's deflection will determine how much this opcode's <code>Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+</p>
+
+Known values for <code>School</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; ABJURATION</li>
+	<li>2 &longrightarrow; CONJURATION</li>
+	<li>3 &longrightarrow; DIVINATION</li>
+	<li>4 &longrightarrow; ENCHANTMENT</li>
+	<li>5 &longrightarrow; ILLUSION</li>
+	<li>6 &longrightarrow; EVOCATION</li>
+	<li>7 &longrightarrow; NECROMANCY</li>
+	<li>8 &longrightarrow; ALTERATION</li>
+	<li>9 &longrightarrow; GENERALIST</li>
+	<li>10 &longrightarrow; WILDMAGE</li>
+</ul>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#73">Spell Shield</a></code> on the target.</li>
+	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -15943,7 +16622,8 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Highlights the targeted creature(s) if they are affected by dispellable magic. The effect appears to be without duration.
+		<div class="descriptiondata"> Highlights the targeted creature(s) if they are affected by dispellable magic. The effect appears to be without duration.<br/>
+More specifically, it functions by applying <a href="#op50">opcode #50</a> to creature(s) with any dispellable effects. Color glow is red.
  </div>
 		<hr />
 
@@ -15952,7 +16632,7 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 	<div id="op226" class="opcode">
 		<span class="opnumberdata">#226 (0xE2)</span>
 
-		<span class="opnamedata">Spell: Immunity Secondary Type Decrement</span>
+		<span class="opnamedata">Spell: Immunity (by Secondary Type, decrementing)</span>
 
 		
 		
@@ -15977,7 +16657,7 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Max Level</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Total Amount</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Secondary Type</span><br />
 
 		
@@ -15985,20 +16665,72 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Known values for 'Secondary Type' are:
-<br/>1   Spell Protections
-<br/>2   Specific Protections
-<br/>3   Illusionary Protections
-<br/>4   Magic Attack
-<br/>5   Divination Attack
-<br/>6   Conjuration
-<br/>7   Combat Protections
-<br/>8   Contingency
-<br/>9   Battleground
-<br/>10  Offensive Damage
-<br/>11  Disabling
-<br/>12  Combination
-<br/>13  Non-Combat
+		<div class="descriptiondata"> The targeted creature(s) will absorb a number of effects (specified by the <code>Total Amount</code> field) whose <code>Secondary Type</code> is equal to the one specified by the <code>Secondary Type</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Secondary Type</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.
+</p>
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's deflection will determine how much this opcode's <code>Total Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+</p>
+
+Known values for <code>Secondary Type</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; SPELLPROTECTIONS</li>
+	<li>2 &longrightarrow; SPECIFICPROTECTIONS</li>
+	<li>3 &longrightarrow; ILLUSIONARYPROTECTIONS</li>
+	<li>4 &longrightarrow; MAGICATTACK</li>
+	<li>5 &longrightarrow; DIVINATIONATTACK</li>
+	<li>6 &longrightarrow; CONJURATION</li>
+	<li>7 &longrightarrow; COMBATPROTECTIONS</li>
+	<li>8 &longrightarrow; CONTINGENCY</li>
+	<li>9 &longrightarrow; BATTLEGROUND</li>
+	<li>10 &longrightarrow; OFFENSIVEDAMAGE</li>
+	<li>11 &longrightarrow; DISABLING</li>
+	<li>12 &longrightarrow; COMBINATION</li>
+	<li>13 &longrightarrow; NON-COMBAT</li>
+</ul>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>CAN block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT block effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#73">Spell Shield</a></code> on the target.</li>
+	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -16007,7 +16739,7 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 	<div id="op227" class="opcode">
 		<span class="opnumberdata">#227 (0xE3)</span>
 
-		<span class="opnamedata">Spell: Bounce School Decrement</span>
+		<span class="opnamedata">Spell: Bounce (by School, decrementing)</span>
 
 		
 		
@@ -16032,24 +16764,82 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Max Level</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">School Type</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Total Amount</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">School</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Known values for 'School Type' are:
-<br/>1   Abjurer
-<br/>2   Conjurer
-<br/>3   Diviner
-<br/>4   Enchanter
-<br/>5   Illusionist
-<br/>6   Invoker
-<br/>7   Necromancer
-<br/>8   Transmuter
-<br/>9   Generalist
+		<div class="descriptiondata"> The targeted creature(s) will reflect a number of effects (specified by the <code>Total Amount</code> field) whose <code>Primary Type (School)</code> is equal to the one specified by the <code>School</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Primary Type (School)</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x25">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x17">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x4C">V2 effects</a> specify it manually.
+</p>
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's reflection will determine how much this opcode's <code>Total Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+</p>
+
+Known values for <code>School</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; ABJURATION</li>
+	<li>2 &longrightarrow; CONJURATION</li>
+	<li>3 &longrightarrow; DIVINATION</li>
+	<li>4 &longrightarrow; ENCHANTMENT</li>
+	<li>5 &longrightarrow; ILLUSION</li>
+	<li>6 &longrightarrow; EVOCATION</li>
+	<li>7 &longrightarrow; NECROMANCY</li>
+	<li>8 &longrightarrow; ALTERATION</li>
+	<li>9 &longrightarrow; GENERALIST</li>
+	<li>10 &longrightarrow; WILDMAGE</li>
+</ul>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT reflect effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN reflect EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT reflect effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target (this is likely a bug).</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -16058,7 +16848,7 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 	<div id="op228" class="opcode">
 		<span class="opnumberdata">#228 (0xE4)</span>
 
-		<span class="opnamedata">Spell: Bounce Secondary Type Decrement</span>
+		<span class="opnamedata">Spell: Bounce (by Secondary Type, decrementing)</span>
 
 		
 		
@@ -16083,7 +16873,7 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Max Level</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Total Amount</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Secondary Type</span><br />
 
 		
@@ -16091,20 +16881,74 @@ Removes <a href="#op216">opcode #216</a> (Level drain) effects from the creature
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Known values for 'Secondary Type' are:
-<br/>1   Spell Protections
-<br/>2   Specific Protections
-<br/>3   Illusionary Protections
-<br/>4   Magic Attack
-<br/>5   Divination Attack
-<br/>6   Conjuration
-<br/>7   Combat Protections
-<br/>8   Contingency
-<br/>9   Battleground
-<br/>10  Offensive Damage
-<br/>11  Disabling
-<br/>12  Combination
-<br/>13  Non-Combat
+		<div class="descriptiondata"> The targeted creature(s) will reflect a number of effects (specified by the <code>Total Amount</code> field) whose <code>Secondary Type</code> is equal to the one specified by the <code>Secondary Type</code> field.
+
+<p>
+	<a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their <code>Secondary Type</code> from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.
+</p>
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's reflection will determine how much this opcode's <code>Total Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+</p>
+
+Known values for <code>Secondary Type</code> are:
+<ul>
+	<li>0 &longrightarrow; NONE</li>
+	<li>1 &longrightarrow; SPELLPROTECTIONS</li>
+	<li>2 &longrightarrow; SPECIFICPROTECTIONS</li>
+	<li>3 &longrightarrow; ILLUSIONARYPROTECTIONS</li>
+	<li>4 &longrightarrow; MAGICATTACK</li>
+	<li>5 &longrightarrow; DIVINATIONATTACK</li>
+	<li>6 &longrightarrow; CONJURATION</li>
+	<li>7 &longrightarrow; COMBATPROTECTIONS</li>
+	<li>8 &longrightarrow; CONTINGENCY</li>
+	<li>9 &longrightarrow; BATTLEGROUND</li>
+	<li>10 &longrightarrow; OFFENSIVEDAMAGE</li>
+	<li>11 &longrightarrow; DISABLING</li>
+	<li>12 &longrightarrow; COMBINATION</li>
+	<li>13 &longrightarrow; NON-COMBAT</li>
+</ul>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT reflect effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+	</li>
+
+	<li>
+		CAN reflect EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can reflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT reflect effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#67">Spell Deflection</a></code> on the target (this is likely a bug).</li>
+	<li>Maintains animation <code>SPTURNI2</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Reflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is reflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -16702,7 +17546,7 @@ Only one creature may have a Time Stop effect running at a time, applying a Time
 	<li>
 		Every one of those <code>STAT</code>s can be set as a weapon's proficiency and it will use that stat's value for proficiency bonuses.
 		<ul>
-			<li>This includes <code>STAT</code>s like <code>CLERIC_ARMOR_OF_FAITH</code>, even though they're used for an alternative purpose.</li>
+			<li>This includes <code>STAT</code>s like <code>CLERIC_ARMOR_OF_FAITH<small><sup>*</sup></small></code>, even though they're used for an alternative purpose.</li>
 		</ul>
 	</li>
 	<li>The only thing stopping them from showing up during chargen/level-up proficiency selection is their entries (or lack there of) in <a href="../files/2da/2da_bgee/weapprof.htm">WEAPPROF.2DA</a>. A <code>NAME_REF</code> column of <code>4294967296 (-1)</code> is hardcoded to hide the proficiency during chargen/level-up. Aside from that it just needs a non-zero maximum for the current class/kit.</li>
@@ -16945,7 +17789,7 @@ Some animations are immune to this effect.
 		0 &longrightarrow; Clone – Image created with the targeted creature(s) Current Hit Points and the following (in order)
 		<ul>
 			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
-			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#0x280">Script Name</a></code> (Death Variable) set to <code>"COPY"</code>.</li>
 			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
 			<li>The creature is not immediately controllable, but will become controllable (if allied) after saving &amp; reloading.</li>
 		</ul>
@@ -16974,7 +17818,7 @@ Some animations are immune to this effect.
 					</li>
 				</ul>
 			</li>
-			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#0x280">Script Name</a></code> (Death Variable) set to <code>"COPY"</code>.</li>
 			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
 			<li><code><a href="#op237">Opcode #237</a>*1</code>: Puppet Stats, Mislead</li>
 			<li><code><a href="#op145">Opcode #145</a>*0</code>: Disable Spell Casting, Wizard</li>
@@ -16995,7 +17839,7 @@ Some animations are immune to this effect.
 			<li>Allegiance set to <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, depending on target allegiance.</li>
 			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
 			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
-			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#0x280">Script Name</a></code> (Death Variable) set to <code>"COPY"</code>.</li>
 			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
 			<li><code><a href="#op237">Opcode #237</a>*2</code>: Puppet Stats, Project Image</li>
 			<li>Applies <code>"PROJIMAG.SPL"</code></li>
@@ -17008,7 +17852,7 @@ Some animations are immune to this effect.
 			<li>Allegiance set to <a href="../files/ids/bgee/ea.htm#4">ALLY</a>, <a href="../files/ids/bgee/ea.htm#128">NEUTRAL</a>, or <a href="../files/ids/bgee/ea.htm#255">ENEMY</a>, depending on target allegiance.</li>
 			<li><a href="../files/ids/bgee/gender.htm">Gender</a> set to <code>ILLUSIONARY</code>.</li>
 			<li>All AI scripts and Dialogues are set to <code>""</code> (empty string, i.e. they will be cleared).</li>
-			<li><code>Script Name</code> (Death Variable) set to <code>"COPY"</code>.</li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#0x280">Script Name</a></code> (Death Variable) set to <code>"COPY"</code>.</li>
 			<li><a href="#op68">Opcode #68</a> based on effect <code>duration</code>.</li>
 			<li><a href="#op216">Opcode #216</a> (amount should be 60&percnt; of character level, but doesn't compute dual-classes correctly).</li>
 			<li><code><a href="#op237">Opcode #237</a>*3</code>: Puppet Stats, Simulacrum</li>
@@ -17212,10 +18056,23 @@ Modifies <a href="../files/ids/bgee/stats.htm#140">PUPPETTYPE</a>, to a value of
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Allows viewing of the current area, based on the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   View explored sections only
-<br/>1   View explored section and unexplored sections.
+		<div class="descriptiondata"> Allows viewing of the current area, based on the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; View explored sections only</li>
+	<li>1 &longrightarrow; View explored section and unexplored sections</li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Effect needs to target a creature. Opcode still non-functional in SoD v2.5.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -17510,7 +18367,8 @@ This effect works in SoA but not ToB
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect enables a 1% chance of the targetted creature(s) going berserk on each attack it makes. This affect sets the berserk stat changes and then attaches <a href="#op246">effect 246</a>.
+		<div class="descriptiondata"> This effect enables a 1&percnt; chance of the targetted creature(s) going berserk on each attack it makes. This affect sets the berserk stat changes and then attaches <a href="#op246">opcode #246</a>.<br/>
+It sets <a href="../files/ids/bgee/stats.htm#142">CHECKFORBERSERK</a>.
  </div>
 		<hr />
 
@@ -17552,7 +18410,8 @@ This effect works in SoA but not ToB
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect appears to be a combination of <a href="#op3">opcode #3</a> and the <code><a href="../files/2da/2da_bgee/statdesc.htm#4">Berserk</a></code> portrait icon. This effect attaches <a href="#op247">effect #247</a>.
+		<div class="descriptiondata"> This effect appears to be a combination of <a href="#op3">opcode #3</a> and the <code><a href="../files/2da/2da_bgee/statdesc.htm#4">Berserk</a></code> portrait icon. This effect attaches <a href="#op247">opcode #247</a>.<br/>
+It also sets <a href="../files/ids/bgee/stats.htm#143">BERSERKSTAGE1</a>.
  </div>
 		<hr />
 
@@ -17980,14 +18839,14 @@ This effect will fail if the targeted creature(s) does not have sufficient point
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the set map marker effect.
-<br/>The <code>String Reference</code> parameter is a string reference to the dialog.tlk file that sets what the marker says when the marker is read. The <code>Target</code> of this effect should be set to <code>Self</code> to function correctly.
+<br/>The <code>String Reference</code> parameter is a string reference to the <a href="../file_formats/ie_formats/tlk_v1.htm">dialog.tlk</a> file that sets what the marker says when the marker is read. The <code>Target</code> of this effect should be set to <code>Self</code> to function correctly.
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-This effect works in SoA but not ToB
+This effect works in SoA but not ToB. Works fine in EE's.
 
   </div>
 </div>
@@ -18027,14 +18886,18 @@ This effect works in SoA but not ToB
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the remove map marker effect. This effect removes the map marker (if any) at the position the effect is cast. The Target of this effect should be set to Pre-Target to function correctly.
+		<div class="descriptiondata"> Applies the remove map marker effect. This effect removes the map marker (if any) at the position the effect is cast. The <code>Target</code> of this effect should be set to <code>Pre-Target</code> to function correctly (actually, it can work with <code>Self</code>, might depend on how you are using it).
+
+<p>
+	The <code>String Reference</code> field should match <code><a href="#op253">opcode #253 StrRef</a></code> to be removed. <a href="#op254">Opcode #254</a> needs to be cast on exact coordinates as <a href="#op253">opcode #253</a>.
+</p>
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-This effect works in SoA but not ToB
+This effect works in SoA but not ToB. Works fine in EE's.
 
   </div>
 </div>
@@ -18244,7 +19107,7 @@ The filename of a spell containing this effect should be no more than 7 characte
 	<div id="op259" class="opcode">
 		<span class="opnumberdata">#259 (0x103)</span>
 
-		<span class="opnamedata">Protection: Spell Trap</span>
+		<span class="opnamedata">Protection: Spell Trap (by Power Level, decrementing)</span>
 
 		
 		
@@ -18269,15 +19132,69 @@ The filename of a spell containing this effect should be no more than 7 characte
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Level</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Total Amount</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Power Level</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the spell-trap effect to the targeted creature(s), absorbing a number of spells as specified by the <code>Amount</code> field, of the level specified by the <code>Level</code> field, and recalling previously cast spells. A spell is assigned to a spell level by the power level of the first effect greater than the <code>Level</code> parameter in the extended header that is being called.
+		<div class="descriptiondata"> Applies the spell-trap effect to the targeted creature(s), absorbing a number of effects as specified by the <code>Total Amount</code> field, of the level specified by the <code>Power Level</code> field, and recalling previously cast spells.
+
+<p>
+	The <code>Power</code> level of the first effect to trigger any instance of this opcode's trap will determine how much this opcode's <code>Total Amount</code> is decremented. Every instance of this opcode on the creature will be decremented by this amount.
+</p>
+
+<p>
+	On EE games, <code>resource</code> field &longrightarrow; Spell cast when this effect self-terminates, <code>default = Parent + "B"</code>.
+</p>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>
+		CANNOT trap effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CANNOT trap EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode cannot trap effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>CANNOT trap effects from self.</li>
+	<li>Maintains portrait icon <code><a href="../files/2da/2da_bgee/statdesc.htm#117">Spell Trap</a></code> on the target.</li>
+	<li>Maintains animation <code>SPMAGGLO</code> on the target, can be suppressed by <a href="#op291">opcode #291</a>.</li>
+	<li>
+		When it traps an effect, it applies <a href="#op261">opcode #261</a> to the target.
+		<ul>
+			<li><code>Parameter1</code> is the <code>Power</code> level of the trapped effect, <code>Parameter2</code> is always <code>0|Wizard</code>.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Trapping separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is trapped, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -18638,7 +19555,18 @@ Make sure to set target. Target: Self (1) works well. If target is unset (0), th
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the protection from specific spell (as granted by #206) from the targeted creature(s) based on a matching resource key.
+		<div class="descriptiondata"> Removes <a href="#op206">opcode #206</a> a matching <code>resource</code> key.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+At least in BG2 and EEs, this effect can remove <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> when EFF file uses <a href="#op206">opcode #206</a> and matching <code>resource</code>.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -19005,7 +19933,7 @@ The custom 2DA file must be structured as <code>"CLEARAIR.2DA"</code>.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Teleports the affected creature(s) to a random enemy (i.e. party members would teleport to a red circled creature, red circled creatures teleport to the party). If there are no enemies within visual range, no effect will occur.
+		<div class="descriptiondata"> Teleports the affected creature(s) to a random enemy (i.e. party members would teleport to a red circled creature, red circled creatures teleport to the party). Enemy needs to be within visual range, but can be invisible.
  </div>
 		<hr />
 
@@ -20723,7 +21651,7 @@ The ‘Stat Value’ parameter can take any value. If you set it to 0, you will 
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Set both the local variable specified by the <code>resource</code> key to the value specified by the <code>Value</code> field.
+		<div class="descriptiondata"> Modifies the local variable specified by the <code>resource</code> key to the value specified by the <code>Value</code> field.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Set Local (to <code>Value</code>)</li>
@@ -20735,9 +21663,35 @@ The ‘Stat Value’ parameter can take any value. If you set it to 0, you will 
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-Since the <code>resource</code> key can only be 8 characters long maximum, you can not set a variable with this Effect that has a name longer than this amount.
-<br />You can use the VVC field of external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files for an additional 8 characters of variable name.
-<br />You can use the 3rd resource field of <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files for an additional 8 characters.
+<ul>
+	<li>
+		Since the <code>resource</code> key can only be 8 characters long maximum, you can not set a variable with this Effect that has a name longer than this amount.
+		<ul>
+			<li>
+				You can use the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> field of external EFF files for an additional 8 characters of variable name.
+				<ul>
+					<li>
+						You can use the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x78">Resource 3</a></code> field of external EFF files for an additional 8 characters of variable name.
+						<ul>
+							<li>As a result, it cannot modify variables more than 24 characters long.</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+This effect is always instantaneous (local variables are stored internally, not as effects, while the game is running). All local variables for a <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> are stored as <a href="#op187">opcode #187</a> effects on that <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> whenever the game is saved, which will trigger as soon as the game is loaded.
 
   </div>
 </div>
@@ -20923,6 +21877,17 @@ SPWISHxx    MinWis    MaxWis
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> This effect denotes that the high level ability specified by the <code>resource</code> key has been gained. Used for pre-requisites/count limits.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Automatically applied by the engine when selecting HLAs, but can be manually applied for the same effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 

@@ -4183,12 +4183,12 @@ Both parameters should be <code>0</code> (zero).
   <div>
     <strong>Info:</strong> 
 <ul>
-	<li>(EE only) <code>Resource2</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
+	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
 		Default is a hardcoded VVC using <code>"SPBOOM.BAM"</code> and palette <code>#65</code>. This is generally used as the "portal" animation.
 	</li>
-	<li>(EE only) <code>Resource3</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
-	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code>Resource2</code> (not exact). Creature will not appear/spawn until this animation finishes.</li>
-	<li>Applies a delayed <a href="#op215">opcode #215</a> with resource <code>"SPGFLSH1"</code> to the summoned creature, <code>delayed duration = 5 ticks less</code> than the <a href="#op271">opcode #271</a>.</li>
+	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#0x78">Resource 3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
+	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> (not exact). Creature will not appear/spawn until this animation finishes.</li>
+	<li>Applies a delayed <a href="#op215">opcode #215</a> with <code>resource = "SPGFLSH1"</code> to the summoned creature, <code>delayed duration = 5 ticks less</code> than the <a href="#op271">opcode #271</a>.</li>
 	<li>Applies a delayed <a href="#op68">opcode #68</a> to the summoned creature based on effect duration (unless permanent).</li>
 	<li>When summoned, any temporary changes (such as from equipped items) to the creature's <a href="../files/ids/bgee/gender.htm">gender</a> are made permanent.</li>
 </ul>
@@ -4918,7 +4918,7 @@ Maintains <a href="../files/ids/bgee/splstate.htm#38">DEAFENED</a> on the target
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Remove the deafness effect from the targeted creature(s).
+		<div class="descriptiondata"> Removes the <a href="#op80">deafness</a> effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -6032,7 +6032,7 @@ Not seen to work in BG1.
 	<div id="op102" class="opcode">
 		<span class="opnumberdata">#102 (0x66)</span>
 
-		<span class="opnamedata">Protection: from Spell Levels</span>
+		<span class="opnamedata">Spell: Immunity (by Power Level)</span>
 
 		
 		
@@ -6050,18 +6050,49 @@ Not seen to work in BG1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) protection from effects (opcodes) whose <code>Power</code> attribute is equal to <code>Spell Level</code>.
-<br/>Valid <code>Spell Level</code> (Power) levels range: <code>0 – 9</code>.
+		<div class="descriptiondata"> Gives the targeted creature(s) protection from effects (opcodes) whose <code>Power</code> attribute is equal to <code>Spell Level</code> (<code>range: 0 – 9</code>).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each application of this opcode only protects against its specified <code>Spell Level</code>, not "up to" it.</li>
+	<li>Each effect in a spell/item is checked separately by this opcode.</li>
+
+	<li>
+		CAN block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>
+		CANNOT block non-hostile effects from self.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their non-hostile behavior from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT10">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#ExtHeader_Flags_BIT10">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x9C_BIT10">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-<ul>
-	<li>Each application of this opcode only protects against its specified <code>Spell Level</code>, not "up to" it.</li>
-	<li>Each effect in a spell/item is checked separately by this opcode.</li>
-</ul>
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
 
   </div>
 </div>
@@ -6948,7 +6979,7 @@ It is still processed, so it will still interact with <a href="#op200">Spell Tur
   <div>
     <strong>Info:</strong> 
 <ul>
-	<li>(EE only) <code>Resource2</code> and <code>Resource3</code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): item to be created is randomly chosen from resource fields <code>1–3</code> that are not empty.</li>
+	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> and <code><a href="../file_formats/ie_formats/eff_v2.htm#0x78">Resource 3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): item to be created is randomly chosen from resource fields <code>1–3</code> that are not empty.</li>
 	<li>Applies a delayed <a href="#op123">opcode #123</a> effect to remove the item (based on specified <code>duration</code>)</li>
 </ul>
 
@@ -7208,19 +7239,19 @@ A couple of examples about <i>Multiplicative Stacking Percentage Modifier</i>:
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Summons a number of monsters.
-<br/>Each <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> file has a <code>Creature Power Level</code> number (at <code>0x18</code>). The amount of monsters summoned by this effect depends on this value, the <code>special</code> parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
+<br/>Each CRE file has a <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> number. The amount of monsters summoned by this effect depends on this value, the <code>special</code> parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
 <br/>When used in SPL/ITM, known value for <code>Mode</code> are:
 <ul>
-	<li>0 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds <code>Number</code></li>
+	<li>0 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Number</code></li>
 	<li>1 &longrightarrow; Summon amount equal to <code>Number</code></li>
-	<li>2 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds "Caster Level"</li>
+	<li>2 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds "Caster Level"</li>
 </ul>
 
 <br/>When used in EFF, known value for <code>Mode</code> are:
 <ul>
-	<li>0 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds <code>Number</code></li>
+	<li>0 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Number</code></li>
 	<li>1 &longrightarrow; Summon amount equal to <code>'Number' + Dice rolls</code></li>
-	<li>2 &longrightarrow; Summon until <code>Creature Power Level</code> equals/exceeds <code>Caster Level</code> field of EFF (located at offset <code>0xc8</code>)</li>
+	<li>2 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Caster Level</code> field of EFF (located at offset <code>0xc8</code>)</li>
 </ul>
 
 <br/>The <code>Type</code> field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are <code>monsumX</code> and <code>anisumX</code>, where <code>X = 'Type' + 1</code>. <code>0–4</code> are allied , <code>5–9</code> are hostile. The specific 2da files used are:
@@ -7238,7 +7269,7 @@ A couple of examples about <i>Multiplicative Stacking Percentage Modifier</i>:
 </ul>
 
 <br/>A custom .2da file can be entered in the resource field (untested in bg1).
-<br/>If used from an external effect (.eff), the vvc field controls the bam file played when summoning.
+<br/>If used from an external effect (.eff), the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">vvc</a></code> field controls the bam file played when summoning.
  </div>
 		<hr />
 
@@ -10638,7 +10669,7 @@ IWD2: Don’t use.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-At least in EEs, this opcode automatically displays string <code><a href="../files/2da/2da_bgee/enginest.htm#14102">STRREF_EFFECT_HOLD</a></code> in the combat log.
+At least in EEs, this opcode automatically displays string <code><a href="../files/2da/2da_bgee/enginest.htm#35">STRREF_EFFECT_HOLD</a></code> in the combat log.
 It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFFTEXT.2DA</a>.
 
   </div>
@@ -10678,7 +10709,21 @@ It even overrides the entries in <a href="../files/2da/2da_bgee/efftext.htm">EFF
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Marks the targetted creature(s) as travelling to the area specified by the resource key. The creature appears in the specified area after a delay (specified by the 'Delay' field), with the orientation specified by the 'Orientation' field. The creature appears at the point specified by the Target Point fields (external EFF files only).
+		<div class="descriptiondata"> Marks the targetted creature(s) as travelling to the area specified by the <code>resource</code> key. The creature appears in the specified area after a delay (specified by the <code>Delay</code> field), with the orientation specified by the <code>Orientation</code> field.<br/>
+In particular:
+<ul>
+	<li>Global Creatures ignore the delay.</li>
+	<li>If the creature is already in the specified area, it will ignore the delay.</li>
+	<li>Non-global creatures currently in a different area than specified will use the delay.</li>
+	<li>Delay is measured in <small><sup>1</sup>&frasl;<sub>30</sub></small> seconds, (&frac12; tick), <code>600 = 20 seconds</code>.</li>
+	<li>
+		On non-EE games, the creature appears at the point specified by the Target Point fields (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files only).
+		<ul>
+			<li>On EE games, target(s) appear at Caster's Coordinates in new area (it does not seem to be possible to override through EFFs).</li>
+		</ul>
+	</li>
+	<li>Creature is moved to the new area (instantly) and flagged <a href="../file_formats/ie_formats/cre_v1.htm#Flags_BIT14">Moving Between Areas</a> until their delay expires (if it's used). It won't be active until the delay expires (it's hidden, cannot be affected by Area-effect, doesn't occupy space). It can still be targeted by the various <code>Everyone</code> targeting modes in the new area while it's still inactive, but similar to <a href="#op213">maze</a>/<a href="#op211">imprisonment</a>, effects won't trigger (including <a href="#op25">poison</a> and similar) on them until they become active.</li>
+</ul>
 
 
 
@@ -10691,6 +10736,16 @@ There is some confusion whether the Target (bg1, iwds) or the Caster point field
   </div>
 </div>
 
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Avoid saving during the delay (can lead to lost NPCs or crashes if you load while NPC's are still in transition).
+
+  </div>
+</div>
 
  </div>
 		<hr />
@@ -10780,7 +10835,8 @@ At minimum in later engines, this opcode can also store other values. Check the 
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Set the <code>Stat Value</code> field to any non-zero value if you want no time needed between spells.
+		<div class="descriptiondata"> While ON, the creature displays string <code><a href="../files/2da/2da_bgee/enginest.htm#86">STRREF_FEEDBACK_AURA_CLEANSED</a></code> (EE games only) whenever they begin to cast a spell before their aura would normally clear (i.e. more than once/round). Does NOT affect item usage, only spellcasting.<br/>
+Set the <code>Stat Value</code> field to any non-zero value if you want no time needed between spells.
 <br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#76">AURACLEANSING</a> to <code>Stat Value</code>.
 
 
@@ -11848,6 +11904,22 @@ The <code>Stat Value</code> parameter can take any value. If you set it to <code
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) HP value will not drop below the value specified by the <code>Minimum Value</code> field.
 <br/>This effect sets <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a> to <code>Minimum Value</code>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li><code>Minimum Value</code> values <code>65536</code> to <code>98303</code> will set an only allowed hit point value (HP can't be higher or lower), each representing <code>'Minimum Value' value - 65536</code>, so <code>0</code> to <code>32767</code>.</li>
+	<li>Values <code>32768</code> to <code>65535</code> do this as well, but all result in negative HP amounts, so not usable, as they will result in the same bugged non-death as <a href="#op17">opcode #17</a> reducing HP to 0.</li>
+	<li>All values higher than <code>98303</code> just repeat loop over from <code>-32768</code> to <code>32767</code>.</li>
+	<li>Any positive value will also grant the creature immunity to directly applied <a href="#op13">opcode #13</a> effects. Those applied indirectly will still kill the creature, notably by opcodes <a href="#op55">#55</a>, <a href="#op134">#134</a>, <a href="#op151">#151</a>, <a href="#op209">#209</a>, and <a href="#op238">#238</a>.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -11938,10 +12010,25 @@ The <code>Stat Value</code> parameter can take any value. If you set it to <code
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the stun effect to the targeted creature(s), if the targeted creature(s) has less than 90 HP.
-<br/>The duration of the effect is:
-<br/>1 to 29  HP -> stunned for 4d4 rounds
-<br/>30 to 59 HP -> stunned for 2d4 rounds
-<br/>60 to 89 HP -> stunned for 1d4 rounds
+<br/>The <code>duration</code> of the effect is:
+<ul>
+	<li>1 to 29 HP &longrightarrow; stunned for 4d4 rounds</li>
+	<li>30 to 59 HP &longrightarrow; stunned for 2d4 rounds</li>
+	<li>60 to 89 HP &longrightarrow; stunned for 1d4 rounds</li>
+</ul>
+
+More specifically, it functions by applying <a href="#op45">opcode #45</a>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<a href="#op101">Immunity</a> to <a href="#op45">opcode #45</a> is sufficient to block the stun effect, but without <a href="#op101">immunity</a> to <a href="#op210">opcode #210</a> it will still generate an erroneous <code>~Stunned~</code> string display.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 

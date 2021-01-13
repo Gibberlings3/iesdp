@@ -4958,7 +4958,7 @@ Both parameters should be <code>0</code> (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Remove the deafness effect from the targeted creature(s).
+		<div class="descriptiondata"> Removes the <a href="#op80">deafness</a> effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -6048,7 +6048,7 @@ Not seen to work in BG1.
 	<div id="op102" class="opcode">
 		<span class="opnumberdata">#102 (0x66)</span>
 
-		<span class="opnamedata">Protection: from Spell Levels</span>
+		<span class="opnamedata">Spell: Immunity (by Power Level)</span>
 
 		
 		
@@ -6066,18 +6066,49 @@ Not seen to work in BG1.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Gives the targeted creature(s) protection from effects (opcodes) whose <code>Power</code> attribute is equal to <code>Spell Level</code>.
-<br/>Valid <code>Spell Level</code> (Power) levels range: <code>0 – 9</code>.
+		<div class="descriptiondata"> Gives the targeted creature(s) protection from effects (opcodes) whose <code>Power</code> attribute is equal to <code>Spell Level</code> (<code>range: 0 – 9</code>).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+	<li>Each application of this opcode only protects against its specified <code>Spell Level</code>, not "up to" it.</li>
+	<li>Each effect in a spell/item is checked separately by this opcode.</li>
+
+	<li>
+		CAN block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+
+	<li>
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		<ul>
+			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
+		</ul>
+	</li>
+
+	<li>
+		CANNOT block non-hostile effects from self.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their non-hostile behavior from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT10">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#ExtHeader_Flags_BIT10">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x9C_BIT10">V2 effects</a> specify it manually.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-<ul>
-	<li>Each application of this opcode only protects against its specified <code>Spell Level</code>, not "up to" it.</li>
-	<li>Each effect in a spell/item is checked separately by this opcode.</li>
-</ul>
+<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files delivered by <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> will interact with Deflection separately from the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect that applies them, and only if that <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect already got through. If the <a href="#op177">opcode #177</a>/<a href="#op283">opcode #283</a> effect is deflected, then the values in the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file won’t matter. Most vanilla <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files have these fields set to <code>empty/zero</code> to avoid interacting with this opcode.
 
   </div>
 </div>
@@ -10466,7 +10497,21 @@ IWD2: Don’t use.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Marks the targetted creature(s) as travelling to the area specified by the resource key. The creature appears in the specified area after a delay (specified by the 'Delay' field), with the orientation specified by the 'Orientation' field. The creature appears at the point specified by the Target Point fields (external EFF files only).
+		<div class="descriptiondata"> Marks the targetted creature(s) as travelling to the area specified by the <code>resource</code> key. The creature appears in the specified area after a delay (specified by the <code>Delay</code> field), with the orientation specified by the <code>Orientation</code> field.<br/>
+In particular:
+<ul>
+	<li>Global Creatures ignore the delay.</li>
+	<li>If the creature is already in the specified area, it will ignore the delay.</li>
+	<li>Non-global creatures currently in a different area than specified will use the delay.</li>
+	<li>Delay is measured in <small><sup>1</sup>&frasl;<sub>30</sub></small> seconds, (&frac12; tick), <code>600 = 20 seconds</code>.</li>
+	<li>
+		On non-EE games, the creature appears at the point specified by the Target Point fields (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files only).
+		<ul>
+			<li>On EE games, target(s) appear at Caster's Coordinates in new area (it does not seem to be possible to override through EFFs).</li>
+		</ul>
+	</li>
+	<li>Creature is moved to the new area (instantly) and flagged <a href="../file_formats/ie_formats/cre_v1.htm#Flags_BIT14">Moving Between Areas</a> until their delay expires (if it's used). It won't be active until the delay expires (it's hidden, cannot be affected by Area-effect, doesn't occupy space). It can still be targeted by the various <code>Everyone</code> targeting modes in the new area while it's still inactive, but similar to <a href="#op213">maze</a>/<a href="#op211">imprisonment</a>, effects won't trigger (including <a href="#op25">poison</a> and similar) on them until they become active.</li>
+</ul>
 
 
 
@@ -10479,6 +10524,16 @@ There is some confusion whether the Target (bg1, iwds) or the Caster point field
   </div>
 </div>
 
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+Avoid saving during the delay (can lead to lost NPCs or crashes if you load while NPC's are still in transition).
+
+  </div>
+</div>
 
  </div>
 		<hr />
@@ -10521,19 +10576,25 @@ There is some confusion whether the Target (bg1, iwds) or the Caster point field
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect stores a various data types, usually a variable in the 'variable' field.
-<br/>Resistance.param3: Point
-<br/>Param4: Float
-<br/>Param1: Int 
-<br/>Param2: Any
-<br/>Resource1+2+3: String
+		<div class="descriptiondata"> This effect sets the variable specified by the <code><a href="../file_formats/ie_formats/eff_v2.htm#0xA8">Variable Name</a></code> field to the value specified by the <code>Value</code> field.
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-This effect can only be used in an external effect (ie. an eff file).
+This effect can only be used in an external effect (<a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Effects">CRE</a>/<a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+This effect is always instantaneous (local variables are stored internally, not as effects, while the game is running). All local variables for a <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> are stored as <a href="#op187">opcode #187</a> effects on that <a href="../file_formats/ie_formats/cre_v1.htm">CRE</a> whenever the game is saved, which will trigger as soon as the game is loaded.
 
   </div>
 </div>
@@ -10573,7 +10634,8 @@ This effect can only be used in an external effect (ie. an eff file).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Set the <code>Stat Value</code> field to any non-zero value if you want no time needed between spells.
+		<div class="descriptiondata"> While ON, the creature displays string <code><a href="../files/2da/2da_bgee/enginest.htm#86">STRREF_FEEDBACK_AURA_CLEANSED</a></code> (EE games only) whenever they begin to cast a spell before their aura would normally clear (i.e. more than once/round). Does NOT affect item usage, only spellcasting.<br/>
+Set the <code>Stat Value</code> field to any non-zero value if you want no time needed between spells.
 <br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#76">AURACLEANSING</a> to <code>Stat Value</code>.
 
 
@@ -11680,6 +11742,22 @@ This effect changes the casting level stat, but has no actual affect in-game IWD
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> The targeted creature(s) HP value will not drop below the value specified by the <code>Minimum Value</code> field.
 <br/>This effect sets <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a> to <code>Minimum Value</code>.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li><code>Minimum Value</code> values <code>65536</code> to <code>98303</code> will set an only allowed hit point value (HP can't be higher or lower), each representing <code>'Minimum Value' value - 65536</code>, so <code>0</code> to <code>32767</code>.</li>
+	<li>Values <code>32768</code> to <code>65535</code> do this as well, but all result in negative HP amounts, so not usable, as they will result in the same bugged non-death as <a href="#op17">opcode #17</a> reducing HP to 0.</li>
+	<li>All values higher than <code>98303</code> just repeat loop over from <code>-32768</code> to <code>32767</code>.</li>
+	<li>Any positive value will also grant the creature immunity to directly applied <a href="#op13">opcode #13</a> effects. Those applied indirectly will still kill the creature, notably by opcodes <a href="#op55">#55</a>, <a href="#op134">#134</a>, <a href="#op151">#151</a>, <a href="#op209">#209</a>, and <a href="#op238">#238</a>.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 

@@ -598,7 +598,7 @@ Probability range is 0-99</p>
 
   <td>0x004c</td>
   <td>4 (dword)</td>
-  <td><p>Primary type (school)</p>
+  <td><p><b><a name="0x4C">Primary Type (School)</a></b></p>
 </td>
 </tr>
 
@@ -678,16 +678,22 @@ Probability range is 0-99</p>
 
 <p>The default behaviour is that effects cannot be dispelled and ignore resistance.</p>
 <ul>
-  <li>bit 0: Can be dispelled, affected by resistance</li>
-  <li>bit 1: Ignores resistance (when used in combination with bit 0)</li>
+  <li>bit 0 ⟶ Can be dispelled, affected by resistance</li>
+  <li>bit 1 ⟶ Ignores resistance (when used in combination with bit 0)</li>
+  <li><b><a name="0x5C_BIT2">bit 2</a></b> ⟶ Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+)</li>
+  <li>bit 31 ⟶ Effect was applied by an <a href="../ie_formats/itm_v1.htm">ITM</a> (only present in EE games patched to v2.0+).
+    <ul>
+      <li>It is set by the engine if the effect’s source <a href="../ie_formats/itm_v1.htm">ITM</a> is identified. This bit is only used by <a href="../../opcodes/bgee.htm#op324">opcode #324</a> which checks it to determine whether it should set <code><a href="../../files/2da/2da_bgee/enginest.htm#128">STRREF_FEEDBACK_IMMUNE_RESOURCE</a></code> to the ITM’s general or identified name.</li>
+    </ul>
+  </li>
 </ul>
 
 <p>This can also be presented in the more traditional way:</p>
 <ul>
-  <li>0=Nonmagical</li>
-  <li>1=Can be dispelled/Affected by resistance</li>
-  <li>2=Cannot be dispelled/Ignores resistance</li>
-  <li>3=Can be dispelled/Ignores resistance</li>
+  <li>0 ⟶ Nonmagical</li>
+  <li>1 ⟶ Can be dispelled/Affected by resistance</li>
+  <li>2 ⟶ Cannot be dispelled/Ignores resistance</li>
+  <li>3 ⟶ Can be dispelled/Ignores resistance</li>
 </ul>
 </td>
 </tr>
@@ -783,7 +789,7 @@ Probability range is 0-99</p>
 
   <td>0x0070</td>
   <td>8 (resref)</td>
-  <td><p>Resource 2 (VVC in many effects)</p>
+  <td><p><b><a name="0x70">Resource 2</a></b> (VVC in many effects)</p>
 </td>
 </tr>
 
@@ -802,7 +808,7 @@ Probability range is 0-99</p>
 
   <td>0x0078</td>
   <td>8 (resref)</td>
-  <td><p>Resource 3</p>
+  <td><p><b><a name="0x78">Resource 3</a></b></p>
 </td>
 </tr>
 
@@ -897,7 +903,12 @@ Probability range is 0-99</p>
 
   <td>0x0090</td>
   <td>4 (dword)</td>
-  <td><p><span class="unknown">Parent resource type (0=None, 1=Spell, 2=Item)</span></p>
+  <td><p><b><a name="0x90">Parent resource type</a></b></p>
+<ul>
+  <li>0 ⟶ <b><a name="0x90_0">None</a></b></li>
+  <li>1 ⟶ <b><a name="0x90_1">Spell</a></b></li>
+  <li>2 ⟶ <b><a name="0x90_2">Item</a></b></li>
+</ul>
 </td>
 </tr>
 
@@ -916,7 +927,7 @@ Probability range is 0-99</p>
 
   <td>0x0094</td>
   <td>8 (resref)</td>
-  <td><p>Parent resource</p>
+  <td><p><b><a name="0x94">Parent resource</a></b></p>
 </td>
 </tr>
 
@@ -935,7 +946,17 @@ Probability range is 0-99</p>
 
   <td>0x009c</td>
   <td>4 (dword)</td>
-  <td><p><span class="unknown">Parent resource flags (from SPL 0x18 or ITM ext header 0x26)</span></p>
+  <td><p><b><a name="0x9C">Parent resource flags</a></b></p>
+
+<ul>
+  <li>bit 10 ⟶ <b><a name="0x9C_BIT10">Hostile</a></b></li>
+  <li>bit 11 ⟶ No LOS required</li>
+  <li>bit 12 ⟶ Allow spotting</li>
+  <li>bit 13 ⟶ Outdoors only</li>
+  <li>bit 14 ⟶ Non-magical ability</li>
+  <li>bit 15 ⟶ Trigger/Contingency</li>
+  <li>bit 16 ⟶ Non-combat ability</li>
+</ul>
 </td>
 </tr>
 
@@ -954,7 +975,7 @@ Probability range is 0-99</p>
 
   <td>0x00a0</td>
   <td>4 (dword)</td>
-  <td><p><span class="unknown">Projectile</span></p>
+  <td><p><b><a name="0xA0">Projectile</a></b></p>
 </td>
 </tr>
 
@@ -992,7 +1013,7 @@ Probability range is 0-99</p>
 
   <td>0x00a8</td>
   <td>32 (bytes)</td>
-  <td><p>Variable</p>
+  <td><p><b><a name="0xA8">Variable name</a></b></p>
 </td>
 </tr>
 
@@ -1049,7 +1070,7 @@ Probability range is 0-99</p>
 
   <td>0x00d0</td>
   <td>4 (dword)</td>
-  <td><p>Secondary Type</p>
+  <td><p><b><a name="0xD0">Secondary Type</a></b></p>
 </td>
 </tr>
 

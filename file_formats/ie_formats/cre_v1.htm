@@ -86,7 +86,7 @@ title: "CRE file format"
                 <li>bit 13: Quest critical / affected by alternative damage</li>
 
                 <li>
-                  bit 14 &longrightarrow; <b><a name="Flags_BIT14">Moving between areas</a></b>
+                  bit 14 &longrightarrow; <b><a name="CREV1_0_Header_Flags_BIT14">Moving between areas</a></b>
                   <ul>
                     <li>See <a href="../../opcodes/bgee.htm#op186">opcode #186</a></li>
                   </ul>
@@ -120,7 +120,7 @@ title: "CRE file format"
           <tr>
             <td>0x0018</td>
             <td>4 (dword)</td>
-            <td><b><a name="0x18">Creature Power Level</a></b> (for summoning spells) / XP of the creature (for party members)</td>
+            <td><b><a name="CREV1_0_Header_0x18">Creature Power Level</a></b> (for summoning spells) / XP of the creature (for party members)</td>
           </tr>
           <tr>
             <td>0x001c</td>
@@ -148,7 +148,7 @@ title: "CRE file format"
             <td>Animation ID (ANIMATE.IDS)<br />
                 <br />
                 BGEE:<br />
-                Animation slots have been (for the most parts) externalised. Symbolic names are defined in ANIMATE.IDS. Animation definitions can be found in INI files where filenames are made up from the hexadecimal representation of the slot value and the ".INI" extension. Example: Animation of "0x6004 CLERIC_MALE_GNOME" is defined in 6004.INI.<br />
+                Animation slots have been (for the most parts) externalised. Symbolic names are defined in <code><a href="../../files/ids/bgee/animate.htm">ANIMATE.IDS</a></code>. Animation definitions can be found in INI files where filenames are made up from the hexadecimal representation of the slot value and the ".INI" extension. Example: Animation of "0x6004 CLERIC_MALE_GNOME" is defined in 6004.INI.<br />
                 <br />
                 Other games:<br />
                 There is some structure to the ordering of these entries, however, it is mostly hard-coded into the .exe, and uneditable.
@@ -194,8 +194,8 @@ title: "CRE file format"
             <td>1 (byte)</td>
             <td>Eff structure version
               <ul>
-                <li>0 &longrightarrow; Version 1 EFF</li>
-                <li>1 &longrightarrow; <b><a name="0x33_1">Version 2 EFF</a></b></li>
+                <li>0 &longrightarrow; <b><a name="CREV1_0_Header_0x33_0">Version 1 EFF</a></b></li>
+                <li>1 &longrightarrow; <b><a name="CREV1_0_Header_0x33_1">Version 2 EFF</a></b></li>
               </ul>
           </td>
           </tr>
@@ -864,7 +864,7 @@ TRANSMUTER          0x20000000</pre>
           <tr>
             <td>0x0280</td>
             <td>32 (char array)</td>
-            <td><b><a name="0x280">Death Variable</a></b> (set SPRITE_IS_DEADvariable on death)</td>
+            <td><b><a name="CREV1_0_Header_0x280">Death Variable</a></b> (set SPRITE_IS_DEADvariable on death)</td>
           </tr>
           <tr>
             <td>0x02a0</td>
@@ -914,12 +914,12 @@ TRANSMUTER          0x20000000</pre>
           <tr>
             <td>0x02c4</td>
             <td>4 (dword)</td>
-            <td>Offset to <a href="eff_v2.htm">effects</a></td>
+            <td>Offset to <a href="#CREV1_0_Effects">effects</a></td>
           </tr>
           <tr>
             <td>0x02c8</td>
             <td>4 (dword)</td>
-            <td>Count of <a href="eff_v2.htm">effects</a>.</td>
+            <td>Count of <a href="#CREV1_0_Effects">effects</a>.</td>
           </tr>
           <tr>
             <td>0x02cc</td>
@@ -1080,7 +1080,7 @@ TRANSMUTER          0x20000000</pre>
     <div class="fileHeader"><a name="CREV1_0_Effects">CRE V1.0 Effects</a></div>
     <div class="indent1">
       <br />
-      Unlike ordinary <a href="../ie_formats/eff_v2.htm">V2 EFF</a> files, <code><a href="#0x33_1">CRE effect V2</a></code> structures omit the 8-byte <code>EFF V2</code> header.<br />
+      Unlike ordinary <a href="../ie_formats/eff_v2.htm">V2 EFF</a> files, <code><a href="#CREV1_0_Header_0x33_1">CRE effect V2</a></code> structures omit the 8-byte <code>EFF V2</code> header.<br />
       As a result, their total length is <code>108h</code> instead of <code>110h</code> and all attributes (<code>Target</code>, <code>Power</code>, <code>Parameter1</code>, etc...) are located at the value listed there "minus 8" (e.g. <code>Opcode number</code> is at <code>0x8</code> instead of <code>0x10</code>).<br />
       <br />
     </div>

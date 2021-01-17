@@ -1,29 +1,65 @@
-- desc: |
+- desc: |-
     Spell form
       - 1 - Standard
       - 2 - Projectile
+
+    This field matters only for <code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0x0">ITM</a></code>, SPL files shouldn't function any different based on their type (even `0`).
   type: char
 - desc: "- bit 2: 'Friendly' ability"
   type: char
-- desc: Location
+- desc: |-
+    <b><a name="splv1_Extended_Header_0x2">Location</a></b>
+
+    - 0 ⟶ None
+      - Ability will not be selectable through the UI (but still available to scripts and spell-casting opcodes).
+    - 1 ⟶ Weapon
+      - <code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0x2_1">ITM</a></code> only.
+    - 2 ⟶ <b><a name="splv1_Extended_Header_0x2_2">Spell</a></b>
+      - Ability can be selected from "Cast Spell (F7)" button, and from Quick-spell buttons.
+    - 3 ⟶ Item
+      - <code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0x2_3">ITM</a></code> only.
+    - 4 ⟶ <b><a name="splv1_Extended_Header_0x2_4">Innate</a></b>
+      - Ability can be selected from "Special Abilities (F12)" button.
+    - 5+ ⟶ As `0`.
   type: word
 - desc: Memorised icon (BAM). The engine replaces the last character of this filename with a B.
   type: resref
-- desc: |
-    Target:
-    - 0 = Invalid (target cannot be selected)
-    - 1 = Creature / Living actor
-    - 2 = Crash
-    - 3 = Dead actor
-      - To be precise, it can target living and dead actors. It really just ignores any range requirement, including being in the same area.
-    - 4 = Area
-    - 5 = Self
-    - 6 = Crash
-    - 7 = None (Self, ignores game pause)
+- desc: |-
+    <b><a name="splv1_Extended_Header_0xC">Target</a></b>
+
+    - 0 ⟶ Invalid (cannot be selected)
+    - 1 ⟶ <b><a name="splv1_Extended_Header_0xC_1">Living actor</a></b>
+      - Target Portrait, Creature/Actor, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Container</a>, or <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">Door</a>. Checks <code><a href="#splv1_Extended_Header_0xE">range</a></code> range.
+    - 2 ⟶ <b><a name="splv1_Extended_Header_0xC_2">Inventory</a></b>
+      - Can't be activated manually.
+    - 3 ⟶ <b><a name="splv1_Extended_Header_0xC_3">Dead actor</a></b>
+      - As <code><a href="#splv1_Extended_Header_0xC_1">Living Actor</a></code>. It really just ignores any <code><a href="#splv1_Extended_Header_0xE">range</a></code> requirement, including being in the same area.
+    - 4 ⟶ <b><a name="splv1_Extended_Header_0xC_4">Any point within range</a></b>
+      - Target location. Checks <code><a href="#splv1_Extended_Header_0xE">range</a></code>.
+    - 5 ⟶ <b><a name="splv1_Extended_Header_0xC_5">Caster</a></b>
+      - Targets Self.
+    - 6 ⟶ Crash
+      - Can't be activated manually.
+    - 7 ⟶ <b><a name="splv1_Extended_Header_0xC_7">Caster</a></b>
+      - Targets Self. In particular:
+        - Cast instantly (even while the game is paused).
+        - Ignores one spell per round rule.
+        - Ignores Silence, Spell Failure, Dead Magic, Wild Surge, "Outdoors Only", "Non-combat", probably a few other rules.
+
+    {% capture note %}
+    This field matter doesn't matter when the ability is activated/cast by script or when cast by another opcode.
+    {% endcapture %} {% include note.html %}
   type: char
-- desc: Target Number
+- desc: |-
+    Target Number
+
+    - Only usable with Ability Targets <code><a href="#splv1_Extended_Header_0xC_1">1</a></code>, <code><a href="#splv1_Extended_Header_0xC_3">3</a></code>, or <code><a href="#splv1_Extended_Header_0xC_4">4</a></code>.
+    - Targeting reticle will display amount remaining while selecting targets.
+    - Double-clicking a target/location will target it for the remaining amount.
+    - Regardless of the number of targets, only a single "Memorization" will be expended.
+    - This feature cannot be utilized by scripts.
   type: char
-- desc: Range
+- desc: <b><a name="splv1_Extended_Header_0xE">Range</a></b>
   type: word
 - desc: Level Required
   type: word

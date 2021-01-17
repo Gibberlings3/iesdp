@@ -13,16 +13,24 @@
   type: dword
 - desc: |
     Target type
-    - 0=None
-    - 1=Self (pre-projectile)
-    - 2=Pre-target
-    - 3=Party
-    - 4=Everyone (inc. party)
-    - 5=Everyone (excl. party)
-    - 6=Everyone matching specific value of caster (or Party if cast by party member)
-    - 7=Everyone matching specific value of target
-    - 8=Everyone (excl. caster)
-    - 9=Self (post-projectile)
+
+    - 0 ⟶ None
+    - 1 ⟶ Self
+    - 2 ⟶ Preset target
+    - 3 ⟶ Party
+    - 4 ⟶ Everyone
+    - 5 ⟶ Everyone except party
+    - 6 ⟶ Caster group
+    - 7 ⟶ Target group
+    - 8 ⟶ Everyone except self
+    - 9 ⟶ Original caster
+
+    {% capture note %}
+    - If called via <a href="../../opcodes/bgee.htm#op177">opcode #177</a>/<a href="../../opcodes/bgee.htm#op283">opcode #283</a>/<a href="../../opcodes/bgee.htm#op183">opcode #183</a>/<a href="../../opcodes/bgee.htm#op272">opcode #272</a>, this field is irrelevant (it will affect whatever creature the <a href="../../opcodes/bgee.htm#op177">opcode #177</a>/<a href="../../opcodes/bgee.htm#op283">opcode #283</a>/<a href="../../opcodes/bgee.htm#op183">opcode #183</a>/<a href="../../opcodes/bgee.htm#op272">opcode #272</a> effect is attached to).
+    - If called via <a href="../../opcodes/bgee.htm#op248">opcode #248</a>, this field is irrelevant (it will affect whatever creature was attacked).
+    - If called via <a href="../../opcodes/bgee.htm#op249">opcode #249</a>, this field will function same as in SPL/ITM effects, except that `0|None` will default to `2|Projectile Target`.
+    - If attached directly to a <a href="../ie_formats/cre_v1.htm">CRE</a> file, this field is irrelevant (it will affect whatever creature it's attached to). Also applies to <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x33_0">V1 effects</a> attached directly to CRE files.
+    {% endcapture %} {% include note.html %}
   type: dword
 - desc: Power
   type: dword
@@ -119,9 +127,11 @@
     - 2 ⟶ Cannot be dispelled/Ignores resistance
     - 3 ⟶ Can be dispelled/Ignores resistance
   type: dword
-- desc: Parameter 3
+- desc: |-
+    <b><a name="0x60">Parameter 3</a></b>
   type: dword
-- desc: Parameter 4
+- desc: |-
+    <b><a name="0x64">Parameter 4</a></b>
   type: dword
 - desc: Parameter 5
   type: dword
@@ -171,9 +181,9 @@
     <b><a name="0xA8">Variable name</a></b>
   type: bytes
   length: 32
-- desc: Caster level
+- desc: |-
+    <b><a name="0xC8">Caster level</a></b>
   type: dword
-  unknown: 1
 - desc: FirstApply (internal flag)
   type: dword
   unknown: 1

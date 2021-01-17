@@ -2,7 +2,7 @@
 n: 12
 name: "HP: Damage"
 param1: "Damage Amount"
-param2: "Type"
+param2: "Mode &amp; Damage Type"
 savingthrow: "Save Type"
 special: "Flags"
 bg1: 0
@@ -13,79 +13,377 @@ iwd2: 0
 pst: 0
 ---
 Damages the target by the value specified by the <code>Damage Amount</code> field, with the damage type specified by the <code>Type</code> field.
-<br/>Known values for <code>Type</code> are:
-<ul>
-  <li>0 &longrightarrow; <code>CRUSHING</code></li>
-  <li>1 &longrightarrow; <code>CRUSHING</code> Set to Value</li>
-  <li>2 &longrightarrow; <code>CRUSHING</code> Set to Percentage</li>
-  <li>3 &longrightarrow; <code>CRUSHING</code> Reduce by Percentage</li>
+<br/>Known values for <code>Mode &amp; Damage Type</code> are:
+<br/><br/>
 
-  <li>65536 &longrightarrow; <code>ACID</code></li>
-  <li>65537 &longrightarrow; <code>ACID</code> Set to Value</li>
-  <li>65538 &longrightarrow; <code>ACID</code> Set to Percentage</li>
-  <li>65539 &longrightarrow; <code>ACID</code> Reduce by Percentage</li>
+<table border="1" width="98%">
+	<colgroup>
+		<col width="20%" />
+		<col width="20%" />
+		<col width="20%" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th>Value (hex)</th>
+			<th><code>Damage Type</code></th>
+			<th><code>Mode</code></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>0x00000000</td>
+			<td>CRUSHING</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00000001</td>
+			<td>CRUSHING</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00000002</td>
+			<td>CRUSHING</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00000003</td>
+			<td>CRUSHING</td>
+			<td>Reduce by Percentage</td>
+		</tr>
 
-  <li>131072 &longrightarrow; <code>COLD</code></li>
-  <li>131073 &longrightarrow; <code>COLD</code> Set to Value</li>
-  <li>131074 &longrightarrow; <code>COLD</code> Set to Percentage</li>
-  <li>131075 &longrightarrow; <code>COLD</code> Reduce by Percentage</li>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
 
-  <li>262144 &longrightarrow; <code>ELECTRICITY</code></li>
-  <li>262145 &longrightarrow; <code>ELECTRICITY</code> Set to Value</li>
-  <li>262146 &longrightarrow; <code>ELECTRICITY</code> Set to Percentage</li>
-  <li>262147 &longrightarrow; <code>ELECTRICITY</code> Reduce by Percentage</li>
+		<tr>
+			<td>0x00010000</td>
+			<td>ACID</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00010001</td>
+			<td>ACID</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00010002</td>
+			<td>ACID</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00010003</td>
+			<td>ACID</td>
+			<td>Reduce by Percentage</td>
+		</tr>
 
-  <li>524288 &longrightarrow; <code>FIRE</code></li>
-  <li>524289 &longrightarrow; <code>FIRE</code> Set to Value</li>
-  <li>524290 &longrightarrow; <code>FIRE</code> Set to Percentage</li>
-  <li>524291 &longrightarrow; <code>FIRE</code> Reduce by Percentage</li>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
 
-  <li>1048576 &longrightarrow; <code>PIERCING</code></li>
-  <li>1048577 &longrightarrow; <code>PIERCING</code> Set to Value</li>
-  <li>1048578 &longrightarrow; <code>PIERCING</code> Set to Percentage</li>
-  <li>1048579 &longrightarrow; <code>PIERCING</code> Reduce by Percentage</li>
+		<tr>
+			<td>0x00020000</td>
+			<td>COLD</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00020001</td>
+			<td>COLD</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00020002</td>
+			<td>COLD</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00020003</td>
+			<td>COLD</td>
+			<td>Reduce by Percentage</td>
+		</tr>
 
-  <li>2097152 &longrightarrow; <code>POISON</code></li>
-  <li>2097153 &longrightarrow; <code>POISON</code> Set to Value</li>
-  <li>2097154 &longrightarrow; <code>POISON</code> Set to Percentage</li>
-  <li>2097155 &longrightarrow; <code>POISON</code> Reduce by Percentage</li>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
 
-  <li>4194304 &longrightarrow; <code>MAGIC</code></li>
-  <li>4194305 &longrightarrow; <code>MAGIC</code> Set to Value</li>
-  <li>4194306 &longrightarrow; <code>MAGIC</code> Set to Percentage</li>
-  <li>4194307 &longrightarrow; <code>MAGIC</code> Reduce by Percentage</li>
+		<tr>
+			<td>0x00040000</td>
+			<td>ELECTRICITY</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00040001</td>
+			<td>ELECTRICITY</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00040002</td>
+			<td>ELECTRICITY</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00040003</td>
+			<td>ELECTRICITY</td>
+			<td>Reduce by Percentage</td>
+		</tr>
 
-  <li>8388608 &longrightarrow; <code>MISSILE</code></li>
-  <li>8388609 &longrightarrow; <code>MISSILE</code> Set to Value</li>
-  <li>8388610 &longrightarrow; <code>MISSILE</code> Set to Percentage</li>
-  <li>8388611 &longrightarrow; <code>MISSILE</code> Reduce by Percentage</li>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
 
-  <li>16777216 &longrightarrow; <code>SLASHING</code></li>
-  <li>16777217 &longrightarrow; <code>SLASHING</code> Set to Value</li>
-  <li>16777218 &longrightarrow; <code>SLASHING</code> Set to Percentage</li>
-  <li>16777219 &longrightarrow; <code>SLASHING</code> Reduce by Percentage</li>
+		<tr>
+			<td>0x00080000</td>
+			<td>FIRE</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00080001</td>
+			<td>FIRE</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00080002</td>
+			<td>FIRE</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00080003</td>
+			<td>FIRE</td>
+			<td>Reduce by Percentage</td>
+		</tr>
 
-  <li>33554432 &longrightarrow; <code>MAGICFIRE</code></li>
-  <li>33554433 &longrightarrow; <code>MAGICFIRE</code> Set to Value</li>
-  <li>33554434 &longrightarrow; <code>MAGICFIRE</code> Set to Percentage</li>
-  <li>33554435 &longrightarrow; <code>MAGICFIRE</code> Reduce by Percentage</li>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
 
-  <li>67108864 &longrightarrow; <code>MAGICCOLD</code></li>
-  <li>67108865 &longrightarrow; <code>MAGICCOLD</code> Set to Value</li>
-  <li>67108866 &longrightarrow; <code>MAGICCOLD</code> Set to Percentage</li>
-  <li>67108867 &longrightarrow; <code>MAGICCOLD</code> Reduce by Percentage</li>
+		<tr>
+			<td>0x00100000</td>
+			<td>PIERCING</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00100001</td>
+			<td>PIERCING</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00100002</td>
+			<td>PIERCING</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00100003</td>
+			<td>PIERCING</td>
+			<td>Reduce by Percentage</td>
+		</tr>
 
-  <li>134217728 &longrightarrow; <code>STUNNING</code></li>
-  <li>134217729 &longrightarrow; <code>STUNNING</code> Set to Value</li>
-  <li>134217730 &longrightarrow; <code>STUNNING</code> Set to Percentage</li>
-  <li>134217731 &longrightarrow; <code>STUNNING</code> Reduce by Percentage</li>
-</ul>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
 
-<br/><br/>The Dice values can be used to inflict varying damage amounts – e.g. <code>2d6</code> would do <code>2–12</code> damage (Damage type is still specified by the <code>Type</code> value).
+		<tr>
+			<td>0x00200000</td>
+			<td>POISON</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00200001</td>
+			<td>POISON</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00200002</td>
+			<td>POISON</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00200003</td>
+			<td>POISON</td>
+			<td>Reduce by Percentage</td>
+		</tr>
+
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr>
+			<td>0x00400000</td>
+			<td>MAGIC</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00400001</td>
+			<td>MAGIC</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00400002</td>
+			<td>MAGIC</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00400003</td>
+			<td>MAGIC</td>
+			<td>Reduce by Percentage</td>
+		</tr>
+
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr>
+			<td>0x00800000</td>
+			<td>MISSILE</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x00800001</td>
+			<td>MISSILE</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x00800002</td>
+			<td>MISSILE</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x00800003</td>
+			<td>MISSILE</td>
+			<td>Reduce by Percentage</td>
+		</tr>
+
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr>
+			<td>0x01000000</td>
+			<td>SLASHING</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x01000001</td>
+			<td>SLASHING</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x01000002</td>
+			<td>SLASHING</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x01000003</td>
+			<td>SLASHING</td>
+			<td>Reduce by Percentage</td>
+		</tr>
+
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr>
+			<td>0x02000000</td>
+			<td>MAGICFIRE</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x02000001</td>
+			<td>MAGICFIRE</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x02000002</td>
+			<td>MAGICFIRE</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x02000003</td>
+			<td>MAGICFIRE</td>
+			<td>Reduce by Percentage</td>
+		</tr>
+
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr>
+			<td>0x04000000</td>
+			<td>MAGICCOLD</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x04000001</td>
+			<td>MAGICCOLD</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x04000002</td>
+			<td>MAGICCOLD</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x04000003</td>
+			<td>MAGICCOLD</td>
+			<td>Reduce by Percentage</td>
+		</tr>
+
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr>
+			<td>0x08000000</td>
+			<td>STUNNING</td>
+			<td>Normal</td>
+		</tr>
+		<tr>
+			<td>0x08000001</td>
+			<td>STUNNING</td>
+			<td>Set to Value</td>
+		</tr>
+		<tr>
+			<td>0x08000002</td>
+			<td>CRUSHING</td>
+			<td>Set to Percentage</td>
+		</tr>
+		<tr>
+			<td>0x08000003</td>
+			<td>STUNNING</td>
+			<td>Reduce by Percentage</td>
+		</tr>
+	</tbody>
+</table>
 
 <p>
-  <code>Damage Amount</code> can be positive or negative (though the damage sound will play in either case).
-  <br/>If <code>Damage Amount</code> and the Dice values are both non-zero, the total damage inflicted is: <code>'Damage Amount' + Dice value</code>.
+	The Dice values can be used to inflict varying damage amounts – e.g. <code>2d6</code> would do <code>2–12</code> damage (Damage type is still specified by the <code>Type</code> value).
+</p>
+
+<p>
+	<code>Damage Amount</code> can be positive or negative (though the damage sound will play in either case).
+	<br/>If <code>Damage Amount</code> and the Dice values are both non-zero, the total damage inflicted is: <code>'Damage Amount' + Dice value</code>.
 </p>
 
 {% capture note %}
@@ -96,10 +394,10 @@ Damages the target by the value specified by the <code>Damage Amount</code> fiel
 
 <br/><br/>Useful bit values for <code>Save Type</code> are:
 <ul>
-  <li>Bit 10 &longrightarrow; Ignore primary target: Line AoE projectile doesn't affect end target</li>
-  <li>Bit 11 &longrightarrow; Ignore secondary target: Line AoE projectile doesn't affect bystanders</li>
-  <li>Bit 24 &longrightarrow; Bypass Mirror Image</li>
-  <li>Bit 25 &longrightarrow; Ignore difficulty: It refers to the damage multiplier to party members based on difficulty.</li>
+	<li>Bit 10 &longrightarrow; Ignore primary target: Line AoE projectile doesn't affect end target</li>
+	<li>Bit 11 &longrightarrow; Ignore secondary target: Line AoE projectile doesn't affect bystanders</li>
+	<li>Bit 24 &longrightarrow; Bypass Mirror Image</li>
+	<li>Bit 25 &longrightarrow; Ignore difficulty: It refers to the damage multiplier to party members based on difficulty.</li>
 </ul>
 
 {% capture note %}
@@ -110,29 +408,29 @@ Damage type <code>POISON</code> automatically uses save flag <code>Bypass Mirror
 
 <br/><br/>Known bit values for <code>Flags</code> are:
 <ul>
-  <li>Bit 0 &longrightarrow; Drain HP to caster (cumulative)</li>
-  <li>Bit 1 &longrightarrow; Reversed HP Drain recipient and target (cumulative)</li>
-  <li>Bit 2 &longrightarrow; Fist damage only</li>
-  <li>Bit 3 &longrightarrow; Drain HP to caster (non-cumulative)</li>
-  <li>Bit 5 &longrightarrow; Suppress combat log feedback string</li>
-  <li>Bit 6 &longrightarrow; HP drain number limited to amount available by target (checks <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a>)</li>
-  <li>Bit 7 &longrightarrow; HP drain number limited to amount necessary to heal recipient to full HP</li>
-  <li>Bit 8 &longrightarrow; Save for half</li>
-  <li>Bit 9 &longrightarrow; Fail for half: A failed (or lack of) saving throw results in half damage.</li>
-  <li>Bit 10 &longrightarrow; Does not wake sleepers</li>
+	<li>Bit 0 &longrightarrow; Drain HP to caster (cumulative)</li>
+	<li>Bit 1 &longrightarrow; Reversed HP Drain recipient and target (cumulative)</li>
+	<li>Bit 2 &longrightarrow; Fist damage only</li>
+	<li>Bit 3 &longrightarrow; Drain HP to caster (non-cumulative)</li>
+	<li>Bit 5 &longrightarrow; Suppress combat log feedback string</li>
+	<li>Bit 6 &longrightarrow; HP drain number limited to amount available by target (checks <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a>)</li>
+	<li>Bit 7 &longrightarrow; HP drain number limited to amount necessary to heal recipient to full HP</li>
+	<li>Bit 8 &longrightarrow; Save for half</li>
+	<li>Bit 9 &longrightarrow; Fail for half: A failed (or lack of) saving throw results in half damage.</li>
+	<li>Bit 10 &longrightarrow; Does not wake sleepers</li>
 </ul>
 
 {% capture note %}
 <ul>
-  <li>Bits <code>0</code>, <code>1</code>, <code>3</code>, and <code>4</code> are mutually exclusive. Bit <code>7</code> prevents temporary HP gain.</li>
-  <li>
-    Notice there are essentially 2 modes the bonus temporary HP are calculated: <code>cumulative</code> and <code>non-cumulative</code>.
-    <ul>
-      <li><code>Cumulative</code> works as you'd imagine: extra HP are simply added on if recipient of the drain is at maximum HP (including any previous temporary HP).</li>
-      <li><code>Non-cumulative</code> HP drain calculates extra HP gain based on where the current HP of the recipient is relative to the normal (unextended by <code>non-cumulative</code> HP bonus) maximum. Furthermore, all <code>non-cumulative</code> HP drain effects are treated as a coexisting group, where the highest extra HP roll is added to the maximum hitpoints without dispelling any lower rolls. So the recipient will still benefit if the lower rolls have a longer duration than the higher roll.</li>
-      <li>Here's an example: if the caster gains <code>4</code> temporary HP from a previous <code>non-cumulative</code> HP drain, suffers <code>5</code> damage, then drains <code>2</code> hit points, (s)he will be cured <code>2</code> hitpoints of which <code>1</code> HP will be "stored" as an extra hitpoint for a certain duration set by the damage effect.</li>
-    </ul>
-  </li>
+	<li>Bits <code>0</code>, <code>1</code>, <code>3</code>, and <code>4</code> are mutually exclusive. Bit <code>7</code> prevents temporary HP gain.</li>
+	<li>
+		Notice there are essentially 2 modes the bonus temporary HP are calculated: <code>cumulative</code> and <code>non-cumulative</code>.
+		<ul>
+			<li><code>Cumulative</code> works as you'd imagine: extra HP are simply added on if recipient of the drain is at maximum HP (including any previous temporary HP).</li>
+			<li><code>Non-cumulative</code> HP drain calculates extra HP gain based on where the current HP of the recipient is relative to the normal (unextended by <code>non-cumulative</code> HP bonus) maximum. Furthermore, all <code>non-cumulative</code> HP drain effects are treated as a coexisting group, where the highest extra HP roll is added to the maximum hitpoints without dispelling any lower rolls. So the recipient will still benefit if the lower rolls have a longer duration than the higher roll.</li>
+			<li>Here's an example: if the caster gains <code>4</code> temporary HP from a previous <code>non-cumulative</code> HP drain, suffers <code>5</code> damage, then drains <code>2</code> hit points, (s)he will be cured <code>2</code> hitpoints of which <code>1</code> HP will be "stored" as an extra hitpoint for a certain duration set by the damage effect.</li>
+		</ul>
+	</li>
 </ul>
 {% endcapture %}
 
@@ -141,12 +439,12 @@ Damage type <code>POISON</code> automatically uses save flag <code>Bypass Mirror
 {% capture note %}
 If this effect reduces target to <code>-20</code> (Allegiance: <a href="../files/ids/bgee/ea.htm#2">PC</a>) or <code>-9</code> (any other Allegiance value) hit points, it also applies <a href="#op13">opcode #13</a> of the specified type:
 <ul>
-  <li><code>CRUSHING</code>/<code>SLASHING</code>/<code>PIERCING</code>: Exploding Death</li>
-  <li><code>ACID</code>/Unlisted: Acid Death</li>
-  <li><code>COLD</code>/<code>MAGICCOLD</code>: Frozen Death</li>
-  <li><code>FIRE</code>/<code>MAGICFIRE</code>: Burning Death</li>
-  <li><code>ELECTRICITY</code>: Electrified Death</li>
-  <li><code>MAGIC</code>/<code>MISSILE</code>/<code>POISON</code>: Normal Death</li>
+	<li><code>CRUSHING</code>/<code>SLASHING</code>/<code>PIERCING</code>: Exploding Death</li>
+	<li><code>ACID</code>/Unlisted: Acid Death</li>
+	<li><code>COLD</code>/<code>MAGICCOLD</code>: Frozen Death</li>
+	<li><code>FIRE</code>/<code>MAGICFIRE</code>: Burning Death</li>
+	<li><code>ELECTRICITY</code>: Electrified Death</li>
+	<li><code>MAGIC</code>/<code>MISSILE</code>/<code>POISON</code>: Normal Death</li>
 </ul>
 {% endcapture %}
 
@@ -157,13 +455,13 @@ Just in case anyone is doing UI feedback text replacement, these are the hex col
 <code>^0xaabbggrr</code> (<code>aa</code> = alpha/transparency, <code>bb</code> = Blue, <code>gg</code> = Green, <code>rr</code> = Red)
 
 <ul>
-  <li><code>CRUSHING</code>, <code>SLASHING</code>, <code>PIERCING</code>, <code>MISSILE</code>, <code>STUNNING</code>: <code>0xffbed7d7</code></li>
-  <li><code>POISON</code>: <code>0xff76e4c7</code></li>
-  <li><code>FIRE</code>, <code>MAGICFIRE</code>: <code>0xff002a9c</code></li>
-  <li><code>COLD</code>, <code>MAGICCOLD</code>: <code>0xffffbf00</code></li>
-  <li><code>ELECTRICITY</code>: <code>0xfffff97d</code></li>
-  <li><code>ACID</code>: <code>0xff19bba8</code></li>
-  <li><code>MAGIC</code>: <code>0xff00d7ff</code></li>
+	<li><code>CRUSHING</code>, <code>SLASHING</code>, <code>PIERCING</code>, <code>MISSILE</code>, <code>STUNNING</code>: <code>0xffbed7d7</code></li>
+	<li><code>POISON</code>: <code>0xff76e4c7</code></li>
+	<li><code>FIRE</code>, <code>MAGICFIRE</code>: <code>0xff002a9c</code></li>
+	<li><code>COLD</code>, <code>MAGICCOLD</code>: <code>0xffffbf00</code></li>
+	<li><code>ELECTRICITY</code>: <code>0xfffff97d</code></li>
+	<li><code>ACID</code>: <code>0xff19bba8</code></li>
+	<li><code>MAGIC</code>: <code>0xff00d7ff</code></li>
 </ul>
 {% endcapture %}
 

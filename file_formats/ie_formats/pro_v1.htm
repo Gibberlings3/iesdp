@@ -1,5 +1,6 @@
 ---
 title: "PRO file format"
+regenerate: true
 ---
     <div class="title_main">PRO file format</div>
     <br />
@@ -505,14 +506,14 @@ title: "PRO file format"
                   <li>
                     The target is hit immediately, and again <code>4</code> seconds (<code>60</code> ticks) later.
                     <ul>
-                      <li>Effects with <code>Saving Throw(BIT10|Ignore Primary Target)</code> will not affect the target (EE only).</li>
+                      <li>Effects with <code><a href="../ie_formats/eff_v1.htm#effv1_Header_BIT10">Ignore Primary Target</a></code> will not affect the target (EE only).</li>
                     </ul>
                   </li>
                   <li>
                     Any creature in or entering the line between the caster and the target is hit immediately.
                     <ul>
                       <li>They are hit again if they are still in or reenter the line between the target and caster at least <code>3</code> seconds later before the projectile ends.</li>
-                      <li>Effects with <code>Saving Throw(BIT11|Ignore Secondary Target)</code> will not affect these creatures (EE only).</li>
+                      <li>Effects with <code><a href="../ie_formats/eff_v1.htm#effv1_Header_0x24_BIT11">Ignore Secondary Target</a></code> will not affect these creatures (EE only).</li>
                     </ul>
                   </li>
                   <li>The Traveling Projectile will reposition itself to maintain a line between the caster and target as either of them moves around.</li>
@@ -1559,7 +1560,7 @@ title: "PRO file format"
               bit 14 &longrightarrow; <b><a name="AreaFlags_BIT14">Skip first condition</a></b>
               <ul>
                 <li>First explosion does not trigger any <code><a href="#0x21A">Explosion Projectile</a></code> (no one is affected), and does not count towards <code><a href="#0x216"># Repetitions</a></code>.</li>
-                <li>Option: <code><a href="#AreaExtFlags_BIT3">Delayed Trigger</a></code> – First explosion is instead delayed <code><a href="#0x210">Explosion Frequency</a></code> ticks, and otherwise works as normal.</li>
+                <li>Option: <code><a href="#AreaFlags_BIT3">Delayed Trigger</a></code> – First explosion is instead delayed <code><a href="#0x210">Explosion Frequency</a></code> ticks, and otherwise works as normal.</li>
               </ul>
             </li>
 

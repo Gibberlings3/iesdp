@@ -10,7 +10,7 @@
   type: strref
 - desc: |
     BG1, BG2, BGEE:  
-    Replacement item (ITM)
+    <b><a name="itmv1_Header_0x10">Replacement item</a></b> (ITM)
 
     PSTEE:  
     Drop sound - played when the item is dropped in the inventory (WAV)
@@ -25,7 +25,15 @@
 - desc: '[Item animation](#Header_Animation)'
   type: char array
   length: 2
-- desc: Min Level
+- desc: |-
+    <b><a name="itmv1_Header_0x24">Min Level</a></b>
+
+    - Treated as average of all active class levels, rounded up.
+
+    {% capture note %}
+    - This field is basically the ITM counterpart of <code><a href="../ie_formats/spl_v1.htm#splv1_Extended_Header_0x10">Level Required</a></code>.
+    - The only difference is that ITM <a href="#itmv1_Extended_Header">abilities</a> cannot have separate level requirements.
+    {% endcapture %} {% include info.html %}
   type: word
 - desc: Min Strength (unused in BG1)
   type: word

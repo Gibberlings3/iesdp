@@ -16,10 +16,24 @@ Polymorphs the targeted creature(s) into the creature specified by the <code>res
 	<li>0 &longrightarrow; Gain Resistances/statistics (spell-casting disabled)</li>
 	<li>1 &longrightarrow; Appearance only</li>
 </ul>
-<br/>
 
-This effect sets <a href="../files/ids/bgee/stats.htm#59">POLYMORPHED</a> to <code>1</code> but only if <code>Type=0</code>.<br/>
-If the <code>resource</code> key is empty, other polymorph effects are removed, allowing for removal of permanent effects.
+<p>
+	This effect sets <a href="../files/ids/bgee/stats.htm#59">POLYMORPHED</a> to <code>1</code> but only if <code>Type=0</code>.
+</p>
+
+<p>
+	If the <code>resource</code> key is empty, other polymorph effects are removed, allowing for removal of permanent effects.
+</p>
+
+{% capture note %}
+At least on EE games, this opcode is bugged when you shapechange between two different non-natural forms.
+<ol>
+	<li>All your equipment will be considered as "unequipped" (in particular, you will lose passive bonuses/maluses granted by your Rings, Amulet, Helmet and the like).</li>
+	<li>It also generates impassable tiles (which is surely a much more serious issue than losing effects from equipped items).</li>
+</ol>
+{% endcapture %}
+
+{% include bug.html %}
 
 {% capture note %}
 When <code>Type</code> is <code>0</code>, this opcode sets Strength, Dexterity, Resistances (excluding Poison and Magic Damage), Base AC, Specific AC (Crush/Slash/Pierce/Missile), and Base APR.
@@ -36,8 +50,8 @@ As a result, it will clear all Polymorph effects if <code>Type = "-1"</code>, el
 
 {% capture note %}
 <ul>
-	<li><code><a href="../file_formats/ie_formats/eff_v2.htm#0x60">Parameter3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>): Circle Size</li>
-	<li><code><a href="../file_formats/ie_formats/eff_v2.htm#0x64">Parameter4</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>): Animation (from <a href="../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)</li>
+	<li><code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x60">Parameter3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>): Circle Size</li>
+	<li><code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x64">Parameter4</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>): Animation (from <a href="../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)</li>
 </ul>
 These two values are not functional (changing them does nothing), but they do get set on the effect.
 {% endcapture %}

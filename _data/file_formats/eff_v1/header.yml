@@ -1,13 +1,45 @@
 - desc: Effect type
   type: word
-- desc: |
-    Target type
-    - 0=None
-    - 1=Self (pre-projectile)
-    - 2=Pre-target
-    - 3=Party
-    - 4=Everyone (inc. party)
-    - 5=Everyone (excl. party)
+- desc: |-
+    <b><a name="effv1_Header_0x2">Target type</a></b>
+
+    - 0 ⟶ None
+    - 1 ⟶ <b><a name="effv1_Header_0x2_1">Self</a></b>
+    - 2 ⟶ <b><a name="effv1_Header_0x2_2">Projectile target</a></b>
+      - Affects each target of the specified projectile, as it impacts them.
+    - 3 ⟶ <b><a name="effv1_Header_0x2_3">Party</a></b>
+    - 4 ⟶ <b><a name="effv1_Header_0x2_4">Everyone</a></b>
+    - 5 ⟶ <b><a name="effv1_Header_0x2_5">Everyone except party</a></b>
+    - 6 ⟶ <b><a name="effv1_Header_0x2_6">Caster group</a></b>
+      - Everyone matching <code><a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x274">specific</a></code> value of caster.
+      - If cast by a party member, then it functions as <code><a href="#effv1_Header_0x2_3">Party</a></code>.
+      - Ability target (<code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0xC">ITM</a>/<a href="../ie_formats/spl_v1.htm#splv1_Extended_Header_0xC">SPL</a></code>) doesn't matter.
+    - 7 ⟶ <b><a name="effv1_Header_0x2_7">Target group</a></b>
+      - Everyone matching <code><a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x274">specific</a></code> value of target.
+      - Ability (<code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0xC">ITM</a>/<a href="../ie_formats/spl_v1.htm#splv1_Extended_Header_0xC">SPL</a></code>) must target a <a href="../ie_formats/are_v1.htm#formAREAV1_0_Actor">creature</a>, not a location, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">container</a>, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">door</a>, etc...
+    - 8 ⟶ <b><a name="effv1_Header_0x2_8">Everyone except self</a></b>
+    - 9 ⟶ <b><a name="effv1_Header_0x2_9">Original caster</a></b>
+      - Affects Caster, as the specified projectile impacts its target(s), once or for each target depending on the projectile's flags. The specified projectile only determines when/if it's applied.
+
+    {% capture note %}
+    - `ITM` global (equipped) effects: Target is always the wearer, this field isn't relevant.
+    - `SPL` global (casting) effects: Will not work with <code><a href="#effv1_Header_0x2_2">Projectile Target</a></code>.
+    - `Everyone` stands for "in current area".
+    - Excluding <code><a href="#effv1_Header_0x2">Target type</a></code> <code><a href="#effv1_Header_0x2_2">2</a></code>, all other <code><a href="#effv1_Header_0x2">Target type</a></code>s apply the effect using projectile `#1|None`.
+    - <code><a href="#effv1_Header_0x2">Target type</a></code>s <code><a href="#effv1_Header_0x2_2">2</a></code> and <code><a href="#effv1_Header_0x2_9">9</a></code> are applied in effect order, but always after the others, even when using projectile `#1|None`.
+      - <code><a href="#effv1_Header_0x2">Target type</a></code>s (`1`, `3–8`) are applied in effect order.
+        - If a spell/item has effects listed in this order:
+          - `op(1), target = 2`
+          - `op(2), target = 3`
+          - `op(3), target = 1`
+          - `op(4), target = 9`
+          - `op(5), target = 2`
+          - `op(6), target = 6`
+
+          They will be applied in this order:
+          op(2), op(3), op(6), op(1), op(4), op(5).
+    - Similar to Melee Weapon Attacks, when <code><a href="#effv1_Header_0x2">Target type</a></code>s other than <code><a href="#effv1_Header_0x2_1">1</a></code>, <code><a href="#effv1_Header_0x2_2">2</a></code>, <code><a href="#effv1_Header_0x2_9">9</a></code> apply the effect, they are subjected to <a href="../../opcodes/bgee.htm#op197">opcode #197</a> (`parameter2=0`) but not to <a href="../../opcodes/bgee.htm#op83">opcode #83</a>. (Excluding when they're affecting the caster).
+    {% endcapture %} {% include note.html %}
   type: byte
 - desc: Power
   type: byte
@@ -15,28 +47,154 @@
   type: dword
 - desc: Parameter 2
   type: dword
-- desc: Timing Mode
-  type: byte
-- desc: Dispel/Resistance
-  type: byte
-- desc: Duration
-  type: dword
-- desc: Probability 1
-  type: byte
-- desc: |
-    Probability 2
+- desc: |-
+    <b><a name="effv1_Header_0xC">Timing mode</a></b>
 
-    Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.  
-    Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.  
-    Probability range is 0-99
+    - 0 ⟶ <b><a name="effv1_Header_0xC_0">Instant/Limited</a></b>
+      - This timing mode measures <code><a href="#effv1_Header_0xE">Duration</a></code> in seconds.
+      - Instantly converts to <code><a href="#effv1_Header_0xC_4096">Absolute duration</a></code>, <code>new duration(ticks) = Gametime(ticks) + 15 * <a href="#effv1_Header_0xE">Duration</a>(seconds)</code>.
+    - 1 ⟶ <b><a name="effv1_Header_0xC_1">Instant/Permanent</a></b>
+      - If the opcode doesn't directly modify a <code><a href="../../files/ids/bgee/stats.htm">STAT</a>/<a href="../../files/ids/bgee/state.htm">STATE</a></code> in the target's <a href="../ie_formats/cre_v1.htm">CRE</a> file, then it will last until removed (or it self-terminates). <code>New duration(ticks) = <a href="#effv1_Header_0xE">Duration</a>(ticks)</code> (mostly unused).
+    - 2 ⟶ <b><a name="effv1_Header_0xC_2">Instant/While equipped</a></b>
+      - As global `ITM` effect: Applied when item is equipped, lasts until item is unequipped (or <a href="../../opcodes/bgee.htm#op135">polymorph</a> bug).
+        - "Equipping" also occurs when game loads, and for weapons whenever they are selected from quickbar (even if it's already the active weapon). Never expires, and not considered a "Limited" effect.
+      - As `SPL` or header `ITM` effect: applies instantly, lasts until game is reloaded.
+      - <code>New duration(ticks) = <a href="#effv1_Header_0xE">Duration</a>(ticks)</code> (mostly unused).
+    - 3 ⟶ <b><a name="effv1_Header_0xC_3">Delay/Limited</a></b>
+      - This timing mode measures <code><a href="#effv1_Header_0xE">Duration</a></code> in seconds.
+      - Instantly converts to <code><a href="#effv1_Header_0xC_6">Limited after duration</a></code>, <code>new duration(ticks) = Gametime(ticks) + 15 * <a href="#effv1_Header_0xE">Duration</a>(seconds)</code>.
+    - 4 ⟶ <b><a name="effv1_Header_0xC_4">Delay/Permanent</a></b>
+      - This timing mode measures <code><a href="#effv1_Header_0xE">Duration</a></code> in seconds.
+      - Instantly converts to <code><a href="#effv1_Header_0xC_7">Permanent after duration</a></code>, <code>new duration(ticks) = Gametime(ticks) + 15 * <a href="#effv1_Header_0xE">Duration</a>(seconds)</code>.
+    - 5 ⟶ <b><a name="effv1_Header_0xC_5">Delay/While equipped</a></b>
+      - This timing mode measures <code><a href="#effv1_Header_0xE">Duration</a></code> in seconds.
+      - Instantly converts to <code><a href="#effv1_Header_0xC_8">Equipped after duration</a></code>, <code>new duration(ticks) = Gametime(ticks) + 15 * <a href="#effv1_Header_0xE">Duration</a>(seconds)</code>.
+    - 6 ⟶ <b><a name="effv1_Header_0xC_6">Limited after duration</a></b>
+      - This timing mode measures <code><a href="#effv1_Header_0xE">Duration</a></code> in ticks (<small><sup>1</sup>⁄<sub>15</sub></small> second).
+      - At <code>Gametime(ticks) >= <a href="#effv1_Header_0xE">Duration</a>(ticks)</code> converts to <code><a href="#effv1_Header_0xC_4096">Absolute duration</a></code>, <code>new duration(ticks) = 2 * <a href="#effv1_Header_0xE">Duration</a>(ticks) - <a href="../ie_formats/eff_v2.htm#effv2_Body_0x6C">Time Applied</a>(ticks)</code>.
+        - (If previously converted from <code><a href="#effv1_Header_0xC_3">Delay/Limited</a></code>)
+      - At <code>Gametime(ticks) >= <a href="#effv1_Header_0xE">Duration</a>(ticks)</code> converts to <code><a href="#effv1_Header_0xC_4096">Absolute duration</a></code>, <code>new duration(ticks) = 16 * <a href="#effv1_Header_0xE">Duration</a>(ticks)</code>.
+        - (If effect applied directly with <code><a href="#effv1_Header_0xC_6">Limited after duration</a></code>)
+        - `16 x Duration(ticks) = Duration(ticks) + 15 * Duration(seconds)` (Yes, it calculates a new duration using its current <code><a href="#effv1_Header_0xE">Duration</a></code> field as both ticks and seconds).
+        - It will convert to <code><a href="#effv1_Header_0xC_4096">Absolute duration</a></code> at the same `Gametime(ticks)` no matter when the effect was applied.
+        - That <code><a href="#effv1_Header_0xC_4096">Absolute duration</a></code> will expire at the same `Gametime(ticks)` no matter when the effect was applied.
+    - 7 ⟶ <b><a name="effv1_Header_0xC_7">Permanent after duration</a></b>
+      - This timing mode measures <code><a href="#effv1_Header_0xE">Duration</a></code> in ticks (<small><sup>1</sup>⁄<sub>15</sub></small> second).
+      - At <code>Gametime(ticks) >= <a href="#effv1_Header_0xE">Duration</a>(ticks)</code> converts to <code><a href="#effv1_Header_0xC_1">Instant/Permanent</a></code>, <code>new duration(ticks) = 2 * <a href="#effv1_Header_0xE">Duration</a>(ticks) - <a href="../ie_formats/eff_v2.htm#effv2_Body_0x6C">Time Applied</a>(ticks)</code>.
+        - (If previously converted from <code><a href="#effv1_Header_0xC_4">Delay/Permanent</a></code>)
+      - At <code>Gametime(ticks) >= <a href="#effv1_Header_0xE">Duration</a>(ticks)</code> converts to <code><a href="#effv1_Header_0xC_1">Instant/Permanent</a></code>, <code>new duration(ticks) = 16 * <a href="#effv1_Header_0xE">Duration</a>(ticks)</code>.
+        - (If effect applied directly with <code><a href="#effv1_Header_0xC_7">Permanent after duration</a></code>)
+        - It will convert to <code><a href="#effv1_Header_0xC_1">Instant/Permanent</a></code> at the same `Gametime(ticks)` no matter when the effect was applied.
+    - 8 ⟶ <b><a name="effv1_Header_0xC_8">Equipped after duration</a></b>
+      - This timing mode measures <code><a href="#effv1_Header_0xE">Duration</a></code> in ticks (<small><sup>1</sup>⁄<sub>15</sub></small> second).
+      - At <code>Gametime(ticks) >= <a href="#effv1_Header_0xE">Duration</a>(ticks)</code> converts to <code><a href="#effv1_Header_0xC_2">Instant/While equipped</a></code>, <code>new duration(ticks) = irrelevant</code>.
+    - 9 ⟶ <b><a name="effv1_Header_0xC_9">Instant/Permanent</a></b> (after Death)
+      - Effect is applied instantly.
+      - Never expires, but can terminate or be removed. <code>New duration(ticks) = <a href="#effv1_Header_0xE">Duration</a>(ticks)</code>.
+    - 10 ⟶ <b><a name="effv1_Header_0xC_10">Instant/Limited</a></b>
+      - This timing mode measures <code><a href="#effv1_Header_0xE">Duration</a></code> in ticks (<small><sup>1</sup>⁄<sub>15</sub></small> second).
+      - Instantly converts to <code><a href="#effv1_Header_0xC_4096">Absolute duration</a></code>, <code>new duration(ticks) = Gametime(ticks) + <a href="effv1_Header_0xE">Duration</a>(ticks)</code>.
+      - If <code><a href="#effv1_Header_0xE">Duration</a> = 0</code>, it won't function any differently from timing mode <code><a href="#effv1_Header_0xC_0">0</a></code>.
+    - 4096 ⟶ <b><a name="effv1_Header_0xC_4096">Absolute duration</a></b>
+      - Effect is applied instantly.
+      - This timing mode treats the <code><a href="#effv1_Header_0xE">Duration</a></code> field as the effect's expiration time (in ticks). Expires at <code>Gametime(ticks) >= <a href="#effv1_Header_0xE">Duration</a>(ticks)</code>.
+        - If the <code><a href="#effv1_Header_0xE">Duration</a></code> field is 108000, the effect will expire when the game timer reaches 24 hours, or instantly if the game timer has already passed that point. `108000 = 300(1 hour) * 24 * 15 (ticks ➔ seconds)`.
+
+    {% capture note %}
+    - All effects except those with Timing mode <code><a href="#effv1_Header_0xC_9">9</a></code> are removed by death.
+    - Some effects use a measurement of gametime in seconds, and multiply it by 15, rather than taking the exact gametime in ticks.<br/>
+      - This results in them lasting longer/shorter than they should (by up to 14 ticks).
+        - One of such effects is <a href="../../opcodes/bgee.htm#op231">Time Stop</a> (this is in addition to lasting half its specified <code><a href="#effv1_Header_0xE">Duration</a></code>).
+    {% endcapture %} {% include note.html %}
+  type: char
+- desc: |-
+    <b><a name="effv1_Header_0xD">Dispel / Resistance</a></b>
+
+    The default behaviour is that effects cannot be dispelled and ignore magic resistance.
+
+    - bit 0 ⟶ Can be dispelled, affected by magic resistance
+    - bit 1 ⟶ Ignores magic resistance (when used in combination with bit 0)
+
+    This can also be presented in the more traditional way:
+    - 0 ⟶ Natural/Nonmagical
+    - 1 ⟶ Can be dispelled/Affected by resistance
+    - 2 ⟶ Cannot be dispelled/Ignores resistance
+    - 3 ⟶ Can be dispelled/Ignores resistance
+
+    The only difference between `0` and `2` is that `0` will automatically convert to `2` when targeting yourself.
+  type: byte
+- desc: |-
+    <b><a name="effv1_Header_0xE">Duration</a></b>
+
+    - This field is measured in seconds or ticks (<small><sup>1</sup>⁄<sub>15</sub></small> second), depending on <code><a href="#effv1_Header_0xC">Timing mode</a></code>.
+  type: dword
+- desc: <b><a name="effv1_Header_0x12">Probability 1</a></b>
+  type: byte
+- desc: |-
+    <b><a name="effv1_Header_0x13">Probability 2</a></b>
+
+    {% capture note %}
+    - The `BG1` engine treats probability as a single word, effects are applied in the range `0–probability`.
+    - Other engines treat probability as two values. When an event fires, a random number (let us denote it by `x`) in the `0–99` range is generated. If <code>x <= <a href="#effv1_Header_0x12">Probability1</a> && >= <a href="#effv1_Header_0x13">Probability2</a></code>, the event fires.
+      - Some counter-intuitive cases:
+        - if you set both <code><a href="#effv1_Header_0x12">Probability1</a></code> and <code><a href="#effv1_Header_0x13">Probability2</a></code> to `0`, you get an effect with a 1％ chance of firing (it fires whenever the random number generator spits out zero).
+        - if you set <code><a href="#effv1_Header_0x12">Probability1</a></code> to `1` and <code><a href="#effv1_Header_0x13">Probability2</a></code> to `0` (as, e.g., happens in BGT/BGEE's implementation of the iron crisis), you don't get an effect with a 1％ chance of firing, but one with a 2％ chance of firing.
+    {% endcapture %} {% include info.html %}
   type: byte
 - desc: Resref key
   type: resref
-- desc: Dice count
+- desc: |-
+    <b><a name="effv1_Header_0x1C">Dice Thrown / Maximum Level</a></b>
+
+    - When this field is non-zero, all opcodes except for <a href="../../opcodes/bgee.htm#op12">opcode #12</a>, <a href="../../opcodes/bgee.htm#op17">opcode #17</a>, <a href="../../opcodes/bgee.htm#op18">opcode #18</a>, <a href="../../opcodes/bgee.htm#op218">opcode #218</a> (only when `parameter2=1`), <a href="../../opcodes/bgee.htm#op331">opcode #331</a>, and <a href="../../opcodes/bgee.htm#op333">opcode #333</a>, treat it as `Maximum Level`, meaning that only creatures whose level attribute is smaller than this value will be affected by the effect.
+
+    {% capture note %}
+    When this field is used as `Maximum Level`:
+    - A `7 ➔ 1` dual-class character qualifies as HD 7, even though the level 7 class is still inactive.
+    - A `1/7/1` multi-class character qualifies as HD 7, not level 3 (average).
+    - The <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x235">2<sup><small>nd</small></sup></a>/<a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x236">3<sup><small>rd</small></sup></a> class levels are NOT included for single-classes.
+      - A `1/30/1` single-class character qualifies as HD 1.
+    {% endcapture %} {% include note.html %}
   type: dword
-- desc: Dice sides
+- desc: |-
+    <b><a name="effv1_Header_0x20">Dice Sides / Minimum Level</a></b>
+
+    - When this field is non-zero, all opcodes except for <a href="../../opcodes/bgee.htm#op12">opcode #12</a>, <a href="../../opcodes/bgee.htm#op17">opcode #17</a>, <a href="../../opcodes/bgee.htm#op18">opcode #18</a>, <a href="../../opcodes/bgee.htm#op218">opcode #218</a> (only when `parameter2=1`), <a href="../../opcodes/bgee.htm#op331">opcode #331</a>, and <a href="../../opcodes/bgee.htm#op333">opcode #333</a>, treat it as `Minimum Level`, meaning that only creatures whose level attribute is greater than this value will be affected by the effect.
+
+    {% capture note %}
+    When this field is used as `Minimum Level`:
+    - A `7 ➔ 1` dual-class character qualifies as HD 7, even though the level 7 class is still inactive.
+    - A `1/7/1` multi-class character qualifies as HD 7, not level 3 (average).
+    - The <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x235">2<sup><small>nd</small></sup></a>/<a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x236">3<sup><small>rd</small></sup></a> class levels are NOT included for single-classes.
+      - A `1/30/1` single-class qualifies as HD 1.
+    {% endcapture %} {% include note.html %}
   type: dword
-- desc: Saving throw type
+- desc: |-
+    <b><a name="effv1_Header_0x24">Saving throw type</a></b>
+
+    - bit 0 ⟶ <b><a name="effv1_Header_0x24_BIT0">Spells</a></b>
+    - bit 1 ⟶ <b><a name="effv1_Header_0x24_BIT1">Breath</a></b>
+    - bit 2 ⟶ <b><a name="effv1_Header_0x24_BIT2">Paralyze / Poison / Death</a></b>
+    - bit 3 ⟶ <b><a name="effv1_Header_0x24_BIT3">Wands</a></b>
+    - bit 4 ⟶ <b><a name="effv1_Header_0x24_BIT4">Petrify / Polymorph</a></b>
+    - bit 10 ⟶ <b><a name="effv1_Header_0x24_BIT10">Ignore primary target</a></b> (EE only)
+      - <a href="../ie_formats/pro_v1.htm#ExtFlags_BIT14">Line AoE projectile</a> doesn't affect end target.
+    - bit 11 ⟶ <b><a name="effv1_Header_0x24_BIT11">Ignore secondary target</a></b> (EE only)
+      - <a href="../ie_formats/pro_v1.htm#ExtFlags_BIT14">Line AoE projectile</a> doesn't affect bystanders.
+    - bit 24 ⟶ <b><a name="effv1_Header_0x24_BIT24">Bypass mirror image</a></b> (EE/TobEx only)
+      - This bit is only relevant for <a href="../../opcodes/bgee.htm#op12">opcode #12</a> and <a href="../../opcodes/bgee.htm#op25">opcode #25</a>.
+      - All other opcodes bypass Mirror Image by default, setting/unsetting this bit is harmless.
+    - bit 25 ⟶
+      - <b><a name="effv1_Header_0x24_BIT25_EE">Ignore difficulty</a></b> (EE only)
+        - This bit is specific to <a href="../../opcodes/bgee.htm#op12">opcode #12</a> only.
+        - It refers to the damage multiplier to Party Members based on Game Difficulty.
+      - <b><a name="effv1_Header_0x24_BIT25_ToBEx">Limit effect stacking</a></b> (ToBEx only)
+    - bit 26 ⟶ TobEx internal (don't use)
+      - Suspends effect application.
+
+    {% capture note %}
+    If more than 1 Saving Throw Type is specified (`BIT0 – BIT4`), the target rolls against their best save.
+    {% endcapture %} {% include note.html %}
   type: dword
 - desc: Saving throw bonus
   type: dword

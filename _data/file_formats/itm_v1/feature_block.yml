@@ -1,24 +1,22 @@
 - desc: Opcode Number
   type: word
-- desc: |
+- desc: |-
     <b><a name="V1_Feature_Block_0x2">Target type</a></b>
 
     - 0 ⟶ None
     - 1 ⟶ <b><a name="V1_Feature_Block_0x2_1">Self</a></b>
     - 2 ⟶ <b><a name="V1_Feature_Block_0x2_2">Projectile target</a></b>
-      - SPL global (casting) effects will not work with this type.
-      - Affects each target of the specified projectile, as it impacts them.
     - 3 ⟶ <b><a name="V1_Feature_Block_0x2_3">Party</a></b>
     - 4 ⟶ <b><a name="V1_Feature_Block_0x2_4">Everyone</a></b>
     - 5 ⟶ <b><a name="V1_Feature_Block_0x2_5">Everyone except party</a></b>
     - 6 ⟶ <b><a name="V1_Feature_Block_0x2_6">Caster group</a></b>
     - 7 ⟶ <b><a name="V1_Feature_Block_0x2_7">Target group</a></b>
-      - Affects all creatures in the current area with the same <code><a href="../../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></code> value as the ability target. (Ability must target a creature, not a location, container, door, etc...)
     - 8 ⟶ <b><a name="V1_Feature_Block_0x2_8">Everyone except self</a></b>
     - 9 ⟶ <b><a name="V1_Feature_Block_0x2_9">Original caster</a></b>
-      - Affects Caster, as the specified projectile impacts its target(s), once or for each target depending on the projectile's flags. The specified projectile only determines when/if it's applied, while it's still applied using projectile `#1|None`.
 
-    ITM global (equipped) effects: Target is always the wearer, this field isn't relevant.
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x2">here</a> for further details.
+    {% endcapture %} {% include info.html %}
   type: char
 - desc: Power
   type: char
@@ -26,31 +24,28 @@
   type: dword
 - desc: Parameter 2
   type: dword
-- desc: |
-    Timing Mode
+- desc: |-
+    <b><a name="V1_Feature_Block_0xC">Timing mode</a></b>
 
-    - 0 ⟶ <b><a name="V1_Feature_Block_0xC_0">Duration</a></b>
-      - This timing mode measures <code><a href="#V1_Feature_Block_0xE">duration</a></code> in seconds.
-    - 1 ⟶ Permanent
-    - 2 ⟶ While equipped
-    - 3 ⟶ Delayed Duration
-    - 4 ⟶ Delayed
-    - 5 ⟶ Delayed (transforms to 8)
-    - 6 ⟶ Duration?
-    - 7 ⟶ Permanent?
-    - 8 ⟶ Permanent (unsaved)
-    - 9 ⟶ Permanent (after Death)
-    - 10 ⟶ <b><a name="V1_Feature_Block_0xC_10">Trigger / Ticks</a></b>
-      - This timing mode just measures <code><a href="#V1_Feature_Block_0xE">duration</a></code> in ticks instead of seconds, there is nothing special about it beyond that. It allows for more accurate synchronization with mechanics that use the full `100 ticks = 1 round`.
-      - If <code><a href="#V1_Feature_Block_0xE">duration</a> = 0</code>, it won't function any differently from timing mode <code><a href="#V1_Feature_Block_0xC_0">0</a></code>.
+    - 0 ⟶ <b><a name="V1_Feature_Block_0xC_0">Instant/Limited</a></b>
+    - 1 ⟶ <b><a name="V1_Feature_Block_0xC_1">Instant/Permanent</a></b>
+    - 2 ⟶ <b><a name="V1_Feature_Block_0xC_2">Instant/While equipped</a></b>
+    - 3 ⟶ <b><a name="V1_Feature_Block_0xC_3">Delay/Limited</a></b>
+    - 4 ⟶ <b><a name="V1_Feature_Block_0xC_4">Delay/Permanent</a></b>
+    - 5 ⟶ <b><a name="V1_Feature_Block_0xC_5">Delay/While equipped</a></b>
+    - 6 ⟶ <b><a name="V1_Feature_Block_0xC_6">Limited after duration</a></b>
+    - 7 ⟶ <b><a name="V1_Feature_Block_0xC_7">Permanent after duration</a></b>
+    - 8 ⟶ <b><a name="V1_Feature_Block_0xC_8">Equipped after duration</a></b>
+    - 9 ⟶ <b><a name="V1_Feature_Block_0xC_9">Instant/Permanent</a></b> (after Death)
+    - 10 ⟶ <b><a name="V1_Feature_Block_0xC_10">Instant/Limited</a></b>
     - 4096 ⟶ <b><a name="V1_Feature_Block_0xC_4096">Absolute duration</a></b>
-      - This timing mode treats the <code><a href="#V1_Feature_Block_0xE">duration</a></code> field as the effect's expiration time (in ticks).
-        If the <code><a href="#V1_Feature_Block_0xE">duration</a></code> field is 108000, the effect will expire when the game timer reaches 24 hours, or instantly if the game timer has already passed that point. `108000 = 300(1 hour) * 24 * 15 (ticks ➔ seconds)`.
 
-    NB. all effects except those with Timing mode `9` are removed by death.
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC">here</a> for further details.
+    {% endcapture %} {% include info.html %}
   type: char
-- desc: |
-    Resistance
+- desc: |-
+    <b><a name="V1_Feature_Block_0xD">Dispel / Resistance</a></b>
 
     The default behaviour is that effects cannot be dispelled and ignore magic resistance.
 
@@ -67,35 +62,50 @@
   type: char
 - desc: <b><a name="V1_Feature_Block_0xE">Duration</a></b>
   type: dword
-- desc: Probability 1
+- desc: <b><a name="V1_Feature_Block_0x12">Probability 1</a></b>
   type: char
-- desc: |
-    Probability 2
+- desc: |-
+    <b><a name="V1_Feature_Block_0x13">Probability 2</a></b>
 
-    Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.  
-    Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.  
-    Probability range is 0-99
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x13">here</a> for further details.
+    {% endcapture %} {% include info.html %}
   type: char
 - desc: Resource
   type: resref
-- desc: Dice Thrown
-  type: dword
-- desc: Dice Sides
-  type: dword
-- desc: |
-    Saving Throw Type
-    - bit 0: Spells
-    - bit 1: Breathe
-    - bit 2: Death
-    - bit 3: Wands
-    - bit 4: Polymorph
-    - bit 10: Ignore primary target – Line AoE projectile doesn't affect end target (EE only)
-    - bit 11: Ignore secondary target – Line AoE projectile doesn't affect bystanders (EE only)
-    - bit 24: Bypass mirror image (EE/TobEx only)
-    - bit 25: EE - ignore difficulty; TobEx - limit effect stacking
-    - bit 26: TobEx internal (don't use) - suspend effect application
+- desc: |-
+    <b><a name="V1_Feature_Block_0x1C">Dice Thrown / Maximum Level</a></b>
 
-    NB. If more than 1 saving throw type is specified, the target rolls against their best save.
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x1C">here</a> for further details.
+    {% endcapture %} {% include info.html %}
+  type: dword
+- desc: |-
+    <b><a name="V1_Feature_Block_0x20">Dice Sides / Minimum Level</a></b>
+
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x20">here</a> for further details.
+    {% endcapture %} {% include info.html %}
+  type: dword
+- desc: |-
+    <b><a name="V1_Feature_Block_0x24">Saving throw type</a></b>
+
+    - bit 0 ⟶ <b><a name="V1_Feature_Block_0x24_BIT0">Spells</a></b>
+    - bit 1 ⟶ <b><a name="V1_Feature_Block_0x24_BIT1">Breath</a></b>
+    - bit 2 ⟶ <b><a name="V1_Feature_Block_0x24_BIT2">Paralyze / Poison / Death</a></b>
+    - bit 3 ⟶ <b><a name="V1_Feature_Block_0x24_BIT3">Wands</a></b>
+    - bit 4 ⟶ <b><a name="V1_Feature_Block_0x24_BIT4">Petrify / Polymorph</a></b>
+    - bit 10 ⟶ <b><a name="V1_Feature_Block_0x24_BIT10">Ignore primary target</a></b> (EE only)
+    - bit 11 ⟶ <b><a name="V1_Feature_Block_0x24_BIT11">Ignore secondary target</a></b> (EE only)
+    - bit 24 ⟶ <b><a name="V1_Feature_Block_0x24_BIT24">Bypass mirror image</a></b> (EE/TobEx only)
+    - bit 25 ⟶
+      - <b><a name="V1_Feature_Block_0x24_BIT25_EE">Ignore difficulty</a></b> (EE only)
+      - <b><a name="V1_Feature_Block_0x24_BIT25_ToBEx">Limit effect stacking</a></b> (ToBEx only)
+    - bit 26 ⟶ TobEx internal (don't use)
+
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x24">here</a> for further details.
+    {% endcapture %} {% include info.html %}
   type: dword
 - desc: Saving Throw Bonus
   type: dword

@@ -1,5 +1,6 @@
 ---
 title: "ITM file format"
+regenerate: true
 ---
     <div class="title_main">ITM file format</div>
 
@@ -66,13 +67,6 @@ title: "ITM file format"
     <br />
     <div class="indent1">
     <table border="1" width="98%">
-      <colgroup>
-        <col width="20%">
-        <col width="20%">
-        <col width="20%">
-        <col class="col4" width="20%">
-        <col class="col4" width="20%">
-      </colgroup>
       <thead>
         <tr>
           <th>Bit</th>
@@ -85,75 +79,142 @@ title: "ITM file format"
       <tbody>
         <tr>
           <td>0</td>
-            <td>Unsellable (critical item)<small><sup>1</sup></small></td>
-          <td>Silver</td>
+          <td>
+            Unsellable (critical item)
+            <ul>
+              <li>In BG1, this flag does not affect whether the item can be sold.</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT8">Silver</a></b>
+            <ul>
+              <li>Determines how the weapon interacts with <a href="../../opcodes/bgee.htm#op120">opcode #120</a>.</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
-          <td>Not dispellable in magical weapon slot (BGEE, TobEx)</td>
+          <td>Not dispellable in <a href="../../opcodes/bgee.htm#op111">magical weapon slot</a> (BGEE, TobEx)</td>
         </tr>
+
         <tr>
           <td>1</td>
-          <td>Two-handed<small><sup>2</sup></small></td>
-          <td>Cold-Iron</td>
+          <td>
+            <b><a name="Header_Flags_BIT1">Two-handed</a></b>
+            <ul>
+              <li>Forces Two-handed weapon style and attack animation.</li>
+              <li>Disables off-hand: attacks and equipped effects.</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT9">Cold iron</a></b>
+            <ul>
+              <li>Determines how the weapon interacts with <a href="../../opcodes/bgee.htm#op120">opcode #120</a>.</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
-          <td>Toggle critical hit aversion<small><sup>5</sup></small>(BGEE, TobEx)</td>
+          <td>
+            Toggle critical hit aversion (BGEE, TobEx)
+            <ul>
+              <li>Keep in mind that if you set this bit to <code>1</code> for an ITM whose <a href="#Header_ItemType">Item type</a> is <code><a href="#Header_ItemType_7">Headgear</a></code>, then you'll toggle off the Critical hit aversion.</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>2</td>
           <td>Movable</td>
-          <td>Stolen (unsellable) / forces dual-wield animation<br /><br />
-               Set offhand animations for 0x5###-0x6### animId series (excluding 0x64##) when weapon placed in offhand.</td>
+          <td>
+            Stolen (unsellable) / <b><a name="Header_Flags_BIT10">Off-handed</a></b>
+            <ul>
+              <li>Set offhand animations for 0x5###-0x6### animId series (excluding 0x64##) when weapon placed in offhand.</li>
+              <li>Forces Dual-Wield animation (overrides <code><a href="#Header_Flags_BIT1">BIT1</a></code>).</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>3</td>
           <td>Displayable</td>
-          <td>Conversable</td>
+          <td>
+            <b><a name="Header_Flags_BIT11">Conversable</a></b>
+            <ul>
+              <li>Dialog can be initiated with the weapon through right-clicking in the Inventory.</li>
+              <li>
+                Item needs to be listed in <a href="../../files/2da/2da_bgee/itemdial.htm">ITEMDIAL.2DA</a> as: <code>(Item ResRef) (Label StrRef) (Dialog ResRef)</code>.
+                <ul>
+                  <li><code>Label StrRef</code> is the label that will be on the button when right-clicking.</li>
+                </ul>
+              </li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>4</td>
           <td>Cursed</td>
-          <td>Force two-handed animation (BGEE)</td>
+          <td>
+            <b><a name="Header_Flags_BIT12">Fake two-handed</a></b> (BGEE)
+            <ul>
+              <li>Forces Two-handed animation.</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>5</td>
           <td><span class="unknown">Cannot scribe to spellbook (scrolls)</span></td>
-          <td>Not usable in off-hand<small><sup>4</sup></small>(BGEE)</td>
+          <td>
+            <b><a name="Header_Flags_BIT13">Forbid off-hand weapon</a></b> (BGEE)
+            <ul>
+              <li>Disables Two-Weapon Style.</li>
+              <li>Does not disable off-hand equipped effects.</li>
+              <li>In <a href="../../opcodes/bgee.htm#op111">Magical Weapon Slot</a>: Disables off-hand (Attacks only).</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>6</td>
-          <td>Magical</td>
+          <td>
+            <b><a name="Header_Flags_BIT6">Magical</a></b>
+            <ul>
+              <li>Determines how the weapon interacts with <a href="../../opcodes/bgee.htm#op120">opcode #120</a>.</li>
+            </ul>
+          </td>
           <td>Usable in inventory (PSTEE)</td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>7</td>
-          <td>Left-handed<small><sup>3</sup></small></td>
-          <td>Adamantine (BGEE)</td>
+          <td>
+            <b><a name="Header_Flags_BIT7">Left-handed</a></b>
+            <ul>
+              <li>Disables off-hand: attacks and equipped effects.</li>
+              <li>Disables Two-Weapon Style (Inventory display is incorrect though).</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT15">Adamantine</a></b> (BGEE)
+            <ul>
+              <li>Used by Drow Equipment in SoD along with script action <code><a href="../../scripting/actions/bgeeactions.htm#280">DestroyAllFragileEquipment(ADAMANTINE)</a></code>.</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
       </tbody>
     </table>
-    <br />
-    <small><sup>1</sup></small> In BG1, this flag does not affect whether the item can be sold.<br />
-    <small><sup>2</sup></small> Forces Two-Handed Weapon style, disables off-hand attacks and equipped effects.<br />
-    <small><sup>3</sup></small> Disables off-hand attacks, equipped effects and Two-Weapon style (inventory still displays Two-Weapon style modifiers, but they are not included in the calculations).<br />
-    <small><sup>4</sup></small> It does not disable equipped effects of the off-hand (weapon or shield). In particular:
-        <ul>
-            <li>For normal weapons, it only disables Two-Weapon style.</li>
-            <li>For magically created weapons, it disables off-hand attacks and Two-Weapon style.</li>
-        </ul>
-    <small><sup>5</sup></small> Keep in mind that if you set this bit to 1 for an ITM whose <a href="#Header_ItemType">Item type</a> is 0x0007 (Headgear), then you'll toggle off the Critical hit aversion.
     </div>
-    
+
     <br />
     <a id="Header_ItemType"><div class="actionheader">Header Item Type</div></a>
     <div class="indent1">
@@ -202,7 +263,7 @@ title: "ITM file format"
         </tr>
         <tr>
           <td>0x0007</td>
-          <td>Helms, hats, and other head-wear</td>
+          <td><b><a name="Header_ItemType_7">Headgear</a></b> (Helms, hats, and other head-wear)</td>
         </tr>
         <tr>
           <td>0x0008</td>
@@ -1172,7 +1233,7 @@ title: "ITM file format"
         <tr>
           <td>3</td>
           <td>THAC0 strength bonus (BGEE split bit 0)</td>
-          <td>Recharge after resting</td>
+          <td><b><a name="ExtHeader_Flags_BIT11">Recharge after resting</a></b></td>
           <td><span class="unknown">Unknown</span></td>
           <td><span class="unknown">Unknown</span></td>
         </tr>

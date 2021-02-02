@@ -1601,8 +1601,46 @@ regenerate: true
         <td><b><a name="0x202">Ray Count</a></b> (EE only...?)
           <ul>
             <li>Suppresses the <code><a href="#AreaFlags_BIT4">Secondary Projectile</a></code> flag.</li>
-            <li>It causes the Explosion Projectile to be fired (Ray Count) amount of times, starting at 135 degrees (South-East), and increasing by <code><a href="#0x224">Cone Width</a></code> degrees each time. For instance, 4 Rays at 90 Cone Width fires the Explosion Projectile SE, SW, NW, and NE.</li>
-            <li>The Explosion Projectile must be either Area-Effect or Pass-Target (BIT1 @ 0x2c) to affect anything.</li>
+            <li>
+              It causes the <code><a href="#0x21A">Explosion Projectile</a></code> to be fired <code>Ray Count</code> amount of times, starting at <code>135</code> degrees (South-East), and increasing by <code><a href="#0x224">Angle between Rays</a></code> degrees each time (clockwise).
+              <ul>
+                <li>
+                  For instance, 4 Rays at <code><a href="#0x224">Angle between Rays</a> = 90</code> fires the <code><a href="#0x21A">Explosion Projectile</a></code> SE, SW, NW, and NE.
+                  <ul>
+                    <li>Example: (Spiritual Wrath – IWDEE) &longrightarrow; <code>"IDPRO312.PRO"</code>.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>The <code><a href="#0x21A">Explosion Projectile</a></code> must be capable of hitting creatures while targeting a location or they will be just for show (<code><a href="#0x8_3">Area Effect</a></code> or <code><a href="#ExtFlags_BIT1">Pass Target</a></code>).</li>
+            <li>
+              The <code><a href="#0x21A">Explosion Projectile</a></code>'s Travelling Projectile will terminate upon reaching the <code><a href="#0x206">Explosion Size</a></code> of this projectile.
+              <ul>
+                <li>This termination also applies to projectiles using <code><a href="#ExtFlags_BIT1">Pass Target</a></code>, which normally do not terminate upon reaching their destination.</li>
+              </ul>
+            </li>
+            <li>
+              An <code><a href="#0x21A">Explosion Projectile</a></code> will explode at a distance equal to the <code><a href="#0x204">Trap Size</a> * "X"</code> (see below) of this projectile.
+              <ul>
+                <li>Only <code><a href="#0x8_3">Area Effect</a></code> projectiles can explode. Those with <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code> will still explode instantly.</li>
+                <li>
+                  The exact multiplier formula is unknown – but it's not linear.
+                  <ul>
+                    <li>The maximum trap size for an explosion size of <code>480</code> to explode before terminating is a trap size of <code>277</code> (about <code>1.73x</code>).</li>
+                    <li>The maximum trap size for an explosion size of <code>240</code> to explode before terminating is a trap size of <code>150</code> (<code>1.6x</code>).</li>
+                    <li>The maximum trap size for an explosion size of <code>120</code> to explode before terminating is a trap size of <code>86</code> (about <code>1.39x</code>).</li>
+                    <li>The maximum trap size for an explosion size of <code>60</code> to explode before terminating is a trap size of <code>43</code> (about <code>1.39x</code>).</li>
+                    <li>
+                      The distance (<code><a href="#0x204">Trap Size</a></code>) to explode does NOT account for the vertical proportion of the game (where <code>vertical distance = &frac34; horizontal distance</code>).
+                      <ul>
+                        <li>The distance (<code><a href="#0x206">Explosion Size</a></code>) for the Traveling Projectile does take the proportion into account.</li>
+                        <li>The same value may explode a projectile going horizontal but not one going vertical, if the <code><a href="#0x206">Explosion Size</a></code> terminates it before reaching the distance.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
           </ul>
         </td>
       </tr>
@@ -1871,7 +1909,7 @@ regenerate: true
         <td>0x000224</td>
         <td>2 (word)</td>
         <td>
-          <b><a name="0x224">Cone Width</a></b> (<code>0 – 65535</code>, effectively capped at <code>359</code>)
+          <b><a name="0x224">Cone Width / Angle between Rays</a></b> (<code>0 – 65535</code>, effectively capped at <code>359</code>)
           <ul>
             <li>Angle is <code>+1</code> specified value.</li>
             <li>Dependency: This field can be activated by either <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code> or <code><a href="#0x202">Ray Count</a></code>.</li>
@@ -1898,7 +1936,12 @@ regenerate: true
       <tr>
         <td>0x00226</td>
         <td>2 (word)</td>
-        <td><span class="unknown"> Unused </span></td>
+        <td>
+          <b><a name="0x226">Rotate rays counterclockwise</a></b>
+          <ul>
+            <li>Rotates the entire set of <code><a href="#0x202">Rays</a></code> spawned by the explosion.</li>
+          </ul>
+        </td>
       </tr>
 
       <tr>

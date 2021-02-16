@@ -3,7 +3,9 @@
       - 1 - Standard
       - 2 - Projectile
 
+    {% capture note %}
     This field matters only for <code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0x0">ITM</a></code>, SPL files shouldn't function any different based on their type (even `0`).
+    {% endcapture %} {% include note.html %}
   type: char
 - desc: "- bit 2: 'Friendly' ability"
   type: char
@@ -21,6 +23,10 @@
     - 4 ⟶ <b><a name="splv1_Extended_Header_0x2_4">Innate</a></b>
       - Ability can be selected from "Special Abilities (F12)" button.
     - 5+ ⟶ As `0`.
+
+    {% capture note %}
+    Subspells don't require an <code><a href="#splv1_Extended_Header_0x2">Ability Location</a></code>.
+    {% endcapture %} {% include note.html %}
   type: word
 - desc: Memorised icon (BAM). The engine replaces the last character of this filename with a B.
   type: resref
@@ -29,13 +35,13 @@
 
     - 0 ⟶ Invalid (cannot be selected)
     - 1 ⟶ <b><a name="splv1_Extended_Header_0xC_1">Living actor</a></b>
-      - Targets Portrait, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Actor">Creature/Actor</a>, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Container</a>, or <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">Door</a>. Checks <code><a href="#splv1_Extended_Header_0xE">range</a></code> range.
+      - Targets Portrait, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Actor">Creature/Actor</a>, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Container</a>, or <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">Door</a>. Checks <code><a href="#splv1_Extended_Header_0xE">Range</a></code>.
     - 2 ⟶ <b><a name="splv1_Extended_Header_0xC_2">Inventory</a></b>
       - Can't be activated manually.
     - 3 ⟶ <b><a name="splv1_Extended_Header_0xC_3">Dead actor</a></b>
-      - As <code><a href="#splv1_Extended_Header_0xC_1">Living Actor</a></code>. It really just ignores any <code><a href="#splv1_Extended_Header_0xE">range</a></code> requirement, including being in the same area.
+      - As <code><a href="#splv1_Extended_Header_0xC_1">Living Actor</a></code>. It really just ignores any <code><a href="#splv1_Extended_Header_0xE">Range</a></code> requirement, including being in the same area.
     - 4 ⟶ <b><a name="splv1_Extended_Header_0xC_4">Any point within range</a></b>
-      - Targets location. Checks <code><a href="#splv1_Extended_Header_0xE">range</a></code>.
+      - Targets location. Checks <code><a href="#splv1_Extended_Header_0xE">Range</a></code>.
     - 5 ⟶ <b><a name="splv1_Extended_Header_0xC_5">Caster</a></b>
       - Targets Self.
     - 6 ⟶ Crash
@@ -47,7 +53,8 @@
         - Ignores <a href="../../opcodes/bgee.htm#op38">Silence</a>, <a href="../../opcodes/bgee.htm#op60">Spell Failure</a>, <a href="../../opcodes/bgee.htm#op60">Dead Magic</a>, <a href="../../opcodes/bgee.htm#op280">Wild Surge</a>, <code><a href="#Header_Flags_BIT13">Outdoors Only</a></code>, <code><a href="#Header_Flags_BIT16">Non-combat</a></code>, probably a few other rules.
 
     {% capture note %}
-    This field doesn't matter when the ability is activated/cast by script or when cast by another opcode.
+    - This field doesn't matter when the ability is activated/cast by script or when cast by another opcode.
+    - Subspells don't require an <code><a href="#splv1_Extended_Header_0xC">Ability Target</a></code>.
     {% endcapture %} {% include note.html %}
   type: char
 - desc: |-
@@ -60,16 +67,29 @@
     - This feature cannot be utilized by scripts.
       - Scripts will treat this field as if it's always `1`.
   type: char
-- desc: <b><a name="splv1_Extended_Header_0xE">Range</a></b>
+- desc: |-
+    <b><a name="splv1_Extended_Header_0xE">Range</a></b>
+
+    {% capture note %}
+    As far as subspells are concerned, their <code><a href="#splv1_Extended_Header_0xE">Range</a></code> is only checked if cast through <a href="../../opcodes/bgee.htm#op148">opcode #148</a> or <a href="../../opcodes/bgee.htm#op232">opcode #232</a>.
+    {% endcapture %} {% include info.html %}
   type: word
 - desc: |-
     <b><a name="splv1_Extended_Header_0x10">Level Required</a></b>
 
     {% capture note %}
-    Standard spellcasting only utilizes the first byte (`0 – 255`), but opcodes that specify Casting Level (<code><a href="../../opcodes/bgee.htm#op146">146*2</a></code>/<code><a href="../../opcodes/bgee.htm#op326">326</a>*<a href="../ie_formats/eff_v2.htm#effv2_Body_0xC8">EFF</a></code>/<code><a href="../../opcodes/bgee.htm#op333">333</a></code>) have access to the entire range (`0 – 65535`).
+    Standard spellcasting only utilizes the first byte (`0 – 255`), but opcodes that specify Casting Level (<code><a href="../../opcodes/bgee.htm#op146">146</a><sup><small>*</small></sup>p2=2</code>/<code><a href="../../opcodes/bgee.htm#op326">326</a><sup><small>*</small></sup><a href="../ie_formats/eff_v2.htm#effv2_Body_0xC8">EFF</a></code>/<code><a href="../../opcodes/bgee.htm#op333">333</a></code>) have access to the entire range (`0 – 65535`).
     {% endcapture %} {% include info.html %}
   type: word
-- desc: Casting Time
+- desc: |-
+    <b><a name="splv1_Extended_Header_0x12">Casting Time</a></b>
+
+    {% capture note %}
+    - This value represents the number of tenths of rounds that it takes to cast the spell.
+    - Combat scripting in the IE gets very dumb when <code><a href="#splv1_Extended_Header_0x12">Casting Time</a></code>s start matching or exceeding `10` (one full round). The engine assumes any spell is cast within a round, and can sometimes just go to the next round's action (f.i. the mage sits there casting for six seconds, then throws the spell away to use a sling).
+      - As a result, you might want to use maximum <code><a href="#splv1_Extended_Header_0x12">Casting Time</a></code>s of `9` (i.e. <sup><small>9</small></sup>⁄<sub><small>10</small></sub> of a round) even for spells which are supposed to have a <code><a href="#splv1_Extended_Header_0x12">Casting Time</a></code> of a full round.
+    - As far as subspells are concerned, their speed is only used if cast through <a href="../../opcodes/bgee.htm#op146">opcode #146</a>/<a href="../../opcodes/bgee.htm#op148">opcode #148</a> with the `Cast normally` option.
+    {% endcapture %} {% include info.html %}
   type: word
 - desc: Times per day
   type: word

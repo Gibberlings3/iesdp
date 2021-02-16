@@ -35,6 +35,9 @@
     - <code><a href="../../files/ids/bgee/stats.htm#51">SPELLFAILUREMAGE</a></code> is related to Spell type <code><a href="#splv1_Header_0x1C_1">Wizard</a></code>.
     - <code><a href="../../files/ids/bgee/stats.htm#52">SPELLFAILUREPRIEST</a></code> is related to Spell type <code><a href="#splv1_Header_0x1C_2">Priest</a></code>.
     - <code><a href="../../files/ids/bgee/stats.htm#194">SPELL_FAILURE_INNATE</a></code> is related to Spell type <code><a href="#splv1_Header_0x1C_3">Psionic</a></code>/<code><a href="#splv1_Header_0x1C_4">Innate</a></code>/<code><a href="#splv1_Header_0x1C_5">Bard song</a></code>.
+    - Normally, any subspells that scale with <code><a href="#splv1_Extended_Header_0x10">Level</a></code> should be of the same <code><a href="#splv1_Header_0x1C">Type</a></code> as the spell casting them.
+      - If they don't scale, it doesn't really matter.
+      - It also doesn't matter when they are applied through <a href="../../opcodes/bgee.htm#op146">opcode #146</a><code><sup><small>*</small></sup>p2=2</code>/<a href="../../opcodes/bgee.htm#op326">opcode #326</a>/<a href="../../opcodes/bgee.htm#op333">opcode #333</a>.
     {% endcapture %} {% include info.html %}
   type: word
 - desc: "[Exclusion Flags](#Exclusion_Flags)"
@@ -45,13 +48,21 @@
   type: char
   unused: 1
 - desc: |-
-    <b><a name="0x25">Primary Type (School)</a></b> (IWD: school.2da, BG2:mschool.2da)
+    <b><a name="splv1_Header_0x25">Primary Type (School)</a></b> (IWD: school.2da, BG2:mschool.2da)
+
+    {% capture note %}
+    For subspells, <code><a href="#splv1_Header_0x25">Primary Type</a></code> should always match parent spell, both for interaction with opcodes <a href="../../opcodes/bgee.htm#op220">#220</a>/<a href="../../opcodes/bgee.htm#op229">#229</a>, and with the specialists save bonus/penalty (and <a href="../../opcodes/bgee.htm#op346">opcode #346</a>).
+    {% endcapture %} {% include info.html %}
   type: byte
 - desc: Min Strength
   type: byte
   unused: 1
 - desc: |-
-    <b><a name="0x27">Secondary Type</a></b> (BG2:msectype.2da)
+    <b><a name="splv1_Header_0x27">Secondary Type</a></b> (BG2:msectype.2da)
+
+    {% capture note %}
+    For subspells, <code><a href="#splv1_Header_0x27">Secondary Type</a></code> should always match parent spell, for interaction with opcodes <a href="../../opcodes/bgee.htm#op221">#221</a>/<a href="../../opcodes/bgee.htm#op230">#230</a>.
+    {% endcapture %} {% include info.html %}
   type: char
 - desc: Min Strength Bonus
   type: byte
@@ -87,7 +98,7 @@
     <b><a name="splv1_Header_0x34">Spell Level</a></b>
 
     - There is no good reason for a <code><a href="#splv1_Header_0x1C_0">Special</a></code>/<code><a href="#splv1_Header_0x1C_3">Psionic</a></code>/<code><a href="#splv1_Header_0x1C_4">Innate</a></code>/<code><a href="#splv1_Header_0x1C_5">Bard song</a></code> to be any <code><a href="#splv1_Header_0x34">Spell level</a></code> except `1`.
-    - If the SPL is never learned/gained (only force-cast by script/opcode), <code><a href="#splv1_Header_0x34">Spell level</a></code> doesn't matter, but there may be some niche cases that check it (f.i. <code><a href="../../scripting/triggers/bgeetriggers.htm#0x4031">HaveSpell()</a></code>).
+    - If the SPL is never <a href="../../opcodes/bgee.htm#op147">learned</a>/<a href="../../opcodes/bgee.htm#op171">gained</a> (only force-cast by script/opcode), <code><a href="#splv1_Header_0x34">Spell level</a></code> doesn't matter, but there may be some niche cases that check it (f.i. <code><a href="../../scripting/triggers/bgeetriggers.htm#0x4031">HaveSpell()</a></code>).
   type: dword
 - desc: Stack amount
   type: word

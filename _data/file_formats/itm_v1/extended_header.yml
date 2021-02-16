@@ -62,13 +62,13 @@
 
     - 0 ⟶ Invalid (cannot be selected)
     - 1 ⟶ <b><a name="itmv1_Extended_Header_0xC_1">Living actor</a></b>
-      - Targets Portrait, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Actor">Creature/Actor</a>, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Container</a>, or <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">Door</a>. Checks <code><a href="#itmv1_Extended_Header_0xE">range</a></code> range.
+      - Targets Portrait, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Actor">Creature/Actor</a>, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Container</a>, or <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">Door</a>. Checks <code><a href="#itmv1_Extended_Header_0xE">Range</a></code>.
     - 2 ⟶ <b><a name="itmv1_Extended_Header_0xC_2">Inventory</a></b>
       - Can't be activated manually.
     - 3 ⟶ <b><a name="itmv1_Extended_Header_0xC_3">Dead actor</a></b>
-      - As <code><a href="#itmv1_Extended_Header_0xC_1">Living Actor</a></code>. It really just ignores any <code><a href="#itmv1_Extended_Header_0xE">range</a></code> requirement, including being in the same area.
+      - As <code><a href="#itmv1_Extended_Header_0xC_1">Living Actor</a></code>. It really just ignores any <code><a href="#itmv1_Extended_Header_0xE">Range</a></code> requirement, including being in the same area.
     - 4 ⟶ <b><a name="itmv1_Extended_Header_0xC_4">Any point within range</a></b>
-      - Targets location. Checks <code><a href="#itmv1_Extended_Header_0xE">range</a></code>.
+      - Targets location. Checks <code><a href="#itmv1_Extended_Header_0xE">Range</a></code>.
     - 5 ⟶ <b><a name="itmv1_Extended_Header_0xC_5">Caster</a></b>
       - Targets Self.
     - 6 ⟶ Crash
@@ -90,7 +90,7 @@
     - Only usable by <code><a href="#itmv1_Extended_Header_0x2_3">Item</a></code> abilities, and only with Ability Targets <code><a href="#itmv1_Extended_Header_0xC_1">1</a></code>, <code><a href="#itmv1_Extended_Header_0xC_3">3</a></code>, or <code><a href="#itmv1_Extended_Header_0xC_4">4</a></code>.
     - Targeting reticle will display amount remaining while selecting targets.
     - Double-clicking a target/location will target it for the remaining amount.
-    - Regardless of the number of targets, only a single "Charge"/"Memorization" will be expended.
+    - Regardless of the number of targets, only a single "Charge" will be expended.
     - This feature cannot be utilized by scripts.
       - Scripts will treat this field as if it's always `1`.
   type: char
@@ -128,9 +128,9 @@
     THAC0 bonus
 
     A successful hit will always occur if any of the conditions below is true
-    - This field is set to `32767`
-    - The target creature(s) is STATE_HELPLESS
-    - The target is affected by time stop
+    - This field is set to `32767`.
+    - The target creature(s) is `STATE_HELPLESS`.
+    - The target is affected by <a href="../../opcodes/bgee.htm#op231">Time Stop</a>.
   type: word
 - desc: <b><a name="itmv1_Extended_Header_0x16">Dice sides</a></b>
   type: byte

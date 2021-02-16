@@ -313,10 +313,14 @@ Sets the weapon proficiency points for the weapon type specified in the <code>Ty
 	<li>
 		Every one of those <code>STAT</code>s can be set as a weapon's proficiency and it will use that stat's value for proficiency bonuses.
 		<ul>
-			<li>This includes <code>STAT</code>s like <code>CLERIC_ARMOR_OF_FAITH<small><sup>*</sup></small></code>, even though they're used for an alternative purpose.</li>
+			<li>
+				This includes <code>STAT</code>s like <code>CLERIC_ARMOR_OF_FAITH<small><sup>*</sup></small></code>, even though they're used for an alternative purpose.
+				<ul>
+					<li>The only thing stopping them from showing up during chargen/level-up proficiency selection is their entries (or lack there of) in <a href="../files/2da/2da_bgee/weapprof.htm">WEAPPROF.2DA</a>. A <code>NAME_REF</code> column of <code>4294967296 (-1)</code> is hardcoded to hide the proficiency during chargen/level-up. Aside from that it just needs a non-zero maximum for the current class/kit.</li>
+				</ul>
+			</li>
 		</ul>
 	</li>
-	<li>The only thing stopping them from showing up during chargen/level-up proficiency selection is their entries (or lack there of) in <a href="../files/2da/2da_bgee/weapprof.htm">WEAPPROF.2DA</a>. A <code>NAME_REF</code> column of <code>4294967296 (-1)</code> is hardcoded to hide the proficiency during chargen/level-up. Aside from that it just needs a non-zero maximum for the current class/kit.</li>
 </ul>
 {% endcapture %}
 

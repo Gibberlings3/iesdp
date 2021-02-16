@@ -150,7 +150,7 @@ regenerate: true
                 <ul>
                   <li>The Original Caster is not a valid target for "Explosion Projectile"s.</li>
                   <li>
-                    Enables subspells to check Magic Resistance when applied through <a href="../../opcodes/bgee.htm#op326">opcode #326</a>.
+                    Enables subspells to check Magic Resistance when applied through <a href="../../opcodes/bgee.htm#op146">opcode #146</a><code><sup><small>*</small></sup>p2=2</code>/<a href="../../opcodes/bgee.htm#op326">opcode #326</a>/<a href="../../opcodes/bgee.htm#op333">opcode #333</a>.
                     <ul>
                       <li>Without this bit, the secondary targets (i.e., all those hit by the subspell's projectile) would not get a Magic Resistance check, but the other checks would still occur as normal (<code>power</code>, <code>saves</code>, <code>probability</code>, etc...).</li>
                     </ul>
@@ -664,7 +664,23 @@ regenerate: true
               </li>
 
               <li>Bit 16 &longrightarrow; <b><a name="ExtFlags_BIT16">Draw behind target</a></b></li>
-              <li>Bit 17 &longrightarrow; <b><a name="ExtFlags_BIT17">Casting glow effect</a></b></li>
+
+              <li>
+                Bit 17 &longrightarrow; <b><a name="ExtFlags_BIT17">Casting glow effect</a></b>
+                <ul>
+                  <li><code><a href="#0x104">Projectile Animation</a></code> plays first 3 cycles/sequences in order. (Mirrored as normal)</li>
+                  <li>
+                    Designed for use with <a href="../../opcodes/bgee.htm#op140">opcode #140</a>, combined with <code><a href="#ExtFlags_BIT3">Hit Immediately</a></code>.
+                    <ul>
+                      <li>The 1<sup><small>st</small></sup> cycle/sequence is played once.</li>
+                      <li>The 2<sup><small>nd</small></sup> cylce/sequence is looped (or cut short) until there is only enough time left to play the 3<sup><small>rd</small></sup> cycle/sequence once.</li>
+                      <li>The 3<sup><small>rd</small></sup> cycle/sequence is then played once.</li>
+                    </ul>
+                  </li>
+                  <li>Also used by the various spell–school <a href="../ie_formats/spl_v1.htm#Header_Casting_Graphics">casting animations</a> for spells.</li>
+                </ul>
+              </li>
+
               <li>Bit 18 &longrightarrow; <b><a name="ExtFlags_BIT18">Travel door</a></b></li>
               <li>Bit 19 &longrightarrow; <b><a name="ExtFlags_BIT19">Stop/fade after hit</a></b></li>
 
@@ -757,7 +773,7 @@ regenerate: true
                       <li>The projectile is limited to lasting only 1–2 seconds, preventing it from affecting any target a second time.</li>
                     </ul>
                   </li>
-                  <li>Special: All "VEF" projectiles (anything listed in <code><a href="../../files/ids/bgee/vefproj.htm">"VEFPROJ.IDS"</a></code>) effectively use this flag.</li>
+                  <li>Special: All "VEF" projectiles (anything listed in <code><a href="../../files/ids/bgee/vefproj.htm">VEFPROJ.IDS</a></code>) effectively use this flag.</li>
                 </ul>
               </li>
 
@@ -1298,7 +1314,7 @@ regenerate: true
             <li>
               bit 1 &longrightarrow; <b><a name="AreaFlags_BIT1">Triggered by inanimate objects</a></b>
               <ul>
-                <li><a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Containers</a> and <a href="../ie_formats/are_v1.htm#formAREAV1_0_Info">Area Triggers</a> (Proximity/Info/Travel) within range are (also) valid targets.</li>
+                <li><a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Containers</a> and <a href="../ie_formats/are_v1.htm#formAREAV1_0_Info_0x20">Area Triggers</a> (Proximity/Info/Travel) within range are (also) valid targets.</li>
               </ul>
             </li>
 
@@ -1413,7 +1429,21 @@ regenerate: true
               </ul>
             </li>
 
-            <li>bit 5 &longrightarrow; <b><a name="AreaFlags_BIT5">Use fragment graphics</a></b></li>
+            <li>
+              bit 5 &longrightarrow; <b><a name="AreaFlags_BIT5">Use fragment graphics</a></b>
+              <ul>
+                <li>Activates <code><a href="#0x212">Fragment Animation</a></code>.</li>
+                <li>
+                  This animation is treated similar to the "Chunking" animation of creatures, launching the specified animation up and outward in various directions.
+                  <ul>
+                    <li>This "Chunking" will start when the projectile explodes and repeat throughout the projectile's duration, if it has one.</li>
+                  </ul>
+                </li>
+                <li>Compatibility: <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code> will only generate fragments when it explodes, once per explosion.</li>
+                <li>Compatibility: The direction these animation are launched is not limited by <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code>.</li>
+                <li>Compatibility: Suppressed by a non-zero <code><a href="#0x202">Ray Count</a></code>.</li>
+              </ul>
+            </li>
 
             <li>
               bit 6 &longrightarrow; <b><a name="AreaFlags_BIT6">Affect only enemies</a></b>
@@ -1740,7 +1770,16 @@ regenerate: true
       <tr>
         <td>0x00212</td>
         <td>2 (short)</td>
-        <td>Fragment animation (<a href="../../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)</td>
+        <td>
+          <b><a name="0x212">Fragment Animation</a></b> (<a href="../../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)
+          <ul>
+            <li>Dependency: Activated by <code><a href="#AreaFlags_BIT5">Fragments</a></code>.</li>
+            <li>This animation is treated similar to the "Chunking" animation of creatures, launching the specified animation up and outward in various directions.</li>
+            <li>Compatibility: <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code> will only generate fragments when it explodes, once per explosion.</li>
+            <li>Compatibility: The direction these animation are launched is not limited by <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code>.</li>
+            <li>Compatibility: Suppressed by a non-zero <code><a href="#0x202">Ray Count</a></code>.</li>
+          </ul>
+        </td>
       </tr>
 
       <tr>

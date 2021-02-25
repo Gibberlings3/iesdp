@@ -25,31 +25,40 @@ The creature type specified by the <code>Stat Type</code> field will be affected
 </p>
 
 <p>
-  If the resource uses projectile <code>#0 (default)</code>:
+  If the <code>resource</code> uses projectile <code>#0 (default)</code>:
   <ul>
-    <li>the <code>resource</code> will ignore its <code>projectile</code> field, defaulting to use projectile <code>#1|None</code> for all effects.</li>
+    <li>The <code>resource</code> will ignore its <code>projectile</code> field, defaulting to use projectile <code>#1|None</code> for all effects.</li>
     <li>Effects in the <code>resource</code> that target <code>Self</code>, <code>Projectile Target</code>, or <code>Original Caster</code> will all affect the target of this effect.</li>
     <li>If this effect is reflected/turned, the target of effects in the <code>resource</code> is reflected.</li>
   </ul>
   Otherwise:
   <ul>
-    <li>effects in the <code>resource</code> that target <code>Self</code> will affect the target of this effect, not the caster, </li>
-    <li>if this effect is reflected/turned, only effects in the <code>resource</code> targeting <code>Original Caster</code> will be affected, now affecting the target. </li>
+    <li>Effects in the <code>resource</code> that target <code>Self</code> will affect the target of this effect, not the caster.</li>
+    <li>If this effect is reflected/turned, only effects in the <code>resource</code> targeting <code>Original Caster</code> will be affected, now affecting the target.</li>
   </ul>
 </p>
 
 {% capture note %}
-If this effect is applied through <a href="#op177">opcode #177</a>, the spell is cast at the level specified at offset <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0xC8">0xc8</a></code> of the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
+If this effect is applied through <a href="#op177">opcode #177</a>, the spell specified by the <code>resource</code> key is cast at the level specified at offset <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0xC8">0xc8</a></code> of the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
 {% endcapture %}
 
 {% include note.html %}
 
 {% capture note %}
 <ul>
+  <li>Unlike <a href="#op146">opcode #146</a><code><small><sup>*</sup></small>p2=1</code>, when this opcode gets reflected, the spell specified by the <code>resource</code> key is cast at the caster's Casting Level, and it will also affect the original target (as if it wasn't reflected – though it will decrement <a href="#op200">Spell Turning</a>).</li>
+  <li>When this opcode is applied through <a href="#op177">opcode #177</a> and gets reflected, the spell specified by the <code>resource</code> key is cast at the level specified at offset <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0xC8">0xc8</a></code> of the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>, and it will also affect the original target (as if it wasn't reflected – though it will decrement <a href="#op200">Spell Turning</a>).</li>
+</ul>
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+<ul>
   <li>
     Effects in the <code>resource</code> will also bypass Magic Resistance, of every target, as if the caster targeted themselves, regardless of who they target with the spell or this effect.
     <ul>
-      <li>Setting the <code><a href="../file_formats/ie_formats/pro_v1.htm#Behavior_BIT4">Ignore Center</a></code> bit in the subspell's projectile will force its effects to check Magic Resistance on every target, even if the caster did target themselves. Though as its primary function is to cause the projectile to ignore the caster (not "center"), it still won't affect them.</li>
+      <li>Setting the <code><a href="../file_formats/ie_formats/pro_v1.htm#Behavior_BIT4">Ignore Center</a></code> bit in the subspell's projectile will force its effects to check Magic Resistance on every target, even if the caster did target themselves. Though as its primary function is to cause the projectile to ignore the caster (not "center"), it still won't affect them if it's <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code>.</li>
     </ul>
   </li>
 </ul>

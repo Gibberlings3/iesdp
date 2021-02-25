@@ -80,9 +80,11 @@ regenerate: true
         <tr>
           <td>0</td>
           <td>
-            Unsellable (critical item)
+            <b><a name="Header_Flags_BIT0">Unsellable (critical item)</a></b>
             <ul>
               <li>In BG1, this flag does not affect whether the item can be sold.</li>
+              <li>On EE games, <a href="../ie_formats/sto_v1.htm">Stores</a> can buy critical items if they are flagged as <code><a href="../ie_formats/sto_v1.htm#storv1_0_Header_0x10_BIT15">Can buy Critical</a></code>, provided they can buy its <code><a href="#Header_ItemType">itemtype</a></code>.</li>
+              <li>Will also cause the item to be moved into Player1's Inventory if the character who has it leaves or is kicked from the party.</li>
             </ul>
           </td>
           <td>
@@ -121,7 +123,12 @@ regenerate: true
 
         <tr>
           <td>2</td>
-          <td>Movable</td>
+          <td>
+            <b><a name="Header_Flags_BIT2">Movable / Droppable</a></b>
+            <ul>
+              <li>This flag is overridden by the <a href="../ie_formats/cre_v1.htm#CREV1_0_Item_0x10_BIT3">CRE</a>/<a href="../ie_formats/sto_v1.htm#storv1_0_Sale_0x10_BIT3">STO</a> item flag <code><a href="../../files/ids/bgee/invitem.htm#BIT3">NONDROPABLE</a></code>.</li>
+            </ul>
+          </td>
           <td>
             Stolen (unsellable) / <b><a name="Header_Flags_BIT10">Off-handed</a></b>
             <ul>
@@ -135,7 +142,12 @@ regenerate: true
 
         <tr>
           <td>3</td>
-          <td>Displayable</td>
+          <td>
+            <b><a name="Header_Flags_BIT3">Displayable</a></b>
+            <ul>
+              <li>Item will show up on the ground (when <code><a href="#Header_Flags_BIT2">dropped</a></code>). Setting the <code><a href="#itmv1_Header_0x44">Ground Icon</a></code> to <code>""</code> (empty) still uses a default icon (1x1 invisible pixel), this gets around that. It can still be clicked on and picked up.</li>
+            </ul>
+          </td>
           <td>
             <b><a name="Header_Flags_BIT11">Conversable</a></b>
             <ul>
@@ -154,7 +166,14 @@ regenerate: true
 
         <tr>
           <td>4</td>
-          <td>Cursed</td>
+          <td>
+            <b><a name="Header_Flags_BIT4">Cursed</a></b>
+            <ul>
+              <li>Determines how the item interacts with <a href="../../opcodes/bgee.htm#op26">opcode #26</a>.</li>
+              <li>The item cannot be unequipped.</li>
+              <li>Cursed weapons override the <code><a href="../../files/ids/bgee/slots.htm#34">Magical Weapon</a></code> slot.</li>
+            </ul>
+          </td>
           <td>
             <b><a name="Header_Flags_BIT12">Fake two-handed</a></b> (BGEE)
             <ul>
@@ -167,7 +186,16 @@ regenerate: true
 
         <tr>
           <td>5</td>
-          <td><span class="unknown">Cannot scribe to spellbook (scrolls)</span></td>
+          <td>
+            <span class="unknown">Cannot scribe to spellbook (scrolls)</span>
+            <ul>
+              <li>Whether a scroll can be "Copy Note" to journal or "Write Magic" to spell book is determined by its <a href="#itmv1_Extended_Header">ability headers</a>. Setting this bit doesn't alter it either way.</li>
+              <li>It doesn't prevent a "clone" from getting a duplicate (<a href="../../opcodes/bgee.htm#op236">opcode #236</a><code><small><sup>*</sup></small>p2=2</code>).</li>
+              <li>It doesn't prevent the <code><a href="../../scripting/actions/bgeeactions.htm#264">CopyGroundPilesTo()</a></code> action from moving them.</li>
+              <li>In original BG1, it was set on every item except for the Identify Scroll.</li>
+              <li>In BGEE/SoD, only a few (16) random items added by Beamdog don't have it set, as well as the Identify and Chromatic Orb scrolls.</li>
+            </ul>
+          </td>
           <td>
             <b><a name="Header_Flags_BIT13">Forbid off-hand weapon</a></b> (BGEE)
             <ul>
@@ -186,6 +214,7 @@ regenerate: true
             <b><a name="Header_Flags_BIT6">Magical</a></b>
             <ul>
               <li>Determines how the weapon interacts with <a href="../../opcodes/bgee.htm#op120">opcode #120</a>.</li>
+              <li>Has no relation to the <code><a href="#itmv1_Header_0x60">Enchantment</a></code> field. Both function independently.</li>
             </ul>
           </td>
           <td>Usable in inventory (PSTEE)</td>

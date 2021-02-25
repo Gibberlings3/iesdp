@@ -59,9 +59,9 @@ regenerate: true
                   <li>No Traveling Projectile, hits instantly (truly instant – function during Time Stop).</li>
                   <li>Dependency: Spell Target(<code>Creature</code>).</li>
                   <li>
-                    This projectile type is functionally identical to the hardcoded projectile: <code>0|<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> / 1|<a href="../../files/ids/bgee/missile.htm">MISSILE.IDS</a></code>
+                    This projectile type is functionally identical to the hardcoded projectile: <code>#0|<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> / #1|<a href="../../files/ids/bgee/missile.htm">MISSILE.IDS</a></code>
                     <ul>
-                      <li>This is projectile <code>1|None</code> in Near Infinity, not <code>0|Default</code>.</li>
+                      <li>This is projectile <code>#1|None</code> in Near Infinity, not <code>#0|Default</code>.</li>
                     </ul>
                   </li>
                 </ul>
@@ -148,11 +148,17 @@ regenerate: true
               <li>
                 bit 4 &longrightarrow; <b><a name="Behavior_BIT4">Do not affect direct target / Ignore center</a></b>
                 <ul>
-                  <li>The Original Caster is not a valid target for "Explosion Projectile"s.</li>
+                  <li>
+                    The Original Caster is not a valid target for <code><a href="#0x21A">Explosion Projectile</a></code>s.
+                    <ul>
+                      <li>This feature only works in <code><a href="#0x8_3">Area-Effect</a></code> projectiles.</li>
+                    </ul>
+                  </li>
                   <li>
                     Enables subspells to check Magic Resistance when applied through <a href="../../opcodes/bgee.htm#op146">opcode #146</a><code><sup><small>*</small></sup>p2=2</code>/<a href="../../opcodes/bgee.htm#op326">opcode #326</a>/<a href="../../opcodes/bgee.htm#op333">opcode #333</a>.
                     <ul>
                       <li>Without this bit, the secondary targets (i.e., all those hit by the subspell's projectile) would not get a Magic Resistance check, but the other checks would still occur as normal (<code>power</code>, <code>saves</code>, <code>probability</code>, etc...).</li>
+                      <li>This feature works in either <code><a href="#0x8_2">Single-target</a></code> or <code><a href="#0x8_3">Area-Effect</a></code> projectiles.</li>
                     </ul>
                   </li>
                 </ul>
@@ -802,6 +808,12 @@ regenerate: true
                 <ul>
                   <li>If this flag is set, the original caster is affected once for every target.</li>
                   <li>Without this flag, the original caster is affected only once, but only if there is at least one target.</li>
+                  <li>
+                    This flag should only be set on <code><a href="#0x8_3">Area-Effect</a></code> projectiles.
+                    <ul>
+                      <li><code><a href="#0x8_2">Single-target</a></code> projectiles, even those that hit multiple targets (f.i. Lightning Bolt), will trigger <code>Original Caster</code> effects once for every target by default.</li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
             </ul>

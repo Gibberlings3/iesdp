@@ -128,17 +128,6 @@ IWD2 uses different parameters altogether.
 
 
 
-<div class="note important">
-  <div>
-    <strong>Important:</strong> 
-With <code>Timing Mode</code>s <code>1/4/7</code>, alters creature's base stat, leaving behind no removable effect.
-
-  </div>
-</div>
-
-
-
-
 <div class="note info">
   <div>
     <strong>Note:</strong> 
@@ -147,42 +136,42 @@ With <code>Timing Mode</code>s <code>1/4/7</code>, alters creature's base stat, 
 		<code>Type=0</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
-			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC")</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x48">Armor Class</a></code>.</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=1</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#3">ACCRUSHINGMOD</a>.</li>
-			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Crushing AC (CRE@0x4A)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4A">Crushing AC</a></code>.</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=2</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#4">ACMISSILEMOD</a>.</li>
-			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Missile AC (CRE@0x4C)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4C">Missile AC</a></code>.</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=4</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#5">ACPIERCINGMOD</a>.</li>
-			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Piercing AC (CRE@0x4E)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4E">Piercing AC</a></code>.</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=8</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#6">ACSLASHINGMOD</a>.</li>
-			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Slashing AC (CRE@0x50)</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x50">Slashing AC</a></code>.</li>
 		</ul>
 	</li>
 	<li>
 		<code>Type=16</code>:
 		<ul>
 			<li>Modifies <a href="../files/ids/bgee/stats.htm#2">ARMORCLASS</a>.</li>
-			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base Armor Class (CRE@0x48, "Effective AC", not "Natural AC"), still subject to "only if better/lower", checked against base value, not current effective value.</li>
+			<li>With <code>Timing Mode</code>s <code>1/4/7</code>, alters target's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x48">Armor Class</a></code>, still subject to "only if better/lower", checked against base value, not current effective value.</li>
 		</ul>
 	</li>
 </ul>
@@ -401,7 +390,7 @@ Being “in combat” is reliant upon the presence of visible, non-sleeping enem
 		<ul>
 			<li>Creature is unseletectable, Inventory is disabled.</li>
 			<li>The creature's AI scripts are disabled.</li>
-			<li>The creature will randomly execute action ~ <a href="../scripting/actions/bgeeactions.htm#134">AttackReevaluate([ANYONE],15)</a> (or similar, not sure exactly which attack action).</li>
+			<li>The creature will randomly execute action ~ <a href="../scripting/actions/bgeeactions.htm#134">AttackReevaluate([ANYONE],15)</a> (or similar, the exact attack action is unknown).</li>
 			<li>Disables Saving while affecting a Party Member (Displayed message: "You do not control all your Party Members")</li>
 		</ul>
 	</li>
@@ -416,7 +405,14 @@ Being “in combat” is reliant upon the presence of visible, non-sleeping enem
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Forces creature(s) to use a melee weapon if possible.
+<ul>
+	<li>
+		Forces creature(s) to use a melee weapon if possible.
+		<ul>
+			<li>If a certain creature is equipped with a <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_Flags_BIT4">Cursed</a></code> ranged weapon, this opcode will not force it to switch to a melee weapon.</li>
+		</ul>
+	</li>
+</ul>
 
   </div>
 </div>
@@ -449,7 +445,7 @@ The second paragraph hasn’t been verified for PST and BG1 yet, but likely hold
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Used with <code>Timing Mode</code>s <code>1/4/7</code> results in setting <a href="../files/ids/bgee/state.htm#BIT1">STATE_BERSERK</a> when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
+Used with <code>Timing Mode</code>s <code>1/4/7</code> results in setting <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT1">STATE_BERSERK</a></code> when it triggers (and using its default behavior), rather than attaching a removable effect with selected behavior.
 
   </div>
 </div>
@@ -720,7 +716,7 @@ On EEs:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, the creature's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23E">Charisma</a></code> is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -1009,7 +1005,7 @@ On EEs:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, the creature's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23D">Constitution</a></code> is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -1288,7 +1284,7 @@ When <code>Type=3</code>:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, the creature's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23C">Dexterity</a></code> is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -1360,7 +1356,7 @@ This effect will cancel out the <a href="#op40">slow opcode</a>.
   <div>
     <strong>Warning:</strong> 
 BG1 only supports haste type <code>0</code>.<br /><br />
-This opcode will set the <a href="../files/ids/bgee/state.htm#BIT15">STATE_HASTED</a> flag and nothing else when applied with <code>Timing Mode 1</code>, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.<br />
+This opcode will set the <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT15">STATE_HASTED</a></code> flag and nothing else when applied with <code>Timing Mode 1</code>, and cannot be removed within the game by any means, only suppressed by <a href="#op40">Slow</a>.<br />
 This only works when applying <code>Normal/Improved</code> haste (there’s no difference, since the <code>STAT</code> for <code>Improved</code> haste doesn’t get set this way), <code>Weak</code> haste does not do anything with <code>Timing Mode 1</code>.
 
   </div>
@@ -1470,7 +1466,7 @@ Unlike <a href="#op12">opcode #12</a>, this opcode does not apply any death effe
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-For non-permanent timing modes of <code>Type</code> <code>2</code> or <code>5</code> use the base maximum HP value, and therefor override other <code>Type</code> <code>2</code> or <code>5</code> modifiers.
+For non-permanent timing modes of <code>Type</code> <code>2</code> or <code>5</code> use the base maximum HP value, and therefore override other <code>Type</code> <code>2</code> or <code>5</code> modifiers.
 
   </div>
 </div>
@@ -1619,7 +1615,7 @@ On EEs:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, the creature's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23A">Intelligence</a></code> is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -1777,8 +1773,8 @@ Here’s more info about <i>initiative roll for movement</i>:
 	<li>
 		<code>1</code> is the worst roll you can get, yet it is neither of the extremes. So, <code>-1</code> Luck is bad because it prevents you from bypassing the wait time, (rolling a <code>0</code>), but <b>if Luck must be negative, the lower the better</b>.
 		<ul>
-			<li><code>Luck = "-1"</code>: Worst roll possible is a <code>1</code>, you will be waiting for 7 AI updates (or, if you prefer, 7/15ths of a second).</li>
-			<li><code>Luck = "-7"</code>: Worst roll possible is a <code>7</code>, you will be waiting for 1 AI update (or, if you prefer, 1/15th of a second)!!</li>
+			<li><code>Luck = "-1"</code>: Worst roll possible is a <code>1</code>, you will be waiting for 7 AI updates (or, if you prefer, <small><sup>7</sup>&frasl;<sub>15</sub></small>ths of a second).</li>
+			<li><code>Luck = "-7"</code>: Worst roll possible is a <code>7</code>, you will be waiting for 1 AI update (or, if you prefer, <small><sup>1</sup>&frasl;<sub>15</sub></small>th of a second)!!</li>
 		</ul>
 	</li>
 	<li>Positive Luck will always increase the likelihood of instantaneous pathing.</li>
@@ -1907,7 +1903,7 @@ The 'Damage Amount' parameter should be set a positive value.
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Removes cursed items in addition to all <a href="#op283">opcode #283</a> effects from the targeted creature(s).
+  <div class="descriptiondata"> Removes <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_Flags_BIT4">Cursed</a></code> items in addition to all <a href="#op283">opcode #283</a> effects from the targeted creature(s).
  </div><br />
   <hr />
   <br />
@@ -2056,12 +2052,12 @@ A negative resistance negates damage entirely
   <span class="parameterheading">Parameter #1:</span>
     <span class="parameterdata">Irrelevant</span><br />
   <span class="parameterheading">Parameter #2:</span>
-    <span class="parameterdata">Restore creature animation</span><br />
+    <span class="parameterdata">Restore creature animation?</span><br />
 
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Raises the targeted creature(s) from the dead.<br/>
 
-Known values for <code>Restore creature animation</code> are:
+Known values for <code>Restore creature animation?</code> are:
 <ul>
 	<li>0 &longrightarrow; No</li>
 	<li>1 &longrightarrow; Yes</li>
@@ -2347,7 +2343,7 @@ When <code>Type = 3</code>, this opcode processes before saving throws are check
 
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Applies the silence effect to the targeted creature(s). Sets <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> to true.<br/>
-A silenced creature cannot cast spells, use special abilities or initiate dialog.<br/>
+A silenced creature cannot cast spells / use special abilities (unless flagged as <code><a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT25">Castable when silenced</a></code>) or initiate dialog.<br/>
 The engine is hard-coded to allow these spells to be cast by a silenced creature:
 <ul>
 	<li><code>"SPWI219"</code> (Vocalize)</li>
@@ -2365,27 +2361,31 @@ The engine is hard-coded to allow these spells to be cast by a silenced creature
   <span class="parameterheading">Parameter #1:</span>
     <span class="parameterdata">Irrelevant</span><br />
   <span class="parameterheading">Parameter #2:</span>
-    <span class="parameterdata">Wake on Damage</span><br />
+    <span class="parameterdata">Wake on Damage?</span><br />
 
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Applies the unconsciousness effect to the targeted creature(s).<br />
-Known values for <code>Wake on Damage</code> are (only in EEs):
+Known values for <code>Wake on Damage?</code> are (only in EEs):
 <ul>
 	<li>0 &longrightarrow; Yes</li>
 	<li>1 &longrightarrow; No</li>
 </ul>
-<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only).
-<br/><br/>
 
-This opcode sets the <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a> flag.
+<p>
+	<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only). Default value is <code><a href="../files/2da/2da_bgee/statdesc.htm#14">Sleep</a></code>.
+</p>
+
+<p>
+	This opcode sets the <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a> flag.
+</p>
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> will set the <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> flag. In such a case, this flag cannot be removed in-game.<br />
-Moreover, they will also set <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a>, which works as the <code>Wake on Hit</code> option. It’s just not usable because of the irremovable <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a>.
+<code>Timing Mode</code>s <code>1/4/7</code> will set the <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT5">STATE_HELPLESS</a></code> flag. In such a case, this flag cannot be removed in-game.<br />
+Moreover, they will also set <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT0">STATE_SLEEPING</a></code>, which works as the <code>Wake on Hit</code> option. It’s just not usable because of the irremovable <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT5">STATE_HELPLESS</a></code>.
 
   </div>
 </div>
@@ -2405,7 +2405,7 @@ Moreover, they will also set <a href="../files/ids/bgee/state.htm#BIT0">STATE_SL
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Applies the slow effect to the targeted creature(s).
+  <div class="descriptiondata"> Applies the slow effect to the targeted creature(s). It automatically grants the <code><a href="../files/2da/2da_bgee/statdesc.htm#41">Slow</a></code> portrait icon.
 
 
 
@@ -2423,7 +2423,7 @@ This effect will cancel out the <a href="#op16">haste opcode</a>.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-This effect doubles the casting time of all spells. Not verified for IWD2.
+This effect doubles the <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x12">Casting Time</a></code> of all spells. Not verified for IWD2.
 
   </div>
 </div>
@@ -2434,7 +2434,7 @@ This effect doubles the casting time of all spells. Not verified for IWD2.
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-This opcode will set the <a href="../files/ids/bgee/state.htm#BIT16">STATE_SLOWED</a> flag and nothing else when applied with <code>Timing Mode 1</code>, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
+This opcode will set the <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT16">STATE_SLOWED</a></code> flag and nothing else when applied with <code>Timing Mode 1</code>, and cannot be removed within the game by any means, only suppressed by <a href="#op16">Haste</a>.
 
   </div>
 </div>
@@ -2684,7 +2684,7 @@ When <code>Type=3</code>:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, the creature's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x238">Strength</a></code> is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -2739,7 +2739,7 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Applied with <code>Timing Mode</code>s <code>1/4/7</code>: will set the creature’s base <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> flag, while still leaving behind a separate removable effect.
+Applied with <code>Timing Mode</code>s <code>1/4/7</code>: will set the creature’s base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT3">STATE_STUNNED</a></code> flag, while still leaving behind a separate removable effect.
 <ul>
 	<li>Should you remove the effect without removing the state (through means other than <a href="#op46">opcode #46</a>), the creature will be fully functional, just not controllable by the player (if it was).</li>
 	<li>By itself, <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> does not disable any scripts or limit which actions the creature may take. It needs its opcode's immobilization effect as well as <a href="../files/ids/bgee/state.htm#BIT5">STATE_HELPLESS</a> to fully work.</li>
@@ -2869,7 +2869,7 @@ On EEs:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-With <code>Timing Mode</code>s <code>1/4/7</code>, base attribute is altered, leaving behind no removable effect.
+With <code>Timing Mode</code>s <code>1/4/7</code>, the creature's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23B">Wisdom</a></code> is altered, leaving behind no removable effect.
 
   </div>
 </div>
@@ -3024,7 +3024,7 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Applied with <code>Timing Mode</code>s <code>1/4/7</code>, sets the creature's base animation, leaving no removable effect.
+Applied with <code>Timing Mode</code>s <code>1/4/7</code>, sets the creature's base <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x28">animation</a></code>, leaving no removable effect.
 
   </div>
 </div>
@@ -3209,7 +3209,7 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> permanently alter the creature's Move Silently score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alter the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x68">Move Silently</a></code> score, leaving no removable effect.
 
   </div>
 </div>
@@ -3220,7 +3220,7 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-(EE only) When <code>Type = 0</code> and <code>Timing Mode = 9</code>, it modifies <a href="../files/ids/bgee/stats.htm#177">MOVESILENTLYMTPBONUS</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range [0,255], before being included in the creature’s Move Silently score.
+(EE only) When <code>Type = 0</code> and <code>Timing Mode = 9</code>, it modifies <a href="../files/ids/bgee/stats.htm#177">MOVESILENTLYMTPBONUS</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range <code>[0,255]</code>, before being included in the creature’s <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x68">Move Silently</a></code> score.
 
   </div>
 </div>
@@ -3545,11 +3545,11 @@ Both parameters should be <code>0</code> (zero).
   <div>
     <strong>Info:</strong> 
 <ul>
-	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
+	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70">Resource 2</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the summoned creature's location.<br />
 		Default is a hardcoded VVC using <code>"SPBOOM.BAM"</code> and palette <code>#65</code>. This is generally used as the "portal" animation.
 	</li>
-	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#0x78">Resource 3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
-	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">Resource 2</a></code> (not exact). Creature will not appear/spawn until this animation finishes.</li>
+	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x78">Resource 3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
+	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70">Resource 2</a></code> (not exact). Creature will not appear/spawn until this animation finishes.</li>
 	<li>Applies a delayed <a href="#op215">opcode #215</a> with <code>resource = "SPGFLSH1"</code> to the summoned creature, <code>delayed duration = 5 ticks less</code> than the <a href="#op271">opcode #271</a>.</li>
 	<li>Applies a delayed <a href="#op68">opcode #68</a> to the summoned creature based on effect duration (unless permanent).</li>
 	<li>When summoned, any temporary changes (such as from equipped items) to the creature's <a href="../files/ids/bgee/gender.htm">gender</a> are made permanent.</li>
@@ -3628,7 +3628,7 @@ At least in BG2 and EEs, the <code>Resource</code> key should be set to the file
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <a href="../files/ids/bgee/state.htm#BIT21">STATE_NONDETECTION</a> flag, leaving no removable effect. This flag is not cleared on death.
+<code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT21">STATE_NONDETECTION</a></code> flag, leaving no removable effect. This flag is not cleared on death.
 
   </div>
 </div>
@@ -3903,7 +3903,7 @@ Permanent timing modes require a duration for this effect to work.
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Removes the disease effect from the targeted creature(s).
+  <div class="descriptiondata"> Removes the <a href="#op78">disease</a> effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
 
 
@@ -3931,7 +3931,7 @@ Both parameters should be <code>0</code> (zero).
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Applies the Deafness effect on the targeted creature(s) – creatures suffer a casting failure rate of 50&percnt; (20&percnt; in bg1, unknown in iwd1). The casting failure rate refers to Wizard and Priest spells only. This is cumulative with Miscast Magic.
+  <div class="descriptiondata"> Applies the Deafness effect on the targeted creature(s) – creatures suffer a casting failure rate of 50&percnt; (20&percnt; in bg1, unknown in iwd1). The casting failure rate refers to <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C_1">Wizard</a></code> and <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C_2">Priest</a></code> spells only. This is cumulative with Miscast Magic.
 
 
 
@@ -4252,7 +4252,7 @@ This effect can unset scripts from a creature, which can break the game.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Open Locks score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x67">Open Locks</a></code> score, leaving no removable effect.
 
   </div>
 </div>
@@ -4263,7 +4263,7 @@ This effect can unset scripts from a creature, which can break the game.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-(EE only) When <code>Type = 0</code> and <code>Timing Mode = 9</code>, it modifies <a href="../files/ids/bgee/stats.htm#176">LOCKPICKINGMTPBONUS</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range [0,255], before being included in the creature’s Open Locks score.
+(EE only) When <code>Type = 0</code> and <code>Timing Mode = 9</code>, it modifies <a href="../files/ids/bgee/stats.htm#176">LOCKPICKINGMTPBONUS</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range <code>[0,255]</code>, before being included in the creature’s <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x67">Open Locks</a></code> score.
 
   </div>
 </div>
@@ -4296,7 +4296,7 @@ This effect can unset scripts from a creature, which can break the game.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Find Traps score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x69">Find Traps</a></code> score, leaving no removable effect.
 
   </div>
 </div>
@@ -4307,7 +4307,7 @@ This effect can unset scripts from a creature, which can break the game.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-(EE only) When <code>Type = 0</code> and <code>Timing Mode = 9</code>, it modifies <a href="../files/ids/bgee/stats.htm#178">TRAPSMTPBONUS</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range [0,255], before being included in the creature’s Find Traps score.
+(EE only) When <code>Type = 0</code> and <code>Timing Mode = 9</code>, it modifies <a href="../files/ids/bgee/stats.htm#178">TRAPSMTPBONUS</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range <code>[0,255]</code>, before being included in the creature’s <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x69">Find Traps</a></code> score.
 
   </div>
 </div>
@@ -4340,7 +4340,7 @@ This effect can unset scripts from a creature, which can break the game.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's Pick Pockets score, leaving no removable effect.
+<code>Timing Mode</code>s <code>1/4/7</code> permanently alters the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x6A">Pick Pockets</a></code> score, leaving no removable effect.
 
   </div>
 </div>
@@ -4351,7 +4351,7 @@ This effect can unset scripts from a creature, which can break the game.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-(EE only) When <code>Type = 0</code> and <code>Timing Mode = 9</code>, it modifies <a href="../files/ids/bgee/stats.htm#179">PICKPOCKETMTPBONUS</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range [0,255], before being included in the creature’s Pick Pockets score.
+(EE only) When <code>Type = 0</code> and <code>Timing Mode = 9</code>, it modifies <a href="../files/ids/bgee/stats.htm#179">PICKPOCKETMTPBONUS</a>. The final value for this stat is multiplied by its percentage entry in <a href="../files/2da/2da_bgee/thiefscl.htm">THIEFSCL.2DA</a>, capped to the range <code>[0,255]</code>, before being included in the creature’s <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x6A">Pick Pockets</a></code> score.
 
   </div>
 </div>
@@ -4536,7 +4536,6 @@ Permanent timing modes require a duration for this effect to work.
 	<li><code>Duration Modifier = 100</code> &longrightarrow; Spells have normal duration</li>
 	<li><code>Duration Modifier = 200</code> &longrightarrow; Spells have double duration</li>
 </ul>
-<br/>
 
 <br/>Known values for <code>Type</code> are:
 <ul>
@@ -4545,7 +4544,7 @@ Permanent timing modes require a duration for this effect to work.
 	<li>2 &longrightarrow; Bard Song (EE only)</li>
 </ul>
 
-<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#53">SPELLDURATIONMODMAGE</a> and <a href="../files/ids/bgee/stats.htm#54">SPELLDURATIONMODPRIEST</a>.
+<br/>The effect modifies <a href="../files/ids/bgee/stats.htm#53">SPELLDURATIONMODMAGE</a> and <a href="../files/ids/bgee/stats.htm#54">SPELLDURATIONMODPRIEST</a>.
 
 
 
@@ -4642,12 +4641,12 @@ Not seen to work in BG1.
 	<li>
 		CAN block effects of Secondary Type <code><a href="../files/2da/2da_bgee/msectype.htm#4">MagicAttack</a></code>.
 		<ul>
-			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0xD0">V2 effects</a> specify it manually.</li>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their Secondary Type from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x27">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x19">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0xD0">V2 effects</a> specify it manually.</li>
 		</ul>
 	</li>
 
 	<li>
-		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#0x5C_BIT2">resist_dispel = BIT2</a></code>.
+		CAN block EFF files with <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x5C_BIT2">resist_dispel = BIT2</a></code>.
 		<ul>
 			<li>Keep in mind that this BIT is automatically set on any effect delivered by an <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-Effect</a> (Explosion) projectile, so this opcode can deflect effects through <a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">AoE</a> projectiles.</li>
 		</ul>
@@ -4656,7 +4655,7 @@ Not seen to work in BG1.
 	<li>
 		CANNOT block non-hostile effects from self.
 		<ul>
-			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their non-hostile behavior from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT10">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#ExtHeader_Flags_BIT10">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#0x9C_BIT10">V2 effects</a> specify it manually.</li>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm">V1 effects</a> inherit their non-hostile behavior from the Header(<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT10">SPL</a>) / Extended Header(<a href="../file_formats/ie_formats/itm_v1.htm#ExtHeader_Flags_BIT10">ITM</a>), <a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x9C_BIT10">V2 effects</a> specify it manually.</li>
 		</ul>
 	</li>
 </ul>
@@ -4817,9 +4816,9 @@ PST does not support the percentage modifier type (unknown what it actually does
     <span class="parameterdata">Type</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Sets the individual reputation of the targeted creature(s) to the value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>This does not affect the main reputation of the Party, unless 'Type' 3 or 4 are used. Though it can affect ranger/paladinhood of any target.
-<br/>Known values for 'Type' are:
+  <div class="descriptiondata"> Sets the individual reputation of the targeted creature(s) to the value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>This does not affect the main reputation of the Party, unless <code>Type 3</code> or <code>4</code> are used. Though it can affect ranger/paladinhood of any target.
+<br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Cumulative Modifier: <code>Reputation = Reputation + 'Statistic Modifier' value</code></li>
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Reputation = 'Statistic Modifier' value</code></li>
@@ -4827,6 +4826,8 @@ PST does not support the percentage modifier type (unknown what it actually does
 	<li>3 &longrightarrow; Increment Party Reputation by <code>10 * 'Statistic Modifier'</code>, cannot lower reputation below <code>100</code>, will raise reputation to <code>100</code> if already less (only in EEs)</li>
 	<li>4 &longrightarrow; Reset Party Reputation to <code>100</code> (only in EEs)</li>
 </ul>
+
+The effect modifies <a href="../files/ids/bgee/stats.htm#48">REPUTATION</a>.
  </div><br />
   <hr />
   <br />
@@ -4893,14 +4894,14 @@ This effect has never been seen to work.
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Creates the item specified by the <code>resource</code> key. The number of items created is controlled by the <code>Amount</code> field. The item is created in the Magical Weapon slot (<code>SLOT_MISC19 – #34</code>).
+  <div class="descriptiondata"> Creates the item specified by the <code>resource</code> key. The number of items created is controlled by the <code>Amount</code> field. The item is created in the <code><a href="../files/ids/bgee/slots.htm#34">Magical Weapon Slot</a></code>.
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The Magical Weapon slot does not allow <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">Item Abilities</a> (<code>header_type = 3</code>).
+The <code><a href="../files/ids/bgee/slots.htm#34">Magical Weapon Slot</a></code> does not allow <code><a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x2_3">Item</a></code> Abilities.
 
   </div>
 </div>
@@ -5182,7 +5183,7 @@ Keep in mind that:
 	<li>Protected weapons will still trigger <a href="../scripting/triggers/bgeetriggers.htm#0x0020">HitBy()</a>, but will not interact with Mirror Image or Stone skins.</li>
 	<li>Blocks weapon damage, on-hit effects of the weapon, <a href="#op248">opcode #248</a> and <a href="#op249">opcode #249</a>, regardless of the effects target.</li>
 	<li>Does NOT block effects from <a href="#op341">opcode #341</a> or <a href="#op361">opcode #361</a> from triggering.</li>
-	<li>Area-effect projectiles (Arrow of Detonation) only check for Weapon Immunity on the attacked target, and use that result for all caught within their area of effect.</li>
+	<li><code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">Area-effect</a></code> projectiles (f.i. Arrow of Detonation) only check for Weapon Immunity on the attacked target, and use that result for all caught within their area of effect.</li>
 </ul>
 
   </div>
@@ -5257,9 +5258,10 @@ This opcode only works when used with a delayed timing mode (4).
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Removes the item specified by the resource key from the targeted creature(s). This effect should be used to remove inventory items (use <a href="#op112">opcode #112</a> for equipped items).
+  <div class="descriptiondata"> Removes the item specified by the <code>resource</code> key from the targeted creature(s). This effect should be used to remove inventory items (use <a href="#op112">opcode #112</a> for equipped items).<br/>
+In particular:
 <ul>
-	<li>Removes all item(s) in the first slot containing the specified resource key from the targeted creature(s).</li>
+	<li>Removes all item(s) in the first slot containing the specified <code>resource</code> key from the targeted creature(s).</li>
 	<li>Items in container items (e.g. Bags of Holding) will not be removed.</li>
 	<li>Inventory slots are checked in numerical order from <a href="../files/ids/bgee/slots.htm">SLOTS.IDS</a>.</li>
 </ul>
@@ -5401,19 +5403,19 @@ A couple of examples about <i>Multiplicative Stacking Percentage Modifier</i>:
 
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Summons a number of monsters.
-<br/>Each CRE file has a <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> number. The amount of monsters summoned by this effect depends on this value, the <code>special</code> parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
-<br/>When used in SPL/ITM, known value for <code>Mode</code> are:
+<br/>Each CRE file has a <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x18">Creature Power Level</a></code> number. The amount of monsters summoned by this effect depends on this value, the <code>special</code> parameter and if it's used in <a href="../file_formats/ie_formats/spl_v1.htm#splv1_Feature_Block">SPL</a> / <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Feature_Block">ITM</a> or from an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>.
+<br/>When used in <a href="../file_formats/ie_formats/spl_v1.htm#splv1_Feature_Block">SPL</a>/<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Feature_Block">ITM</a> files, known value for <code>Mode</code> are:
 <ul>
-	<li>0 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Number</code></li>
+	<li>0 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x18">Creature Power Level</a></code> equals/exceeds <code>Number</code></li>
 	<li>1 &longrightarrow; Summon amount equal to <code>Number</code></li>
-	<li>2 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds "Caster Level"</li>
+	<li>2 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x18">Creature Power Level</a></code> equals/exceeds Caster's Level</li>
 </ul>
 
-<br/>When used in EFF, known value for <code>Mode</code> are:
+<br/>When used in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files, known value for <code>Mode</code> are:
 <ul>
-	<li>0 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Number</code></li>
+	<li>0 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x18">Creature Power Level</a></code> equals/exceeds <code>Number</code></li>
 	<li>1 &longrightarrow; Summon amount equal to <code>'Number' + Dice rolls</code></li>
-	<li>2 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#0x18">Creature Power Level</a></code> equals/exceeds <code>Caster Level</code> field of EFF (located at offset <code>0xc8</code>)</li>
+	<li>2 &longrightarrow; Summon until <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x18">Creature Power Level</a></code> equals/exceeds <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0xC8">Caster Level</a></code> field</li>
 </ul>
 
 <br/>The <code>Type</code> field sets which <a href="../file_formats/ie_formats/2da.htm">2DA</a> file to pick the creatures to summon from. The 2da files are <code>monsumX</code> and <code>anisumX</code>, where <code>X = 'Type' + 1</code>. <code>0–4</code> are allied , <code>5–9</code> are hostile. The specific 2da files used are:
@@ -5431,7 +5433,7 @@ A couple of examples about <i>Multiplicative Stacking Percentage Modifier</i>:
 </ul>
 
 <br/>A custom .2da file can be entered in the resource field (untested in bg1).
-<br/>If used from an external effect (.eff), the <code><a href="../file_formats/ie_formats/eff_v2.htm#0x70">vvc</a></code> field controls the bam file played when summoning.
+<br/>If used from an external effect (.eff), the <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70">vvc</a></code> field controls the bam file played when summoning.
  </div><br />
   <hr />
   <br />
@@ -5454,7 +5456,7 @@ A couple of examples about <i>Multiplicative Stacking Percentage Modifier</i>:
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-<code>Timing Mode 1</code> will set <a href="../files/ids/bgee/state.htm#BIT31">STATE_CONFUSED</a> without leaving behind a removable effect.
+<code>Timing Mode 1</code> will set <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT31">STATE_CONFUSED</a></code> without leaving behind a removable effect.
 
   </div>
 </div>
@@ -5746,7 +5748,7 @@ This opcode modifies <a href="../files/ids/bgee/stats.htm#32">LUCK</a>.
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -5757,8 +5759,8 @@ Both parameters should be 0 (zero).
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Does not remove any other death STATEs from the creature (as <a href="#op13">opcode 13</a> does).<br />
-While the end result is otherwise the same as “Stoned Death” applied by <a href="#op13">opcode 13</a>, this opcode does not actually utilize <a href="#op13">opcode 13</a> (internally or otherwise), unlike most (all?) other forms of death.
+Does not remove any other death STATEs from the creature (as <a href="#op13">opcode #13</a> does).<br />
+While the end result is otherwise the same as “Stoned Death” applied by <a href="#op13">opcode #13</a>, this opcode does not actually utilize <a href="#op13">opcode #13</a> (internally or otherwise), unlike most (all?) other forms of death.
 
   </div>
 </div>
@@ -6161,7 +6163,7 @@ At least in EE games, it is possible to colorize the string. In order to do so, 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-The Magical Weapon slot does not allow <a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header">Item Abilities</a> (<code>header_type = 3</code>).<br>
+The <code><a href="../files/ids/bgee/slots.htm#34">Magical Weapon Slot</a></code> does not allow <code><a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x2_3">Item</a></code> Abilities.<br>
 Moreover, unlike <a href="#op111">opcode #111</a>, this opcode will not "equip" the item that's created in this particular slot.
 
   </div>
@@ -6229,7 +6231,7 @@ When using a non-permanent <code>timing mode</code>, it applies a delayed <a hre
 	<li>0 &longrightarrow; Wizard</li>
 	<li>1 &longrightarrow; Priest</li>
 	<li>2 &longrightarrow; Innate</li>
-	<li>3 &longrightarrow; Innate, only 'magical' abilities (SPL flag <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT14 – "Ignore dead/wild magic"</a> unset) (BGEE)</li>
+	<li>3 &longrightarrow; Innate, only 'magical' abilities (SPL flag <code><a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT14">Ignore dead/wild magic</a></code> unset) (EEs)</li>
 </ul>
 
 <br/>Known values for <code>Show message?</code> are:
@@ -6259,6 +6261,38 @@ When using a non-permanent <code>timing mode</code>, it applies a delayed <a hre
 	<li>1 &longrightarrow; Cast Instantly at caster level</li>
 	<li>2 &longrightarrow; Cast Instantly at specified level (EE-only)</li>
 </ul>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+<ul>
+	<li>When this opcode gets reflected using <code>Type=1</code>, the spell specified by the <code>resource</code> key is cast at the target's Casting Level, not the caster's.</li>
+	<li>When this opcode gets reflected using <code>Type=2</code>, the spell specified by the <code>resource</code> key is cast at the specified <code>Casting Level</code>, and it will also affect the original target (as if it wasn't reflected – though it will decrement <a href="#op200">Spell Turning</a>).</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li>
+    When <code>Type=2</code>, effects in the <code>resource</code> will also bypass Magic Resistance, of every target, as if the caster targeted themselves, regardless of who they target with the spell or this effect.
+    <ul>
+      <li>Setting the <code><a href="../file_formats/ie_formats/pro_v1.htm#Behavior_BIT4">Ignore Center</a></code> bit in the subspell's projectile will force its effects to check Magic Resistance on every target, even if the caster did target themselves. Though as its primary function is to cause the projectile to ignore the caster (not "center"), it still won't affect them if it's <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code>.</li>
+    </ul>
+  </li>
+</ul>
+
+  </div>
+</div>
+
 
 
 
@@ -6337,10 +6371,10 @@ This opcode does not work if the target is a container in non-ee versions.
     <strong>Info:</strong> 
 This opcode should generally target <code>Self</code>. In particular:
 <ul>
-	<li>The projectile of the subspell will originate from the target(s) of op148.</li>
-	<li>If the SPL/ITM with op148 targets a location, and doesn't have an area-effect projectile, there will be no target to cast on.</li>
-	<li>If the SPL/ITM with op148 has an area-effect projectile, the spell in op148 would be cast once for every valid target.</li>
-	<li>If this opcode uses the <code>Cast Instantly</code> option, then the target, not the caster, would cast the spell in op148.</li>
+	<li>The projectile of the subspell will originate from the target(s) of <a href="#op148">opcode #148</a>.</li>
+	<li>If the SPL/ITM with <a href="#op148">opcode #148</a> targets a location, and doesn't have an <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code> projectile, there will be no target to cast on.</li>
+	<li>If the SPL/ITM with <a href="#op148">opcode #148</a> has an <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code> projectile, the spell in <a href="#op148">opcode #148</a> would be cast once for every valid target.</li>
+	<li>If this opcode uses the <code>Cast Instantly</code> option, then the target, not the caster, would cast the spell in <a href="#op148">opcode #148</a>.</li>
 </ul>
 
   </div>
@@ -6430,8 +6464,8 @@ This effect is automatically successful, but can only find traps that are normal
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Remove targeted creature via <a href="#op168">opcode #168</a></li>
-	<li>1 &longrightarrow; Kill targeted creature via <code><a href="#op13">opcode #13</a>*8</code> (Chunking death)</li>
-	<li>2 &longrightarrow; Kill targeted creature via <code><a href="#op13">opcode #13</a>*4</code> (Normal death)</li>
+	<li>1 &longrightarrow; Kill targeted creature via <a href="#op13">opcode #13</a><code><small><sup>*</sup></small>p2=8</code> (Chunking death)</li>
+	<li>2 &longrightarrow; Kill targeted creature via <a href="#op13">opcode #13</a><code><small><sup>*</sup></small>p2=4</code> (Normal death)</li>
 	<li>3 &longrightarrow; No effect on targeted creature – New creature (specified by the <code>resource</code> key) is spawned at target's location</li>
 </ul>
 
@@ -6700,14 +6734,14 @@ Both parameters should be 0 (zero).
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Removes the sanctuary effect from the targeted creature(s).
+  <div class="descriptiondata"> Removes the <a href="#op153">sanctuary</a> effect from the targeted creature(s).
 
 
 
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-Both parameters should be 0 (zero).
+Both parameters should be <code>0</code> (zero).
 
   </div>
 </div>
@@ -6727,7 +6761,7 @@ Both parameters should be 0 (zero).
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Removes the horror effect from the targeted creature(s).
+  <div class="descriptiondata"> Removes the <a href="#op24">horror</a> effect from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
  </div><br />
   <hr />
@@ -6894,7 +6928,7 @@ For a ‘Type’ value of 0, any negative value of ‘Statistic Modifier’ will
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Moves the targeted creature(s) to area ".ARE" (a non-existent area). Also known as <a href="../scripting/actions/bgeeactions.htm#111">Script: Destroy Self</a>.
+  <div class="descriptiondata"> Moves the targeted creature(s) to area <code>".ARE"</code> (a non-existent area). Also known as <a href="../scripting/actions/bgeeactions.htm#111">Script: Destroy Self</a>.
 <br/><br/>
 
 This deletes non-global creatures from the game (most common usage).
@@ -7064,7 +7098,22 @@ On EE games:
     <span class="parameterdata">Irrelevant</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Gives the spell specified by the <code>resource</code> key to the targeted creature(s).
+  <div class="descriptiondata"> Gives the <code><a href="../file_formats/ie_formats/spl_v1.htm">SPL</a></code> specified by the <code>resource</code> key to the targeted creature(s).
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+	<li><code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C_1">Wizard</a></code> spell type can be <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">level</a></code> <code>1–9</code> if gained.</li>
+	<li><code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C_2">Priest</a></code> spell type can be <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">level</a></code> <code>1–7</code> if gained.</li>
+	<li>Other <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C">Spell type</a></code>s can be <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">level</a></code> <code>1–32767</code> if gained.</li>
+</ul>
+
+  </div>
+</div>
+
  </div><br />
   <hr />
   <br />
@@ -7422,7 +7471,7 @@ PST: This effect doesn’t exist and always crashes the game.
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Ammo (i.e., <code>Arrows(5)</code>, <code>Bullets(14)</code> and <code>Bolts(31)</code>) does not work well with this opcode. The Ammo Slots are always “Equipped”, even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
+Ammo (i.e., <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_5">Arrows</a></code>, <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_14">Bullets</a></code> and <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_31">Bolts</a></code>) does not work well with this opcode. The Ammo Slots are always “Equipped”, even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
 <br />The offhand has the same issue – even when disabled, it’s detected by this opcode as equipped.
 <br />Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen).
 
@@ -7526,7 +7575,7 @@ In particular:
 			<li>On EE games, target(s) appear at Caster's Coordinates in new area (it does not seem to be possible to override through EFFs).</li>
 		</ul>
 	</li>
-	<li>Creature is moved to the new area (instantly) and flagged <a href="../file_formats/ie_formats/cre_v1.htm#Flags_BIT14">Moving Between Areas</a> until their delay expires (if it's used). It won't be active until the delay expires (it's hidden, cannot be affected by Area-effect, doesn't occupy space). It can still be targeted by the various <code>Everyone</code> targeting modes in the new area while it's still inactive, but similar to <a href="#op213">maze</a>/<a href="#op211">imprisonment</a>, effects won't trigger (including <a href="#op25">poison</a> and similar) on them until they become active.</li>
+	<li>Creature is moved to the new area (instantly) and flagged <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_Flags_BIT14">Moving Between Areas</a></code> until their delay expires (if it's used). It won't be active until the delay expires (it's hidden, cannot be affected by Area-effect, doesn't occupy space). It can still be targeted by the various <code>Everyone</code> targeting modes in the new area while it's still inactive, but similar to <a href="#op213">maze</a>/<a href="#op211">imprisonment</a>, effects won't trigger (including <a href="#op25">poison</a> and similar) on them until they become active.</li>
 </ul>
 
 

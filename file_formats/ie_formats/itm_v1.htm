@@ -222,7 +222,7 @@
   <td>0x0010</td>
   <td>8 (resref)</td>
   <td><p>BG1, BG2, BGEE:<br />
-Replacement item (ITM)</p>
+<b><a name="itmv1_Header_0x10">Replacement item</a></b> (ITM)</p>
 
 <p>PSTEE:<br />
 Drop sound - played when the item is dropped in the inventory (WAV)</p>
@@ -320,7 +320,22 @@ Drop sound - played when the item is dropped in the inventory (WAV)</p>
 
   <td>0x0024</td>
   <td>2 (word)</td>
-  <td><p>Min Level</p>
+  <td><p><b><a name="itmv1_Header_0x24">Min Level</a></b></p>
+
+<ul>
+  <li>Treated as average of all active class levels, rounded up.</li>
+</ul>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+  <li>This field is basically the ITM counterpart of <code><a href="../ie_formats/spl_v1.htm#splv1_Extended_Header_0x10">Level Required</a></code>.</li>
+  <li>The only difference is that ITM <a href="#itmv1_Extended_Header">abilities</a> cannot have separate level requirements.</li>
+</ul>
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -644,7 +659,7 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0044</td>
   <td>8 (resref)</td>
-  <td><p>Ground icon (BAM)</p>
+  <td><p><b><a name="itmv1_Header_0x44">Ground icon</a></b> (BAM)</p>
 </td>
 </tr>
 
@@ -739,7 +754,7 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0060</td>
   <td>4 (dword)</td>
-  <td><p>Enchantment</p>
+  <td><p><b><a name="itmv1_Header_0x60">Enchantment</a></b></p>
 </td>
 </tr>
 
@@ -897,10 +912,52 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
   <td><p><b><a name="itmv1_Extended_Header_0x0">Attack type</a></b></p>
 <ul>
   <li>0 ⟶ None</li>
-  <li>1 ⟶ Melee</li>
-  <li>2 ⟶ Projectile</li>
-  <li>3 ⟶ <b><a name="itmv1_Extended_Header_0x0_3">Magic</a></b></li>
-  <li>4 ⟶ Launcher</li>
+  <li>1 ⟶ <b><a name="itmv1_Extended_Header_0x0_1">Melee</a></b></li>
+  <li>2 ⟶ <b><a name="itmv1_Extended_Header_0x0_2">Ranged</a></b></li>
+  <li>3 ⟶ <b><a name="itmv1_Extended_Header_0x0_3">Magical</a></b></li>
+  <li>4 ⟶ <b><a name="itmv1_Extended_Header_0x0_4">Launcher</a></b></li>
+</ul>
+
+<p>For <code><a href="#itmv1_Extended_Header_0x2_3">Item</a></code> abilities:</p>
+<ul>
+  <li>Do NOT use <code class="language-plaintext highlighter-rouge">0|None</code>, will crash the game.</li>
+  <li>Only <code><a href="#itmv1_Extended_Header_0x0_3">Magical</a></code> abilities can be drained (along with <a href="../../opcodes/bgee.htm#op243">opcode #243</a>’s other restrictions).</li>
+  <li>Type <code><a href="#itmv1_Extended_Header_0x0_4">4</a></code> cannot be used except from scripts (icon won’t show up in actionbar).</li>
+</ul>
+
+<p>For <code><a href="#itmv1_Extended_Header_0x2_1">Weapon</a></code> abilities:</p>
+<ul>
+  <li>Do NOT use <code class="language-plaintext highlighter-rouge">0|None</code>, will crash the game.</li>
+  <li><code><a href="#itmv1_Extended_Header_0x0_1">Melee</a></code>: Ignores the <code><a href="#itmv1_Extended_Header_0x2A">projectile</a></code> field (always uses <code class="language-plaintext highlighter-rouge">#1|None</code>). Valid for <a href="../../files/2da/2da_bgee/stylbonu.htm">Weapon Styles</a>.</li>
+  <li><code><a href="#itmv1_Extended_Header_0x0_2">Ranged</a></code>:
+    <ul>
+      <li>Utilizes <code><a href="#itmv1_Extended_Header_0x2A">projectile</a></code> field.</li>
+      <li>Item cannot be equipped in <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code>, unless its <code><a href="#Header_ItemType">itemtype</a></code> can only be equipped in the <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code> slot, from <code><a href="../../files/2da/2da_bgee/itemtype.htm">ITEMTYPE.2DA</a></code>.</li>
+      <li>If equipped in <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code>, it will attack as normal (at least for the offhand).</li>
+      <li><code><a href="../../files/ids/bgee/slots.htm#9">Off-hand</a></code> weapon will be suppressed while this item ability is selected in <code><a href="../../files/ids/bgee/slots.htm#35">mainhand</a></code> (EE only).</li>
+    </ul>
+  </li>
+  <li><code><a href="#itmv1_Extended_Header_0x0_3">Magical</a></code>: Identical to <code><a href="#itmv1_Extended_Header_0x0_1">Melee</a></code>, except that it can be <a href="../../opcodes/bgee.htm#op243">drained</a>.</li>
+  <li><code><a href="#itmv1_Extended_Header_0x0_4">Launcher</a></code>:
+    <ul>
+      <li>In the <code><a href="../../files/ids/bgee/slots.htm#35">mainhand</a></code> slots:
+        <ul>
+          <li>Ability cannot actually be selected, nor is the item considered “equipped” by script triggers or <a href="../../opcodes/bgee.htm#op183">opcode #183</a>.</li>
+          <li>Equipped effects, stats and on-hit effects are added to the currently selected weapon ability IF that ability requires a <code><a href="#itmv1_Extended_Header_0x10">launcher</a></code> of this type.</li>
+        </ul>
+      </li>
+      <li>In the <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code> slot:
+        <ul>
+          <li>Item cannot be equipped in <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code>, unless its <code><a href="#Header_ItemType">itemtype</a></code> can only be equipped in the <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code> slot, from <code><a href="../../files/2da/2da_bgee/itemtype.htm">ITEMTYPE.2DA</a></code>.</li>
+          <li>Attack cycle will stop when this weapon would have attacked (must be re-initiated manually or by script).
+            <ul>
+              <li>The creature will stop attacking when the off-hand attack would have occurred. Similar to pressing the group “Stop” button (F3).</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
 </td>
 </tr>
@@ -922,8 +979,8 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
   <td>1 (char)</td>
   <td><p>ID Req.</p>
 <ul>
-  <li>bit 0: ID Required</li>
-  <li>bit 1: Non-ID Required</li>
+  <li>bit 0 ⟶ ID Required</li>
+  <li>bit 1 ⟶ Non-ID Required</li>
 </ul>
 </td>
 </tr>
@@ -943,14 +1000,44 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0002</td>
   <td>1 (char)</td>
-  <td><p>Location</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x2">Location</a></b></p>
+
 <ul>
-  <li>0 = None</li>
-  <li>1 = Weapon</li>
-  <li>2 = Spell</li>
-  <li>3 = Equipment</li>
-  <li>4 = Innate</li>
+  <li>0 ⟶ None
+    <ul>
+      <li>Ability will not be selectable through the UI (but still available to scripts and spell-casting opcodes).</li>
+    </ul>
+  </li>
+  <li>1 ⟶ <b><a name="itmv1_Extended_Header_0x2_1">Weapon</a></b>
+    <ul>
+      <li>Ability can be used/selected in Quick-weapon slots (when equipped in one of the <code><a href="../../files/ids/bgee/slots.htm#35">mainhand</a></code>/<code><a href="../../files/ids/bgee/slots.htm#11">ammo</a></code>/<code><a href="../../files/ids/bgee/slots.htm#10">fist</a></code>/<code><a href="../../files/ids/bgee/slots.htm#34">magical weapon</a></code> slots).</li>
+    </ul>
+  </li>
+  <li>2 ⟶ Spell
+    <ul>
+      <li><code><a href="../ie_formats/spl_v1.htm#splv1_Extended_Header_0x2_2">SPL</a></code> only.</li>
+    </ul>
+  </li>
+  <li>3 ⟶ <b><a name="itmv1_Extended_Header_0x2_3">Equipment / Item</a></b>
+    <ul>
+      <li>Ability can be selected from Quick-item slots, when equipped in one of those slots, or from the “Use Item (F8)” button if equipped elsewhere (except the <code><a href="../../files/ids/bgee/slots.htm#34">Magical Weapon Slot</a></code>).</li>
+    </ul>
+  </li>
+  <li>4 ⟶ Innate
+    <ul>
+      <li><code><a href="../ie_formats/spl_v1.htm#splv1_Extended_Header_0x2_4">SPL</a></code> only.</li>
+    </ul>
+  </li>
+  <li>5+ ⟶ As <code class="language-plaintext highlighter-rouge">0</code>.</li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The first ability header of an item equipped in a <code><a href="../../files/ids/bgee/slots.htm#35">weapon</a></code>/<code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code> slot will always be treated as a <code><a href="#itmv1_Extended_Header_0x2_1">weapon</a></code> abillty, even if it lacks the correct <code><a href="#itmv1_Extended_Header_0x2">location</a></code> to be selected as such, unless that item is a <code><a href="../../files/ids/bgee/itemcat.htm#12">shield</a></code> in the <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code>.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1007,21 +1094,63 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x000c</td>
   <td>1 (char)</td>
-  <td><p>Target type</p>
+  <td><p><b><a name="itmv1_Extended_Header_0xC">Target type</a></b></p>
+
 <ul>
-  <li>0 = Invalid (cannot be selected)</li>
-  <li>1 = Creature / Living actor</li>
-  <li>2 = Crash</li>
-  <li>3 = Dead actor
+  <li>0 ⟶ Invalid (cannot be selected)</li>
+  <li>1 ⟶ <b><a name="itmv1_Extended_Header_0xC_1">Living actor</a></b>
     <ul>
-      <li>To be precise, it can target living and dead actors. It really just ignores any range requirement, including being in the same area.</li>
+      <li>Targets Portrait, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Actor">Creature/Actor</a>, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Container</a>, or <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">Door</a>. Checks <code><a href="#itmv1_Extended_Header_0xE">Range</a></code>.</li>
     </ul>
   </li>
-  <li>4 = Area</li>
-  <li>5 = Self</li>
-  <li>6 = Crash</li>
-  <li>7 = None (Self, ignores game pause)</li>
+  <li>2 ⟶ <b><a name="itmv1_Extended_Header_0xC_2">Inventory</a></b>
+    <ul>
+      <li>Can’t be activated manually.</li>
+    </ul>
+  </li>
+  <li>3 ⟶ <b><a name="itmv1_Extended_Header_0xC_3">Dead actor</a></b>
+    <ul>
+      <li>As <code><a href="#itmv1_Extended_Header_0xC_1">Living Actor</a></code>. It really just ignores any <code><a href="#itmv1_Extended_Header_0xE">Range</a></code> requirement, including being in the same area.</li>
+    </ul>
+  </li>
+  <li>4 ⟶ <b><a name="itmv1_Extended_Header_0xC_4">Any point within range</a></b>
+    <ul>
+      <li>Targets location. Checks <code><a href="#itmv1_Extended_Header_0xE">Range</a></code>.</li>
+    </ul>
+  </li>
+  <li>5 ⟶ <b><a name="itmv1_Extended_Header_0xC_5">Caster</a></b>
+    <ul>
+      <li>Targets Self.</li>
+    </ul>
+  </li>
+  <li>6 ⟶ Crash
+    <ul>
+      <li>Can’t be activated manually.</li>
+    </ul>
+  </li>
+  <li>7 ⟶ <b><a name="itmv1_Extended_Header_0xC_7">Caster</a></b> (EE only)
+    <ul>
+      <li>Targets Self. In particular:
+        <ul>
+          <li>Used instantly (even while the game is paused).</li>
+          <li>Ignores one item per round rule.</li>
+          <li>Ignores <code><a href="#itmv1_Extended_Header_0x2A">projectile</a></code> (uses <code class="language-plaintext highlighter-rouge">#1|None</code>).</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li>This field doesn’t matter when the ability is activated/cast by script, when cast by another opcode, or for weapon attacks.</li>
+  <li><code><a href="#itmv1_Extended_Header_0x2_1">Weapon</a></code> attacks always use a more restricted form of <code><a href="#itmv1_Extended_Header_0xC_1">Living actor</a></code>, as they cannot target <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">containers</a> or <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">doors</a> unless they are locked.</li>
+</ul>
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1040,7 +1169,19 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x000d</td>
   <td>1 (char)</td>
-  <td><p>Target count</p>
+  <td><p><b><a name="itmv1_Extended_Header_0xD">Target count</a></b></p>
+
+<ul>
+  <li>Only usable by <code><a href="#itmv1_Extended_Header_0x2_3">Item</a></code> abilities, and only with Ability Targets <code><a href="#itmv1_Extended_Header_0xC_1">1</a></code>, <code><a href="#itmv1_Extended_Header_0xC_3">3</a></code>, or <code><a href="#itmv1_Extended_Header_0xC_4">4</a></code>.</li>
+  <li>Targeting reticle will display amount remaining while selecting targets.</li>
+  <li>Double-clicking a target/location will target it for the remaining amount.</li>
+  <li>Regardless of the number of targets, only a single “Charge” will be expended.</li>
+  <li>This feature cannot be utilized by scripts.
+    <ul>
+      <li>Scripts will treat this field as if it’s always <code class="language-plaintext highlighter-rouge">1</code>.</li>
+    </ul>
+  </li>
+</ul>
 </td>
 </tr>
 
@@ -1059,7 +1200,7 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x000e</td>
   <td>2 (word)</td>
-  <td><p>Range</p>
+  <td><p><b><a name="itmv1_Extended_Header_0xE">Range</a></b></p>
 </td>
 </tr>
 
@@ -1078,14 +1219,44 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0010</td>
   <td>1 (byte)</td>
-  <td><p>Projectile type</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x10">Launcher required</a></b></p>
+
 <ul>
-  <li>0 = None</li>
-  <li>1 = Arrow</li>
-  <li>2 = Bolt</li>
-  <li>3 = Bullet</li>
-  <li>40 = Spear</li>
-  <li>100 = Throwing Axe</li>
+  <li>0 ⟶ None</li>
+  <li>1 ⟶ <b><a name="itmv1_Extended_Header_0x10_1">Bow</a></b>
+    <ul>
+      <li>Any <code><a href="#itmv1_Extended_Header_0x0_2">Ranged</a></code> ability with this field set to this value will require a weapon with the corresponding <code><a href="../../files/ids/bgee/itemcat.htm#15">ITEMCAT.IDS</a></code> (Item category) in one of the <code><a href="../../files/ids/bgee/slots.htm#35">mainhand</a></code> weapon slots (not <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code>, <code><a href="../../files/ids/bgee/slots.htm#10">fist</a></code>, or <code><a href="../../files/ids/bgee/slots.htm#34">magical weapon</a></code> slot).</li>
+    </ul>
+  </li>
+  <li>2 ⟶ <b><a name="itmv1_Extended_Header_0x10_2">Crossbow</a></b>
+    <ul>
+      <li>Any <code><a href="#itmv1_Extended_Header_0x0_2">Ranged</a></code> ability with this field set to this value will require a weapon with the corresponding <code><a href="../../files/ids/bgee/itemcat.htm#27">ITEMCAT.IDS</a></code> (Item category) in one of the <code><a href="../../files/ids/bgee/slots.htm#35">mainhand</a></code> weapon slots (not <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code>, <code><a href="../../files/ids/bgee/slots.htm#10">fist</a></code>, or <code><a href="../../files/ids/bgee/slots.htm#34">magical weapon</a></code> slot).</li>
+    </ul>
+  </li>
+  <li>3 ⟶ <b><a name="itmv1_Extended_Header_0x10_3">Sling</a></b>
+    <ul>
+      <li>Any <code><a href="#itmv1_Extended_Header_0x0_2">Ranged</a></code> ability with this field set to this value will require a weapon with the corresponding <code><a href="../../files/ids/bgee/itemcat.htm#18">ITEMCAT.IDS</a></code> (Item category) in one of the <code><a href="../../files/ids/bgee/slots.htm#35">mainhand</a></code> weapon slots (not <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code>, <code><a href="../../files/ids/bgee/slots.htm#10">fist</a></code>, or <code><a href="../../files/ids/bgee/slots.htm#34">magical weapon</a></code> slot).</li>
+    </ul>
+  </li>
+  <li>40 ⟶ Spear</li>
+  <li>100 ⟶ Throwing Axe</li>
+</ul>
+
+<p>In particular:</p>
+<ul>
+  <li>It ONLY checks items for <code><a href="../../files/ids/bgee/itemcat.htm#15">BOW</a></code> / <code><a href="../../files/ids/bgee/itemcat.htm#27">XBOW</a></code> / <code><a href="../../files/ids/bgee/itemcat.htm#18">SLING</a></code> and will always use that item’s first ability header – it doesn’t matter what that ability’s <code><a href="#itmv1_Extended_Header_0x0">Type</a></code> is (<code><a href="#itmv1_Extended_Header_0x0_1">Melee</a></code>/<code><a href="#itmv1_Extended_Header_0x0_2">Ranged</a></code>/<code><a href="#itmv1_Extended_Header_0x0_3">Magical</a></code>/<code><a href="#itmv1_Extended_Header_0x0_4">Launcher</a></code>).
+    <ul>
+      <li>This also means that you can’t make an Arrow that requires being shot out of a Sword.</li>
+    </ul>
+  </li>
+  <li><code><a href="../../files/ids/bgee/itemcat.htm">ITEMCAT</a></code> is offset <code><a href="#Header_ItemType">0x1C</a></code> of the ITM file (which is also linked to <code><a href="../../files/2da/2da_bgee/itemtype.htm">ITEMTYPE.2DA</a></code>).</li>
+  <li>Only the <code><a href="../../files/ids/bgee/slots.htm#35">Mainhand</a></code>, <code><a href="../../files/ids/bgee/slots.htm#11">Ammo</a></code>, and <code><a href="../../files/ids/bgee/slots.htm#34">Magical Weapon</a></code> slots can utilize launchers. The <code><a href="../../files/ids/bgee/slots.htm#9">off-hand</a></code> ignores this field, while the <code><a href="../../files/ids/bgee/slots.htm#10">fist</a></code> slot uses it (only to crash).</li>
+  <li>Weapons of any <code><a href="../../files/ids/bgee/itemcat.htm">ITEMCAT</a></code> can use this field, as long as it is equipped in one of the proper slots.
+    <ul>
+      <li>This also means that you can make a Sword that requires being shot out of a Bow.</li>
+    </ul>
+  </li>
+  <li>Bows, Crossbows, and Slings with multiple abilities can even use themselves as their required launcher.</li>
 </ul>
 </td>
 </tr>
@@ -1166,9 +1337,9 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
 <p>A successful hit will always occur if any of the conditions below is true</p>
 <ul>
-  <li>This field is set to 32767</li>
-  <li>The target creature(s) is STATE_HELPLESS</li>
-  <li>The target is affected by time stop</li>
+  <li>This field is set to <code class="language-plaintext highlighter-rouge">32767</code>.</li>
+  <li>The target creature(s) is <code class="language-plaintext highlighter-rouge">STATE_HELPLESS</code>.</li>
+  <li>The target is affected by <a href="../../opcodes/bgee.htm#op231">Time Stop</a>.</li>
 </ul>
 </td>
 </tr>
@@ -1188,7 +1359,7 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0016</td>
   <td>1 (byte)</td>
-  <td><p>Dice sides</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x16">Dice sides</a></b></p>
 </td>
 </tr>
 
@@ -1207,7 +1378,11 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0017</td>
   <td>1 (byte)</td>
-  <td><p><b><a name="itmv1_Extended_Header_0x17">Primary Type</a></b></p>
+  <td><p><b><a name="itmv1_Extended_Header_0x17">Primary Type (School)</a></b></p>
+
+<ul>
+  <li>See <code><a href="../../files/2da/2da_bgee/mschool.htm">MSCHOOL.2DA</a></code>.</li>
+</ul>
 </td>
 </tr>
 
@@ -1226,7 +1401,7 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0018</td>
   <td>1 (byte)</td>
-  <td><p>Dice thrown</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x18">Dice thrown</a></b></p>
 </td>
 </tr>
 
@@ -1246,6 +1421,10 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
   <td>0x0019</td>
   <td>1 (byte)</td>
   <td><p><b><a name="itmv1_Extended_Header_0x19">Secondary Type</a></b></p>
+
+<ul>
+  <li>See <code><a href="../../files/2da/2da_bgee/msectype.htm">MSECTYPE.2DA</a></code>.</li>
+</ul>
 </td>
 </tr>
 
@@ -1264,7 +1443,7 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x001a</td>
   <td>2 (word)</td>
-  <td><p>Damage bonus</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x1A">Damage bonus</a></b></p>
 </td>
 </tr>
 
@@ -1283,18 +1462,81 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x001c</td>
   <td>2 (word)</td>
-  <td><p>Damage type</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x1C">Damage type</a></b></p>
+
 <ul>
-  <li>0 = None</li>
-  <li>1 = Piercing/Magic</li>
-  <li>2 = Blunt</li>
-  <li>3 = Slashing</li>
-  <li>4 = Ranged</li>
-  <li>5 = Fists</li>
-  <li>6 = Piercing/Blunt (more) (BG2)</li>
-  <li>7 = Piercing/Slashing (more) (BG2)</li>
-  <li>8 = Blunt/Slashing (less) (BG2)</li>
+  <li>0 ⟶ <b><a name="itmv1_Extended_Header_0x1C_0">None</a></b>
+    <ul>
+      <li>Deals Crushing damage, uses base AC (ignores all 4 specific AC).
+        <ul>
+          <li>If <code><a href="#itmv1_Extended_Header_0x18">#dice</a> = 0</code>: Deals damage as normal, just no dice amount.</li>
+          <li>If <code><a href="#itmv1_Extended_Header_0x18">#dice</a> &gt; 0</code>: Sets target’s HP to <code class="language-plaintext highlighter-rouge">Damage Dealt</code>, ignores crushing resistance.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>1 ⟶ <b><a name="itmv1_Extended_Header_0x1C_1">Piercing</a></b></li>
+  <li>2 ⟶ <b><a name="itmv1_Extended_Header_0x1C_2">Crushing</a></b></li>
+  <li>3 ⟶ <b><a name="itmv1_Extended_Header_0x1C_3">Slashing</a></b></li>
+  <li>4 ⟶ <b><a name="itmv1_Extended_Header_0x1C_4">Missile</a></b></li>
+  <li>5 ⟶ <b><a name="itmv1_Extended_Header_0x1C_5">Fist</a></b>
+    <ul>
+      <li>Deals non-lethal damage, but uses Crushing AC.</li>
+    </ul>
+  </li>
+  <li>6 ⟶ <b><a name="itmv1_Extended_Header_0x1C_6">Piercing/Crushing</a></b> (Better)
+    <ul>
+      <li>Uses whichever damage type and AC the creature has the worst damage resistance against (regardless if its AC is better or worse). Uses <code class="language-plaintext highlighter-rouge">Piercing</code> if equal resistance.</li>
+    </ul>
+  </li>
+  <li>7 ⟶ <b><a name="itmv1_Extended_Header_0x1C_7">Piercing/Slashing</a></b> (Better)
+    <ul>
+      <li>Uses whichever damage type and AC the creature has the worst damage resistance against (regardless if its AC is better or worse). Uses <code class="language-plaintext highlighter-rouge">Piercing</code> if equal resistance.</li>
+    </ul>
+  </li>
+  <li>8 ⟶ <b><a name="itmv1_Extended_Header_0x1C_8">Crushing/Slashing</a></b> (Worse)
+    <ul>
+      <li>Uses whichever damage type and AC the creature has the better damage resistance against (regardless if its AC is better or worse). Uses <code class="language-plaintext highlighter-rouge">Slashing</code> if equal resistance.</li>
+    </ul>
+  </li>
+  <li>9 ⟶ <b><a name="itmv1_Extended_Header_0x1C_9">Blunt Missile</a></b>
+    <ul>
+      <li>Same as <code><a href="#itmv1_Extended_Header_0x1C_0">None</a></code>
+        <ul>
+          <li>Either it’s bugged or <code><a href="#itmv1_Extended_Header_0x1C_9">Blunt Missile</a></code> has always been an IWD2-only feature.</li>
+          <li>It’s probably meant to deal crushing damage while using Missile AC.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>10+ ⟶ Same as <code><a href="#itmv1_Extended_Header_0x1C_0">None</a></code></li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li>ALL values:
+    <ul>
+      <li>If <code><a href="#itmv1_Extended_Header_0x18">Dice thrown</a></code>, <code><a href="#itmv1_Extended_Header_0x16">Dice size</a></code>, and <code><a href="#itmv1_Extended_Header_0x1A">Damage bonus</a></code> are all <code class="language-plaintext highlighter-rouge">0</code>: Always deals zero damage (ignores all modifiers, like Weapon Proficiency).
+        <ul>
+          <li>If you want zero base damage + modifiers, you can use <code class="language-plaintext highlighter-rouge">1d1 - 1</code>.</li>
+        </ul>
+      </li>
+      <li>Some edge cases:
+        <ul>
+          <li><code><a href="#itmv1_Extended_Header_0x18">Dice thrown</a>d<a href="#itmv1_Extended_Header_0x16">Dice size</a> + <a href="#itmv1_Extended_Header_0x1A">Damage bonus</a> = Xd0 + 0</code>: Deals <code class="language-plaintext highlighter-rouge">X</code> damage, regardless of other modifiers.</li>
+          <li><code><a href="#itmv1_Extended_Header_0x18">Dice thrown</a>d<a href="#itmv1_Extended_Header_0x16">Dice size</a> + <a href="#itmv1_Extended_Header_0x1A">Damage bonus</a> = 0d0 + X</code>: Deals <code class="language-plaintext highlighter-rouge">X + modifiers</code> damage.</li>
+          <li><code><a href="#itmv1_Extended_Header_0x18">Dice thrown</a>d<a href="#itmv1_Extended_Header_0x16">Dice size</a> + <a href="#itmv1_Extended_Header_0x1A">Damage bonus</a> = 0dX + 0</code>: Also deals <code class="language-plaintext highlighter-rouge">0</code> damage.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Values <code class="language-plaintext highlighter-rouge">1–4</code> don’t have any other quirks (<code><a href="#itmv1_Extended_Header_0x1C_1">Piercing</a></code>, <code><a href="#itmv1_Extended_Header_0x1C_2">Crushing</a></code>, <code><a href="#itmv1_Extended_Header_0x1C_3">Slashing</a></code>, <code><a href="#itmv1_Extended_Header_0x1C_4">Missile</a></code>), just each a different damage type.</li>
+</ul>
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1351,7 +1593,7 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0022</td>
   <td>2 (word)</td>
-  <td><p>Charges</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x22">Max Charges</a></b></p>
 </td>
 </tr>
 
@@ -1371,12 +1613,40 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
   <td>0x0024</td>
   <td>2 (word)</td>
   <td><p><b><a name="itmv1_Extended_Header_0x24">Charge depletion behaviour</a></b></p>
+
 <ul>
-  <li>0 ⟶ Don’t vanish</li>
-  <li>1 ⟶ Expended</li>
-  <li>2 ⟶ Expended (w/o sound)</li>
-  <li>3 ⟶ Recharge each day</li>
+  <li>0 ⟶ <b><a name="itmv1_Extended_Header_0x24_0">Item remains</a></b>
+    <ul>
+      <li>Item becomes unusable (except as a weapon) when <code><a href="#itmv1_Extended_Header_0x22">Max Charges</a></code> reaches zero. Can be recharged by selling or by resting if it has the <code><a href="#ExtHeader_Flags_BIT11">Recharge after resting</a></code> flag.</li>
+    </ul>
+  </li>
+  <li>1 ⟶ <b><a name="itmv1_Extended_Header_0x24_1">Item vanishes</a></b>
+    <ul>
+      <li>Item disappears when <code><a href="#itmv1_Extended_Header_0x22">Max Charges</a></code> reaches zero. Can be recharged prior to reaching zero (through either method).</li>
+    </ul>
+  </li>
+  <li>2 ⟶ <b><a name="itmv1_Extended_Header_0x24_2">Replace with used up</a></b>
+    <ul>
+      <li>When <code><a href="#itmv1_Extended_Header_0x22">Max Charges</a></code> reaches zero, item is replaced with the item specified at offset <code><a href="#itmv1_Header_0x10">0x10</a></code>. Can be recharged prior to reaching zero (through either method).</li>
+    </ul>
+  </li>
+  <li>3 ⟶ <b><a name="itmv1_Extended_Header_0x24_3">Item recharges</a></b>
+    <ul>
+      <li>This is very likely no different from <code><a href="#itmv1_Extended_Header_0x24_0">Item remains</a></code> or <code class="language-plaintext highlighter-rouge">4+</code>, i.e. defaults to <code><a href="#itmv1_Extended_Header_0x24_0">0</a></code>.</li>
+    </ul>
+  </li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li>This field is irrelevant when the <code><a href="#itmv1_Extended_Header_0x22">Max Charges</a></code> field is zero. Item can be used infinitely.</li>
+  <li>If the item has a <code><a href="#itmv1_Header_0x38">Max Stack Size</a> &gt; 1</code>, this behavior will instead occur when the stack is depleted, not the charges (but still requires a non-zero <code><a href="#itmv1_Extended_Header_0x22">Max Charges</a></code>).</li>
+</ul>
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1433,7 +1703,39 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x002c</td>
   <td>2*3 (word)</td>
-  <td><p><a href="#ExtendedHeader_MeleeAnimation">Melee animation</a></p>
+  <td><p><b><a href="#ExtendedHeader_MeleeAnimation">Melee animation</a></b></p>
+
+<ul>
+  <li>It should total 100, but not mandatory on EE games.</li>
+  <li>Not needed if <code><a href="#itmv1_Extended_Header_0x32">Arrow</a></code>/<code><a href="#itmv1_Extended_Header_0x34">Bolt</a></code>/<code><a href="#itmv1_Extended_Header_0x36">Bullet</a></code> is used.</li>
+  <li>It should work as such:<br />
+Engine rolls <code class="language-plaintext highlighter-rouge">0 – 99</code>.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">overhand range = 0 to (overhand - 1)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">backhand range = overhand to (overhand + backhand - 1)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">thrust range = (overhand + backhand) to (overhand + backhand + thrust - 1)</code></li>
+    </ul>
+
+    <p>A couple of examples:</p>
+    <ul>
+      <li>With values <code class="language-plaintext highlighter-rouge">34</code>, <code class="language-plaintext highlighter-rouge">33</code>, and <code class="language-plaintext highlighter-rouge">33</code>:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">0 – 33</code>: Overhand</li>
+          <li><code class="language-plaintext highlighter-rouge">34 – 66</code>: Backhand</li>
+          <li><code class="language-plaintext highlighter-rouge">67 – 99</code>: Thrust</li>
+        </ul>
+      </li>
+      <li>With values <code class="language-plaintext highlighter-rouge">100</code>, <code class="language-plaintext highlighter-rouge">100</code>, <code class="language-plaintext highlighter-rouge">100</code>:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">0 – 99</code>: Overhand</li>
+          <li><code class="language-plaintext highlighter-rouge">100 – 199</code>: Backhand (never used)</li>
+          <li><code class="language-plaintext highlighter-rouge">200 – 299</code>: Thrust (never used)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Along with <code><a href="#itmv1_Extended_Header_0x32">Is arrow?</a></code>/<code><a href="#itmv1_Extended_Header_0x34">Is bolt?</a></code>/<code><a href="#itmv1_Extended_Header_0x36">Is bullet?</a></code>, it is only used for attack animations. If all are zero, no animation will be used for attacking. Activated <code><a href="#itmv1_Extended_Header_0x2_3">Item</a></code> abilities can leave them all <code class="language-plaintext highlighter-rouge">0</code>, as they are not used.</li>
+</ul>
 </td>
 </tr>
 
@@ -1452,7 +1754,14 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0032</td>
   <td>2 (word)</td>
-  <td><p>Bow/Arrow qualifier (0=No, 1=Yes)</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x32">Arrow qualifier / Is arrow?</a></b></p>
+<ul>
+  <li>0 ⟶ No</li>
+  <li>1 ⟶ Yes</li>
+</ul>
+
+<p>It controls which firing animation the ability will use.
+It needs to be set on any launcher and/or ammo, but the launcher will override the ammo.</p>
 </td>
 </tr>
 
@@ -1471,7 +1780,14 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0034</td>
   <td>2 (word)</td>
-  <td><p>Crossbow/Bolt qualifier (0=No, 1=Yes)</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x34">Bolt qualifier / Is bolt?</a></b></p>
+<ul>
+  <li>0 ⟶ No</li>
+  <li>1 ⟶ Yes</li>
+</ul>
+
+<p>It controls which firing animation the ability will use.
+It needs to be set on any launcher and/or ammo, but the launcher will override the ammo.</p>
 </td>
 </tr>
 
@@ -1490,7 +1806,14 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0036</td>
   <td>2 (word)</td>
-  <td><p>Misc. Projectile qualifier (0=No, 1=Yes)</p>
+  <td><p><b><a name="itmv1_Extended_Header_0x36">Bullet qualifier / Is bullet?</a></b></p>
+<ul>
+  <li>0 ⟶ No</li>
+  <li>1 ⟶ Yes</li>
+</ul>
+
+<p>It controls which firing animation the ability will use.
+It needs to be set on any launcher and/or ammo, but the launcher will override the ammo.</p>
 </td>
 </tr>
 
@@ -1566,19 +1889,28 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x0002</td>
   <td>1 (char)</td>
-  <td><p>Target type</p>
+  <td><p><b><a name="V1_Feature_Block_0x2">Target type</a></b></p>
+
 <ul>
-  <li>0 = None</li>
-  <li>1 = Self (pre-projectile)</li>
-  <li>2 = Pre-target</li>
-  <li>3 = Party</li>
-  <li>4 = Everyone (inc. party)</li>
-  <li>5 = Everyone (excl. party)</li>
-  <li>6 = Everyone matching specific value of caster (or Party if cast by party member)</li>
-  <li>7 = Everyone matching specific value of target (In ITM: ranged ability type only, otherwise no target)</li>
-  <li>8 = Everyone (excl. caster)</li>
-  <li>9 = Self (post-projectile)</li>
+  <li>0 ⟶ None</li>
+  <li>1 ⟶ <b><a name="V1_Feature_Block_0x2_1">Self</a></b></li>
+  <li>2 ⟶ <b><a name="V1_Feature_Block_0x2_2">Projectile target</a></b></li>
+  <li>3 ⟶ <b><a name="V1_Feature_Block_0x2_3">Party</a></b></li>
+  <li>4 ⟶ <b><a name="V1_Feature_Block_0x2_4">Everyone</a></b></li>
+  <li>5 ⟶ <b><a name="V1_Feature_Block_0x2_5">Everyone except party</a></b></li>
+  <li>6 ⟶ <b><a name="V1_Feature_Block_0x2_6">Caster group</a></b></li>
+  <li>7 ⟶ <b><a name="V1_Feature_Block_0x2_7">Target group</a></b></li>
+  <li>8 ⟶ <b><a name="V1_Feature_Block_0x2_8">Everyone except self</a></b></li>
+  <li>9 ⟶ <b><a name="V1_Feature_Block_0x2_9">Original caster</a></b></li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x2">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1654,38 +1986,30 @@ Note: A strength of 19 or above is considered to have a Strength Bonus of 0, and
 
   <td>0x000c</td>
   <td>1 (char)</td>
-  <td><p>Timing Mode</p>
+  <td><p><b><a name="V1_Feature_Block_0xC">Timing mode</a></b></p>
 
 <ul>
-  <li>0 ⟶ <b><a name="0xC_0">Duration</a></b>
-    <ul>
-      <li>This timing mode measures <code><a href="#0xE">duration</a></code> in seconds.</li>
-    </ul>
-  </li>
-  <li>1 ⟶ Permanent</li>
-  <li>2 ⟶ While equipped</li>
-  <li>3 ⟶ Delayed Duration</li>
-  <li>4 ⟶ Delayed</li>
-  <li>5 ⟶ Delayed (transforms to 8)</li>
-  <li>6 ⟶ Duration?</li>
-  <li>7 ⟶ Permanent?</li>
-  <li>8 ⟶ Permanent (unsaved)</li>
-  <li>9 ⟶ Permanent (after Death)</li>
-  <li>10 ⟶ <b><a name="0xC_10">Trigger / Ticks</a></b>
-    <ul>
-      <li>This timing mode just measures <code><a href="#0xE">duration</a></code> in ticks instead of seconds, there is nothing special about it beyond that. It allows for more accurate synchronization with mechanics that use the full <code class="language-plaintext highlighter-rouge">100 ticks = 1 round</code>.</li>
-      <li>If <code><a href="#0xE">duration</a> = 0</code>, it won’t function any differently from timing mode <code><a href="#0xC_0">0</a></code>.</li>
-    </ul>
-  </li>
-  <li>4096 ⟶ <b><a name="0xC_4096">Absolute duration</a></b>
-    <ul>
-      <li>This timing mode treats the <code><a href="#0xE">duration</a></code> field as the effect’s expiration time (in ticks).
-If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will expire when the game timer reaches 24 hours, or instantly if the game timer has already passed that point. <code class="language-plaintext highlighter-rouge">108000 = 300(1 hour) * 24 * 15 (ticks ➔ seconds)</code>.</li>
-    </ul>
-  </li>
+  <li>0 ⟶ <b><a name="V1_Feature_Block_0xC_0">Instant/Limited</a></b></li>
+  <li>1 ⟶ <b><a name="V1_Feature_Block_0xC_1">Instant/Permanent</a></b></li>
+  <li>2 ⟶ <b><a name="V1_Feature_Block_0xC_2">Instant/While equipped</a></b></li>
+  <li>3 ⟶ <b><a name="V1_Feature_Block_0xC_3">Delay/Limited</a></b></li>
+  <li>4 ⟶ <b><a name="V1_Feature_Block_0xC_4">Delay/Permanent</a></b></li>
+  <li>5 ⟶ <b><a name="V1_Feature_Block_0xC_5">Delay/While equipped</a></b></li>
+  <li>6 ⟶ <b><a name="V1_Feature_Block_0xC_6">Limited after duration</a></b></li>
+  <li>7 ⟶ <b><a name="V1_Feature_Block_0xC_7">Permanent after duration</a></b></li>
+  <li>8 ⟶ <b><a name="V1_Feature_Block_0xC_8">Equipped after duration</a></b></li>
+  <li>9 ⟶ <b><a name="V1_Feature_Block_0xC_9">Instant/Permanent</a></b> (after Death)</li>
+  <li>10 ⟶ <b><a name="V1_Feature_Block_0xC_10">Instant/Limited</a></b></li>
+  <li>4096 ⟶ <b><a name="V1_Feature_Block_0xC_4096">Absolute duration</a></b></li>
 </ul>
 
-<p>NB. all effects except those with Timing mode <code class="language-plaintext highlighter-rouge">9</code> are removed by death.</p>
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1704,7 +2028,7 @@ If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will
 
   <td>0x000d</td>
   <td>1 (char)</td>
-  <td><p>Resistance</p>
+  <td><p><b><a name="V1_Feature_Block_0xD">Dispel / Resistance</a></b></p>
 
 <p>The default behaviour is that effects cannot be dispelled and ignore magic resistance.</p>
 
@@ -1740,7 +2064,7 @@ If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will
 
   <td>0x000e</td>
   <td>4 (dword)</td>
-  <td><p><b><a name="0xE">Duration</a></b></p>
+  <td><p><b><a name="V1_Feature_Block_0xE">Duration</a></b></p>
 </td>
 </tr>
 
@@ -1759,7 +2083,7 @@ If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will
 
   <td>0x0012</td>
   <td>1 (char)</td>
-  <td><p>Probability 1</p>
+  <td><p><b><a name="V1_Feature_Block_0x12">Probability 1</a></b></p>
 </td>
 </tr>
 
@@ -1778,11 +2102,15 @@ If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will
 
   <td>0x0013</td>
   <td>1 (char)</td>
-  <td><p>Probability 2</p>
+  <td><p><b><a name="V1_Feature_Block_0x13">Probability 2</a></b></p>
 
-<p>Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.<br />
-Note: Other engines treat probability as two values, effects are applied in the range probability &lt;= x &lt;= probability.<br />
-Probability range is 0-99</p>
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x13">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1820,7 +2148,15 @@ Probability range is 0-99</p>
 
   <td>0x001c</td>
   <td>4 (dword)</td>
-  <td><p>Dice Thrown</p>
+  <td><p><b><a name="V1_Feature_Block_0x1C">Dice Thrown / Maximum Level</a></b></p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x1C">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1839,7 +2175,15 @@ Probability range is 0-99</p>
 
   <td>0x0020</td>
   <td>4 (dword)</td>
-  <td><p>Dice Sides</p>
+  <td><p><b><a name="V1_Feature_Block_0x20">Dice Sides / Minimum Level</a></b></p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x20">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1858,21 +2202,33 @@ Probability range is 0-99</p>
 
   <td>0x0024</td>
   <td>4 (dword)</td>
-  <td><p>Saving Throw Type</p>
+  <td><p><b><a name="V1_Feature_Block_0x24">Saving throw type</a></b></p>
+
 <ul>
-  <li>bit 0: Spells</li>
-  <li>bit 1: Breathe</li>
-  <li>bit 2: Death</li>
-  <li>bit 3: Wands</li>
-  <li>bit 4: Polymorph</li>
-  <li>bit 10: Ignore primary target – Line AoE projectile doesn’t affect end target (EE only)</li>
-  <li>bit 11: Ignore secondary target – Line AoE projectile doesn’t affect bystanders (EE only)</li>
-  <li>bit 24: Bypass mirror image (EE/TobEx only)</li>
-  <li>bit 25: EE - ignore difficulty; TobEx - limit effect stacking</li>
-  <li>bit 26: TobEx internal (don’t use) - suspend effect application</li>
+  <li>bit 0 ⟶ <b><a name="V1_Feature_Block_0x24_BIT0">Spells</a></b></li>
+  <li>bit 1 ⟶ <b><a name="V1_Feature_Block_0x24_BIT1">Breath</a></b></li>
+  <li>bit 2 ⟶ <b><a name="V1_Feature_Block_0x24_BIT2">Paralyze / Poison / Death</a></b></li>
+  <li>bit 3 ⟶ <b><a name="V1_Feature_Block_0x24_BIT3">Wands</a></b></li>
+  <li>bit 4 ⟶ <b><a name="V1_Feature_Block_0x24_BIT4">Petrify / Polymorph</a></b></li>
+  <li>bit 10 ⟶ <b><a name="V1_Feature_Block_0x24_BIT10">Ignore primary target</a></b> (EE only)</li>
+  <li>bit 11 ⟶ <b><a name="V1_Feature_Block_0x24_BIT11">Ignore secondary target</a></b> (EE only)</li>
+  <li>bit 24 ⟶ <b><a name="V1_Feature_Block_0x24_BIT24">Bypass mirror image</a></b> (EE/TobEx only)</li>
+  <li>bit 25 ⟶
+    <ul>
+      <li><b><a name="V1_Feature_Block_0x24_BIT25_EE">Ignore difficulty</a></b> (EE only)</li>
+      <li><b><a name="V1_Feature_Block_0x24_BIT25_ToBEx">Limit effect stacking</a></b> (ToBEx only)</li>
+    </ul>
+  </li>
+  <li>bit 26 ⟶ TobEx internal (don’t use)</li>
 </ul>
 
-<p>NB. If more than 1 saving throw type is specified, the target rolls against their best save.</p>
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x24">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1933,13 +2289,6 @@ Probability range is 0-99</p>
     <br />
     <div class="indent1">
     <table border="1" width="98%">
-      <colgroup>
-        <col width="20%">
-        <col width="20%">
-        <col width="20%">
-        <col class="col4" width="20%">
-        <col class="col4" width="20%">
-      </colgroup>
       <thead>
         <tr>
           <th>Bit</th>
@@ -1952,75 +2301,171 @@ Probability range is 0-99</p>
       <tbody>
         <tr>
           <td>0</td>
-            <td>Unsellable (critical item)<small><sup>1</sup></small></td>
-          <td>Silver</td>
+          <td>
+            <b><a name="Header_Flags_BIT0">Unsellable (critical item)</a></b>
+            <ul>
+              <li>In BG1, this flag does not affect whether the item can be sold.</li>
+              <li>On EE games, <a href="../ie_formats/sto_v1.htm">Stores</a> can buy critical items if they are flagged as <code><a href="../ie_formats/sto_v1.htm#storv1_0_Header_0x10_BIT15">Can buy Critical</a></code>, provided they can buy its <code><a href="#Header_ItemType">itemtype</a></code>.</li>
+              <li>Will also cause the item to be moved into Player1's Inventory if the character who has it leaves or is kicked from the party.</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT8">Silver</a></b>
+            <ul>
+              <li>Determines how the weapon interacts with <a href="../../opcodes/bgee.htm#op120">opcode #120</a>.</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
-          <td>Not dispellable in magical weapon slot (BGEE, TobEx)</td>
+          <td>Not dispellable in <a href="../../opcodes/bgee.htm#op111">magical weapon slot</a> (BGEE, TobEx)</td>
         </tr>
+
         <tr>
           <td>1</td>
-          <td>Two-handed<small><sup>2</sup></small></td>
-          <td>Cold-Iron</td>
+          <td>
+            <b><a name="Header_Flags_BIT1">Two-handed</a></b>
+            <ul>
+              <li>Forces Two-handed weapon style and attack animation.</li>
+              <li>Disables off-hand: attacks and equipped effects.</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT9">Cold iron</a></b>
+            <ul>
+              <li>Determines how the weapon interacts with <a href="../../opcodes/bgee.htm#op120">opcode #120</a>.</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
-          <td>Toggle critical hit aversion<small><sup>5</sup></small>(BGEE, TobEx)</td>
+          <td>
+            Toggle critical hit aversion (BGEE, TobEx)
+            <ul>
+              <li>Keep in mind that if you set this bit to <code>1</code> for an ITM whose <a href="#Header_ItemType">Item type</a> is <code><a href="#Header_ItemType_7">Headgear</a></code>, then you'll toggle off the Critical hit aversion.</li>
+            </ul>
+          </td>
         </tr>
+
         <tr>
           <td>2</td>
-          <td>Movable</td>
-          <td>Stolen (unsellable) / forces dual-wield animation<br /><br />
-               Set offhand animations for 0x5###-0x6### animId series (excluding 0x64##) when weapon placed in offhand.</td>
+          <td>
+            <b><a name="Header_Flags_BIT2">Movable / Droppable</a></b>
+            <ul>
+              <li>This flag is overridden by the <a href="../ie_formats/cre_v1.htm#CREV1_0_Item_0x10_BIT3">CRE</a>/<a href="../ie_formats/sto_v1.htm#storv1_0_Sale_0x10_BIT3">STO</a> item flag <code><a href="../../files/ids/bgee/invitem.htm#BIT3">NONDROPABLE</a></code>.</li>
+            </ul>
+          </td>
+          <td>
+            Stolen (unsellable) / <b><a name="Header_Flags_BIT10">Off-handed</a></b>
+            <ul>
+              <li>Set offhand animations for 0x5###-0x6### animId series (excluding 0x64##) when weapon placed in offhand.</li>
+              <li>Forces Dual-Wield animation (overrides <code><a href="#Header_Flags_BIT1">BIT1</a></code>).</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>3</td>
-          <td>Displayable</td>
-          <td>Conversable</td>
+          <td>
+            <b><a name="Header_Flags_BIT3">Displayable</a></b>
+            <ul>
+              <li>Item will show up on the ground (when <code><a href="#Header_Flags_BIT2">dropped</a></code>). Setting the <code><a href="#itmv1_Header_0x44">Ground Icon</a></code> to <code>""</code> (empty) still uses a default icon (1x1 invisible pixel), this gets around that. It can still be clicked on and picked up.</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT11">Conversable</a></b>
+            <ul>
+              <li>Dialog can be initiated with the weapon through right-clicking in the Inventory.</li>
+              <li>
+                Item needs to be listed in <a href="../../files/2da/2da_bgee/itemdial.htm">ITEMDIAL.2DA</a> as: <code>(Item ResRef) (Label StrRef) (Dialog ResRef)</code>.
+                <ul>
+                  <li><code>Label StrRef</code> is the label that will be on the button when right-clicking.</li>
+                </ul>
+              </li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>4</td>
-          <td>Cursed</td>
-          <td>Force two-handed animation (BGEE)</td>
+          <td>
+            <b><a name="Header_Flags_BIT4">Cursed</a></b>
+            <ul>
+              <li>Determines how the item interacts with <a href="../../opcodes/bgee.htm#op26">opcode #26</a>.</li>
+              <li>The item cannot be unequipped.</li>
+              <li>Cursed weapons override the <code><a href="../../files/ids/bgee/slots.htm#34">Magical Weapon</a></code> slot.</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT12">Fake two-handed</a></b> (BGEE)
+            <ul>
+              <li>Forces Two-handed animation.</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>5</td>
-          <td><span class="unknown">Cannot scribe to spellbook (scrolls)</span></td>
-          <td>Not usable in off-hand<small><sup>4</sup></small>(BGEE)</td>
+          <td>
+            <span class="unknown">Cannot scribe to spellbook (scrolls)</span>
+            <ul>
+              <li>Whether a scroll can be "Copy Note" to journal or "Write Magic" to spell book is determined by its <a href="#itmv1_Extended_Header">ability headers</a>. Setting this bit doesn't alter it either way.</li>
+              <li>It doesn't prevent a "clone" from getting a duplicate (<a href="../../opcodes/bgee.htm#op236">opcode #236</a><code><small><sup>*</sup></small>p2=2</code>).</li>
+              <li>It doesn't prevent the <code><a href="../../scripting/actions/bgeeactions.htm#264">CopyGroundPilesTo()</a></code> action from moving them.</li>
+              <li>In original BG1, it was set on every item except for the Identify Scroll.</li>
+              <li>In BGEE/SoD, only a few (16) random items added by Beamdog don't have it set, as well as the Identify and Chromatic Orb scrolls.</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT13">Forbid off-hand weapon</a></b> (BGEE)
+            <ul>
+              <li>Disables Two-Weapon Style.</li>
+              <li>Does not disable off-hand equipped effects.</li>
+              <li>In <a href="../../opcodes/bgee.htm#op111">Magical Weapon Slot</a>: Disables off-hand (Attacks only).</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>6</td>
-          <td>Magical</td>
+          <td>
+            <b><a name="Header_Flags_BIT6">Magical</a></b>
+            <ul>
+              <li>Determines how the weapon interacts with <a href="../../opcodes/bgee.htm#op120">opcode #120</a>.</li>
+              <li>Has no relation to the <code><a href="#itmv1_Header_0x60">Enchantment</a></code> field. Both function independently.</li>
+            </ul>
+          </td>
           <td>Usable in inventory (PSTEE)</td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
+
         <tr>
           <td>7</td>
-          <td>Left-handed<small><sup>3</sup></small></td>
-          <td>Adamantine (BGEE)</td>
+          <td>
+            <b><a name="Header_Flags_BIT7">Left-handed</a></b>
+            <ul>
+              <li>Disables off-hand: attacks and equipped effects.</li>
+              <li>Disables Two-Weapon Style (Inventory display is incorrect though).</li>
+            </ul>
+          </td>
+          <td>
+            <b><a name="Header_Flags_BIT15">Adamantine</a></b> (BGEE)
+            <ul>
+              <li>Used by Drow Equipment in SoD along with script action <code><a href="../../scripting/actions/bgeeactions.htm#280">DestroyAllFragileEquipment(ADAMANTINE)</a></code>.</li>
+            </ul>
+          </td>
           <td><span class="unknown">Unused</span></td>
           <td><span class="unknown">Unused</span></td>
         </tr>
       </tbody>
     </table>
-    <br />
-    <small><sup>1</sup></small> In BG1, this flag does not affect whether the item can be sold.<br />
-    <small><sup>2</sup></small> Forces Two-Handed Weapon style, disables off-hand attacks and equipped effects.<br />
-    <small><sup>3</sup></small> Disables off-hand attacks, equipped effects and Two-Weapon style (inventory still displays Two-Weapon style modifiers, but they are not included in the calculations).<br />
-    <small><sup>4</sup></small> It does not disable equipped effects of the off-hand (weapon or shield). In particular:
-        <ul>
-            <li>For normal weapons, it only disables Two-Weapon style.</li>
-            <li>For magically created weapons, it disables off-hand attacks and Two-Weapon style.</li>
-        </ul>
-    <small><sup>5</sup></small> Keep in mind that if you set this bit to 1 for an ITM whose <a href="#Header_ItemType">Item type</a> is 0x0007 (Headgear), then you'll toggle off the Critical hit aversion.
     </div>
-    
+
     <br />
     <a id="Header_ItemType"><div class="actionheader">Header Item Type</div></a>
     <div class="indent1">
@@ -2061,7 +2506,7 @@ Probability range is 0-99</p>
         </tr>
         <tr>
           <td>0x0005</td>
-          <td>Arrows</td>
+          <td><b><a name="Header_ItemType_5">Arrows</a></b></td>
         </tr>
         <tr>
           <td>0x0006</td>
@@ -2069,7 +2514,7 @@ Probability range is 0-99</p>
         </tr>
         <tr>
           <td>0x0007</td>
-          <td>Helms, hats, and other head-wear</td>
+          <td><b><a name="Header_ItemType_7">Headgear</a></b> (Helms, hats, and other head-wear)</td>
         </tr>
         <tr>
           <td>0x0008</td>
@@ -2097,7 +2542,7 @@ Probability range is 0-99</p>
         </tr>
         <tr>
           <td>0x000e</td>
-          <td>Bullets (for a sling)</td>
+          <td><b><a name="Header_ItemType_14">Bullets</a></b> (for a sling)</td>
         </tr>
         <tr>
           <td>0x000f</td>
@@ -2165,7 +2610,7 @@ Probability range is 0-99</p>
         </tr>
         <tr>
           <td>0x001f</td>
-          <td>Crossbow bolts</td>
+          <td><b><a name="Header_ItemType_31">Crossbow bolts</a></b></td>
         </tr>
         <tr>
           <td>0x0020</td>
@@ -3002,12 +3447,16 @@ Probability range is 0-99</p>
         <col width="20%">
         <col width="20%">
         <col width="20%">
+        <col width="20%">
+        <col width="20%">
       </colgroup>
       <thead>
         <tr>
           <th>Bit</th>
           <th>Byte 1</th>
           <th>Byte 2</th>
+          <th>Byte 3</th>
+          <th>Byte 4</th>
         </tr>
       </thead>
       <tbody>
@@ -3015,24 +3464,34 @@ Probability range is 0-99</p>
           <td>0</td>
           <td>Add strength bonus</td>
           <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>1</td>
           <td>Breakable</td>
           <td>EE: Break Sanctuary</td>
+          <td><span class="unknown">Unknown</span></td>
+          <td>ToBEx: Toggle backstab</td>
         </tr>
         <tr>
           <td>2</td>
           <td>Damage strength bonus (BGEE split bit 0)</td>
           <td><b><a name="ExtHeader_Flags_BIT10">Hostile</a></b></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td>EE/ToBEx: Cannot target invisible</td>
         </tr>
         <tr>
           <td>3</td>
           <td>THAC0 strength bonus (BGEE split bit 0)</td>
-          <td>Recharge after resting</td>
+          <td><b><a name="ExtHeader_Flags_BIT11">Recharge after resting</a></b></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>4</td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
           <td><span class="unknown">Unknown</span></td>
           <td><span class="unknown">Unknown</span></td>
         </tr>
@@ -3040,14 +3499,20 @@ Probability range is 0-99</p>
           <td>5</td>
           <td><span class="unknown">Unknown</span></td>
           <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>6</td>
           <td><span class="unknown">Unknown</span></td>
           <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
         </tr>
         <tr>
           <td>7</td>
+          <td><span class="unknown">Unknown</span></td>
+          <td><span class="unknown">Unknown</span></td>
           <td><span class="unknown">Unknown</span></td>
           <td><span class="unknown">Unknown</span></td>
         </tr>

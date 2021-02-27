@@ -123,9 +123,9 @@
                   <li>No Traveling Projectile, hits instantly (truly instant – function during Time Stop).</li>
                   <li>Dependency: Spell Target(<code>Creature</code>).</li>
                   <li>
-                    This projectile type is functionally identical to the hardcoded projectile: <code>0|<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> / 1|<a href="../../files/ids/bgee/missile.htm">MISSILE.IDS</a></code>
+                    This projectile type is functionally identical to the hardcoded projectile: <code>#0|<a href="../../files/ids/bgee/projectl.htm">PROJECTL.IDS</a> / #1|<a href="../../files/ids/bgee/missile.htm">MISSILE.IDS</a></code>
                     <ul>
-                      <li>This is projectile <code>1|None</code> in Near Infinity, not <code>0|Default</code>.</li>
+                      <li>This is projectile <code>#1|None</code> in Near Infinity, not <code>#0|Default</code>.</li>
                     </ul>
                   </li>
                 </ul>
@@ -212,7 +212,19 @@
               <li>
                 bit 4 &longrightarrow; <b><a name="Behavior_BIT4">Do not affect direct target / Ignore center</a></b>
                 <ul>
-                  <li>The Original Caster is not a valid target for "Explosion Projectile"s.</li>
+                  <li>
+                    The Original Caster is not a valid target for <code><a href="#0x21A">Explosion Projectile</a></code>s.
+                    <ul>
+                      <li>This feature only works in <code><a href="#0x8_3">Area-Effect</a></code> projectiles.</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Enables subspells to check Magic Resistance when applied through <a href="../../opcodes/bgee.htm#op146">opcode #146</a><code><sup><small>*</small></sup>p2=2</code>/<a href="../../opcodes/bgee.htm#op326">opcode #326</a>/<a href="../../opcodes/bgee.htm#op333">opcode #333</a>.
+                    <ul>
+                      <li>Without this bit, the secondary targets (i.e., all those hit by the subspell's projectile) would not get a Magic Resistance check, but the other checks would still occur as normal (<code>power</code>, <code>saves</code>, <code>probability</code>, etc...).</li>
+                      <li>This feature works in either <code><a href="#0x8_2">Single-target</a></code> or <code><a href="#0x8_3">Area-Effect</a></code> projectiles.</li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
 
@@ -398,7 +410,14 @@
                 </ul>
               </li>
 
-              <li>Bit 2 &longrightarrow; <b><a name="ExtFlags_BIT2">Draw centre VVC once</a></b></li>
+              <li>
+                Bit 2 &longrightarrow; <b><a name="ExtFlags_BIT2">Draw center VVC once</a></b>
+                <ul>
+                  <li>Dependency: Activated by <code><a href="#AreaFlags_BIT10">Draw Animation<a></code>.</li>
+                  <li>Forces <code><a href="#0x21C">Explosion Animation</a></code> to be played only once.</li>
+                  <li>Works on <a href="../ie_formats/vef_v1.htm">VEF</a>, <a href="../ie_formats/vvc_v1.htm">VVC</a>, and <a href="../ie_formats/bam_v1.htm">BAM</a> files, but <a href="../ie_formats/vef_v1.htm">VEF</a>/<a href="../ie_formats/vvc_v1.htm">VVC</a> files can manually set their duration to match the projectile duration.</li>
+                </ul>
+              </li>
 
               <li>
                 Bit 3 &longrightarrow; <b><a name="ExtFlags_BIT3">Hit immediately</a></b>
@@ -420,7 +439,7 @@
                     <ul>
                       <li>This requires the <code><a href="#0x21C">Explosion Animation</a></code> to include a VVC (VEF optional), not just a BAM.</li>
                       <li>Any mirroring must be specified in the VVC.</li>
-                      <li>The <code>VVC</code> file's <code><a href="../ie_formats/vvc_v1.htm#0x40">Travel Orientation</a></code> must use <code>BIT0|Face Target</code>.</li>
+                      <li>The VVC file's <code><a href="../ie_formats/vvc_v1.htm#0x40">Travel Orientation</a></code> must use <code><a href="../ie_formats/vvc_v1.htm#0x40_BIT0">Face Target</a></code>.</li>
                     </ul>
                   </li>
                 </ul>
@@ -563,14 +582,14 @@
                   <li>
                     The target is hit immediately, and again <code>4</code> seconds (<code>60</code> ticks) later.
                     <ul>
-                      <li>Effects with <code>Saving Throw(BIT10|Ignore Primary Target)</code> will not affect the target (EE only).</li>
+                      <li>Effects with <code><a href="../ie_formats/eff_v1.htm#effv1_Header_BIT10">Ignore Primary Target</a></code> will not affect the target (EE only).</li>
                     </ul>
                   </li>
                   <li>
                     Any creature in or entering the line between the caster and the target is hit immediately.
                     <ul>
                       <li>They are hit again if they are still in or reenter the line between the target and caster at least <code>3</code> seconds later before the projectile ends.</li>
-                      <li>Effects with <code>Saving Throw(BIT11|Ignore Secondary Target)</code> will not affect these creatures (EE only).</li>
+                      <li>Effects with <code><a href="../ie_formats/eff_v1.htm#effv1_Header_0x24_BIT11">Ignore Secondary Target</a></code> will not affect these creatures (EE only).</li>
                     </ul>
                   </li>
                   <li>The Traveling Projectile will reposition itself to maintain a line between the caster and target as either of them moves around.</li>
@@ -715,7 +734,23 @@
               </li>
 
               <li>Bit 16 &longrightarrow; <b><a name="ExtFlags_BIT16">Draw behind target</a></b></li>
-              <li>Bit 17 &longrightarrow; <b><a name="ExtFlags_BIT17">Casting glow effect</a></b></li>
+
+              <li>
+                Bit 17 &longrightarrow; <b><a name="ExtFlags_BIT17">Casting glow effect</a></b>
+                <ul>
+                  <li><code><a href="#0x104">Projectile Animation</a></code> plays first 3 cycles/sequences in order. (Mirrored as normal)</li>
+                  <li>
+                    Designed for use with <a href="../../opcodes/bgee.htm#op140">opcode #140</a>, combined with <code><a href="#ExtFlags_BIT3">Hit Immediately</a></code>.
+                    <ul>
+                      <li>The 1<sup><small>st</small></sup> cycle/sequence is played once.</li>
+                      <li>The 2<sup><small>nd</small></sup> cylce/sequence is looped (or cut short) until there is only enough time left to play the 3<sup><small>rd</small></sup> cycle/sequence once.</li>
+                      <li>The 3<sup><small>rd</small></sup> cycle/sequence is then played once.</li>
+                    </ul>
+                  </li>
+                  <li>Also used by the various spell–school <a href="../ie_formats/spl_v1.htm#Header_Casting_Graphics">casting animations</a> for spells.</li>
+                </ul>
+              </li>
+
               <li>Bit 18 &longrightarrow; <b><a name="ExtFlags_BIT18">Travel door</a></b></li>
               <li>Bit 19 &longrightarrow; <b><a name="ExtFlags_BIT19">Stop/fade after hit</a></b></li>
 
@@ -808,7 +843,7 @@
                       <li>The projectile is limited to lasting only 1–2 seconds, preventing it from affecting any target a second time.</li>
                     </ul>
                   </li>
-                  <li>Special: All "VEF" projectiles (anything listed in <code><a href="../../files/ids/bgee/vefproj.htm">"VEFPROJ.IDS"</a></code>) effectively use this flag.</li>
+                  <li>Special: All "VEF" projectiles (anything listed in <code><a href="../../files/ids/bgee/vefproj.htm">VEFPROJ.IDS</a></code>) effectively use this flag.</li>
                 </ul>
               </li>
 
@@ -833,10 +868,16 @@
                 </ul>
               </li>
 
-              <li>Bit 31 &longrightarrow; <b><a name="ExtFlags_BIT31">Caster affected</a></b> – This is related to effect target <code>9 (Original Caster)</code>.
+              <li>Bit 31 &longrightarrow; <b><a name="ExtFlags_BIT31">Caster affected</a></b> – This is related to effect target <code><a href="../ie_formats/eff_v1.htm#effv1_Header_0x2_9">Original Caster</a></code>.
                 <ul>
                   <li>If this flag is set, the original caster is affected once for every target.</li>
                   <li>Without this flag, the original caster is affected only once, but only if there is at least one target.</li>
+                  <li>
+                    This flag should only be set on <code><a href="#0x8_3">Area-Effect</a></code> projectiles.
+                    <ul>
+                      <li><code><a href="#0x8_2">Single-target</a></code> projectiles, even those that hit multiple targets (f.i. Lightning Bolt), will trigger <code>Original Caster</code> effects once for every target by default.</li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -1349,7 +1390,7 @@
             <li>
               bit 1 &longrightarrow; <b><a name="AreaFlags_BIT1">Triggered by inanimate objects</a></b>
               <ul>
-                <li><a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Containers</a> and <a href="../ie_formats/are_v1.htm#formAREAV1_0_Info">Area Triggers</a> (Proximity/Info/Travel) within range are (also) valid targets.</li>
+                <li><a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Containers</a> and <a href="../ie_formats/are_v1.htm#formAREAV1_0_Info_0x20">Area Triggers</a> (Proximity/Info/Travel) within range are (also) valid targets.</li>
               </ul>
             </li>
 
@@ -1464,7 +1505,21 @@
               </ul>
             </li>
 
-            <li>bit 5 &longrightarrow; <b><a name="AreaFlags_BIT5">Use fragment graphics</a></b></li>
+            <li>
+              bit 5 &longrightarrow; <b><a name="AreaFlags_BIT5">Use fragment graphics</a></b>
+              <ul>
+                <li>Activates <code><a href="#0x212">Fragment Animation</a></code>.</li>
+                <li>
+                  This animation is treated similar to the "Chunking" animation of creatures, launching the specified animation up and outward in various directions.
+                  <ul>
+                    <li>This "Chunking" will start when the projectile explodes and repeat throughout the projectile's duration, if it has one.</li>
+                  </ul>
+                </li>
+                <li>Compatibility: <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code> will only generate fragments when it explodes, once per explosion.</li>
+                <li>Compatibility: The direction these animation are launched is not limited by <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code>.</li>
+                <li>Compatibility: Suppressed by a non-zero <code><a href="#0x202">Ray Count</a></code>.</li>
+              </ul>
+            </li>
 
             <li>
               bit 6 &longrightarrow; <b><a name="AreaFlags_BIT6">Affect only enemies</a></b>
@@ -1508,7 +1563,7 @@
                   <ul>
                     <li>These animations will stack on each other, creating an unrecognizable blob.</li>
                     <li>
-                      Compatibility: With <code><a href="#ExtFlags_BIT12">Draw Center VVC Once</a></code>, this animation will once again play only once.
+                      Compatibility: With <code><a href="#ExtFlags_BIT2">Draw Center VVC Once</a></code>, this animation will once again play only once.
                       <ul>
                         <li>Works on <code><a href="../ie_formats/vef_v1.htm">VEF</a></code>, <code><a href="../ie_formats/vvc_v1.htm">VVC</a></code>, and <code><a href="../ie_formats/bam_v1.htm">BAM</a></code> files, but <code><a href="../ie_formats/vef_v1.htm">VEF</a></code>/<code><a href="../ie_formats/vvc_v1.htm">VVC</a></code> files can manually set their duration to match the projectile duration.</li>
                       </ul>
@@ -1518,7 +1573,7 @@
                       <ul>
                         <li>This requires the <code><a href="#0x21C">Explosion Animation</a></code> to include a <code><a href="../ie_formats/vvc_v1.htm">VVC</a></code> (<code><a href="../ie_formats/vef_v1.htm">VEF</a></code> optional), not just a <code><a href="../ie_formats/bam_v1.htm">BAM</a></code>.</li>
                         <li>Any mirroring must be specified in the <code><a href="../ie_formats/vvc_v1.htm">VVC</a></code>.</li>
-                        <li>The <code>VVC <a href="../ie_formats/vvc_v1.htm#0x40">Travel Orientation</a></code> must use <code>BIT0|Face Target</code>.</li>
+                        <li>The VVC <code><a href="../ie_formats/vvc_v1.htm#0x40">Travel Orientation</a></code> must use <code><a href="../ie_formats/vvc_v1.htm#0x40_BIT0">Face Target</a></code>.</li>
                       </ul>
                     </li>
                   </ul>
@@ -1617,7 +1672,7 @@
               bit 14 &longrightarrow; <b><a name="AreaFlags_BIT14">Skip first condition</a></b>
               <ul>
                 <li>First explosion does not trigger any <code><a href="#0x21A">Explosion Projectile</a></code> (no one is affected), and does not count towards <code><a href="#0x216"># Repetitions</a></code>.</li>
-                <li>Option: <code><a href="#AreaExtFlags_BIT3">Delayed Trigger</a></code> – First explosion is instead delayed <code><a href="#0x210">Explosion Frequency</a></code> ticks, and otherwise works as normal.</li>
+                <li>Option: <code><a href="#AreaFlags_BIT3">Delayed Trigger</a></code> – First explosion is instead delayed <code><a href="#0x210">Explosion Frequency</a></code> ticks, and otherwise works as normal.</li>
               </ul>
             </li>
 
@@ -1658,8 +1713,46 @@
         <td><b><a name="0x202">Ray Count</a></b> (EE only...?)
           <ul>
             <li>Suppresses the <code><a href="#AreaFlags_BIT4">Secondary Projectile</a></code> flag.</li>
-            <li>It causes the Explosion Projectile to be fired (Ray Count) amount of times, starting at 135 degrees (South-East), and increasing by <code><a href="#0x224">Cone Width</a></code> degrees each time. For instance, 4 Rays at 90 Cone Width fires the Explosion Projectile SE, SW, NW, and NE.</li>
-            <li>The Explosion Projectile must be either Area-Effect or Pass-Target (BIT1 @ 0x2c) to affect anything.</li>
+            <li>
+              It causes the <code><a href="#0x21A">Explosion Projectile</a></code> to be fired <code>Ray Count</code> amount of times, starting at <code>135</code> degrees (South-East), and increasing by <code><a href="#0x224">Angle between Rays</a></code> degrees each time (clockwise).
+              <ul>
+                <li>
+                  For instance, 4 Rays at <code><a href="#0x224">Angle between Rays</a> = 90</code> fires the <code><a href="#0x21A">Explosion Projectile</a></code> SE, SW, NW, and NE.
+                  <ul>
+                    <li>Example: (Spiritual Wrath – IWDEE) &longrightarrow; <code>"IDPRO312.PRO"</code>.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>The <code><a href="#0x21A">Explosion Projectile</a></code> must be capable of hitting creatures while targeting a location or they will be just for show (<code><a href="#0x8_3">Area Effect</a></code> or <code><a href="#ExtFlags_BIT1">Pass Target</a></code>).</li>
+            <li>
+              The <code><a href="#0x21A">Explosion Projectile</a></code>'s Travelling Projectile will terminate upon reaching the <code><a href="#0x206">Explosion Size</a></code> of this projectile.
+              <ul>
+                <li>This termination also applies to projectiles using <code><a href="#ExtFlags_BIT1">Pass Target</a></code>, which normally do not terminate upon reaching their destination.</li>
+              </ul>
+            </li>
+            <li>
+              An <code><a href="#0x21A">Explosion Projectile</a></code> will explode at a distance equal to the <code><a href="#0x204">Trap Size</a> * "X"</code> (see below) of this projectile.
+              <ul>
+                <li>Only <code><a href="#0x8_3">Area Effect</a></code> projectiles can explode. Those with <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code> will still explode instantly.</li>
+                <li>
+                  The exact multiplier formula is unknown – but it's not linear.
+                  <ul>
+                    <li>The maximum trap size for an explosion size of <code>480</code> to explode before terminating is a trap size of <code>277</code> (about <code>1.73x</code>).</li>
+                    <li>The maximum trap size for an explosion size of <code>240</code> to explode before terminating is a trap size of <code>150</code> (<code>1.6x</code>).</li>
+                    <li>The maximum trap size for an explosion size of <code>120</code> to explode before terminating is a trap size of <code>86</code> (about <code>1.39x</code>).</li>
+                    <li>The maximum trap size for an explosion size of <code>60</code> to explode before terminating is a trap size of <code>43</code> (about <code>1.39x</code>).</li>
+                    <li>
+                      The distance (<code><a href="#0x204">Trap Size</a></code>) to explode does NOT account for the vertical proportion of the game (where <code>vertical distance = &frac34; horizontal distance</code>).
+                      <ul>
+                        <li>The distance (<code><a href="#0x206">Explosion Size</a></code>) for the Traveling Projectile does take the proportion into account.</li>
+                        <li>The same value may explode a projectile going horizontal but not one going vertical, if the <code><a href="#0x206">Explosion Size</a></code> terminates it before reaching the distance.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
           </ul>
         </td>
       </tr>
@@ -1753,7 +1846,16 @@
       <tr>
         <td>0x00212</td>
         <td>2 (short)</td>
-        <td>Fragment animation (<a href="../../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)</td>
+        <td>
+          <b><a name="0x212">Fragment Animation</a></b> (<a href="../../files/ids/bgee/animate.htm">ANIMATE.IDS</a>)
+          <ul>
+            <li>Dependency: Activated by <code><a href="#AreaFlags_BIT5">Fragments</a></code>.</li>
+            <li>This animation is treated similar to the "Chunking" animation of creatures, launching the specified animation up and outward in various directions.</li>
+            <li>Compatibility: <code><a href="#AreaFlags_BIT2">Triggered by Condition</a></code> will only generate fragments when it explodes, once per explosion.</li>
+            <li>Compatibility: The direction these animation are launched is not limited by <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code>.</li>
+            <li>Compatibility: Suppressed by a non-zero <code><a href="#0x202">Ray Count</a></code>.</li>
+          </ul>
+        </td>
       </tr>
 
       <tr>
@@ -1843,7 +1945,7 @@
       <tr>
         <td>0x00217</td>
         <td>1 (byte)</td>
-        <td><b><a name="0x217">Explosion Animation</a></b> (<a href="../../files/ids/bgee/fireball.htm">FIREBALL.IDS</a>)</td>
+        <td><b><a name="0x217">Explosion Effect</a></b> (<a href="../../files/ids/bgee/fireball.htm">FIREBALL.IDS</a>)</td>
       </tr>
       <tr>
         <td>0x000218</td>
@@ -1890,14 +1992,45 @@
       <tr>
         <td>0x00021c</td>
         <td>8 (resref)</td>
-        <td><b><a name="0x21C">Explosion Animation</a></b> (<a href="vvc_v1.htm">VVC</a>)</td>
+        <td>
+          <b><a name="0x21C">Explosion Animation</a></b> (<a href="vvc_v1.htm">VVC</a>)
+          <ul>
+            <li>Activated by any <code><a href="#0x217">Explosion Effect<a></code> other than <code>255</code>.</li>
+            <li>Activated by <code><a href="#AreaFlags_BIT10">Draw Animation</a></code> when using <code><a href="#0x217">Explosion Effect<a> = 255</code>.</li>
+            <li>This animation is played, at the point of explosion, the first time the projectile explodes.</li>
+            <li>Option: <code><a href="#AreaExtFlags_BIT3">Paletted Center</a></code> will cause this animation to be recolored by the <code><a href="#0x218">Explosion Color</a></code> field.</li>
+            <li>Option: <code><a href="#AreaExtFlags_BIT13">Blend Area/Ring Anim</a></code> will add transparency to the animation (for <a href="../ie_formats/bam_v1.htm">BAM</a> files, <a href="../ie_formats/vvc_v1.htm">VVC</a> can do this themselves).</li>
+            <li>Option: <code><a href="#AreaExtFlags_BIT14">Glow Area/Ring Anim</a></code> will brighten the animation ,generally make it "glow" (for <a href="../ie_formats/bam_v1.htm">BAM</a> files, <a href="../ie_formats/vvc_v1.htm">VVC</a> can do this themselves).</li>
+            <li>Compatibility: With <code><a href="#AreaFlags_BIT10">Draw Animation</a></code>, this field supports (<a href="../ie_formats/vef_v1.htm">VEF</a>&gt;<a href="../ie_formats/vvc_v1.htm">VVC</a>&gt;<a href="../ie_formats/bam_v1.htm">BAM</a>) files.</li>
+            <li>
+              Compatibility: With <code><a href="#AreaFlags_BIT10">Draw Animation</a></code>, the animation is played again every tick of the projectile's duration.
+              <ul>
+                <li>These animations will stack on each other, creating an unrecognizable blob.</li>
+                <li>
+                  Compatibility: With <code><a href="#ExtFlags_BIT2">Draw Center VVC Once</a></code>, this animation will once again play only once, the first time the projectile explodes.
+                  <ul>
+                    <li>Works on <a href="../ie_formats/vef_v1.htm">VEF</a>, <a href="../ie_formats/vvc_v1.htm">VVC</a>, and <a href="../ie_formats/bam_v1.htm">BAM</a> files, but <a href="../ie_formats/vef_v1.htm">VEF</a>/<a href="../ie_formats/vvc_v1.htm">VVC</a> files can manually set their duration to match the projectile duration.</li>
+                  </ul>
+                </li>
+                <li>
+                  Compatibility: With <code><a href="#ExtFlags_BIT4">Face Target</a></code>, this animation can be oriented in the direction of casting (the <a href="../ie_formats/vvc_v1.htm">VVC</a> and its <a href="../ie_formats/bam_v1.htm">BAM</a> must be setup to do so as well).
+                  <ul>
+                    <li>This requires the <code><a href="#0x21C">Explosion Animation</a></code> to include a <a href="../ie_formats/vvc_v1.htm">VVC</a> (<a href="../ie_formats/vef_v1.htm">VEF</a> optional), not just a <a href="../ie_formats/bam_v1.htm">BAM</a>.</li>
+                    <li>Any mirroring must be specified in the VVC.</li>
+                    <li>The VVC <code><a href="../ie_formats/vvc_v1.htm#0x40">Travel Orientation</a></code> must use <code><a href="../ie_formats/vvc_v1.htm#0x40_BIT0">Face Target</a></code>.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </td>
       </tr>
 
       <tr>
         <td>0x000224</td>
         <td>2 (word)</td>
         <td>
-          <b><a name="0x224">Cone Width</a></b> (<code>0 – 65535</code>, effectively capped at <code>359</code>)
+          <b><a name="0x224">Cone Width / Angle between Rays</a></b> (<code>0 – 65535</code>, effectively capped at <code>359</code>)
           <ul>
             <li>Angle is <code>+1</code> specified value.</li>
             <li>Dependency: This field can be activated by either <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code> or <code><a href="#0x202">Ray Count</a></code>.</li>
@@ -1924,17 +2057,71 @@
       <tr>
         <td>0x00226</td>
         <td>2 (word)</td>
-        <td><span class="unknown"> Unused </span></td>
+        <td>
+          <b><a name="0x226">Rotate rays counterclockwise</a></b>
+          <ul>
+            <li>Rotates the entire set of <code><a href="#0x202">Rays</a></code> spawned by the explosion.</li>
+          </ul>
+        </td>
       </tr>
+
       <tr>
         <td>0x00228</td>
         <td>8 (resref)</td>
-        <td><b><a name="0x228">Spread Animation</a></b> (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)</td>
+        <td>
+          <b><a name="0x228">Spread Animation</a></b> (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)
+          <ul>
+            <li>Dependency: Activated by <code><a href="#0x217">Explosion Effect</a></code> not being value <code>255|None</code>.</li>
+            <li>This animation is played in "rings" around the point of origin, out to the <code><a href="#0x206">Explosion Size</a></code>.</li>
+            <li>Each of these "rings" has a radius in increments of <code><a href="#0xA">Speed</a></code>, resulting in a total number of rings equal to <code><a href="#0x206">Explosion Size</a> / <a href="#0xA">Speed</a></code>.</li>
+            <li>
+              Each of these "rings" starts playing <code><a href="#0xA">Speed</a></code> ticks after the previous, starting with the innermost.
+              <ul>
+                <li>The animations will loop until:<br/>
+                  Once the outer-most "ring" has begun playing and the projectile's duration has expired, the "rings" will disappear at the same rate, starting with the outer-most "ring".
+                </li>
+              </ul>
+            </li>
+            <li>
+              The density of animations in each ring is controlled by fields <code><a href="#0x248">Animation Granularity</a></code> and <code><a href="#0x24A">Animation Granularity Divider</a></code>.
+              <ul>
+                <li>Lower values result in higher animation density, but very low values will create clear "gaps" in each of the diagonal directions.</li>
+              </ul>
+            </li>
+            <li>This animation will play all of its cycles/sequences in order, and cannot be oriented.</li>
+            <li>Defunct: <code><a href="#AreaExtFlags_BIT5">Paletted Animation</a></code> should cause this animation to be recolored by the <code><a href="#0x218">Explosion Color</a></code> field, but instead just recolors it all black.</li>
+            <li>Option: <code><a href="#AreaExtFlags_BIT13">Blend Area/Ring Anim</a></code> will add transparency to the animation.</li>
+            <li>Option: <code><a href="#AreaExtFlags_BIT14">Glow Area/Ring Anim</a></code> will brighten the animation (generally make it "glow").</li>
+            <li>Option: <code><a href="#AreaExtFlags_BIT2">Start Scattered</a></code> will cause each of these animations to play at random intervals instead of looping continuously throughout the duration.</li>
+          </ul>
+        </td>
       </tr>
+
       <tr>
         <td>0x00230</td>
         <td>8 (resref)</td>
-        <td><b><a name="0x230">Ring Animation</a></b> (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)</td>
+        <td>
+          <b><a name="0x230">Ring Animation</a></b> (<a href="vef_v1.htm">VEF</a>/<a href="vvc_v1.htm">VVC</a>/<a href="bam_v1.htm">BAM</a>)
+          <ul>
+            <li>Dependency: Activated by <code><a href="#0x217">Explosion Effect</a></code> not being value <code>255|None</code>.</li>
+            <li>This animation expands outward from the point of origin, out to the <code><a href="#0x206">Explosion Size</a></code>, and a rate of <code><a href="#0xA">Speed</a></code>.</li>
+            <li>
+              The density of animations is controlled by fields <code><a href="#0x248">Animation Granularity</a></code> and <code><a href="#0x24A">Animation Granularity Divider</a></code>.
+              <ul>
+                <li>Lower values result in higher animation density, but very low values will create clear "gaps" in each of the diagonal directions.</li>
+              </ul>
+            </li>
+            <li>Defunct: <code><a href="#AreaExtFlags_BIT0">Paletted Ring</a></code> should cause this animation to be recolored by the <code><a href="#0x218">Explosion Color</a></code> field, but instead just recolors it all black.</li>
+            <li>
+              Option: <code><a href="#AreaExtFlags_BIT9">Oriented fireball puffs</a></code> will orient the animation in the direction it's travelling.
+              <ul>
+                <li>It can only mirror horizontally, not vertically. The animation will need at least these 9 directions to be properly oriented: S, SSW, SW, WSW, W, WNW, NW, NNW, N</li>
+              </ul>
+            </li>
+            <li>Option: <code><a href="#AreaExtFlags_BIT13">Blend Area/Ring Anim</a></code> will add transparency to the animation.</li>
+            <li>Option: <code><a href="#AreaExtFlags_BIT14">Glow Area/Ring Anim</a></code> will brighten the animation (generally make it "glow").</li>
+          </ul>
+        </td>
       </tr>
 
       <tr>
@@ -2060,12 +2247,12 @@
       <tr>
         <td>0x00248</td>
         <td>2 (word)</td>
-        <td>Animation granularity</td>
+        <td><b><a name="0x248">Animation granularity</a></b></td>
       </tr>
       <tr>
         <td>0x0024a</td>
         <td>2 (word)</td>
-        <td>Animation granularity divider</td>
+        <td><b><a name="0x24A">Animation granularity divider</a></b></td>
       </tr>
       <tr>
         <td>0x0024c</td>

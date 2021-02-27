@@ -184,7 +184,7 @@
 
   <td>0x0008</td>
   <td>4 (dword)</td>
-  <td><p>Spell Name - Unidentified (strref)</p>
+  <td><p><b><a name="splv1_Header_0x8">Spell Name</a></b> - Unidentified (strref)</p>
 </td>
 </tr>
 
@@ -203,7 +203,7 @@
 
   <td>0x000c</td>
   <td>4 (dword)</td>
-  <td><p>Spell Name - Identified (strref) (usually -1)</p>
+  <td><p><span class="unknown">Spell Name - Identified (strref) (usually <code class="language-plaintext highlighter-rouge">-1</code>) (unused)</span></p>
 </td>
 </tr>
 
@@ -260,15 +260,42 @@
 
   <td>0x001c</td>
   <td>2 (word)</td>
-  <td><p>Spell type:</p>
+  <td><p><b><a name="splv1_Header_0x1C">Spell type</a></b>:</p>
+
 <ul>
-  <li>0 = Special</li>
-  <li>1 = Wizard</li>
-  <li>2 = Cleric</li>
-  <li>3 = Psionic</li>
-  <li>4 = Innate</li>
-  <li>5 = Bardsong</li>
+  <li>0 ⟶ <b><a name="splv1_Header_0x1C_0">Special</a></b></li>
+  <li>1 ⟶ <b><a name="splv1_Header_0x1C_1">Wizard</a></b></li>
+  <li>2 ⟶ <b><a name="splv1_Header_0x1C_2">Priest</a></b></li>
+  <li>3 ⟶ <b><a name="splv1_Header_0x1C_3">Psionic</a></b></li>
+  <li>4 ⟶ <b><a name="splv1_Header_0x1C_4">Innate</a></b></li>
+  <li>5 ⟶ <b><a name="splv1_Header_0x1C_5">Bard song</a></b></li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+  <li><code><a href="#splv1_Header_0x1C_0">Special</a></code>, <code><a href="#splv1_Header_0x1C_3">Psionic</a></code>, <code><a href="#splv1_Header_0x1C_4">Innate</a></code>, and <code><a href="#splv1_Header_0x1C_5">Bard song</a></code> differ only by the string displayed when you cast them. They are all treated as <code><a href="#splv1_Header_0x1C_4">Innate</a></code> abilities, even by <a href="../../opcodes/bgee.htm#op145">opcode #145</a> and the <code><a href="../../scripting/triggers/bgeetriggers.htm#0x00A7">SpellCastInnate()</a></code> trigger.</li>
+  <li><code><a href="#splv1_Header_0x1C_0">Special</a></code> and <code><a href="#splv1_Header_0x1C_4">Innate</a></code> will display <code>"(Caster): (<a href="#splv1_Header_0x8">spell name</a>): (target)"</code>.</li>
+  <li><code><a href="#splv1_Header_0x1C_3">Psionic</a></code> and <code><a href="#splv1_Header_0x1C_5">Bard song</a></code> will display <code>"(Caster): Casts (<a href="#splv1_Header_0x8">spell name</a>): (target)"</code> (which can be misleading).</li>
+  <li><code><a href="#splv1_Header_0x1C_1">Wizard</a></code> and <code><a href="#splv1_Header_0x1C_2">Priest</a></code> will also display <code>"(Caster): Casts (<a href="#splv1_Header_0x8">spell name</a>): (target)"</code>.</li>
+  <li>Any spell cast by one of the <code><a href="../../scripting/actions/bgeeactions.htm#113">ForceSpell()</a></code> script actions will instead display <code><a href="#splv1_Header_0x1C_0">Special</a></code>/<code><a href="#splv1_Header_0x1C_4">Innate</a></code> casting message.</li>
+  <li>Any spell cast by the “BattleSong” (Bard Song/Shaman Dance) or <code><a href="../../scripting/actions/bgeeactions.htm#160">ApplySpell()</a></code> script actions will display <code><a href="#splv1_Header_0x1C_0">Special</a></code>/<code><a href="#splv1_Header_0x1C_4">Innate</a></code> casting message.</li>
+  <li>For any spell cast by another opcode, its casting message will depend on that opcode, but is usually the same as the <code><a href="#splv1_Header_0x1C_0">Special</a></code>/<code><a href="#splv1_Header_0x1C_4">Innate</a></code> casting message.</li>
+  <li>All other values (<code class="language-plaintext highlighter-rouge">6 – 65535</code>) functions the same as <code><a href="#splv1_Header_0x1C_3">Psionic</a></code>/<code><a href="#splv1_Header_0x1C_5">Bard song</a></code>.</li>
+  <li><code><a href="../../files/ids/bgee/stats.htm#51">SPELLFAILUREMAGE</a></code> is related to Spell type <code><a href="#splv1_Header_0x1C_1">Wizard</a></code>.</li>
+  <li><code><a href="../../files/ids/bgee/stats.htm#52">SPELLFAILUREPRIEST</a></code> is related to Spell type <code><a href="#splv1_Header_0x1C_2">Priest</a></code>.</li>
+  <li><code><a href="../../files/ids/bgee/stats.htm#194">SPELL_FAILURE_INNATE</a></code> is related to Spell type <code><a href="#splv1_Header_0x1C_3">Psionic</a></code>/<code><a href="#splv1_Header_0x1C_4">Innate</a></code>/<code><a href="#splv1_Header_0x1C_5">Bard song</a></code>.</li>
+  <li>Normally, any subspells that scale with <code><a href="#splv1_Extended_Header_0x10">Level</a></code> should be of the same <code><a href="#splv1_Header_0x1C">Type</a></code> as the spell casting them.
+    <ul>
+      <li>If they don’t scale, it doesn’t really matter.</li>
+      <li>It also doesn’t matter when they are applied through <a href="../../opcodes/bgee.htm#op146">opcode #146</a><code><sup><small>*</small></sup>p2=2</code>/<a href="../../opcodes/bgee.htm#op326">opcode #326</a>/<a href="../../opcodes/bgee.htm#op333">opcode #333</a>.</li>
+    </ul>
+  </li>
+</ul>
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -344,7 +371,15 @@
 
   <td>0x0025</td>
   <td>1 (byte)</td>
-  <td><p><b><a name="0x25">Primary Type (School)</a></b> (IWD: school.2da, BG2:mschool.2da)</p>
+  <td><p><b><a name="splv1_Header_0x25">Primary Type (School)</a></b> (IWD: school.2da, BG2:mschool.2da)</p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+For subspells, <code><a href="#splv1_Header_0x25">Primary Type</a></code> should always match parent spell, both for interaction with opcodes <a href="../../opcodes/bgee.htm#op220">#220</a>/<a href="../../opcodes/bgee.htm#op229">#229</a>, and with the specialists save bonus/penalty (and <a href="../../opcodes/bgee.htm#op346">opcode #346</a>).
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -382,7 +417,15 @@
 
   <td>0x0027</td>
   <td>1 (char)</td>
-  <td><p><b><a name="0x27">Secondary Type</a></b> (BG2:msectype.2da)</p>
+  <td><p><b><a name="splv1_Header_0x27">Secondary Type</a></b> (BG2:msectype.2da)</p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+For subspells, <code><a href="#splv1_Header_0x27">Secondary Type</a></code> should always match parent spell, for interaction with opcodes <a href="../../opcodes/bgee.htm#op221">#221</a>/<a href="../../opcodes/bgee.htm#op230">#230</a>.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -591,7 +634,12 @@
 
   <td>0x0034</td>
   <td>4 (dword)</td>
-  <td><p>Spell Level</p>
+  <td><p><b><a name="splv1_Header_0x34">Spell Level</a></b></p>
+
+<ul>
+  <li>There is no good reason for a <code><a href="#splv1_Header_0x1C_0">Special</a></code>/<code><a href="#splv1_Header_0x1C_3">Psionic</a></code>/<code><a href="#splv1_Header_0x1C_4">Innate</a></code>/<code><a href="#splv1_Header_0x1C_5">Bard song</a></code> to be any <code><a href="#splv1_Header_0x34">Spell level</a></code> except <code class="language-plaintext highlighter-rouge">1</code>.</li>
+  <li>If the SPL is never <a href="../../opcodes/bgee.htm#op147">learned</a>/<a href="../../opcodes/bgee.htm#op171">gained</a> (only force-cast by script/opcode), <code><a href="#splv1_Header_0x34">Spell level</a></code> doesn’t matter, but there may be some niche cases that check it (f.i. <code><a href="../../scripting/triggers/bgeetriggers.htm#0x4031">HaveSpell()</a></code>).</li>
+</ul>
 </td>
 </tr>
 
@@ -724,7 +772,7 @@
 
   <td>0x0054</td>
   <td>4 (dword)</td>
-  <td><p>Spell Description - Identified (strref) (usually -1)</p>
+  <td><p><span class="unknown">Spell Description - Identified (strref) (usually <code class="language-plaintext highlighter-rouge">-1</code>) (unused)</span></p>
 </td>
 </tr>
 
@@ -919,6 +967,14 @@
   <li>1 - Standard</li>
   <li>2 - Projectile</li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This field matters only for <code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0x0">ITM</a></code>, SPL files shouldn’t function any different based on their type (even <code class="language-plaintext highlighter-rouge">0</code>).
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -958,7 +1014,44 @@
 
   <td>0x0002</td>
   <td>2 (word)</td>
-  <td><p>Location</p>
+  <td><p><b><a name="splv1_Extended_Header_0x2">Location</a></b></p>
+
+<ul>
+  <li>0 ⟶ None
+    <ul>
+      <li>Ability will not be selectable through the UI (but still available to scripts and spell-casting opcodes).</li>
+    </ul>
+  </li>
+  <li>1 ⟶ Weapon
+    <ul>
+      <li><code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0x2_1">ITM</a></code> only.</li>
+    </ul>
+  </li>
+  <li>2 ⟶ <b><a name="splv1_Extended_Header_0x2_2">Spell</a></b>
+    <ul>
+      <li>Ability can be selected from “Cast Spell (F7)” button, and from Quick-spell buttons.</li>
+    </ul>
+  </li>
+  <li>3 ⟶ Item
+    <ul>
+      <li><code><a href="../ie_formats/itm_v1.htm#itmv1_Extended_Header_0x2_3">ITM</a></code> only.</li>
+    </ul>
+  </li>
+  <li>4 ⟶ <b><a name="splv1_Extended_Header_0x2_4">Innate</a></b>
+    <ul>
+      <li>Ability can be selected from “Special Abilities (F12)” button.</li>
+    </ul>
+  </li>
+  <li>5+ ⟶ As <code class="language-plaintext highlighter-rouge">0</code>.</li>
+</ul>
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Subspells don’t require an <code><a href="#splv1_Extended_Header_0x2">Ability Location</a></code>.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -996,21 +1089,63 @@
 
   <td>0x000c</td>
   <td>1 (char)</td>
-  <td><p>Target:</p>
+  <td><p><b><a name="splv1_Extended_Header_0xC">Target</a></b></p>
+
 <ul>
-  <li>0 = Invalid (target cannot be selected)</li>
-  <li>1 = Creature / Living actor</li>
-  <li>2 = Crash</li>
-  <li>3 = Dead actor
+  <li>0 ⟶ Invalid (cannot be selected)</li>
+  <li>1 ⟶ <b><a name="splv1_Extended_Header_0xC_1">Living actor</a></b>
     <ul>
-      <li>To be precise, it can target living and dead actors. It really just ignores any range requirement, including being in the same area.</li>
+      <li>Targets Portrait, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Actor">Creature/Actor</a>, <a href="../ie_formats/are_v1.htm#formAREAV1_0_Container">Container</a>, or <a href="../ie_formats/are_v1.htm#formAREAV1_0_Door">Door</a>. Checks <code><a href="#splv1_Extended_Header_0xE">Range</a></code>.</li>
     </ul>
   </li>
-  <li>4 = Area</li>
-  <li>5 = Self</li>
-  <li>6 = Crash</li>
-  <li>7 = None (Self, ignores game pause)</li>
+  <li>2 ⟶ <b><a name="splv1_Extended_Header_0xC_2">Inventory</a></b>
+    <ul>
+      <li>Can’t be activated manually.</li>
+    </ul>
+  </li>
+  <li>3 ⟶ <b><a name="splv1_Extended_Header_0xC_3">Dead actor</a></b>
+    <ul>
+      <li>As <code><a href="#splv1_Extended_Header_0xC_1">Living Actor</a></code>. It really just ignores any <code><a href="#splv1_Extended_Header_0xE">Range</a></code> requirement, including being in the same area.</li>
+    </ul>
+  </li>
+  <li>4 ⟶ <b><a name="splv1_Extended_Header_0xC_4">Any point within range</a></b>
+    <ul>
+      <li>Targets location. Checks <code><a href="#splv1_Extended_Header_0xE">Range</a></code>.</li>
+    </ul>
+  </li>
+  <li>5 ⟶ <b><a name="splv1_Extended_Header_0xC_5">Caster</a></b>
+    <ul>
+      <li>Targets Self.</li>
+    </ul>
+  </li>
+  <li>6 ⟶ Crash
+    <ul>
+      <li>Can’t be activated manually.</li>
+    </ul>
+  </li>
+  <li>7 ⟶ <b><a name="splv1_Extended_Header_0xC_7">Caster</a></b>
+    <ul>
+      <li>Targets Self. In particular:
+        <ul>
+          <li>Cast instantly (even while the game is paused).</li>
+          <li>Ignores one spell per round rule.</li>
+          <li>Ignores <a href="../../opcodes/bgee.htm#op38">Silence</a>, <a href="../../opcodes/bgee.htm#op60">Spell Failure</a>, <a href="../../opcodes/bgee.htm#op60">Dead Magic</a>, <a href="../../opcodes/bgee.htm#op280">Wild Surge</a>, <code><a href="#Header_Flags_BIT13">Outdoors Only</a></code>, <code><a href="#Header_Flags_BIT16">Non-combat</a></code>, probably a few other rules.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li>This field doesn’t matter when the ability is activated/cast by script or when cast by another opcode.</li>
+  <li>Subspells don’t require an <code><a href="#splv1_Extended_Header_0xC">Ability Target</a></code>.</li>
+</ul>
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1029,7 +1164,19 @@
 
   <td>0x000d</td>
   <td>1 (char)</td>
-  <td><p>Target Number</p>
+  <td><p><b><a name="splv1_Extended_Header_0xD">Target count</a></b></p>
+
+<ul>
+  <li>Only usable with Ability Targets <code><a href="#splv1_Extended_Header_0xC_1">1</a></code>, <code><a href="#splv1_Extended_Header_0xC_3">3</a></code>, or <code><a href="#splv1_Extended_Header_0xC_4">4</a></code>.</li>
+  <li>Targeting reticle will display amount remaining while selecting targets.</li>
+  <li>Double-clicking a target/location will target it for the remaining amount.</li>
+  <li>Regardless of the number of targets, only a single “Memorization” will be expended.</li>
+  <li>This feature cannot be utilized by scripts.
+    <ul>
+      <li>Scripts will treat this field as if it’s always <code class="language-plaintext highlighter-rouge">1</code>.</li>
+    </ul>
+  </li>
+</ul>
 </td>
 </tr>
 
@@ -1048,7 +1195,15 @@
 
   <td>0x000e</td>
   <td>2 (word)</td>
-  <td><p>Range</p>
+  <td><p><b><a name="splv1_Extended_Header_0xE">Range</a></b></p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+As far as subspells are concerned, their <code><a href="#splv1_Extended_Header_0xE">Range</a></code> is only checked if cast through <a href="../../opcodes/bgee.htm#op148">opcode #148</a> or <a href="../../opcodes/bgee.htm#op232">opcode #232</a>.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1067,7 +1222,15 @@
 
   <td>0x0010</td>
   <td>2 (word)</td>
-  <td><p>Level Required</p>
+  <td><p><b><a name="splv1_Extended_Header_0x10">Level Required</a></b></p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Standard spellcasting only utilizes the first byte (<code class="language-plaintext highlighter-rouge">0 – 255</code>), but opcodes that specify Casting Level (<code><a href="../../opcodes/bgee.htm#op146">146</a><sup><small>*</small></sup>p2=2</code>/<code><a href="../../opcodes/bgee.htm#op326">326</a><sup><small>*</small></sup><a href="../ie_formats/eff_v2.htm#effv2_Body_0xC8">EFF</a></code>/<code><a href="../../opcodes/bgee.htm#op333">333</a></code>) have access to the entire range (<code class="language-plaintext highlighter-rouge">0 – 65535</code>).
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1086,7 +1249,23 @@
 
   <td>0x0012</td>
   <td>2 (word)</td>
-  <td><p>Casting Time</p>
+  <td><p><b><a name="splv1_Extended_Header_0x12">Casting Time</a></b></p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+<ul>
+  <li>This value represents the number of tenths of rounds that it takes to cast the spell.</li>
+  <li>Combat scripting in the IE gets very dumb when <code><a href="#splv1_Extended_Header_0x12">Casting Time</a></code>s start matching or exceeding <code class="language-plaintext highlighter-rouge">10</code> (one full round). The engine assumes any spell is cast within a round, and can sometimes just go to the next round’s action (f.i. the mage sits there casting for six seconds, then throws the spell away to use a sling).
+    <ul>
+      <li>As a result, you might want to use maximum <code><a href="#splv1_Extended_Header_0x12">Casting Time</a></code>s of <code class="language-plaintext highlighter-rouge">9</code> (i.e. <sup><small>9</small></sup>⁄<sub><small>10</small></sub>ths of a round) even for spells which are supposed to have a <code><a href="#splv1_Extended_Header_0x12">Casting Time</a></code> of a full round.</li>
+    </ul>
+  </li>
+  <li>As far as subspells are concerned, their speed is only used if cast through <a href="../../opcodes/bgee.htm#op146">opcode #146</a>/<a href="../../opcodes/bgee.htm#op148">opcode #148</a> with the <code class="language-plaintext highlighter-rouge">Cast normally</code> option.</li>
+</ul>
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1352,19 +1531,28 @@
 
   <td>0x0002</td>
   <td>1 (char)</td>
-  <td><p>Target type</p>
+  <td><p><b><a name="V1_Feature_Block_0x2">Target type</a></b></p>
+
 <ul>
-  <li>0 = None</li>
-  <li>1 = Self (pre-projectile)</li>
-  <li>2 = Pre-target</li>
-  <li>3 = Party</li>
-  <li>4 = Everyone (inc. party)</li>
-  <li>5 = Everyone (excl. party)</li>
-  <li>6 = Everyone matching specific value of caster (or Party if cast by party member)</li>
-  <li>7 = Everyone matching specific value of target (In ITM: ranged ability type only, otherwise no target)</li>
-  <li>8 = Everyone (excl. caster)</li>
-  <li>9 = Self (post-projectile)</li>
+  <li>0 ⟶ None</li>
+  <li>1 ⟶ <b><a name="V1_Feature_Block_0x2_1">Self</a></b></li>
+  <li>2 ⟶ <b><a name="V1_Feature_Block_0x2_2">Projectile target</a></b></li>
+  <li>3 ⟶ <b><a name="V1_Feature_Block_0x2_3">Party</a></b></li>
+  <li>4 ⟶ <b><a name="V1_Feature_Block_0x2_4">Everyone</a></b></li>
+  <li>5 ⟶ <b><a name="V1_Feature_Block_0x2_5">Everyone except party</a></b></li>
+  <li>6 ⟶ <b><a name="V1_Feature_Block_0x2_6">Caster group</a></b></li>
+  <li>7 ⟶ <b><a name="V1_Feature_Block_0x2_7">Target group</a></b></li>
+  <li>8 ⟶ <b><a name="V1_Feature_Block_0x2_8">Everyone except self</a></b></li>
+  <li>9 ⟶ <b><a name="V1_Feature_Block_0x2_9">Original caster</a></b></li>
 </ul>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x2">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1440,38 +1628,30 @@
 
   <td>0x000c</td>
   <td>1 (char)</td>
-  <td><p>Timing Mode</p>
+  <td><p><b><a name="V1_Feature_Block_0xC">Timing mode</a></b></p>
 
 <ul>
-  <li>0 ⟶ <b><a name="0xC_0">Duration</a></b>
-    <ul>
-      <li>This timing mode measures <code><a href="#0xE">duration</a></code> in seconds.</li>
-    </ul>
-  </li>
-  <li>1 ⟶ Permanent</li>
-  <li>2 ⟶ While equipped</li>
-  <li>3 ⟶ Delayed Duration</li>
-  <li>4 ⟶ Delayed</li>
-  <li>5 ⟶ Delayed (transforms to 8)</li>
-  <li>6 ⟶ Duration?</li>
-  <li>7 ⟶ Permanent?</li>
-  <li>8 ⟶ Permanent (unsaved)</li>
-  <li>9 ⟶ Permanent (after Death)</li>
-  <li>10 ⟶ <b><a name="0xC_10">Trigger / Ticks</a></b>
-    <ul>
-      <li>This timing mode just measures <code><a href="#0xE">duration</a></code> in ticks instead of seconds, there is nothing special about it beyond that. It allows for more accurate synchronization with mechanics that use the full <code class="language-plaintext highlighter-rouge">100 ticks = 1 round</code>.</li>
-      <li>If <code><a href="#0xE">duration</a> = 0</code>, it won’t function any differently from timing mode <code><a href="#0xC_0">0</a></code>.</li>
-    </ul>
-  </li>
-  <li>4096 ⟶ <b><a name="0xC_4096">Absolute duration</a></b>
-    <ul>
-      <li>This timing mode treats the <code><a href="#0xE">duration</a></code> field as the effect’s expiration time (in ticks).
-If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will expire when the game timer reaches 24 hours, or instantly if the game timer has already passed that point. <code class="language-plaintext highlighter-rouge">108000 = 300(1 hour) * 24 * 15 (ticks ➔ seconds)</code>.</li>
-    </ul>
-  </li>
+  <li>0 ⟶ <b><a name="V1_Feature_Block_0xC_0">Instant/Limited</a></b></li>
+  <li>1 ⟶ <b><a name="V1_Feature_Block_0xC_1">Instant/Permanent</a></b></li>
+  <li>2 ⟶ <b><a name="V1_Feature_Block_0xC_2">Instant/While equipped</a></b></li>
+  <li>3 ⟶ <b><a name="V1_Feature_Block_0xC_3">Delay/Limited</a></b></li>
+  <li>4 ⟶ <b><a name="V1_Feature_Block_0xC_4">Delay/Permanent</a></b></li>
+  <li>5 ⟶ <b><a name="V1_Feature_Block_0xC_5">Delay/While equipped</a></b></li>
+  <li>6 ⟶ <b><a name="V1_Feature_Block_0xC_6">Limited after duration</a></b></li>
+  <li>7 ⟶ <b><a name="V1_Feature_Block_0xC_7">Permanent after duration</a></b></li>
+  <li>8 ⟶ <b><a name="V1_Feature_Block_0xC_8">Equipped after duration</a></b></li>
+  <li>9 ⟶ <b><a name="V1_Feature_Block_0xC_9">Instant/Permanent</a></b> (after Death)</li>
+  <li>10 ⟶ <b><a name="V1_Feature_Block_0xC_10">Instant/Limited</a></b></li>
+  <li>4096 ⟶ <b><a name="V1_Feature_Block_0xC_4096">Absolute duration</a></b></li>
 </ul>
 
-<p>NB. all effects except those with Timing mode <code class="language-plaintext highlighter-rouge">9</code> are removed by death.</p>
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1490,7 +1670,7 @@ If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will
 
   <td>0x000d</td>
   <td>1 (char)</td>
-  <td><p>Resistance</p>
+  <td><p><b><a name="V1_Feature_Block_0xD">Dispel / Resistance</a></b></p>
 
 <p>The default behaviour is that effects cannot be dispelled and ignore magic resistance.</p>
 
@@ -1526,7 +1706,7 @@ If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will
 
   <td>0x000e</td>
   <td>4 (dword)</td>
-  <td><p><b><a name="0xE">Duration</a></b></p>
+  <td><p><b><a name="V1_Feature_Block_0xE">Duration</a></b></p>
 </td>
 </tr>
 
@@ -1545,7 +1725,7 @@ If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will
 
   <td>0x0012</td>
   <td>1 (char)</td>
-  <td><p>Probability 1</p>
+  <td><p><b><a name="V1_Feature_Block_0x12">Probability 1</a></b></p>
 </td>
 </tr>
 
@@ -1564,11 +1744,15 @@ If the <code><a href="#0xE">duration</a></code> field is 108000, the effect will
 
   <td>0x0013</td>
   <td>1 (char)</td>
-  <td><p>Probability 2</p>
+  <td><p><b><a name="V1_Feature_Block_0x13">Probability 2</a></b></p>
 
-<p>Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.<br />
-Note: Other engines treat probability as two values, effects are applied in the range probability &lt;= x &lt;= probability.<br />
-Probability range is 0-99</p>
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x13">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1606,7 +1790,15 @@ Probability range is 0-99</p>
 
   <td>0x001c</td>
   <td>4 (dword)</td>
-  <td><p>Dice Thrown</p>
+  <td><p><b><a name="V1_Feature_Block_0x1C">Dice Thrown / Maximum Level</a></b></p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x1C">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1625,7 +1817,15 @@ Probability range is 0-99</p>
 
   <td>0x0020</td>
   <td>4 (dword)</td>
-  <td><p>Dice Sides</p>
+  <td><p><b><a name="V1_Feature_Block_0x20">Dice Sides / Minimum Level</a></b></p>
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x20">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1644,21 +1844,33 @@ Probability range is 0-99</p>
 
   <td>0x0024</td>
   <td>4 (dword)</td>
-  <td><p>Saving Throw Type</p>
+  <td><p><b><a name="V1_Feature_Block_0x24">Saving throw type</a></b></p>
+
 <ul>
-  <li>bit 0: Spells</li>
-  <li>bit 1: Breathe</li>
-  <li>bit 2: Death</li>
-  <li>bit 3: Wands</li>
-  <li>bit 4: Polymorph</li>
-  <li>bit 10: Ignore primary target – Line AoE projectile doesn’t affect end target (EE only)</li>
-  <li>bit 11: Ignore secondary target – Line AoE projectile doesn’t affect bystanders (EE only)</li>
-  <li>bit 24: Bypass mirror image (EE/TobEx only)</li>
-  <li>bit 25: EE - ignore difficulty; TobEx - limit effect stacking</li>
-  <li>bit 26: TobEx internal (don’t use) - suspend effect application</li>
+  <li>bit 0 ⟶ <b><a name="V1_Feature_Block_0x24_BIT0">Spells</a></b></li>
+  <li>bit 1 ⟶ <b><a name="V1_Feature_Block_0x24_BIT1">Breath</a></b></li>
+  <li>bit 2 ⟶ <b><a name="V1_Feature_Block_0x24_BIT2">Paralyze / Poison / Death</a></b></li>
+  <li>bit 3 ⟶ <b><a name="V1_Feature_Block_0x24_BIT3">Wands</a></b></li>
+  <li>bit 4 ⟶ <b><a name="V1_Feature_Block_0x24_BIT4">Petrify / Polymorph</a></b></li>
+  <li>bit 10 ⟶ <b><a name="V1_Feature_Block_0x24_BIT10">Ignore primary target</a></b> (EE only)</li>
+  <li>bit 11 ⟶ <b><a name="V1_Feature_Block_0x24_BIT11">Ignore secondary target</a></b> (EE only)</li>
+  <li>bit 24 ⟶ <b><a name="V1_Feature_Block_0x24_BIT24">Bypass mirror image</a></b> (EE/TobEx only)</li>
+  <li>bit 25 ⟶
+    <ul>
+      <li><b><a name="V1_Feature_Block_0x24_BIT25_EE">Ignore difficulty</a></b> (EE only)</li>
+      <li><b><a name="V1_Feature_Block_0x24_BIT25_ToBEx">Limit effect stacking</a></b> (ToBEx only)</li>
+    </ul>
+  </li>
+  <li>bit 26 ⟶ TobEx internal (don’t use)</li>
 </ul>
 
-<p>NB. If more than 1 saving throw type is specified, the target rolls against their best save.</p>
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x24">here</a> for further details.
+
+  </div>
+</div>
 </td>
 </tr>
 
@@ -1740,15 +1952,15 @@ Probability range is 0-99</p>
           <td>0</td>
           <td> <span class="unknown"> Unknown </span></td>
           <td> <span class="unknown"> Unknown </span></td>
-          <td> Not in combat </td>
-          <td> Can target invisible (BGEE, TobEx) </td>
+          <td><b><a name="Header_Flags_BIT16">Not in combat</a></b></td>
+          <td><b><a name="Header_Flags_BIT24">Can target invisible</a></b> (BGEE, TobEx)</td>
         </tr>
         <tr>
           <td>1</td>
           <td> <span class="unknown"> Unknown </span></td>
           <td> Breaks Sanctuary (BGEE) </td>
           <td> <span class="unknown"> Unknown </span></td>
-          <td> Castable when silenced (BGEE, TobEx)</td>
+          <td><b><a name="Header_Flags_BIT25">Castable when silenced</a></b> (BGEE, TobEx)</td>
         </tr>
         <tr>
           <td>2</td>
@@ -1774,21 +1986,21 @@ Probability range is 0-99</p>
         <tr>
           <td>5</td>
           <td> <span class="unknown"> Unknown </span></td>
-          <td> Outdoors only</td>
+          <td><b><a name="Header_Flags_BIT13">Outdoors only</a></b></td>
           <td> <span class="unknown"> Unknown </span></td>
           <td> <span class="unknown"> Unknown </span></td>
         </tr>
         <tr>
           <td>6</td>
           <td> <span class="unknown"> Unknown </span></td>
-          <td> Ignore dead-magic and wild surge effect</td>
+          <td><b><a name="Header_Flags_BIT14">Ignore dead-magic and wild surge effect</a></b></td>
           <td> <span class="unknown"> Unknown </span></td>
           <td> <span class="unknown"> Unknown </span></td>
         </tr>
         <tr>
           <td>7</td>
           <td> <span class="unknown"> Unknown </span></td>
-          <td> Ignore wild surge effect (i.e. trigger/contingency)</td>
+          <td><b><a name="Header_Flags_BIT15">Ignore wild surge effect</a></b> (i.e. trigger/contingency)</td>
           <td> <span class="unknown"> Unknown </span></td>
           <td> <span class="unknown"> Unknown </span></td>
         </tr>

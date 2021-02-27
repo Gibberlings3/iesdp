@@ -41,11 +41,13 @@ Set the <code>Amount</code> parameter as the amount of damage, and the <code>Typ
 	<li>13 &longrightarrow; Contagion</li>
 </ul>
 
-<br/><br/><code>Amount</code> can be positive (penalty) or negative (bonus).
+<p>
+	<code>Amount</code> can be positive (penalty) or negative (bonus).
+</p>
 
-<br/><br/>
-<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is <code>none (no icon)</code>.
-<br/>
+<p>
+	<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is <code>None (no icon)</code>.
+</p>
 
 {% capture note %}
 <code>Permanent</code> timing modes require a <code>duration</code> for this effect to work.
@@ -100,7 +102,7 @@ In particular:
 	<li>If <code>Type=11</code>:
 		<ul>
 			<li><code>Timing Mode</code> should be <code>3</code> (with no duration).</li>
-			<li>In <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s, it always causes <code>1d6</code> damage.</li>
+			<li>In <a href="../file_formats/ie_formats/spl_v1.htm#splv1_Feature_Block">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Feature_Block">ITM</a>s, it always causes <code>1d6</code> damage.</li>
 			<li>In external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s it functions identically to 'Mold Touch/Decrement', in every way (see below for further details).</li>
 		</ul>
 	</li>
@@ -112,7 +114,7 @@ In particular:
 				Oddly, this effect measures rounds as 6 seconds (90 ticks) intervals, not 100 ticks.
 			</li>
 			<li>
-				As far as damage dealt is concerned, in <a href="../file_formats/ie_formats/spl_v1.htm">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm">ITM</a>s:
+				As far as damage dealt is concerned, in <a href="../file_formats/ie_formats/spl_v1.htm#splv1_Feature_Block">SPL</a>s/<a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Feature_Block">ITM</a>s:
 				<ul>
 					<li><code>x = 'Amount'(d6)</code>, decrementing the amount by 1 die every round, until zero.</li>
 					<li>Should always use <code>Timing Mode</code> <code>1</code>, <code>3</code> or <code>4</code>, and only a non-zero duration if using <code>Timing Mode 4</code>.</li>
@@ -133,7 +135,7 @@ In particular:
 		</ul>
 	</li>
 </ul>
-<code>Frequency Multiplier</code> determines whether it deals damage every second or every round, and whether it deals <code>x</code> x or <code>xd6</code> damage.
+<code>Frequency Multiplier</code> determines whether it deals damage every second or every round, and whether it deals <code>x</code> or <code>xd6</code> damage.
 <ul>
 	<li><code>Frequency Multiplier = 0</code> &longrightarrow; <code>xd6</code> per round</li>
 	<li><code>Frequency Multiplier = 65536</code> or greater (must be even) &longrightarrow; <code>x</code> per second</li>

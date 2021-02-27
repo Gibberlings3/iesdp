@@ -12,12 +12,100 @@ iwd2: 0
 pst: 0
 ---
 Casts a secondary spell (default: <code>"original resource" + B</code>) on the target, for a number of strikes specified by the <code>Number</code> field. The spell will be cast once per <code>Delay</code> through its projectile.
-<br/>If a spell <code>Level</code> is not specified, then the spell will be cast at level 1 and the damage opcodes will inherit the dice values of this effect, otherwise the spell will be cast at the given level.
-<br/><code>Delay</code> specifies the delay between hits, its default value is <code>6</code> (one round).
+
+<p>
+	If a spell <code>Level</code> is not specified, then the spell will be cast at level 1 and the damage opcodes will inherit the dice values of this effect, otherwise the spell will be cast at the given level.
+</p>
+
+<p>
+	<code>Delay</code> specifies the delay between hits, its default value is <code>6</code> (one round).
+</p>
 
 {% capture note %}
-Its <code>Saving Throw</code> is checked EVERY time it triggers, terminating the <a href="#op333">op333</a> effect if successful, so unless that is desired (or it only triggers once), it should not have a <code>Saving Throw</code>.<br/>
-See <a href="#op326">opcode #326</a> for some peculiarities of projectile behaviour.
+When using this opcode, be aware of the following quirks:
+<ul>
+	<li>If <code>subspell's projectile = 0</code>, subspell effects targeting <code>Self|Projectile Target|Original Caster</code> will affect the effect target of <a href="#op333">opcode #333</a>.</li>
+	<li>If <code>subspell's projectile != 0</code>, subspell effects targeting <code>Original Caster</code> will affect the effect target of <a href="#op333">opcode #333</a>.</li>
+
+	<li>
+		If <code>subspell's projectile != 0</code>, subspell effects targeting <code>Self</code> and <code>Projectile Target</code> will affect the ability target of spell containing <a href="#op333">opcode #333</a>. In particular:
+		<ul>
+			<li>
+				SPL containing <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Living Actor</code>; <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Self</code><br/>
+				Subspell is cast targeting the <code>Living Actor</code>
+				<ul>
+					<li>subspell: op#: <code>target:Self</code> &longrightarrow; affects targeted <code>Living Actor</code>.</li>
+					<li>subspell: op#: <code>target:Projectile Target</code> &longrightarrow; affects targeted <code>Living Actor</code> if subspell's projectile is <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_2">single-target</a></code>, or subspell's projectile target(s) if it's <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code>.</li>
+				</ul>
+			</li>
+
+			<li>
+				SPL containing <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Living Actor</code>; <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Projectile Target</code><br/>
+				Subspell is cast at each target of the projectile
+				<ul>
+					<li>subspell: op#: <code>target:Self</code> &longrightarrow; affects subspell's target.</li>
+					<li>subspell: op#: <code>target:Projectile Target</code> &longrightarrow; affects subspell's target if subspell's projectile is <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_2">single-target</a></code>, or subspell's projectile target(s) if it's <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code>.</li>
+				</ul>
+			</li>
+
+			<li>
+				SPL containing <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Target Point</code>; <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Self</code><br/>
+				Subspell is cast targeting yourself, not the target point
+				<ul>
+					<li>subspell: op#: <code>target:Self</code> &longrightarrow; affects <code>Self</code>.</li>
+					<li>subspell: op#: <code>target:Projectile Target</code> &longrightarrow; affects <code>Self</code> if subspell's projectile is <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_2">single-target</a></code>, or subspell's projectile target(s) if it's <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code>.</li>
+				</ul>
+			</li>
+
+			<li>
+				SPL containing <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Target Point</code>; <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Projectile Target</code><br/>
+				Subspell is cast at each target of the projectile
+				<ul>
+					<li>subspell: op#: <code>target:Self</code> &longrightarrow; affects subspell's target.</li>
+					<li>subspell: op#: <code>target:Projectile Target</code> &longrightarrow; affects subspell's target if subspell's projectile is <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_2">single-target</a></code>, or subspell's projectile target(s) if it's <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code>.</li>
+				</ul>
+			</li>
+
+			<li>
+				SPL containing <a href="#op333">opcode #333</a> &Rightarrow; <code>target:Caster</code> &longrightarrow; is the same as targeting yourself as the <code>Living Actor</code>.
+			</li>
+		</ul>
+	</li>
+
+	<li>
+		The opcode itself CANNOT be reflected, but when it would be reflected, instead only its first "hit" gets reflected (and will decrement <a href="#op200">Spell Turning</a>). Subsequent hits occur as if reflection wasn't involved. When this happens, for that first hit only:
+		<ul>
+			<li>If <code>subspell's projectile = 0</code>, subspell effects targeting <code>Self|Projectile Target|Original Caster</code> will affect the original caster.</li>
+			<li>If <code>subspell's projectile != 0</code>, subspell effects targeting <code>Original Caster</code> will affect the original caster.</li>
+			<li>If <code>subspell's projectile != 0</code>, subspell effects targeting <code>Self</code> and <code>Projectile Target</code> will continue to affect the ability target of the spell containing <a href="#op333">opcode #333</a>.</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include important.html %}
+
+{% capture note %}
+<ul>
+	<li>
+		Effects in the <code>resource</code> will also bypass Magic Resistance, of every target, as if the caster targeted themselves, regardless of who they target with the spell or this effect.
+		<ul>
+			<li>Setting the <code><a href="../file_formats/ie_formats/pro_v1.htm#Behavior_BIT4">Ignore Center</a></code> bit in the subspell's projectile will force its effects to check Magic Resistance on every target, even if the caster did target themselves. Though as its primary function is to cause the projectile to ignore the caster (not "center"), it still won't affect them if it's <code><a href="../file_formats/ie_formats/pro_v1.htm#0x8_3">area-effect</a></code>.</li>
+		</ul>
+	</li>
+</ul>
 {% endcapture %}
 
 {% include note.html %}
+
+{% capture note %}
+Its <code>Saving Throw</code> is checked EVERY time it triggers, terminating the <a href="#op333">opcode #333</a> effect if successful, so unless that is desired (or it only triggers once), it should not have a <code>Saving Throw</code>.
+{% endcapture %}
+
+{% include bug.html %}
+
+{% capture note %}
+See <a href="#op326">opcode #326</a> for some peculiarities of projectile behaviour.
+{% endcapture %}
+
+{% include info.html %}

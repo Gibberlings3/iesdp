@@ -21,30 +21,30 @@ Applies the invisibility effect, in the style specified by the <code>Type</code>
 {% capture note %}
 <ul>
 	<li>
-		Normal Invisibility:
+		<code>Normal</code> Invisibility:
 		<ul>
 			<li>Grants a <code>+4</code> bonus to melee attacks only.</li>
-			<li>Applying "Normal" Invisibility with <code>Timing Mode</code>s other than <code>1/4/7</code> in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
-			<li>Applying "Normal" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
+			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s other than <code>1/4/7</code> in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
+			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT4">STATE_INVISIBLE</a></code>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
 		</ul>
 	</li>
 	<li>
-		Improved Invisibility:
+		<code>Improved</code> Invisibility:
 		<ul>
 			<li>Affected creature stays invisible after attack.</li>
 			<li>Does not provide saving throw bonuses outside EEs, where it provides a bonus of <code>4</code> to all.</li>
 			<li>Lingers after the duration is spent and act as permanent if used as a 'While Equipped' effect.</li>
-			<li>Applying "Improved" invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility. There's no reason to apply both "Normal" and "Improved" invisibility in the same spell/item (unless you want them to have different probabilities/hd limits).</li>
-			<li>Applying "Improved" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>, and because it duplicates itself as "Normal" invisibility, <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> as well, while still leaving behind a removable (but irrelevant) effect for each. These states are not cleared on death.</li>
+			<li>Applying <code>Improved</code> Invisibility will cause the effect to be duplicated, with the duplicate using <code>Normal</code> invisibility. There's no reason to apply both <code>Normal</code> and <code>Improved</code> invisibility in the same spell/item (unless you want them to have different probabilities/hd limits).</li>
+			<li>Applying <code>Improved</code> Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT22">STATE_IMPROVEDINVISIBILITY</a></code>, and because it duplicates itself as <code>Normal</code> invisibility, <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT4">STATE_INVISIBLE</a></code> as well, while still leaving behind a removable (but irrelevant) effect for each. These states are not cleared on death.</li>
 			<li>The effects that remain when setting the base <code>STATE</code>s are irrelevant, at least in-game, because everything that can remove the <code>STATE</code>s will also remove the effect. The <code>STATE</code>s can however be removed separately through NI or EEkeeper, at which point the effect will once again reapply its <code>STATE</code> immediately upon loading the game.</li>
 		</ul>
 	</li>
 	<li>
 		Weak Invisibility:
 		<ul>
-			<li>It's the same type of invisibility as 'Improved Invisibility' after you take a hostile action and reveal yourself.</li>
+			<li>It's the same type of invisibility as <code>Improved</code> Invisibility after you take a hostile action and reveal yourself.</li>
 			<li>Applying "Weak" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will function no differently than <code>Timing Mode 0</code>, aside from having no natural expiration timer.</li>
-			<li>Applying "Weak" Invisibility is otherwise the same as "Improved" invisibility, except it doesn't duplicate itself with a "Normal" version, which is why it doesn't quality for backstabs.</li>
+			<li>Applying "Weak" Invisibility is otherwise the same as <code>Improved</code> Invisibility, except it doesn't duplicate itself with a <code>Normal</code> version, which is why it doesn't quality for backstabs.</li>
 		</ul>
 	</li>
 </ul>
@@ -64,7 +64,7 @@ The "Stealth" modal ability of Thieves/Rangers/Monks applies this effect with th
 {% include note.html %}
 
 {% capture note %}
-Creatures attacking an invisible creature suffer a <code>-4</code> penalty to hit, unless they are affected by <a href="#op193">opcode #193</a>. Moreover, you cannot target an improved/weak invisible creature with spells unless you're affected by <a href="#op193">opcode #193</a> or the spell can target invisible creatures (<a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags">BIT24</a>).
+Creatures attacking an invisible creature suffer a <code>-4</code> penalty to hit, unless they are affected by <a href="#op193">opcode #193</a>. Moreover, you cannot target an <code>improved</code>/<code>weak</code> invisible creature with spells unless you're affected by <a href="#op193">opcode #193</a> or the spell <a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT24">can target invisible creatures</a>.
 {% endcapture %}
 
 {% include note.html %}

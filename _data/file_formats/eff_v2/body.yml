@@ -1,28 +1,36 @@
 - desc: |
     External EFFs - the field is the same as the signature field from the header  
-    Embedded EFFs - this field is zeroed out
+    <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x33_1">Embedded EFF</a>s - this field is zeroed out
   offset: 0x8
   type: char array
   length: 4
 - desc: |
     External EFFs - the field is the same as the version field from the header  
-    Embedded EFFs - this field is zeroed out
+    <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x33_1">Embedded EFF</a>s - this field is zeroed out
   type: char array
   length: 4
 - desc: Opcode number
   type: dword
-- desc: |
-    Target type
-    - 0=None
-    - 1=Self (pre-projectile)
-    - 2=Pre-target
-    - 3=Party
-    - 4=Everyone (inc. party)
-    - 5=Everyone (excl. party)
-    - 6=Everyone matching specific value of caster (or Party if cast by party member)
-    - 7=Everyone matching specific value of target
-    - 8=Everyone (excl. caster)
-    - 9=Self (post-projectile)
+- desc: |-
+    <b><a name="effv2_Body_0x14">Target type</a></b>
+
+    - 0 ⟶ <b><a name="effv2_Body_0x14_0">None</a></b>
+    - 1 ⟶ <b><a name="effv2_Body_0x14_1">Self</a></b>
+    - 2 ⟶ <b><a name="effv2_Body_0x14_2">Projectile target</a></b>
+    - 3 ⟶ <b><a name="effv2_Body_0x14_3">Party</a></b>
+    - 4 ⟶ <b><a name="effv2_Body_0x14_4">Everyone</a></b>
+    - 5 ⟶ <b><a name="effv2_Body_0x14_5">Everyone except party</a></b>
+    - 6 ⟶ <b><a name="effv2_Body_0x14_6">Caster group</a></b>
+    - 7 ⟶ <b><a name="effv2_Body_0x14_7">Target group</a></b>
+    - 8 ⟶ <b><a name="effv2_Body_0x14_8">Everyone except self</a></b>
+    - 9 ⟶ <b><a name="effv2_Body_0x14_9">Original caster</a></b>
+
+    {% capture note %}
+    - If called via <a href="../../opcodes/bgee.htm#op177">opcode #177</a>/<a href="../../opcodes/bgee.htm#op283">opcode #283</a>/<a href="../../opcodes/bgee.htm#op183">opcode #183</a>/<a href="../../opcodes/bgee.htm#op272">opcode #272</a>, this field is irrelevant (it will affect whatever creature the <a href="../../opcodes/bgee.htm#op177">opcode #177</a>/<a href="../../opcodes/bgee.htm#op283">opcode #283</a>/<a href="../../opcodes/bgee.htm#op183">opcode #183</a>/<a href="../../opcodes/bgee.htm#op272">opcode #272</a> effect is attached to).
+    - If called via <a href="../../opcodes/bgee.htm#op248">opcode #248</a>, this field is irrelevant (it will affect whatever creature was attacked).
+    - If called via <a href="../../opcodes/bgee.htm#op249">opcode #249</a>, this field will function same as in <code><a href="../ie_formats/eff_v1.htm#effv1_Header_0x2">SPL/ITM</a></code> effects, except that <code><a href="#effv2_Body_0x14_0">None</a></code> will default to <code><a href="#effv2_Body_0x14_2">Projectile target</a></code>.
+    - If attached directly to a <a href="../ie_formats/cre_v1.htm">CRE</a> file, this field is irrelevant (it will affect whatever creature it's attached to). Also applies to <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x33_0">V1 effects</a> attached directly to <a href="../ie_formats/cre_v1.htm">CRE</a> files.
+    {% endcapture %} {% include note.html %}
   type: dword
 - desc: Power
   type: dword
@@ -30,36 +38,59 @@
   type: dword
 - desc: Parameter 2
   type: dword
-- desc: |
-    Timing mode
-    - 0=Duration
-    - 1=Permanent
-    - 2=While equipped
-    - 3=Delayed Duration
-    - 4=Delayed
-    - 5=Delayed (transforms to 8)
-    - 6=Duration?
-    - 7=Permanent?
-    - 8=Permanent (unsaved)
-    - 9=Permanent (after Death)
-    - 10=Trigger
-    - 4096=Absolute duration
+- desc: |-
+    <b><a name="effv2_Body_0x24">Timing mode</a></b>
 
-    NB. all effects except those with Timing mode '9' are removed by death.
+    - 0 ⟶ <b><a name="effv2_Body_0x24_0">Instant/Limited</a></b>
+    - 1 ⟶ <b><a name="effv2_Body_0x24_1">Instant/Permanent</a></b>
+    - 2 ⟶ <b><a name="effv2_Body_0x24_2">Instant/While equipped</a></b>
+    - 3 ⟶ <b><a name="effv2_Body_0x24_3">Delay/Limited</a></b>
+    - 4 ⟶ <b><a name="effv2_Body_0x24_4">Delay/Permanent</a></b>
+    - 5 ⟶ <b><a name="effv2_Body_0x24_5">Delay/While equipped</a></b>
+    - 6 ⟶ <b><a name="effv2_Body_0x24_6">Limited after duration</a></b>
+    - 7 ⟶ <b><a name="effv2_Body_0x24_7">Permanent after duration</a></b>
+    - 8 ⟶ <b><a name="effv2_Body_0x24_8">Equipped after duration</a></b>
+    - 9 ⟶ <b><a name="effv2_Body_0x24_9">Instant/Permanent</a></b> (after Death)
+    - 10 ⟶ <b><a name="effv2_Body_0x24_10">Instant/Limited</a></b>
+    - 4096 ⟶ <b><a name="effv2_Body_0x24_4096">Absolute duration</a></b>
+
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC">here</a> for further details.
+    {% endcapture %} {% include info.html %}
+
+    {% capture note %}
+    If called via <a href="../../opcodes/bgee.htm#op177">opcode #177</a>/<a href="../../opcodes/bgee.htm#op183">opcode #183</a>/<a href="../../opcodes/bgee.htm#op283">opcode #283</a>, this field is ignored.
+    {% endcapture %} {% include note.html %}
   type: word
 - desc: Timing ?
   type: word
   unknown: 1
-- desc: Duration
-  type: dword
-- desc: Probability 1
-  type: word
-- desc: |
-    Probability 2
+- desc: |-
+    <b><a name="effv2_Body_0x28">Duration</a></b>
 
-    Note: The BG1 engine treats probability as a single word, effects are applied in the range 0-probability.  
-    Note: Other engines treat probability as two values, effects are applied in the range probability <= x <= probability.  
-    Probability range is 0-99
+    - This field is measured in seconds or ticks (<small><sup>1</sup>⁄<sub>15</sub></small> second), depending on <code><a href="#effv2_Body_0x24">Timing mode</a></code>.
+
+    {% capture note %}
+    If called via <a href="../../opcodes/bgee.htm#op177">opcode #177</a>/<a href="../../opcodes/bgee.htm#op183">opcode #183</a>/<a href="../../opcodes/bgee.htm#op283">opcode #283</a>, this field is ignored.
+    {% endcapture %} {% include note.html %}
+  type: dword
+- desc: |-
+    <b><a name="effv2_Body_0x2C">Probability 1</a></b>
+
+    {% capture note %}
+    If called via <a href="../../opcodes/bgee.htm#op183">opcode #183</a>, this field is ignored.
+    {% endcapture %} {% include note.html %}
+  type: word
+- desc: |-
+    <b><a name="effv2_Body_0x2E">Probability 2</a></b>
+
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x13">here</a> for further details.
+    {% endcapture %} {% include info.html %}
+
+    {% capture note %}
+    If called via <a href="../../opcodes/bgee.htm#op183">opcode #183</a>, this field is ignored.
+    {% endcapture %} {% include note.html %}
   type: word
 - desc: Resource
   type: resref
@@ -67,22 +98,36 @@
   type: dword
 - desc: Dice Sides
   type: dword
-- desc: |
-    Saving throw type
-    - bit 0: Spells
-    - bit 1: Breath
-    - bit 2: Death
-    - bit 3: Wands
-    - bit 4: Polymorph
-    - bit 10: Ignore primary target – Line AoE projectile doesn't affect end target (EE only)
-    - bit 11: Ignore secondary target – Line AoE projectile doesn't affect bystanders (EE only)
-    - bit 24: Bypass mirror image (EE/ToBEx only)
-    - bit 25: EE - ignore difficulty; TobEx - limit effect stacking
-    - bit 26: TobEx internal (don't use) - suspend effect application
+- desc: |-
+    <b><a name="effv2_Body_0x40">Saving throw type</a></b>
 
-    NB. If more than 1 saving throw type is specified, the target rolls against their best save
+    - bit 0 ⟶ <b><a name="effv2_Body_0x40_BIT0">Spells</a></b>
+    - bit 1 ⟶ <b><a name="effv2_Body_0x40_BIT1">Breath</a></b>
+    - bit 2 ⟶ <b><a name="effv2_Body_0x40_BIT2">Paralyze / Poison / Death</a></b>
+    - bit 3 ⟶ <b><a name="effv2_Body_0x40_BIT3">Wands</a></b>
+    - bit 4 ⟶ <b><a name="effv2_Body_0x40_BIT4">Petrify / Polymorph</a></b>
+    - bit 10 ⟶ <b><a name="effv2_Body_0x40_BIT10">Ignore primary target</a></b> (EE only)
+    - bit 11 ⟶ <b><a name="effv2_Body_0x40_BIT11">Ignore secondary target</a></b> (EE only)
+    - bit 24 ⟶ <b><a name="effv2_Body_0x40_BIT24">Bypass mirror image</a></b> (EE/TobEx only)
+    - bit 25 ⟶
+      - <b><a name="effv2_Body_0x40_BIT25_EE">Ignore difficulty</a></b> (EE only)
+      - <b><a name="effv2_Body_0x40_BIT25_ToBEx">Limit effect stacking</a></b> (ToBEx only)
+    - bit 26 ⟶ TobEx internal (don't use)
+
+    {% capture note %}
+    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0x24">here</a> for further details.
+    {% endcapture %} {% include info.html %}
+
+    {% capture note %}
+    If called via <a href="../../opcodes/bgee.htm#op183">opcode #183</a>, this field is ignored.
+    {% endcapture %} {% include note.html %}
   type: dword
-- desc: Save bonus
+- desc: |-
+    <b><a name="effv2_Body_0x44">Save bonus</a></b>
+
+    {% capture note %}
+    If called via <a href="../../opcodes/bgee.htm#op183">opcode #183</a>, this field is ignored.
+    {% endcapture %} {% include note.html %}
   type: dword
 - desc: |
     TobEx: Stacking ID. Checked when bit 25 of the Saving Throw Type is set.
@@ -92,7 +137,9 @@
     Stacking IDs are unique to the opcode being applied. To maintain uniqueness of stacking IDs between different mods, one recommendation is to use the higher word of Special as the modder's Infinity Engine Community Prefix, then use the lower word as an identifying ID. For example, 0x41360001 ('A6' 0x0001).
   type: dword
 - desc: |-
-    <b><a name="0x4C">Primary Type (School)</a></b>
+    <b><a name="effv2_Body_0x4C">Primary Type (School)</a></b>
+
+    - See <code><a href="../../files/2da/2da_bgee/mschool.htm">MSCHOOL.2DA</a></code>.
   type: dword
 - desc: Unknown
   type: dword
@@ -104,12 +151,12 @@
   type: dword
   unknown: 1
 - desc: |
-    Resistance
+    <b><a name="effv2_Body_0x5C">Dispel/Resistance</a></b>
 
     The default behaviour is that effects cannot be dispelled and ignore resistance.
     - bit 0 ⟶ Can be dispelled, affected by resistance
     - bit 1 ⟶ Ignores resistance (when used in combination with bit 0)
-    - <b><a name="0x5C_BIT2">bit 2</a></b> ⟶ Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+)
+    - <b><a name="effv2_Body_0x5C_BIT2">bit 2</a></b> ⟶ Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+)
     - bit 31 ⟶ Effect was applied by an [ITM](../ie_formats/itm_v1.htm) (only present in EE games patched to v2.0+).
       - It is set by the engine if the effect's source [ITM](../ie_formats/itm_v1.htm) is identified. This bit is only used by [opcode #324](../../opcodes/bgee.htm#op324) which checks it to determine whether it should set <code><a href="../../files/2da/2da_bgee/enginest.htm#128">STRREF_FEEDBACK_IMMUNE_RESOURCE</a></code> to the ITM's general or identified name.
 
@@ -118,20 +165,29 @@
     - 1 ⟶ Can be dispelled/Affected by resistance
     - 2 ⟶ Cannot be dispelled/Ignores resistance
     - 3 ⟶ Can be dispelled/Ignores resistance
+
+    {% capture note %}
+    If called via <a href="../../opcodes/bgee.htm#op183">opcode #183</a>, this field is ignored.
+    {% endcapture %} {% include note.html %}
   type: dword
-- desc: Parameter 3
+- desc: |-
+    <b><a name="effv2_Body_0x60">Parameter 3</a></b>
   type: dword
-- desc: Parameter 4
+- desc: |-
+    <b><a name="effv2_Body_0x64">Parameter 4</a></b>
   type: dword
 - desc: Parameter 5
   type: dword
-- desc: Parameter 6
+- desc: |-
+    <b><a name="effv2_Body_0x6C">Time applied</a></b> (ticks)
+
+    - It stores the gametime (ticks) at which the effect was originally applied.
   type: dword
 - desc: |-
-    <b><a name="0x70">Resource 2</a></b> (VVC in many effects)
+    <b><a name="effv2_Body_0x70">Resource 2</a></b> (<a href="../ie_formats/vvc_v1.htm">VVC</a> in many effects)
   type: resref
 - desc: |-
-    <b><a name="0x78">Resource 3</a></b>
+    <b><a name="effv2_Body_0x78">Resource 3</a></b>
   type: resref
 - desc: Caster X coordinate
   type: dword
@@ -142,18 +198,24 @@
 - desc: Target Y coordinate
   type: dword
 - desc: |-
-    <b><a name="0x90">Parent resource type</a></b>
-    - 0 ⟶ <b><a name="0x90_0">None</a></b>
-    - 1 ⟶ <b><a name="0x90_1">Spell</a></b>
-    - 2 ⟶ <b><a name="0x90_2">Item</a></b>
+    <b><a name="effv2_Body_0x90">Parent resource type</a></b>
+    - 0 ⟶ <b><a name="effv2_Body_0x90_0">None</a></b>
+    - 1 ⟶ <b><a name="effv2_Body_0x90_1">Spell</a></b>
+    - 2 ⟶ <b><a name="effv2_Body_0x90_2">Item</a></b>
   type: dword
 - desc: |-
-    <b><a name="0x94">Parent resource</a></b>
+    <b><a name="effv2_Body_0x94">Parent resource</a></b>
+
+    {% capture note %}
+    - When attaching passive kit bonuses (labeled as `AP_XXXXXXXX` in <code><a href="../../files/2da/2da_bgee/clabxx00.htm">CLAB</a></code> files) to joinable CRE files as <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x33_1">V2 Effects</a>, this field should be set to the SPL applying such bonuses.
+      - In so doing, such bonuses will not be applied a second time (due to <code><a href="../../files/2da/2da_bgee/clabxx00.htm">CLAB</a></code> processing) when those creatures join the Party.
+    - So for instance, when applying +10％ <a href="../../opcodes/bgee.htm#op87">Crushing Resistance</a> to a CRE file whose <code><a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x244">Kit</a></code> is `BARBARIAN`, set this field to `"SPCL153"`.
+    {% endcapture %} {% include info.html %}
   type: resref
 - desc: |-
-    <b><a name="0x9C">Parent resource flags</a></b>
+    <b><a name="effv2_Body_0x9C">Parent resource flags</a></b>
 
-    - bit 10 ⟶ <b><a name="0x9C_BIT10">Hostile</a></b>
+    - bit 10 ⟶ <b><a name="effv2_Body_0x9C_BIT10">Hostile</a></b>
     - bit 11 ⟶ No LOS required
     - bit 12 ⟶ Allow spotting
     - bit 13 ⟶ Outdoors only
@@ -162,23 +224,25 @@
     - bit 16 ⟶ Non-combat ability
   type: dword
 - desc: |-
-    <b><a name="0xA0">Projectile</a></b>
+    <b><a name="effv2_Body_0xA0">Projectile</a></b>
   type: dword
 - desc: Parent resource slot
   type: dword
   unknown: 1
 - desc: |-
-    <b><a name="0xA8">Variable name</a></b>
+    <b><a name="effv2_Body_0xA8">Variable name</a></b>
   type: bytes
   length: 32
-- desc: Caster level
+- desc: |-
+    <b><a name="effv2_Body_0xC8">Caster level</a></b>
   type: dword
-  unknown: 1
 - desc: FirstApply (internal flag)
   type: dword
   unknown: 1
 - desc: |-
-    <b><a name="0xD0">Secondary Type</a></b>
+    <b><a name="effv2_Body_0xD0">Secondary Type</a></b>
+
+    - See <code><a href="../../files/2da/2da_bgee/msectype.htm">MSECTYPE.2DA</a></code>.
   type: dword
 - desc: Unknown
   type: dword

@@ -30,8 +30,8 @@ Known values for <code>Type</code> are:
 
 <br/>Known values for <code>Weapon Slot</code> are:
 <ul>
-	<li>0 &longrightarrow; Current weapon (the one to which this opcode is attached as an equipped effect)</li>
-	<li>1 &longrightarrow; Main hand weapon</li>
+	<li>0 &longrightarrow; Current weapon (the one to which this opcode is attached as an equipped effect, otherwise no restrictions)</li>
+	<li>1 &longrightarrow; Main hand weapon (includes Ammo and Fists)</li>
 	<li>2 &longrightarrow; Off-hand weapon</li>
 	<li>3 &longrightarrow; Both weapons</li>
 </ul>
@@ -43,7 +43,13 @@ Known values for <code>Type</code> are:
 {% include note.html %}
 
 {% capture note %}
-<code>Type</code> values <code>2</code>, <code>4</code>, <code>5</code>, <code>7</code>, <code>9</code>, and <code>11</code> do nothing (the "non-" versions), as the opcode can only add properties, not remove them.
+<code>Type</code> values <code>2</code>, <code>4</code>, <code>5</code>, <code>7</code>, <code>9</code>, and <code>11</code> do nothing (the "non-" versions), as the opcode can only add properties, not remove them. These <code>Type</code> values were likely copied directly from <a href="#op120">opcode #120</a>, specifically so they would have the same values, even if some didn't function.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+Unlike <a href="#op344">opcode #344</a>, if you set <code>Type=0</code>, any non-zero <code>Enchantment Level</code> value will also flag the item as <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_Flags_BIT6">Magical</a></code>.
 {% endcapture %}
 
 {% include note.html %}

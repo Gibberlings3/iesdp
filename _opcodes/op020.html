@@ -23,7 +23,12 @@ Applies the invisibility effect, in the style specified by the <code>Type</code>
 	<li>
 		<code>Normal</code> Invisibility:
 		<ul>
-			<li>Grants a <code>+4</code> bonus to melee attacks only.</li>
+			<li>
+				Grants a <code>+4</code> bonus to melee attacks only.
+				<ul>
+					<li>In addition to that, an invisible creature with a (backstab value greater than <code>1</code>) or (sneak attack value of at least <code>1d6</code>) also ignores the target's dexterity AC modifier (see <code><a href="../files/2da/2da_bgee/dexmod.htm">DEXMOD.2da</a></code>), when attacking in melee, even if their weapon is unsuitable for backstabbing/sneak attacks.</li>
+				</ul>
+			</li>
 			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s other than <code>1/4/7</code> in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
 			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT4">STATE_INVISIBLE</a></code>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
 		</ul>
@@ -40,7 +45,7 @@ Applies the invisibility effect, in the style specified by the <code>Type</code>
 		</ul>
 	</li>
 	<li>
-		Weak Invisibility:
+		<code>Weak</code> Invisibility:
 		<ul>
 			<li>It's the same type of invisibility as <code>Improved</code> Invisibility after you take a hostile action and reveal yourself.</li>
 			<li>Applying "Weak" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will function no differently than <code>Timing Mode 0</code>, aside from having no natural expiration timer.</li>

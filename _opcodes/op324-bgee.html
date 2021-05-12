@@ -67,9 +67,10 @@ In order to do so, both the <code>Resource</code> field of <a href="#op324">opco
 
 {% capture note %}
 <ul>
-  <li>When displaying its feedback message, it will attempt to identify the name of the parent spell if this effect is located in a child spell with no name. It does in the following manner: if the effect is used within a spell that has no name but there is a spell in the game whose <code>resname</code> is one character shorter with a valid name, then it will display that name. This feature is used in Sunfire <code>"SPWI523D.SPL"</code> to check for thief evasion (IWD:EE).</li>
+  <li>As of v2.6, the name of the correct resource is displayed instead of the name of the resource the effect instance is located in.</li>
+  <li>When displaying its feedback message, it will attempt to identify the name of the parent spell if this effect is located in a child spell with no name. It does in the following manner: if the effect is used within a spell that has no name but there is a spell in the game whose <code>resname</code> is one character shorter with a valid name, then it will display that name. This feature is used by Sunfire (<code>"SPWI523D.spl"</code>) in IWD:EE to check for thief evasion.</li>
   <ul>
-    <li>This feature will also attempt to look for an identical <code>"resname.itm"</code> and display that (identified/unidentified) name if the <code>.spl</code> the effect is in doesn't have a name.</li>
+    <li>This feature will also attempt to look for an identical <code>"resname.itm"</code> and display that (identified/unidentified) name if the <code>.spl</code> the effect is in doesn't have a valid name.</li>
   </ul>
 </ul>
 {% endcapture %}

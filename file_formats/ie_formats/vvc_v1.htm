@@ -1,5 +1,6 @@
 ---
 title: "VVC file format"
+regenerate: true
 ---
     <div class="title_main">VVC file format</div>
     <br />
@@ -79,7 +80,15 @@ title: "VVC file format"
             <li>bit 12: Ignore dream palette</li>
             <li>bit 13: 2d blend </li>
             <li>bit 14: Unused </li>
-            <li>bit 15: Unused </li>
+
+            <li>
+              bit 15 &longrightarrow; <b><a name="Drawing_BIT15">Scale / Center to view</a></b> – Causes the animation to:
+              <ul>
+                <li>Fill the viewable screen, independent of the zoom level.</li>
+                <li>Always be centered in the players view screen.</li>
+                <li>Only displays while the center of the view screen is within the targeted creature's default visual range (there's more to it than this, cause it's not affected by blind).</li>
+              </ul>
+            </li>
           </ul>
         <td>
       </tr>
@@ -96,7 +105,17 @@ title: "VVC file format"
             <li>bit 5: Internal gamma</li>
             <li>bit 6: Non-reserved palette</li>
             <li>bit 7: Full palette </li>
-            <li>bit 8: Unused </li>
+
+            <li>
+              bit 8 &longrightarrow; <b><a name="Color_Adjustment_BIT8">Blend with character's Major color</a></b>
+              <ul>
+                <li>Recolors/Blends the animation using the targeted creature's <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x2E">Major</a> color palette.</li>
+                <li>The animation is brighter while that creature is selected, darker while they are not selected.</li>
+                <li>Color is also affected by their proximity to other creatures.</li>
+                <li>When combined with <code><a href="#Drawing_BIT15">Scale / Center to view</a></code>, the recoloring only happens while the targeted creature is on-screen (requires increased visual range, zooming, and/or other party members to expand visual area).</li>
+              </ul>
+            </li>
+
             <li>bit 9: Sepia</li>
             <li>bit 10: Unused</li>
             <li>bit 11: Unused</li>

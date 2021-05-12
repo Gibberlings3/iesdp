@@ -1828,7 +1828,7 @@ At least in EEs, this effect can remove <a href="#op177">opcode #177</a> effects
 		</tr>
 		<tr>
 			<td>0x08000002</td>
-			<td>CRUSHING</td>
+			<td>STUNNING</td>
 			<td>Set to Percentage</td>
 		</tr>
 		<tr>
@@ -1878,16 +1878,16 @@ Damage type <code>POISON</code> automatically uses save flag <code>Bypass Mirror
 </div>
 
 
-<br/><br/>Known bit values for <code>Flags</code> are:
+<br/><br/>Known bit values for <code><a name="op12_flags">Flags</a></code> are:
 <ul>
 	<li>Bit 0 &longrightarrow; Drain HP to caster (cumulative)</li>
-	<li>Bit 1 &longrightarrow; Reversed HP Drain recipient and target (cumulative)</li>
+	<li>Bit 1 &longrightarrow; As bit 0 but caster and target are reversed (cumulative)</li>
 	<li>Bit 2 &longrightarrow; Fist damage only</li>
 	<li>Bit 3 &longrightarrow; Drain HP to caster (non-cumulative)</li>
-	<li>Bit 4 &longrightarrow; Reversed HP Drain recipient and target (non-cumulative)</li>
+	<li>Bit 4 &longrightarrow; As bit 3 but caster and target are reversed (non-cumulative)</li>
 	<li>Bit 5 &longrightarrow; Suppress combat log feedback string</li>
-	<li>Bit 6 &longrightarrow; HP drain number limited to amount available by target (checks <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a>)</li>
-	<li>Bit 7 &longrightarrow; HP drain number limited to amount necessary to heal recipient to full HP</li>
+	<li>Bit 6 &longrightarrow; Damage inflicted is limited to amount available by target (checks <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a> and works in reverse if bits 1 or 4 are set)</li>
+	<li>Bit 7 &longrightarrow; Damage inflicted is limited to the caster's <code>(<a href="../files/ids/bgee/stats.htm#1">MAXHITPOINTS</a> - <a href="../files/ids/bgee/stats.htm#0">CURRENTHP</a>)</code> (works in reverse if bits 1 or 4 are set)</li>
 	<li>Bit 8 &longrightarrow; Save for half</li>
 	<li>Bit 9 &longrightarrow; Fail for half: A failed (or lack of) saving throw results in half damage.</li>
 	<li>Bit 10 &longrightarrow; Does not wake sleepers</li>
@@ -1899,14 +1899,20 @@ Damage type <code>POISON</code> automatically uses save flag <code>Bypass Mirror
   <div>
     <strong>Info:</strong> 
 <ul>
-	<li>Bits <code>0</code>, <code>1</code>, <code>3</code>, and <code>4</code> are mutually exclusive. Bit <code>7</code> prevents temporary HP gain.</li>
 	<li>
-		Notice there are essentially 2 modes the bonus temporary HP are calculated: <code>cumulative</code> and <code>non-cumulative</code>.
+		Bits 0, 1, 3, and 4 are mutually exclusive, while bits 6 and 7 do not require any of the HP drain bits to be set to function.
 		<ul>
-			<li><code>Cumulative</code> works as you'd imagine: extra HP are simply added on if recipient of the drain is at maximum HP (including any previous temporary HP).</li>
-			<li><code>Non-cumulative</code> HP drain calculates extra HP gain based on where the current HP of the recipient is relative to the normal (unextended by <code>non-cumulative</code> HP bonus) maximum. Furthermore, all <code>non-cumulative</code> HP drain effects are treated as a coexisting group, where the highest extra HP roll is added to the maximum hitpoints without dispelling any lower rolls. So the recipient will still benefit if the lower rolls have a longer duration than the higher roll.</li>
-			<li>Here's an example: if the caster gains <code>4</code> temporary HP from a previous <code>non-cumulative</code> HP drain, suffers <code>5</code> damage, then drains <code>2</code> hit points, (s)he will be cured <code>2</code> hitpoints of which <code>1</code> HP will be "stored" as an extra hitpoint for a certain duration set by the damage effect.</li>
+			<li>However, bits 6 and 7 are often used together to achieve desired HP drain behavior. For instance, bit7 in conjunction with bit1 is used in IWD:EE/SoD's "Shadow Pact" ability (<code>"SPIN195.spl"</code>/<code>"BDSHPACT.spl"</code>) for shadows to prevent them from inflicting more damage on reverse HP drain than necessary to heal them to normal max HP.</li>
 		</ul>
+	</li>
+	<li>
+		In all cases, HP drain now only increases maximum HP if the character is at full health and there are extra HP remaining from the drain, which can happen even during the drain. Current HP gained is always cumulative (bits 0,1,3,4) if the caster is injured. Extra HP gained by non-cumulative HP drain (bits 3,4) may still coexist on the same creature. This means that the caster can still benefit from lower HP drain if the effect expires later than the higher HP drain effect.
+	</li>
+	<li>
+		Example: The caster at 3/4 HP can increase his/her HP to 7/7 with one casting of Larloch's Minor Drain (if 4 is rolled) and 8/8 with another casting if 4 is rolled again, otherwise nothing seems to happen despite the damage inflicted. The caster may further benefit with additional castings if injured, but cannot go beyond 8/8 HP. This all assumes there is sufficient HP to drain (since bit 6 is now set in <code>"SPWI119.spl"</code>).
+	</li>
+	<li>
+		Extra maximum HP effects carried on the creature now have their <code>mschool</code>, <code>msectype</code>, <code>resource</code>, <code>resist_dispel</code>, <code>dispel_level</code> etc properly set. See <a href="#op18">opcode #18</a> for how non-cumulative HP gain is stored.
 	</li>
 </ul>
 
@@ -2493,7 +2499,7 @@ Unlike <a href="#op12">opcode #12</a>, this opcode does not apply any death effe
 	<li>3 &longrightarrow; As <code>0</code> (does not affect current HP)</li>
 	<li>4 &longrightarrow; As <code>1</code> (does not affect current HP)</li>
 	<li>5 &longrightarrow; As <code>2</code> (does not affect current HP)</li>
-	<li>6 &longrightarrow; Non-cumulative Modifier: <code>HP = HP + 'Statistic Modifier' value</code> (affects current and max HP) (EE only...?)</li>
+	<li>6 &longrightarrow; Non-cumulative Modifier: <code>HP = HP + 'Statistic Modifier' value</code> (affects current and max HP) (EE only)</li>
 </ul>
 
 <br/><br/><code>Statistic Modifier</code> can be positive or negative.
@@ -2515,8 +2521,7 @@ Unlike <a href="#op12">opcode #12</a>, this opcode does not apply any death effe
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-<code>Type=6</code>: This mode is applied by <a href="#op12">opcode #12</a> with either Special BIT3 or BIT4 (Drain to max HP), blocking further effects with those BITs from granting additional HP, but still allow them to deal damage.<br />
-(This might change in v2.6, given the overhaul to the damage flags involved with it, as currently it further blocks both the Current and Maximum HP gain, when it should only block further Maximum HP gain.)
+To differentiate non-cumulative HP gain from other forms of HP gain, <code>Type</code> is set internally to <code>6</code>. As mentioned <a href="#op12_flags">here</a>, multiple effects of <code>Type=6</code> can be carried by the creature at the same time and only the largest value is used when calculating extra HP. Hence the term <i>“noncumulative coexisting”</i>. This functionality doesn’t interact with other forms (<code>Type != 6</code>) of HP gain, and cumulative HP drain doesn’t use <code>Type=6</code>.
 
   </div>
 </div>
@@ -2552,65 +2557,6 @@ If <code>Statistic Modifier</code> and the Dice values are both non-zero, the to
 <ul>
 	<li>Maximum HP cannot be reduced below a creature's level/HD (average level rounded up for multiclasses).</li>
 	<li>It is still able to reduce current HP below the creature's level/HD, and has the same bugged death as <a href="#op17">opcode #17</a> if it reduces a creature to zero or less HP.</li>
-</ul>
-
-  </div>
-</div>
-
-
-
-
-<div class="note warning">
-  <div>
-    <strong>Warning:</strong> 
-The following can be considered bugs, though they may be internally necessary, so it could also be seen as a matter of DO NOT USE in this way.
-<ul>
-	<li>
-		When applied in spells/items, this effect, and all other existing op18 effects on the creature have their <code>Statistic Modifier</code> value increased by their dice value (rerolled):
-		<ul>
-			<li>
-				Apply op18: <code>+10d1</code>, on CRE:<br />
-				This effect <code>p1 = 20 (10d1 + 10d1)</code>, total = <code>+20</code>
-			</li>
-			<li>
-				Apply op18: <code>+5d1</code>, on CRE:<br />
-				This effect <code>p1 = 10 (5d1 + 5d1)</code>.<br />
-				Previous effect <code>p1 now = 30 (20 + 10d1)</code>, total = <code>+40</code>
-			</li>
-			<li>
-				Apply op18: <code>+10d1</code>, on CRE:<br />
-				This effect <code>p1 = 20 (10d1 + 10d1)</code>.<br />
-				First effect <code>p1 now = 40 (30 + 10d1)</code>.<br />
-				Second effect <code>p1 now = 15 (10 + 5d1)</code>, total = <code>+75</code>
-			</li>
-			<li>
-				Apply op18: <code>+1d1</code>, on CRE:<br />
-				This effect <code>p1 = 2 (1d1 + 1d1)</code>.<br />
-				First effect <code>p1 now = 50 (40 + 10d1)</code>.<br />
-				Second effect <code>p1 now = 20 (15 + 5d1)</code>.<br />
-				Third effect <code>p1 now = 30 (20 + 10d1)</code>, total = <code>+102</code>
-			</li>
-			<li>Avoid using the dice fields in spells/items.</li>
-		</ul>
-	</li>
-	<li>
-		When applied in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
-		<ul>
-			<li>Dice Values are rerolled if you save/reload while the effect is still active.</li>
-			<li>Avoid using the dice fields in external EFFs.</li>
-		</ul>
-	</li>
-	<li>
-		When applied in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
-		<ul>
-			<li>Current Hit Points are increased by twice the specified amount, plus the cumulative total of all other op18 effects applied through external EFFs currently active on the creature. Maximum Hit Points are increased as normal.</li>
-			<li>Apply EFF with <code>p1=10</code>, <code>p2=0</code>, Current HP: <code>+20</code>, Maximum HP: <code>+10</code></li>
-			<li>Apply it again before the previous expires: Current HP: <code>+30</code>, Maximum HP: <code>+10</code></li>
-			<li>Apply it again before either previous expires: Current HP: <code>+40</code>, Maximum HP: <code>+10</code></li>
-			<li>Avoid using the "Update current HP" modes in external EFFs.</li>
-			<li>This works similar to using the dice fields in items/spells, except it affects Current Hit Points instead of Maximum. Though since Current Hit Point modifiers don't leave any effect behind, cannot actually verify that's how the mechanic works.</li>
-		</ul>
-	</li>
 </ul>
 
   </div>
@@ -2782,7 +2728,12 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 	<li>
 		<code>Normal</code> Invisibility:
 		<ul>
-			<li>Grants a <code>+4</code> bonus to melee attacks only.</li>
+			<li>
+				Grants a <code>+4</code> bonus to melee attacks only.
+				<ul>
+					<li>In addition to that, an invisible creature with a (backstab value greater than <code>1</code>) or (sneak attack value of at least <code>1d6</code>) also ignores the target's dexterity AC modifier (see <code><a href="../files/2da/2da_bgee/dexmod.htm">DEXMOD.2da</a></code>), when attacking in melee, even if their weapon is unsuitable for backstabbing/sneak attacks.</li>
+				</ul>
+			</li>
 			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s other than <code>1/4/7</code> in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
 			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT4">STATE_INVISIBLE</a></code>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
 		</ul>
@@ -2799,7 +2750,7 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 		</ul>
 	</li>
 	<li>
-		Weak Invisibility:
+		<code>Weak</code> Invisibility:
 		<ul>
 			<li>It's the same type of invisibility as <code>Improved</code> Invisibility after you take a hostile action and reveal yourself.</li>
 			<li>Applying "Weak" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will function no differently than <code>Timing Mode 0</code>, aside from having no natural expiration timer.</li>
@@ -5631,7 +5582,7 @@ This opcode increments <a href="../files/ids/bgee/stats.htm#51">SPELLFAILUREMAGE
 <ul>
 	<li>It always affects the entire creature (not a specific location).</li>
 	<li>It is always "instantaneous". No effect is attached to the creature, it's all handled by internal mechanics, but it still uses the specified duration. Saving &AMP; Reloading will remove the effect.</li>
-	<li>It starts with full color overlay, then fades out over the specified duration (to the creature's normal color), then fades back to a full color overlay, then instantly returns to the creature's normal colors.</li>
+	<li>The creature will instantly be covered by a color overlay which then fades out. The color overlay will not fade back in. It's otherwise similar to <a href="#op50">opcode #50</a>, where the color overlay fades onto the creature and then fades back out.</li>
 </ul>
 
 <br/>The <code>RGB Colour</code> field is handled as follows:
@@ -19735,7 +19686,7 @@ In EE games, can also remove <a href="#op177">opcode #177</a>/<a href="#op283">o
 	<li>Items flagged as <code><a href="../files/ids/bgee/itemflag.htm#BIT0">INDESTRUCTIBLE</a></code> are not drained.</li>
 	<li>Items with a <code><a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Header_0x38">Maximum Stack Size</a></code> greater than <code>1</code> are not drained.</li>
 	<li>Items drained of all charges behave as dictated by their first Ability that is fully drained (the <code><a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x24">when drained</a></code> field).</li>
-	<li>You can drain charges for a specific item if the <code>resource</code> field is used.</li>
+	<li>You can drain charges of a particular item if the <code>resource</code> field is used.</li>
 </ul>
  </div>
 		<hr />
@@ -22646,7 +22597,11 @@ The <code>Stat Value</code> parameter can take any value. If you set it to <code
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Creatures in EE run scripts as long as they are in the current area, <a href="#op293">opcode #293</a> does not alter this, nor allow their scripts to run while they are in different areas.
+<ul>
+	<li>Creatures in EE run scripts as long as they are in the current area, <a href="#op293">opcode #293</a> does not alter this, nor allow their scripts to run while they are in different areas.</li>
+	<li>However, creatures without this opcode attached will run scripts at a considerably slower rate (about &frac13; or &frac14; rate).</li>
+	<li>Moreover, it looks like off-screen creatures move only at halved speed (which might be true for other actions as well). With this opcode creatures seem to move and act at the same speed as on-screen.</li>
+</ul>
 
   </div>
 </div>
@@ -24269,9 +24224,10 @@ In order to do so, both the <code>Resource</code> field of <a href="#op324">opco
   <div>
     <strong>Note:</strong> 
 <ul>
-  <li>When displaying its feedback message, it will attempt to identify the name of the parent spell if this effect is located in a child spell with no name. It does in the following manner: if the effect is used within a spell that has no name but there is a spell in the game whose <code>resname</code> is one character shorter with a valid name, then it will display that name. This feature is used in Sunfire <code>"SPWI523D.SPL"</code> to check for thief evasion (IWD:EE).</li>
+  <li>As of v2.6, the name of the correct resource is displayed instead of the name of the resource the effect instance is located in.</li>
+  <li>When displaying its feedback message, it will attempt to identify the name of the parent spell if this effect is located in a child spell with no name. It does in the following manner: if the effect is used within a spell that has no name but there is a spell in the game whose <code>resname</code> is one character shorter with a valid name, then it will display that name. This feature is used by Sunfire (<code>"SPWI523D.spl"</code>) in IWD:EE to check for thief evasion.</li>
   <ul>
-    <li>This feature will also attempt to look for an identical <code>"resname.itm"</code> and display that (identified/unidentified) name if the <code>.spl</code> the effect is in doesn't have a name.</li>
+    <li>This feature will also attempt to look for an identical <code>"resname.itm"</code> and display that (identified/unidentified) name if the <code>.spl</code> the effect is in doesn't have a valid name.</li>
   </ul>
 </ul>
 

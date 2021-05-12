@@ -358,7 +358,12 @@
               <li>
                 Bit 1 &longrightarrow; <b><a name="ExtFlags_BIT1">Pass target</a></b>
                 <ul>
-                  <li>Projectile travels in straight line (is not homing), hitting all creatures within range of its current location every <code>2</code> ticks.</li>
+                  <li>
+                    Projectile travels in straight line (is not homing), hitting all creatures within range of its current location every <code>2</code> ticks.
+                    <ul>
+                      <li>The projectile targets each creature only once unless <code><a href="#ExtFlags_BIT0">Bounce from Walls</a></code> is set at which point during the bounce, the targets are cleared and the projectile can target previously hit creatures once more (as expected).</li>
+                    </ul>
+                  </li>
                   <li>Compatibility: <code><a href="#ExtFlags_BIT10">Multiple Projectile</a></code> functions as normal except that it will not arc this projectile.</li>
                   <li>
                     Priority:
@@ -1714,13 +1719,23 @@
           <ul>
             <li>Suppresses the <code><a href="#AreaFlags_BIT4">Secondary Projectile</a></code> flag.</li>
             <li>
-              It causes the <code><a href="#0x21A">Explosion Projectile</a></code> to be fired <code>Ray Count</code> amount of times, starting at <code>135</code> degrees (South-East), and increasing by <code><a href="#0x224">Angle between Rays</a></code> degrees each time (clockwise).
+              It causes the <code><a href="#0x21A">Explosion Projectile</a></code> to be fired <code>Ray Count</code> amount of times.
               <ul>
                 <li>
-                  For instance, 4 Rays at <code><a href="#0x224">Angle between Rays</a> = 90</code> fires the <code><a href="#0x21A">Explosion Projectile</a></code> SE, SW, NW, and NE.
-                  <ul>
-                    <li>Example: (Spiritual Wrath – IWDEE) &longrightarrow; <code>"IDPRO312.PRO"</code>.</li>
-                  </ul>
+                  Setting the <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code> bit will cause the rays to spawn at the location of the caster. If this bit is not set and the <code><a href="#0x202">Ray Count</a></code> is nonzero, then the rays will spawn at the location of the explosion of the projectile.
+                </li>
+                <li>
+                  The direction of the first ray is no longer fixed towards the southeast but is determined as follows:
+                  <ol>
+                    <li>if the <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code> bit is disabled, the first ray will continue in the same direction as the parent projectile using a vector of the caster's location to the explosion point.</li>
+                    <li>if the <code><a href="#AreaFlags_BIT11">Cone-shaped</a></code> bit is enabled, the first ray will travel from the caster's position towards the destination/casting point.</li>
+                  </ol>
+                </li>
+                <li>
+                  Further rays are generated based on how <code><a href="#0x224">cone angle/angle between rays</a></code> is set.
+                </li>
+                <li>
+                  As of v2.6, you may nest rays in one another to construct complex-shaped areas of effect. In terms of nesting multiple rays, the point of origin of the ray one higher up the "chain" is treated as the caster's position.
                 </li>
               </ul>
             </li>
@@ -1728,6 +1743,15 @@
             <li>
               The <code><a href="#0x21A">Explosion Projectile</a></code>'s Travelling Projectile will terminate upon reaching the <code><a href="#0x206">Explosion Size</a></code> of this projectile.
               <ul>
+                <li>
+                  For lightning bolt-type projectiles, this distance is used up, even as the bolt bounces (see <code>"LIGHTB.pro"</code> in BG1/2:EE and <code>"IDPRO40.pro"</code> in IWD:EE as examples).
+                </li>
+                <li>
+                  For <code><a href="#0x8_2">single-target</a></code> projectiles, they simply travel that distance before disappearing.
+                </li>
+                <li>
+                  For <code><a href="#0x8_3">area-of-effect</a></code> projectiles (f.i. <code>"FIREBALL.pro"</code>), they explode normally when reaching that distance. And as mentioned earlier, <code><a href="#0x8_3">area-of-effect</a></code> child projectiles can also use the ray feature themselves to generate additional rays with the direction vector determined as mentioned above.
+                </li>
                 <li>This termination also applies to projectiles using <code><a href="#ExtFlags_BIT1">Pass Target</a></code>, which normally do not terminate upon reaching their destination.</li>
               </ul>
             </li>
@@ -2044,7 +2068,15 @@
             <li>
               Option: With <code><a href="#0x202">Ray Count</a> > 0</code>
               <ul>
-                <li>This value controls the angle (degrees) between each "ray".</li>
+                <li>This will generate additional rays relative to the initial direction of the first ray.</li>
+                <li>
+                  They will be generated on alternating sides of the first ray at angle increments set by this field.
+                  <ul>
+                    <li>For instance, if <code><a href="#0x202">Ray Count</a></code> is set to <code>5</code> and this field is set to <code>45</code>, then rays will be generated at angles <code>-90</code>, <code>-45</code>, <code>0</code>, <code>45</code>, <code>90</code> degrees relative to the direction vector as described <a href="#0x202">above</a>.</li>
+                    <li>Note that if <code><a href="#0x202">Ray Count</a></code> is an even number, the ray group will be asymmetrical unless you rotate them (see <a href="#0x226">below</a>).</li>
+                    <li>In Spiritual Wrath's case (<code>"IDPRO312.pro"</code> in IWD:EE), there are 4 rays at 90 degree angles from one another, making them appear symmetrical.</li>
+                  </ul>
+                </li>
               </ul>
             </li>
           </ul>
@@ -2058,9 +2090,9 @@
         <td>0x00226</td>
         <td>2 (word)</td>
         <td>
-          <b><a name="0x226">Rotate rays counterclockwise</a></b>
+          <b><a name="0x226">Rotate rays clockwise</a></b>
           <ul>
-            <li>Rotates the entire set of <code><a href="#0x202">Rays</a></code> spawned by the explosion.</li>
+            <li>Setting this field (<code>0–359</code>) will rotate the entire set of <code><a href="#0x202">Rays</a></code> spawned by the explosion clockwise.</li>
           </ul>
         </td>
       </tr>

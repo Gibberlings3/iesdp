@@ -2078,7 +2078,7 @@ Unlike <a href="#op12">opcode #12</a>, this opcode does not apply any death effe
 	<li>3 &longrightarrow; As <code>0</code> (does not affect current HP)</li>
 	<li>4 &longrightarrow; As <code>1</code> (does not affect current HP)</li>
 	<li>5 &longrightarrow; As <code>2</code> (does not affect current HP)</li>
-	<li>6 &longrightarrow; Non-cumulative Modifier: <code>HP = HP + 'Statistic Modifier' value</code> (affects current and max HP) (EE only...?)</li>
+	<li>6 &longrightarrow; Non-cumulative Modifier: <code>HP = HP + 'Statistic Modifier' value</code> (affects current and max HP) (EE only)</li>
 </ul>
 
 <br/><br/><code>Statistic Modifier</code> can be positive or negative.
@@ -2100,8 +2100,7 @@ Unlike <a href="#op12">opcode #12</a>, this opcode does not apply any death effe
 <div class="note info">
   <div>
     <strong>Info:</strong> 
-<code>Type=6</code>: This mode is applied by <a href="#op12">opcode #12</a> with either Special BIT3 or BIT4 (Drain to max HP), blocking further effects with those BITs from granting additional HP, but still allow them to deal damage.<br />
-(This might change in v2.6, given the overhaul to the damage flags involved with it, as currently it further blocks both the Current and Maximum HP gain, when it should only block further Maximum HP gain.)
+To differentiate non-cumulative HP gain from other forms of HP gain, <code>Type</code> is set internally to <code>6</code>. As mentioned <a href="#op12_flags">here</a>, multiple effects of <code>Type=6</code> can be carried by the creature at the same time and only the largest value is used when calculating extra HP. Hence the term <i>“noncumulative coexisting”</i>. This functionality doesn’t interact with other forms (<code>Type != 6</code>) of HP gain, and cumulative HP drain doesn’t use <code>Type=6</code>.
 
   </div>
 </div>
@@ -2137,65 +2136,6 @@ If <code>Statistic Modifier</code> and the Dice values are both non-zero, the to
 <ul>
 	<li>Maximum HP cannot be reduced below a creature's level/HD (average level rounded up for multiclasses).</li>
 	<li>It is still able to reduce current HP below the creature's level/HD, and has the same bugged death as <a href="#op17">opcode #17</a> if it reduces a creature to zero or less HP.</li>
-</ul>
-
-  </div>
-</div>
-
-
-
-
-<div class="note warning">
-  <div>
-    <strong>Warning:</strong> 
-The following can be considered bugs, though they may be internally necessary, so it could also be seen as a matter of DO NOT USE in this way.
-<ul>
-	<li>
-		When applied in spells/items, this effect, and all other existing op18 effects on the creature have their <code>Statistic Modifier</code> value increased by their dice value (rerolled):
-		<ul>
-			<li>
-				Apply op18: <code>+10d1</code>, on CRE:<br />
-				This effect <code>p1 = 20 (10d1 + 10d1)</code>, total = <code>+20</code>
-			</li>
-			<li>
-				Apply op18: <code>+5d1</code>, on CRE:<br />
-				This effect <code>p1 = 10 (5d1 + 5d1)</code>.<br />
-				Previous effect <code>p1 now = 30 (20 + 10d1)</code>, total = <code>+40</code>
-			</li>
-			<li>
-				Apply op18: <code>+10d1</code>, on CRE:<br />
-				This effect <code>p1 = 20 (10d1 + 10d1)</code>.<br />
-				First effect <code>p1 now = 40 (30 + 10d1)</code>.<br />
-				Second effect <code>p1 now = 15 (10 + 5d1)</code>, total = <code>+75</code>
-			</li>
-			<li>
-				Apply op18: <code>+1d1</code>, on CRE:<br />
-				This effect <code>p1 = 2 (1d1 + 1d1)</code>.<br />
-				First effect <code>p1 now = 50 (40 + 10d1)</code>.<br />
-				Second effect <code>p1 now = 20 (15 + 5d1)</code>.<br />
-				Third effect <code>p1 now = 30 (20 + 10d1)</code>, total = <code>+102</code>
-			</li>
-			<li>Avoid using the dice fields in spells/items.</li>
-		</ul>
-	</li>
-	<li>
-		When applied in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
-		<ul>
-			<li>Dice Values are rerolled if you save/reload while the effect is still active.</li>
-			<li>Avoid using the dice fields in external EFFs.</li>
-		</ul>
-	</li>
-	<li>
-		When applied in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s:
-		<ul>
-			<li>Current Hit Points are increased by twice the specified amount, plus the cumulative total of all other op18 effects applied through external EFFs currently active on the creature. Maximum Hit Points are increased as normal.</li>
-			<li>Apply EFF with <code>p1=10</code>, <code>p2=0</code>, Current HP: <code>+20</code>, Maximum HP: <code>+10</code></li>
-			<li>Apply it again before the previous expires: Current HP: <code>+30</code>, Maximum HP: <code>+10</code></li>
-			<li>Apply it again before either previous expires: Current HP: <code>+40</code>, Maximum HP: <code>+10</code></li>
-			<li>Avoid using the "Update current HP" modes in external EFFs.</li>
-			<li>This works similar to using the dice fields in items/spells, except it affects Current Hit Points instead of Maximum. Though since Current Hit Point modifiers don't leave any effect behind, cannot actually verify that's how the mechanic works.</li>
-		</ul>
-	</li>
 </ul>
 
   </div>
@@ -2367,7 +2307,12 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 	<li>
 		<code>Normal</code> Invisibility:
 		<ul>
-			<li>Grants a <code>+4</code> bonus to melee attacks only.</li>
+			<li>
+				Grants a <code>+4</code> bonus to melee attacks only.
+				<ul>
+					<li>In addition to that, an invisible creature with a (backstab value greater than <code>1</code>) or (sneak attack value of at least <code>1d6</code>) also ignores the target's dexterity AC modifier (see <code><a href="../files/2da/2da_bgee/dexmod.htm">DEXMOD.2da</a></code>), when attacking in melee, even if their weapon is unsuitable for backstabbing/sneak attacks.</li>
+				</ul>
+			</li>
 			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s other than <code>1/4/7</code> in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
 			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT4">STATE_INVISIBLE</a></code>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
 		</ul>
@@ -2384,7 +2329,7 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 		</ul>
 	</li>
 	<li>
-		Weak Invisibility:
+		<code>Weak</code> Invisibility:
 		<ul>
 			<li>It's the same type of invisibility as <code>Improved</code> Invisibility after you take a hostile action and reveal yourself.</li>
 			<li>Applying "Weak" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will function no differently than <code>Timing Mode 0</code>, aside from having no natural expiration timer.</li>
@@ -21051,7 +20996,11 @@ The <code>Stat Value</code> parameter can take any value. If you set it to <code
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Creatures in EE run scripts as long as they are in the current area, <a href="#op293">opcode #293</a> does not alter this, nor allow their scripts to run while they are in different areas.
+<ul>
+	<li>Creatures in EE run scripts as long as they are in the current area, <a href="#op293">opcode #293</a> does not alter this, nor allow their scripts to run while they are in different areas.</li>
+	<li>However, creatures without this opcode attached will run scripts at a considerably slower rate (about &frac13; or &frac14; rate).</li>
+	<li>Moreover, it looks like off-screen creatures move only at halved speed (which might be true for other actions as well). With this opcode creatures seem to move and act at the same speed as on-screen.</li>
+</ul>
 
   </div>
 </div>

@@ -366,7 +366,7 @@ Damages the target by the value specified by the <code>Damage Amount</code> fiel
 		</tr>
 		<tr>
 			<td>0x08000002</td>
-			<td>CRUSHING</td>
+			<td>STUNNING</td>
 			<td>Set to Percentage</td>
 		</tr>
 		<tr>
@@ -406,16 +406,16 @@ Damage type <code>POISON</code> automatically uses save flag <code>Bypass Mirror
 
 {% include note.html %}
 
-<br/><br/>Known bit values for <code>Flags</code> are:
+<br/><br/>Known bit values for <code><a name="op12_flags">Flags</a></code> are:
 <ul>
 	<li>Bit 0 &longrightarrow; Drain HP to caster (cumulative)</li>
-	<li>Bit 1 &longrightarrow; Reversed HP Drain recipient and target (cumulative)</li>
+	<li>Bit 1 &longrightarrow; As bit 0 but caster and target are reversed (cumulative)</li>
 	<li>Bit 2 &longrightarrow; Fist damage only</li>
 	<li>Bit 3 &longrightarrow; Drain HP to caster (non-cumulative)</li>
-	<li>Bit 4 &longrightarrow; Reversed HP Drain recipient and target (non-cumulative)</li>
+	<li>Bit 4 &longrightarrow; As bit 3 but caster and target are reversed (non-cumulative)</li>
 	<li>Bit 5 &longrightarrow; Suppress combat log feedback string</li>
-	<li>Bit 6 &longrightarrow; HP drain number limited to amount available by target (checks <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a>)</li>
-	<li>Bit 7 &longrightarrow; HP drain number limited to amount necessary to heal recipient to full HP</li>
+	<li>Bit 6 &longrightarrow; Damage inflicted is limited to amount available by target (checks <a href="../files/ids/bgee/stats.htm#83">MINHITPOINTS</a> and works in reverse if bits 1 or 4 are set)</li>
+	<li>Bit 7 &longrightarrow; Damage inflicted is limited to the caster's <code>(<a href="../files/ids/bgee/stats.htm#1">MAXHITPOINTS</a> - <a href="../files/ids/bgee/stats.htm#0">CURRENTHP</a>)</code> (works in reverse if bits 1 or 4 are set)</li>
 	<li>Bit 8 &longrightarrow; Save for half</li>
 	<li>Bit 9 &longrightarrow; Fail for half: A failed (or lack of) saving throw results in half damage.</li>
 	<li>Bit 10 &longrightarrow; Does not wake sleepers</li>
@@ -423,14 +423,20 @@ Damage type <code>POISON</code> automatically uses save flag <code>Bypass Mirror
 
 {% capture note %}
 <ul>
-	<li>Bits <code>0</code>, <code>1</code>, <code>3</code>, and <code>4</code> are mutually exclusive. Bit <code>7</code> prevents temporary HP gain.</li>
 	<li>
-		Notice there are essentially 2 modes the bonus temporary HP are calculated: <code>cumulative</code> and <code>non-cumulative</code>.
+		Bits 0, 1, 3, and 4 are mutually exclusive, while bits 6 and 7 do not require any of the HP drain bits to be set to function.
 		<ul>
-			<li><code>Cumulative</code> works as you'd imagine: extra HP are simply added on if recipient of the drain is at maximum HP (including any previous temporary HP).</li>
-			<li><code>Non-cumulative</code> HP drain calculates extra HP gain based on where the current HP of the recipient is relative to the normal (unextended by <code>non-cumulative</code> HP bonus) maximum. Furthermore, all <code>non-cumulative</code> HP drain effects are treated as a coexisting group, where the highest extra HP roll is added to the maximum hitpoints without dispelling any lower rolls. So the recipient will still benefit if the lower rolls have a longer duration than the higher roll.</li>
-			<li>Here's an example: if the caster gains <code>4</code> temporary HP from a previous <code>non-cumulative</code> HP drain, suffers <code>5</code> damage, then drains <code>2</code> hit points, (s)he will be cured <code>2</code> hitpoints of which <code>1</code> HP will be "stored" as an extra hitpoint for a certain duration set by the damage effect.</li>
+			<li>However, bits 6 and 7 are often used together to achieve desired HP drain behavior. For instance, bit7 in conjunction with bit1 is used in IWD:EE/SoD's "Shadow Pact" ability (<code>"SPIN195.spl"</code>/<code>"BDSHPACT.spl"</code>) for shadows to prevent them from inflicting more damage on reverse HP drain than necessary to heal them to normal max HP.</li>
 		</ul>
+	</li>
+	<li>
+		In all cases, HP drain now only increases maximum HP if the character is at full health and there are extra HP remaining from the drain, which can happen even during the drain. Current HP gained is always cumulative (bits 0,1,3,4) if the caster is injured. Extra HP gained by non-cumulative HP drain (bits 3,4) may still coexist on the same creature. This means that the caster can still benefit from lower HP drain if the effect expires later than the higher HP drain effect.
+	</li>
+	<li>
+		Example: The caster at 3/4 HP can increase his/her HP to 7/7 with one casting of Larloch's Minor Drain (if 4 is rolled) and 8/8 with another casting if 4 is rolled again, otherwise nothing seems to happen despite the damage inflicted. The caster may further benefit with additional castings if injured, but cannot go beyond 8/8 HP. This all assumes there is sufficient HP to drain (since bit 6 is now set in <code>"SPWI119.spl"</code>).
+	</li>
+	<li>
+		Extra maximum HP effects carried on the creature now have their <code>mschool</code>, <code>msectype</code>, <code>resource</code>, <code>resist_dispel</code>, <code>dispel_level</code> etc properly set. See <a href="#op18">opcode #18</a> for how non-cumulative HP gain is stored.
 	</li>
 </ul>
 {% endcapture %}

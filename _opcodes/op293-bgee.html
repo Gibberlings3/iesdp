@@ -15,7 +15,11 @@ The targeted creature(s) will still run scripts when off-screen and out of comba
 <br/>The effect modifies <a href="../files/ids/bgee/stats.htm#183">PREVENT_AI_SLOWDOWN</a> to <code>Stat Value</code>.
 
 {% capture note %}
-Creatures in EE run scripts as long as they are in the current area, <a href="#op293">opcode #293</a> does not alter this, nor allow their scripts to run while they are in different areas.
+<ul>
+	<li>Creatures in EE run scripts as long as they are in the current area, <a href="#op293">opcode #293</a> does not alter this, nor allow their scripts to run while they are in different areas.</li>
+	<li>However, creatures without this opcode attached will run scripts at a considerably slower rate (about &frac13; or &frac14; rate).</li>
+	<li>Moreover, it looks like off-screen creatures move only at halved speed (which might be true for other actions as well). With this opcode creatures seem to move and act at the same speed as on-screen.</li>
+</ul>
 {% endcapture %}
 
 {% include note.html %}

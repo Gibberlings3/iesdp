@@ -1251,7 +1251,12 @@
 	Returns true if the specified creature has been in the party at any point.<br />
 	<br />
 	<strong>0x40E0 NextTriggerObject(O:Object*)</strong><br />
-	Defines the object that the next trigger will be evaluated in reference to. This trigger does not evaluate and does not count as a trigger in an OR() block. If the object cannot be found, the next trigger will evaluate to false.<br />
+	Defines the object that the next trigger will be evaluated in reference to. This trigger does not evaluate
+and does not count as a trigger in an OR() block. If the object cannot be found, the next trigger will evaluate to
+false. It will even
+<a href="https://www.gibberlings3.net/forums/topic/31891-nexttriggerobject-documentation-not-accurate/?do=findComment&comment=287192" rel="noopener">
+break the OR() trigger</a> if you don't put it in there last in the entire condition section. WeiDU adds a
+shorthand notation in the form of <pre>TriggerOverride(object, trigger)</pre> that fits into a single line.<br />
 	<br />
 	<strong>0x40E1 ExtendedStateCheck(O:Object*,I:State*extstate)</strong><br />
 	Returns true only if the specified object is in the state specified (uses EXTSTATE.IDS).<br />
@@ -1386,6 +1391,7 @@
 	<strong>0x410C ProficiencyLT(O:Object*,I:Slot*WProf,I:Value*)</strong><br />
 	Returns true only if the proficiency level of the specified object in the weapon denoted by the second parameter is less than the third parameter.<br />
 	<br />
+
 <a href="#" class="go-up">
   &nbsp;
 </a>

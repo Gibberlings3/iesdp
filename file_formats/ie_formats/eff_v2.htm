@@ -771,12 +771,41 @@ If called via <a href="../../opcodes/bgee.htm#op183">opcode #183</a>, this field
 
 <p>The default behaviour is that effects cannot be dispelled and ignore resistance.</p>
 <ul>
-  <li>bit 0 ⟶ Can be dispelled, affected by resistance</li>
-  <li>bit 1 ⟶ Ignores resistance (when used in combination with bit 0)</li>
-  <li><b><a name="effv2_Body_0x5C_BIT2">bit 2</a></b> ⟶ Bypasses deflection/reflection/trap opcodes (only in EE games patched to v2.0+)</li>
-  <li>bit 31 ⟶ Effect was applied by an <a href="../ie_formats/itm_v1.htm">ITM</a> (only present in EE games patched to v2.0+).
+  <li>bit 0 ⟶ <b><a name="effv2_Body_0x5C_BIT0">Dispel</a></b>
     <ul>
-      <li>It is set by the engine if the effect’s source <a href="../ie_formats/itm_v1.htm">ITM</a> is identified. This bit is only used by <a href="../../opcodes/bgee.htm#op324">opcode #324</a> which checks it to determine whether it should set <code><a href="../../files/2da/2da_bgee/enginest.htm#128">STRREF_FEEDBACK_IMMUNE_RESOURCE</a></code> to the ITM’s general or identified name.</li>
+      <li>Can be dispelled, affected by Magic Resistance.</li>
+    </ul>
+  </li>
+  <li>bit 1 ⟶ <b><a name="effv2_Body_0x5C_BIT1">Bypass resistance</a></b>
+    <ul>
+      <li>Ignores Magic Resistance.</li>
+    </ul>
+  </li>
+  <li>bit 2 ⟶ <b><a name="effv2_Body_0x5C_BIT2">Bypasses deflection/reflection/trap opcodes</a></b> (only in EE games patched to v2.0+).</li>
+  <li>bit 3 ⟶ <b><a name="effv2_Body_0x5C_BIT3">Self-targeted</a></b> (only in EE games patched to v2.6+)
+    <ul>
+      <li>Targeting yourself with an ability (Extended Header) will internally set this bit on all effects applied by that ability.
+        <ul>
+          <li>For the caster, it will allow a Magic Resistance check for any effect that has both <code><a href="#effv2_Body_0x5C_BIT0">Dispel</a></code> set and offers some saving throw.
+            <ul>
+              <li>The saving throw doesn’t have to succeed, it just has to be offered.</li>
+            </ul>
+          </li>
+          <li>For anyone else hit by the ability, it will allow a Magic Resistance check for any effect that also has <code><a href="#effv2_Body_0x5C_BIT0">Dispel</a></code> set.</li>
+        </ul>
+      </li>
+      <li>Either way, this bit is still overridden by <code><a href="#effv2_Body_0x5C_BIT1">Bypass Resistance</a></code>.</li>
+      <li>This feature should eliminate the bug/exploit of bypassing other’s Magic Resistance by targeting yourself with an <code><a href="../ie_formats/pro_v1.htm#0x8_3">area-effect</a></code> ability.</li>
+    </ul>
+  </li>
+  <li>bit 31 ⟶ <b><a name="effv2_Body_0x5C_BIT31">Effect applied by item</a></b>
+    <ul>
+      <li>Effect was applied by an <a href="../ie_formats/itm_v1.htm">ITM</a> (only present in EE games patched to v2.0+).</li>
+      <li>It is set by the engine if the effect’s source <a href="../ie_formats/itm_v1.htm">ITM</a> is identified.
+        <ul>
+          <li>This bit is only used by <a href="../../opcodes/bgee.htm#op324">opcode #324</a> which checks it to determine whether it should set <code><a href="../../files/2da/2da_bgee/enginest.htm#128">STRREF_FEEDBACK_IMMUNE_RESOURCE</a></code> to the ITM’s general or identified name.</li>
+        </ul>
+      </li>
     </ul>
   </li>
 </ul>

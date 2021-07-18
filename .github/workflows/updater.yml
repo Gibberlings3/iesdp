@@ -1,0 +1,14 @@
+name: Updater
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build_zip:
+    runs-on: ubuntu-latest
+
+    # ensure the zip archive has proper links ... so manually trigger the build after some prep
+    steps:
+    - name: Push to other branch for a clean build
+      run: bash deploy.sh

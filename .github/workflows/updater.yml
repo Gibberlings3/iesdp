@@ -16,11 +16,12 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.5
+        bundler-cache: true
 
     - name: Install dependencies & build site
       uses: limjh16/jekyll-action-ts@v2
-      with:
-        enable_cache: true
+      #with:
+        #enable_cache: true
 
     - name: Push to other branch for a clean build
       run: bash deploy.sh

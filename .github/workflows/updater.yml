@@ -14,15 +14,10 @@ jobs:
       with:
         ruby-version: 2.5
 
-    - name: Install deps
-      run: gem install github-pages jekyll-liquify
-
-    - uses: actions/checkout@v2
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+    - name: Install dependencies & build site
+      uses: limjh16/jekyll-action-ts@v2
+      with:
+        enable_cache: true
 
     - name: Push to other branch for a clean build
       run: bash deploy.sh

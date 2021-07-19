@@ -10,7 +10,7 @@ git init
 git config user.name "Travis the automation"
 git config user.email "travis@travi.s"
 
-git remote add upstream "https://${{ secrets.GITHUB_TOKEN }}@github.com/Gibberlings3/iesdp.git"
+git remote add upstream "https://$GITHUB_TOKEN@github.com/Gibberlings3/iesdp.git"
 git fetch upstream
 git reset upstream/gh-pages
 

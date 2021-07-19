@@ -26,6 +26,6 @@ jobs:
 
     - name: Push cleaned up build to other branch
       run: bash deploy.sh
-      if: github.event == 'push'
+      if: github.event_name == 'push'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

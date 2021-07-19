@@ -3,6 +3,8 @@ name: Updater
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -13,15 +15,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - uses: ruby/setup-ruby@v1
+    - name: Install dependencies
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7
         bundler-cache: true
 
-    - name: Install dependencies & build site
+    - name: Build site
       uses: limjh16/jekyll-action-ts@v2
 
-    - name: Push to other branch for a clean build
+    - name: Push cleaned up build to other branch
       run: bash deploy.sh
+      if: github.event == 'push'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build_zip:
+  build:
     runs-on: ubuntu-latest
 
     # ensure the zip archive has proper links ... so manually trigger the build after some prep
@@ -16,8 +16,8 @@ jobs:
 
     - name: Install dependencies & build site
       uses: limjh16/jekyll-action-ts@v2
-      with:
-        enable_cache: true
+      #with:
+        #enable_cache: true
 
     - name: Push to other branch for a clean build
       run: bash deploy.sh

@@ -20,8 +20,8 @@ jobs:
 
     - name: Install dependencies & build site
       uses: limjh16/jekyll-action-ts@v2
-      #with:
-        #enable_cache: true
 
     - name: Push to other branch for a clean build
       run: bash deploy.sh
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

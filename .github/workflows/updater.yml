@@ -6,18 +6,21 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     # ensure the zip archive has proper links ... so manually trigger the build after some prep
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.5
 
     - name: Install dependencies & build site
       uses: limjh16/jekyll-action-ts@v2
-      #with:
-        #enable_cache: true
+      with:
+        enable_cache: true
 
     - name: Push to other branch for a clean build
       run: bash deploy.sh

@@ -137,11 +137,11 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         <br />
 
         <strong>control_var = scope::variable_name</strong><br />
-        This attribute was originally supposed to control whether enter and exit spawn groups are executed by checking a boolean value defined by the specified variable. <strong>Note:</strong> Specifying this attribute causes the game to crash because of a buggy implementation.<br />
+        This attribute was supposed to control whether enter and exit spawn groups are executed by checking a boolean value defined by the specified variable. <strong>Note:</strong> Specifying this attribute causes the game to crash because of a buggy implementation.<br />
         <br />
 
         <strong>spawn_time_of_day = string</strong><br />
-        This attribute was originally supposed to be a bit-string with allowed times for enter and exit spawn groups to execute. It appears to be unused by the engine.<br />
+        This attribute was supposed to be a bit-string with allowed times for enter and exit spawn groups to execute. It appears to be unused by the engine.<br />
         <br />
       </div>
       <br />
@@ -149,7 +149,7 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
 
       <strong>[name_of_creature_section]</strong><br />
       <div class="indent1">
-        This section defines the spawn conditions, attributes and behavior of a single creature type. It can be referenced by the "critters" attribute of group sections. <strong>Notes:</strong> Attributes that expect a variable name require the variable to exist in the game, even if it contains the value 0. Many attributes that expect a boolean value are merely checked for existence by the engine. The actual value doesn't matter. You have to remove the whole attribute definition to disable it.<br />
+        This section defines the spawn conditions, attributes and behavior of a single creature type. It can be referenced by the "critters" attribute of group sections. <strong>Notes:</strong> Attributes that expect a variable name require the variable to exist in the game, even if it contains the value 0. Many attributes that expect a boolean value are merely checked for existence by the engine. The actual value doesn't matter. The whole attribute definition has to be removed to disable it.<br />
         <br />
 
         It supports the following attributes:<br />
@@ -338,10 +338,10 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         This attribute expects a single letter which determines how the engine chooses the next spawn point.<br />
         Known attribute values are:
         <ul>
-          <li><span class="code"><strong>e</strong></span>: (POINT_SELECT_EXPLICIT) The spawn location and orientation are retrieved from predefined game variables defined by "spawn_point_global" and "spawn_facing_global" respectively.<strong>Note:</strong> Due to a bug in the implementation the orientation is read from "point_select_var" instead of "spawn_facing_global".</li>
+          <li><span class="code"><strong>e</strong></span>: (POINT_SELECT_EXPLICIT) The spawn location and orientation are retrieved from predefined game variables defined by "spawn_point_global" and "spawn_facing_global" respectively. <strong>Note:</strong> Due to a bug in the implementation the orientation is read from "point_select_var" instead of "spawn_facing_global".</li>
           <li><span class="code"><strong>i</strong></span>: (POINT_SELECT_INDEXED_SEQUENTIAL) Uses the value of the variable defined by "point_select_var" as starting index into the array of map coordinates defined by the "spawn_point" attribute.</li>
           <li><span class="code"><strong>r</strong></span>: (POINT_SELECT_RANDOM_SEQUENTIAL) Default mode if unspecified. The spawn location is chosen at random from the array of map coordinates defined by the "spawn_point" attribute.</li>
-          <li><span class="code"><strong>s</strong></span>: (POINT_SELECT_SEQUENTIAL) The engine uses the first spawn location defined by the "spawn_point" attribute and increments the index by one after each spawn. <strong>Note:</strong> Due to a buggy implementation the spawn index is reset to 0 AFTER selecting the first spawn location, so the first spawn will always continue the progression of the PREVIOUS spawn execution. Additionally, the only way a spawn location other than the first or second is used is if 1) Every spawn location index before the selected one was unsuitable for spawning, or 2) "create_qty" is defined to spawn more than one creature at once. Spawning multiple creatures at once (by setting <span class="code">create_qty &gt; 1</span>) will increment the spawn location index for each individual creature correctly, however.</li>
+          <li><span class="code"><strong>s</strong></span>: (POINT_SELECT_SEQUENTIAL) The engine uses the first spawn location defined by the "spawn_point" attribute and increments the index by one after each spawn. <strong>Note:</strong> Due to a buggy implementation the spawn index is reset to 0 AFTER selecting the first spawn location, so the first spawn will always continue the progression of the PREVIOUS spawn execution. Additionally, the only way a spawn location other than the first or second is used is if 1) Every spawn location index before the selected one was unsuitable for spawning, or 2) "create_qty" is defined to spawn more than one creature at once. Spawning multiple creatures at once (by setting create_qty &gt; 1) will increment the spawn location index for each individual creature correctly, however.</li>
         </ul>
 
         <strong>point_select_var = scope::variable_name</strong><br />
@@ -365,7 +365,7 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         <br />
 
         <strong>save_selected_point = scope::variable_name</strong><br />
-        This attribute instructs the engine to store the map coordinates of the spawned creature in the specified variable. <strong>Note:</strong> The map coordinates of the first spawned creature are stored if <span class="code">create_qty &gt; 1</span>.<br />
+        This attribute instructs the engine to store the map coordinates of the spawned creature in the specified variable. <strong>Note:</strong> The map coordinates of the first spawned creature are stored if create_qty &gt; 1.<br />
         <br />
 
         <strong>save_selected_facing = scope::variable_name</strong><br />

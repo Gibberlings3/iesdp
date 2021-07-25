@@ -22,6 +22,7 @@
 
 module Jekyll
   module DecToHex
+    safe true
     def dec_to_hex(val)
       sprintf("0x%X", val)
     end

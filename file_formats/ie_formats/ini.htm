@@ -129,19 +129,19 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         <br />
 
         <strong>interval = number</strong><br />
-        Time interval, measured in AI ticks (15 ticks = 1 second), before creature sections defined by the "critters" attribute are evaluated. This attribute is only relevant if the section is linked to the "event" attribute of the [spawn_main] section.<br />
+        Time interval, measured in AI ticks (15 ticks = 1 second), before creature sections defined by the "critters" attribute are evaluated. This attribute is only relevant if the section is linked to the "event" attribute of the [spawn_main] section. The smallest supported interval value appears to be 15 AI ticks. Smaller values are adjusted accordingly by the engine.<br />
         <br />
 
         <strong>detail_level = name</strong><br />
         This was possibly a memory saving option, but eventually got excluded — it is controlled by the "Detail level" key not present by default in torment.ini. Known attribute values: <span class="code">High, Medium, Low</span>. However the engine has a bug and treats Medium entries as High. It is only supported by PST.<br />
         <br />
 
-        <strong>control_var = ???</strong><br />
-        <span class="unknown">The meaning of this attribute is unknown.</span> <strong>Note:</strong> In BGEE specifying this attribute causes the game to crash.<br />
+        <strong>control_var = scope::variable_name</strong><br />
+        This attribute was supposed to control whether enter and exit spawn groups are executed by checking a boolean value defined by the specified variable. <strong>Note:</strong> Specifying this attribute causes the game to crash because of a buggy implementation.<br />
         <br />
 
-        <strong>spawn_time_of_day = ???</strong><br />
-        This attribute has no effect, as the engines have no code for it. It is unused.<br />
+        <strong>spawn_time_of_day = string</strong><br />
+        This attribute was supposed to be a bit-string with allowed times for enter and exit spawn groups to execute. It appears to be unused by the engine.<br />
         <br />
       </div>
       <br />
@@ -149,11 +149,14 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
 
       <strong>[name_of_creature_section]</strong><br />
       <div class="indent1">
-        This section defines the spawn conditions, behavior and attributes of a single creature type. It can be referenced by the "critters" attribute of group sections. It supports the following attributes:<br />
+        This section defines the spawn conditions, attributes and behavior of a single creature type. It can be referenced by the "critters" attribute of group sections. <strong>Notes:</strong> Attributes that expect a variable name require the variable to exist in the game, even if it contains the value 0. Many attributes that expect a boolean value are merely checked for existence by the engine. The actual value doesn't matter. The whole attribute definition has to be removed to disable it.<br />
         <br />
 
-        <strong>spec_var = variable_name</strong><br />
-        This attribute expects the name of a variable. It uses the global scope by default, but can optionally be preceded by the variable scope and two consecutive colons (e.g. AR0500::MY_VAR). The variable is checked for non-zero. Only a single variable can be evaluated per creature section.<br />
+        It supports the following attributes:<br />
+        <br />
+
+        <strong>spec_var = scope::variable_name</strong><br />
+        This attribute expects the name of a variable which is used to control whether the creature section is eligible for spawning. It uses GLOBAL scope by default, but can be optionally preceded by a user-defined scope and two consecutive colons (e.g. <span class="code">AR0500::MY_VAR</span>). Only a single variable can be evaluated per creature section.<br />
         <br />
 
         <strong>spec = filter_value</strong><br />
@@ -161,8 +164,8 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         A specified script name is checked against the script name of the spawned creature. A target specification in square brackets is checked against the respective numeric attributes of the spawned creature. A value of 0 is considered a wildcard. Faction and Team may not be available for all games. Just like the target notation in scripts it is not necessary to specify all fields. Unlisted fields are treated as 0.<br />
         <br />
 
-        <strong>spec_area = ???</strong><br />
-        <span class="unknown">The meaning of this attribute is unknown.</span><br />
+        <strong>spec_area = [centerX,centerY,range,unknown?]</strong><br />
+        This attribute is supposed to alter where on the map the engine looks for existing creatures to determine the spawn cap. <strong>Note:</strong> Because of a buggy implementation this attribute is mostly inoperable. Don't use it!<br />
         <br />
 
         <strong>spec_qty = number</strong><br />
@@ -215,7 +218,7 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         This attribute defines the numeric GENERAL value which is assigned to the creature when it is spawned. Omit this attribute to use the value defined by the CRE resource.<br />
         <br />
 
-        <strong>ai_race = value</strong><br />
+        <strong>ai_race = number</strong><br />
         This attribute defines the numeric RACE value which is assigned to the creature when it is spawned. Omit this attribute to use the value defined by the CRE resource.<br />
         <br />
 
@@ -332,16 +335,17 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         <br />
 
         <strong>point_select = letter</strong><br />
-        This attribute expects a single letter which controls various aspects of the spawning process.<br />
+        This attribute expects a single letter which determines how the engine chooses the next spawn point.<br />
         Known attribute values are:
         <ul>
-          <li><span class="code">E</span>: Indicates that the spawn location and orientation are retrieved from predefined game variables defined by "spawn_point_global" and "spawn_facing_global" respectively.</li>
-          <li><span class="code">R</span>: Indicates that the spawn location is chosen at random from the map coordinates defined by the "spawn_point" attribute.</li>
-          <li><span class="code">S</span>: Indicates that a single spawn location is chosen from the map coordinates defined by the "spawn_point" attribute and reused by subsequent spawn operations.</li>
+          <li><span class="code"><strong>e</strong></span>: (POINT_SELECT_EXPLICIT) The spawn location and orientation are retrieved from predefined game variables defined by "spawn_point_global" and "spawn_facing_global" respectively. <strong>Note:</strong> Due to a bug in the implementation the orientation is read from "point_select_var" instead of "spawn_facing_global".</li>
+          <li><span class="code"><strong>i</strong></span>: (POINT_SELECT_INDEXED_SEQUENTIAL) Uses the value of the variable defined by "point_select_var" as starting index into the array of map coordinates defined by the "spawn_point" attribute.</li>
+          <li><span class="code"><strong>r</strong></span>: (POINT_SELECT_RANDOM_SEQUENTIAL) Default mode if unspecified. The spawn location is chosen at random from the array of map coordinates defined by the "spawn_point" attribute.</li>
+          <li><span class="code"><strong>s</strong></span>: (POINT_SELECT_SEQUENTIAL) The engine uses the first spawn location defined by the "spawn_point" attribute and increments the index by one after each spawn. <strong>Note:</strong> Due to a buggy implementation the spawn index is reset to 0 AFTER selecting the first spawn location, so the first spawn will always continue the progression of the PREVIOUS spawn execution. Additionally, the only way a spawn location other than the first or second is used is if 1) Every spawn location index before the selected one was unsuitable for spawning, or 2) "create_qty" is defined to spawn more than one creature at once. Spawning multiple creatures at once (by setting create_qty &gt; 1) will increment the spawn location index for each individual creature correctly, however.</li>
         </ul>
 
-        <strong>point_select_var = ???</strong><br />
-        <span class="unknown">The meaning of this attribute is unknown.</span><br />
+        <strong>point_select_var = scope::variable_name</strong><br />
+        This attribute is only used if "point_select" is set to <span class="code">i</span> (POINT_SELECT_INDEXED_SEQUENTIAL). It expects a variable name that determines the first spawn location index the engine considers when selecting for a spawn. It uses the following index calculation: <span class="code">index = [point_select_var] % [spawn_point].size</span>. <strong>Notes:</strong> Specifying the scope is mandatory for this attribute to work. Due to a bug in the implementation this attribute is also used to determine the creature orientation if "point_select" is set to <span class="code">e</span> (POINT_SELECT_EXPLICIT).<br />
         <br />
 
         <strong>facing = number</strong><br />
@@ -349,43 +353,43 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         <br />
 
         <strong>ignore_can_see = boolean_value</strong><br />
-        This attribute indicates whether a creature can be spawned even if the spawn point is within visual range of the party. By default creatures are only spawned off-screen.<br />
+        This attribute indicates whether a creature can be spawned even if the spawn point is not obscured by the fog of war and is currently in the viewport. By default creatures are only spawned off-screen.<br />
         <br />
 
         <strong>check_crowd = boolean_value</strong><br />
-        <span class="unknown">The meaning of this attribute is unknown.</span><br />
+        This attribute appears to be unimplemented.<br />
         <br />
 
         <strong>find_safest_point = boolean_value</strong><br />
-        <span class="unknown">The meaning of this attribute is unknown.</span><br />
+        When this attribute is defined the engine iterates over all eligible spawn locations and selects the first entry that is considered "safe". A "safe" spawn location is defined as being currently obscured by the fog of war and is not currently in the viewport. This behavior can be overridden by the "ignore_can_see" attribute.<br />
         <br />
 
-        <strong>save_selected_point = variable_name</strong><br />
-        This attribute instructs the engine to store the map coordinates of the spawned creature in the specified variable.<br />
+        <strong>save_selected_point = scope::variable_name</strong><br />
+        This attribute instructs the engine to store the map coordinates of the spawned creature in the specified variable. <strong>Note:</strong> The map coordinates of the first spawned creature are stored if create_qty &gt; 1.<br />
         <br />
 
-        <strong>save_selected_facing = variable_name</strong><br />
-        This attribute instructs the engine to store the orientation of the spawned creature in the specified variable.<br />
+        <strong>save_selected_facing = scope::variable_name</strong><br />
+        This attribute is supposed to instruct the engine to store the orientation of the spawned creature in the specified variable. <strong>Note:</strong> This attribute appears to be unimplemented.<br />
         <br />
 
-        <strong>spawn_point_global = variable_name</strong><br />
-        This attribute expects a variable name that is used to retrieve the map coordinates for the spawned creature. It requires the "point_select" attribute to be set to <span class="code">E</span>.<br />
+        <strong>spawn_point_global = scope::variable_name</strong><br />
+        This attribute is only used if "point_select" is set to <span class="code">e</span> (POINT_SELECT_EXPLICIT). It expects a variable name that is used to retrieve the map coordinates for the spawned creature.<br />
         <br />
 
-        <strong>spawn_facing_global = variable_name</strong><br />
-        This attribute expects a variable name that is used to retrieve the orientation for the spawned creature. It requires the "point_select" attribute to be set to <span class="code">E</span>. <strong>Note:</strong> This attribute doesn't appear to work correctly in BGEE.<br />
+        <strong>spawn_facing_global = scope::variable_name</strong><br />
+        This attribute is only used if "point_select" is set to <span class="code">e</span> (POINT_SELECT_EXPLICIT). It expects a variable name that is used to retrieve the orientation for the spawned creature. <strong>Notes:</strong> Specifying the scope is mandatory for this attribute to work. Due to a bug in the implementation the orientation is read from "point_select_var" instead of this attribute. However, both attributes must be specified to work and require an explicit scope definition.<br />
         <br />
 
-        <strong>inc_spawn_point_index = ???</strong><br />
-        <span class="unknown">The meaning of this attribute is unknown.</span><br />
+        <strong>inc_spawn_point_index = boolean_value</strong><br />
+        This attribute is only used if "point_select" is set to <span class="code">i</span> (POINT_SELECT_INDEXED_SEQUENTIAL). It indicates that the variable defined by "point_select_var" is incremented on spawn location selection. If "create_qty" is greater than 1 then spawn point index is incremented after each creature is spawned. <strong>Note:</strong> The spawn operation applies a pre-selection and post-selection pass when executing a creature spawn section which results in the index being incremented twice if the same section is executed multiple times. Pre-selection is applied before the whole spawn operation is executed. Post-selection is applied after individual creature spawns which is important to note if "create_qty" is set to spawn multiple creatures at once.<br />
         <br />
 
-        <strong>hold_selected_point_key = ???</strong><br />
-        <span class="unknown">The meaning of this attribute is unknown.</span><br />
+        <strong>hold_selected_point_key = boolean_value</strong><br />
+        This attribute prevents the engine from updating the currently selected spawn location index directly after the spawn operation (post-selection). If "create_qty" is greater than 1 then this attribute forces the engine to reuse the initially selected spawn location for all spawns created during the current spawn operation. This attribute affects only sequential "point_select" modes which includes <span class="code">i</span>, <span class="code">r</span> and <span class="code">s</span>.<br />
         <br />
 
-        <strong>check_by_view_port = ???</strong><br />
-        The meaning of this attribute is not fully understood, but when on it limits spawning to outside of the current viewport (part of the area currently displayed). <i>ignore_can_see</i> also has to be set and at least in PSTEE, the spawnpoint has to be within visual range. It's unused in the originals under this name, but there are plenty of uses of <i>check_view_port</i> </span><br />
+        <strong>check_by_view_port = boolean_value</strong><br />
+        This attribute appears to be unimplemented. <strong>Note:</strong> There are plenty of uses of the "check_view_port" attribute. That attribute is not supported by the engine.<br />
         <br />
 
         <strong>do_not_spawn = boolean_value</strong><br />
@@ -396,12 +400,12 @@ spawn_point       = [595.583:14],[787.562:14],[859.757:14],[1204.924:14],[1353.1
         <span class="unknown">It is likely that this attribute controls whether all nearby creatures turn party-hostile when the spawned creature calls for help.</span> It is only supported by PST.<br />
         <br />
 
-        <strong>time_of_day = value</strong><br />
-        This attribute controls at what time the creature can be spawned. The value is interpreted as a bitfield similar to the appearance schedule field in ARE actor structures. <strong>Note:</strong> In BGEE specifying this attribute causes the game to crash.<br />
+        <strong>time_of_day = string</strong><br />
+        This attribute is supposed to be a bit-string defining the spawned creature's "Present at" field (see offset 0x40 in ARE actor structure). <strong>Note:</strong> Specifying this attribute causes the game to crash because of a buggy implementation of the bit-string parser.<br />
         <br />
 
         <strong>disable_renderer = boolean_value</strong><br />
-        This attribute indicates whether the animation of the spawned creature should be rendered on the game screen. The state is not stored in saved games. Regardless of their rendering state the spawned creature takes up personal space, and the mouse cursor will react appropriately when placed over their current location. The script action "SetRenderable(O:Target*,I:Renderable*Boolean)" can be used to further control the rendering state of the creature. This attribute is only supported by PSTEE.<br />
+        This attribute indicates whether the animation of the spawned creature should be rendered on the game screen. The state is not stored in saved games. Regardless of their rendering state the spawned creature takes up personal space, and the mouse cursor will react appropriately when placed over their current location. The script action <span class="code">SetRenderable(O:Target*,I:Renderable*Boolean)</span> can be used to further control the rendering state of the creature. This attribute is only supported by PSTEE.<br />
         <br />
       </div>
       <br />

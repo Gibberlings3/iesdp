@@ -1,0 +1,977 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<!--  <meta charset="utf-8"> -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>INI file format: Creature Animations</title>
+  <meta name="description" content="The IESDP (Infinity Engine Structures Description Project) is an effort to research the workings of the Bioware Infinity Engine(R), and act as a collective resource for those interested in such workings.
+">
+
+  
+
+
+
+
+
+  <link rel="stylesheet" href="../../css/main.css">
+
+<!--
+  <link rel="canonical" href="https://gibberlings3.github.io/iesdp/file_formats/ie_formats/ini_anim.htm">
+  <link rel="alternate" type="application/rss+xml" title="IESDP" href="https://gibberlings3.github.io/iesdp/feed.xml">
+-->
+</head>
+
+
+<body>
+
+<header class="site-header">
+
+
+
+
+
+
+
+
+    <hr />
+    <div id="buttonboxtop">
+      <div id="buttonstriptop">
+        <a href="../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../site_info/legal.htm">Legal</a> &nbsp;&bull;&nbsp;
+        <a href="https://www.gibberlings3.net/forums/forum/54-iesdp-updates-and-info/" target="_blank">Forum</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <a href="../../main.htm">
+        <img src="../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+      </a>
+    </div>
+
+</header>
+
+
+<div id="nonFooter">
+  <div id="content">
+
+    <div class="title_main">INI file format: Creature Animations</div>
+
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">PST, BGEE</div>
+    <br />
+
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      See <a href="ini.htm">INI file format description</a>.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      Each INI file contains the definition for a single creature animation. INI filenames are made up from the hexadecimal representation of the creature animation slot value and the <span class="mono">.INI</span> file extension. Example: Animation of <span class="code">0x6004 CLERIC_MALE_GNOME</span> is defined in <span class="mono">6004.INI</span>. Even with animation definitions provided by the INI files there are many aspects still hardcoded by the engine. This feature is available since BGEE patch version 2.0 (and version 1.4 for IWDEE). Before that creature animations could be defined in a limited manner by the files <a href="../../files/2da/2da_bgee/extanim.htm">EXTANIM.2DA</a> and <a href="../../files/2da/2da_bgee/extspeed.htm">EXTSPEED.2DA</a>.<br />
+      <br />
+      Animation slots are limited to the numeric 16-bit range (<span class="mono">0x0000 - 0xffff</span>) and are further divided into subranges for different animation types. These subranges are hardcoded by the engine, most likely to retain backwards compatibility with the original games.<br />
+      More general information about the various creature animation types can be found here: <a href="../../appendices/avatarnaming.htm">Avatar Naming Schemes</a><br />
+      <br />
+      <strong>Note:</strong> The INI file format was originally invented for defining PST creature animation properties. More details can be found in the section <a href="#formINI_type_F000">Type F000 (monster_planescape)</a>.<br />
+      <br />
+
+      <ul>
+        <li><a href="#formINI_overview">Overview</a></li>
+        <li><a href="#formINI_type_0000">Type 0000 (effect)</a></li>
+        <li>Type 1000
+          <ul>
+            <li><a href="#formINI_type_1000_1">monster_quadrant</a></li>
+            <li><a href="#formINI_type_1000_2">monster_multi</a></li>
+            <li><a href="#formINI_type_1000_3">multi_new</a></li>
+          </ul>
+        </li>
+        <li><a href="#formINI_type_2000">Type 2000 (monster_layered_spell)</a></li>
+        <li><a href="#formINI_type_3000">Type 3000 (monster_ankheg)</a></li>
+        <li><a href="#formINI_type_4000">Type 4000 (town_static)</a></li>
+        <li>Type 5000 / 6000
+          <ul>
+            <li><a href="#formINI_type_5000_1">character</a></li>
+            <li><a href="#formINI_type_5000_2">character_old</a></li>
+          </ul>
+        </li>
+        <li>Type 7000
+          <ul>
+            <li><a href="#formINI_type_7000_1">monster</a></li>
+            <li><a href="#formINI_type_7000_2">monster_old</a></li>
+          </ul>
+        </li>
+        <li><a href="#formINI_type_8000">Type 8000 (monster_layered)</a></li>
+        <li><a href="#formINI_type_9000">Type 9000 (monster_large)</a></li>
+        <li><a href="#formINI_type_A000">Type A000 (monster_large16)</a></li>
+        <li><a href="#formINI_type_B000">Type B000 (ambient_static)</a></li>
+        <li><a href="#formINI_type_C000">Type C000 (ambient)</a></li>
+        <li><a href="#formINI_type_D000">Type D000 (flying)</a></li>
+        <li><a href="#formINI_type_E000">Type E000 (monster_icewind)</a></li>
+        <li><a href="#formINI_type_F000">Type F000 (monster_planescape)</a></li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_overview">Overview</a></div>
+    <div class="indent1">
+      Animation definitions are generally divided into three sections: <em>[general]</em>, <em>[type_specific_name]</em> and <em>[sounds]</em>.<br />
+      <br />
+      The <em>[type_specific_name]</em> section contains attributes which are tied to the specific animation type. They are described in detail for each individual type further below.<br />
+      The following action sequence codes are used throughout the majority of animation types:<br />
+      - <span class="mono">A1</span> &rarr; <span class="mono">SEQ_SLASH</span><br />
+      - <span class="mono">A2</span> &rarr; <span class="mono">SEQ_BACKSLASH</span><br />
+      - <span class="mono">A3</span> &rarr; <span class="mono">SEQ_JAB / SEQ_SHOOT</span><br />
+      - <span class="mono">S1</span> &rarr; <span class="mono">SEQ_SHOOT</span><br />
+      - <span class="mono">CA</span> &rarr; <span class="mono">SEQ_CAST</span><br />
+      - <span class="mono">DE</span> &rarr; <span class="mono">SEQ_DIE</span><br />
+      - <span class="mono">GH</span> &rarr; <span class="mono">SEQ_DAMAGE</span><br />
+      - <span class="mono">GU</span> &rarr; <span class="mono">SEQ_AWAKE</span><br />
+      - <span class="mono">SC</span> &rarr; <span class="mono">SEQ_READY / SEQ_HEAD_TURN</span><br />
+      - <span class="mono">SD</span> &rarr; <span class="mono">SEQ_HEAD_TURN</span><br />
+      - <span class="mono">SL</span> &rarr; <span class="mono">SEQ_SLEEP</span><br />
+      - <span class="mono">SP</span> &rarr; <span class="mono">SEQ_CONJURE</span><br />
+      - <span class="mono">TW</span> &rarr; <span class="mono">SEQ_TWITCH</span><br />
+      - <span class="mono">WK</span> &rarr; <span class="mono">SEQ_WALK</span><br />
+      - <span class="mono">EMERGE</span> &rarr; <span class="mono">SEQ_EMERGE</span> (type 3000 only)<br />
+      - <span class="mono">HIDE</span> &rarr; <span class="mono">SEQ_HIDE</span> (type 3000 only)<br />
+      <br />
+      The <em>[general]</em> section contains attributes which are common to all available animation types. However, not all available attributes are considered by all animation types because of animation type restrictions or implementation-specific reasons. The following attributes are available:<br />
+      <br />
+      <ul>
+        <li class="anchors"><strong>animation_type = 4-digits_hex_value</strong><br />This attribute expects the creature type of the animation slot as a hexadecimal number. The INI file requires a section of the specified creature type.</li>
+        <li class="anchors"><strong>move_scale = int_or_decimal</strong><br />This attribute expects the default walking speed for the creature animation. The value can be specified as integer or decimal value. The default movement speed for humanoid creatures is 9.</li>
+        <li class="anchors"><strong>ellipse = int</strong><br />This attribute expects the selection circle radius. The default radius for humanoid creatures is 16.</li>
+        <li class="anchors"><strong>color_blood = int</strong><br />This attribute expects the color gradient index for blood splatter.</li>
+        <li class="anchors"><strong>color_chunks = int</strong><br /><span class="unknown">It is likely that this attribute expects the color gradient index for the associated chunk animation.</span></li>
+        <li class="anchors"><strong>sound_freq = int</strong><br /><span class="unknown">It is likely that this attribute specifies the delay between creature sounds.</span></li>
+        <li class="anchors"><strong>sound_death = resref</strong><br /><span class="unknown">It is likely that this attribute specifies the sound file played back when dying.</span></li>
+        <li class="anchors"><strong>personal_space = int</strong><br />This attribute expects the diameter of the personal space the creature takes up on the world map. It is measured in search map units. The default diameter for humanoid creatures is 3.</li>
+        <li class="anchors"><strong>cast_frame = int</strong><br /><span class="unknown">It is likely that this attribute specifies the sound delay (in animation frames) for casting animations.</span></li>
+        <li class="anchors"><strong>height_offset = int</strong><br />This attribute expects a numeric value that is used to calculate the bounding box for effects, health bar and other visual markers.</li>
+        <li class="anchors"><strong>brightest = boolean</strong><br />This attribute defines a blending mode when the sprite is rendered onto the screen. If set without the "multiply_blend" attribute then <span class="code">GL_ONE_MINUS_DST_COLOR</span> blending is performed. If both "brightest" and "multiply_blend" are set then <span class="code">GL_SRC_COLOR</span> blending is performed.</li>
+        <li class="anchors"><strong>multiply_blend = boolean</strong><br />This attribute defines a blending mode when the sprite is rendered onto the screen. If set without the "brightest" attribute then <span class="code">GL_DST_COLOR</span> blending is performed. If both "brightest" and "multiply_blend" are set then <span class="code">GL_SRC_COLOR</span> blending is performed.</li>
+        <li class="anchors"><strong>light_source = boolean</strong><br />When this attribute is set then environmental lighting such as day/night, weather or shadows do not affect the creature animation.</li>
+        <li class="anchors"><strong>new_palette = resref</strong><br />This attribute applies a replacement palette from the specified BMP resource to the creature animation.</li>
+        <li class="anchors"><strong>sound_ref = resref</strong><br /><span class="unknown">The meaning of this attribute is unknown.</span></li>
+        <li class="anchors"><strong>combat_round_0 = resref<br />combat_round_1 = resref<br />combat_round_2 = resref<br />combat_round_3 = resref<br />combat_round_4 = resref</strong><br /><span class="unknown">It is likely that these attributes define BMP resources that are repurposed for controlling how attack animation sequences are triggered within a combat round.</span></li>
+        <li class="anchors"><strong>walk_sound = resref</strong><br />This attribute applies the specified sound resource for the default walking sound of the creature.</li>
+      </ul>
+      <br />
+      The <em>[sounds]</em> section contains creature-specific sound effects and their associated timing. Generally each sound slot is accompanied by a <em>*_frame</em> attribute which specifies the starting frame when the sound should be triggered (e.g. <em>attack</em> is associated with <em>attack_frame</em>). It is possible to assign a comma-separated list of sound files to a single sound slot. The sounds are randomly chosen by the engine. The same number of entries should also be defined by the associated <em>*_frame</em> attribute.<br />
+      <br />
+      The following sound slots are available: <em>attack</em>, <em>awake</em>, <em>cast</em>, <em>conjure</em>, <em>damage</em>, <em>die</em>, <em>head_turn</em>, <em>ready</em>, <em>shoot</em>, <em>twitch</em>, <em>walk</em>, <em>attack_slash</em>, <em>attack_backslash</em>, <em>attack_jab</em>, <em>emerge</em>, <em>hide</em>, <em>sleep</em>, <em>battle_cry</em>, <em>selection</em> and <em>fall</em>.<br />
+    </div>
+    <br />
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_0000">Type 0000 (effect)</a></div>
+    <div class="indent1">
+      This animation type is primarily used for internal visual effects, such as specific spell effects or body parts of exploding creatures.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref].BAM</span>, where [resref] indicates the value assigned to the "resref" attribute. The internal structure of the BAM resource depends heavily on the specified attributes.<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation. For this animation type the prefix is identical to the BAM resref.</li>
+        <li class="anchors"><strong>shadow = resref</strong><br />This attribute specifies a separate shadow BAM resref.</li>
+        <li class="anchors"><strong>palletized = boolean</strong><br />This attribute appears to be unimplemented.</li>
+        <li class="anchors"><strong>translucent = boolean</strong><br />This attribute indicates whether the animation is translucent.</li>
+        <li class="anchors"><strong>random_render = boolean</strong><br />This attributes indicates whether a random BAM animation cycle is chosen at spawn.</li>
+        <li class="anchors"><strong>delta_z = int</strong><br />This attribute determines how fast certain hardcoded effects move along the (fake) z-axis.</li>
+        <li class="anchors"><strong>alt_palette = resref</strong><br /><span class="unknown">It is likely that this attribute specifies a replacement palette for the creature animation.</span></li>
+        <li class="anchors"><strong>height_code_shield = string</strong><br /><span class="unknown">This attribute appears to be unimplemented.</span></li>
+        <li class="anchors"><strong>height_code_helmet = string</strong><br /><span class="unknown">This attribute appears to be unimplemented.</span></li>
+        <li class="anchors"><strong>height_code = string</strong><br /><span class="unknown">This attribute appears to be unimplemented.</span></li>
+        <li class="anchors"><strong>resref_paperdoll = string</strong><br /><span class="unknown">This attribute appears to be unimplemented.</span></li>
+        <li class="anchors"><strong>resref_armor_base = string</strong><br /><span class="unknown">This attribute appears to be unimplemented.</span></li>
+        <li class="anchors"><strong>resref_armor_specific = string</strong><br /><span class="unknown">This attribute appears to be unimplemented.</span></li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_1000_1">Type 1000 (monster_quadrant)</a></div>
+    <div class="indent1">
+      This is one of three available animation types tied to the 0x1000 range of animation slots. The type uses a simplified split-part animation scheme to draw big creatures. Supported animation slot range: <span class="mono">0x1000 - 0x11ff</span><br />
+      <br />
+      Animation scheme: <span class="mono">[resref][seq].BAM</span>, with<br />
+      seq:<br />
+      - <span class="mono">G1[quadrant]</span>: WK=0-9<br />
+      - <span class="mono">G1[quadrant]E</span>: WK=10-15<br />
+      - <span class="mono">G2[quadrant]</span>: SD=0-9, SC=16-25, GH=32-41, DE=48-57, TW=64-73<br />
+      - <span class="mono">G2[quadrant]E</span>: SD=10-15, SC=26-31, GH=42-47, DE=58-63, TW=74-79<br />
+      - <span class="mono">G3[quadrant]</span>: A1=0-9, A2=16-25, A3=32-41<br />
+      - <span class="mono">G3[quadrant]E</span>: A1=10-15, A2=26-31, A3=42-47<br />
+      <br />
+      quadrant:<br />
+      - index in range <span class="mono">1 - quadrants</span>, one digit<br />
+      - ordered left &rarr; right, top &rarr; bottom<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; S, 2 &rarr; SW, 3 &rarr; SW, 4 &rarr; W, 5 &rarr; W, 6 &rarr; NW, 7 &rarr; NW, 8 &rarr; N, 9 &rarr; N<br />
+      - 10 &rarr; NE, 11 &rarr; NE, 12 &rarr; E, 13 &rarr; E, 14 &rarr; SE, 15 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>caster = boolean</strong><br />This attribute indicates whether sequence A3 is used as sequence CA.</li>
+        <li class="anchors"><strong>extend_direction = boolean</strong><br />This attributes indicates whether eastern directions are calculated. 0: eastern directions are calculated by the engine, 1: eastern directions are available as *E.BAM resources.</li>
+        <li class="anchors"><strong>extend_direction_test = int</strong><br />This attribute specifies the number of western directions available if eastern directions are to be calculated by the engine.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>path_smooth = boolean</strong><br />This attribute indicates how pathfinding should be calculated. 0: pathfinding ensures that only major creature directions (S,SW,W,NW,N,...) are used. 1: pathfinding allows arbitrary angles.</li>
+        <li class="anchors"><strong>quadrants = int</strong><br />This attribute defines the number of quadrants animation frames have been split into.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_1000_2">Type 1000 (monster_multi)</a></div>
+    <div class="indent1">
+      This is one of three available animation types tied to the 0x1000 range of animation slots. The type uses an advanced split-part animation scheme to draw huge creatures such as dragons. Supported animation slot ranges: <span class="mono">0x1200 - 0x12ff</span>, <span class="mono">0x1400 - 0x1fff</span><br />
+      <br />
+      <strong>Important:</strong> Due to a buggy implementation in the game engine this animation type allows new definitions only in <span class="code">split_bams=0</span> mode. Predefined animations slots are unaffected as they are directly hardcoded in the engine.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][seq].BAM</span>, with<br />
+      seq:<br />
+      If <span class="code">split_bams=0</span>:<br />
+      - <span class="mono">G1[quadrant]</span>: WK=0-8 (S,SSW,SW,WSW,W,WNW,NW,NNW,N)<br />
+      - <span class="mono">G2[quadrant]</span>: SD/SC/SP=0-8, SD=9-17 (unused), SC=18-26 (unused)<br />
+      - <span class="mono">G3[quadrant]</span>: A1=0-8, A2=9-17 (unused), A3=18-26 (unused)<br />
+      - <span class="mono">G4[quadrant]</span>: GH=0-8, DE/SL/GU*=9-17, TW=18-26, SL=27-35 (unused), DE=36-44 (unused)<br />
+      - <span class="mono">G5[quadrant]</span>: SP=0-8 (unused), CA=9-17<br />
+      - *: GU (get up) sequence: frames are played back in reversed order<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SSW, 2 &rarr; SW, 3 &rarr; WSW, 4 &rarr; W, 5 &rarr; WNW, 6 &rarr; NW, 7 &rarr; NNW, 8 &rarr; N<br />
+      - eastern directions are calculated by the engine<br />
+      <br />
+      If <span class="code">split_bams=1</span>:<br />
+      - <span class="mono">1[quadrant]0[dir]</span>: WK=[dir]<br />
+      - <span class="mono">2[quadrant]0[dir]</span>: SD/SC/SP=[dir], SD=9+[dir] (unused), SC=18+[dir] (unused)<br />
+      - <span class="mono">3[quadrant]0[dir]</span>: A1=[dir], A2=9+[dir] (unused), A3=18+[dir] (unused)<br />
+      - <span class="mono">4[quadrant]0[dir]</span>: GH=[dir], DE=9+[dir] (unused), TW=18+[dir] (unused), SL=27+[dir] (unused), DE=36+[dir] (unused)<br />
+      - <span class="mono">4[quadrant]1[dir]</span>: GH=[dir] (unused), DE/SL/GU*=9+[dir], TW=18+[dir] (unused), SL=27+[dir] (unused), DE=36+[dir] (unused)<br />
+      - <span class="mono">4[quadrant]2[dir]</span>: GH=[dir] (unused), DE=9+[dir] (unused), TW=18+[dir], SL=27+[dir] (unused), DE=36+[dir] (unused)<br />
+      - <span class="mono">5[quadrant]0[dir]</span>: SP=[dir], CA=9+[dir]<br />
+      - *: GU (get up) sequence: frames are played back in reversed order<br />
+      <br />
+      quadrant:<br />
+      - index in range <span class="mono">1 - quadrants</span>, one digit<br />
+      - ordered left &rarr; right, top &rarr; bottom<br />
+      <br />
+      dir:<br />
+      - a single-digit number indicating a direction (0=S, 1=SSW, 2=SW, 3=WSW, 4=W, 5=WNW, 6=NW, 7=NNW, 8=N)<br />
+      - eastern directions are calculated by the engine<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>double_blit = boolean</strong><br />This attribute appears to be unused in BGEE.</li>
+        <li class="anchors"><strong>quadrants = int</strong><br />This attribute defines the number of quadrants animation frames have been split into.</li>
+        <li class="anchors"><strong>split_bams = boolean</strong><br />This attributes indicates which animation scheme to use (see details above). 0: animations are packed in G1 and G2 files, 1: animations are spread over various subfiles.</li>
+        <li class="anchors"><strong>palette1 = resref<br />palette2 = resref<br />palette3 = resref<br />palette4 = resref<br />palette5 = resref</strong><br />These attributes are supposed to specify replacement palettes for the individual main animation groups (e.g. palette1 &rarr; <span class="mono">G1*</span> or <span class="mono">1*</span> animations). However, due to a buggy implementation they are basically defunct. Falls back to the general section attribute "new_palette" + number of animation group (e.g. the Green Dragon palette resref "MDR1_GR" implies that palette resrefs MDR1_GR1, MDR1_GR2, MDR1_GR3, MDR1_GR4 and MDR1_GR5 are used).</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_1000_3">Type 1000 (multi_new)</a></div>
+    <div class="indent1">
+      This is one of three available animation types tied to the 0x1000 range of animation slots. The type was introduced by BG2:ToB and uses a simplified split-part animation scheme to draw big creatures such as Demogorgon. Supported animation slot range: <span class="mono">0x1300 - 0x13ff</span><br />
+      <br />
+      <strong>Note:</strong> This animation type is currently incorrectly assigned to a number of original animation slots in the 0x1200 range. However, these definitions are ignored because they are overridden by hardcoded definitions in the game engine.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][seq].BAM</span>, with<br />
+      seq:<br />
+      If <span class="code">split_bams=0</span>:<br />
+      - <span class="mono">G1[quadrant]</span>: WK=0-8, SC=9-17, SD=18-26, GH=27-35, DE=36-44, TW=45-53<br />
+      - <span class="mono">G2[quadrant]</span>: A1=0-8, A2=9-17, A3=18-26, A4=27-35 (ranged), A5=36-44 (unused?), SP=45-53, CA=54-62<br />
+      <br />
+      If <span class="code">split_bams=1</span>:<br />
+      - <span class="mono">G1[quadrant]</span>: SC=9-17, SD=18-26, GH=27-35, DE=36-44, TW=45-53<br />
+      - <span class="mono">G1[quadrant]1</span>: WK=0-8<br />
+      - <span class="mono">G1[quadrant]2</span>: SD=18-26<br />
+      - <span class="mono">G1[quadrant]3</span>: GH=27-35<br />
+      - <span class="mono">G1[quadrant]4</span>: GH=27-35, DE=36-44<br />
+      - <span class="mono">G1[quadrant]5</span>: TW=45-53<br />
+      - <span class="mono">G2[quadrant]</span>: A1=0-8<br />
+      - <span class="mono">G2[quadrant]1</span>: A2=9-17<br />
+      - <span class="mono">G2[quadrant]2</span>: A3=18-26<br />
+      - <span class="mono">G2[quadrant]3</span>: A4=27-35 (ranged)<br />
+      - <span class="mono">G2[quadrant]4</span>: A5=36-44 (unused?), SP=45-53, CA=54-62<br />
+      - <span class="mono">G2[quadrant]5</span>: SP=45-53<br />
+      - <span class="mono">G2[quadrant]6</span>: CA=54-62<br />
+      <br />
+      quadrant:<br />
+      - index in range <span class="mono">1 - quadrants</span>, one digit<br />
+      - ordered left &rarr; right, top &rarr; bottom<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SSW, 2 &rarr; SW, 3 &rarr; WSW, 4 &rarr; W, 5 &rarr; WNW, 6 &rarr; NW, 7 &rarr; NNW, 8 &rarr; N<br />
+      - eastern directions are calculated by the engine<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>can_lie_down = boolean</strong><br />This attribute specifies internal engine behavior when a creature "gets up" after being created (e.g. summoned).</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>path_smooth = boolean</strong><br />This attribute indicates how pathfinding should be calculated. 0: pathfinding ensures that only major creature directions (S,SW,W,NW,N,...) are used. 1: pathfinding allows arbitrary angles.</li>
+        <li class="anchors"><strong>quadrants = int</strong><br />This attribute defines the number of quadrants animation frames have been split into.</li>
+        <li class="anchors"><strong>split_bams = boolean</strong><br />This attributes indicates which animation scheme to use (see details above). 0: animations are packed in G1 and G2 files, 1: animations are spread over various subfiles.</li>
+        <li class="anchors"><strong>translucent = boolean</strong><br />This attribute indicates whether the animation is translucent.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_2000">Type 2000 (monster_layered_spell)</a></div>
+    <div class="indent1">
+      This animation type is used for a small selection of BG1 animations with spellcasting abilities such as Volo, sirines and ogre mages. It supports false color replacements and weapon overlays, and provides a limited set of unmirrored orientations.<br />
+      <br />
+      <strong>Note:</strong> Slots of this type are currently mislabled as [monster_layered] by predefined animation slots. However, these definitions are ignored because they are overridden by hardcoded definitions in the game engine.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][wovl]?[seq].BAM</span>, with<br />
+      seq:<br />
+      - <span class="mono">G1</span>: WK=0-4, SC=8-12, SD=16-20, GH=24-28, DE=32-36, TW=40-44<br />
+      - <span class="mono">G1E</span>: WK=5-7, SC=13-15, SD=21-23, GH=29-31, DE=37-39, TW=45-47<br />
+      - <span class="mono">G2</span>: A1=0-4, A2/CA=8-12, A3/SP=16-20<br />
+      - <span class="mono">G2E</span>: A1=5-7, A2/CA=13-15, A3/SP=21-23<br />
+      <br />
+      <strong>Note:</strong> A1 and A2 are used with 1-h weapons, A3 is used with 2-h weapons.<br />
+      <br />
+      wovl:<br />
+      An optional part of the animation naming scheme that is derived from the first letter of the string assigned to the attributes "resref_weapon1" and "resref_weapon2".<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SW, 2 &rarr; W, 3 &rarr; NW, 4 &rarr; N<br />
+      - 5 &rarr; NE, 6 &rarr; E, 7 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>dual_attack = boolean</strong><br />When set then <span class="mono">SEQ_SHOOT</span> transforms into <span class="mono">SEQ_READY</span>, A3 has a chance to use A1 instead.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>invulnerable = boolean</strong><br />This attribute indicates whether the creature is unkillable by default (e.g. children).</li>
+        <li class="anchors"><strong>resref_weapon1 = string</strong><br />This attribute expects the prefix of the weapon animation overlay for 1-h weapons. The first letter is used for the "wovl" part of the animation naming scheme.</li>
+        <li class="anchors"><strong>resref_weapon2 = string</strong><br />This attribute expects the prefix of the weapon animation overlay for 2-h weapons. The first letter is used for the "wovl" part of the animation naming scheme.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_3000">Type 3000 (monster_ankheg)</a></div>
+    <div class="indent1">
+      This animation type is used for monsters that can bury beneath the ground such as ankhegs. For that reason this type supports the two additional animation sequences <span class="mono">SEQ_EMERGE</span> and <span class="mono">SEQ_HIDE</span>.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][D]?[seq].BAM</span>, with<br />
+      seq:<br />
+      If <span class="code">mirror=1</span> (and <span class="code">extend_direction != 0</span>):<br />
+      - <span class="mono">G1</span>: DE=9-17, TW=18-26, SD=27-35<br />
+      - <span class="mono">G2</span>: SC=0-8, EMERGE=9-17, HIDE=18-26<br />
+      - <span class="mono">G3</span>: A1=0-8, CA=9-17<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SSW, 2 &rarr; SW, 3 &rarr; WSW, 4 &rarr; W, 5 &rarr; WNW, 6 &rarr; NW, 7 &rarr; NNW, 8 &rarr; W<br />
+      - eastern directions are calculated by the engine<br />
+      <br />
+      If <span class="code">mirror=0</span> (and <span class="code">extend_direction == 0</span>):<br />
+      - <span class="mono">G1</span>: DE=8-12, TW=16-20, SD=24-28<br />
+      - <span class="mono">G1E</span>: DE=13-15, TW=21-23, SD=29-31<br />
+      - <span class="mono">G2</span>: SC=0-4, EMERGE=8-12, HIDE=16-20<br />
+      - <span class="mono">G2E</span>: SC=5-7, EMERGE=13-15, HIDE=21-23<br />
+      - <span class="mono">G3</span>: A1=0-4, CA=8-12<br />
+      - <span class="mono">G3E</span>: A1=5-7, CA=13-15<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SW, 2 &rarr; W, 3 &rarr; NW, 4 &rarr; N<br />
+      - 5 &rarr; NE, 6 &rarr; E, 7 &rarr; SE<br />
+      <br />
+      D:<br />
+      - indicates the overlay animation that is drawn where the creature is connected with the ground<br />
+      - rendered synchroneously with Gx sequences<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>mirror = boolean</strong><br />This attributes indicates whether eastern directions are calculated. 0: eastern directions are available as *E.BAM resources, 1: eastern directions are calculated by the engine.</li>
+        <li class="anchors"><strong>extend_direction = int</strong><br />This attribute expects the number of available directions per animation sequence. The default value is 5.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_4000">Type 4000 (town_static)</a></div>
+    <div class="indent1">
+      This simple animation type is used for static (unmoving) creatures such as sitting or sleeping characters.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref].BAM</span>, with the following sequences:<br />
+      - SC=0-15, SD=16-31, GH=32-47, DE=48-63, TW=64-79<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; S, 2 &rarr; SW, 3 &rarr; SW, 4 &rarr; W, 5 &rarr; W, 6 &rarr; NW, 7 &rarr; NW, 8 &rarr; N, 9 &rarr; N<br />
+      - 10 &rarr; NE, 11 &rarr; NE, 12 &rarr; E, 13 &rarr; E, 14 &rarr; SE, 15 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>can_lie_down = boolean</strong><br />This attribute specifies internal engine behavior when a creature "gets up" after being created (e.g. summoned).</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_5000_1">Type 5000 / 6000 (character)</a></div>
+    <div class="indent1">
+      This is one of two available animation types tied to the 0x5000/0x6000 ranges of animation slots. The type was introduced by BG2 and supports an advanced set of features to visualize different armor levels, various kinds of equipment overlays and false color replacements.<br />
+      Supported slot ranges: <span class="mono">0x5000 - 0x53ff</span>, <span class="mono">0x5500 - 0x55ff</span>, <span class="mono">0x6000 - 0x63ff</span>, and <span class="mono">0x6500 - 0x65ff</span>. The 0x6000 range is generally reserved for party-joinable characters, but otherwise identical to the 0x5000 range.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][armor][action][detail].BAM</span>, with<br />
+      <br />
+      resref:<br />
+      - naming scheme: <span class="mono">[char][race][gender][class]</span><br />
+      <br />
+      char: an arbitrary character<br />
+      <br />
+      race:<br />
+      - D=dwarf/gnome, H=human, E=elf/half-elf, I=halfling, O=half-orc<br />
+      <br />
+      gender:<br />
+      - F=female, M=male<br />
+      <br />
+      class:<br />
+      - B=common base*, C=cleric/druid/shaman, F=fighter/ranger/paladin, M=monk, T=thief/bard, W=mage/sorcerer<br />
+      - *: shared character animation across multiple classes which will be overridden if class-specific animations are available<br />
+      <br />
+      armor: number in range <span class="mono">1 - armor_max_code</span>, where 1=none, 2=leather, 3=chain/robe and 4=plate<br />
+      <br />
+      action: A=Attack, CA=Cast, G=Misc, S=Shoot, W=Walk<br />
+      <br />
+      detail:<br />
+      - for action=A: 1=1h-overhead, 2=2h-overhead, 3=1h-backslash, 4=2h-backslash, 5=1h-thrust, 6=2h-thrust, 7=2weapon-v1, 8=throwing?, 9=2weapon-v2<br />
+      - for action=S: A=bow, S=sling, X=crossbow<br />
+      - for action=CA: none<br />
+      <br />
+      sequences:<br />
+      <span class="unknown">
+        If <span class="code">split_bams=0</span> (unverified, there are no instances in the game):<br />
+        - <span class="mono">G1</span>: WK=0-8, SC1=9-17, SD1=18-26, SC2=27-35 (with 2-h weapon?), GH=36-44, DE=45-53, TW=54-62, SD2=63-71, SD3=72-80, SL1=81-89, SL2=90-98<br />
+        - <span class="mono">CA</span>: CA1=0-8, SP1=9-17, CA2=18-26, SP2=27-35, CA3=36-44, SP3=45-53, CA4=54-62, SP4=63-71<br />
+      </span>
+      <br />
+      If <span class="code">split_bams=1</span>:<br />
+      - <span class="mono">G1</span>: SC1=9-17 (1-h weapon)<br />
+      - <span class="mono">G11</span>: WK=0-8<br />
+      - <span class="mono">G12</span>: SD1=18-26<br />
+      - <span class="mono">G13</span>: SC2=27-35 (2-h weapon)<br />
+      - <span class="mono">G14</span>: GH=36-44<br />
+      - <span class="mono">G15</span>: GH=36-44, DE=45-53<br />
+      - <span class="mono">G16</span>: TW=54-62<br />
+      - <span class="mono">G17</span>: SD2=63-71<br />
+      - <span class="mono">G18</span>: SD3=72-80<br />
+      - <span class="mono">G19</span>: SL1=81-89, SL2=90-98<br />
+      - <span class="mono">CA</span>: CA1=0-8, SP1=9-17, CA2=18-26, SP2=27-35, CA3=36-44, SP3=45-53, CA4=54-62, SP4=63-71<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SSW, 2 &rarr; SW, 3 &rarr; WSW, 4 &rarr; W, 5 &rarr; WNW, 6 &rarr; NW, 7 &rarr; NNW, 8 &rarr; W<br />
+      - eastern directions are calculated by the engine<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the base prefix which is used to determine the BAM resources associated with the creature animation. It can be overridden by animations with class-specific suffix if available (see attributes "resref_armor_base" and "resref_armor_specific" below).</li>
+        <li class="anchors"><strong>armor_max_code = int</strong><br />This attribute defines the maximum armor code available for the creature animation (see animation scheme above).</li>
+        <li class="anchors"><strong>can_lie_down = boolean</strong><br />This attribute specifies internal engine behavior when a creature "gets up" after being created (e.g. summoned).</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>double_blit = boolean</strong><br />This attribute appears to be unimplemented.</li>
+        <li class="anchors"><strong>equip_helmet = boolean</strong><br />This attribute indicates whether helmet animation overlays can be drawn.</li>
+        <li class="anchors"><strong>split_bams = boolean</strong><br />This attributes indicates which animation scheme to use (see details above). 0: <span class="unknown">animations are packed in G1 and CA files (unverified)</span>, 1: animations are spread over various subfiles.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>height_code = string</strong><br />The default height code prefix used to determine animation overlays.</li>
+        <li class="anchors"><strong>height_code_helmet = string</strong><br />The height code prefix used to determine helmet animation overlays.</li>
+        <li class="anchors"><strong>height_code_shield = string</strong><br />The height code prefix used to determine shield animation overlays.</li>
+        <li class="anchors"><strong>resref_paperdoll = string</strong><br />The BAM resref prefix for inventory paperdoll graphics. Naming scheme: <span class="mono">[resref_paperdoll][armor]INV.BAM</span>.</li>
+        <li class="anchors"><strong>resref_armor_base = char</strong><br />A single letter that replaces the last character of the "resref" attribute for shared character animations.</li>
+        <li class="anchors"><strong>resref_armor_specific = char</strong><br />A single letter that replaces the last character of the "resref" attribute for class-specific character animations.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_5000_2">Type 5000 / 6000 (character_old)</a></div>
+    <div class="indent1">
+      This is one of two available animation types tied to the 0x5000/0x6000 ranges of animation slots. The type was originally used by BG1 and supports a limited set of features to visualize different armor levels, various kinds of equipment overlays and false color replacements.<br />
+      Supported slot ranges: <span class="mono">0x5400 - 0x54ff</span>, <span class="mono">0x5600 - 0x5fff</span>, <span class="mono">0x6400 - 0x64ff</span>, and <span class="mono">0x6600 - 0x6fff</span>. The 0x6000 range is generally reserved for party-joinable characters, but otherwise identical to the 0x5000 range.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][armor][sequence].BAM</span>, with<br />
+      <br />
+      armor: number in range <span class="mono">1 - armor_max_code</span>, where 1=none, 2=leather, 3=chain/robe and 4=plate<br />
+      <br />
+      sequence:<br />
+      - <span class="mono">A1</span>: 0-4 (1-h overhead)<br />
+      - <span class="mono">A1E</span>: 5-7 (1-h overhead)<br />
+      - <span class="mono">A2</span>: 0-4 (2-h overhead)<br />
+      - <span class="mono">A2E</span>: 5-7 (2-h overhead)<br />
+      - <span class="mono">A3</span>: 0-4 (1-h backslash)<br />
+      - <span class="mono">A3E</span>: 5-7 (1-h backslash)<br />
+      - <span class="mono">A4</span>: 0-4 (2-h backslash)<br />
+      - <span class="mono">A4E</span>: 5-7 (2-h backslash)<br />
+      - <span class="mono">A5</span>: 0-4 (1-h thrust)<br />
+      - <span class="mono">A5E</span>: 5-7 (1-h thrust)<br />
+      - <span class="mono">A6</span>: 0-4 (2-h thrust)<br />
+      - <span class="mono">A6E</span>: 5-7 (2-h thrust)<br />
+      - <span class="mono">SA</span>: 0-4 (bow)<br />
+      - <span class="mono">SAE</span>: 5-7 (bow)<br />
+      - <span class="mono">SX</span>: 0-4 (crossbow)<br />
+      - <span class="mono">SXE</span>: 5-7 (crossbow)<br />
+      - <span class="mono">CA</span>: CA=0-4, SP1=8-12, CA2=16-20, SP2=24-28, CA3=32-36, SP3=40-44, CA4=48-52, SP4=56-60<br />
+      - <span class="mono">CAE</span>: CA=5-7, SP1=13-15, CA2=21-23, SP2=29-31, CA3=37-39, SP3=45-47, CA4=53-55, SP4=61-63<br />
+      - <span class="mono">G1</span>: WK=0-4, SC1=8-12 (1-h weapon), SD1=16-20, SC2=24-28 (2-h weapon), SD2=32-36, GH=40-44, DE=48-52, TW=56-60, SL=64-68 (still frame?)<br />
+      - <span class="mono">G1E</span>: WK=5-7, SC1=13-15 (1-h weapon), SD1=21-23, SC2=29-31 (2-h weapon), SD2=37-39, GH=45-47, DE=53-55, TW=61-63, SL=69-71 (still frame?)<br />
+      - <span class="mono">W2</span>: WK2=0-4 (supplementary directions: SSW, WSW, WNW, NNW, NNE), for walking animation sequence only<br />
+      - <span class="mono">W2E</span>: WK2=5-7 (supplementary directions: ENE, ESE, SSE), for walking animation sequence only<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SW, 2 &rarr; W, 3 &rarr; NW, 4 &rarr; N<br />
+      - 5 &rarr; NE, 6 &rarr; E, 7 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the base prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>armor_max_code = int</strong><br />This attribute defines the maximum armor code available for the creature animation (see animation scheme above).</li>
+        <li class="anchors"><strong>can_lie_down = boolean</strong><br />This attribute specifies internal engine behavior when a creature "gets up" after being created (e.g. summoned).</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>double_blit = boolean</strong><br />This attribute appears to be unimplemented.</li>
+        <li class="anchors"><strong>equip_helmet = boolean</strong><br />This attribute indicates whether helmet animation overlays can be drawn.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>hide_weapons = boolean</strong><br />This attribute indicates whether the weapon overlay should be drawn. 0: draw weapon overlays, 1: do not draw weapon overlays</li>
+        <li class="anchors"><strong>height_code = string</strong><br />The default height code prefix used to determine animation overlays.</li>
+        <li class="anchors"><strong>height_code_helmet = string</strong><br />The height code prefix used to determine helmet animation overlays.</li>
+        <li class="anchors"><strong>shadow = string</strong><br />This attribute overrides the default shadow animation prefix "CSHD" to what is provided. <strong>Note:</strong> The engine is hardcoded to override shadows for the Drizzt and Sarevok animations by "CSHD" and "SSHD" respectively.</li>
+        <li class="anchors"><strong></strong><br /></li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_7000_1">Type 7000 (monster)</a></div>
+    <div class="indent1">
+      This is one of two available animation types tied to the 0x7000 range of animation slots. It was introduced by BG2 and primarily used for various monsters. The animation type provides support for false color replacements, full palette replacements, glow layers, and an extended set of mirrored orientations.<br />
+      <br />
+      To retain backwards compatibility with the original game engines valid slot subranges are wildly spread over the whole 0x7000 range:<br />
+      <div class="highlight"><pre class="text-box"><code class="code">
+0x7002 - 0x700f, 0x7012 - 0x701f, 0x7022 - 0x702f, 0x7032 - 0x703f, 0x7042 - 0x704f, 0x7052 - 0x705f, 0x7062 - 0x706f, 0x7072 - 0x707f, 0x7082 - 0x708f, 0x7092 - 0x709f, 0x70a2 - 0x70af, 0x70b2 - 0x70bf, 0x70c2 - 0x70cf, 0x70d2 - 0x70df, 0x70e2 - 0x70ef, 0x70f2 - 0x70ff, 0x7102 - 0x710f, 0x7112 - 0x711f, 0x7122 - 0x712f, 0x7132 - 0x713f, 0x7142 - 0x714f, 0x7152 - 0x715f, 0x7162 - 0x716f, 0x7172 - 0x717f, 0x7182 - 0x718f, 0x7192 - 0x719f, 0x71a2 - 0x71af, 0x71b2 - 0x71bf, 0x71c2 - 0x71cf, 0x71d2 - 0x71df, 0x71e2 - 0x71ef, 0x71f2 - 0x71ff
+
+0x7204 - 0x720f, 0x7214 - 0x721f, 0x7224 - 0x722f, 0x7234 - 0x723f, 0x7244 - 0x724f, 0x7254 - 0x725f, 0x7264 - 0x726f, 0x7274 - 0x727f, 0x7284 - 0x728f, 0x7294 - 0x729f, 0x72a4 - 0x72af, 0x72b4 - 0x72bf, 0x72c4 - 0x72cf, 0x72d4 - 0x72df, 0x72e4 - 0x72ef, 0x72f4 - 0x72ff
+
+0x7300 - 0x73ff
+
+0x7403 - 0x740f, 0x7413 - 0x741f, 0x7423 - 0x742f, 0x7433 - 0x743f, 0x7443 - 0x744f, 0x7453 - 0x745f, 0x7463 - 0x746f, 0x7473 - 0x747f, 0x7483 - 0x748f, 0x7493 - 0x749f, 0x74a3 - 0x74af, 0x74b3 - 0x74bf, 0x74c3 - 0x74cf, 0x74d3 - 0x74df, 0x74e3 - 0x74ef, 0x74f3 - 0x74ff
+
+0x7502 - 0x750f, 0x7512 - 0x751f, 0x7522 - 0x752f, 0x7532 - 0x753f, 0x7542 - 0x754f, 0x7552 - 0x755f, 0x7562 - 0x756f, 0x7572 - 0x757f, 0x7582 - 0x758f, 0x7592 - 0x759f, 0x75a2 - 0x75af, 0x75b2 - 0x75bf, 0x75c2 - 0x75cf, 0x75d2 - 0x75df, 0x75e2 - 0x75ef, 0x75f2 - 0x75ff
+
+0x7703 - 0x770f, 0x7713 - 0x771f, 0x7723 - 0x772f, 0x7733 - 0x773f, 0x7743 - 0x774f, 0x7753 - 0x775f, 0x7763 - 0x776f, 0x7773 - 0x777f, 0x7783 - 0x778f, 0x7793 - 0x779f, 0x77a3 - 0x77af, 0x77b3 - 0x77bf, 0x77c3 - 0x77cf, 0x77d3 - 0x77df, 0x77e3 - 0x77ef, 0x77f3 - 0x77ff
+
+0x7905 - 0x790f, 0x7915 - 0x791f, 0x7925 - 0x792f, 0x7935 - 0x793f, 0x7945 - 0x794f, 0x7955 - 0x795f, 0x7965 - 0x796f, 0x7975 - 0x797f, 0x7985 - 0x798f, 0x7995 - 0x799f, 0x79a5 - 0x79af, 0x79b5 - 0x79bf, 0x79c5 - 0x79cf, 0x79d5 - 0x79df, 0x79e5 - 0x79ef, 0x79f5 - 0x79ff, 0x7a05 - 0x7a0f, 0x7a15 - 0x7a1f, 0x7a25 - 0x7a2f, 0x7a35 - 0x7a3f, 0x7a45 - 0x7a4f, 0x7a55 - 0x7a5f, 0x7a65 - 0x7a6f, 0x7a75 - 0x7a7f, 0x7a85 - 0x7a8f, 0x7a95 - 0x7a9f, 0x7aa5 - 0x7aaf, 0x7ab5 - 0x7abf, 0x7ac5 - 0x7acf, 0x7ad5 - 0x7adf, 0x7ae5 - 0x7aef, 0x7af5 - 0x7aff
+
+0x7b07 - 0x7b0f, 0x7b17 - 0x7b1f, 0x7b27 - 0x7b2f, 0x7b37 - 0x7b3f, 0x7b47 - 0x7b4f, 0x7b57 - 0x7b5f, 0x7b67 - 0x7b6f, 0x7b77 - 0x7b7f, 0x7b87 - 0x7b8f, 0x7b97 - 0x7b9f, 0x7ba7 - 0x7baf, 0x7bb7 - 0x7bbf, 0x7bc7 - 0x7bcf, 0x7bd7 - 0x7bdf, 0x7be7 - 0x7bef, 0x7bf7 - 0x7bff
+
+0x7c02 - 0x7c0f, 0x7c12 - 0x7c1f, 0x7c22 - 0x7c2f, 0x7c32 - 0x7c3f, 0x7c42 - 0x7c4f, 0x7c52 - 0x7c5f, 0x7c62 - 0x7c6f, 0x7c72 - 0x7c7f, 0x7c82 - 0x7c8f, 0x7c92 - 0x7c9f, 0x7ca2 - 0x7caf, 0x7cb2 - 0x7cbf, 0x7cc2 - 0x7ccf, 0x7cd2 - 0x7cdf, 0x7ce2 - 0x7cef, 0x7cf2 - 0x7cff
+
+0x7e02 - 0x7e0f, 0x7e12 - 0x7e1f, 0x7e22 - 0x7e2f, 0x7e32 - 0x7e3f, 0x7e42 - 0x7e4f, 0x7e52 - 0x7e5f, 0x7e62 - 0x7e6f, 0x7e72 - 0x7e7f, 0x7e82 - 0x7e8f, 0x7e92 - 0x7e9f, 0x7ea2 - 0x7eaf, 0x7eb2 - 0x7ebf, 0x7ec2 - 0x7ecf, 0x7ed2 - 0x7edf, 0x7ee2 - 0x7eef, 0x7ef2 - 0x7eff
+
+0x7f00 - 0x7fff
+      </code></pre></div>
+      <br />
+      Animation scheme: <span class="mono">[resref][seq][wovl]?.BAM</span>, with<br />
+      seq:<br />
+      If <span class="code">split_bams=0</span>:<br />
+      - <span class="mono">G1</span>: WK=0-8, SC=9-17, SD=18-26, GH=27-35, DE=36-44, TW=45-53, SL=54-62, GU=63-71<br />
+      - <span class="mono">G2</span>: A1=0-8, A2=9-17, A3=18-26, A4=27-35, A5=36-44, SP=45-53, CA=54-62<br />
+      <br />
+      If <span class="code">split_bams=1</span>:<br />
+      - <span class="mono">G1</span>: SC=9-17<br />
+      - <span class="mono">G11</span>: WK=0-8<br />
+      - <span class="mono">G12</span>: SD=18-26<br />
+      - <span class="mono">G13</span>: GH=27-35<br />
+      - <span class="mono">G14</span>: GH=27-35 (unused), DE=36-44, TW=45-53<br />
+      - <span class="mono">G15</span>: TW=45-53<br />
+      - <span class="mono">G2</span>: A1=0-8<br />
+      - <span class="mono">G21</span>: A2=9-17<br />
+      - <span class="mono">G22</span>: A3=18-26<br />
+      - <span class="mono">G23</span>: A4=27-35<br />
+      - <span class="mono">G24</span>: A5=36-44<br />
+      - <span class="mono">G25</span>: SP=45-53<br />
+      - <span class="mono">G26</span>: CA=54-62<br />
+      <br />
+      wovl:<br />
+      - an optional weapon animation overlay as separate BAM<br />
+      - it uses the "equipped appearance" string defined by the ITM V1 resources at offset 0x34<br />
+      - weapon animation is always stored as an unsplit BAM<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SSW, 2 &rarr; SW, 3 &rarr; WSW, 4 &rarr; W, 5 &rarr; WNW, 6 &rarr; NW, 7 &rarr; NNW, 8 &rarr; N<br />
+      - eastern directions are calculated by the engine<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>can_lie_down = boolean</strong><br />This attribute specifies internal engine behavior when a creature "gets up" after being created (e.g. summoned).</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>path_smooth = boolean</strong><br />This attribute indicates how pathfinding should be calculated. 0: pathfinding ensures that only major creature directions (S,SW,W,NW,N,...) are used. 1: pathfinding allows arbitrary angles.</li>
+        <li class="anchors"><strong>split_bams = boolean</strong><br />This attributes indicates which animation scheme to use (see details above). 0: animations are packed in G1 and G2 files, 1: animations are spread over various subfiles.</li>
+        <li class="anchors"><strong>translucent = boolean</strong><br />This attribute indicates whether the animation is translucent.</li>
+        <li class="anchors"><strong>glow_layer = resref</strong><br />This attribute expects a BAM resref prefix that is used as an additional background sprite to enable special aura-like blending effects. It is defined by (currently unused) special deva and planetar animations.</li>
+        <li class="anchors"><strong>palette1 = resref<br />palette2 = resref</strong><br />These attributes define replacement palettes for individual animation groups (G1, G2).</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_7000_2">Type 7000 (monster_old)</a></div>
+    <div class="indent1">
+      This is one of two available animation types tied to the 0x7000 range of animation slots. It was originally used in BG1 for various monsters such as dogs, bears and basilisks. The animation type provides support for false color replacements and a reduced set of unmirrored orientations.<br />
+      <br />
+      To retain backwards compatibility with the original game engines valid slot subranges are wildly spread over the whole 0x7000 range:<br />
+      <div class="highlight"><pre class="text-box"><code class="code">
+0x7000, 0x7001, 0x7010, 0x7011, 0x7020, 0x7021, 0x7030, 0x7031, 0x7040, 0x7041, 0x7050, 0x7051, 0x7060, 0x7061, 0x7070, 0x7071, 0x7080, 0x7081, 0x7090, 0x7091, 0x70a0, 0x70a1, 0x70b0, 0x70b1, 0x70c0, 0x70c1, 0x70d0, 0x70d1, 0x70e0, 0x70e1, 0x70f0, 0x70f1, 0x7100, 0x7101, 0x7110, 0x7111, 0x7120, 0x7121, 0x7130, 0x7131, 0x7140, 0x7141, 0x7150, 0x7151, 0x7160, 0x7161, 0x7170, 0x7171, 0x7180, 0x7181, 0x7190, 0x7191, 0x71a0, 0x71a1, 0x71b0, 0x71b1, 0x71c0, 0x71c1, 0x71d0, 0x71d1, 0x71e0, 0x71e1, 0x71f0, 0x71f1, 
+
+0x7200 - 0x7203, 0x7210 - 0x7213, 0x7220 - 0x7223, 0x7230 - 0x7233, 0x7240 - 0x7243, 0x7250 - 0x7253, 0x7260 - 0x7263, 0x7270 - 0x7273, 0x7280 - 0x7283, 0x7290 - 0x7293, 0x72a0 - 0x72a3, 0x72b0 - 0x72b3, 0x72c0 - 0x72c3, 0x72d0 - 0x72d3, 0x72e0 - 0x72e3, 0x72f0 - 0x72f3
+
+0x7400 - 0x7402, 0x7410 - 0x7412, 0x7420 - 0x7422, 0x7430 - 0x7432, 0x7440 - 0x7442, 0x7450 - 0x7452, 0x7460 - 0x7462, 0x7470 - 0x7472, 0x7480 - 0x7482, 0x7490 - 0x7492, 0x74a0 - 0x74a2, 0x74b0 - 0x74b2, 0x74c0 - 0x74c2, 0x74d0 - 0x74d2, 0x74e0 - 0x74e2, 0x74f0 - 0x74f2
+
+0x7500, 0x7501, 0x7510, 0x7511, 0x7520, 0x7521, 0x7530, 0x7531, 0x7540, 0x7541, 0x7550, 0x7551, 0x7560, 0x7561, 0x7570, 0x7571, 0x7580, 0x7581, 0x7590, 0x7591, 0x75a0, 0x75a1, 0x75b0, 0x75b1, 0x75c0, 0x75c1, 0x75d0, 0x75d1, 0x75e0, 0x75e1, 0x75f0, 0x75f1
+
+0x7600 - 0x76ff
+
+0x7700 - 0x7702, 0x7710 - 0x7712, 0x7720 - 0x7722, 0x7730 - 0x7732, 0x7740 - 0x7742, 0x7750 - 0x7752, 0x7760 - 0x7762, 0x7770 - 0x7772, 0x7780 - 0x7782, 0x7790 - 0x7792, 0x77a0 - 0x77a2, 0x77b0 - 0x77b2, 0x77c0 - 0x77c2, 0x77d0 - 0x77d2, 0x77e0 - 0x77e2, 0x77f0 - 0x77f2
+
+0x7800 - 0x78ff
+
+0x7900 - 0x7904, 0x7910 - 0x7914, 0x7920 - 0x7924, 0x7930 - 0x7934, 0x7940 - 0x7944, 0x7950 - 0x7954, 0x7960 - 0x7964, 0x7970 - 0x7974, 0x7980 - 0x7984, 0x7990 - 0x7994, 0x79a0 - 0x79a4, 0x79b0 - 0x79b4, 0x79c0 - 0x79c4, 0x79d0 - 0x79d4, 0x79e0 - 0x79e4, 0x79f0 - 0x79f4, 0x7a00 - 0x7a04, 0x7a10 - 0x7a14, 0x7a20 - 0x7a24, 0x7a30 - 0x7a34, 0x7a40 - 0x7a44, 0x7a50 - 0x7a54, 0x7a60 - 0x7a64, 0x7a70 - 0x7a74, 0x7a80 - 0x7a84, 0x7a90 - 0x7a94, 0x7aa0 - 0x7aa4, 0x7ab0 - 0x7ab4, 0x7ac0 - 0x7ac4, 0x7ad0 - 0x7ad4, 0x7ae0 - 0x7ae4, 0x7af0 - 0x7af4
+
+0x7b00 - 0x7b06, 0x7b10 - 0x7b16, 0x7b20 - 0x7b26, 0x7b30 - 0x7b36, 0x7b40 - 0x7b46, 0x7b50 - 0x7b56, 0x7b60 - 0x7b66, 0x7b70 - 0x7b76, 0x7b80 - 0x7b86, 0x7b90 - 0x7b96, 0x7ba0 - 0x7ba6, 0x7bb0 - 0x7bb6, 0x7bc0 - 0x7bc6, 0x7bd0 - 0x7bd6, 0x7be0 - 0x7be6, 0x7bf0 - 0x7bf6
+
+0x7c00, 0x7c01, 0x7c10, 0x7c11, 0x7c20, 0x7c21, 0x7c30, 0x7c31, 0x7c40, 0x7c41, 0x7c50, 0x7c51, 0x7c60, 0x7c61, 0x7c70, 0x7c71, 0x7c80, 0x7c81, 0x7c90, 0x7c91, 0x7ca0, 0x7ca1, 0x7cb0, 0x7cb1, 0x7cc0, 0x7cc1, 0x7cd0, 0x7cd1, 0x7ce0, 0x7ce1, 0x7cf0, 0x7cf1
+
+0x7d00 - 0x7dff
+
+0x7e00, 0x7e01, 0x7e10, 0x7e11, 0x7e20, 0x7e21, 0x7e30, 0x7e31, 0x7e40, 0x7e41, 0x7e50, 0x7e51, 0x7e60, 0x7e61, 0x7e70, 0x7e71, 0x7e80, 0x7e81, 0x7e90, 0x7e91, 0x7ea0, 0x7ea1, 0x7eb0, 0x7eb1, 0x7ec0, 0x7ec1, 0x7ed0, 0x7ed1, 0x7ee0, 0x7ee1, 0x7ef0, 0x7ef1
+      </code></pre></div>
+      <br />
+      Animation scheme: <span class="mono">[resref][seq].BAM</span>, with<br />
+      seq:<br />
+      - <span class="mono">G1</span>: WK=0-4, SC=8-12, SD=16-20, GH=24-28, DE=32-36, TW=40-44<br />
+      - <span class="mono">G1E</span>: WK=5-7, SC=13-15, SD=21-23, GH=29-31, DE=37-39, TW=45-47<br />
+      - <span class="mono">G2</span>: A1=0-4, CA=8-12, A3=16-20<br />
+      - <span class="mono">G2E</span>: A1=5-7, CA=13-15, A3=21-23<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SW, 2 &rarr; W, 3 &rarr; NW, 4 &rarr; N<br />
+      - 5 &rarr; NE, 6 &rarr; E, 7 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>translucent = boolean</strong><br />This attribute indicates whether the animation is translucent.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_8000">Type 8000 (monster_layered)</a></div>
+    <div class="indent1">
+      This animation type is similar to animation type 2000 and used for a small selection of BG1 animations. It supports false color replacements and weapon overlays, and provides a limited set of unmirrored orientations.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][wovl]?[seq].BAM</span>, with<br />
+      seq:<br />
+      - <span class="mono">G1</span>: WK=0-4, SC=8-12, SD=16-20, GH=24-28, DE=32-36, TW=40-44<br />
+      - <span class="mono">G1E</span>: WK=5-7, SC=13-15, SD=21-23, GH=29-31, DE=37-39, TW=45-47<br />
+      - <span class="mono">G2</span>: A1=0-4, A2/CA=8-12, A3/SP=16-20<br />
+      - <span class="mono">G2E</span>: A1=5-7, A2/CA=13-15, A3/SP=21-23<br />
+      <br />
+      <strong>Note:</strong> A1 and A2 are used with 1-h weapons, A3 is used with 2-h weapons.<br />
+      <br />
+      wovl:<br />
+      An optional part of the animation naming scheme that is derived from the first letter of the string assigned to the attributes "resref_weapon1" and "resref_weapon2".<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SW, 2 &rarr; W, 3 &rarr; NW, 4 &rarr; N<br />
+      - 5 &rarr; NE, 6 &rarr; E, 7 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>caster = boolean</strong><br />This attribute indicates whether sequences A2 and A3 are used as CA and SP respectively. This is overridden if weapon overlays are defined.</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>resref_weapon1 = string</strong><br />This attribute expects the prefix of the weapon animation overlay for 1-h weapons. The first letter is used for the "wovl" part of the animation naming scheme.</li>
+        <li class="anchors"><strong>resref_weapon2 = string</strong><br />This attribute expects the prefix of the weapon animation overlay for 2-h weapons. The first letter is used for the "wovl" part of the animation naming scheme.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_9000">Type 9000 (monster_large)</a></div>
+    <div class="indent1">
+      This simple animation type was originally used in BG1. It supports false color replacements and provides a limited set of unmirrored orientations.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][seq].BAM</span>, with<br />
+      seq:<br />
+      - <span class="mono">G1</span>: SD=0-4, SC=8-12, WK=16-20<br />
+      - <span class="mono">G1E</span>: SD=5-7, SC=13-15, WK=21-23<br />
+      - <span class="mono">G2</span>: A1=0-4, A2=8-12<br />
+      - <span class="mono">G2E</span>: A1=5-7, A2=13-15<br />
+      - <span class="mono">G3</span>: A3=0-4, GH2=8-12, DE=16-20, TW=24-28<br />
+      - <span class="mono">G3E</span>: A3=5-7, GH=13-15, DE=21-23, TW=29-31<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SW, 2 &rarr; W, 3 &rarr; NW, 4 &rarr; N<br />
+      - 5 &rarr; NE, 6 &rarr; E, 7 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_A000">Type A000 (monster_large16)</a></div>
+    <div class="indent1">
+      This animation type is very similar to animation type 9000 but provides an extended set of unmirrored orientations.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][seq].BAM</span>, with<br />
+      seq:<br />
+      - <span class="mono">G1</span>: WK=0-9<br />
+      - <span class="mono">G1E</span>: WK=10-15<br />
+      - <span class="mono">G2</span>: SD=0-9, SC=16-25, GH=32-41, DE=48-57, TW=64-73<br />
+      - <span class="mono">G2E</span>: SD=10-15, SC=26-31, GH=42-47, DE=58-63, TW=74-79<br />
+      - <span class="mono">G3</span>: A1=0-9, A2=16-25, A3=32-41<br />
+      - <span class="mono">G3E</span>: A1=10-15, A2=26-31, A3=42-47<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SSW, 2 &rarr; SW, 3 &rarr; WSW, 4 &rarr; W, 5 &rarr; WNW, 6 &rarr; NW, 7 &rarr; NNW, 8 &rarr; N, 9 &rarr; NNE<br />
+      - 10 &rarr; NE, 11 &rarr; ENE, 12 &rarr; E, 13 &rarr; ESE, 14 &rarr; SE, 15 &rarr; SSE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_B000">Type B000 (ambient_static)</a></div>
+    <div class="indent1">
+      This simple animation type is used for static (unmoving) creatures which are mostly added as "decoration", such as beggars, nobles, horses and cows.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][seq].BAM</span>, with<br />
+      seq:<br />
+      - <span class="mono">G1</span>: SC=0-4, SD=8-12, GH=16-20, DE=24-28, TW=32-36<br />
+      - <span class="mono">G1E</span>: SC=5-7, SD=13-15, GH=21-23, DE=29-31, TW=37-39<br />
+      - <span class="mono">G2</span>: A1=0-4, CA=8-12, A3=16-20<br />
+      - <span class="mono">G2E</span>: A1=5-7, CA=13-15, A3=21-23<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SW, 2 &rarr; W, 3 &rarr; NW, 4 &rarr; N<br />
+      - 5 &rarr; NE, 6 &rarr; E, 7 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>invulnerable = boolean</strong><br />This attribute indicates whether the creature is unkillable by default (e.g. children).</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_C000">Type C000 (ambient)</a></div>
+    <div class="indent1">
+      This animation type is very similar to animation type B000 but also supports walking animation sequences.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][seq].BAM</span>, with<br />
+      seq:<br />
+      - <span class="mono">G1</span>: WK=0-4, SC=8-12, SD=16-20, GH=24-28, DE=32-36, TW=40-44<br />
+      - <span class="mono">G1E</span>: WK=5-7, SC=13-15, SD=21-23, GH=29-31, DE=37-39, TW=45-47<br />
+      - <span class="mono">G2</span>: A1=0-4, CA=8-12, A3=16-20<br />
+      - <span class="mono">G2E</span>: A1=5-7, CA=13-15, A3=21-23<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SW, 2 &rarr; W, 3 &rarr; NW, 4 &rarr; N<br />
+      - 5 &rarr; NE, 6 &rarr; E, 7 &rarr; SE<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+        <li class="anchors"><strong>invulnerable = boolean</strong><br />This attribute indicates whether the creature is unkillable by default (e.g. children).</li>
+        <li class="anchors"><strong>list_type = int</strong><br />This attribute is used internally by the engine to apply special behavior to the creature. For example, <span class="code">list_type=2</span> indicates flying creatures, such as bats. The engine transforms WK to SC, disables detection by infravision and applies numerous exceptions related to pathfinding, polymorph, and other aspects.</li>
+        <li class="anchors"><strong>path_smooth = boolean</strong><br />This attribute indicates how pathfinding should be calculated. 0: pathfinding ensures that only major creature directions (S,SW,W,NW,N,...) are used. 1: pathfinding allows arbitrary angles.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_D000">Type D000 (flying)</a></div>
+    <div class="indent1">
+      This animation type is exclusively used by flying creatures which are handled specially by the engine.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref].BAM</span>, with the following sequences:<br />
+      - still/SD=0-8, flapping/WK=9-17<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SSW, 2 &rarr; SW, 3 &rarr; WSW, 4 &rarr; W, 5 &rarr; WNW, 6 &rarr; NW, 7 &rarr; NNW, 8 &rarr; N<br />
+      - eastern directions are calculated by the engine<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>false_color = boolean</strong><br />This attribute indicates whether false color replacement is applied.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_E000">Type E000 (monster_icewind)</a></div>
+    <div class="indent1">
+      This animation type is primarily used for creatures introduced by Icewind Dale and its successor. It supports separate weapon animation overlays and a reduced unmirrored set of orientations.<br />
+      <br />
+      Animation scheme: <span class="mono">[resref][wovl]?[seq].BAM</span>, with<br />
+      seq:<br />
+      The following animation sequences are known: A1, A2, A3, A4, CA, DE, GH, GU, SC, SD, SL, SP, TW, WK<br />
+      - <span class="mono">[seq]</span>: 0=S, 1=SW, 2=W, 3=NW, 4=N<br />
+      - <span class="mono">[seq]E</span>: 5=NE, 6=E, 7=SE<br />
+      <br />
+      wovl:<br />
+      Known weapon overlays: A=Axe, B=Bow, C=Club, D=Dagger, F=Flail, H=Halberd, M=Mace, Q=Quarterstaff, S=Sword, W=Warhammer.<br />
+      <strong>Note:</strong> Weapon animation overlays are not restricted to the weapon alone, and may also contain additional content such as shields, off-hand weapons or helmets.<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>resref = string</strong><br /> This attribute defines the prefix which is used to determine the BAM resources associated with the creature animation.</li>
+        <li class="anchors"><strong>weapon_left_hand = boolean</strong><br />This attribute appears to be unimplemented.</li>
+        <li class="anchors"><strong>translucent = boolean</strong><br />This attribute indicates whether the animation is translucent.</li>
+        <li class="anchors"><strong>detected_by_infravision = boolean</strong><br />This attribute indicates whether a red tint is applied to the creature when it is spotted by infravision.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="formINI_type_F000">Type F000 (monster_planescape)</a></div>
+    <div class="indent1">
+      This animation type is exclusively supported only by original Planescape Torment and PSTEE. It uses a special animation structure with an extended set of action sequences which can be expanded by custom sequences. The difference is reflected by the associated INI file where supported action sequences are listed individually in place of a common <em>resref</em> attribute.<br />
+      <br />
+      Animation scheme: <span class="mono">[C|D][action][resref].BAM</span>, with<br />
+      <br />
+      The first letter of the animation file is either 'C' or 'D'. The reason for this is unknown, but it is likely that 'D' is used for creatures which provide false color replacements.<br />
+      <br />
+      action: Name of the action sequence defined by the INI file (see below for details). The game uses a common set of action names, but they can theoretically be arbitrary chosen.<br />
+      <br />
+      resref: This is an arbitrary string that identifies the creature name.<br />
+      <br />
+      Available orientations (sequence &rarr; direction):<br />
+      - 0 &rarr; S, 1 &rarr; SSW, 2 &rarr; SW, 3 &rarr; WSW, 4 &rarr; W, 5 &rarr; WNW, 6 &rarr; NW, 7 &rarr; NNW, 8 &rarr; N<br />
+      - eastern directions are calculated by the engine<br />
+      <br />
+      The following attributes are supported:<br />
+      <ul>
+        <li class="anchors"><strong>bestiary = int</strong><br />This attribute expects a numeric value that is associated with the creature's bestiary entry.</li>
+        <li class="anchors"><strong>armor = int</strong><br /><span class="unknown">The meaning of this attribute is unknown.</span></li>
+        <li class="anchors"><strong>clown = boolean</strong><br />This attribute indicates that the creature uses false color replacements.</li>
+        <li class="anchors"><strong>walkscale = decimal</strong><br />This attribute defines the walking speed of the creature. It overrides the "move_scale" attribute in the general section if available.</li>
+        <li class="anchors"><strong>runscale = decimal</strong><br />This attribute defines the running speed of the creature.</li>
+        <li class="anchors"><strong>foot1walk = int<br />foot2walk = int<br />foot3walk = int<br />foot4walk = int</strong><br /><span class="unknown">The meaning of these attributes is unknown.</span></li>
+        <li class="anchors"><strong>foot1run = int<br />foot2run = int<br />foot3run = int<br />foot4run = int</strong><br /><span class="unknown">The meaning of these attributes is unknown.</span></li>
+        <li class="anchors"><strong>color1 = int<br />color2 = int<br />color3 = int<br />color4 = int<br />color5 = int<br />color6 = int<br />color7 = int</strong><br />These attributes defines the palette locations where a specific color range should be replaced by a gradient defined in the CRE resource of the associated creature. They are only considered if <span class="code">clown=1</span>.</li>
+        <li class="anchors"><strong>Action sequence = resref</strong><br />
+        This attribute expects the full BAM animation resref associated with the specified action. The following sequences are supported:
+          <ul>
+            <li><strong>attack1, attack2, attack3:</strong> Attack animations for slash, backslash and thrust actions. However, in practice they may contain any kind of attack animations.</li>
+            <li><strong>gethit:</strong> Twitch animation when getting hit.</li>
+            <li><strong>run:</strong> Run animation.</li>
+            <li><strong>walk:</strong> Walk animation.</li>
+            <li><strong>spell1, spell2, spell3:</strong> Various spellcasting animations.</li>
+            <li><strong>getup:</strong> Animation for getting up from death, sleep or unconsciousness.</li>
+            <li><strong>dieforward, diebackward, diecollapse:</strong> Various dying animations.</li>
+            <li><strong>talk1, talk2, talk3:</strong> Various gestures that are mostly initiated during conversations.</li>
+            <li><strong>standfidget1, standfidget2:</strong> Various gestures that are initiated in random intervals when the creature is in an idle stand.</li>
+            <li><strong>stancefidget1, stancefidget2:</strong> Various gestures that are initiated in random intervals when the creature is in a tense stance.</li>
+            <li><strong>stand:</strong> The idle stand animation.</li>
+            <li><strong>stance:</strong> Animation used when being combat ready or tense.</li>
+            <li><strong>stance2stand:</strong> Transition animation to switch from stance to stand behavior.</li>
+            <li><strong>stand2stance:</strong> Transition animation to switch from stand to stance behavior.</li>
+            <li><strong>misc1, misc2, ..., misc20:</strong> Up to 20 miscellaneous animations can be defined for custom action sequences. Best known example is the Nameless One waking up on a slab in the Mortuary.</li>
+          </ul>
+        </li>
+      </ul>
+      <br />
+      <strong>Notes about original PST creature animation definitions:</strong><br />
+      PST stores all creature animation definitions in the file <span class="mono">RESDATA.INI</span>.<br />
+      <br />
+      Individual animation definitions are placed under numeric section names which are treated as the effective animation slot number used by the game engine internally. The slot numbers stored in <span class="mono"><a href="../../files/ids/pst/animate.htm">ANIMATE.IDS</a></span> or the animation field of <span class="mono">CRE V1.2</span> resources are stripped off their higher byte value if it matches <span class="mono">0x60</span> or <span class="mono">0xE0</span> before they are further processed.<br />
+      <br />
+      The content of the animation definition may include the attributes available for the <em>[sounds]</em> section, as well as all of the attributes available for the <em>[monster_planescape]</em> section, except attributes "color1" to "color7" which are stored directly in the <span class="mono">CRE V1.2</span> resources instead.<br />
+    </div>
+  </div>
+</div>
+
+<a href="#" class="go-up">
+  &nbsp;
+</a>
+
+
+  </div>
+</div>
+
+<script>
+window.addEventListener("scroll", function(event) {
+  var top = window.pageYOffset || document.documentElement.scrollTop;
+  var arrow = document.getElementsByClassName("go-up")[0];
+  if (top > 100) {
+    arrow.style.visibility = "visible";
+  } else {
+    arrow.style.visibility = "hidden";
+  }
+});
+</script>
+
+<footer class="site-footer">
+  <hr />
+  <div id="footer">
+
+    <div class="">
+      <a class="gh-icon-container" href="https://github.com/gibberlings3/iesdp/">
+  <span class="icon icon--github"><svg viewBox="0 0 16 16"><path d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span>
+</a>
+
+      <a href="https://github.com/gibberlings3/iesdp//blob/master/file_formats/ie_formats/ini_anim.htm">Edit this page</a>
+    </div>
+
+    <div class="">
+      <form method="get" action="http://www.google.com/search">
+        <div style="margin: 0px; padding: 0px; text-align: center">
+          <input type="hidden" name="ie" value="UTF-8" />
+          <input type="hidden" name="oe" value="UTF-8" />
+          <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+          <input class="form_button" type="submit" name="btnG" value="Search" />
+          <input type="hidden" name="domains" value="https://gibberlings3.github.io/iesdp" />
+          <input type="hidden" name="sitesearch" value="https://gibberlings3.github.io/iesdp" />
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <hr />
+</footer>
+
+
+</body>
+</html>

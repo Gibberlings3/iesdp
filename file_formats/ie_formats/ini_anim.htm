@@ -5,7 +5,7 @@ title: "INI file format: Creature Animations"
 
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1">BGEE</div>
+    <div class="indent1">PST, BGEE</div>
     <br />
 
     <div class="fileHeader">General Description</div>
@@ -20,6 +20,8 @@ title: "INI file format: Creature Animations"
       <br />
       Animation slots are limited to the numeric 16-bit range (<span class="mono">0x0000 - 0xffff</span>) and are further divided into subranges for different animation types. These subranges are hardcoded by the engine, most likely to retain backwards compatibility with the original games.<br />
       More general information about the various creature animation types can be found here: <a href="../../appendices/avatarnaming.htm">Avatar Naming Schemes</a><br />
+      <br />
+      <strong>Note:</strong> The INI file format was originally invented for defining PST creature animation properties. More details can be found in the section <a href="#formINI_type_F000">Type F000 (monster_planescape)</a>.<br />
       <br />
 
       <ul>
@@ -64,7 +66,7 @@ title: "INI file format: Creature Animations"
       Animation definitions are generally divided into three sections: <em>[general]</em>, <em>[type_specific_name]</em> and <em>[sounds]</em>.<br />
       <br />
       The <em>[type_specific_name]</em> section contains attributes which are tied to the specific animation type. They are described in detail for each individual type further below.<br />
-      The following animation sequence codes are used throughout the majority of animation types:<br />
+      The following action sequence codes are used throughout the majority of animation types:<br />
       - <span class="mono">A1</span> &rarr; <span class="mono">SEQ_SLASH</span><br />
       - <span class="mono">A2</span> &rarr; <span class="mono">SEQ_BACKSLASH</span><br />
       - <span class="mono">A3</span> &rarr; <span class="mono">SEQ_JAB / SEQ_SHOOT</span><br />
@@ -818,7 +820,7 @@ title: "INI file format: Creature Animations"
         <li class="anchors"><strong>bestiary = int</strong><br />This attribute expects a numeric value that is associated with the creature's bestiary entry.</li>
         <li class="anchors"><strong>armor = int</strong><br /><span class="unknown">The meaning of this attribute is unknown.</span></li>
         <li class="anchors"><strong>clown = boolean</strong><br />This attribute indicates that the creature uses false color replacements.</li>
-        <li class="anchors"><strong>walkscale = decimal</strong><br />This attribute defines the walking speed of the creature. It overrides the "move_scale" attribute in the general section.</li>
+        <li class="anchors"><strong>walkscale = decimal</strong><br />This attribute defines the walking speed of the creature. It overrides the "move_scale" attribute in the general section if available.</li>
         <li class="anchors"><strong>runscale = decimal</strong><br />This attribute defines the running speed of the creature.</li>
         <li class="anchors"><strong>foot1walk = int<br />foot2walk = int<br />foot3walk = int<br />foot4walk = int</strong><br /><span class="unknown">The meaning of these attributes is unknown.</span></li>
         <li class="anchors"><strong>foot1run = int<br />foot2run = int<br />foot3run = int<br />foot4run = int</strong><br /><span class="unknown">The meaning of these attributes is unknown.</span></li>
@@ -844,6 +846,13 @@ title: "INI file format: Creature Animations"
           </ul>
         </li>
       </ul>
+      <br />
+      <strong>Notes about original PST creature animation definitions:</strong><br />
+      PST stores all creature animation definitions in the file <span class="mono">RESDATA.INI</span>.<br />
+      <br />
+      Individual animation definitions are placed under numeric section names which are treated as the effective animation slot number used by the game engine internally. The slot numbers stored in <span class="mono"><a href="../../files/ids/pst/animate.htm">ANIMATE.IDS</a></span> or the animation field of <span class="mono">CRE V1.2</span> resources are stripped off their higher byte value if it matches <span class="mono">0x60</span> or <span class="mono">0xE0</span> before they are further processed.<br />
+      <br />
+      The content of the animation definition may include the attributes available for the <em>[sounds]</em> section, as well as all of the attributes available for the <em>[monster_planescape]</em> section, except attributes "color1" to "color7" which are stored directly in the <span class="mono">CRE V1.2</span> resources instead.<br />
     </div>
   </div>
 </div>

@@ -68,18 +68,56 @@
 
     <div class="title_main"> concentr.2da</div>
 <br />
-No description available yet.<br />
+The way that spellcasters fail after taking damage has been externalized to this file.<br />
 <br />
-In BG2EE we have:<br />
+In BG2EE we have:<br /><br />
 <pre>
 2DA V1.0
 0
 BEHAVIOR             VALUE
 CHECK_MODE           0
 </pre>
-  </div>
+<br />
+
+Known values for <code>CHECK_MODE</code> are:
+<ul>
+  <li>0 &longrightarrow; Any damage a spellcaster takes will cause them to fail their spellcasting</li>
+  <li>1 &longrightarrow; Spell disrupted if <code>(1d20 - 1) + Luck > <a href="../../../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">Spell Level</a> + Damage Taken</code></li>
+  <li>2 &longrightarrow; Spell disrupted if <code>(1d20 - 1) + (Constitution / 2) - 5 > <a href="../../../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">Spell Level</a> + 15</code></li>
+  <li>3 &longrightarrow; Spell disrupted if <code>(1d20 - 1) + Luck > <a href="../../../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">Spell Level</a> + 15</code></li>
+  <li>4 &longrightarrow; Spell disrupted if <code>(1d20 - 1) + (Constitution / 2) - 5 > <a href="../../../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">Spell Level</a> + Damage Taken</code></li>
+  <li>(After this it should repeat based on whether <code>BIT0</code> and <code>BIT1</code> are set)</li>
+</ul>
+
+
+
+<div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+<code>CHECK_MODE</code> values greater than or equal to <code>1</code> are bugged (since all those inequality symbols should be <code>&lt;</code> instead of <code>&gt;</code>).<br />
+As a result, you might want to stick with the default behavior (<code>CHECK_MODE=0</code>) until this bug is fixed.
+
+	</div>
 </div>
 
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li>Constitution and Luck use their aggregate/current scores, not necessarily the base values.</li>
+  <li>
+    Unlike other dice affected by Luck, this one does not cap it at its normal min/max values.
+    <ul>
+      <li>&plus;/&minus;50 Luck is &plus;/&minus;50 to the roll.</li>
+    </ul>
+  </li>
+</ul>
+
+  </div>
+</div>
 
 <a href="#" class="go-up">
   &nbsp;

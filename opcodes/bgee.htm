@@ -18558,14 +18558,24 @@ Only one creature may have a Time Stop effect running at a time, applying a Time
 <ul>
 	<li>0 &longrightarrow; Myself</li>
 	<li>1 &longrightarrow; LastHitter</li>
-	<li>2 &longrightarrow; NearestEnemyOf</li>
+	<li>
+		2 &longrightarrow; [ENEMY]
+		<ul>
+			<li>Since object specifiers are not relative to the creature, this works as expected only from the Player's perspective.</li>
+		</ul>
+	</li>
 	<li>3 &longrightarrow; Nearest</li>
 </ul>
 
 <br/><br/>Known values for <code>Condition</code> are:
 <ul>
 	<li>0 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x0020">HitBy([ANYONE])</a> – Checked every time</li>
-	<li>1 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x401C">See(NearestEnemyOf(Myself))</a> – Checked once per round</li>
+	<li>
+		1 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x401C">See([ENEMY])</a> – Checked once per round
+		<ul>
+			<li>Since object specifiers are not relative to the creature, this works as expected only from the Player's perspective.</li>
+		</ul>
+	</li>
 	<li>2 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,50)</a> – Checked once per round</li>
 	<li>3 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,25)</a> – Checked once per round</li>
 	<li>4 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,10)</a> – Checked once per round</li>

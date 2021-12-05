@@ -5,7 +5,8 @@ set -x
 
 rev=$(git rev-parse --short HEAD)
 
-cd _site
+cp -r _site grrrrr
+cd grrrrr
 ls -ld . ..
 whoami
 ls

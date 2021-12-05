@@ -6,8 +6,10 @@ set -x
 rev=$(git rev-parse --short HEAD)
 
 cd _site
+ls -ld . ..
+whoami
+ls
 
-mkdir .git
 git init
 git config user.name "Travis the automation"
 git config user.email "travis@travi.s"

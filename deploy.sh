@@ -1,10 +1,15 @@
 #!/bin/bash
 
 set -o errexit -o nounset
+set -x
 
 rev=$(git rev-parse --short HEAD)
 
-cd _site
+cp -r _site grrrrr
+cd grrrrr
+ls -ld . ..
+whoami
+ls
 
 git init
 git config user.name "Travis the automation"

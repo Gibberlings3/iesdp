@@ -187,10 +187,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="2" class="action_name">
         2 AddWayPoint(P:WayPoint*)
@@ -235,6 +231,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="3" class="action_name">
         3 Attack(O:Target*)
@@ -252,10 +252,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -288,28 +284,9 @@ END
 
 
   
-    <div class="actionHeader">
-      <a id="7" class="action_name">
-        7 CreateCreature(S:NewObject*,P:Location*,I:Face*)
-      </a></div>
-    <div class="indent1 action_body"><p></p><p>This action is used to create a creature - either an NPC, a neutral creature or an enemy. NewObject is the filename of the creature to create, Location is the coordinates to create the creature at ([x.y] format) and direction being the direction the creature is facing (0-15, 0 being south and the facing values increasing as the character turns clockwise). Note that a coordinate of [-1.-1] will create the creature next to the active creature.</p>
 
-<p>This script is from the area script for the Copper Coronet (AR0406) and creates extra guards when the Player is discovered in the off limits area.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  Global("CopperGuards","GLOBAL",1)
-THEN
-  RESPONSE #100
-    CreateCreature("ccguard1",[2338.412],14)
-    CreateCreature("ccguard2",[2318.457],14)
-    CreateCreature("ccguard1",[2749.793],6)
-    CreateCreature("ccguard2",[2791.831],6)
-    CreateCreature("ccguard1",[1981.762],14)
-    CreateCreature("ccguard1",[1286.1500],14)
-END
-</code></pre></div></div>
 
-    </div>
   
 
 
@@ -339,6 +316,29 @@ END
 
 
 
+  
+    <div class="actionHeader">
+      <a id="7" class="action_name">
+        7 CreateCreature(S:NewObject*,P:Location*,I:Face*)
+      </a></div>
+    <div class="indent1 action_body"><p></p><p>This action is used to create a creature - either an NPC, a neutral creature or an enemy. NewObject is the filename of the creature to create, Location is the coordinates to create the creature at ([x.y] format) and direction being the direction the creature is facing (0-15, 0 being south and the facing values increasing as the character turns clockwise). Note that a coordinate of [-1.-1] will create the creature next to the active creature.</p>
+
+<p>This script is from the area script for the Copper Coronet (AR0406) and creates extra guards when the Player is discovered in the off limits area.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  Global("CopperGuards","GLOBAL",1)
+THEN
+  RESPONSE #100
+    CreateCreature("ccguard1",[2338.412],14)
+    CreateCreature("ccguard2",[2318.457],14)
+    CreateCreature("ccguard1",[2749.793],6)
+    CreateCreature("ccguard2",[2791.831],6)
+    CreateCreature("ccguard1",[1981.762],14)
+    CreateCreature("ccguard1",[1286.1500],14)
+END
+</code></pre></div></div>
+
+    </div>
   
 
 
@@ -422,6 +422,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="11" class="action_name">
         11 EquipItem(S:Object*)
@@ -438,14 +446,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -633,6 +633,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="19" class="action_name">
         19 JoinParty()
@@ -654,14 +658,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="20" class="action_name">
         20 LayHands(O:Target*)
@@ -669,6 +665,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -870,10 +870,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="30" class="action_name">
         30 SetGlobal(S:Name*,S:Area*,I:Value*)
@@ -890,6 +886,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -1005,33 +1005,6 @@ END
   
     <div class="actionHeader">
       <a id="34" class="action_name">
-        34 UseItem(S:Object*,O:Target*)
-      </a></div>
-    <div class="indent1 action_body"><p></p><p>This action instructs the active creature to use the specified item (object) on the specified target (target). This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature’s inventory (though it need not be equipped).</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  HPPercentLT(Myself,50)
-  HasItem("potn52",Myself)
-THEN
-  RESPONSE #100
-    DisplayStringHead(Myself,46150) //quaffs a potion
-    UseItem("potn52",Myself)
-    Continue()
-END
-</code></pre></div></div>
-
-    </div>
-  
-
-
-
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="34" class="action_name">
         34 UseItemSlot(O:Target*,I:Slot*)
       </a></div>
     <div class="indent1 action_body">
@@ -1048,6 +1021,29 @@ END
 
 
 
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="34" class="action_name">
+        34 UseItem(S:Object*,O:Target*)
+      </a></div>
+    <div class="indent1 action_body"><p></p><p>This action instructs the active creature to use the specified item (object) on the specified target (target). This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature’s inventory (though it need not be equipped).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  HPPercentLT(Myself,50)
+  HasItem("potn52",Myself)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150) //quaffs a potion
+    UseItem("potn52",Myself)
+    Continue()
+END
+</code></pre></div></div>
+
+    </div>
   
 
 
@@ -1078,6 +1074,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -1277,6 +1277,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="53" class="action_name">
         53 ClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1284,14 +1288,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -1361,6 +1357,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="58" class="action_name">
         58 DoubleClickRButtonObject(O:Target*,I:ScrollSpeed*Scroll)
@@ -1373,6 +1373,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="59" class="action_name">
         59 MoveCursorPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1380,10 +1384,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -1561,10 +1561,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="68" class="action_name">
         68 CallLightning(O:Target*)
@@ -1582,6 +1578,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -1743,10 +1743,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="82" class="action_name">
         82 CreateItem(S:ResRef*,I:Usage1*,I:Usage2*,I:Usage3*)
@@ -1765,6 +1761,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -1792,14 +1792,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="84" class="action_name">
         84 Face(I:Direction*)
@@ -1819,6 +1811,14 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -1926,10 +1926,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="90" class="action_name">
         90 MoveToPointNoRecticle(P:Point*)
@@ -1942,6 +1938,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="91" class="action_name">
         91 LeaveArea(S:Area*,P:Point*,I:Face*)
@@ -1949,10 +1953,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to leave the current area.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -2011,8 +2011,56 @@ END
   
     <div class="actionHeader">
       <a id="95" class="action_name">
+        95 SpellPointRES(S:RES*,P:Target*)
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg1actions.htm#95" title="BG1 version is identical to this one">BG1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bg2actions.htm#95" title="BG2 version is identical to this one">BG2</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bgeeactions.htm#95" title="BGEE version is identical to this one">BGEE</a></span>/<span class="avariant_current">IWD2</span>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="PST does not have this action">PST</span>]
+      </span>
+    
+
+  </span></div>
+    <div class="indent1 action_body">
+
+  
+  <p>See <a href="#95">SpellPoint.</a></p><p></p>
+
+    </div>
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="95" class="action_name">
         95 SpellPoint(P:Target*,I:Spell*Spell)
-      </a></div>
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg1actions.htm#95" title="BG1 version is identical to this one">BG1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bg2actions.htm#95" title="BG2 version is identical to this one">BG2</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bgeeactions.htm#95" title="BGEE version is identical to this one">BGEE</a></span>/<span class="avariant_current">IWD2</span>]
+      </span>
+    <span class="avariants">
+        [<a href="/iesdp/scripting/actions/totlactions.htm#95" title="IWD1 version is different from this one">IWD1</a>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="PST does not have this action">PST</span>]
+      </span>
+    
+
+  </span></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the specified point ([x.y]). The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. The example script is from <code class="language-plaintext highlighter-rouge">"andris.bcs"</code>.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
@@ -2043,36 +2091,6 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
 
 
 
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="95" class="action_name">
-        95 SpellPointRES(S:RES*,P:Target*)
-      </a><span class="action_sisters">
-    
-    Variants:
-    <span class="avariants">
-        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg1actions.htm#95" title="BG1 version is identical to this one">BG1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bg2actions.htm#95" title="BG2 version is identical to this one">BG2</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bgeeactions.htm#95" title="BGEE version is identical to this one">BGEE</a></span>/<span class="avariant_current">IWD2</span>]
-      </span>
-    
-      
-      
-      
-      <span class="avariants">
-        [<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="PST does not have this action">PST</span>]
-      </span>
-    
-
-  </span></div>
-    <div class="indent1 action_body">
-
-  
-  <p>See <a href="#95">SpellPoint.</a></p><p></p>
-
-    </div>
   
 
 
@@ -2268,10 +2286,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="105" class="action_name">
         105 AttackOneRound(O:Target*)
@@ -2287,6 +2301,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -2367,10 +2385,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="108" class="action_name">
         108 EscapeAreaMove(S:Area*,I:X*,I:Y*,I:Face*)
@@ -2418,6 +2432,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="110" class="action_name">
         110 LeaveAreaLUA(S:Area*,S:Parchment*,P:Point*,I:Face*)
@@ -2439,10 +2461,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -2480,6 +2498,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action is used by the engine internally. An object id is expected in the in1 parameter.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -2523,6 +2545,17 @@ END
 
 
   
+    <div class="actionHeader">
+      <a id="113" class="action_name">
+        113 ForceSpellRES(S:RES*,O:Target*)
+      </a><span class="label label-warning" title="This action may not be reliable">unreliable</span></div>
+    <div class="indent1 action_body">
+
+  
+  <p>See <a href="#113">ForceSpell.</a></p><p></p>
+
+    </div>
+  
 
 
 
@@ -2532,13 +2565,13 @@ END
 
   
     <div class="actionHeader">
-      <a id="113" class="action_name">
-        113 ForceSpellRES(S:RES*,O:Target*)
-      </a><span class="label label-warning" title="This action may not be reliable">unreliable</span></div>
+      <a id="114" class="action_name">
+        114 ForceSpellPointRES(S:RES*,P:Target*)
+      </a></div>
     <div class="indent1 action_body">
 
   
-  <p>See <a href="#113">ForceSpell.</a></p><p></p>
+  <p>See <a href="#114">ForceSpellPoint.</a></p><p></p>
 
     </div>
   
@@ -2582,21 +2615,6 @@ END
 
   </div>
 </div>
-
-    </div>
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="114" class="action_name">
-        114 ForceSpellPointRES(S:RES*,P:Target*)
-      </a></div>
-    <div class="indent1 action_body">
-
-  
-  <p>See <a href="#114">ForceSpellPoint.</a></p><p></p>
 
     </div>
   
@@ -2768,6 +2786,10 @@ THEN
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="120" class="action_name">
         120 StartCutScene(S:CutScene*)
@@ -2808,10 +2830,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -2967,6 +2985,10 @@ THEN
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="129" class="action_name">
         129 AnkhegHide()
@@ -2974,10 +2996,6 @@ THEN
     <div class="indent1 action_body"><p></p><p>This action is likely called directly by the engine, and is used to give ankegs give the appearance of burrowing into the ground. Calling the action from script has no effect.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -3068,6 +3086,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="133" class="action_name">
         133 ClearActions(O:Object*)
@@ -3131,10 +3153,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="135" class="action_name">
         135 LockScroll()
@@ -3177,6 +3195,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="137" class="action_name">
         137 StartDialog(S:DialogFile*,O:Target*)
@@ -3193,10 +3215,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3376,6 +3394,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="146" class="action_name">
         146 Polymorph(I:AnimationType*Animate)
@@ -3400,10 +3422,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3447,6 +3465,10 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="148" class="action_name">
         148 BashDoor(0:Object*)
@@ -3454,10 +3476,6 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
     <div class="indent1 action_body"><p></p><p>This action is miscoded in the default action.ids file (the number 0 should be the capital letter O). When corrected, this action causes the active creature to attempt to bash the specified door.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -3715,33 +3733,6 @@ END
   
     <div class="actionHeader">
       <a id="160" class="action_name">
-        160 ApplySpell(O:Target*,I:Spell*Spell)
-      </a></div>
-    <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by ApplySpell use a single dice value. The example script is used to mimic a contingency from mage18y.bcs.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  See(NearestEnemyOf(Myself))
-  Global("Prep","LOCALS",0)
-THEN
-  RESPONSE #100
-    ApplySpell(Myself,WIZARD_STONE_SKIN)
-    ApplySpell(Myself,WIZARD_SPELL_TRAP)
-    ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
-    ApplySpell(Myself,WIZARD_SPELL_TURNING)
-    ApplySpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
-    ApplySpell(SixthNearestEnemyOf(Myself),WIZARD_MONSTER_SUMMONING_4)
-    SetGlobal("Prep","LOCALS",1)
-END
-</code></pre></div></div>
-
-    </div>
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="160" class="action_name">
         160 ApplySpellRES(S:RES*,O:Target*)
       </a><span class="action_sisters">
     
@@ -3763,6 +3754,44 @@ END
 
   
   <p>See <a href="#160">ApplySpell.</a></p><p></p>
+
+    </div>
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="160" class="action_name">
+        160 ApplySpell(O:Target*,I:Spell*Spell)
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg1actions.htm#160" title="BG1 version is identical to this one">BG1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/totlactions.htm#160" title="IWD1 version is identical to this one">IWD1</a></span>/<span class="avariant_current">IWD2</span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/pstactions.htm#160" title="PST version is identical to this one">PST</a></span>]
+      </span>
+    <span class="avariants">
+        [<a href="/iesdp/scripting/actions/bg2actions.htm#160" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/bgeeactions.htm#160" title="BGEE version is different from this one">BGEE</a>]
+      </span>
+    
+
+  </span></div>
+    <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell is applied instantly; no casting animation is played. The spell cannot be interrupted. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long. Note that for normal spellcasting the probability dice values for effects are rolled for each spell, whereas spells applied in the same scripting block by ApplySpell use a single dice value. The example script is used to mimic a contingency from mage18y.bcs.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  See(NearestEnemyOf(Myself))
+  Global("Prep","LOCALS",0)
+THEN
+  RESPONSE #100
+    ApplySpell(Myself,WIZARD_STONE_SKIN)
+    ApplySpell(Myself,WIZARD_SPELL_TRAP)
+    ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
+    ApplySpell(Myself,WIZARD_SPELL_TURNING)
+    ApplySpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+    ApplySpell(SixthNearestEnemyOf(Myself),WIZARD_MONSTER_SUMMONING_4)
+    SetGlobal("Prep","LOCALS",1)
+END
+</code></pre></div></div>
 
     </div>
   
@@ -3850,6 +3879,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="164" class="action_name">
         164 AddExperienceParty(I:XP*)
@@ -3875,10 +3908,6 @@ THEN
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3949,10 +3978,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="168" class="action_name">
         168 Interact(O:Object*)
@@ -4009,6 +4034,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="170" class="action_name">
         170 RevealAreaOnMap(S:ResRef*)
@@ -4027,6 +4056,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -4057,10 +4090,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="172" class="action_name">
         172 ChangeTileState(O:Tile*,I:State*Boolean)
@@ -4068,6 +4097,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action sets the open/closed graphic of a tile in a WED file.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -4092,10 +4125,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -4325,10 +4354,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="180" class="action_name">
         180 MoveToObjectFollow(O:Object*)
@@ -4356,6 +4381,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="181" class="action_name">
         181 ReallyForceSpell(O:Target*,I:Spell*Spell)
@@ -4366,10 +4395,10 @@ END
         [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg1actions.htm#181" title="BG1 version is identical to this one">BG1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/totlactions.htm#181" title="IWD1 version is identical to this one">IWD1</a></span>/<span class="avariant_current">IWD2</span>]
       </span>
     <span class="avariants">
-        [<a href="/iesdp/scripting/actions/bg2actions.htm#181" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/bgeeactions.htm#181" title="BGEE version is different from this one">BGEE</a>]
+        [<a href="/iesdp/scripting/actions/pstactions.htm#181" title="PST version is different from this one">PST</a>]
       </span>
     <span class="avariants">
-        [<a href="/iesdp/scripting/actions/pstactions.htm#181" title="PST version is different from this one">PST</a>]
+        [<a href="/iesdp/scripting/actions/bg2actions.htm#181" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/bgeeactions.htm#181" title="BGEE version is different from this one">BGEE</a>]
       </span>
     
 
@@ -4416,10 +4445,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="182" class="action_name">
         182 MakeUnselectable(I:Time*)
@@ -4441,6 +4466,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action changes the active creature’s selection circle to purple - making it unselectable. Creatures made unselectable stop processing scripts.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -4504,6 +4533,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="185" class="action_name">
         185 SetMasterArea(S:Name*)
@@ -4529,10 +4562,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action adds the specified area to the top of the area script processing stack. When the player enters an area that is not in the mastarea.2da the associated script is added to the bottom of the area script processing stack. When the player enters an area that is in mastarea.2da the associated script is added to the top of the area script processing stack.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -4619,10 +4648,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="189" class="action_name">
         189 LeaveAreaLUAPanic(S:Area*,S:Parchment*,P:Point*,I:Face*)
@@ -4691,6 +4716,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="191" class="action_name">
         191 SpellNoDec(O:Target*,I:Spell*Spell)
@@ -4719,14 +4748,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. The spell will not be removed from the casters memory after casting. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -4761,6 +4782,40 @@ END
 
 
 
+  
+
+
+
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="192" class="action_name">
+        192 SpellPointNoDecRES(S:RES*,P:Target*)
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg1actions.htm#192" title="BG1 version is identical to this one">BG1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bg2actions.htm#192" title="BG2 version is identical to this one">BG2</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bgeeactions.htm#192" title="BGEE version is identical to this one">BGEE</a></span>/<span class="avariant_current">IWD2</span>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="PST does not have this action">PST</span>]
+      </span>
+    
+
+  </span></div>
+    <div class="indent1 action_body">
+
+  
+  <p>See <a href="#192">SpellPointNoDec.</a></p><p></p>
+
+    </div>
   
 
 
@@ -4806,32 +4861,6 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
 
 
 
-  
-    <div class="actionHeader">
-      <a id="192" class="action_name">
-        192 SpellPointNoDecRES(S:RES*,P:Target*)
-      </a><span class="action_sisters">
-    
-    Variants:
-    <span class="avariants">
-        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg1actions.htm#192" title="BG1 version is identical to this one">BG1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bg2actions.htm#192" title="BG2 version is identical to this one">BG2</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/bgeeactions.htm#192" title="BGEE version is identical to this one">BGEE</a></span>/<span class="avariant_current">IWD2</span>]
-      </span>
-    
-      
-      
-      
-      <span class="avariants">
-        [<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="PST does not have this action">PST</span>]
-      </span>
-    
-
-  </span></div>
-    <div class="indent1 action_body">
-
-  
-  <p>See <a href="#192">SpellPointNoDec.</a></p><p></p>
-
-    </div>
   
 
 
@@ -4990,6 +5019,10 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="198" class="action_name">
         198 StartDialogueNoSet(O:Object*)
@@ -5015,10 +5048,6 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to initiate dialog with the target object, using its currently assigned dialog file. This action can be used from a distance and will work whether the target creature is in sight or not. Dialog will not be initiated if the creature using this action has been assigned a dialog that has all top level conditions returning false.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -5214,10 +5243,6 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="205" class="action_name">
         205 WaitWait(I:Time*)
@@ -5240,6 +5265,10 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
     <div class="indent1 action_body"><p></p><p>This action functions the same as Wait.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -5488,6 +5517,10 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="229" class="action_name">
         229 FaceObject(O:Object*)
@@ -5510,18 +5543,6 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to face the target object.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
   
 
 
@@ -5643,6 +5664,14 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="233" class="action_name">
         233 HideCreature(O:Object*,I:State*Boolean)
@@ -5665,6 +5694,10 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -5701,14 +5734,6 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="235" class="action_name">
         235 PlaySequence(O:Target*,I:Sequence*Sequence)
@@ -5731,6 +5756,10 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -5779,10 +5808,6 @@ It is the same as <a href="#85">RandomWalk()</a>, just with the offscreen-wait r
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="237" class="action_name">
         237 ReturnToSavedLocation()
@@ -5818,6 +5843,18 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="238" class="action_name">
         238 AddXPVar(S:VarTableEntry*,I:Strref*)
@@ -5840,14 +5877,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -5896,6 +5925,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="240" class="action_name">
         240 IncrementInternal(O:Object*,I:Index*,I:Value*)
@@ -5918,18 +5955,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action alters the specified internal variable for the target creature by the amount indicated. The amount can be positive or negative.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
   
 
 
@@ -5989,6 +6014,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="243" class="action_name">
         243 IncrementGlobalOnce(S:String1*,S:String2*,S:String3*,S:String4*,I:Value*)
@@ -6016,14 +6049,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="244" class="action_name">
         244 DeleteJournalEntry(I:Strref*)
@@ -6046,6 +6071,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -6125,6 +6154,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="247" class="action_name">
         247 BitGlobal(S:String1*,S:String2*,I:Value*,I:Mode*Bitmode)
@@ -6156,10 +6193,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="248" class="action_name">
         248 GlobalBitGlobal(S:String1*,S:String2*,S:String3*,S:String4*,I:Mode*Bitmode)
@@ -6182,14 +6215,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -6258,6 +6283,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="250" class="action_name">
         250 RunAwayFromNoLeaveArea(O:Object*,I:Duration*)
@@ -6285,6 +6314,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="251" class="action_name">
         251 DropInventoryEX(O:Object*)
@@ -6307,10 +6344,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to drop all its inventory items (except those marked undroppable?).</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -6381,10 +6414,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -6467,22 +6496,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="256" class="action_name">
         256 SetDialogueRange(I:Range*)
@@ -6522,6 +6535,26 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="257" class="action_name">
         257 ForceHide(O:Target*)
@@ -6544,10 +6577,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -6735,10 +6764,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="263" class="action_name">
         263 MoveToObjectUntilSee(O:Target*)
@@ -6761,10 +6786,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -6813,6 +6834,22 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="265" class="action_name">
         265 ExpansionEndCredits()
@@ -6843,14 +6880,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="266" class="action_name">
         266 DisplayMessage(I:StrRef*)
@@ -6873,6 +6902,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action displays the message specified by the strref paramater.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -6972,18 +7005,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="269" class="action_name">
         269 SetStartPos(P:Point*)
@@ -7006,6 +7027,14 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -7054,6 +7083,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="271" class="action_name">
         271 StopJoinRequests()
@@ -7076,10 +7109,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -7194,6 +7223,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="275" class="action_name">
         275 SaveGame(I:STRREF*)
@@ -7216,14 +7249,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action saves the game using the specified description.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -7416,6 +7441,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="281" class="action_name">
         281 MarkObject(O:Object*)
@@ -7490,6 +7519,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="283" class="action_name">
         283 SetCriticalPathObject(O:Object*,I:Critical*Boolean)
@@ -7512,18 +7545,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action sets the Critical Path flag on the specified objects to the specified value. The game ends if a creature with the Critical Path flag set is killed.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
   
 
 
@@ -7564,6 +7585,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="285" class="action_name">
         285 SmallWaitRandom(I:Min*,I:Max*)
@@ -7591,6 +7616,18 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="286" class="action_name">
         286 AllowAreaResting(I:TrueOrFalse*Boolean)
@@ -7613,14 +7650,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action toggles weather the party is allowed to rest in the current area.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -7700,10 +7729,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="289" class="action_name">
         289 SpellCastEffect(O:Source*,S:Voice*,S:Sound1*,S:Sound2*,I:Animation*Sceffect,I:Speed*,I:Sequence*Sequence)
@@ -7726,6 +7751,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -7774,10 +7803,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="291" class="action_name">
         291 SpellHitEffectSprite(O:Source*,O:Target*,I:Effect*Sheffect,I:Height*)
@@ -7800,6 +7825,18 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
   
 
 
@@ -7848,18 +7885,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="293" class="action_name">
         293 UnHide(O:Object*)
@@ -7882,10 +7907,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action removes any invisibility effects and aborts the hiding in shadows modal action.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -7970,6 +7991,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="296" class="action_name">
         296 ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*,I:AdditionalMarkup*)
@@ -8044,10 +8073,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="298" class="action_name">
         298 FaceSavedLocation(O:Object*)
@@ -8070,10 +8095,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -8153,6 +8174,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="301" class="action_name">
         301 SetExtendedNight(I:TrueOrFalse*Boolean)
@@ -8180,10 +8209,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="302" class="action_name">
         302 ReturnToStartLoc(I:Tollerance*)
@@ -8206,6 +8231,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -8289,10 +8318,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="305" class="action_name">
         305 SetMyTarget(O:Object*)
@@ -8315,6 +8340,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -8355,10 +8384,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="307" class="action_name">
         307 SetGlobalTimerRandom(S:Name*,S:Area*,I:Min*,I:Max*)
@@ -8394,10 +8419,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="308" class="action_name">
         308 SetGlobalTimerOnce(S:Name*,S:Area*,I:Time*Gtimes)
@@ -8420,6 +8441,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -8507,10 +8532,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="311" class="action_name">
         311 SpellWait(I:Spell*Spell)
@@ -8533,6 +8554,18 @@ END
     <div class="indent1 action_body"><p></p><p>Adds a Wait action to the queue for the current object, equal to the exact casting time of the spell, i.e. the script writing need not worry about time spent inactive due to failed/cancelled spells. If the parameter is 0 a Wait action equal to the casting time of the previous cast spell is added to the queue.</p>
 
     </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
   
 
 
@@ -8658,10 +8691,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="316" class="action_name">
         316 AddFeat(O:Object*,I:Value*Feats)
@@ -8684,6 +8713,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -8724,14 +8757,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="318" class="action_name">
         318 SetCreatureAreaFlag(O:Object*,I:Flag*Crearefl,I:Value*Boolean)
@@ -8759,6 +8784,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="319" class="action_name">
         319 ForceMarkedSpell(I:Spell*Spell)
@@ -8781,10 +8814,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -8825,6 +8854,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="321" class="action_name">
         321 MarkSpellAndObject(S:Spells*,O:Object*,I:Flags*Splcast)
@@ -8847,10 +8880,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action is used for spell validation (e.g. only casting Call Lightning in an outdoor area). Flag values are from <a href="../../files/ids/iwd2/splcast.htm">splcast.ids</a>.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -8895,10 +8924,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="323" class="action_name">
         323 WaitAnimation(O:Target*,I:Sequence*Sequence)
@@ -8921,6 +8946,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action waits for the target object to complete the indicated animation sequence, if the sequence is underway.</p>
 
     </div>
+  
+
+
+
   
 
 

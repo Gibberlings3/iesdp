@@ -7,6 +7,7 @@ rev=$(git rev-parse --short HEAD)
 
 cd _site
 
+mkdir .git
 git init
 git config user.name "Travis the automation"
 git config user.email "travis@travi.s"

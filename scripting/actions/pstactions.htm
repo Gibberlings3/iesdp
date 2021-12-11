@@ -187,6 +187,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="2" class="action_name">
         2 AddWayPoint(P:WayPoint*)
@@ -226,10 +230,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -288,18 +288,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="7" class="action_name">
         7 CreateCreature(S:NewObject*,P:Location*,I:Face*)
@@ -322,6 +310,18 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
   
 
 
@@ -409,10 +409,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="11" class="action_name">
         11 EquipItem(S:Object*)
@@ -429,6 +425,14 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -454,10 +458,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -618,6 +618,27 @@ END
   
     <div class="actionHeader">
       <a id="19" class="action_name">
+        19 JoinParty()
+      </a></div>
+    <div class="indent1 action_body"><p></p><p>This action adds the active creature to the party. If the party is currently full the ‘select party members’ dialog is shown. JoinParty clears the ActionQueue of the active creature.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  See([PC])
+  Global("KRJOINPARTY","GLOBAL",0)
+THEN
+  RESPONSE #100
+    JoinParty()
+END
+</code></pre></div></div>
+
+    </div>
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="19" class="action_name">
         19 JoinPartyEx(I:JoinGroup*Boolean)
       </a><span class="action_sisters">
     
@@ -647,37 +668,27 @@ END
 
   
     <div class="actionHeader">
-      <a id="19" class="action_name">
-        19 JoinParty()
-      </a></div>
-    <div class="indent1 action_body"><p></p><p>This action adds the active creature to the party. If the party is currently full the ‘select party members’ dialog is shown. JoinParty clears the ActionQueue of the active creature.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  See([PC])
-  Global("KRJOINPARTY","GLOBAL",0)
-THEN
-  RESPONSE #100
-    JoinParty()
-END
-</code></pre></div></div>
-
-    </div>
-  
-
-
-
-  
-
-
-
-  
-    <div class="actionHeader">
       <a id="20" class="action_name">
         20 LayHands(O:Target*)
-      </a></div>
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<a href="/iesdp/scripting/actions/bg1actions.htm#20" title="BG1 version is different from this one">BG1</a>/<a href="/iesdp/scripting/actions/bg2actions.htm#20" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/bgeeactions.htm#20" title="BGEE version is different from this one">BGEE</a>/<a href="/iesdp/scripting/actions/totlactions.htm#20" title="IWD1 version is different from this one">IWD1</a>/<a href="/iesdp/scripting/actions/iwd2actions.htm#20" title="IWD2 version is different from this one">IWD2</a>]
+      </span>
+    <span class="avariants">
+        [<span class="avariant_current">PST</span>]
+      </span>
+    
+
+  </span></div>
     <div class="indent1 action_body"><p></p><p>This action is a leftover from BG1 - it does not work in PST.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -907,27 +918,6 @@ END
   
     <div class="actionHeader">
       <a id="30" class="action_name">
-        30 SetGlobal(S:Name*,S:Area*,I:Value*)
-      </a></div>
-    <div class="indent1 action_body"><p></p><p>This action sets a variable (specified by name) in the scope (specified by area) to the value (specified by value). See the <a href="../../appendices/variables.htm">variable type</a> appendix for details on variables.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  Global("KRINAREA","AR0400",0)
-THEN
-  RESPONSE #100
-    CreateCreature("ORC01",[1738.543],0)
-    SetGlobal("KRINAR EA","AR0400",1)
-END
-</code></pre></div></div>
-
-    </div>
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="30" class="action_name">
         30 GlobalSet(S:Name*,S:Area*,I:Value*)
       </a><span class="action_sisters">
     
@@ -956,6 +946,27 @@ END
 
 
   
+    <div class="actionHeader">
+      <a id="30" class="action_name">
+        30 SetGlobal(S:Name*,S:Area*,I:Value*)
+      </a></div>
+    <div class="indent1 action_body"><p></p><p>This action sets a variable (specified by name) in the scope (specified by area) to the value (specified by value). See the <a href="../../appendices/variables.htm">variable type</a> appendix for details on variables.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  Global("KRINAREA","AR0400",0)
+THEN
+  RESPONSE #100
+    CreateCreature("ORC01",[1738.543],0)
+    SetGlobal("KRINAR EA","AR0400",1)
+END
+</code></pre></div></div>
+
+    </div>
+  
+
+
+
+  
 
 
 
@@ -967,21 +978,7 @@ END
     <div class="actionHeader">
       <a id="31" class="action_name">
         31 Spell(O:Target*,I:Spell*Spell)
-      </a><span class="label label-warning" title="This action may not be reliable">unreliable</span><span class="action_sisters">
-    
-    Variants:
-    <span class="avariants">
-        [<a href="/iesdp/scripting/actions/bg1actions.htm#31" title="BG1 version is different from this one">BG1</a>/<a href="/iesdp/scripting/actions/bg2actions.htm#31" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/bgeeactions.htm#31" title="BGEE version is different from this one">BGEE</a>/<a href="/iesdp/scripting/actions/iwd2actions.htm#31" title="IWD2 version is different from this one">IWD2</a>]
-      </span>
-    <span class="avariants">
-        [<span class="avariant_current">PST</span>]
-      </span>
-    <span class="avariants">
-        [<a href="/iesdp/scripting/actions/totlactions.htm#31" title="IWD1 version is different from this one">IWD1</a>]
-      </span>
-    
-
-  </span></div>
+      </a><span class="label label-warning" title="This action may not be reliable">unreliable</span></div>
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell.This action may not be reliable.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
@@ -1037,6 +1034,37 @@ END
 
 
   
+    <div class="actionHeader">
+      <a id="34" class="action_name">
+        34 UseItem(S:Object*,O:Target*)
+      </a></div>
+    <div class="indent1 action_body"><p></p><p>This action instructs the active creature to use the specified item (object) on the specified target (target). The ability number (i.e. extended header index) to use may be specified. This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature’s inventory (though it need not be equipped).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  HPPercentLT(Myself,50)
+  HasItem("potn52",Myself)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150) //quaffs a potion
+    UseItem("potn52",Myself)
+    Continue()
+END
+</code></pre></div></div>
+
+    </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
 
 
 
@@ -1066,37 +1094,6 @@ END
   <p>See <a href="#34">UseItem.</a></p><p></p>
 
     </div>
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="34" class="action_name">
-        34 UseItem(S:Object*,O:Target*)
-      </a></div>
-    <div class="indent1 action_body"><p></p><p>This action instructs the active creature to use the specified item (object) on the specified target (target). The ability number (i.e. extended header index) to use may be specified. This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature’s inventory (though it need not be equipped).</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  HPPercentLT(Myself,50)
-  HasItem("potn52",Myself)
-THEN
-  RESPONSE #100
-    DisplayStringHead(Myself,46150) //quaffs a potion
-    UseItem("potn52",Myself)
-    Continue()
-END
-</code></pre></div></div>
-
-    </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -1294,10 +1291,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="51" class="action_name">
         51 ClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1305,6 +1298,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -1422,10 +1419,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="59" class="action_name">
         59 MoveCursorPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1433,6 +1426,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -1610,6 +1607,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="68" class="action_name">
         68 CallLightning(O:Target*)
@@ -1627,10 +1628,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -1792,6 +1789,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="82" class="action_name">
         82 CreateItem(S:ResRef*,I:Usage1*,I:Usage2*,I:Usage3*)
@@ -1815,10 +1816,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="83" class="action_name">
         83 SmallWait(I:Time*)
@@ -1836,6 +1833,14 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -1865,18 +1870,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="85" class="action_name">
         85 RandomWalk()
@@ -1895,6 +1888,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -1943,10 +1940,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="88" class="action_name">
         88 Leader(P:Point*)
@@ -1975,6 +1968,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="90" class="action_name">
         90 MoveToPointNoRecticle(P:Point*)
@@ -1987,14 +1988,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="91" class="action_name">
         91 LeaveArea(S:Area*,P:Point*,I:Face*)
@@ -2002,6 +1995,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to leave the current area.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -2119,6 +2116,10 @@ THEN
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="97" class="action_name">
         97 UseItemPointSlot(P:Target*,I:Slot*)
@@ -2126,10 +2127,6 @@ THEN
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -2227,6 +2224,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="105" class="action_name">
         105 AttackOneRound(O:Target*)
@@ -2242,10 +2243,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -2296,10 +2293,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="108" class="action_name">
         108 EscapeArea()
@@ -2317,6 +2310,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -2377,6 +2374,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="110" class="action_name">
         110 LeaveAreaLUA(S:Area*,P:Point*,I:Face*)
@@ -2398,10 +2399,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -2439,18 +2436,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action is used by the engine internally. An object id is expected in the in1 parameter.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
   
 
 
@@ -2515,6 +2500,18 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="115" class="action_name">
         115 SetGlobalTimer(S:Name*,S:Area*,I:Time*Gtimes)
@@ -2533,6 +2530,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -2594,10 +2595,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="119" class="action_name">
         119 DropInventory()
@@ -2615,36 +2612,6 @@ THEN
     Wait(2)
 (cut short for brevity)
 </code></pre></div></div>
-
-    </div>
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="120" class="action_name">
-        120 StartCutSceneEx(S:CutScene*,I:evaluateConditions*Boolean)
-      </a><span class="action_sisters">
-    
-    Variants:
-    <span class="avariants">
-        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bgeeactions.htm#120" title="BGEE version is identical to this one">BGEE</a></span>/<span class="avariant_current">PST</span>]
-      </span>
-    
-      
-      
-      
-      <span class="avariants">
-        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="BG2 does not have this action">BG2</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>]
-      </span>
-    
-
-  </span></div>
-    <div class="indent1 action_body">
-
-  
-  <p>See <a href="#120">StartCutScene.</a></p><p></p>
 
     </div>
   
@@ -2690,6 +2657,36 @@ THEN
     ActionOverride("bdcaelar",StartDialogNoSet(Player1))
 END
 </code></pre></div></div>
+
+    </div>
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="120" class="action_name">
+        120 StartCutSceneEx(S:CutScene*,I:evaluateConditions*Boolean)
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bgeeactions.htm#120" title="BGEE version is identical to this one">BGEE</a></span>/<span class="avariant_current">PST</span>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="BG2 does not have this action">BG2</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>]
+      </span>
+    
+
+  </span></div>
+    <div class="indent1 action_body">
+
+  
+  <p>See <a href="#120">StartCutScene.</a></p><p></p>
 
     </div>
   
@@ -2948,10 +2945,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="133" class="action_name">
         133 ClearActions(O:Object*)
@@ -3015,6 +3008,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="135" class="action_name">
         135 LockScroll()
@@ -3057,10 +3054,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="137" class="action_name">
         137 StartDialog(S:DialogFile*,O:Target*)
@@ -3077,6 +3070,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -3157,10 +3154,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="141" class="action_name">
         141 GivePartyGoldGlobal(S:Name*,S:Area*)
@@ -3175,6 +3168,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -3258,6 +3255,35 @@ END
   
     <div class="actionHeader">
       <a id="146" class="action_name">
+        146 Polymorph(I:AnimationType*Animate)
+      </a></div>
+    <div class="indent1 action_body"><p></p><p>This action causes the active creature to change animation to the specified animation (values from <a href="../../files/ids/pst/animate.htm">animate.ids</a>)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  !InPartyAllowDead("Aerie")
+  !Dead("Aerie")
+  !GlobalGT("AerieTransform","GLOBAL",0)
+  Global("Aerie","AR0607",0)
+  Global("KalahI","AR0607",0)
+THEN
+  RESPONSE #100
+    MoveGlobal("Ar0607","Aerie",[318.378])
+    ChangeEnemyAlly("Aerie",NEUTRAL)
+    SetGlobal("Aerie","AR0607",1)
+    ActionOverride("Aerie",Polymorph(MAGE_FEMALE_ELF))
+    ActionOverride("Aerie",SetBeenInPartyFlags())
+    SetGlobal("AerieTransform","GLOBAL",2)
+END
+</code></pre></div></div>
+
+    </div>
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="146" class="action_name">
         146 PolymorphEx(I:AnimationType*Animate,I:RangeModes*)
       </a><span class="action_sisters">
     
@@ -3279,35 +3305,6 @@ END
 
   
   <p>See <a href="#146">Polymorph.</a></p><p></p>
-
-    </div>
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="146" class="action_name">
-        146 Polymorph(I:AnimationType*Animate)
-      </a></div>
-    <div class="indent1 action_body"><p></p><p>This action causes the active creature to change animation to the specified animation (values from <a href="../../files/ids/pst/animate.htm">animate.ids</a>)</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  !InPartyAllowDead("Aerie")
-  !Dead("Aerie")
-  !GlobalGT("AerieTransform","GLOBAL",0)
-  Global("Aerie","AR0607",0)
-  Global("KalahI","AR0607",0)
-THEN
-  RESPONSE #100
-    MoveGlobal("Ar0607","Aerie",[318.378])
-    ChangeEnemyAlly("Aerie",NEUTRAL)
-    SetGlobal("Aerie","AR0607",1)
-    ActionOverride("Aerie",Polymorph(MAGE_FEMALE_ELF))
-    ActionOverride("Aerie",SetBeenInPartyFlags())
-    SetGlobal("AerieTransform","GLOBAL",2)
-END
-</code></pre></div></div>
 
     </div>
   
@@ -3436,6 +3433,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="152" class="action_name">
         152 ChangeAIType(O:Object*)
@@ -3443,10 +3444,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action changes the IDS identifiers for the active creature to the values specified. The object parameter must be in the IDS object form (i.e [EA.GENERAL.RACE.CLASS.SPECIFIC.GENDER.ALIGN]). If parameters are missing, they will default to 0. If a symbolic object is passed, all identifiers will be cleared and the IDS identifier bytes will be filled. ChangeAIType(NearestEnemyOf(LastSeenBy(LastTalkedToBy(LastTrigger())))) would zero Allegiance, General, Race, Class, Specific, Gender, and Alignment, set spec 1 to “Myself” (the <a href="../../files/ids/pst/object.htm">object.ids</a> value, 1), 2 to LastTrigger, 3 to LastTalkedToBy, 4 to LastSeenBy, and 5 to NearestEnemyOf.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -3615,14 +3612,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="160" class="action_name">
         160 ApplySpell(O:Target*,I:Spell*Spell)
@@ -3645,6 +3634,14 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -3732,36 +3729,6 @@ END
   
     <div class="actionHeader">
       <a id="164" class="action_name">
-        164 AddPartyexperience(I:XP*)
-      </a><span class="action_sisters">
-    
-    Variants:
-    <span class="avariants">
-        [<span class="avariant_current">PST</span>]
-      </span>
-    
-      
-      
-      
-      <span class="avariants">
-        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="BG2 does not have this action">BG2</span>/<span class="avariant_missing" title="BGEE does not have this action">BGEE</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>]
-      </span>
-    
-
-  </span></div>
-    <div class="indent1 action_body">
-
-  
-  <p>See <a href="#164">AddExperienceParty.</a></p><p></p>
-
-    </div>
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="164" class="action_name">
         164 AddExperienceParty(I:XP*)
       </a></div>
     <div class="indent1 action_body"><p></p><p>This action gives the specified amount of experience to the party. The XP amount is distributed among all current living party members. The example script is from ar1300.bcs.</p>
@@ -3783,6 +3750,36 @@ THEN
   AddexperienceParty(29750)
 (cut short for brevity)
 </code></pre></div></div>
+
+    </div>
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="164" class="action_name">
+        164 AddPartyexperience(I:XP*)
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_current">PST</span>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="BG2 does not have this action">BG2</span>/<span class="avariant_missing" title="BGEE does not have this action">BGEE</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>]
+      </span>
+    
+
+  </span></div>
+    <div class="indent1 action_body">
+
+  
+  <p>See <a href="#164">AddExperienceParty.</a></p><p></p>
 
     </div>
   
@@ -3888,10 +3885,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="169" class="action_name">
         169 DestroyItem(S:Object*,O:Target*,I:All*Boolean)
@@ -3899,6 +3892,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -3965,6 +3962,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="173" class="action_name">
         173 AddJournalEntry(I:Entry*,I:Type*Jourtype)
@@ -3984,10 +3985,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -4057,6 +4054,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="181" class="action_name">
         181 ReallyForceSpell(O:Target*,I:Spell*Spell)
@@ -4064,10 +4065,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. The action must be added to action.ids before it can be used. The example script is from suelfw9.bcs.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -4107,14 +4104,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="182" class="action_name">
         182 MakeUnselectable(I:Time*)
@@ -4136,6 +4125,14 @@ END
     <div class="indent1 action_body"><p></p><p>This action changes the active creature’s selection circle to purple - making it unselectable. Creatures made unselectable stop processing scripts. The action must be added to action.ids before it can be used.</p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -4200,10 +4197,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="190" class="action_name">
         190 FinalSave(I:Slot*)
@@ -4229,6 +4222,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action saves the game in the specified save slot, with a blank area preview image and a name of “Final-Save”. The action must be added to action.ids before it can be used.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -4465,10 +4462,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="205" class="action_name">
         205 FadeFromBlack()
@@ -4491,6 +4484,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -4713,10 +4710,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="213" class="action_name">
         213 FloatMessageFixedRnd(P:Location*,S:Pool*)
@@ -4775,6 +4768,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="215" class="action_name">
         215 FaceObject(O:Object*)
@@ -4806,6 +4803,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="216" class="action_name">
         216 FullHeal(O:Object*)
@@ -4828,14 +4833,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -4969,10 +4966,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="221" class="action_name">
         221 DestroyPartyGold(I:Amount*)
@@ -5026,6 +5019,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -5093,14 +5090,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="225" class="action_name">
         225 FollowCreature(O:Target*)
@@ -5140,6 +5129,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="226" class="action_name">
         226 GenerateModronMaze()
@@ -5162,6 +5155,22 @@ END
     <div class="indent1 action_body"><p></p><p>This action generates data for the Modron Maze (AR13**). The generated data is held in the GAM file.</p>
 
     </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
   
 
 
@@ -5237,14 +5246,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="229" class="action_name">
         229 GlobalSHR(S:Name*,S:Area*,I:Value*,I:ShiftIn*Boolean)
@@ -5267,22 +5268,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
   
 
 
@@ -5315,6 +5300,26 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="231" class="action_name">
         231 GlobalMAX(S:Name*,S:Area*,I:Value*)
@@ -5337,14 +5342,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -5389,6 +5386,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="233" class="action_name">
         233 GlobalSetGlobal(S:Name1*,S:Area1*,S:Name2*,S:Area2*)
@@ -5411,14 +5412,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -5498,10 +5491,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="236" class="action_name">
         236 GlobalANDGlobal(S:Name1*,S:Area1*,S:Name2*,S:Area2*)
@@ -5568,6 +5557,22 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="238" class="action_name">
         238 GlobalBANDGlobal(S:Name1*,S:Area1*,S:Name2*,S:Area2*)
@@ -5590,18 +5595,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
   
 
 
@@ -5664,6 +5657,18 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
   
 
 
@@ -5743,18 +5748,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="243" class="action_name">
         243 GlobalMINGlobal(S:Name1*,S:Area1*,S:Name2*,S:Area2*)
@@ -5821,6 +5814,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="245" class="action_name">
         245 BitClear(S:Name*,S:Area*,I:Bit*Bits)
@@ -5843,6 +5840,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -5891,10 +5892,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="247" class="action_name">
         247 ExploreMapChunk(P:Center*,I:Radius*,I:Mode*)
@@ -5917,6 +5914,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -5957,10 +5958,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="249" class="action_name">
         249 RunToPointNoRecticle(P:Point*)
@@ -5983,6 +5980,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -6039,6 +6040,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="251" class="action_name">
         251 RunningAttack(O:Target*)
@@ -6074,14 +6079,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="252" class="action_name">
         252 RunningAttackNoSound(O:Target*)
@@ -6104,6 +6101,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -6191,6 +6192,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="256" class="action_name">
         256 RunToSavedLocation()
@@ -6213,14 +6218,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -6320,10 +6317,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="261" class="action_name">
         261 GlobalXORGlobal(S:Name*,S:Area*,S:Name2*,S:Area2*)
@@ -6346,10 +6339,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -6398,6 +6387,18 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="263" class="action_name">
         263 PlaySequenceTimed(I:Anim*Animstat,I:Seconds*)
@@ -6420,18 +6421,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
   
 
 
@@ -6472,6 +6461,22 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="265" class="action_name">
         265 IncrementProficiency(O:Target*,I:SlotNum*Wprof,I:Modifier*)
@@ -6494,14 +6499,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -6558,6 +6555,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="267" class="action_name">
         267 StartSong(I:Song*Songs,P:Where*,I:How*Songflag)
@@ -6580,14 +6581,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -6627,44 +6620,13 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="268" class="action_name">
         268 SetFaction(O:Object*,I:Value*Faction)
-      </a><span class="label label-info" title="It is unknown whether this action does anything">unknown</span><span class="action_sisters">
-    
-    Variants:
-    <span class="avariants">
-        [<span class="avariant_current">PST</span>]
-      </span>
-    
-      
-      
-      
-      <span class="avariants">
-        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="BG2 does not have this action">BG2</span>/<span class="avariant_missing" title="BGEE does not have this action">BGEE</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>]
-      </span>
-    
-
-  </span></div>
-    <div class="indent1 action_body"><p></p>
-
-    </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-    <div class="actionHeader">
-      <a id="269" class="action_name">
-        269 SetTeam(O:Object*,I:Value*Team)
       </a><span class="label label-info" title="It is unknown whether this action does anything">unknown</span><span class="action_sisters">
     
     Variants:
@@ -6722,6 +6684,37 @@ END
 
 
 
+  
+
+
+
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="269" class="action_name">
+        269 SetTeam(O:Object*,I:Value*Team)
+      </a><span class="label label-info" title="It is unknown whether this action does anything">unknown</span><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_current">PST</span>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="BG2 does not have this action">BG2</span>/<span class="avariant_missing" title="BGEE does not have this action">BGEE</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>]
+      </span>
+    
+
+  </span></div>
+    <div class="indent1 action_body"><p></p>
+
+    </div>
   
 
 
@@ -6793,6 +6786,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="272" class="action_name">
         272 ChangeDialog(O:Object*,S:ResRef*)
@@ -6815,6 +6812,14 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -6859,10 +6864,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="274" class="action_name">
         274 IncInternal(O:Object*,I:Index*Internal,I:Value*)
@@ -6894,10 +6895,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="275" class="action_name">
         275 PlaySequenceGlobal(S:Label*,S:Scope*,I:Anim*Animstat,I:EndAnim*Animstat)
@@ -6920,6 +6917,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -7011,14 +7012,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="278" class="action_name">
         278 ActivatePortalCursor(O:Object*,I:Value*)
@@ -7041,6 +7034,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action sets the “trapped” field to 1/2 (as a bitfield). If the region has a cursor type of 48, the portal cursor is shown.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -7085,6 +7082,18 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="280" class="action_name">
         280 SetSavedLocation(P:Where*,I:Face*)
@@ -7120,18 +7129,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="281" class="action_name">
         281 TeleportParty(S:Area*,P:Point*,I:Face*)
@@ -7154,6 +7151,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -7229,14 +7230,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="284" class="action_name">
         284 SetMazeHarder()
@@ -7259,6 +7252,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action modifies the difficulty of the modron maze, by altering the MazeDifficulty global variable towards 2. There are three difficulty levels, represent by 0, 1 and 2.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -7303,6 +7300,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="286" class="action_name">
         286 SetCorpseEnabled(S:Name*,I:State*)
@@ -7325,18 +7326,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action toggles the enabled (i.e. visible) state of the specified corpse.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
-  
-
-
-
   
 
 
@@ -7377,6 +7366,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="288" class="action_name">
         288 SetNamelessDeath(I:AreaNum*,P:Dest*,I:State*Animstat)
@@ -7404,6 +7401,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="289" class="action_name">
         289 SetNamelessDeathParty(P:Dest*,I:Reserved*)
@@ -7426,10 +7427,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -7478,6 +7475,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="291" class="action_name">
         291 SinisterPoof(S:BamResRef*,P:Location*,I:Itterations*)
@@ -7500,6 +7501,14 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -7540,22 +7549,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="293" class="action_name">
         293 SetNamelessClass(I:Value*Class)
@@ -7578,10 +7571,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -7634,6 +7623,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="295" class="action_name">
         295 CreateCreatureAtFeet(S:ResRef*)
@@ -7656,6 +7649,18 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
   
 
 
@@ -7700,14 +7705,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="297" class="action_name">
         297 ResetFogOfWar()
@@ -7739,6 +7736,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="298" class="action_name">
         298 DisableSpriteDither()
@@ -7761,10 +7762,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -7813,10 +7810,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="300" class="action_name">
         300 DisableFogDither()
@@ -7839,6 +7832,14 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -7918,10 +7919,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="303" class="action_name">
         303 TimedMoveToPoint(P:Point*,I:Time*)
@@ -7944,6 +7941,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -8006,10 +8007,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -8093,6 +8090,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="308" class="action_name">
         308 TransformPartyItemAll(S:OldObject*,S:NewObject*,I:Charge1*,I:Charge2*,I:Charge3*)
@@ -8115,10 +8120,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -8202,14 +8203,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="311" class="action_name">
         311 GeneratePartyMember(P:Location*,I:Value*Specific)
@@ -8232,6 +8225,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 

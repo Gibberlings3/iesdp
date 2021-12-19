@@ -13,16 +13,43 @@ pst: 0
 Fades the targeted creature(s) by the value in the amount specified by the <code>Fade Amount</code> field in the style specified by the <code>Visual Effect</code> field.
 <br/>Known values for <code>Fade Amount</code> are:
 <ul>
-	<li>1 &longrightarrow; Fully visible</li>
+	<li>0 &longrightarrow; Fully visible</li>
 	<li>...</li>
-	<li>255 &longrightarrow; Almost invisible</li>
+	<li>255 &longrightarrow; Fully transparent</li>
 </ul>
 
-<br/>Known values for <code>Visual Effect</code> are:
+<p>
+	A creature's <code><a href="../files/ids/bgee/stats.htm#60">TRANSLUCENT</a></code> stat is stored in a single byte (<code>0-255</code>) on the <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_translucency">CRE</a></code> file.<br>
+	This opcode only reads the first byte (out of four) of <code>Fade Amount</code>, so the value will always be <code>0-255</code>.
+</p>
+
+Known values for <code>Visual Effect</code> are:
 <ul>
 	<li>0 &longrightarrow; Draw instantly</li>
 	<li>1 &longrightarrow; Fade in</li>
 	<li>2 &longrightarrow; Fade out</li>
 </ul>
 
-<br/><br/>This effect sets <a href="../files/ids/bgee/stats.htm#60">TRANSLUCENT</a> to <code>Fade Amount</code>.
+<p>
+	<code>Visual Effect = 0</code> sets the <code><a href="../files/ids/bgee/stats.htm#60">TRANSLUCENT</a></code> stat directly, based on the <code>timing mode</code>.<br/>
+	<code>Visual Effect = 1</code> and <code>Visual Effect = 2</code> call a hardcoded process that decreases/increases the <code><a href="../files/ids/bgee/stats.htm#60">TRANSLUCENT</a></code> stat by <code>Fade Amount</code> every tick, until it reaches <code>0</code>/<code>255</code>.
+</p>
+
+{% capture note %}
+<ul>
+	<li>
+		Any transparency inherit in the <code><a href="../file_formats/ie_formats/ini_anim.htm">animation</a></code> (see for instance <code>7703.INI &mdash; SHADOW</code>) will stack with that of the <code><a href="../files/ids/bgee/stats.htm#60">TRANSLUCENT</a></code> stat.
+		<ul>
+			<li>It's likely multiplied (so that <code>50&percnt; * 50&percnt; = 25&percnt;</code>), or something similar, but not additive.</li>
+		</ul>
+	</li>
+	<li>
+		On EE games, If you have the game option "Sprite Outlines" enabled, <code><a href="../files/ids/bgee/stats.htm#60">TRANSLUCENT</a></code> values <code>1 - 127</code> are treated as <code>0</code>.
+		<ul>
+			<li>If you also have the game option "Highlight selected sprites" enabled, <code><a href="../files/ids/bgee/stats.htm#60">TRANSLUCENT</a></code> values <code>1 - 127</code> will display correctly, but only while the mouse is over the creature.</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+
+{% include note.html %}

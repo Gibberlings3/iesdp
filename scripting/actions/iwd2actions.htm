@@ -87,25 +87,10 @@
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="0" class="action_name">
         0 NoAction()
-      </a><span class="action_sisters">
-    
-    Variants:
-    <span class="avariants">
-        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg1actions.htm#0" title="BG1 version is identical to this one">BG1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/totlactions.htm#0" title="IWD1 version is identical to this one">IWD1</a></span>/<span class="avariant_current">IWD2</span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/pstactions.htm#0" title="PST version is identical to this one">PST</a></span>]
-      </span>
-    <span class="avariants">
-        [<a href="/iesdp/scripting/actions/bg2actions.htm#0" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/bgeeactions.htm#0" title="BGEE version is different from this one">BGEE</a>]
-      </span>
-    
-
-  </span></div>
+      </a></div>
     <div class="indent1 action_body"><p></p><p>This action can be used to do nothing - many characters walk around randomly or stand in one place doing nothing:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
@@ -118,17 +103,7 @@ THEN
 END
 </code></pre></div></div>
 
-<p>This command also sets a creatures ModalState to 0, and so can be used to stop other modal actions (e.g. Bard Song).</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  ModalState(BATTLESONG)
-THEN
-  RESPONSE #100
-    NoAction()
-END
-</code></pre></div></div>
-
-<p>NoAction() is also commonly used as a hanging action in targeting blocks. This is a matter of good practice rather than necessary. The NoAction() action will never be rum since the block always returns false, but the having an action in the scripting block allows scripting programs to accurately check for errors.</p>
+<p><code class="language-plaintext highlighter-rouge">NoAction()</code> is also commonly used as a hanging (dummy) action in targeting blocks. This is a matter of good practice rather than necessary. The <code class="language-plaintext highlighter-rouge">NoAction()</code> action will never be run since the block always returns false, but having an action in the scripting block allows scripting programs to accurately check for errors.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   See(NearestEnemyOf(Myself))

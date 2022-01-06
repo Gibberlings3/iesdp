@@ -14,10 +14,10 @@ pst: 1
 Disables spell casting abilities of the targeted creature(s), in the style specified by the <code>Spell Type</code> field.
 <br/>Known values for <code>Spell Type</code> are:
 <ul>
-	<li>0 &longrightarrow; Wizard</li>
-	<li>1 &longrightarrow; Priest</li>
-	<li>2 &longrightarrow; Innate</li>
-	<li>3 &longrightarrow; Innate, only 'magical' abilities (SPL flag <code><a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT14">Ignore dead/wild magic</a></code> unset) (EEs)</li>
+	<li>0 &longrightarrow; Disables <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C_1">wizard</a></code> spells with <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x2">location</a>=<a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x2_2">spell</a></code> (also applied by <a href="#op135">polymorph</a>)</li>
+	<li>1 &longrightarrow; Disables <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C_2">priest</a></code> spells with <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x2">location</a>=<a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x2_2">spell</a></code> (also applied by <a href="#op135">polymorph</a>)</li>
+	<li>2 &longrightarrow; Disables all innate spells (really any <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C">type</a></code> except <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C_1">wizard</a></code>/<code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C_2">priest</a></code>), regardless of <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x2">location</a></code></li>
+	<li>3 &longrightarrow; Disables only "magical" spells (those lacking <code><a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT14">Ignore dead/wild magic</a></code>), regardless of <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x1C">type</a></code> or <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x2">location</a></code> (EEs)</li>
 </ul>
 
 <br/>Known values for <code>Show message?</code> are:

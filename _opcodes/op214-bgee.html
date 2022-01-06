@@ -32,8 +32,15 @@ name		RESREF			Casting Type
 As far as <code>Casting Type</code> is concerned:
 <ul>
 	<li>0/1 &longrightarrow; Spell completely mimics the mechanics of casting a spell from a quick-cast slot (including requiring and expending a memorization of the spell)</li>
+	<li>
+		2 &longrightarrow; It either does nothing or crashes, depending on the spell.
+		<ul>
+			<li><code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0xC_5">Caster</a></code> targeted spells just do nothing.</li>
+			<li><code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0xC_1">Actor</a></code>/<code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0xC_4">Location</a></code> targeted spells will crash the game.</li>
+		</ul>
+	</li>
 	<li>3 &longrightarrow; Ignores Spells/Round rule, ignores memorization.</li>
-	<li>4 &longrightarrow; Ignores Spells/Round rule, ignores memorization, spellcasting cannot be interrupted by damage.</li>
+	<li>4 &longrightarrow; Ignores Spells/Round rule, ignores memorization, spellcasting cannot be interrupted by damage, uses normal <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0x12">casting speed</a></code>.</li>
 	<li>5 &longrightarrow; Ignores Spells/Round rule, cast instantly, even if the game is paused, can be cast without memorization, but will decrement memorization if exists.</li>
 </ul>
 

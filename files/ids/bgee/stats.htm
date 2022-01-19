@@ -336,13 +336,40 @@ Set by <a href="../../../opcodes/bgee.htm#op105">opcode #105</a>
 </div>
 <br />
 
-<div class="idsHeader"><a name="46">46 MORALEBREAK</a></div>
+<div class="idsHeader"><a name="MORALEBREAK">46 MORALEBREAK</a></div>
 <div class="indent1">
-Returns <code>0</code> or <code>1</code> if the creature is immune to fear.
+  <ul>
+    <li>This stat is the lower bound for avoiding a morale failure.</li>
+    <li>If <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_Morale">Morale</a></code> is lower than this value, morale failure occurs, if <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_Morale">Morale</a></code> is higher, any morale failure is removed.</li>
+    <li>A value of <code>0</code> is effectively immune to morale failure though.</li>
+    <li>No creature has a <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MoraleBreak">Morale break</a></code> value higher than <code>10</code> as they would always be in morale failure.</li>
+  </ul>
+  
+  <div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+    <li><code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_Morale">Morale</a></code> also fails if <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MoraleBreak">Morale break</a> = current <a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_Morale">Morale</a> value</code>, so <code>20 <a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_Morale">Morale</a></code> will fail if <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MoraleBreak">Morale break</a></code> is also <code>20</code>.
+      <ul>
+        <li>Except if <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MoraleBreak">Morale break</a></code> is <code>0</code>, which cannot fail.</li>
+      </ul>
+    </li>
+  </ul>
+
+
+  </div>
+</div>
+
 </div>
 <br />
 
-<div class="idsHeader"><a name="47">47 MORALERECOVERYTIME</a></div>
+<div class="idsHeader"><a name="MORALERECOVERYTIME">47 MORALERECOVERYTIME</a></div>
+<div class="indent1">
+  <ul>
+    <li><code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MoraleRecovery">Morale recovery</a></code> is the period of time (should be seconds) it takes to recover some amount of <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_Morale">Morale</a></code> naturally (towards a value of <code>10</code>, from a higher or lower value).</li>
+    <li>It's unknown what's going on internally though, as it's not consistent, and even the details given by <code><a href="../../../appendices/clua/bgee.htm">CTRL+M</a></code> don't update <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_Morale">Morale</a></code> in real-time.</li>
+  </ul>
+</div>
 <br />
 
 <div class="idsHeader"><a name="48">48 REPUTATION</a></div>

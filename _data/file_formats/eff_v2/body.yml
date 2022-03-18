@@ -218,6 +218,13 @@
     <b><a name="effv2_Body_0x94">Parent resource</a></b>
 
     {% capture note %}
+    This specific field always needs to be in <u><b>ALLCAPS</b></u>.<br />
+    <br />
+
+    Be careful checking it in <a href="https://github.com/Argent77/NearInfinity">Near Infinity</a>, it displays <code>resource</code> fields in ALLCAPS regardless of the actual characters. However, it also always saves those fields in ALLCAPS as well.
+    {% endcapture %} {% include important.html %}
+
+    {% capture note %}
     - When attaching passive kit bonuses (labeled as `AP_XXXXXXXX` in <code><a href="../../files/2da/2da_bgee/clabxx00.htm">CLAB</a></code> files) to joinable CRE files as <a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x33_1">V2 Effects</a>, this field should be set to the SPL applying such bonuses.
       - In so doing, such bonuses will not be applied a second time (due to <code><a href="../../files/2da/2da_bgee/clabxx00.htm">CLAB</a></code> processing) when those creatures join the Party.
     - So for instance, when applying +10％ <a href="../../opcodes/bgee.htm#op87">Crushing Resistance</a> to a CRE file whose <code><a href="../ie_formats/cre_v1.htm#CREV1_0_Header_0x244">Kit</a></code> is `BARBARIAN`, set this field to `"SPCL153"`.

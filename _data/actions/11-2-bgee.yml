@@ -6,4 +6,12 @@ params:
     type: s
   - name: EquipUnEquip
     type: i
-no_result: true
+desc: |-
+  This action instructs the active creature to equip/unequip the specified item.
+
+  {% capture note %}
+  - Item must be in the creature's inventory for the script action to function.
+  - When used to <code><a href="../../files/ids/bgee/xequip.htm#EQUIP">EQUIP</a></code>, item's global effects (`timing_mode=2`) are applied to the creature each time the action is performed, and avatar animations are updated to reflect the new item.
+  - When is used to <code><a href="../../files/ids/bgee/xequip.htm#UNEQUIP">UNEQUIP</a></code>, it removes one instance of the item's global equipped effects (global effects with other timing modes are not removed).
+  - The item itself never moves in the inventory, whether using the <code><a href="../../files/ids/bgee/xequip.htm#EQUIP">EQUIP</a></code> or <code><a href="../../files/ids/bgee/xequip.htm#UNEQUIP">UNEQUIP</a></code> mode, or whether or not the item was in the backpack or equipped.
+  {% endcapture %} {% include info.html %}

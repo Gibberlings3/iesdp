@@ -13,6 +13,25 @@ pst: 0
 Gives the targeted creature(s) immunity from the spell specified in the <code>resource</code> key. The strref specified by the <code>String Reference</code> field is displayed when the spell is absorbed.
 
 {% capture note %}
+As of EE v2.6, <code>String Reference</code> is bound by
+<details>
+<pre>
+if (!pEffect->m_sourceRes.IsValid() || (pImmunitySpell->m_error != 0xf00074 && pImmunitySpell->m_error != 0xf00080))
+{
+	uint nNewFeedback = 0xffffffff;
+	if (pImmunitySpell->m_error == 0xf00074) {
+		nNewFeedback = 0xf00073;
+	}
+	pImmunitySpell->m_error = nNewFeedback;
+}
+</pre>
+</details>
+Basically, <code>String Reference</code> has to be <code>0xF00074</code> or <code>0xF00080</code> for the engine to display it.
+{% endcapture %}
+
+{% include bug.html %}
+
+{% capture note %}
 At least in EEs, this opcode can block <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files too.<br/>
 In order to do so, both the <code>Resource</code> field of <a href="#op206">opcode #206</a> and the <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x94">Parent Resource</a></code> field of the EFF file must be the same string (max. 8 character long); moreover, you must set the <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x90">Resource Type</a></code> field of the EFF file to <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x90_1">Spell</a></code>.
 {% endcapture %}

@@ -66,249 +66,455 @@
 <div id="nonFooter">
   <div id="content">
 
-    <div class="title_main"> BG(2)EE Identifiers </div>
-    <br />
-    Objects can be split broadly into three categories; static objects, marked objects and object specifiers. Static objects (e.g. Player1, MySelf) are always bound (and in fact, they always return the same creature). Marked objects (e.g. LastSeenBy, LastAttackerOf) are almost always bound. Object specifiers (e.g. [ENEMY.0.0.MAGE] are not bound - they are checked every time they are referenced. Objects listed in objects.ids are marked objects and are not saved over game sessions. Note that Group objects are determined by the specifics value set in the creature file (0x274).<br />
+<div class="title_main"> BG(2)EE Identifiers </div>
 <br />
-    NB. Nearest() identifiers cascade outwards, i.e. if there are only three valid creatures, FourthNearest() and above will return the third nearest creature (rather than false).<br />
-<br />    
+
+Objects can be split broadly into three categories; static objects, marked objects and object specifiers. Static objects (e.g. <code><a href="#Player1">Player1</a></code>, <code><a href="#1">Myself</a></code>) are always bound (and in fact, they always return the same creature). Marked objects (e.g. <code><a href="#18">LastSeenBy</a></code>, <code><a href="#10">LastAttackerOf</a></code>) are almost always bound. Object specifiers (e.g. <code>[<a href="../bgee/ea.htm#255">ENEMY</a>.0.0.<a href="../bgee/class.htm#1">MAGE</a>]</code> are not bound &mdash; they are checked every time they are referenced. Objects listed in <code><a href="../bgee/object.htm">object.ids</a></code> are marked objects and are not saved over game sessions.
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li><code><a href="#60">Group</a></code> objects are determined by the <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x274">specifics</a></code> value set in the creature file.</li>
+  <li><code><a href="#14">Nearest()</a></code> identifiers cascade outwards, i.e. if there are only three valid creatures, <code><a href="#FourthNearest">FourthNearest()</a></code> and above will return the third nearest creature (rather than false).</li>
+</ul>
+
+  </div>
+</div>
+
+
+<br />
+<br />   
+
 IDS V1.0<br />
-0 Nothing<br />
 <br />
+
+<div class="idsHeader"><a name="Nothing">0 Nothing</a></div>
+<br />
+
 <div class="idsHeader"><a name="1">1 Myself</a></div>
 <div class="indent1">
-Returns the active creature.
+  Returns the active creature.
 </div>
 <br />
-2 LeaderOf<br />
-3 GroupOf<br />
+
+<div class="idsHeader"><a name="LeaderOf">2 LeaderOf</a></div>
 <br />
+
+<div class="idsHeader"><a name="GroupOf">3 GroupOf</a></div>
+<br />
+
 <div class="idsHeader"><a name="4">4 WeakestOf</a></div>
 <div class="indent1">
-Returns the weakest player character (in the party).
+  Returns the weakest player character (in the party).
 </div>
 <br />
+
 <div class="idsHeader"><a name="5">5 StrongestOf</a></div>
 <div class="indent1">
-Returns the strongest player character (in the party).
+  Returns the strongest player character (in the party).
 </div>
 <br />
+
 <div class="idsHeader"><a name="6">6 MostDamagedOf</a></div>
 <div class="indent1">
-Returns the most damaged player character (in the party).
+  Returns the most damaged player character (in the party).
 </div>
 <br />
+
 <div class="idsHeader"><a name="7">7 LeastDamagedOf</a></div>
 <div class="indent1">
-Returns the least damaged player character (in the party).
+  Returns the least damaged player character (in the party).
 </div>
 <br />
-8 ProtectedBy<br />
-9 ProtectorOf<br />
+
+<div class="idsHeader"><a name="ProtectedBy">8 ProtectedBy</a></div>
 <br />
+
+<div class="idsHeader"><a name="ProtectorOf">9 ProtectorOf</a></div>
+<br />
+
 <div class="idsHeader"><a name="10">10 LastAttackerOf</a></div>
 <div class="indent1">
-Returns the creature that last inflicted physical damage on the active creature.
+  Returns the creature that last inflicted physical damage on the active creature.
 </div>
 <br />
-11 LastTargetedBy<br />
+
+<div class="idsHeader"><a name="LastTargetedBy">11 LastTargetedBy</a></div>
 <br />
+
 <div class="idsHeader"><a name="12">12 NearestEnemyOf</a></div>
 <div class="indent1">
-Returns the nearest creature of opposite allegiance.
+  Returns the nearest creature of opposite allegiance.
 </div>
 <br />
-13 LastCommandedBy<br />
+
+<div class="idsHeader"><a name="LastCommandedBy">13 LastCommandedBy</a></div>
 <br />
+
 <div class="idsHeader"><a name="14">14 Nearest</a></div>
 <div class="indent1">
-Returns the nearest visible creature - usually the active creature.
+  Returns the nearest visible creature &mdash; usually the active creature.
 </div>
 <br />
-15 LastHitter<br />
-16 LastHelp<br />
+
+<div class="idsHeader"><a name="LastHitter">15 LastHitter</a></div>
 <br />
+
+<div class="idsHeader"><a name="LastHelp">16 LastHelp</a></div>
+<br />
+
 <div class="idsHeader"><a name="17">17 LastTrigger</a></div>
 <div class="indent1">
-Returns the last creature that activated the active trigger region.
+  Returns the last creature that activated the active trigger region.
 </div>
 <br />
+
 <div class="idsHeader"><a name="18">18 LastSeenBy</a></div>
 <div class="indent1">
-Set by See() and Detect(), not by Exists() or Range().
+  Set by <code><a href="../../../scripting/triggers/bgeetriggers.htm#0x401C">See()</a></code> and <code><a href="../../../scripting/triggers/bgeetriggers.htm#0x4074">Detect()</a></code>, not by <code><a href="../../../scripting/triggers/bgeetriggers.htm#0x400D">Exists()</a></code> or <code><a href="../../../scripting/triggers/bgeetriggers.htm#0x4018">Range()</a></code>.
 </div>
 <br />
+
 <div class="idsHeader"><a name="19">19 LastTalkedToBy</a></div>
 <div class="indent1">
-Returns the last creature that has been targeted by StartDialogue() or similar actions.
+  Returns the last creature that has been targeted by <code><a href="../../../scripting/actions/bgeeactions.htm#137">StartDialogue()</a></code> or similar actions.
 </div>
 <br />
+
 <div class="idsHeader"><a name="20">20 LastHeardBy</a></div>
 <div class="indent1">
-Returns the last creature that triggered a Help() or Shout() action.
+  Returns the last creature that triggered a <code><a href="../../../scripting/actions/bgeeactions.htm#17">Help()</a></code> or <code><a href="../../../scripting/actions/bgeeactions.htm#106">Shout()</a></code> action.
 </div>
 <br />
-21 Player1<br />
-22 Player2<br />
-23 Player3<br />
-24 Player4<br />
-25 Player5<br />
-26 Player6<br />
+
+<div class="idsHeader"><a name="Player1">21 Player1</a></div>
 <br />
+
+<div class="idsHeader"><a name="Player2">22 Player2</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player3">23 Player3</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player4">24 Player4</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player5">25 Player5</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player6">26 Player6</a></div>
+<br />
+
 <div class="idsHeader"><a name="27">27 Protagonist</a></div>
 <div class="indent1">
-Synonymous with Player1.
+  Synonymous with <code><a href="#Player1">Player1</a></code>.
 </div>
 <br />
+
 <div class="idsHeader"><a name="28">28 StrongestOfMale</a></div>
 <div class="indent1">
-Returns the strongest male player character (in the party).
+  Returns the strongest male player character (in the party).
 </div>
 <br />
-29 SecondNearestEnemyOf<br />
-30 ThirdNearestEnemyOf<br />
-31 FourthNearestEnemyOf<br />
-32 FifthNearestEnemyOf<br />
-33 SixthNearestEnemyOf<br />
-34 SeventhNearestEnemyOf<br />
-35 EighthNearestEnemyOf<br />
-36 NinthNearestEnemyOf<br />
-37 TenthNearestEnemyOf<br />
-38 SecondNearest<br />
-39 ThirdNearest<br />
-40 FourthNearest<br />
-41 FifthNearest<br />
-42 SixthNearest<br />
-43 SeventhNearest<br />
-44 EighthNearest<br />
-45 NinthNearest<br />
-46 TenthNearest<br />
+
+<div class="idsHeader"><a name="SecondNearestEnemyOf">29 SecondNearestEnemyOf</a></div>
 <br />
+
+<div class="idsHeader"><a name="ThirdNearestEnemyOf">30 ThirdNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestEnemyOf">31 FourthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestEnemyOf">32 FifthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestEnemyOf">33 SixthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestEnemyOf">34 SeventhNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestEnemyOf">35 EighthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestEnemyOf">36 NinthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestEnemyOf">37 TenthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SecondNearest">38 SecondNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdNearest">39 ThirdNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearest">40 FourthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearest">41 FifthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearest">42 SixthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearest">43 SeventhNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearest">44 EighthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearest">45 NinthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearest">46 TenthNearest</a></div>
+<br />
+
 <div class="idsHeader"><a name="47">47 WorstAC</a></div>
 <div class="indent1">
-Returns the player character (in the party) with the highest AC.
+  Returns the player character (in the party) with the highest AC.
 </div>
 <br />
+
 <div class="idsHeader"><a name="48">48 BestAC</a></div>
 <div class="indent1">
-Returns the player character (in the party) with the lowest AC.
+  Returns the player character (in the party) with the lowest AC.
 </div>
 <br />
+
 <div class="idsHeader"><a name="49">49 LastSummonerOf</a></div>
 <div class="indent1">
-Returns the character who summoned the active creature.
+  Returns the character who summoned the active creature.
 </div>
 <br />
 
 <div class="idsHeader"><a name="50">50 NearestEnemyOfType</a></div>
 <div class="indent1">
-    It auto-populates the <a href="../bgee/ea.htm">EA</a> field of the object selector and immediately evaluates it, so it's useless to define the <a href="../bgee/ea.htm">EA</a> manually.
+  It auto-populates the <code><a href="../bgee/ea.htm">EA</a></code> field of the object selector and immediately evaluates it, so it's useless to define the <code><a href="../bgee/ea.htm">EA</a></code> manually.
 </div>
 <br />
 
-51 SecondNearestEnemyOfType<br />
-52 ThirdNearestEnemyOfType<br />
-53 FourthNearestEnemyOfType<br />
-54 FifthNearestEnemyOfType<br />
-55 SixthNearestEnemyOfType<br />
-56 SeventhNearestEnemyOfType<br />
-57 EigthNearestEnemyOfType<br />
-57 EighthNearestEnemyOfType<br />
-58 NinthNearestEnemyOfType<br />
-59 TenthNearestEnemyOfType<br />
-<br/>
+<div class="idsHeader"><a name="SecondNearestEnemyOfType">51 SecondNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdNearestEnemyOfType">52 ThirdNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestEnemyOfType">53 FourthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestEnemyOfType">54 FifthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestEnemyOfType">55 SixthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestEnemyOfType">56 SeventhNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="EigthNearestEnemyOfType">57 EigthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestEnemyOfType">57 EighthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestEnemyOfType">58 NinthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestEnemyOfType">59 TenthNearestEnemyOfType</a></div>
+<br />
 
 <div class="idsHeader"><a name="60">60 NearestMyGroupOfType</a></div>
 <div class="indent1">
-    It auto-populates the <a href="../bgee/specific.htm">SPECIFIC</a> field of the object selector and immediately evaluates it, so it's useless to define the <a href="../bgee/specific.htm">SPECIFIC</a> manually.
+  It auto-populates the <code><a href="../bgee/specific.htm">SPECIFIC</a></code> field of the object selector and immediately evaluates it, so it's useless to define the <code><a href="../bgee/specific.htm">SPECIFIC</a></code> manually.
 </div>
 <br />
 
-61 SecondNearestMyGroupOfType<br />
-62 ThirdNearestMyGroupOfType<br />
-63 FourthNearestMyGroupOfType<br />
-64 FifthNearestMyGroupOfType<br />
-65 SixthNearestMyGroupOfType<br />
-66 SeventhNearestMyGroupOfType<br />
-67 EigthNearestMyGroupOfType<br />
-67 EighthNearestMyGroupOfType<br />
-68 NinthNearestMyGroupOfType<br />
-69 TenthNearestMyGroupOfType<br />
+<div class="idsHeader"><a name="SecondNearestMyGroupOfType">61 SecondNearestMyGroupOfType</a></div>
 <br />
+
+<div class="idsHeader"><a name="ThirdNearestMyGroupOfType">62 ThirdNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestMyGroupOfType">63 FourthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestMyGroupOfType">64 FifthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestMyGroupOfType">65 SixthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestMyGroupOfType">66 SeventhNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="EigthNearestMyGroupOfType">67 EigthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestMyGroupOfType">67 EighthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestMyGroupOfType">68 NinthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestMyGroupOfType">69 TenthNearestMyGroupOfType</a></div>
+<br />
+
 <div class="idsHeader"><a name="70">70 Player1Fill</a></div>
 <div class="indent1">
-Returns the player in the first portrait slot.
+  Returns the player in the first portrait slot.
 </div>
 <br />
-71 Player2Fill<br />
-72 Player3Fill<br />
-73 Player4Fill<br />
-74 Player5Fill<br />
-75 Player6Fill<br />
+
+<div class="idsHeader"><a name="Player2Fill">71 Player2Fill</a></div>
 <br />
+
+<div class="idsHeader"><a name="Player3Fill">72 Player3Fill</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player4Fill">73 Player4Fill</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player5Fill">74 Player5Fill</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player6Fill">75 Player6Fill</a></div>
+<br />
+
 <div class="idsHeader"><a name="76">76 NearestDoor</a></div>
 <div class="indent1">
-Returns the nearest closed door (does not detect secret doors, or locked doors).
+  Returns the nearest closed door (does not detect secret doors, or locked doors).
 </div>
 <br />
-77 SecondNearestDoor<br />
-78 ThirdNearestDoor<br />
-79 FourthNearestDoor<br />
-80 FifthNearestDoor<br />
-81 SixthNearestDoor<br />
-82 SeventhNearestDoor<br />
-83 EighthNearestDoor<br />
-84 NinthNearestDoor<br />
-85 TenthNearestDoor<br />
-86 PartySlot1<br />
-87 PartySlot2<br />
-88 PartySlot3<br />
-89 PartySlot4<br />
-90 PartySlot5<br />
-91 PartySlot6<br />
+
+<div class="idsHeader"><a name="SecondNearestDoor">77 SecondNearestDoor</a></div>
 <br />
+
+<div class="idsHeader"><a name="ThirdNearestDoor">78 ThirdNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestDoor">79 FourthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestDoor">80 FifthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestDoor">81 SixthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestDoor">82 SeventhNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestDoor">83 EighthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestDoor">84 NinthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestDoor">85 TenthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot1">86 PartySlot1</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot2">87 PartySlot2</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot3">88 PartySlot3</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot4">89 PartySlot4</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot5">90 PartySlot5</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot6">91 PartySlot6</a></div>
+<br />
+
 <div class="idsHeader"><a name="92">92 Familiar</a></div>
 <div class="indent1">
-Returns the familiar creature if present.
+  Returns the familiar creature if present.
 </div>
 <br />
+
 <div class="idsHeader"><a name="93">93 FamiliarSummoner</a></div>
 <div class="indent1">
-Returns the summoner of the current familiar.
+  Returns the summoner of the current familiar.
 </div>
 <br />
-94 LastKilled<br />
+
+<div class="idsHeader"><a name="LastKilled">94 LastKilled</a></div>
 <br />
+
 <div class="idsHeader"><a name="95">95 NearestAllyOf</a></div>
 <div class="indent1">
-Returns the nearest creature of same allegiance.
+  Returns the nearest creature of same allegiance.
 </div>
 <br />
-96 SecondNearestAllyOf<br />
-97 ThirdNearestAllyOf<br />
-98 FourthNearestAllyOf<br />
-99 FifthNearestAllyOf<br />
-100 SixthNearestAllyOf<br />
-101 SeventhNearestAllyOf<br />
-102 EighthNearestAllyOf<br />
-103 NinthNearestAllyOf<br />
-104 TenthNearestAllyOf<br />
+
+<div class="idsHeader"><a name="SecondNearestAllyOf">96 SecondNearestAllyOf</a></div>
 <br />
+
+<div class="idsHeader"><a name="ThirdNearestAllyOf">97 ThirdNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestAllyOf">98 FourthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestAllyOf">99 FifthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestAllyOf">100 SixthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestAllyOf">101 SeventhNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestAllyOf">102 EighthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestAllyOf">103 NinthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestAllyOf">104 TenthNearestAllyOf</a></div>
+<br />
+
 <div class="idsHeader"><a name="105">105 FarthestEnemyOf</a></div>
 <div class="indent1">
-Returns the farthest enemy within visual range of the active creature.
+  Returns the farthest enemy within visual range of the active creature.
 </div>
 <br />
-106 SecondFarthestEnemyOf<br />
-107 ThirdFarthestEnemyOf<br />
-108 FourthFarthestEnemyOf<br />
-109 FifthFarthestEnemyOf<br />
-110 SixthFarthestEnemyOf<br />
-111 SeventhFarthestEnemyOf<br />
-112 EighthFarthestEnemyOf<br />
-113 NinthFarthestEnemyOf<br />
-114 TenthFarthestEnemyOf<br />
 
+<div class="idsHeader"><a name="SecondFarthestEnemyOf">106 SecondFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdFarthestEnemyOf">107 ThirdFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthFarthestEnemyOf">108 FourthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthFarthestEnemyOf">109 FifthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthFarthestEnemyOf">110 SixthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhFarthestEnemyOf">111 SeventhFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthFarthestEnemyOf">112 EighthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthFarthestEnemyOf">113 NinthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthFarthestEnemyOf">114 TenthFarthestEnemyOf</a></div>
+<br />
 <a href="#" class="go-up">
   &nbsp;
 </a>

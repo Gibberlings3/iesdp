@@ -81,7 +81,23 @@ CHECK_MODE           0
 
 Known values for <code>CHECK_MODE</code> are:
 <ul>
-  <li>0 &longrightarrow; Any damage a spellcaster takes will cause them to fail their spellcasting</li>
+  <li>
+    0 &longrightarrow; Any damage a spellcaster takes will cause them to fail their spellcasting.
+    <ul>
+      <li>
+        To be precise, spellcasters can't be disrupted by damage if they are facing <code><a href="../../ids/bgee/dir.htm#SSW">SSW</a></code>, <code><a href="../../ids/bgee/dir.htm#SWW">SWW</a></code>, <code><a href="../../ids/bgee/dir.htm#NWW">NWW</a></code>, <code><a href="../../ids/bgee/dir.htm#NNW">NNW</a></code>, <code><a href="../../ids/bgee/dir.htm#NNE">NNE</a></code>, <code><a href="../../ids/bgee/dir.htm#NEE">NEE</a></code>, <code><a href="../../ids/bgee/dir.htm#SEE">SEE</a></code>, or <code><a href="../../ids/bgee/dir.htm#SSE">SSE</a></code>.
+        <ul>
+          <li>
+            This happens because the disruption code is only checked if the caster is in the correct orientation to face the target. <code><a href="../../ids/bgee/seq.htm#SEQ_DAMAGE">SEQ_DAMAGE</a></code> rounds a creature's orientation down to the nearest <i>even</i> direction, causing the caster to momentarily <b><u>not</u></b> face the target, making the check fail. Here's an example:
+
+            <details>
+              <img src="../../../images/spell disruption.gif" alt="spell_disruption">
+            </details>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
   <li>1 &longrightarrow; Spell disrupted if <code>(1d20 - 1) + Luck > <a href="../../../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">Spell Level</a> + Damage Taken</code></li>
   <li>2 &longrightarrow; Spell disrupted if <code>(1d20 - 1) + (Constitution / 2) - 5 > <a href="../../../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">Spell Level</a> + 15</code></li>
   <li>3 &longrightarrow; Spell disrupted if <code>(1d20 - 1) + Luck > <a href="../../../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x34">Spell Level</a> + 15</code></li>

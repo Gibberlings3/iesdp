@@ -4750,18 +4750,18 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) entire animation glows the colour specified by the <code>RGB Colour</code> field, at the speed specified by the (3rd byte of the) <code>Speed</code> field.
+		<div class="descriptiondata"> The targeted creature(s) entire animation glows the colour specified by the <code>RGB Colour</code> field, at the speed specified by the (3<small><sup>rd</sup></small> byte of the) <code>Speed</code> field.
 <br/>The <code>RGB Colour</code> field is handled as follows:
 <ul>
-	<li>Second byte = Red (<code>0–255</code>)</li>
-	<li>Third byte = Green (<code>0–255</code>)</li>
-	<li>Fourth byte = Blue (<code>0–255</code>)</li>
+	<li>Second byte = Red (<code>0 &mdash; 255</code>)</li>
+	<li>Third byte = Green (<code>0 &mdash; 255</code>)</li>
+	<li>Fourth byte = Blue (<code>0 &mdash; 255</code>)</li>
 </ul>
 
 <br/>The <code>Location and Speed</code> field is handled as follows:
 <ul>
 	<li>First byte = Location</li>
-	<li>Third byte = Speed (<code>0–255</code>)</li>
+	<li>Third byte = Speed (<code>0 &mdash; 255</code>)</li>
 </ul>
 
 <br/>A speed of 0 does not pulsate. A speed of <code>1</code> is fastest, and a speed of <code>255</code> is slowest. The duration of the effect is controlled by the <code>Speed</code> field.
@@ -4769,19 +4769,19 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 <br/>Known values for <code>Location</code> are:
 <ul>
 	<li>
-		0 – 6: Avatar/Armor
+		0 &mdash; 6: Avatar/Armor
 		<ul>
-			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) – entire body for some animations</li>
+			<li>00 &longrightarrow; Belt Buckle (on armour) or amulets (on robes) &mdash; entire body for some animations</li>
 			<li>01 &longrightarrow; Minor colour</li>
 			<li>02 &longrightarrow; Major colour</li>
 			<li>03 &longrightarrow; Skin colour</li>
-			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes – the centre strip down a robe and the hem on some robes)</li>
-			<li>05 &longrightarrow; Armor colour (and major trimming on robe – cross trim and cape trim on Robe of Archmagi)</li>
+			<li>04 &longrightarrow; Strap colour (on armour) or minor trimming (on robes &mdash; the centre strip down a robe and the hem on some robes)</li>
+			<li>05 &longrightarrow; Armor colour (and major trimming on robe &mdash; cross trim and cape trim on Robe of Archmagi)</li>
 			<li>06 &longrightarrow; Hair colour</li>
 		</ul>
 	</li>
 	<li>
-		16 – 22: Weapon
+		16 &mdash; 22: Weapon
 		<ul>
 			<li>16 &longrightarrow; Quillons or Crossguard</li>
 			<li>20 &longrightarrow; Grip (usually not visible as it's in the characters hand)</li>
@@ -4789,7 +4789,7 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 		</ul>
 	</li>
 	<li>
-		32 – 40: Shield
+		32 &mdash; 40: Shield
 		<ul>
 			<li>32 &longrightarrow; Shield hub</li>
 			<li>33 &longrightarrow; Shield interior</li>
@@ -4798,13 +4798,13 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 		</ul>
 	</li>
 	<li>
-		48 – 54: Helmet
+		48 &mdash; 54: Helmet
 		<ul>
-			<li>48 &longrightarrow; Helm ornamentation – i.e. wings</li>
-			<li>49 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
-			<li>50 &longrightarrow; Helm ornamentation – i.e. feathers/horsehair</li>
+			<li>48 &longrightarrow; Helm ornamentation &mdash; i.e. wings</li>
+			<li>49 &longrightarrow; Helm ornamentation &mdash; i.e. feathers/horsehair</li>
+			<li>50 &longrightarrow; Helm ornamentation &mdash; i.e. feathers/horsehair</li>
 			<li>52 &longrightarrow; Helm face</li>
-			<li>53 &longrightarrow; Helm – the main covering</li>
+			<li>53 &longrightarrow; Helm &mdash; the main covering</li>
 		</ul>
 	</li>
 	<li>255 &longrightarrow; Whole Body (at least in IWD2 and EEs)</li>
@@ -5369,9 +5369,24 @@ Both parameters should be <code>0</code> (zero).
 	<li>
 		Second word = Magic Weapon Dispel Type
 		<ul>
-			<li>0 &longrightarrow; Always dispel</li>
-			<li>1 &longrightarrow; Never Dispel</li>
-			<li>2 &longrightarrow; Use Caster Level</li>
+			<li>
+				0 &longrightarrow; Always dispel
+				<ul>
+					<li>Will not remove items flagged as <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_Flags_BIT24">undispellable</a></code>.</li>
+				</ul>
+			</li>
+			<li>
+				1 &longrightarrow; Never Dispel
+				<ul>
+					<li>Will not remove any <a href="../files/ids/bgee/slots.htm#34">Magical Weapon slot</a> item, regardless of <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_Flags_BIT24">undispellable</a></code>.</li>
+				</ul>
+			</li>
+			<li>
+				2 &longrightarrow; Use Caster Level
+				<ul>
+					<li>Will not remove items flagged as <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_Flags_BIT24">undispellable</a></code>.</li>
+				</ul>
+			</li>
 		</ul>
 	</li>
 </ul>
@@ -5515,13 +5530,13 @@ In BG2 and EEs, this effect alters the Move Silently skill.
 	<li>5 &longrightarrow; Innate Abilities</li>
 </ul>
 
-This opcode increments <a href="../files/ids/bgee/stats.htm#51">SPELLFAILUREMAGE</a>, <a href="../files/ids/bgee/stats.htm#52">SPELLFAILUREPRIEST</a> and <a href="../files/ids/bgee/stats.htm#194">SPELL_FAILURE_INNATE</a>, each of which is capped <code>0 – 100</code>.
+This opcode increments <code><a href="../files/ids/bgee/stats.htm#51">SPELLFAILUREMAGE</a></code>, <code><a href="../files/ids/bgee/stats.htm#52">SPELLFAILUREPRIEST</a></code> and <code><a href="../files/ids/bgee/stats.htm#194">SPELL_FAILURE_INNATE</a></code>, each of which is capped <code>0 &mdash; 100</code>.
 
-<br/><br/><code>Type</code> values of <code>0</code>,<code>1</code> or <code>2</code> display a message – "Spell Failed: casting failure" (on EE games, this string is specified by <code><a href="../files/2da/2da_bgee/enginest.htm#178">STRREF_FEEDBACK_SPELLFAILED_CASTFAILURE</a></code>)
+<br/><br/><code>Type</code> values of <code>0</code>,<code>1</code> or <code>2</code> display a message &mdash; "Spell Failed: casting failure" (on EE games, this string is specified by <code><a href="../files/2da/2da_bgee/enginest.htm#178">STRREF_FEEDBACK_SPELLFAILED_CASTFAILURE</a></code>)
 
-<br/><br/><code>Type</code> values of <code>3</code>,<code>4</code> or <code>5</code> display a message – "Spell failed due to dead magic" (on EE games, this string is specified by <code><a href="../files/2da/2da_bgee/enginest.htm#179">STRREF_FEEDBACK_SPELLFAILED_CASTFAILUREDEAD</a></code>)
+<br/><br/><code>Type</code> values of <code>3</code>,<code>4</code> or <code>5</code> display a message &mdash; "Spell failed due to dead magic" (on EE games, this string is specified by <code><a href="../files/2da/2da_bgee/enginest.htm#179">STRREF_FEEDBACK_SPELLFAILED_CASTFAILUREDEAD</a></code>)
 <ul>
-	<li>Additionally, it sets <a href="../files/ids/bgee/stats.htm#196">DEAD_MAGIC</a> to <code>1</code>.</li>
+	<li>Additionally, it sets <code><a href="../files/ids/bgee/stats.htm#196">DEAD_MAGIC</a></code> to <code>1</code>.</li>
 </ul>
 
 
@@ -6372,7 +6387,20 @@ Maintains its own portrait icon <code><a href="../files/2da/2da_bgee/statdesc.ht
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT18">STATE_BLIND</a></code> flag, leaving no removable effect.
+<ul>
+	<li><code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT18">STATE_BLIND</a></code> flag, leaving no removable effect.</li>
+	<li>
+		Related: the <code>-4</code> penalty to <code>AC</code> and <code>THAC0</code> are apparently tied to the effect, not <code>STATE_BLIND</code>.
+		<ul>
+			<li>
+				So for instance you will not be able to 100&percnt; cure a creature affected by <code>CLERIC_NATURE_BEAUTY &mdash; "sppr704.spl"</code> (it applies <a href="#op74">opcode #74</a> with <code>timing_mode=1</code>).
+				<ul>
+					<li>As a workaround, you might want to stick with a limited <code>timing_mode</code> and set <code>duration</code> to a very high random value.</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>
 
   </div>
 </div>
@@ -6707,7 +6735,7 @@ In particular:
 		<ul>
 			<li>
 				The first hit doesn't occur immediately, but instead at 80 ticks (exactly), the second hit occurs at 90 ticks (6 seconds), then later hits occur 1 round apart. So:<br />
-				1st hit: 5.33s(80t), 2nd hit: 6s(90t), 3rd hit: 12s(180t), etc...<br />
+				1<small><sup>st</sup></small> hit: 5.33s(80t), 2<small><sup>nd</sup></small> hit: 6s(90t), 3<small><sup>rd</sup></small> hit: 12s(180t), etc...<br />
 				Oddly, this effect measures rounds as 6 seconds (90 ticks) intervals, not 100 ticks.
 			</li>
 			<li>
@@ -8464,6 +8492,17 @@ The <code><a href="../files/ids/bgee/slots.htm#34">Magical Weapon Slot</a></code
   <div>
     <strong>Warning:</strong> 
 The <code>resource</code> field should not be empty, or the game will crash (not consistently, but it happens).
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+The dispel bit of <a href="#op111">opcode #111</a> has no bearing on the <a href="../file_formats/ie_formats/itm_v1.htm">item</a> it creates. Its only function comes up when the <a href="#op111">opcode #111</a> effect is delayed — the effect can be dispelled before it triggers (see also <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_Flags_BIT24">undispellable</a></code> and <a href="#op58">opcode #58</a>).
 
   </div>
 </div>
@@ -16398,6 +16437,30 @@ Known values for <code>Secondary Type</code> are:
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Gives the targeted creature(s) immunity from the spell specified in the <code>resource</code> key. The strref specified by the <code>String Reference</code> field is displayed when the spell is absorbed.
+
+
+
+<div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+As of EE v2.6, <code>String Reference</code> is bound by
+<details>
+<pre>
+if (!pEffect-&gt;m_sourceRes.IsValid() || (pImmunitySpell-&gt;m_error != 0xf00074 &amp;&amp; pImmunitySpell-&gt;m_error != 0xf00080))
+{
+	uint nNewFeedback = 0xffffffff;
+	if (pImmunitySpell-&gt;m_error == 0xf00074) {
+		nNewFeedback = 0xf00073;
+	}
+	pImmunitySpell-&gt;m_error = nNewFeedback;
+}
+</pre>
+</details>
+Basically, <code>String Reference</code> has to be <code>0xF00074</code> or <code>0xF00080</code> for the engine to display it.
+
+	</div>
+</div>
+
 
 
 

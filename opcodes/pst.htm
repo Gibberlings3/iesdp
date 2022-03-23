@@ -4483,7 +4483,20 @@ Maintains its own portrait icon <code><a href="../files/2da/2da_bgee/statdesc.ht
 <div class="note important">
   <div>
     <strong>Important:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT18">STATE_BLIND</a></code> flag, leaving no removable effect.
+<ul>
+	<li><code>Timing Mode</code>s <code>1/4/7</code> will permanently set the creature's <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT18">STATE_BLIND</a></code> flag, leaving no removable effect.</li>
+	<li>
+		Related: the <code>-4</code> penalty to <code>AC</code> and <code>THAC0</code> are apparently tied to the effect, not <code>STATE_BLIND</code>.
+		<ul>
+			<li>
+				So for instance you will not be able to 100&percnt; cure a creature affected by <code>CLERIC_NATURE_BEAUTY &mdash; "sppr704.spl"</code> (it applies <a href="#op74">opcode #74</a> with <code>timing_mode=1</code>).
+				<ul>
+					<li>As a workaround, you might want to stick with a limited <code>timing_mode</code> and set <code>duration</code> to a very high random value.</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>
 
   </div>
 </div>

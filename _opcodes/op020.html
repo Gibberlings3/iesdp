@@ -11,30 +11,20 @@ iwd2: 0
 pst: 0
 ---
 Applies the invisibility effect, in the style specified by the <code>Type</code> value.
-<br/>Known values for <code>Type</code> are:
-<ul>
-	<li>0 &longrightarrow; Normal Invisibility</li>
-	<li>1 &longrightarrow; Improved Invisibility</li>
-	<li>2 &longrightarrow; Weak Invisibility (EE only)</li>
-</ul>
+<br/><br/>
 
-{% capture note %}
+Known values for <code>Type</code> are:
 <ul>
 	<li>
-		<code>Normal</code> Invisibility:
+		0 &longrightarrow; Normal Invisibility
 		<ul>
-			<li>
-				Grants a <code>+4</code> bonus to melee attacks only.
-				<ul>
-					<li>In addition to that, an invisible creature with a (backstab value greater than <code>1</code>) or (sneak attack value of at least <code>1d6</code>) also ignores the target's dexterity AC modifier (see <code><a href="../files/2da/2da_bgee/dexmod.htm">DEXMOD.2da</a></code>), when attacking in melee, even if their weapon is unsuitable for backstabbing/sneak attacks.</li>
-				</ul>
-			</li>
+			<li>Grants a <code>+4</code> bonus to melee attacks only.</li>
 			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s other than <code>1/4/7</code> in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> through <a href="#op183">opcode #183</a> will NOT terminate early due to hostile/aggressive action (similar to the constant invisibility provided by Mislead). Applying the same through <a href="#op177">opcode #177</a> or <a href="#op283">opcode #283</a> DOES terminate due to hostile/aggressive action as normal.</li>
 			<li>Applying <code>Normal</code> Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will set the creature's base state <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT4">STATE_INVISIBLE</a></code>, while still leaving behind a removable (but irrelevant) effect. This state is not cleared on death, but it is still terminated by any hostile/aggressive action that would normally terminate invisibility.</li>
 		</ul>
 	</li>
 	<li>
-		<code>Improved</code> Invisibility:
+		1 &longrightarrow; Improved Invisibility
 		<ul>
 			<li>Affected creature stays invisible after attack.</li>
 			<li>Does not provide saving throw bonuses outside EEs, where it provides a bonus of <code>4</code> to all.</li>
@@ -45,7 +35,7 @@ Applies the invisibility effect, in the style specified by the <code>Type</code>
 		</ul>
 	</li>
 	<li>
-		<code>Weak</code> Invisibility:
+		2 &longrightarrow; Weak Invisibility (EE only)
 		<ul>
 			<li>It's the same type of invisibility as <code>Improved</code> Invisibility after you take a hostile action and reveal yourself.</li>
 			<li>Applying "Weak" Invisibility with <code>Timing Mode</code>s <code>1/4/7</code> will function no differently than <code>Timing Mode 0</code>, aside from having no natural expiration timer.</li>
@@ -53,6 +43,46 @@ Applies the invisibility effect, in the style specified by the <code>Type</code>
 		</ul>
 	</li>
 </ul>
+
+{% capture note %}
+Any attack a character makes while invisible will ignore the target's AC dexterity bonus (see <code><a href="../files/2da/2da_bgee/dexmod.htm">dexmod.2da</a></code>)
+<br><br>
+
+To be exact, the attack must follow these rules:
+<ol>
+	<li>Attacker must have a backstab multiplier of <code>2</code> or higher (see <code><a href="../files/2da/2da_bgee/backstab.htm">backstab.2da</a></code>)</li>
+	<li>Attacker must be <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT4">STATE_INVISIBLE</a></code></li>
+	<li>Attacker's weapon must <u>not</u> be <code><a href="../file_formats/ie_formats/itm_v1.htm#itmv1_Extended_Header_0x0_2">RANGED</a></code></li>
+</ol>
+<code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273">Class</a></code> / <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x244">Kit</a></code> doesn't matter, <code><a href="../files/2da/2da_bgee/sneakatt.htm">sneakatt.2da</a></code> doesn't matter (even though the backstab multiplier isn't used to calculate damage under "Game Option: 3E Sneak Attack", the creature still has its multiplier calculated / assigned), weapon backstab suitability doesn't matter.
+<br><br>
+
+<details>
+	In the following example:
+	<ul>
+		<li>Attacking character <code>THAC0 &equals; 17</code></li>
+		<li>Attacked character <code>AC &equals; 0</code>, (dexterity contributing <code>-4</code> bonus)</li>
+	</ul>
+	The thief's attack only requires a total roll of <code>13</code> to hit, even though a roll of <code>17</code> is required normally:
+	<details>
+		<img src="../images/thief attacking while invisible.gif" alt="thief_attacking_while_invisible" width="960" height="600"> <!-- 16:10 aspect ratio -->
+	</details>
+	<br>
+
+	<b>However, this mechanic isn't implemented properly...</b>
+	<br><br>
+
+	If the attacked character has a <i>penalty</i> to AC due to dexterity, they will be harder to hit while being attacked under the above conditions.<br />
+	In the following example:
+	<ul>
+		<li>Attacking character <code>THAC0 &equals; 17</code></li>
+		<li>Attacked character <code>AC &equals; 9</code>, (dexterity contributing <code>+5</code> penalty)</li>
+	</ul>
+	The thief's attack should only require a total roll of <code>8</code> to hit, though a roll of <code>13</code> is now required:
+	<details>
+		<img src="../images/thief attacking while invisible - bug.gif" alt="thief_attacking_while_invisible_bug" width="960" height="600"> <!-- 16:10 aspect ratio -->
+	</details>
+</details>
 {% endcapture %}
 
 {% include info.html %}

@@ -17,9 +17,9 @@ On macOS you might also need the gem `webrick`.
 
 # How it works
 
-Since Github pages don't allow plugins, we have to use an extra step in
-deployment. Travis, when checking for syntax errors, also pushes the resulting
-Jekyll build back to the gh-pages branch. That is what is displayed if you
-visit the URL at the top. Actual work happens on the master branch.
+Since Github Pages don't allow plugins, we have to use an extra step in
+deployment to properly generate the final IESDP and push it to the
+`gh-pages` branch. That is what is displayed if you visit the URL at the top.
+Actual work happens on the `master` branch.
 
 Handy cheat sheet: http://jekyll.tips/jekyll-cheat-sheet/

@@ -12,98 +12,175 @@ iwd2: 0
 pst: 0
 ---
 Casts the spell specified by the <code>resource</code> field on the target specified by the <code>Target</code> field, when the condition from the <code>Condition</code> field is true. The conditions are akin to various triggers.
-<br/>Known values for <code>Target</code> are:
-<ul>
-	<li>0 &longrightarrow; Myself</li>
-	<li>1 &longrightarrow; LastHitter</li>
-	<li>
-		2 &longrightarrow; [ENEMY]
-		<ul>
-			<li>Since object specifiers are not relative to the creature, this works as expected only from the Player's perspective.</li>
-		</ul>
-	</li>
-	<li>3 &longrightarrow; Nearest</li>
-</ul>
-
-<br/><br/>Known values for <code>Condition</code> are:
-<ul>
-	<li>0 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x0020">HitBy([ANYONE])</a> – Checked every time</li>
-	<li>
-		1 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x401C">See([ENEMY])</a> – Checked once per round
-		<ul>
-			<li>Since object specifiers are not relative to the creature, this works as expected only from the Player's perspective.</li>
-		</ul>
-	</li>
-	<li>2 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,50)</a> – Checked once per round</li>
-	<li>3 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,25)</a> – Checked once per round</li>
-	<li>4 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,10)</a> – Checked once per round</li>
-	<li>5 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x4037">StateCheck(Myself,STATE_HELPLESS)</a> f.i. unconscious – Checked once per round</li>
-	<li>6 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x4037">StateCheck(Myself,STATE_POISONED)</a> – Checked once per round</li>
-	<li>7 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x0002">AttackedBy([ANYONE])</a> – Checked every time</li>
-	<li>8 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x4018">Range([ANYONE],4)</a> – Checked once per round</li>
-	<li>9 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x4018">Range([ANYONE],10)</a> – Checked once per round</li>
-	<li>10 &longrightarrow; Unknown – Checked once per round</li>
-	<li>11 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x00CC">TookDamage()</a> – Checked every time</li>
-	<li>12 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x004B">Killed([ANYONE])</a> – Checked every time</li>
-	<li>13 &longrightarrow; Time of Day is <code>Extra</code> – Checked once per round</li>
-	<li>14 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x4018">Range([ANYONE],<code>Extra</code>)</a> – Checked once per round</li>
-	<li>15 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x4037">StateCheck([ANYONE],<code>Extra</code>)</a> – Checked once per round</li>
-	<li>16 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x004A">Died(Myself)</a></li>
-	<li>17 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x004A">Died([ANYONE])</a> – Checked every time</li>
-	<li>18 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x0008">TurnedBy([ANYONE])</a> – Checked every time</li>
-	<li>19 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x4012">HPLT(Myself,<code>Extra</code>)</a> – Checked once per round</li>
-	<li>20 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,<code>Extra</code>)</a> – Checked once per round</li>
-	<li>21 &longrightarrow; <a href="../scripting/triggers/bgeetriggers.htm#0x40E2">CheckSpellState(Myself,<code>Extra</code>)</a> – Checked once per round</li>
-</ul>
-
-<br/><br/>The <code>Extra</code> field is used for the following <code>Condition</code> values:
-<ul>
-	<li>13 &longrightarrow; Use value from <a href="../files/ids/bgee/timeoday.htm">TIMEODAY.IDS</a></li>
-	<li>14 &longrightarrow; Range in feet</li>
-	<li>15 &longrightarrow; Use value from <a href="../files/ids/bgee/state.htm">STATE.IDS</a></li>
-	<li>19 &longrightarrow; Any numeric value</li>
-	<li>20 &longrightarrow; Any numeric value</li>
-	<li>21 &longrightarrow; Use value from <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a></li>
-</ul>
-
-<br/><br/>For a <code>Condition</code> of <code>13</code>, the <code>Target</code> parameter must be <code>0</code>.
 <br/><br/>
 
-When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70">resource2</a></code> and <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x78">resource3</a></code> can also be specified – all spells will be cast when triggered.<br/><br/>
-
-When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, known values for <code>Parameter3</code> are:
+Known values for <code>Target</code> are:
 <ul>
-	<li>0 &longrightarrow; Not a "real" contingency (Fire Shields, Globe of Blades, etc...)</li>
-	<li>1 &longrightarrow; Real contingency (Maintains <code><a href="../files/2da/2da_bgee/statdesc.htm#75">Contingency</a></code> portrait icon, displays feedback message <code><a href="../files/2da/2da_bgee/enginest.htm#246">STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER</a></code> when triggered, and terminates this effect after first trigger. This value is always set when created by <a href="#op234">opcode #234</a>.</li>
+	<li>0 &longrightarrow; <code><a href="../files/ids/bgee/object.htm#1">Myself</a></code></li>
+	<li>1 &longrightarrow; <code><a href="../files/ids/bgee/object.htm#LastHitter">LastHitter</a></code></li>
+	<li>
+		2 &longrightarrow; <code><a href="../files/ids/bgee/ea.htm#200">[EVILCUTOFF]</a></code>
+		<ul>
+			<li>Since object specifiers are not relative to the creature, this works as expected only from the Player's perspective.</li>
+		</ul>
+	</li>
+	<li>3 &longrightarrow; <code><a href="../files/ids/bgee/object.htm#14">Nearest</a></code></li>
 </ul>
 
-When used in an external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> file, <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x90">Parent Type (Source Type)</a></code> may be manually set to influence its behavior. Known values for <code>Parent Type</code> are:
+Known values for <code>Condition</code> are:
 <ul>
-	<li>0 &longrightarrow; None – Allows further effects with a matching <code>Parent Resource</code> to affect the target.</li>
-	<li>1 &longrightarrow; Spell – Any further effects with a matching <code>Parent Resource</code> will be blocked by the engine and string <code><a href="../files/2da/2da_bgee/enginest.htm#42">STRREF_ERROR_CAN_NOT_CAST_TWO_CONT</a></code> is returned to the combat log. Spells must therefore either have this as the last effect, or use it in an EFF through <a href="#op177">opcode #177</a>, specifying a <code>Parent Type</code> of <code>0</code> or <code>2</code>.</li>
-	<li>2 &longrightarrow; Item – Allows further effects with a matching <code>Parent Resource</code> to affect the target.</li>
+	<li>0 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x0020">HitBy([ANYONE])</a></code> &mdash; Checked every time</li>
+	<li>
+		1 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x401C">See([EVILCUTOFF])</a></code> &mdash; Checked once per round
+		<ul>
+			<li>Since object specifiers are not relative to the creature, this works as expected only from the Player's perspective.</li>
+		</ul>
+	</li>
+	<li>2 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,50)</a></code> &mdash; Checked once per round</li>
+	<li>3 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,25)</a></code> &mdash; Checked once per round</li>
+	<li>4 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,10)</a></code> &mdash; Checked once per round</li>
+	<li>5 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x4037">StateCheck(Myself,STATE_HELPLESS)</a></code> f.i. unconscious &mdash; Checked once per round</li>
+	<li>6 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x4037">StateCheck(Myself,STATE_POISONED)</a></code> &mdash; Checked once per round</li>
+	<li>7 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x0002">AttackedBy([ANYONE])</a></code> &mdash; Checked every time</li>
+	<li>8 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x40B3">PersonalSpaceDistance([ANYONE],4)</a></code> &mdash; Checked once per round</li>
+	<li>9 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x40B3">PersonalSpaceDistance([ANYONE],10)</a></code> &mdash; Checked once per round</li>
+	<li>
+		10 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x4027">Delay(<code>Extra</code>)</a></code> &mdash; Checked once per round
+		<ul>
+			<li>This condition is pretty unreliable because two events need to line up for it to fire: the <code><a href="../scripting/triggers/bgeetriggers.htm#0x4027">Delay()</a></code> trigger needs to return true at the same time the contingency is checked.</li>
+		</ul>
+	</li>
+	<li>11 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x00CC">TookDamage()</a></code> &mdash; Checked every time</li>
+	<li>12 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x004B">Killed([ANYONE])</a></code> &mdash; Checked every time</li>
+	<li>
+		13 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x401F">TimeOfDay(<code>Extra</code>)</a></code> &mdash; Checked once per round
+		<ul>
+			<li>For this particular <code>Condition</code>, the <code>Target</code> parameter must be <code>0</code>.</li>
+		</ul>
+	</li>
+	<li>14 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x40B3">PersonalSpaceDistance([ANYONE],<code>Extra</code>)</a></code> &mdash; Checked once per round</li>
+	<li>15 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x4037">StateCheck([ANYONE],<code>Extra</code>)</a></code> &mdash; Checked once per round</li>
+	<li>16 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x0025">Die()</a></code></li>
+	<li>17 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x004A">Died([ANYONE])</a></code> &mdash; Checked every time</li>
+	<li>18 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x0008">TurnedBy([ANYONE])</a></code> &mdash; Checked every time</li>
+	<li>19 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x4012">HPLT(Myself,<code>Extra</code>)</a></code> &mdash; Checked once per round</li>
+	<li>20 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x402D">HPPercentLT(Myself,<code>Extra</code>)</a></code> &mdash; Checked once per round</li>
+	<li>21 &longrightarrow; <code><a href="../scripting/triggers/bgeetriggers.htm#0x40E2">CheckSpellState(Myself,<code>Extra</code>)</a></code> &mdash; Checked once per round</li>
+</ul>
+
+Known values for <code>Extra</code> are:
+<ul>
+	<li>
+		BIT0 &longrightarrow; When triggered, will display <code><a href="../files/2da/2da_bgee/enginest.htm#246">STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER</a></code> as effect host and remove effect
+		<ul>
+			<li>If <code>Condition=0</code> and <code>(Extra BAND BIT0) == BIT0</code> (i.e., <code>BIT0</code> is set) &longrightarrow; Trigger even if the effect host was the source of the hit</li>
+		</ul>
+	</li>
+	<li>
+		BIT1 &longrightarrow; Fire subspell as effect source (the creature that casts the spell) instead of effect host (the creature the effect is attached to)
+		<ul>
+			<li>
+				This is not relevant for vanilla spells. However, just for the sake of providing an example...
+				<details>
+					If you change Globe of Blades, (<code>"sppr725.spl"</code>) like so:
+					<ol>
+						<li><code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header">SPL Ability</a></code> &Rightarrow; <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0xC">Target</a> &equals; <a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0xC_1">Living actor</a></code></li>
+						<li>And change all of the ability's <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Feature_Block">effects</a></code> to <code><a href="../file_formats/ie_formats/spl_v1.htm#V1_Feature_Block_0x2">Target</a> &equals; <a href="../file_formats/ie_formats/spl_v1.htm#V1_Feature_Block_0x2_2">Projectile target</a></code></li>
+						<li>And change <code>"sppr725d.eff"</code> to <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_Resource">Resource</a> &equals; "spwi112"</code>, <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_Special">Special</a> &equals; 2</code></li>
+					</ol>
+					If you cast the spell on another creature, when the contingency is triggered the caster fires Magic Missile (<code>"spwi112.spl"</code>) at the contingency host. Basically it lets you check the conditions on another creature yet take an action from the caster.
+				</details>
+			</li>
+		</ul>
+	</li>
+	<li>BIT2 &longrightarrow; Suppress subspell <code><a href="../file_formats/ie_formats/spl_v1.htm#Header_Casting_Graphics">casting glow</a></code> and <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Header_0x8">string</a></code></li>
+	<li>BIT3 &longrightarrow; Suppress subspell <code><a href="../file_formats/ie_formats/spl_v1.htm#splv1_Extended_Header_0xE">range</a></code> check</li>
+</ul>
+
+The <code>Extra</code> field is also used for the following <code>Condition</code> values:
+<ul>
+	<li>13 &longrightarrow; Use value from <code><a href="../files/ids/bgee/timeoday.htm">TIMEODAY.IDS</a></code></li>
+	<li>14 &longrightarrow; Range in feet</li>
+	<li>15 &longrightarrow; Use value from <code><a href="../files/ids/bgee/state.htm">STATE.IDS</a></code></li>
+	<li>19 &longrightarrow; Any numeric value</li>
+	<li>20 &longrightarrow; Any numeric value</li>
+	<li>21 &longrightarrow; Use value from <code><a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a></code></li>
 </ul>
 
 {% capture note %}
-If you need a condition which is always true, you could set <code>Condition</code> to <code>20</code> and <code>Extra</code> to <code>102</code> (<code>hp < 102%</code> will always be true; <code>102</code> is used because <code>Extra</code> must be even or the combat log will be flooded with feedback messages).
+<ul>
+	<li>As you may have noticed, <code>Extra</code> acting as both flags and parameters for some <code>Condition</code> values is annoying.</li>
+	<li>
+		As a matter of fact, conditions such as <code><a href="../scripting/triggers/bgeetriggers.htm#0x401F">TimeOfDay(DUSK)</a></code> (i.e., <code>Condition=13</code> and <code>Extra=1</code>) may not work as expected &mdash; In this particular case, since <code>BIT0</code> is set to <code>1</code>, the effect will terminate after first trigger and <code><a href="../files/2da/2da_bgee/enginest.htm#246">STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER</a></code> will be displayed in the combat log.
+		<ul>
+			<li>Hopefully, this is not an issue since you can set up the <a href="#op232">opcode #232</a> effect to always fire (see below) and then add <a href="#op318">opcode #318</a>/<a href="#op324">opcode #324</a> effects to the subspell filtering for the desired condition(s).</li>
+		</ul>
+	</li>
+</ul>
 {% endcapture %}
 
-{% include note.html %}
+{% include important.html %}
+
+<p>
+	When used in an external <code><a href="../file_formats/ie_formats/eff_v2.htm">EFF</a></code> file, <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70">resource2</a></code> and <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x78">resource3</a></code> can also be specified &mdash; all spells will be cast when triggered.
+</p>
+
+<p>
+	When used in an external <code><a href="../file_formats/ie_formats/eff_v2.htm">EFF</a></code> file, known values for <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x60">Parameter3</a></code> are:
+	<ul>
+		<li>0 &longrightarrow; Not a "real" contingency (Fire Shields, Globe of Blades, etc...)</li>
+		<li>
+			1 &longrightarrow; Real contingency
+			<ul>
+				<li>Maintains <code><a href="../files/2da/2da_bgee/statdesc.htm#75">Contingency</a></code> portrait icon, displays feedback message <code><a href="../files/2da/2da_bgee/enginest.htm#246">STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER</a></code> when triggered, and terminates this effect after first trigger. This value is always set when created by <a href="#op234">opcode #234</a>.</li>
+			</ul>
+		</li>
+	</ul>
+</p>
+
+<p>
+	When used in an external <code><a href="../file_formats/ie_formats/eff_v2.htm">EFF</a></code> file, <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x90">Parent Type (Source Type)</a></code> may be manually set to influence its behavior. Known values for <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x90">Parent Type</a></code> are:
+	<ul>
+		<li>
+			0 &longrightarrow; None
+			<ul>
+				<li>Allows further effects with a matching <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x94">Parent Resource</a></code> to affect the target.</li>
+			</ul>
+		</li>
+		<li>
+			1 &longrightarrow; Spell
+			<ul>
+				<li>Any further effects with a matching <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x94">Parent Resource</a></code> will be blocked by the engine and string <code><a href="../files/2da/2da_bgee/enginest.htm#42">STRREF_ERROR_CAN_NOT_CAST_TWO_CONT</a></code> is returned to the combat log. Spells must therefore either have this as the last effect, or use it in an <code><a href="../file_formats/ie_formats/eff_v2.htm">EFF</a></code> through <a href="#op177">opcode #177</a>, specifying a <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x90">Parent Type</a></code> of <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x90_0">0</a></code> or <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x90_2">2</a></code>.</li>
+			</ul>
+		</li>
+		<li>
+			2 &longrightarrow; Item
+			<ul>
+				<li>Allows further effects with a matching <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x94">Parent Resource</a></code> to affect the target.</li>
+			</ul>
+		</li>
+	</ul>
+</p>
 
 {% capture note %}
-These triggers and objects are limited to their normal detection range: e.g., <code>Died([ANYONE])</code> won't see someone dying on the other side of the map.
+<ul>
+	<li>
+		If you need a condition which is always true, you could set <code>Condition</code> to <code>20</code> and <code>Extra</code> to <code>102</code> &mdash; <code>hp < 102&percnt;</code> will always be true. <code>102</code> is used because its binary representation does not have <code>BIT0</code> set to <code>1</code>. In so doing:
+		<ul>
+			<li><code><a href="../files/2da/2da_bgee/enginest.htm#246">STRREF_GUI_FEEDBACK_CONTINGENCY_TRIGGER</a></code> won't be displayed in the combat log</li>
+			<li>the effect won't terminate after first trigger</li>
+		</ul>
+	</li>
+	<li>These triggers and objects are limited to their normal detection range: e.g., <code><a href="../scripting/triggers/bgeetriggers.htm#0x004A">Died([ANYONE])</a></code> won't see someone dying on the other side of the map.</li>
+	<li>Excluding the <code><a href="../scripting/triggers/bgeetriggers.htm#0x40B3">PersonalSpaceDistance()</a></code> checks, <code><a href="../files/ids/bgee/ea.htm#0">[ANYONE]</a></code> includes <code><a href="../files/ids/bgee/object.htm#1">Myself</a></code>.</li>
+	<li>The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the <code>Cast Normal</code> result.</li>
+	<li>
+		As of v2.6, the vanilla Contingency spells will now remove a previous instance of themselves if recast before they have triggered.
+		<ul>
+			<li>Probably was a cleaner solution than working with subspells to do the same with <a href="#op321">opcode #321</a>.</li>
+		</ul>
+	</li>
+</ul>
 {% endcapture %}
 
-{% include note.html %}
-
-{% capture note %}
-Excluding the <code>Range()</code> checks, <a href="../files/ids/bgee/ea.htm#0">[ANYONE]</a> includes <code>Myself</code>.
-{% endcapture %}
-
-{% include note.html %}
-
-{% capture note %}
-The presence of this effect in any of a spell's ability headers will force any Wild Surge of that spell to use the 'Cast Normal' result.
-{% endcapture %}
-
-{% include note.html %}
+{% include info.html %}

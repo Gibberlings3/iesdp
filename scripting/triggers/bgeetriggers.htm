@@ -484,6 +484,11 @@ title: "BGEE Script Triggers"
 <div class="triggerHeader"><a name="0x4047">0x4047 RandomNum(I:Range*,I:Value*)</a></div>
 <div class="indent1">
   Generates a random number between <code>1</code> and <code>Range</code>. Returns true only if the random number equals the 2<small><sup>nd</sup></small> parameter.
+
+  {% capture note %}
+  Scripting uses the same random value to seed all <code><a href="#0x4047">RandomNum()</a></code> triggers across a single tick; if you have multiple <code><a href="#0x4047">RandomNum()</a></code> calls with the same parameters, they will all generate the same result.
+  {% endcapture %}
+  {% include note.html %}
 </div>
 <br />
 
@@ -1118,6 +1123,11 @@ title: "BGEE Script Triggers"
 <div class="triggerHeader"><a name="0x40B3">0x40B3 PersonalSpaceDistance(O:Object*,I:Range*)</a></div>
 <div class="indent1">
   NT Returns true if the specified object is exactly as far away from the active CRE as the 2<small><sup>nd</sup></small> parameter specifies.
+
+  {% capture note %}
+  This trigger is <code><a href="#0x4018">Range()</a></code> reduced by the creatures' circle sizes.
+  {% endcapture %}
+  {% include info.html %}
 </div>
 <br />
 

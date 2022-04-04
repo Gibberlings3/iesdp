@@ -16,6 +16,8 @@ Gives the targeted creature(s) immunity from the spell specified in the <code>re
 As of EE v2.6, <code>String Reference</code> is bound by
 <details>
 <pre>
+// NOTE: strrefs [0xF00000&mdash;0xF00537] index into <a href="../files/2da/2da_bgee/enginest.htm">enginest.2da</a>, with the row being "strref - 0xF00000"
+
 if (!pEffect->m_sourceRes.IsValid() || (pImmunitySpell->m_error != 0xf00074 && pImmunitySpell->m_error != 0xf00080))
 {
 	uint nNewFeedback = 0xffffffff;
@@ -26,7 +28,13 @@ if (!pEffect->m_sourceRes.IsValid() || (pImmunitySpell->m_error != 0xf00074 && p
 }
 </pre>
 </details>
-Basically, <code>String Reference</code> has to be <code>0xF00074</code> or <code>0xF00080</code> for the engine to display it.
+Basically, <code>String Reference</code> has to be <code>0xF00074</code> (<code><a href="../files/2da/2da_bgee/enginest.htm#116">STRREF_FEEDBACK_EVADE_RESOURCE</a></code>) or <code>0xF00080</code> (<code><a href="../files/2da/2da_bgee/enginest.htm#128">STRREF_FEEDBACK_IMMUNE_RESOURCE</a></code>) for the engine to display it.
+<br><br>
+
+<b><u>NOTE:</u></b> the engine only allows <code>0xF00074</code> / <code>0xF00080</code> &mdash; it doesn't care that <code><a href="../files/2da/2da_bgee/enginest.htm#128">STRREF_FEEDBACK_IMMUNE_RESOURCE</a></code> (<code>99389</code> on BG2:EE) is what <code>0xF00080</code> eventually resolves to, it's not <code>0xF00080</code>. <a href="#op206">opcode #206</a>'s <code>String Reference</code> should look like this in <a href="https://github.com/Argent77/NearInfinity">Near Infinity</a> (right click ⇒ Edit as hex number):
+<details>
+	<img src="../images/op206 string reference.png" alt="op206_string_reference">
+</details>
 {% endcapture %}
 
 {% include bug.html %}

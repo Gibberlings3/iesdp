@@ -42,21 +42,42 @@
     <b><a name="effv2_Body_0x24">Timing mode</a></b>
 
     - 0 ⟶ <b><a name="effv2_Body_0x24_0">Instant/Limited</a></b>
-    - 1 ⟶ <b><a name="effv2_Body_0x24_1">Instant/Permanent</a></b>
-    - 2 ⟶ <b><a name="effv2_Body_0x24_2">Instant/While equipped</a></b>
-    - 3 ⟶ <b><a name="effv2_Body_0x24_3">Delay/Limited</a></b>
-    - 4 ⟶ <b><a name="effv2_Body_0x24_4">Delay/Permanent</a></b>
-    - 5 ⟶ <b><a name="effv2_Body_0x24_5">Delay/While equipped</a></b>
-    - 6 ⟶ <b><a name="effv2_Body_0x24_6">Limited after duration</a></b>
-    - 7 ⟶ <b><a name="effv2_Body_0x24_7">Permanent after duration</a></b>
-    - 8 ⟶ <b><a name="effv2_Body_0x24_8">Equipped after duration</a></b>
-    - 9 ⟶ <b><a name="effv2_Body_0x24_9">Instant/Permanent</a></b> (after Death)
-    - 10 ⟶ <b><a name="effv2_Body_0x24_10">Instant/Limited</a></b>
-    - 4096 ⟶ <b><a name="effv2_Body_0x24_4096">Absolute duration</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_0">here</a> for further details.
 
-    {% capture note %}
-    See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC">here</a> for further details.
-    {% endcapture %} {% include info.html %}
+    - 1 ⟶ <b><a name="effv2_Body_0x24_1">Instant/Permanent</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_1">here</a> for further details.
+
+    - 2 ⟶ <b><a name="effv2_Body_0x24_2">Instant/While equipped</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_2">here</a> for further details.
+
+    - 3 ⟶ <b><a name="effv2_Body_0x24_3">Delay/Limited</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_3">here</a> for further details.
+
+    - 4 ⟶ <b><a name="effv2_Body_0x24_4">Delay/Permanent</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_4">here</a> for further details.
+
+    - 5 ⟶ <b><a name="effv2_Body_0x24_5">Delay/While equipped</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_5">here</a> for further details.
+
+    - 6 ⟶ <b><a name="effv2_Body_0x24_6">Limited after duration</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_6">here</a> for further details.
+
+    - 7 ⟶ <b><a name="effv2_Body_0x24_7">Permanent after duration</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_7">here</a> for further details.
+
+    - 8 ⟶ <b><a name="effv2_Body_0x24_8">Equipped after duration</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_8">here</a> for further details.
+
+    - 9 ⟶ <b><a name="effv2_Body_0x24_9">Instant/Permanent</a></b> (after Death)
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_9">here</a> for further details.
+
+    - 10 ⟶ <b><a name="effv2_Body_0x24_10">Instant/Limited</a></b>
+      - See <a href="../ie_formats/eff_v1.htm#effv1_Header_0xC_10">here</a> for further details.
+
+    - 4096 ⟶ <b><a name="effv2_Body_0x24_4096">Absolute duration</a></b>
+      - Effect is applied instantly.
+      - This timing mode treats the <code><a href="#effv2_Body_0x28">Duration</a></code> field as the effect's expiration time (in ticks). Expires at <code><a href="../ie_formats/gam_v2.0.htm#GAMEV2_0_Header_GameTime">Gametime</a>(ticks) >= <a href="#effv2_Body_0x28">Duration</a>(ticks)</code>.
+        - If the <code><a href="#effv2_Body_0x28">Duration</a></code> field is `108000`, the effect will expire when the game timer reaches 24 hours, or instantly if the game timer has already passed that point. `108000 = 300(1 hour) * 24 * 15 (ticks ➔ seconds)`.
 
     {% capture note %}
     If called via <a href="../../opcodes/bgee.htm#op177">opcode #177</a>/<a href="../../opcodes/bgee.htm#op183">opcode #183</a>/<a href="../../opcodes/bgee.htm#op283">opcode #283</a>, this field is ignored.
@@ -92,7 +113,8 @@
     If called via <a href="../../opcodes/bgee.htm#op183">opcode #183</a>, this field is ignored.
     {% endcapture %} {% include note.html %}
   type: word
-- desc: Resource
+- desc: |-
+    <b><a name="effv2_Body_Resource">Resource</a></b>
   type: resref
 - desc: Dice Thrown
   type: dword
@@ -129,7 +151,9 @@
     If called via <a href="../../opcodes/bgee.htm#op183">opcode #183</a>, this field is ignored.
     {% endcapture %} {% include note.html %}
   type: dword
-- desc: |
+- desc: |-
+    <b><a name="effv2_Body_Special">Special</a></b> (EE games)
+
     TobEx: Stacking ID. Checked when bit 25 of the Saving Throw Type is set.
 
     If two effects of the same opcode are applied, both have Limit Effect Stacking bit set, and both have the same stacking ID, then the latter applied effect is suspended in application until the former effect expires. Regardless of whether it is applied, the latter effect will expire at the same time that it would expire if it was applied. In other words, the total duration of some non-stacking effect opcode is not extended because more than one copy of the effect was applied.

@@ -9,29 +9,27 @@ Description `desc` field takes Markdown, HTML, Liquid. The preferred syntax is *
 Example: `Polymorph(I:AnimationType*Animate)`
 
 ```yaml
-bg1: 1   # at least one game must be 1
+bg1: 1                   # at least one game must be 1
 bg2: 1
-iwd1: 0  # 0's are optional, can be omitted, so this line and next 2 are not necessary
+iwd1: 0                  # 0's are optional, can be omitted, so this line and next 2 are not necessary
 # iwd2: 0
-# pst: 0
+# pst:  0
 
-n: 146    # required - action number
-
-name: Polymorph  # required, case sensitive, no parentheses
-
-params:  # optional: I:AnimationType*Animate
+n: 146                   # required - action number
+name: Polymorph          # required, case sensitive, no parentheses
+params:                  # optional
   - name: AnimationType  # required, case sensitive
     type: i              # required, automatically uppercased
     ids:  Animate        # optional, automatically capitalized
 
-not_tested: true  # optional, "untested" label
-no_result: true   # optional, "does not work" label
-unknown: true     # optional, "unknown" label
-unreliable: true  # optional, "unreliable" label
-alias: true       # optional, sets desc to "See N". By default N=n, but they aren't equal, alias can take a numerical value instead:
-# alias: 147      # this sets desc to "See #147"
+not_tested: true         # optional, "untested" label
+no_result: true          # optional, "does not work" label
+unknown: true            # optional, "unknown" label
+unreliable: true         # optional, "unreliable" label
+alias: true              # optional, sets desc to "See N". By default N=n, but they aren't equal, alias can take a numerical value instead:
+# alias: 147             # this sets desc to "See #147"
 
-desc: |-          # optional
+desc: |-                 # optional
   This action causes the active creature to change animation to the specified animation (values from [animate.ids](/files/ids/bg2/animate.htm))
   ...
 ```

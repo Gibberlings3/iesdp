@@ -31,23 +31,8 @@ alias: true       # optional, sets desc to "See N". By default N=n, but they are
 
 desc: |-          # optional
   This action causes the active creature to change animation to the specified animation (values from [animate.ids](/files/ids/bg2/animate.htm))
-  ```
-    IF
-      !InPartyAllowDead("Aerie")
-      !Dead("Aerie")
-      !GlobalGT("AerieTransform","GLOBAL",0)
-      Global("Aerie","AR0607",0)
-      Global("KalahI","AR0607",0)
-    THEN
-      RESPONSE #100
-        MoveGlobal("Ar0607","Aerie",[318.378])
-        ChangeEnemyAlly("Aerie",NEUTRAL)
-        SetGlobal("Aerie","AR0607",1)
-        ActionOverride("Aerie",Polymorph(MAGE_FEMALE_ELF))
-        ActionOverride("Aerie",SetBeenInPartyFlags())
-        SetGlobal("AerieTransform","GLOBAL",2)
-    END
-  ```
+  ...
+```
 
 `desc` field takes Markdown, HTML, Liquid. The preferred syntax is **Markdown**. HTML and Liquid should be used sparingly, only when there's no Markdown equivalent.
 

@@ -46,8 +46,9 @@ Data is a yaml list of offsets. Example:
     Attack type
     - 0 = None
     - 1 = Melee
-  type: char         # required.
-  length: 1          # optional, generally should be omitted, in which case, size inferred from type. Known types: char, byte, word, dword, resref, strref
+  type: char         # required. Known types: char, byte, word, dword, resref, strref.
+                     # You can use a custom type, but in that case you must specify the following "length" field.
+  length: 1          # optional, generally should be omitted, in which case, size inferred from type.
   offset: 0x1        # optional, if specified, current offset is checked against this value, if not equal, an error is raised
                      # Generally, should only be specified for the first and last items in the list
   mult: 3            # optional, allows to do stuff like "2*3 (word)"

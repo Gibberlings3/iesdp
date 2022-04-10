@@ -2,6 +2,8 @@
 
 Certain file format and action data is externalized into [Jekyll data files](https://jekyllrb.com/docs/datafiles/), with eventual goal being making most of IESDP data machine readable and available for consumption by external tools.
 
+Description `desc` field takes Markdown, HTML, Liquid. The preferred syntax is **Markdown**. HTML and Liquid should be used sparingly, only when there's no Markdown equivalent.
+
 ## Actions
 
 Example: `Polymorph(I:AnimationType*Animate)`
@@ -34,15 +36,12 @@ desc: |-          # optional
   ...
 ```
 
-`desc` field takes Markdown, HTML, Liquid. The preferred syntax is **Markdown**. HTML and Liquid should be used sparingly, only when there's no Markdown equivalent.
-
-
 ## File formats
 
 File naming example: `_data/file_formats/itm_v1/extended_header.yml`.
 
 Data is a yaml list of offsets. Example:
-
+```yaml
 - desc: |            # required - markdown
     Attack type
     - 0 = None
@@ -54,3 +53,4 @@ Data is a yaml list of offsets. Example:
   mult: 3            # optional, allows to do stuff like "2*3 (word)"
   unknown: 1         # optional, applies "unknown" style span
   unused: 1          # optional, appends " (unused)" to description and applies "unknown" style span
+```

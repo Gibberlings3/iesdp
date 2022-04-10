@@ -17,10 +17,10 @@ n: 146    # required - action number
 
 name: Polymorph  # required, case sensitive, no parentheses
 
-params:  # optional
+params:  # optional: I:AnimationType*Animate
   - name: AnimationType  # required, case sensitive
-    type: i              # required 
-    ids:  Animate        # optional, adds "*Animate" to the argument
+    type: i              # required, automatically uppercased
+    ids:  Animate        # optional, automatically capitalized
 
 not_tested: true  # optional, "untested" label
 no_result: true   # optional, "does not work" label

@@ -35,7 +35,9 @@ URLs should be canonical, with `relurl` filter. This is to ensure that links in 
   - `<a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273">Class</a>`. This is HTML, should be Markdown.
   - `[Class](../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273)`. Missing `relurl`.
 - **Right**:
-  - `[Class]({{ "/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273" | prepend: relurl }})`.
+  - `[Class]({{ "/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273" | prepend: relurl }})`. Preferred version.
+  - `<a name="class" href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273' | prepend: relurl }}">Class</a>`.
+    We want to add anchor `class` to the link. But markdown doesn't support that attribute. So we defer to HTML version. But `href` still uses `relurl`.
 
 
 ## Actions

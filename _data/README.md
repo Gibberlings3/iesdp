@@ -2,7 +2,20 @@
 
 Certain file format and action data is externalized into [Jekyll data files](https://jekyllrb.com/docs/datafiles/), with eventual goal being making most of IESDP data machine readable and available for consumption by external tools.
 
-Description `desc` field takes Markdown, HTML, Liquid. The preferred syntax is **Markdown**. HTML and Liquid should be used sparingly, only when there's no Markdown equivalent.
+- [Actions](#actions)
+- [File formats](#file-formats)
+
+Description `desc` field in both Actions and File formats takes Markdown, HTML, Liquid. The preferred syntax is **Markdown**. HTML and Liquid should be used sparingly, only when there's no Markdown equivalent.
+
+URLs should be canonical, with `relurl` filter. This is to ensure that links in both online and offline versions of IESDP work properly.
+
+- **Wrong**:
+  - `<a href="https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273">Class</a>`. Absolute URL instead of relative.
+  - `<a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273">Class</a>`. This is HTML, should be Markdown.
+  - `[Class](../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273)`. Missing `relurl`.
+- **Right**:
+  - `[Class]({{ "/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273" | prepend: relurl }})`.
+
 
 ## Actions
 
@@ -46,9 +59,11 @@ Data is a yaml list of offsets. Example:
     - 1 = Melee
   type: char         # required. Known types: char, byte, word, dword, resref, strref.
                      # You can use a custom type, but in that case you must specify the following "length" field.
+
   length: 1          # optional, generally should be omitted, in which case, size inferred from type.
   offset: 0x1        # optional, if specified, current offset is checked against this value, if not equal, an error is raised
                      # Generally, should only be specified for the first and last items in the list
+
   mult: 3            # optional, allows to do stuff like "2*3 (word)"
   unknown: 1         # optional, applies "unknown" style span
   unused: 1          # optional, appends " (unused)" to description and applies "unknown" style span

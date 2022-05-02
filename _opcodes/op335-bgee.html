@@ -24,6 +24,19 @@ The next time the row number specified by <code>Row#</code> of <a href="../files
 <br/>
 
 {% capture note %}
+This opcode has a similar issue as <a href="#op135">opcode #135</a> with regards to applying the effect while another is already active:
+<ul>
+	<li>
+		If you apply <a href="#op335">opcode #335</a> while the specified <code>Spellstate</code> is already set (either by <a href="#op328">opcode #328</a> or another <a href="#op335">opcode #335</a>), then the new <a href="#op335">opcode #335</a> will <u><b>NOT</b></u> be applied.
+		<ul>
+			<li>Having said that, a <code><a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC">timing</a>=<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4">4</a>,<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE">duration</a>=0</code> delay between removing the old spellstate and applying the new will bypass this issue.</li>
+		</ul>
+	</li>
+</ul>
+{% endcapture %}
+{% include bug.html %}
+
+{% capture note %}
 Setting <code>Row# = "-1"</code> will effectively have it last its full duration, blocking every effect listed for that spellstate in <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a>.
 {% endcapture %}
 

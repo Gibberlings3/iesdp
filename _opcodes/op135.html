@@ -18,7 +18,7 @@ Polymorphs the targeted creature(s) into the creature specified by the <code>res
 </ul>
 
 <p>
-	This effect sets <a href="../files/ids/bgee/stats.htm#59">POLYMORPHED</a> to <code>1</code> but only if <code>Type=0</code>.
+	This effect sets <code><a href="../files/ids/bgee/stats.htm#59">POLYMORPHED</a></code> to <code>1</code> but only if <code>Type=0</code>.
 </p>
 
 <p>
@@ -31,17 +31,51 @@ Polymorphs the targeted creature(s) into the creature specified by the <code>res
 {% capture note %}
 At least on EE games, this opcode is bugged when you shapechange between two different non-natural forms. In particular:
 <ul>
-	<li>All your equipment will be considered as "unequipped" (in particular, you will lose passive bonuses/maluses granted by your Rings, Amulet, Helmet and the like).</li>
+	<li>
+		All your equipment will be considered as "unequipped" (in particular, you will lose passive bonuses/maluses granted by your Rings, Amulet, Helmet and the like).
+		<ul>
+			<li>Having said that, a <code><a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC">timing</a>=<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4">4</a>,<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE">duration</a>=0</code> delay between removing the old polymorph and applying the new will bypass this issue.</li>
+		</ul>
+	</li>
 </ul>
 {% endcapture %}
 
 {% include bug.html %}
 
 {% capture note %}
-When <code>Type</code> is <code>0</code>, this opcode sets Strength, Dexterity, Resistances (excluding Poison and Magic Damage), Base AC, Specific AC (Crushing/Slashing/Piercing/Missile), and Base APR.
+When <code>Type</code> is <code>0</code>, this opcode sets
+<ul>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x238">Strength</a></code></li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x239">Exceptional Strength</a></code></li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23C">Dexterity</a></code></li>
+	<li>Resistances
+		<ul>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_FireResistance">Fire</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ColdResistance">Cold</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ElectricityResistance">Electricity</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_AcidResistance">Acid</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance">Magic</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicFireResistance">Magic Fire</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicColdResistance">Magic Cold</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_SlashingResistance">Slashing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_CrushingResistance">Crushing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_PiercingResistance">Piercing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MissileResistance">Missile</a></code></li>
+		</ul>
+	</li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x48">Base AC</a></code></li>
+	<li>Specific AC
+		<ul>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4A">Crushing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4C">Missile</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4E">Piercing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x50">Slashing</a></code></li>
+		</ul>
+	</li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x53">Base APR</a></code></li>
+</ul>
 {% endcapture %}
-
-{% include note.html %}
+{% include info.html %}
 
 {% capture note %}
 When the <code>resource</code> key is empty, and it subsequently clears other Polymorph effects, <code>Type</code> is used just like <code>param#1</code> of <a href="#op337">opcode #337</a>.<br/>

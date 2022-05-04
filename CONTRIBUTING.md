@@ -30,15 +30,29 @@ Description `desc` field in both Actions and File formats takes Markdown, HTML, 
 
 URLs should be canonical, with `relurl` filter. This is to ensure that links in both online and offline versions of IESDP work properly.
 
-- **Wrong**:
-  - `<a href="https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273">Class</a>`. Absolute URL instead of relative.
-  - `<a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273">Class</a>`. This is HTML, should be Markdown.
-  - `[Class](../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273)`. Missing `relurl`.
 - **Right**:
-  - `[Class]({{ "/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273" | prepend: relurl }})`. Preferred version.
-  - `<a name="class" href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273' | prepend: relurl }}">Class</a>`  
-     We want to add anchor `class` to the link. But markdown doesn't support that attribute. So we defer to HTML version. Note that `href` still uses `relurl`.
-
+  - Preferred version: markdown with `relurl`
+    ```markdown
+    [Class]({{ "/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273" | prepend: relurl }})
+    ```
+  - Alternative version, HTML
+    ```html
+    <a name="class" href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273' | prepend: relurl }}">Class</a>
+    ```
+     We want to add anchor `class` to the link, but markdown doesn't support that attribute. So we defer to HTML version. Note that `href` still uses `relurl`.
+- **Wrong**:
+  - Missing `relurl`
+    ```markdown
+    [Class](../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273)
+    ```
+  - HTML instead of Markdown
+    ```html
+    <a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273">Class</a>
+    ```
+  - Absolute URL instead of relative
+    ```html
+    <a href="https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273">Class</a>
+    ```
 
 ## Actions
 

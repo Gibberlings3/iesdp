@@ -23,3 +23,7 @@ deployment to properly generate the final IESDP and push it to the
 Actual work happens on the `master` branch.
 
 Handy cheat sheet: http://jekyll.tips/jekyll-cheat-sheet/
+
+# Contributing
+
+See [contributing guide](CONTRIBUTING.md).

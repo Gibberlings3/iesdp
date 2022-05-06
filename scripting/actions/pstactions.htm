@@ -66,6 +66,12 @@
 <div id="nonFooter">
   <div id="content">
 
+
+
+
+
+
+
 <div class="title_main actions_title"> PST Script Actions </div>
 
 
@@ -162,10 +168,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="2" class="action_name">
         2 AddWayPoint(P:WayPoint*)
@@ -205,6 +207,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -263,10 +269,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="7" class="action_name">
         7 CreateCreature(S:NewObject*,P:Location*,I:Face*)
@@ -289,6 +291,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -409,6 +415,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="13" class="action_name">
         13 FindTraps()
@@ -434,10 +444,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="14" class="action_name">
         14 GetItem(S:Object*,O:Target*)
@@ -454,6 +460,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -488,10 +498,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -1009,6 +1015,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="34" class="action_name">
         34 UseItem(S:Object*,O:Target*)
@@ -1050,10 +1060,6 @@ END
   <p>See <a href="#34">UseItem.</a></p><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -1266,6 +1272,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="51" class="action_name">
         51 ClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1273,10 +1283,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -1330,6 +1336,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="55" class="action_name">
         55 DoubleClickLButtonPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1369,10 +1379,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -1931,6 +1937,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="89" class="action_name">
         89 Follow(P:Point*)
@@ -1943,14 +1953,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="90" class="action_name">
         90 MoveToPointNoRecticle(P:Point*)
@@ -1958,6 +1960,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -2042,6 +2048,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="96" class="action_name">
         96 Rest()
@@ -2075,10 +2085,6 @@ THEN
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="97" class="action_name">
         97 UseItemPoint(S:Item*,P:Target*,I:Ability*)
@@ -2091,6 +2097,10 @@ THEN
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="97" class="action_name">
         97 UseItemPointSlot(P:Target*,I:Slot*)
@@ -2098,10 +2108,6 @@ THEN
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -2412,6 +2418,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="113" class="action_name">
         113 ForceSpell(O:Target*,I:Spell*Spell)
@@ -2430,10 +2440,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -2514,7 +2520,13 @@ END
       <a id="116" class="action_name">
         116 TakePartyItem(S:Item*)
       </a></div>
-    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). The item is transferred to the inventory of the active creature. The example is from AR0516.bcs.</p>
+    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). Characters are checked in current party order. The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). All slots are checked; inventory slots are checked in the following order</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0, 2, 4, 6, 8, 10, 12, 14
+1, 3, 5, 7, 9, 11, 13, 15
+</code></pre></div></div>
+
+<p>The example is from AR0516.bcs.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("ThrallOrb","GLOBAL",2)
@@ -2535,13 +2547,7 @@ END
       <a id="116" class="action_name">
         116 TakePartyItem(S:Item*)
       </a></div>
-    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). Characters are checked in current party order. The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). All slots are checked; inventory slots are checked in the following order</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0, 2, 4, 6, 8, 10, 12, 14
-1, 3, 5, 7, 9, 11, 13, 15
-</code></pre></div></div>
-
-<p>The example is from AR0516.bcs.</p>
+    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). The item is transferred to the inventory of the active creature. The example is from AR0516.bcs.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("ThrallOrb","GLOBAL",2)
@@ -2815,10 +2821,6 @@ THEN
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="129" class="action_name">
         129 AnkhegHide()
@@ -2826,6 +2828,10 @@ THEN
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -2916,6 +2922,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="133" class="action_name">
         133 ClearActions(O:Object*)
@@ -2974,10 +2984,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3076,6 +3082,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="139" class="action_name">
         139 PlayerDialog(O:Target*)
@@ -3083,10 +3093,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -3125,6 +3131,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="141" class="action_name">
         141 GivePartyGoldGlobal(S:Name*,S:Area*)
@@ -3139,10 +3149,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3321,10 +3327,6 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="148" class="action_name">
         148 BashDoor(0:Object*)
@@ -3332,6 +3334,10 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
     <div class="indent1 action_body"><p></p><p>This action is miscoded in the default action.ids file (the number 0 should be the capital letter O). When corrected, this action causes the active creature to attempt to bash the specified door.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -3378,10 +3384,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="151" class="action_name">
         151 DisplayString(O:Object*,I:StrRef*)
@@ -3415,6 +3417,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action changes the IDS identifiers for the active creature to the values specified. The object parameter must be in the IDS object form (i.e [EA.GENERAL.RACE.CLASS.SPECIFIC.GENDER.ALIGN]). If parameters are missing, they will default to 0. If a symbolic object is passed, all identifiers will be cleared and the IDS identifier bytes will be filled. ChangeAIType(NearestEnemyOf(LastSeenBy(LastTalkedToBy(LastTrigger())))) would zero Allegiance, General, Race, Class, Specific, Gender, and Alignment, set spec 1 to “Myself” (the <a href="../../files/ids/pst/object.htm">object.ids</a> value, 1), 2 to LastTrigger, 3 to LastTalkedToBy, 4 to LastSeenBy, and 5 to NearestEnemyOf.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -3823,6 +3829,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="168" class="action_name">
         168 Interact(O:Object*)
@@ -3847,10 +3857,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3933,10 +3939,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="173" class="action_name">
         173 AddJournalEntry(I:Entry*,I:Type*Jourtype)
@@ -4009,6 +4011,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="180" class="action_name">
         180 MoveToObjectFollow(O:Object*)
@@ -4025,6 +4035,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="181" class="action_name">
         181 ReallyForceSpell(O:Target*,I:Spell*Spell)
@@ -4032,14 +4046,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. The action must be added to action.ids before it can be used. The example script is from suelfw9.bcs.</p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -4070,14 +4076,6 @@ END
   <p>See <a href="#181">ReallyForceSpell.</a></p><p></p>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -4137,6 +4135,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="188" class="action_name">
         188 TakePartyItemAll(S:Item*)
@@ -4155,6 +4157,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action removes all instances of the specified item from the party. The items are placed in the inventory of the active creature. Items contained in containers (e.g. Bag of Holding) are not taken. The action must be added to action.ids before it can be used.</p>
 
     </div>
+  
+
+
+
   
 
 

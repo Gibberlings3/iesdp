@@ -269,6 +269,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="7" class="action_name">
         7 CreateCreature(S:NewObject*,P:Location*,I:Face*)
@@ -291,10 +295,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -386,6 +386,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="11" class="action_name">
         11 EquipItem(S:Object*)
@@ -402,10 +406,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -465,10 +465,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="15" class="action_name">
         15 GiveItem(S:Object*,O:Target*)
@@ -498,6 +494,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -648,10 +648,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="20" class="action_name">
         20 LayHands(O:Target*)
@@ -670,6 +666,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action is a leftover from BG1 - it does not work in PST.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -1015,10 +1015,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="34" class="action_name">
         34 UseItem(S:Object*,O:Target*)
@@ -1060,6 +1056,10 @@ END
   <p>See <a href="#34">UseItem.</a></p><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -1352,10 +1352,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="56" class="action_name">
         56 DoubleClickLButtonObject(O:Target*,I:ScrollSpeed*Scroll)
@@ -1400,6 +1396,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="59" class="action_name">
         59 MoveCursorPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1407,10 +1411,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -1588,10 +1588,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="68" class="action_name">
         68 CallLightning(O:Target*)
@@ -1609,6 +1605,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -1823,10 +1823,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="84" class="action_name">
         84 Face(I:Direction*)
@@ -1873,6 +1869,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -1969,6 +1969,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="91" class="action_name">
         91 LeaveArea(S:Area*,P:Point*,I:Face*)
@@ -1976,10 +1980,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to leave the current area.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -2097,10 +2097,6 @@ THEN
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="97" class="action_name">
         97 UseItemPointSlot(P:Target*,I:Slot*)
@@ -2108,6 +2104,10 @@ THEN
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -2274,14 +2274,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="108" class="action_name">
         108 EscapeArea()
@@ -2299,6 +2291,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -2346,6 +2342,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -2418,10 +2418,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="113" class="action_name">
         113 ForceSpell(O:Target*,I:Spell*Spell)
@@ -2440,6 +2436,14 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -2485,10 +2489,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="115" class="action_name">
         115 SetGlobalTimer(S:Name*,S:Area*,I:Time*Gtimes)
@@ -2511,6 +2511,23 @@ END
 
 
 
+  
+    <div class="actionHeader">
+      <a id="116" class="action_name">
+        116 TakePartyItem(S:Item*)
+      </a></div>
+    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). The item is transferred to the inventory of the active creature. The example is from AR0516.bcs.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  Global("ThrallOrb","GLOBAL",2)
+  PartyHasItem("MISC7Y")
+THEN
+  RESPONSE #100
+    TakePartyItem("MISC7Y")
+END
+</code></pre></div></div>
+
+    </div>
   
 
 
@@ -2542,23 +2559,6 @@ END
 
 
 
-  
-    <div class="actionHeader">
-      <a id="116" class="action_name">
-        116 TakePartyItem(S:Item*)
-      </a></div>
-    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). The item is transferred to the inventory of the active creature. The example is from AR0516.bcs.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
-  Global("ThrallOrb","GLOBAL",2)
-  PartyHasItem("MISC7Y")
-THEN
-  RESPONSE #100
-    TakePartyItem("MISC7Y")
-END
-</code></pre></div></div>
-
-    </div>
   
 
 
@@ -2805,10 +2805,6 @@ THEN
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="128" class="action_name">
         128 AnkhegEmerge()
@@ -2816,6 +2812,10 @@ THEN
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -3131,10 +3131,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="141" class="action_name">
         141 GivePartyGoldGlobal(S:Name*,S:Area*)
@@ -3149,6 +3145,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -3829,10 +3829,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="168" class="action_name">
         168 Interact(O:Object*)
@@ -3862,6 +3858,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="169" class="action_name">
         169 DestroyItem(S:Object*,O:Target*,I:All*Boolean)
@@ -3869,10 +3873,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -3902,10 +3902,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="171" class="action_name">
         171 GiveGoldForce(I:Amount*)
@@ -3927,6 +3923,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="172" class="action_name">
         172 ChangeTileState(O:Tile*,I:State*Boolean)
@@ -3934,6 +3934,14 @@ END
     <div class="indent1 action_body"><p></p><p>This action sets the open/closed graphic of a tile in a WED file.</p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -3958,14 +3966,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
-  
-
-
-
   
 
 
@@ -4015,10 +4015,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="180" class="action_name">
         180 MoveToObjectFollow(O:Object*)
@@ -4035,10 +4031,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="181" class="action_name">
         181 ReallyForceSpell(O:Target*,I:Spell*Spell)
@@ -4046,6 +4038,14 @@ END
     <div class="indent1 action_body"><p></p><p>This action causes the active creature to cast the specified spell at the target object. The spell need not currently be memorised by the caster, and will not be interrupted while being cast. The spell is cast instantly (i.e. with a casting time of 0). The caster must meet the level requirements of the spell. The action must be added to action.ids before it can be used. The example script is from suelfw9.bcs.</p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 

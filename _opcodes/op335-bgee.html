@@ -11,25 +11,25 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-When the opcode is applied, it checks if the creature currently has the spellstate specified by <code>Spellstate</code> set. Known values for <code>Spellstate</code> are defined in <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>.
+When the opcode is applied, it checks if the creature currently has the spellstate specified by <code>Spellstate</code> set. Known values for <code>Spellstate</code> are defined in <a name="class" href="{{ '../files/ids/bgee/splstate.htm' | prepend: relurl }}">SPLSTATE.IDS</a>.
 <br/>
 
 <ul>
 	<li>If it's already set, this opcode is NOT applied, nothing happens.</li>
-	<li>Otherwise, the opcode is attached, the spellstate becomes set (for the duration of the effect), and the "Resource" specified by the <code>resource</code> key (if any!) is granted to the character (as if through <a href="#op171">opcode #171</a>)</li>
+	<li>Otherwise, the opcode is attached, the spellstate becomes set (for the duration of the effect), and the "Resource" specified by the <code>resource</code> key (if any!) is granted to the character (as if through <a name="class" href="{{ '#op171' | prepend: relurl }}">opcode #171</a>)</li>
 </ul>
 <br/>
 
-The next time the row number specified by <code>Row#</code> of <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a> is triggered (blocks an effect), this effect will terminate, remove the spell it granted (as if through <a href="#op172">opcode #172</a>) and decrement <a href="#op336">opcode #336</a> effects according to their <code>Eye Group</code> (<code>parameter2</code> for <a href="#op336">opcode #336</a>, <code>special</code> field for <a href="#op335">opcode #335</a>).
+The next time the row number specified by <code>Row#</code> of <a name="class" href="{{ '../files/2da/2da_bgee/7eyes.htm' | prepend: relurl }}">7EYES.2DA</a> is triggered (blocks an effect), this effect will terminate, remove the spell it granted (as if through <a name="class" href="{{ '#op172' | prepend: relurl }}">opcode #172</a>) and decrement <a name="class" href="{{ '#op336' | prepend: relurl }}">opcode #336</a> effects according to their <code>Eye Group</code> (<code>parameter2</code> for <a name="class" href="{{ '#op336' | prepend: relurl }}">opcode #336</a>, <code>special</code> field for <a name="class" href="{{ '#op335' | prepend: relurl }}">opcode #335</a>).
 <br/>
 
 {% capture note %}
-This opcode has a similar issue as <a href="#op135">opcode #135</a> with regards to applying the effect while another is already active:
+This opcode has a similar issue as <a name="class" href="{{ '#op135' | prepend: relurl }}">opcode #135</a> with regards to applying the effect while another is already active:
 <ul>
 	<li>
-		If you apply <a href="#op335">opcode #335</a> while the specified <code>Spellstate</code> is already set (either by <a href="#op328">opcode #328</a> or another <a href="#op335">opcode #335</a>), then the new <a href="#op335">opcode #335</a> will <u><b>NOT</b></u> be applied.
+		If you apply <a name="class" href="{{ '#op335' | prepend: relurl }}">opcode #335</a> while the specified <code>Spellstate</code> is already set (either by <a name="class" href="{{ '#op328' | prepend: relurl }}">opcode #328</a> or another <a name="class" href="{{ '#op335' | prepend: relurl }}">opcode #335</a>), then the new <a name="class" href="{{ '#op335' | prepend: relurl }}">opcode #335</a> will <u><b>NOT</b></u> be applied.
 		<ul>
-			<li>Having said that, a <code><a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC">timing</a>=<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4">4</a>,<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE">duration</a>=0</code> delay between removing the old spellstate and applying the new will bypass this issue.</li>
+			<li>Having said that, a <code><a name="class" href="{{ '../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC' | prepend: relurl }}">timing</a>=<a name="class" href="{{ '../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4' | prepend: relurl }}">4</a>,<a name="class" href="{{ '../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE' | prepend: relurl }}">duration</a>=0</code> delay between removing the old spellstate and applying the new will bypass this issue.</li>
 		</ul>
 	</li>
 </ul>
@@ -37,7 +37,7 @@ This opcode has a similar issue as <a href="#op135">opcode #135</a> with regards
 {% include bug.html %}
 
 {% capture note %}
-Setting <code>Row# = "-1"</code> will effectively have it last its full duration, blocking every effect listed for that spellstate in <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a>.
+Setting <code>Row# = "-1"</code> will effectively have it last its full duration, blocking every effect listed for that spellstate in <a name="class" href="{{ '../files/2da/2da_bgee/7eyes.htm' | prepend: relurl }}">7EYES.2DA</a>.
 {% endcapture %}
 
 {% include note.html %}

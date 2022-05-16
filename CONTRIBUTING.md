@@ -35,11 +35,17 @@ URLs should be canonical, with `relurl` filter. This is to ensure that links in 
     ```markdown
     [Class]({{ "/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273" | prepend: relurl }})
     ```
-  - Alternative version, HTML
+  - Alternative version: HTML.
     ```html
-    <a name="class" href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273' | prepend: relurl }}">Class</a>
+    <a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273' | prepend: relurl }}">Class</a>
     ```
-     We want to add anchor `class` to the link, but markdown doesn't support that attribute. So we defer to HTML version. Note that `href` still uses `relurl`.
+    Note that `href` still uses `relurl`.  
+    Used in:
+    - Opcodes descriptions (`_opcodes`), since they are in html format.
+    - When markdown syntax is not enough. For example, if we want to add anchor `class` to the link, but markdown doesn't support that attribute.
+      ```html
+      <a name="class" href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273' | prepend: relurl }}">Class</a>
+      ```
 - **Wrong**:
   - Missing `relurl`
     ```markdown

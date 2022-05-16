@@ -28,24 +28,26 @@ Certain file format and action data is externalized into [Jekyll data files](htt
 
 Description `desc` field in both Actions and File formats takes Markdown, HTML, Liquid. The preferred syntax is **Markdown**. HTML and Liquid should be used sparingly, only when there's no Markdown equivalent.
 
-URLs should be canonical, with `relurl` filter. This is to ensure that links in both online and offline versions of IESDP work properly.
+URLs should be canonical (start from website root, don't use `../`s), with `relurl` filter. This is to ensure that links in both online and offline versions of IESDP work properly.  
+One exception to this rule is linking anchors on the same page, they don't need `relurl`.
 
 - **Right**:
   - Preferred version: markdown with `relurl`
     ```markdown
     [Class]({{ "/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273" | prepend: relurl }})
     ```
-  - Alternative version: HTML.
+  - Alternative version: HTML with `relurl`
     ```html
     <a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273' | prepend: relurl }}">Class</a>
     ```
-    Note that `href` still uses `relurl`.  
     Used in:
     - Opcodes descriptions (`_opcodes`), since they are in html format.
     - When markdown syntax is not enough. For example, if we want to add anchor `class` to the link, but markdown doesn't support that attribute.
       ```html
       <a name="class" href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x273' | prepend: relurl }}">Class</a>
       ```
+  - Same page anchors:
+    `[opcode #337](#op337)` if in `_data` or `<a href="#op337">opcode #337</a>` if in `_opcodes`.
 - **Wrong**:
   - Missing `relurl`
     ```markdown

@@ -81,6 +81,12 @@
    
 
 
+
+
+
+
+
+
 	<div id="op0" class="opcode">
 		<span class="opnumberdata">#0 (0x0)</span>
 
@@ -9851,7 +9857,14 @@ While the end result is otherwise the same as “Stoned Death” applied by <a h
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Polymorphs the targeted creature(s) into the creature specified by the <code>resource</code> key, in the style specified by the <code>Type</code> field.
+		<div class="descriptiondata"> 
+
+
+
+
+
+
+Polymorphs the targeted creature(s) into the creature specified by the <code>resource</code> key, in the style specified by the <code>Type</code> field.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Gain Resistances/statistics (spell-casting disabled)</li>
@@ -9859,13 +9872,13 @@ While the end result is otherwise the same as “Stoned Death” applied by <a h
 </ul>
 
 <p>
-	This effect sets <a href="../files/ids/bgee/stats.htm#59">POLYMORPHED</a> to <code>1</code> but only if <code>Type=0</code>.
+	This effect sets <code><a href="../files/ids/bgee/stats.htm#59">POLYMORPHED</a></code> to <code>1</code> but only if <code>Type=0</code>.
 </p>
 
 <p>
 	If the <code>resource</code> key is empty, other Polymorph effects are removed, allowing for removal of permanent effects.
 	<ul>
-		<li>It will also remove any item in <a href="../files/ids/bgee/slots.htm#34">Magical Weapon Slot</a>, whether or not it was supplying a Polymorph effect.</li>
+		<li>It will also remove any item in <code><a href="../files/ids/bgee/slots.htm#34">SLOT_MISC19</a></code> (Magical Weapon Slot), whether or not it was supplying a Polymorph effect.</li>
 	</ul>
 </p>
 
@@ -9876,7 +9889,12 @@ While the end result is otherwise the same as “Stoned Death” applied by <a h
 		<strong>Bug:</strong> 
 At least on EE games, this opcode is bugged when you shapechange between two different non-natural forms. In particular:
 <ul>
-	<li>All your equipment will be considered as "unequipped" (in particular, you will lose passive bonuses/maluses granted by your Rings, Amulet, Helmet and the like).</li>
+	<li>
+		All your equipment will be considered as "unequipped" (in particular, you will lose passive bonuses/maluses granted by your Rings, Amulet, Helmet and the like).
+		<ul>
+			<li>Having said that, a <code><a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC">timing</a>=<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4">4</a>,<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE">duration</a>=0</code> delay between removing the old polymorph and applying the new will bypass this issue.</li>
+		</ul>
+	</li>
 </ul>
 
 	</div>
@@ -9884,11 +9902,40 @@ At least on EE games, this opcode is bugged when you shapechange between two dif
 
 
 
-
 <div class="note info">
   <div>
-    <strong>Note:</strong> 
-When <code>Type</code> is <code>0</code>, this opcode sets Strength, Dexterity, Resistances (excluding Poison and Magic Damage), Base AC, Specific AC (Crushing/Slashing/Piercing/Missile), and Base APR.
+    <strong>Info:</strong> 
+When <code>Type</code> is <code>0</code>, this opcode sets
+<ul>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x238">Strength</a></code></li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x239">Exceptional Strength</a></code></li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23C">Dexterity</a></code></li>
+	<li>Resistances
+		<ul>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_FireResistance">Fire</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ColdResistance">Cold</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ElectricityResistance">Electricity</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_AcidResistance">Acid</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance">Magic</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicFireResistance">Magic Fire</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicColdResistance">Magic Cold</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_SlashingResistance">Slashing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_CrushingResistance">Crushing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_PiercingResistance">Piercing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MissileResistance">Missile</a></code></li>
+		</ul>
+	</li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x48">Base AC</a></code></li>
+	<li>Specific AC
+		<ul>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4A">Crushing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4C">Missile</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4E">Piercing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x50">Slashing</a></code></li>
+		</ul>
+	</li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x53">Base APR</a></code></li>
+</ul>
 
   </div>
 </div>
@@ -25465,7 +25512,14 @@ See <a href="#op326">opcode #326</a> for some peculiarities of projectile behavi
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> When the opcode is applied, it checks if the creature currently has the spellstate specified by <code>Spellstate</code> set. Known values for <code>Spellstate</code> are defined in <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>.
+		<div class="descriptiondata"> 
+
+
+
+
+
+
+When the opcode is applied, it checks if the creature currently has the spellstate specified by <code>Spellstate</code> set. Known values for <code>Spellstate</code> are defined in <a href="../files/ids/bgee/splstate.htm">SPLSTATE.IDS</a>.
 <br/>
 
 <ul>
@@ -25476,6 +25530,24 @@ See <a href="#op326">opcode #326</a> for some peculiarities of projectile behavi
 
 The next time the row number specified by <code>Row#</code> of <a href="../files/2da/2da_bgee/7eyes.htm">7EYES.2DA</a> is triggered (blocks an effect), this effect will terminate, remove the spell it granted (as if through <a href="#op172">opcode #172</a>) and decrement <a href="#op336">opcode #336</a> effects according to their <code>Eye Group</code> (<code>parameter2</code> for <a href="#op336">opcode #336</a>, <code>special</code> field for <a href="#op335">opcode #335</a>).
 <br/>
+
+
+<div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+This opcode has a similar issue as <a href="#op135">opcode #135</a> with regards to applying the effect while another is already active:
+<ul>
+	<li>
+		If you apply <a href="#op335">opcode #335</a> while the specified <code>Spellstate</code> is already set (either by <a href="#op328">opcode #328</a> or another <a href="#op335">opcode #335</a>), then the new <a href="#op335">opcode #335</a> will <u><b>NOT</b></u> be applied.
+		<ul>
+			<li>Having said that, a <code><a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC">timing</a>=<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4">4</a>,<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE">duration</a>=0</code> delay between removing the old spellstate and applying the new will bypass this issue.</li>
+		</ul>
+	</li>
+</ul>
+
+	</div>
+</div>
+
 
 
 

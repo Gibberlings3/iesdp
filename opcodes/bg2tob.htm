@@ -80,6 +80,12 @@
    
 
 
+
+
+
+
+
+
 	<div id="op0" class="opcode">
 		<span class="opnumberdata">#0 (0x0)</span>
 
@@ -9095,7 +9101,14 @@ While the end result is otherwise the same as “Stoned Death” applied by <a h
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Polymorphs the targeted creature(s) into the creature specified by the <code>resource</code> key, in the style specified by the <code>Type</code> field.
+		<div class="descriptiondata"> 
+
+
+
+
+
+
+Polymorphs the targeted creature(s) into the creature specified by the <code>resource</code> key, in the style specified by the <code>Type</code> field.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Gain Resistances/statistics (spell-casting disabled)</li>
@@ -9103,13 +9116,13 @@ While the end result is otherwise the same as “Stoned Death” applied by <a h
 </ul>
 
 <p>
-	This effect sets <a href="../files/ids/bgee/stats.htm#59">POLYMORPHED</a> to <code>1</code> but only if <code>Type=0</code>.
+	This effect sets <code><a href="../files/ids/bgee/stats.htm#59">POLYMORPHED</a></code> to <code>1</code> but only if <code>Type=0</code>.
 </p>
 
 <p>
 	If the <code>resource</code> key is empty, other Polymorph effects are removed, allowing for removal of permanent effects.
 	<ul>
-		<li>It will also remove any item in <a href="../files/ids/bgee/slots.htm#34">Magical Weapon Slot</a>, whether or not it was supplying a Polymorph effect.</li>
+		<li>It will also remove any item in <code><a href="../files/ids/bgee/slots.htm#34">SLOT_MISC19</a></code> (Magical Weapon Slot), whether or not it was supplying a Polymorph effect.</li>
 	</ul>
 </p>
 
@@ -9120,7 +9133,12 @@ While the end result is otherwise the same as “Stoned Death” applied by <a h
 		<strong>Bug:</strong> 
 At least on EE games, this opcode is bugged when you shapechange between two different non-natural forms. In particular:
 <ul>
-	<li>All your equipment will be considered as "unequipped" (in particular, you will lose passive bonuses/maluses granted by your Rings, Amulet, Helmet and the like).</li>
+	<li>
+		All your equipment will be considered as "unequipped" (in particular, you will lose passive bonuses/maluses granted by your Rings, Amulet, Helmet and the like).
+		<ul>
+			<li>Having said that, a <code><a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC">timing</a>=<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4">4</a>,<a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE">duration</a>=0</code> delay between removing the old polymorph and applying the new will bypass this issue.</li>
+		</ul>
+	</li>
 </ul>
 
 	</div>
@@ -9128,11 +9146,40 @@ At least on EE games, this opcode is bugged when you shapechange between two dif
 
 
 
-
 <div class="note info">
   <div>
-    <strong>Note:</strong> 
-When <code>Type</code> is <code>0</code>, this opcode sets Strength, Dexterity, Resistances (excluding Poison and Magic Damage), Base AC, Specific AC (Crushing/Slashing/Piercing/Missile), and Base APR.
+    <strong>Info:</strong> 
+When <code>Type</code> is <code>0</code>, this opcode sets
+<ul>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x238">Strength</a></code></li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x239">Exceptional Strength</a></code></li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23C">Dexterity</a></code></li>
+	<li>Resistances
+		<ul>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_FireResistance">Fire</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ColdResistance">Cold</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ElectricityResistance">Electricity</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_AcidResistance">Acid</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance">Magic</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicFireResistance">Magic Fire</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicColdResistance">Magic Cold</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_SlashingResistance">Slashing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_CrushingResistance">Crushing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_PiercingResistance">Piercing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MissileResistance">Missile</a></code></li>
+		</ul>
+	</li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x48">Base AC</a></code></li>
+	<li>Specific AC
+		<ul>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4A">Crushing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4C">Missile</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4E">Piercing</a></code></li>
+			<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x50">Slashing</a></code></li>
+		</ul>
+	</li>
+	<li><code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x53">Base APR</a></code></li>
+</ul>
 
   </div>
 </div>

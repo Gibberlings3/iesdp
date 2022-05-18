@@ -10,37 +10,66 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Removes effects from the resource specified by the <code>resource</code> key, in the style specified by the <code>Type</code> field. Both spell and item resources are considered.
+{% include relurl.html %}
+
+Removes effects from the resource specified by the <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> key, in the style specified by the <code>Type</code> field. Both <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> and <a href="{{ '/file_formats/ie_formats/itm_v1.htm' | prepend: relurl }}"><code>ITM</code></a> resources are considered.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>
 		0 &longrightarrow; Default
 		<ul>
-			<li>Will remove effects applied with any <code>Timing Mode</code></li>
+			<li>Will remove effects applied with any <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC' | prepend: relurl }}"><code>Timing Mode</code></a></li>
 		</ul>
 	</li>
 	<li>
 		1 &longrightarrow; Equipped effects list only
 		<ul>
-			<li>Will only remove effects applied with <code>Timing Mode 2</code></li>
+			<li>Will only remove effects applied with <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_2' | prepend: relurl }}"><code>Timing Mode 2</code></a></li>
 		</ul>
 	</li>
 	<li>
 		2 &longrightarrow; Timed effects list only
 		<ul>
-			<li>Will remove effects applied with any <code>Timing Mode</code>, excluding <code>2</code> and <code>9</code></li>
+			<li>Will remove effects applied with any <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC' | prepend: relurl }}"><code>Timing Mode</code></a>, excluding <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_2' | prepend: relurl }}"><code>2</code></a> and <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_9' | prepend: relurl }}"><code>9</code></a></li>
 		</ul>
 	</li>
 </ul>
 
 {% capture note %}
-It always needs to be the first effect for stacking prevention. <code>Timing Mode</code> should be either <code>Instant/Limited(0)</code> with <code>duration=0</code>, or <code>Instant/Permanent(1)</code>.
+<ul>
+	<li>
+		It always needs to be the first effect for stacking prevention.
+		<ul>
+			<li><a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC' | prepend: relurl }}"><code>Timing Mode</code></a> should be either <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_0' | prepend: relurl }}"><code>0</code></a> with <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE' | prepend: relurl }}"><code>duration</code></a><code>=0</code>, or <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_1' | prepend: relurl }}"><code>1</code></a>.</li>
+		</ul>
+	</li>
+	<li>
+		It will only look at effects attached directly to the creature.
+		<ul>
+			<li>
+				Any <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> file filtered through an <a href="#op177">opcode #177</a>&sol;<a href="#op182">opcode #182</a>&sol;<a href="#op183">opcode #183</a> effect will not be looked at.
+				<ul>
+					<li>Only the <a href="#op177">opcode #177</a>&sol;<a href="#op182">opcode #182</a>&sol;<a href="#op183">opcode #183</a> effect itself will be checked.</li>
+				</ul>
+			</li>
+			<li>Any <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> file applied by an <a href="#op248">opcode #248</a>&sol;<a href="#op249">opcode #249</a>&sol;<a href="#op272">opcode #272</a> effect will be looked at, as they get attached directly to the corresponding creature.</li>
+		</ul>
+	</li>
+</ul>
 {% endcapture %}
 
 {% include note.html %}
 
 {% capture note %}
-Leaving the <code>resource</code> field empty will remove any effect on the creature without a parent resource. Weapon proficiencies, HLA markers, stealth, turn undead (paladin's panic only) ...  Local variable effects are however safe.
+If an <a href="{{ '/file_formats/ie_formats/itm_v1.htm' | prepend: relurl }}"><code>ITM</code></a> file and a <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> file share the same <code>resref</code> (f.i. <code>"spwi112.itm"</code> , <code>"spwi112.spl"</code>), and the <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> field of this opcode is set to <code>"spwi112"</code>, then it will remove effects from both resources (the engine doesn't care about the extension when checking the <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> field).
+<ul>
+	<li>You might want to keep it mind when using this opcode (you can potentially break things&hellip;)</li>
+</ul>
+{% endcapture %}
+{% include important.html %}
+
+{% capture note %}
+Leaving the <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> field empty will remove any effect on the creature without a parent resource. Weapon proficiencies, HLA markers, stealth, turn undead (paladin's panic only) &hellip; Local variable effects are however safe.
 {% endcapture %}
 
 {% include warning.html %}

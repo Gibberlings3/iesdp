@@ -10,6 +10,8 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
+{% include relurl.html %}
+
 Polymorphs the targeted creature(s) into the creature specified by the <code>resource</code> key, in the style specified by the <code>Type</code> field.
 <br/>Known values for <code>Type</code> are:
 <ul>
@@ -18,13 +20,13 @@ Polymorphs the targeted creature(s) into the creature specified by the <code>res
 </ul>
 
 <p>
-	This effect sets <code><a name="class"  href="{{ '../files/ids/bgee/stats.htm#59' | prepend: relurl }}">POLYMORPHED</a></code> to <code>1</code> but only if <code>Type=0</code>.
+	This effect sets <code><a  href="{{ '/files/ids/bgee/stats.htm#59' | prepend: relurl }}">POLYMORPHED</a></code> to <code>1</code> but only if <code>Type=0</code>.
 </p>
 
 <p>
 	If the <code>resource</code> key is empty, other Polymorph effects are removed, allowing for removal of permanent effects.
 	<ul>
-		<li>It will also remove any item in <code><a name="class" href="{{ '../files/ids/bgee/slots.htm#34' | prepend: relurl }}">SLOT_MISC19</a></code> (Magical Weapon Slot), whether or not it was supplying a Polymorph effect.</li>
+		<li>It will also remove any item in <code><a href="{{ '/files/ids/bgee/slots.htm#34' | prepend: relurl }}">SLOT_MISC19</a></code> (Magical Weapon Slot), whether or not it was supplying a Polymorph effect.</li>
 	</ul>
 </p>
 
@@ -34,7 +36,7 @@ At least on EE games, this opcode is bugged when you shapechange between two dif
 	<li>
 		All your equipment will be considered as "unequipped" (in particular, you will lose passive bonuses/maluses granted by your Rings, Amulet, Helmet and the like).
 		<ul>
-			<li>Having said that, a <code><a name="class" href="{{ '../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC' | prepend: relurl }}">timing</a>=<a name="class" href="{{ '../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4' | prepend: relurl }}">4</a>,<a name="class" href="{{ '../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE' | prepend: relurl }}">duration</a>=0</code> delay between removing the old polymorph and applying the new will bypass this issue.</li>
+			<li>Having said that, a <code><a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC' | prepend: relurl }}">timing</a>=<a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_4' | prepend: relurl }}">4</a>,<a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE' | prepend: relurl }}">duration</a>=0</code> delay between removing the old polymorph and applying the new will bypass this issue.</li>
 		</ul>
 	</li>
 </ul>
@@ -45,40 +47,40 @@ At least on EE games, this opcode is bugged when you shapechange between two dif
 {% capture note %}
 When <code>Type</code> is <code>0</code>, this opcode sets
 <ul>
-	<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x238' | prepend: relurl }}">Strength</a></code></li>
-	<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x239' | prepend: relurl }}">Exceptional Strength</a></code></li>
-	<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23C' | prepend: relurl }}">Dexterity</a></code></li>
+	<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x238' | prepend: relurl }}">Strength</a></code></li>
+	<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x239' | prepend: relurl }}">Exceptional Strength</a></code></li>
+	<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x23C' | prepend: relurl }}">Dexterity</a></code></li>
 	<li>Resistances
 		<ul>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_FireResistance' | prepend: relurl }}">Fire</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ColdResistance' | prepend: relurl }}">Cold</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ElectricityResistance' | prepend: relurl }}">Electricity</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_AcidResistance' | prepend: relurl }}">Acid</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance' | prepend: relurl }}">Magic</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicFireResistance' | prepend: relurl }}">Magic Fire</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicColdResistance' | prepend: relurl }}">Magic Cold</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_SlashingResistance' | prepend: relurl }}">Slashing</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_CrushingResistance' | prepend: relurl }}">Crushing</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_PiercingResistance' | prepend: relurl }}">Piercing</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MissileResistance' | prepend: relurl }}">Missile</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_FireResistance' | prepend: relurl }}">Fire</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ColdResistance' | prepend: relurl }}">Cold</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_ElectricityResistance' | prepend: relurl }}">Electricity</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_AcidResistance' | prepend: relurl }}">Acid</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance' | prepend: relurl }}">Magic</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicFireResistance' | prepend: relurl }}">Magic Fire</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicColdResistance' | prepend: relurl }}">Magic Cold</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_SlashingResistance' | prepend: relurl }}">Slashing</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_CrushingResistance' | prepend: relurl }}">Crushing</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_PiercingResistance' | prepend: relurl }}">Piercing</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MissileResistance' | prepend: relurl }}">Missile</a></code></li>
 		</ul>
 	</li>
-	<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x48' | prepend: relurl }}">Base AC</a></code></li>
+	<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x48' | prepend: relurl }}">Base AC</a></code></li>
 	<li>Specific AC
 		<ul>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4A' | prepend: relurl }}">Crushing</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4C' | prepend: relurl }}">Missile</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4E' | prepend: relurl }}">Piercing</a></code></li>
-			<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x50' | prepend: relurl }}">Slashing</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4A' | prepend: relurl }}">Crushing</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4C' | prepend: relurl }}">Missile</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x4E' | prepend: relurl }}">Piercing</a></code></li>
+			<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x50' | prepend: relurl }}">Slashing</a></code></li>
 		</ul>
 	</li>
-	<li><code><a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x53' | prepend: relurl }}">Base APR</a></code></li>
+	<li><code><a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x53' | prepend: relurl }}">Base APR</a></code></li>
 </ul>
 {% endcapture %}
 {% include info.html %}
 
 {% capture note %}
-When the <code>resource</code> key is empty, and it subsequently clears other Polymorph effects, <code>Type</code> is used just like <code>param#1</code> of <a name="class" href="{{ '#op337' | prepend: relurl }}">opcode #337</a>.<br/>
+When the <code>resource</code> key is empty, and it subsequently clears other Polymorph effects, <code>Type</code> is used just like <code>param#1</code> of <a href="#op337">opcode #337</a>.<br/>
 As a result, it will clear all Polymorph effects if <code>Type = "-1"</code>, else it will only clear Polymorph effects that have a <code>param#2</code> that matches.
 {% endcapture %}
 
@@ -86,8 +88,8 @@ As a result, it will clear all Polymorph effects if <code>Type = "-1"</code>, el
 
 {% capture note %}
 <ul>
-	<li><code><a name="class" href="{{ '../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x60' | prepend: relurl }}">Parameter3</a></code> (external <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}">EFF</a>): Circle Size</li>
-	<li><code><a name="class" href="{{ '../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x64' | prepend: relurl }}">Parameter4</a></code> (external <a name="class" href="{{ '../file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}">EFF</a>): Animation (from <a name="class" href="{{ '../files/ids/bgee/animate.htm' | prepend: relurl }}">ANIMATE.IDS</a>)</li>
+	<li><code><a href="{{ '/file_formats/ie_formats/eff_v2.htm#effv2_Body_0x60' | prepend: relurl }}">Parameter3</a></code> (external <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}">EFF</a>): Circle Size</li>
+	<li><code><a href="{{ '/file_formats/ie_formats/eff_v2.htm#effv2_Body_0x64' | prepend: relurl }}">Parameter4</a></code> (external <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}">EFF</a>): Animation (from <a href="{{ '/files/ids/bgee/animate.htm' | prepend: relurl }}">ANIMATE.IDS</a>)</li>
 </ul>
 These two values are not functional (changing them does nothing), but they do get set on the effect.
 {% endcapture %}
@@ -95,7 +97,7 @@ These two values are not functional (changing them does nothing), but they do ge
 {% include note.html %}
 
 {% capture note %}
-The creature you're polymorphing into cannot have <a name="class" href="{{ '../files/ids/bgee/state.htm#BIT0' | prepend: relurl }}">STATE_SLEEPING</a>, <a name="class" href="{{ '../files/ids/bgee/state.htm#BIT6' | prepend: relurl }}">STATE_FROZEN_DEATH</a>, <a name="class" href="{{ '../files/ids/bgee/state.htm#BIT7' | prepend: relurl }}">STATE_STONE_DEATH</a>, <a name="class" href="{{ '../files/ids/bgee/state.htm#BIT9' | prepend: relurl }}">STATE_FLAME_DEATH</a>, or <a name="class" href="{{ '../files/ids/bgee/state.htm#BIT11' | prepend: relurl }}">STATE_DEAD</a> set in its <a name="class" href="{{ '../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20' | prepend: relurl }}">CRE</a> file, or the game will crash.
+The creature you're polymorphing into cannot have <a href="{{ '/files/ids/bgee/state.htm#BIT0' | prepend: relurl }}">STATE_SLEEPING</a>, <a href="{{ '/files/ids/bgee/state.htm#BIT6' | prepend: relurl }}">STATE_FROZEN_DEATH</a>, <a href="{{ '/files/ids/bgee/state.htm#BIT7' | prepend: relurl }}">STATE_STONE_DEATH</a>, <a href="{{ '/files/ids/bgee/state.htm#BIT9' | prepend: relurl }}">STATE_FLAME_DEATH</a>, or <a href="{{ '/files/ids/bgee/state.htm#BIT11' | prepend: relurl }}">STATE_DEAD</a> set in its <a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20' | prepend: relurl }}">CRE</a> file, or the game will crash.
 {% endcapture %}
 
 {% include warning.html %}

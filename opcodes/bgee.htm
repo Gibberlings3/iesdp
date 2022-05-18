@@ -14570,7 +14570,7 @@ This opcode uses a reverse stacking order: the “oldest” effect with matching
 	<div id="op182" class="opcode">
 		<span class="opnumberdata">#182 (0xB6)</span>
 
-		<span class="opnamedata">Item: Apply Effect Item</span>
+		<span class="opnamedata">Use EFF file if/while item resource equipped</span>
 
 		
 		
@@ -14578,39 +14578,56 @@ This opcode uses a reverse stacking order: the “oldest” effect with matching
 		
 			
 				
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bg1tots.htm#op182">BG1</a>
+			
+		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unused</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unused</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies an effect when the specified item is equipped. 
+		<div class="descriptiondata"> 
 
 
 
-<div class="note warning">
-  <div>
-    <strong>Warning:</strong> 
-This effect has never been seen to work.
 
-  </div>
+
+
+<p>
+	This opcode is supposed to apply the <a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> file specified in <a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70"><code>resource2</code></a> if the target has the <a href="../file_formats/ie_formats/itm_v1.htm"><code>ITM</code></a> file specified in <a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_Resource"><code>resource</code></a> equipped.
+	<ul>
+		<li>Since the <a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> resource is specified in <a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70"><code>resource2</code></a>, this opcode must be used in <a href="../file_formats/ie_formats/eff_v2.htm"><code>V2</code></a> (external) effects.</li>
+	</ul>
+</p>
+
+
+<div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+This opcode is bugged.
+<ul>
+	<li>
+		The internal function it uses to find the item, <code>CGameSprite::FindItemPersonal()</code>, treats the found slot&hyphen;index as a boolean, so it always applies the <a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> unless the <a href="../file_formats/ie_formats/itm_v1.htm"><code>ITM</code></a> is in <a href="../files/ids/bgee/slots.htm#0"><code>SLOT_AMULET</code></a>.
+		<ul>
+			<li>Basically, since all slot indices but <a href="../files/ids/bgee/slots.htm#0"><code>SLOT_AMULET</code></a> are strictly greater than <code>0</code>, the function will almost always return true, making the opcode useless.</li>
+		</ul>
+	</li>
+	<li>Additionally, <code>CGameSprite::FindItemPersonal()</code> doesn't consider <a href="../files/ids/bgee/slots.htm#34"><code>SLOT_MISC19</code></a> (the Magical Weapon slot, used by <a href="#op111">opcode #111</a>) as an "equipped" slot (this is probably intentional though...)</li>
+</ul>
+
+	</div>
 </div>
-
-
-
-
-<div class="note warning">
-  <div>
-    <strong>Warning:</strong> 
-PST: This effect doesn’t exist and always crashes the game.
-
-  </div>
-</div>
-
  </div>
 		<hr />
 
@@ -24358,25 +24375,32 @@ This opcode must be attached to the item itself, and does not work when applied 
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes effects from the resource specified by the <code>resource</code> key, in the style specified by the <code>Type</code> field. Both spell and item resources are considered.
+		<div class="descriptiondata"> 
+
+
+
+
+
+
+Removes effects from the resource specified by the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource"><code>resource</code></a> key, in the style specified by the <code>Type</code> field. Both <a href="../file_formats/ie_formats/spl_v1.htm"><code>SPL</code></a> and <a href="../file_formats/ie_formats/itm_v1.htm"><code>ITM</code></a> resources are considered.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>
 		0 &longrightarrow; Default
 		<ul>
-			<li>Will remove effects applied with any <code>Timing Mode</code></li>
+			<li>Will remove effects applied with any <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC"><code>Timing Mode</code></a></li>
 		</ul>
 	</li>
 	<li>
 		1 &longrightarrow; Equipped effects list only
 		<ul>
-			<li>Will only remove effects applied with <code>Timing Mode 2</code></li>
+			<li>Will only remove effects applied with <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_2"><code>Timing Mode 2</code></a></li>
 		</ul>
 	</li>
 	<li>
 		2 &longrightarrow; Timed effects list only
 		<ul>
-			<li>Will remove effects applied with any <code>Timing Mode</code>, excluding <code>2</code> and <code>9</code></li>
+			<li>Will remove effects applied with any <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC"><code>Timing Mode</code></a>, excluding <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_2"><code>2</code></a> and <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_9"><code>9</code></a></li>
 		</ul>
 	</li>
 </ul>
@@ -24386,7 +24410,39 @@ This opcode must be attached to the item itself, and does not work when applied 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-It always needs to be the first effect for stacking prevention. <code>Timing Mode</code> should be either <code>Instant/Limited(0)</code> with <code>duration=0</code>, or <code>Instant/Permanent(1)</code>.
+<ul>
+	<li>
+		It always needs to be the first effect for stacking prevention.
+		<ul>
+			<li><a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC"><code>Timing Mode</code></a> should be either <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_0"><code>0</code></a> with <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xE"><code>duration</code></a><code>=0</code>, or <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_0xC_1"><code>1</code></a>.</li>
+		</ul>
+	</li>
+	<li>
+		It will only look at effects attached directly to the creature.
+		<ul>
+			<li>
+				Any <a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> file filtered through an <a href="#op177">opcode #177</a>&sol;<a href="#op182">opcode #182</a>&sol;<a href="#op183">opcode #183</a> effect will not be looked at.
+				<ul>
+					<li>Only the <a href="#op177">opcode #177</a>&sol;<a href="#op182">opcode #182</a>&sol;<a href="#op183">opcode #183</a> effect itself will be checked.</li>
+				</ul>
+			</li>
+			<li>Any <a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> file applied by an <a href="#op248">opcode #248</a>&sol;<a href="#op249">opcode #249</a>&sol;<a href="#op272">opcode #272</a> effect will be looked at, as they get attached directly to the corresponding creature.</li>
+		</ul>
+	</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+If an <a href="../file_formats/ie_formats/itm_v1.htm"><code>ITM</code></a> file and a <a href="../file_formats/ie_formats/spl_v1.htm"><code>SPL</code></a> file share the same <code>resref</code> (f.i. <code>"spwi112.itm"</code> , <code>"spwi112.spl"</code>), and the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource"><code>resource</code></a> field of this opcode is set to <code>"spwi112"</code>, then it will remove effects from both resources (the engine doesn't care about the extension when checking the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource"><code>resource</code></a> field).
+<ul>
+	<li>You might want to keep it mind when using this opcode (you can potentially break things&hellip;)</li>
+</ul>
 
   </div>
 </div>
@@ -24397,11 +24453,10 @@ It always needs to be the first effect for stacking prevention. <code>Timing Mod
 <div class="note warning">
   <div>
     <strong>Warning:</strong> 
-Leaving the <code>resource</code> field empty will remove any effect on the creature without a parent resource. Weapon proficiencies, HLA markers, stealth, turn undead (paladin’s panic only) …  Local variable effects are however safe.
+Leaving the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource"><code>resource</code></a> field empty will remove any effect on the creature without a parent resource. Weapon proficiencies, HLA markers, stealth, turn undead (paladin’s panic only) … Local variable effects are however safe.
 
   </div>
 </div>
-
  </div>
 		<hr />
 

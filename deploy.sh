@@ -12,7 +12,7 @@ whoami
 ls
 
 git init
-git config user.name "Travis the automation"
+git config user.name "Travis the automaton"
 git config user.email "travis@travi.s"
 
 git remote add upstream "https://x-access-token:$GITHUB_TOKEN@github.com/Gibberlings3/iesdp.git"

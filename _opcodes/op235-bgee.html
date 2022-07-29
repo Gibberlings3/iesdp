@@ -10,6 +10,8 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
+{% include relurl.html %}
+
 Applies the wing buffet effect centred on the casting creature(s), buffeting the targeted creature(s) at the speed specified by the <code>Speed</code> field, in the direction specified by the <code>Direction</code> field. <code>Speed</code> ranges from <code>0</code> to <code>255</code>.
 <br/>Known values for <code>Direction</code> are:
 <ul>
@@ -20,6 +22,67 @@ Applies the wing buffet effect centred on the casting creature(s), buffeting the
 </ul>
 
 {% capture note %}
+The following animations are hardcoded to be immune to this effect:
+<details>
+	<ul>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#TANARRI' | prepend: relurl }}"><code>TANARRI</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_RED' | prepend: relurl }}"><code>DRAGON_RED</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_BLACK' | prepend: relurl }}"><code>DRAGON_BLACK</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_SILVER' | prepend: relurl }}"><code>DRAGON_SILVER</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_GREEN' | prepend: relurl }}"><code>DRAGON_GREEN</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_AQUA' | prepend: relurl }}"><code>DRAGON_AQUA</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_BLUE' | prepend: relurl }}"><code>DRAGON_BLUE</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_BROWN' | prepend: relurl }}"><code>DRAGON_BROWN</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_MULTICOLOR' | prepend: relurl }}"><code>DRAGON_MULTICOLOR</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DRAGON_PURPLE' | prepend: relurl }}"><code>DRAGON_PURPLE</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DEMOGORGON' | prepend: relurl }}"><code>DEMOGORGON</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#ELEMENTAL_EARTH' | prepend: relurl }}"><code>ELEMENTAL_EARTH</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#SHAMBLING_MOUND' | prepend: relurl }}"><code>SHAMBLING_MOUND</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#ELEMENTAL_FIRE' | prepend: relurl }}"><code>ELEMENTAL_FIRE</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#ELEMENTAL_FIRE_PURPLE' | prepend: relurl }}"><code>ELEMENTAL_FIRE_PURPLE</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#BURNING_MAN' | prepend: relurl }}"><code>BURNING_MAN</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#ELEMENTAL_AIR' | prepend: relurl }}"><code>ELEMENTAL_AIR</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#RAVER' | prepend: relurl }}"><code>RAVER</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#SLAYER' | prepend: relurl }}"><code>SLAYER</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#SOLAR' | prepend: relurl }}"><code>SOLAR</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#DEVA_MONADIC' | prepend: relurl }}"><code>DEVA_MONADIC</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#MELISSAN' | prepend: relurl }}"><code>MELISSAN</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#GIANT_FIRE' | prepend: relurl }}"><code>GIANT_FIRE</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#GIANT_YAGA-SHURA' | prepend: relurl }}"><code>GIANT_YAGA-SHURA</code></a></li>
+		<li><a href="{{ '/files/ids/bgee/animate.htm#GOLEM_ICE' | prepend: relurl }}"><code>GOLEM_ICE</code></a></li>
+	</ul>
+</details>
+{% endcapture %}
+{% include important.html %}
+
+{% capture note %}
+The opcode also has this weird block:
+<details>
+	<pre>
+	if (this->m_sourceRes.startsWith("SP")) {
+		this->m_effectAmount = (100 - pSprite->m_derivedStats.m_nResistMagic) / 100 * (float)this->m_effectAmount;
+		if (this->m_effectAmount == 0) {
+			return 0; // Terminate
+		}
+	}
+	</pre>
+</details>
+<p>
+	It's attempting to dampen the knockback speed with the target's <a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance' | prepend: relurl }}"><code>magic resistance</code></a>, but it fails at casting the first division to a float.<br />
+	If the <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> resref starts with <code>SP</code> (see for instance <code>"spin695.spl"</code> &mdash; Wing Buffet) any positive <a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance' | prepend: relurl }}"><code>magic resistance</code></a> will make the <code>Speed</code> parameter <code>0</code>, causing the opcode to immediately terminate.
+	<details>
+		<video controls width="960" height="600" src="../videos/op235_vs_mr.mp4">
+			<p>
+				Your browser doesn't support <code>HTML5</code> video. Here is a <a href="https://www.gibberlings3.net/forums/topic/35836-bug-tob-weapons-foebane-5-can-drain-undead-staff-of-the-ram-6-can-knock-out-giants/?do=findComment&comment=313455">link to the video</a> instead.
+			</p>
+		</video>
+	</details>
+	Having said that, you can bypass this issue by having the <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> file starting with <code>SP</code> apply a secondary <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> file (for instance via <a href="#op146">opcode #146</a>), and then by having the secondary <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> file apply <a href="#op235">opcode #235</a>. Just make sure the secondary <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> resref does not start with <code>SP</code>.
+</p>
+{% endcapture %}
+{% include bug.html %}
+
+{% capture note %}
 If used on creatures with the "pass-wall" effect applied, creatures can cross points marked as light obstacles on the search map.<br/>
 In EEs, this effect can push creatures through closed (and locked) doors (this does not require the "pass-wall" effect).
 {% endcapture %}
@@ -28,12 +91,6 @@ In EEs, this effect can push creatures through closed (and locked) doors (this d
 
 {% capture note %}
 <code>Direction</code> options <code>1</code> and <code>3</code> "can" be overriden in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files, but default to the ability target/location.
-{% endcapture %}
-
-{% include note.html %}
-
-{% capture note %}
-Some animations are immune to this effect.
 {% endcapture %}
 
 {% include note.html %}

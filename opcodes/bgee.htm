@@ -19477,7 +19477,14 @@ This opcode only works from party-members.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the wing buffet effect centred on the casting creature(s), buffeting the targeted creature(s) at the speed specified by the <code>Speed</code> field, in the direction specified by the <code>Direction</code> field. <code>Speed</code> ranges from <code>0</code> to <code>255</code>.
+		<div class="descriptiondata"> 
+
+
+
+
+
+
+Applies the wing buffet effect centred on the casting creature(s), buffeting the targeted creature(s) at the speed specified by the <code>Speed</code> field, in the direction specified by the <code>Direction</code> field. <code>Speed</code> ranges from <code>0</code> to <code>255</code>.
 <br/>Known values for <code>Direction</code> are:
 <ul>
 	<li>0/1 &longrightarrow; Away from the destination point (specified in EFF file)</li>
@@ -19485,6 +19492,70 @@ This opcode only works from party-members.
 	<li>3 &longrightarrow; Towards the destination point (specified in EFF file)</li>
 	<li>4 &longrightarrow; Towards source</li>
 </ul>
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+The following animations are hardcoded to be immune to this effect:
+<details>
+	<ul>
+		<li><a href="../files/ids/bgee/animate.htm#TANARRI"><code>TANARRI</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_RED"><code>DRAGON_RED</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_BLACK"><code>DRAGON_BLACK</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_SILVER"><code>DRAGON_SILVER</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_GREEN"><code>DRAGON_GREEN</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_AQUA"><code>DRAGON_AQUA</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_BLUE"><code>DRAGON_BLUE</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_BROWN"><code>DRAGON_BROWN</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_MULTICOLOR"><code>DRAGON_MULTICOLOR</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DRAGON_PURPLE"><code>DRAGON_PURPLE</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DEMOGORGON"><code>DEMOGORGON</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#ELEMENTAL_EARTH"><code>ELEMENTAL_EARTH</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#SHAMBLING_MOUND"><code>SHAMBLING_MOUND</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#ELEMENTAL_FIRE"><code>ELEMENTAL_FIRE</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#ELEMENTAL_FIRE_PURPLE"><code>ELEMENTAL_FIRE_PURPLE</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#BURNING_MAN"><code>BURNING_MAN</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#ELEMENTAL_AIR"><code>ELEMENTAL_AIR</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#RAVER"><code>RAVER</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#SLAYER"><code>SLAYER</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#SOLAR"><code>SOLAR</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#DEVA_MONADIC"><code>DEVA_MONADIC</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#MELISSAN"><code>MELISSAN</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#GIANT_FIRE"><code>GIANT_FIRE</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#GIANT_YAGA-SHURA"><code>GIANT_YAGA-SHURA</code></a></li>
+		<li><a href="../files/ids/bgee/animate.htm#GOLEM_ICE"><code>GOLEM_ICE</code></a></li>
+	</ul>
+</details>
+
+  </div>
+</div>
+
+
+
+<div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+The opcode also has this weird block:
+<details>
+	<pre>
+	if (this-&gt;m_sourceRes.startsWith("SP")) {
+		this-&gt;m_effectAmount = (100 - pSprite-&gt;m_derivedStats.m_nResistMagic) / 100 * (float)this-&gt;m_effectAmount;
+		if (this-&gt;m_effectAmount == 0) {
+			return 0; // Terminate
+		}
+	}
+	</pre>
+</details>
+
+	It's attempting to dampen the knockback speed with the target's <a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance"><code>magic resistance</code></a>, but it fails at casting the first division to a float.<br />
+	If the <a href="../file_formats/ie_formats/spl_v1.htm"><code>SPL</code></a> resref starts with <code>SP</code> (see for instance <code>"spin695.spl"</code> &mdash; Wing Buffet) any positive <a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance"><code>magic resistance</code></a> will make the <code>Speed</code> parameter <code>0</code>, causing the opcode to immediately terminate.<br />
+	Having said that, you can bypass this issue by having the <a href="../file_formats/ie_formats/spl_v1.htm"><code>SPL</code></a> file starting with <code>SP</code> apply a secondary <a href="../file_formats/ie_formats/spl_v1.htm"><code>SPL</code></a> file (for instance via <a href="#op146">opcode #146</a>), and then by having the secondary <a href="../file_formats/ie_formats/spl_v1.htm"><code>SPL</code></a> file apply <a href="#op235">opcode #235</a>. Just make sure the secondary <a href="../file_formats/ie_formats/spl_v1.htm"><code>SPL</code></a> resref does not start with <code>SP</code>.
+
+
+	</div>
+</div>
+
 
 
 
@@ -19507,18 +19578,6 @@ In EEs, this effect can push creatures through closed (and locked) doors (this d
 
   </div>
 </div>
-
-
-
-
-<div class="note info">
-  <div>
-    <strong>Note:</strong> 
-Some animations are immune to this effect.
-
-  </div>
-</div>
-
  </div>
 		<hr />
 

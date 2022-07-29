@@ -69,14 +69,7 @@ The opcode also has this weird block:
 </details>
 <p>
 	It's attempting to dampen the knockback speed with the target's <a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance' | prepend: relurl }}"><code>magic resistance</code></a>, but it fails at casting the first division to a float.<br />
-	If the <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> resref starts with <code>SP</code> (see for instance <code>"spin695.spl"</code> &mdash; Wing Buffet) any positive <a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance' | prepend: relurl }}"><code>magic resistance</code></a> will make the <code>Speed</code> parameter <code>0</code>, causing the opcode to immediately terminate.
-	<details>
-		<video controls width="960" height="600" src="../videos/op235_vs_mr.mp4">
-			<p>
-				Your browser doesn't support <code>HTML5</code> video. Here is a <a href="https://www.gibberlings3.net/forums/topic/35836-bug-tob-weapons-foebane-5-can-drain-undead-staff-of-the-ram-6-can-knock-out-giants/?do=findComment&comment=313455">link to the video</a> instead.
-			</p>
-		</video>
-	</details>
+	If the <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> resref starts with <code>SP</code> (see for instance <code>"spin695.spl"</code> &mdash; Wing Buffet) any positive <a href="{{ '/file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_MagicResistance' | prepend: relurl }}"><code>magic resistance</code></a> will make the <code>Speed</code> parameter <code>0</code>, causing the opcode to immediately terminate.<br />
 	Having said that, you can bypass this issue by having the <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> file starting with <code>SP</code> apply a secondary <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> file (for instance via <a href="#op146">opcode #146</a>), and then by having the secondary <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> file apply <a href="#op235">opcode #235</a>. Just make sure the secondary <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a> resref does not start with <code>SP</code>.
 </p>
 {% endcapture %}

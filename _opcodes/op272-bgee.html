@@ -13,24 +13,31 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Applies the <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> specified by the <code>resource</code> key to the targeted creature(s) as specified by the <code>Type</code> field.
+{% include relurl.html %}
+
+Applies the <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> specified by the <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> key to the targeted creature(s) as specified by the <code>Type</code> field.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Apply once per second
 		<ul>
-			<li><code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored – <code>Amount_1</code> needs to be non-zero</li>
+			<li><code>Amount_2</code> and <code>Frequency Multiplier</code> are ignored &mdash; <code>Amount_1</code> needs to be non-zero</li>
 		</ul>
 	</li>
 	<li>1 &longrightarrow; Unknown (see below for further details)</li>
 	<li>2 &longrightarrow; Apply <code>Amount_1</code> times every <code>Frequency Multiplier</code> second(s)</li>
 	<li>3 &longrightarrow; Apply once every <code>'Amount_1' * 'Frequency Multiplier'</code> second(s)</li>
-	<li>4 &longrightarrow; Apply <code>Amount_2</code> times every <code>'Amount_1' * 'Frequency Multiplier'</code> second(s) – This is the only one that must be in external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a> files</li>
+	<li>4 &longrightarrow; Apply <code>Amount_2</code> times every <code>'Amount_1' * 'Frequency Multiplier'</code> second(s) &mdash; This is the only one that must be in external <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> files</li>
 	<li>5+ &longrightarrow; Crash</li>
 </ul>
 
 <p>
-	<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons. Default value is <code>None (no icon)</code>.
+	<code>Icon</code> defines the index from <a href="{{ '/files/2da/2da_bgee/statdesc.htm' | prepend: relurl }}"><code>STATDESC.2DA</code></a> for custom portrait icons. Default value is <code>None (no icon)</code>.
 </p>
+
+{% capture note %}
+<a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> files applied by this opcode can be blocked by <a href="#op101">opcode #101</a>.
+{% endcapture %}
+{% include important.html %}
 
 {% capture note %}
 The timings are relative to the movement rate of the affected creature(s). <a href="#op40">opcode #40</a> (Slow) and <a href="#op78">opcode #78</a> (Disease) doubles the timing rate, effect <a href="#op16">opcode #16</a> (Haste) halves the timing rate.

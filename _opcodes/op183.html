@@ -10,14 +10,36 @@ iwd1: 1
 iwd2: 0
 pst: 0
 ---
-Applies the effect specified by the <code>resource</code> key to the targeted creature(s) when an item of the item type specified by the <code>Type</code> field is equipped.
+{% include relurl.html %}
+
+Applies the <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> file specified by the <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> key to the targeted creature(s) when an <a href="{{ '/file_formats/ie_formats/itm_v1.htm' | prepend: relurl }}"><code>ITM</code></a> of the <a href="{{ '/file_formats/ie_formats/itm_v1.htm#Header_ItemType' | prepend: relurl }}"><code>item type</code></a> specified by the <code>Type</code> field is equipped.
 
 {% capture note %}
-Ammo (i.e., <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_5">Arrows</a></code>, <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_14">Bullets</a></code> and <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_31">Bolts</a></code>) does not work well with this opcode. The Ammo Slots are always "Equipped", even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
-<br/>The offhand has the same issue – even when disabled, it's detected by this opcode as equipped.
-<br/>Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen).
+<a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> files applied by this opcode bypass / ignore <a href="#op101">opcode #101</a>.
 {% endcapture %}
+{% include important.html %}
 
+{% capture note %}
+<ul>
+	<li>
+		Ammo (i.e., <a href="{{ '/file_formats/ie_formats/itm_v1.htm#Header_ItemType_5' | prepend: relurl }}"><code>Arrows</code></a>, <a href="{{ '/file_formats/ie_formats/itm_v1.htm#Header_ItemType_14' | prepend: relurl }}"><code>Bullets</code></a> and <a href="{{ '/file_formats/ie_formats/itm_v1.htm#Header_ItemType_31' | prepend: relurl }}"><code>Bolts</code></a>) does not work well with this opcode
+		<ul>
+			<li>
+				The Ammo Slots (<a href="{{ '/files/ids/bgee/slots.htm#11' | prepend: relurl }}"><code>SLOT_AMMO</code></a>, <a href="{{ '/files/ids/bgee/slots.htm#12' | prepend: relurl }}"><code>SLOT_AMMO1</code></a>, <a href="{{ '/files/ids/bgee/slots.htm#13' | prepend: relurl }}"><code>SLOT_AMMO2</code></a>, <a href="{{ '/files/ids/bgee/slots.htm#14' | prepend: relurl }}"><code>SLOT_AMMO3</code></a>) are always "Equipped", even when they are not in use
+				<ul>
+					<li>
+						In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active
+						<ul>
+							<li>Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen)</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	<li>The offhand (<a href="{{ '/files/ids/bgee/slots.htm#9' | prepend: relurl }}"><code>SLOT_SHIELD</code></a>) has the same issue &mdash; even when disabled, it's detected by this opcode as equipped</li>
+</ul>
+{% endcapture %}
 {% include note.html %}
 
 {% capture note %}

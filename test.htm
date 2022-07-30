@@ -2312,11 +2312,11 @@ Known values for <code>Wake on Damage?</code> are (only in EEs):
 </ul>
 
 <p>
-	<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only). Default value is <code><a href="../files/2da/2da_bgee/statdesc.htm#14">Sleep</a></code>.
+	<code>Icon</code> defines the index from <a href="../files/2da/2da_bgee/statdesc.htm">STATDESC.2DA</a> for custom portrait icons (EE only). Default value is <code><a href="../files/2da/2da_bgee/statdesc.htm#14">Sleep</a></code>. If it is set, also  spell state <code><a href="../files/ids/bgee/splstate.htm#249">PRONE</a></code> will be set. Otherwise the creature will be moved to the backlist and become <a href="https://www.gibberlings3.net/forums/topic/35548-ee-additional-op39-info/" target="_blank" rel="noopener">untargettable by most scripts</a>.
 </p>
 
 <p>
-	This opcode sets the <a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a> flag.
+	This opcode sets the <code><a href="../files/ids/bgee/state.htm#BIT0">STATE_SLEEPING</a></code> and <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT5">STATE_HELPLESS</a></code> flag bits.
 </p>
 
 
@@ -2324,8 +2324,8 @@ Known values for <code>Wake on Damage?</code> are (only in EEs):
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-<code>Timing Mode</code>s <code>1/4/7</code> will set the <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT5">STATE_HELPLESS</a></code> flag. In such a case, this flag cannot be removed in-game.<br />
-Moreover, they will also set <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT0">STATE_SLEEPING</a></code>, which works as the <code>Wake on Hit</code> option. It’s just not usable because of the irremovable <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT5">STATE_HELPLESS</a></code>.
+In case of <code>Timing Mode</code>s <code>1/4/7</code> the bits cannot be removed in-game.<br />
+Moreover, the <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT0">STATE_SLEEPING</a></code> works as the <code>Wake on Hit</code> option. It’s just not usable because of the unremovable <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x20_BIT5">STATE_HELPLESS</a></code>.
 
   </div>
 </div>

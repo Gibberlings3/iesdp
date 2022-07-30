@@ -7273,18 +7273,25 @@ A couple of examples about <code>Multiplicative Stacking Percentage Modifier</co
     <span class="parameterdata">IDS File</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Applies the eff file specified by the resource key to the targeted creature(s), if the targeted creature(s) match the value specified by the <code>IDS Entry</code> field, in the specified <code>IDS File</code>.
+  <div class="descriptiondata"> 
+
+
+
+
+
+
+Applies the <a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> file specified by the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource"><code>resource</code></a> key to the targeted creature(s), if the targeted creature(s) match the value specified by the <code>IDS Entry</code> field, in the specified <code>IDS File</code>.
 <br/>NB. When using an eff to alter thac0/dmg bonus, set <code>param1 = 0</code>, and <code>param2 = 2</code>.
 <br/>Known values for <code>IDS File</code> are:
 <ul>
-	<li>2 &longrightarrow; <a href="../files/ids/bgee/ea.htm">EA.IDS</a></li>
-	<li>3 &longrightarrow; <a href="../files/ids/bgee/general.htm">GENERAL.IDS</a></li>
-	<li>4 &longrightarrow; <a href="../files/ids/bgee/race.htm">RACE.IDS</a></li>
-	<li>5 &longrightarrow; <a href="../files/ids/bgee/class.htm">CLASS.IDS</a></li>
-	<li>6 &longrightarrow; <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
-	<li>7 &longrightarrow; <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
-	<li>8 &longrightarrow; <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
-	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+	<li>2 &longrightarrow; <a href="../files/ids/bgee/ea.htm"><code>EA.IDS</code></a></li>
+	<li>3 &longrightarrow; <a href="../files/ids/bgee/general.htm"><code>GENERAL.IDS</code></a></li>
+	<li>4 &longrightarrow; <a href="../files/ids/bgee/race.htm"><code>RACE.IDS</code></a></li>
+	<li>5 &longrightarrow; <a href="../files/ids/bgee/class.htm"><code>CLASS.IDS</code></a></li>
+	<li>6 &longrightarrow; <a href="../files/ids/bgee/specific.htm"><code>SPECIFIC.IDS</code></a></li>
+	<li>7 &longrightarrow; <a href="../files/ids/bgee/gender.htm"><code>GENDER.IDS</code></a></li>
+	<li>8 &longrightarrow; <a href="../files/ids/bgee/align.htm"><code>ALIGN.IDS</code></a></li>
+	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm"><code>KIT.IDS</code></a> (EE only)</li>
 </ul>
 
 
@@ -7300,6 +7307,14 @@ IWD2: there was a note to not use this effect in older IESDP.
 </div>
 
 
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> files applied by this opcode can be blocked by <a href="#op101">opcode #101</a>.
+
+  </div>
+</div>
  </div><br />
   <hr />
   <br />
@@ -7445,16 +7460,48 @@ PST: This effect doesn’t exist and always crashes the game.
     <span class="parameterdata">Type</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Applies the effect specified by the <code>resource</code> key to the targeted creature(s) when an item of the item type specified by the <code>Type</code> field is equipped.
+  <div class="descriptiondata"> 
+
+
+
+
+
+
+Applies the <a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> file specified by the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource"><code>resource</code></a> key to the targeted creature(s) when an <a href="../file_formats/ie_formats/itm_v1.htm"><code>ITM</code></a> of the <a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType"><code>item type</code></a> specified by the <code>Type</code> field is equipped.
+
+
+<div class="note important">
+  <div>
+    <strong>Important:</strong> 
+<a href="../file_formats/ie_formats/eff_v2.htm"><code>EFF</code></a> files applied by this opcode bypass / ignore <a href="#op101">opcode #101</a>.
+
+  </div>
+</div>
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-Ammo (i.e., <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_5">Arrows</a></code>, <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_14">Bullets</a></code> and <code><a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_31">Bolts</a></code>) does not work well with this opcode. The Ammo Slots are always “Equipped”, even when they are not in use. In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active.
-<br />The offhand has the same issue – even when disabled, it’s detected by this opcode as equipped.
-<br />Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen).
+<ul>
+	<li>
+		Ammo (i.e., <a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_5"><code>Arrows</code></a>, <a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_14"><code>Bullets</code></a> and <a href="../file_formats/ie_formats/itm_v1.htm#Header_ItemType_31"><code>Bolts</code></a>) does not work well with this opcode
+		<ul>
+			<li>
+				The Ammo Slots (<a href="../files/ids/bgee/slots.htm#11"><code>SLOT_AMMO</code></a>, <a href="../files/ids/bgee/slots.htm#12"><code>SLOT_AMMO1</code></a>, <a href="../files/ids/bgee/slots.htm#13"><code>SLOT_AMMO2</code></a>, <a href="../files/ids/bgee/slots.htm#14"><code>SLOT_AMMO3</code></a>) are always "Equipped", even when they are not in use
+				<ul>
+					<li>
+						In other words: they trigger <a href="#op183">opcode #183</a> just by being in a quiver slot, regardless of whether the correct launcher is equipped or even active
+						<ul>
+							<li>Having said that, this opcode currently allows detecting a launcher using its automated ammo (such as Shortbow of Gesen)</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	<li>The offhand (<a href="../files/ids/bgee/slots.htm#9"><code>SLOT_SHIELD</code></a>) has the same issue &mdash; even when disabled, it's detected by this opcode as equipped</li>
+</ul>
 
   </div>
 </div>

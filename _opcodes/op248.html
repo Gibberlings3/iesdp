@@ -10,9 +10,16 @@ iwd1: 0
 iwd2: 0
 pst: 0
 ---
-Sets the effect specified by the <code>resource</code> key as a melee effect.
+{% include relurl.html %}
+
+Sets the effect specified by the <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> key as a melee effect.
 <br/>The specified effect will be applied to the target of each successful melee attack.
-<br/>The <code>resource</code> key references a <a href="../file_formats/ie_formats/eff_v2.htm">.EFF</a> not a <a href="../file_formats/ie_formats/spl_v1.htm">.SPL</a>.
+<br/>The <a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> key references a <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> not a <a href="{{ '/file_formats/ie_formats/spl_v1.htm' | prepend: relurl }}"><code>SPL</code></a>.
+
+{% capture note %}
+<a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> files applied by this opcode can be blocked by <a href="#op101">opcode #101</a>.
+{% endcapture %}
+{% include important.html %}
 
 {% capture note %}
 At least in EEs, setting <code>parameter2</code> to <code>4</code> (i.e., <code>BIT2</code>) results in restricting this effect to fists only. If you leave it at <code>0</code>, then all melee weapons are eligible (including fists).

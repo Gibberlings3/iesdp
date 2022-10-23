@@ -1,0 +1,28 @@
+---
+n: 383
+name: "Hit Point Transfer"
+param1: "Drain Amount"
+param2: "Drain Type"
+bg1: 0
+bg2: 0
+bgee: 0
+iwd1: 0
+iwd2: 0
+pst: 0
+pstee: 1
+---
+Set the Dice Throws and Size to the random drain amount you wish the effect to do (if you want no random amount involved, leave it at 0d0). If you wish to do a fixed amount of draining as well, or by itself, set the <code>Drain Amount</code> parameter to the amount of health to drain (if you want no fixed amount of HP drained, leave the value at 0). The <code>Drain Type</code> sets who receives and who delivers the hit points.
+
+<br/>Known values for <code>Drain Type</code> are:
+<ul>
+  <li>0 &longrightarrow; The target receives hit points from the caster.</li>
+  <li>1 &longrightarrow; The caster receives hit points from the target.</li>
+  <li>2 &longrightarrow; The target and caster hit points are swapped. This works even if both are at full health.</li>
+  <li>3 &longrightarrow; Same as 0, but amount is not capped at the target's max. HP. This works even if both are at full health. No damage animation is shown.</li>
+</ul>
+
+{% capture note %}
+This opcode mirrors functionality of <a href="{{ '/opcodes/pst.htm#op192' | prepend: relurl }}">PST opcode 192</a>.
+{% endcapture %}
+
+{% include note.html %}

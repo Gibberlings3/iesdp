@@ -1,0 +1,36 @@
+---
+n: 373
+name: "Play BAM file"
+param1: "RGB"
+param2: "Method"
+bg1: 0
+bg2: 0
+bgee: 0
+iwd1: 0
+iwd2: 0
+pst: 0
+pstee: 1
+---
+Plays back the specified BAM resource according to the specified <code>Method</code>.
+
+<br/>Known values for <code>Method</code> are:
+<ul>
+  <li>BIT0 &longrightarrow; Random placement (within a fixed radius around the target)</li>
+  <li>BIT12 &longrightarrow; Sticky</li>
+  <li>BIT16 &longrightarrow; Repeated playback (only effective if BIT17 is also set)</li>
+  <li>BIT17 &longrightarrow; Play in foreground</li>
+  <li>BIT20 &longrightarrow; Fade out after duration (fade duration defined by DiceSize, in seconds.) Initial transparency is defined by the red component of the <code>RGB</code> field. Non-zero green or blue values cancel the fade effect. Effect changes if used together with BIT21.</li>
+  <li>BIT21 &longrightarrow; Blended, if used together with BIT20.</li>
+</ul>
+
+{% capture note %}
+There are four effects doing exactly the same, this is probably to have resistances against opcode.
+{% endcapture %}
+
+{% include note.html %}
+
+{% capture note %}
+This opcode mirrors functionality of <a href="{{ '/opcodes/pst.htm#op191' | prepend: relurl }}">PST opcode 191</a>.
+{% endcapture %}
+
+{% include note.html %}

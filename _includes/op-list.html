@@ -11,7 +11,7 @@
 		{% assign sisters = site.opcodes | where: 'n', {{opcode.n}} %}
 		{% assign prefix = true %}
 		{% for sis in sisters %}
-			{% if sis.bg1 == opcode.bg1 and sis.bg2 == opcode.bg2 and sis.iwd1 == opcode.iwd1 and sis.iwd2 == opcode.iwd2 and sis.pst == opcode.pst and sis.bgee == opcode.bgee %}
+			{% if sis.bg1 == opcode.bg1 and sis.bg2 == opcode.bg2 and sis.iwd1 == opcode.iwd1 and sis.iwd2 == opcode.iwd2 and sis.pst == opcode.pst and sis.bgee == opcode.bgee and sis.pstee == opcode.pstee %}
 				{% continue %}
 			{% endif %}
 			{% if prefix == true %}
@@ -30,6 +30,8 @@
 				<a class="opvariant" href="iwd2.htm#op{{opcode.n}}">IWD2</a>
 			{% elsif sis.pst == 1 %}
 				<a class="opvariant" href="pst.htm#op{{opcode.n}}">PST</a>
+			{% elsif sis.pstee == 1 %}
+				<a class="opvariant" href="pstee.htm#op{{opcode.n}}">PSTEE</a>
 			{% endif %}
 		{% endfor %}
 		<br />

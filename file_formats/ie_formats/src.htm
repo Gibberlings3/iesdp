@@ -69,18 +69,19 @@
     <div class="title_main">SRC file format</div>
     <br />
     <div class="fileHeader">Applies to:</div>
-    <div class="indent1">PST</div>
+    <div class="indent1">PST, PSTEE</div>
     <br />
     
     <div class="fileHeader">General Description</div>
     <div class="indent1">
-      This file format contain strrefs for out-of-dialog text (e.g text displayed over the chracter on the game screen). Text is usually displayed over the creatures head, and the associated sound is played.<br />
+      This file format contains strrefs for out-of-dialog text (e.g text displayed over the character on the game screen). Text is usually displayed over the creature's head, and the associated sound is played.<br />
     </div>
     <br />
     
     <div class="fileHeader">Detailed Description</div>
     <div class="indent1">
-      SRC files have a very simple header, simply containing the count of strref entries. Each strref entry is eight bytes and consists of a strref and an unknown dword (always set to 1).<br />
+      SRC files have a very simple header, only containing the count of strref entries. Each strref entry is eight bytes and consists of a strref and the relative weight of the entry (usually set to 1).<br />
+      The weight defines how often an entry is picked in relation to the other entries. Higher weights increase the probability for the entry to be picked more often by the engine. It can be approximated by this formula: <code>probability = weight * 100 / sum_of_all_weights</code>.</br />
       <br />
       Overall structure<br />
       <div class="indent1">
@@ -138,12 +139,12 @@
           <tr>
             <td>0x0004</td>
             <td>4 (dword)</td>
-            <td>Strref (entry #0)</td>
+            <td>Strref</td>
           </tr>
           <tr>
             <td>0x0008</td>
             <td>4 (dword)</td>
-            <td><div class="unknown">Unknown</div></td>
+            <td>Weight</td>
           </tr>
         </tbody>
       </table>

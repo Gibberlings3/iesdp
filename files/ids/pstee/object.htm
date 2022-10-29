@@ -1,0 +1,570 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<!--  <meta charset="utf-8"> -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PSTEE Identifiers : object.ids</title>
+  <meta name="description" content="The IESDP (Infinity Engine Structures Description Project) is an effort to research the workings of the Bioware Infinity Engine(R), and act as a collective resource for those interested in such workings.
+">
+
+  
+
+
+
+
+
+  <link rel="stylesheet" href="../../../css/main.css">
+
+<!--
+  <link rel="canonical" href="https://gibberlings3.github.io/iesdp/files/ids/pstee/object.htm">
+  <link rel="alternate" type="application/rss+xml" title="IESDP" href="https://gibberlings3.github.io/iesdp/feed.xml">
+-->
+</head>
+
+
+<body>
+
+<header class="site-header">
+
+
+
+
+
+
+
+
+    <hr />
+    <div id="buttonboxtop">
+      <div id="buttonstriptop">
+        <a href="../../../index.htm">Index</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/2da/index.htm">2DA</a> &nbsp;&bull;&nbsp;
+        <a href="../../../opcodes/index.htm">Effects</a> &nbsp;&bull;&nbsp;
+        <a href="../../../file_formats/index.htm">File Formats</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/actions/index.htm">Actions</a> &nbsp;&bull;&nbsp;
+        <a href="../../../files/ids/index.htm">Identifiers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../scripting/triggers/index.htm">Triggers</a> &nbsp;&bull;&nbsp;
+        <a href="../../../appendices/index.htm">Appendices</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/index.htm">Site Info</a> &nbsp;&bull;&nbsp;
+        <a href="../../../site_info/legal.htm">Legal</a> &nbsp;&bull;&nbsp;
+        <a href="https://www.gibberlings3.net/forums/forum/54-iesdp-updates-and-info/" target="_blank">Forum</a>
+      </div>
+    </div>
+    <hr />
+    <div id="logo">
+      <a href="../../../main.htm">
+        <img src="../../../images/iesdp_logo.gif" alt="IESDP Logo" width="120" height="120" />
+      </a>
+    </div>
+
+</header>
+
+
+<div id="nonFooter">
+  <div id="content">
+
+    <div class="title_main"> object.ids </div>
+<br />
+
+Objects can be split broadly into three categories; static objects, marked objects and object specifiers. Static objects (e.g. <code><a href="#Player1">Player1</a></code>, <code><a href="#1">Myself</a></code>) are always bound (and in fact, they always return the same creature). Marked objects (e.g. <code><a href="#18">LastSeenBy</a></code>, <code><a href="#10">LastAttackerOf</a></code>) are almost always bound. Object specifiers (e.g. <code>[<a href="../pstee/ea.htm#255">ENEMY</a>.0.0.<a href="../pstee/class.htm#1">MAGE</a>]</code> are not bound &mdash; they are checked every time they are referenced. Objects listed in <code><a href="../pstee/object.htm">object.ids</a></code> are marked objects and are not saved over game sessions.
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+<ul>
+  <li><code><a href="#60">Group</a></code> objects are determined by the <code><a href="../../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x274">specifics</a></code> value set in the creature file.</li>
+  <li><code><a href="#14">Nearest()</a></code> identifiers cascade outwards, i.e. if there are only three valid creatures, <code><a href="#FourthNearest">FourthNearest()</a></code> and above will return the third nearest creature (rather than false).</li>
+</ul>
+
+  </div>
+</div>
+
+
+<br />
+<br />   
+
+IDS V1.0<br />
+<br />
+
+<div class="idsHeader"><a name="Nothing">0 Nothing</a></div>
+<br />
+
+<div class="idsHeader"><a name="1">1 Myself</a></div>
+<div class="indent1">
+  Returns the active creature.
+</div>
+<br />
+
+<div class="idsHeader"><a name="LeaderOf">2 LeaderOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="GroupOf">3 GroupOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="4">4 WeakestOf</a></div>
+<div class="indent1">
+  Returns the weakest player character (in the party).
+</div>
+<br />
+
+<div class="idsHeader"><a name="5">5 StrongestOf</a></div>
+<div class="indent1">
+  Returns the strongest player character (in the party).
+</div>
+<br />
+
+<div class="idsHeader"><a name="6">6 MostDamagedOf</a></div>
+<div class="indent1">
+  Returns the most damaged player character (in the party).
+</div>
+<br />
+
+<div class="idsHeader"><a name="7">7 LeastDamagedOf</a></div>
+<div class="indent1">
+  Returns the least damaged player character (in the party).
+</div>
+<br />
+
+<div class="idsHeader"><a name="ProtectedBy">8 ProtectedBy</a></div>
+<br />
+
+<div class="idsHeader"><a name="ProtectorOf">9 ProtectorOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="10">10 LastAttackerOf</a></div>
+<div class="indent1">
+  Returns the creature that last inflicted physical damage on the active creature.
+</div>
+<br />
+
+<div class="idsHeader"><a name="LastTargetedBy">11 LastTargetedBy</a></div>
+<br />
+
+<div class="idsHeader"><a name="12">12 NearestEnemyOf</a></div>
+<div class="indent1">
+  Returns the nearest creature of opposite allegiance.
+</div>
+<br />
+
+<div class="idsHeader"><a name="LastCommandedBy">13 LastCommandedBy</a></div>
+<br />
+
+<div class="idsHeader"><a name="14">14 Nearest</a></div>
+<div class="indent1">
+  Returns the nearest visible creature &mdash; usually the active creature.
+</div>
+<br />
+
+<div class="idsHeader"><a name="LastHitter">15 LastHitter</a></div>
+<br />
+
+<div class="idsHeader"><a name="LastHelp">16 LastHelp</a></div>
+<br />
+
+<div class="idsHeader"><a name="17">17 LastTrigger</a></div>
+<div class="indent1">
+  Returns the last creature that activated the active trigger region.
+</div>
+<br />
+
+<div class="idsHeader"><a name="18">18 LastSeenBy</a></div>
+<div class="indent1">
+  Set by <code><a href="../../../scripting/triggers/psteetriggers.htm#0x401C">See()</a></code> and <code><a href="../../../scripting/triggers/psteetriggers.htm#0x4074">Detect()</a></code>, not by <code><a href="../../../scripting/triggers/psteetriggers.htm#0x400D">Exists()</a></code> or <code><a href="../../../scripting/triggers/psteetriggers.htm#0x4018">Range()</a></code>.
+</div>
+<br />
+
+<div class="idsHeader"><a name="19">19 LastTalkedToBy</a></div>
+<div class="indent1">
+  Returns the last creature that has been targeted by <code><a href="../../../scripting/actions/psteeactions.htm#137">StartDialogue()</a></code> or similar actions.
+</div>
+<br />
+
+<div class="idsHeader"><a name="20">20 LastHeardBy</a></div>
+<div class="indent1">
+  Returns the last creature that triggered a <code><a href="../../../scripting/actions/psteeactions.htm#17">Help()</a></code> or <code><a href="../../../scripting/actions/psteeactions.htm#106">Shout()</a></code> action.
+</div>
+<br />
+
+<div class="idsHeader"><a name="Player1">21 Player1</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player2">22 Player2</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player3">23 Player3</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player4">24 Player4</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player5">25 Player5</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player6">26 Player6</a></div>
+<br />
+
+<div class="idsHeader"><a name="27">27 Protagonist</a></div>
+<div class="indent1">
+  Synonymous with <code><a href="#Player1">Player1</a></code>.
+</div>
+<br />
+
+<div class="idsHeader"><a name="28">28 StrongestOfMale</a></div>
+<div class="indent1">
+  Returns the strongest male player character (in the party).
+</div>
+<br />
+
+<div class="idsHeader"><a name="SecondNearestEnemyOf">29 SecondNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdNearestEnemyOf">30 ThirdNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestEnemyOf">31 FourthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestEnemyOf">32 FifthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestEnemyOf">33 SixthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestEnemyOf">34 SeventhNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestEnemyOf">35 EighthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestEnemyOf">36 NinthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestEnemyOf">37 TenthNearestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SecondNearest">38 SecondNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdNearest">39 ThirdNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearest">40 FourthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearest">41 FifthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearest">42 SixthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearest">43 SeventhNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearest">44 EighthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearest">45 NinthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearest">46 TenthNearest</a></div>
+<br />
+
+<div class="idsHeader"><a name="47">47 WorstAC</a></div>
+<div class="indent1">
+  Returns the player character (in the party) with the highest AC.
+</div>
+<br />
+
+<div class="idsHeader"><a name="48">48 BestAC</a></div>
+<div class="indent1">
+  Returns the player character (in the party) with the lowest AC.
+</div>
+<br />
+
+<div class="idsHeader"><a name="49">49 LastSummonerOf</a></div>
+<div class="indent1">
+  Returns the character who summoned the active creature.
+</div>
+<br />
+
+<div class="idsHeader"><a name="50">50 NearestEnemyOfType</a></div>
+<div class="indent1">
+  It auto-populates the <code><a href="../pstee/ea.htm">EA</a></code> field of the object selector and immediately evaluates it, so it's useless to define the <code><a href="../pstee/ea.htm">EA</a></code> manually.
+</div>
+<br />
+
+<div class="idsHeader"><a name="SecondNearestEnemyOfType">51 SecondNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdNearestEnemyOfType">52 ThirdNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestEnemyOfType">53 FourthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestEnemyOfType">54 FifthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestEnemyOfType">55 SixthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestEnemyOfType">56 SeventhNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="EigthNearestEnemyOfType">57 EigthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestEnemyOfType">57 EighthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestEnemyOfType">58 NinthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestEnemyOfType">59 TenthNearestEnemyOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="60">60 NearestMyGroupOfType</a></div>
+<div class="indent1">
+  It auto-populates the <code><a href="../pstee/specific.htm">SPECIFIC</a></code> field of the object selector and immediately evaluates it, so it's useless to define the <code><a href="../pstee/specific.htm">SPECIFIC</a></code> manually.
+</div>
+<br />
+
+<div class="idsHeader"><a name="SecondNearestMyGroupOfType">61 SecondNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdNearestMyGroupOfType">62 ThirdNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestMyGroupOfType">63 FourthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestMyGroupOfType">64 FifthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestMyGroupOfType">65 SixthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestMyGroupOfType">66 SeventhNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="EigthNearestMyGroupOfType">67 EigthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestMyGroupOfType">67 EighthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestMyGroupOfType">68 NinthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestMyGroupOfType">69 TenthNearestMyGroupOfType</a></div>
+<br />
+
+<div class="idsHeader"><a name="70">70 Player1Fill</a></div>
+<div class="indent1">
+  Returns the player in the first portrait slot.
+</div>
+<br />
+
+<div class="idsHeader"><a name="Player2Fill">71 Player2Fill</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player3Fill">72 Player3Fill</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player4Fill">73 Player4Fill</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player5Fill">74 Player5Fill</a></div>
+<br />
+
+<div class="idsHeader"><a name="Player6Fill">75 Player6Fill</a></div>
+<br />
+
+<div class="idsHeader"><a name="76">76 NearestDoor</a></div>
+<div class="indent1">
+  Returns the nearest closed door (does not detect secret doors, or locked doors).
+</div>
+<br />
+
+<div class="idsHeader"><a name="SecondNearestDoor">77 SecondNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdNearestDoor">78 ThirdNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestDoor">79 FourthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestDoor">80 FifthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestDoor">81 SixthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestDoor">82 SeventhNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestDoor">83 EighthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestDoor">84 NinthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestDoor">85 TenthNearestDoor</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot1">86 PartySlot1</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot2">87 PartySlot2</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot3">88 PartySlot3</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot4">89 PartySlot4</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot5">90 PartySlot5</a></div>
+<br />
+
+<div class="idsHeader"><a name="PartySlot6">91 PartySlot6</a></div>
+<br />
+
+<div class="idsHeader"><a name="92">92 Familiar</a></div>
+<div class="indent1">
+  Returns the familiar creature if present.
+</div>
+<br />
+
+<div class="idsHeader"><a name="93">93 FamiliarSummoner</a></div>
+<div class="indent1">
+  Returns the summoner of the current familiar.
+</div>
+<br />
+
+<div class="idsHeader"><a name="LastKilled">94 LastKilled</a></div>
+<br />
+
+<div class="idsHeader"><a name="95">95 NearestAllyOf</a></div>
+<div class="indent1">
+  Returns the nearest creature of same allegiance.
+</div>
+<br />
+
+<div class="idsHeader"><a name="SecondNearestAllyOf">96 SecondNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdNearestAllyOf">97 ThirdNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthNearestAllyOf">98 FourthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthNearestAllyOf">99 FifthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthNearestAllyOf">100 SixthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhNearestAllyOf">101 SeventhNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthNearestAllyOf">102 EighthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthNearestAllyOf">103 NinthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthNearestAllyOf">104 TenthNearestAllyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="105">105 FarthestEnemyOf</a></div>
+<div class="indent1">
+  Returns the farthest enemy within visual range of the active creature.
+</div>
+<br />
+
+<div class="idsHeader"><a name="SecondFarthestEnemyOf">106 SecondFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="ThirdFarthestEnemyOf">107 ThirdFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FourthFarthestEnemyOf">108 FourthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="FifthFarthestEnemyOf">109 FifthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SixthFarthestEnemyOf">110 SixthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="SeventhFarthestEnemyOf">111 SeventhFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="EighthFarthestEnemyOf">112 EighthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="NinthFarthestEnemyOf">113 NinthFarthestEnemyOf</a></div>
+<br />
+
+<div class="idsHeader"><a name="TenthFarthestEnemyOf">114 TenthFarthestEnemyOf</a></div>
+<br />
+<a href="#" class="go-up">
+  &nbsp;
+</a>
+
+
+  </div>
+</div>
+
+<script>
+window.addEventListener("scroll", function(event) {
+  var top = window.pageYOffset || document.documentElement.scrollTop;
+  var arrow = document.getElementsByClassName("go-up")[0];
+  if (top > 100) {
+    arrow.style.visibility = "visible";
+  } else {
+    arrow.style.visibility = "hidden";
+  }
+});
+</script>
+
+<footer class="site-footer">
+  <hr />
+  <div id="footer">
+
+    <div class="">
+      <a class="gh-icon-container" href="https://github.com/gibberlings3/iesdp/">
+  <span class="icon icon--github"><svg viewBox="0 0 16 16"><path d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span>
+</a>
+
+      <a href="https://github.com/gibberlings3/iesdp//blob/master/files/ids/pstee/object.htm">Edit this page</a>
+    </div>
+
+    <div class="">
+      <form method="get" action="https://www.google.com/search">
+        <div style="margin: 0px; padding: 0px; text-align: center">
+          <input type="hidden" name="ie" value="UTF-8" />
+          <input type="hidden" name="oe" value="UTF-8" />
+          <input class="form_text" type="text" name="q" size="30" maxlength="255" value="" />
+          <input class="form_button" type="submit" name="btnG" value="Search" />
+          <input type="hidden" name="domains" value="https://gibberlings3.github.io/iesdp" />
+          <input type="hidden" name="sitesearch" value="https://gibberlings3.github.io/iesdp" />
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <hr />
+</footer>
+
+
+</body>
+</html>

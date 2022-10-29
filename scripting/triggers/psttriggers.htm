@@ -21,7 +21,7 @@ title: "PST Script Triggers"
     Returns true if the specified object has left the party in the last script round. This trigger is only sent to player characters.<br />
     <br />
     <strong>0x0006 ReceivedOrder(O:Object*,I:Order ID*)</strong><br />
-    NT<br />
+    NT This trigger is used in conjunction with the GiveOrder() action, and works in a similar way to the Heard() trigger. Only one creature at a time responds to an Order, and creatures do not detect their own orders. The creature must be in visual range for this trigger to work.<br />
     <br />
     <strong>0x0007 Said(O:Object*,I:Dialog ID*)</strong><br />
     NT<br />
@@ -95,12 +95,6 @@ title: "PST Script Triggers"
     <br />
     <strong>0x401E Time(I:Time*Time)</strong><br />
     Returns true only if the period of day matches the period in the 2nd parameter (taken from Time.ids). Hours are offset by 30 minutes, e.g. Time(1) is true between 00:30 and 01:29.<br />
-    <br />
-    <strong>0x4068 TimeGT(I:Time*Time)</strong><br />
-    Returns true only if the current time is greater than that specified. Hours are offset by 30 minutes, e.g. TimeGT(1) is true between 01:30 and 02:29.<br />
-    <br />
-    <strong>0x4069 TimeLT(I:Time*Time)</strong><br />
-    Returns true only if the current time is less than that specified. Hours are offset by 30 minutes, e.g. TimeLT(1) is true between 23:30 and 00:29.<br />
     <br />
     <strong>0x401F TimeOfDay(I:Time Of Day*TimeODay)</strong><br />
     As above but less specific and uses TimeODay.ids.<br />
@@ -316,11 +310,17 @@ title: "PST Script Triggers"
     <strong>0x4062 InteractingWith(O:Object*)</strong><br />
     NT Returns true only if the active CRE is interacting (dialogue?) with the specified object.<br />
     <br />
+    <strong>0x4068 TimeGT(I:Time*Time)</strong><br />
+    Returns true only if the current time is greater than that specified. Hours are offset by 30 minutes, e.g. TimeGT(1) is true between 01:30 and 02:29.<br />
+    <br />
+    <strong>0x4069 TimeLT(I:Time*Time)</strong><br />
+    Returns true only if the current time is less than that specified. Hours are offset by 30 minutes, e.g. TimeLT(1) is true between 23:30 and 00:29.<br />
+    <br />
     <strong>0x4075 NearLocation(O:Object*,P:Point*,I:Range*)</strong><br />
-    NT<br />
+    NT Returns true if the specified object is within the range of the specified point. Works similar to Range(), but with a point instead of an object.<br />
     <br />
     <strong>0x4076 NearSavedLocation(I:Range*)</strong><br />
-    NT<br />
+    NT Returns true if the active creature is within the range of its home location.<br />
     <br />
     <strong>0x4077 InView(O:Object*,I:Eyesight*)</strong><br />
     NT<br />
@@ -338,16 +338,16 @@ title: "PST Script Triggers"
     NT<br />
     <br />
     <strong>0x407c TimerActive(I:ID*)</strong><br />
-    NT<br />
+    NT Returns true only if the local timer with the specified ID has not yet expired.<br />
     <br />
     <strong>0x407d PCCanSeePoint(P:Point*)</strong><br />
     NT<br />
     <br />
     <strong>0x407e CreatureInArea(S:AreaName*)</strong><br />
-    NT<br />
+    NT Returns true only if the active CRE is in the area specified.<br />
     <br />
     <strong>0x407f BitCheck(S:Name*,S:Area*,I:Bit*Bits)</strong><br />
-    NT<br />
+    NT Returns true if at least one bit from the given variable is in common with the bits defined in the third parameter.<br />
     <br />
     <strong>0x4080 GlobalBAND(S:Name*,S:Area*,I:Value*)</strong><br />
     NT<br />
@@ -407,10 +407,10 @@ title: "PST Script Triggers"
     NT<br />
     <br />
     <strong>0x4093 NearbyDialog(S:DialogFile*)</strong><br />
-    NT<br />
+    NT Returns true only if a creature with the specified dialog file is within visual range of the active CRE.<br />
     <br />
-    <strong>0x4094 Vacant()</strong><br />
-    NT<br />
+    <strong>0x0094 Vacant()</strong><br />
+    NT Returns true only if the current area is a non-master area and is about to be unloaded because no player characters were present in the last script round.<br />
     <br />
     <strong>0x4095 Xor(S:Name*,S:Area*,I:Value*)</strong><br />
     NT<br />
@@ -428,22 +428,22 @@ title: "PST Script Triggers"
     NT<br />
     <br />
     <strong>0x409a Faction(O:Object*,I:Value*Faction)</strong><br />
-    NT<br />
+    NT Returns true only if the Faction of the specified object is the same as that specified by the 2nd parameter. <br />
     <br />
     <strong>0x409b Team(O:Object*,I:Value*Team)</strong><br />
-    NT<br />
+    NT Returns true only if the Team of the specified object is the same as that specified by the 2nd parameter.<br />
     <br />
     <strong>0x409c StuffGlobalRandom(S:Name*,S:Area*,I:Range*)</strong><br />
-    NT<br />
+    NT This trigger acts as a hybrid action/trigger. It generates a random integer between [0, 'Range'] inclusive, and sets the variable 'Name' under the given 'Scope'. This trigger always returns true.<br />
     <br />
-    <strong>0x409d HarmlessOpened(O:Object*)</strong><br />
-    NT<br />
+    <strong>0x009d HarmlessOpened(O:Object*)</strong><br />
+    NT Only for container and door scripts. Returns true only if the specified object opened the container or door in the last script round, given there was no trap active.<br />
     <br />
-    <strong>0x409e HarmlessClosed(O:Object*)</strong><br />
-    NT<br />
+    <strong>0x009e HarmlessClosed(O:Object*)</strong><br />
+    NT Only for door scripts. Returns true only if the specified object closed the door in the last script round, given there was no trap active.<br />
     <br />
-    <strong>0x409f HarmlessEntered(O:Object*)</strong><br />
-    NT<br />
+    <strong>0x009f HarmlessEntered(O:Object*)</strong><br />
+    NT Only for trigger regions. Returns true only if the specified object entered the region in the last script round, given there was no trap active.<br />
     <br />
     <strong>0x40a0 CalledByName(O:Object*,S:Scriptname*)</strong><br />
     NT<br />
@@ -457,29 +457,29 @@ title: "PST Script Triggers"
     <strong>0x40a3 InternalGT(O:Object*,I:Index*Internal,I:Value*)</strong><br />
     NT<br />
     <br />
-    <strong>0x40a4 NullDialog(O:Object*)</strong><br />
-    NT<br />
+    <strong>0x00a4 NullDialog(O:Object*)</strong><br />
+    NT Returns true for one script round if the specified object attempts to talk to the active CRE which has an empty ("") dialog file set.<br />
     <br />
-    <strong>0x40a5 WasInDialog()</strong><br />
-    NT<br />
+    <strong>0x00a5 WasInDialog()</strong><br />
+    NT Returns true only if the active CRE was in dialog mode in the last script round.<br />
     <br />
     <strong>0x40a6 IsLocked(O:Object*)</strong><br />
-    NT<br />
+    NT Returns true only if the specified door is locked.<br />
     <br />
     <strong>0x40a7 AnimState(O:Object*,I:Sequence*Animstat)</strong><br />
     NT<br />
     <br />
     <strong>0x40a8 ExtraProficiency(O:Object*,I:Value*)</strong><br />
-    NT<br />
+    NT Returns true only if the specified object has the same number of unspent proficiency points as in the 2nd parameter.<br />
     <br />
     <strong>0x40a9 ExtraProficiencyLT(O:Object*,I:Value*)</strong><br />
-    NT<br />
+    NT Returns true only if the specified object has less unspent proficiency points as in the 2nd parameter.<br />
     <br />
     <strong>0x40aa ExtraProficiencyGT(O:Object*,I:Value*)</strong><br />
-    NT<br />
+    NT Returns true only if the specified object has more unspent proficiency points as in the 2nd parameter.<br />
     <br />
-    <strong>0x40ab NamelessBitTheDust()</strong><br />
-    NT<br />
+    <strong>0x00ab NamelessBitTheDust()</strong><br />
+    NT Returns only true if TNO died in the last script round.<br />
     <br />
     <strong>0x40ac ClassLevel(O:Object*,I:Value*Class,I:Value*)</strong><br />
     NT<br />
@@ -490,8 +490,8 @@ title: "PST Script Triggers"
     <strong>0x40ae ClassLevelLT(O:Object*,I:Value*Class,I:Value*)</strong><br />
     NT<br />
     <br />
-    <strong>0x40af FailedToOpen(O:Object*)</strong><br />
-    NT<br />
+    <strong>0x00af FailedToOpen(O:Object*)</strong><br />
+    NT Returns true if the current CRE failed to open a door or container in the last script round.<br />
     <br />
     <strong>0x40b1 LastPersonTalkedTo(O:Object*)</strong><br />
     NT<br />

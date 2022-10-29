@@ -1,0 +1,42 @@
+---
+title: "PST:EE 2DA Files : rndscrol.2da"
+---
+    <div class="title_main"> rndscrol.2da</div>
+<br />
+This file defines what items are generated when a creature uses an item of filename RNDSCRx#.ITM, where x=any character (even letters and symbols, and has no bearing on how RNDMAGIC.2DA is read), and #=the row number of RNDSCROL.2DA to use (can be 1-9).  RNDSCRx#.ITM is replaced by the generated item.  Therefore, this works like a random treasure table.<br />
+<br />
+The first column of RNDSCROL.2DA specifies the name of the row, currently a simple generic name.  The rest of the 20 columns have headers 1, 2, 3, 4, 5, ..., 18, 19, 20.  The column used is specified by a roll of a 2D10.  Note that this is different from RNDTREAS.2DA and RNDMAGIC.2DA, which do not have the column labelled '1', but similar to RNDWEP.2DA and RNDEQUIP.2DA.  Only 21 columns in total are supported, else the 2da file will fail to work entirely.  When this happens, all RNDSCRx#.ITMs are replaced by erroneous invisible items that cannot be removed.<br />
+<br />
+The PSTEE version of RNDSCROL.2DA is shown below.
+As an example of how RNDSCROL.2DA is used, a creature has the item RNDSCR01.ITM. As soon as the creature is created, row 1 of RNDSCROL.2DA is read. 2D10 dice are rolled, and produce a value of 6. Row 1, column 6 reads SPWI114. Therefore, RNDSCR01.ITM on that creature is replaced by SPWI114.<br />
+RNDSCROL.2DA can be directly referenced by RNDTREAS.2DA or RNDMAGIC.2DA without actually having RNDSCRx#.ITM as a resource.  For example, an entry in RNDTREAS.2DA that reads RNDSCRL02, 2D10 dice are rolled producing a roll of 3 will replace RNDSCRx#.ITM with SPWI105.<br />
+<br />
+In PSTEE we have:<br />
+<pre>
+2DA V1.0
+456
+        1       2       3       4       5       6       7       8       9       10      11      12      13      14      15      16      17      18      19      20
+1       spwi101 spwi102 spwi105 spwi107 spwi111 spwi114 spwi115 spwi102 spwi107 spwi114 spwi101 spwi102 spwi105 spwi107 spwi111 spwi114 spwi115 spwi102 spwi107 spwi114
+2       spwi101 spwi102 spwi105 spwi107 spwi111 spwi114 spwi115 spwi201 spwi207 spwi211 spwi213 spwi301 spwi304 spwi307 spwi309 spwi402 spwi405 spwi201 spwi301 spwi211
+</pre>
+
+<br />
+RNDSCROL.2DA supports 9 functional rows of random treasure.  Rows 10 and above are completely ignored.  If RNDSCRx#.ITM references a non-existant or an ignored row number (or if #=0 under any circumstances), then RNDSCRx#.ITM is replaced by an erroneous invisible item that cannot be removed.  Note that the replacing item is NOT RNDSCRx#.ITM itself, in this case. This blank item can likely be altered by setting the default 2da entry to a valid item.<br />
+<br />
+Items that can be referenced:<br />
+<ul>
+<li>specific items (for stackable items, a *# suffix, that is, an asterisk followed by a number, can be added to the item ResRef to specify the amount of that item to create, e.g. BOLT04*4 generates a single stack of 4 BOLT04 items; for non-stackable items, a *# suffix does nothing; the limitations on the size of # are the same as that for gold pieces described below)</li>
+<li>#, that is, a number, refers to a gold value (e.g. #=016 replaces RNDSCRx#.ITM with a stack of 16 gold).  The maximum stack of gold allowable is 256 pieces.  More than that listed will max out at 231 (interestingly, this is the remainder when you divide 256 into 999; # need not be three digits, so if #=4 or #=04 or #-004, a stack of 4 gold will still be generated without error)</li>
+<li>*, that is, a single asterisk, generates an erroneous item, i.e. an invisible item that cannot be removed.  This is useful if you want your creature not to drop anything, but you do not want to use this for containers and item piles</li>
+</ul>
+<br />
+Items that cannot be referenced:<br />
+<ul>
+<li>RNDEQU##; using this will create RNDEQU##.ITM, exactly as it is (circular loops are not possible)</li>
+<li>RNDMAG##; using this will create an erroneous item that cannot be removed</li>
+<li>RNDSCR##, using this will create RNDSCR##.ITM, exactly as it is (circular loops are not possible)</li>
+<li>RNDTRE##; using this will create RNDTRE##.ITM, exactly as it is (circular loops are not possible)</li>
+<li>RNDWEP##; using this will create an erroneous item that cannot be removed</li>
+</ul>
+<br />
+Since RNDSCROL.2DA cannot reference the other four random treasure .2DA files, this 2da is at the bottom (fifth to the top) of the random treasure table hierarchy.

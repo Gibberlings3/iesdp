@@ -2463,12 +2463,6 @@ Both of these params use only the lower 16 bits (upper bits might have other fun
 	<li>BIT6 &longrightarrow; Level 7</li>
 	<li>BIT7 &longrightarrow; Level 8</li>
 	<li>BIT8 &longrightarrow; Level 9</li>
-	<li>
-		BIT9 &longrightarrow; Double spells
-		<ul>
-			<li>The amount of spell slots is doubled <u>exclusively for</u> the level specified by <code>Slot Amount Modifier</code></li>
-		</ul>
-	</li>
 </ul>
 
 <p>
@@ -4745,18 +4739,22 @@ Not seen to work in BG1.
     <span class="parameterdata">Type</span><br />
 
   <span class="descriptionheading">Description</span><br />
-  <div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Gold = Gold + 'Statistic Modifier' value
-<br/>1   Flat Value Modifier -> Gold = 'Statistic Modifier' value
-<br/>2   Percentage Modifier -> Gold = (Gold * 'Statistic Modifier' value) / 100
+  <div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Gold = Gold + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Gold = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Gold = (Gold * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><br/>The effect modifies party gold or <a href="../files/ids/bgee/stats.htm#45">GOLD</a> for everyone else.
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-This effect can only be used to lower the gold value.
+<code>Type=0</code> can only remove gold. Gold amount has a lower bound of <code>0</code>.
 
   </div>
 </div>
@@ -4833,14 +4831,15 @@ PST does not support the percentage modifier type (unknown what it actually does
 
   <span class="descriptionheading">Description</span><br />
   <div class="descriptiondata"> Sets the individual reputation of the targeted creature(s) to the value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
-<br/>This does not affect the main reputation of the Party, unless <code>Type 3</code> or <code>4</code> are used. Though it can affect ranger/paladinhood of any target.
+<br/>This does not affect the main reputation of the Party, unless <code>Type 3-5</code> are used. Though it can affect ranger/paladinhood of any target.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Cumulative Modifier: <code>Reputation = Reputation + 'Statistic Modifier' value</code></li>
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Reputation = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Percentage Modifier: <code>Reputation = (Reputation * 'Statistic Modifier' value) / 100</code></li>
 	<li>3 &longrightarrow; Increment Party Reputation by <code>10 * 'Statistic Modifier'</code>, cannot lower reputation below <code>100</code>, will raise reputation to <code>100</code> if already less (only in EEs)</li>
-	<li>4 &longrightarrow; Reset Party Reputation to <code>100</code> (only in EEs)</li>
+	<li>4 &longrightarrow; Party Reputation = 'Statistic Modifier' value, cannot lower reputation below <code>100</code>, will raise reputation to <code>100</code> if already less (only in EEs)</li>
+	<li>5 &longrightarrow; Party Reputation = (Party Reputation * 'Statistic Modifier' value) / 100, cannot lower reputation below 100, will raise reputation to 100 if already less (only in EEs)</li>
 </ul>
 
 The effect modifies <a href="../files/ids/bgee/stats.htm#48">REPUTATION</a>.

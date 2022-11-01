@@ -350,6 +350,7 @@ When this opcode is stacked, the number of attacks are stacked, not the values o
 			<li><code>Type=1</code> just overrides the base and previous <code>Type=1</code> and <code>Type=2</code> effects.</li>
 		</ul>
 	</li>
+	<li>Only the first <code>Type=3</code> effect will take hold; any later ones will be skipped.</li>
 </ul>
 
   </div>
@@ -4207,16 +4208,16 @@ Both of these params use only the lower 16 bits (upper bits might have other fun
 		
 		
 			
+				
+			
 			
 				Variants:
 				
 			
 			
-				<a class="opvariant" href="iwd1totl.htm#op42">IWD1</a>
+				<a class="opvariant" href="bg1tots.htm#op42">BG1</a>
 			
 		
-			
-				
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Slot Amount Modifier</span><br />
@@ -8277,19 +8278,19 @@ Not seen to work in BG1.
 		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
 <br/>Known values for <code>Type</code> are:
 <ul>
-	<li>0 &longrightarrow; Cumulative Modifier: <code>Gold = Gold + 'Statistic Modifier' value</code></li>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Gold = Gold - 'Statistic Modifier' value</code></li>
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Gold = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Percentage Modifier: <code>Gold = (Gold * 'Statistic Modifier' value) / 100</code></li>
 </ul>
 
-<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#45">GOLD</a>.
+<br/><br/>The effect modifies party gold or <a href="../files/ids/bgee/stats.htm#45">GOLD</a> for everyone else.
 
 
 
 <div class="note info">
   <div>
     <strong>Note:</strong> 
-<code>Type=1</code> can only remove gold. Gold amount has a lower bound of <code>0</code>.
+<code>Type=0</code> can only remove gold. Gold amount has a lower bound of <code>0</code>.
 
   </div>
 </div>
@@ -8388,14 +8389,15 @@ Not seen to work in BG1.
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Sets the individual reputation of the targeted creature(s) to the value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
-<br/>This does not affect the main reputation of the Party, unless <code>Type 3</code> or <code>4</code> are used. Though it can affect ranger/paladinhood of any target.
+<br/>This does not affect the main reputation of the Party, unless <code>Type 3-5</code> are used. Though it can affect ranger/paladinhood of any target.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Cumulative Modifier: <code>Reputation = Reputation + 'Statistic Modifier' value</code></li>
 	<li>1 &longrightarrow; Flat Value Modifier: <code>Reputation = 'Statistic Modifier' value</code></li>
 	<li>2 &longrightarrow; Percentage Modifier: <code>Reputation = (Reputation * 'Statistic Modifier' value) / 100</code></li>
 	<li>3 &longrightarrow; Increment Party Reputation by <code>10 * 'Statistic Modifier'</code>, cannot lower reputation below <code>100</code>, will raise reputation to <code>100</code> if already less (only in EEs)</li>
-	<li>4 &longrightarrow; Reset Party Reputation to <code>100</code> (only in EEs)</li>
+	<li>4 &longrightarrow; Party Reputation = 'Statistic Modifier' value, cannot lower reputation below <code>100</code>, will raise reputation to <code>100</code> if already less (only in EEs)</li>
+	<li>5 &longrightarrow; Party Reputation = (Party Reputation * 'Statistic Modifier' value) / 100, cannot lower reputation below 100, will raise reputation to 100 if already less (only in EEs)</li>
 </ul>
 
 The effect modifies <a href="../files/ids/bgee/stats.htm#48">REPUTATION</a>.
@@ -8609,9 +8611,18 @@ The dispel bit of <a href="#op111">opcode #111</a> has no bearing on the <a href
 		
 			
 				
+			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bg1tots.htm#op112">BG1</a>
+			
+		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Sound</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
@@ -8619,7 +8630,15 @@ The dispel bit of <a href="#op111">opcode #111</a> has no bearing on the <a href
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the <code>resource</code> key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see <a href="../files/ids/bgee/slots.htm">SLOTS.IDS</a>) is removed. <code>"EFF_M02"</code> is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use <a href="#op123">opcode #123</a> for inventory items).
+		<div class="descriptiondata"> Removes a single instance (or stack) of the item specified by the <code>resource</code> key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see <a href="../files/ids/bgee/slots.htm">SLOTS.IDS</a>) is removed. This effect should be used to remove equipped items (use <a href="#op123">opcode #123</a> for inventory items).
+<br><br>
+
+On successful removal, parameter "Sound" dictates which sound will be played:
+<li>0&nbsp; ⟶ Play EFF_M02.WAV</li>
+<li>1&nbsp; ⟶ Play AMB_D02B.WAV</li>
+<li>2&nbsp; ⟶ Play <code>Resource2</code>.WAV</li>
+<li>3+      ⟶ No sound</li>
+</ul>
  </div>
 		<hr />
 
@@ -17115,8 +17134,8 @@ Removes <a href="#op211">Imprisonment</a> and <a href="#op213">Maze</a>, and <a 
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Type</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
 		
@@ -17673,14 +17692,16 @@ Moreover:
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Wake on damage</span><br />
 
 		
 		
+		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Icon</span><br />
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies <a href="#op39">opcode #39</a> using <code>Sleep (Wake on Hit)</code> mode to the targeted creature(s), if the targeted creature(s) has less than 20 HP. The effect always lasts 5 rounds, and ignores the <code>duration</code> field.
+		<div class="descriptiondata"> Applies <a href="#op39">opcode #39</a> using <code>Sleep (Wake on Hit)</code> mode to the targeted creature(s), if the targeted creature(s) has less than 20 HP. The effect always lasts 5 rounds, and ignores the <code>duration</code> field. When calling the sleep opcode, parameters 2 and special are copied over.
  </div>
 		<hr />
 

@@ -4137,9 +4137,15 @@ This opcode will set the <code><a href="../file_formats/ie_formats/cre_v1.htm#CR
 		
 			
 				
+			
+			
+			
+				<a class="opvariant" href="bg2tob.htm#op41">BG2</a>
+			
+		
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Colour</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount</span><br />
 		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
@@ -4147,52 +4153,33 @@ This opcode will set the <code><a href="../file_formats/ie_formats/cre_v1.htm#CR
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Displays the sparkle effect specified by the <code>Type</code> field, in the colour specified by the <code>Colour</code> field. The colour field may be connected to <a href="../files/2da/2da_bgee/sprklclr.htm">SPRKLCLR.2DA</a>.
-<br/>Known values for <code>Colour</code> are:
-<ul>
-	<li>0 &longrightarrow; Crash</li>
-	<li>1 &longrightarrow; Black</li>
-	<li>2 &longrightarrow; Blue</li>
-	<li>3 &longrightarrow; Chromatic</li>
-	<li>4 &longrightarrow; Gold</li>
-	<li>5 &longrightarrow; Green</li>
-	<li>6 &longrightarrow; Purple</li>
-	<li>7 &longrightarrow; Red</li>
-	<li>8 &longrightarrow; White</li>
-	<li>9 &longrightarrow; Ice</li>
-	<li>10 &longrightarrow; Stone</li>
-	<li>11 &longrightarrow; Magenta</li>
-	<li>12 &longrightarrow; Orange</li>
-	<li>13&plus; &longrightarrow; Crash</li>
-</ul>
+		<div class="descriptiondata"> Produces a sparkle effect by playing BAM animation instances specified by the <code>resource</code> key, with the behavior defined by <code>Type</code>. <code>Amount</code> defines the number of additional BAM copies displayed by each animation instance.
 
-<br/>Known values for <code>Type</code> are:
+<p>
+A non-zero Dice Number value appears to influence the probability of showing the effect. Higher values indicate higher probabilities of showing the effect. Value seems to be capped at 256.
+</p>
+
+Known values for <code>Type</code> are:
 <ul>
-	<li>
-		1 &longrightarrow; Explosion
+	<li>1 &longrightarrow; Explosion
 		<ul>
-			<li>It is always instantaneous.</li>
+      <li>Plays a random amount of animation instances, including no instances at all, which follow a random path away from the target to simulate an "explosion" effect.</li>
+			<li>Duration is defined by the number of BAM animation frames.</li>
 		</ul>
 	</li>
-	<li>2 &longrightarrow; No effect?</li>
-	<li>
-		3 &longrightarrow; Sparkle Shower
+	<li>2 &longrightarrow; Swirl
+    <ul>
+      <li>Plays a number of animation instances a certain distance over the target, with each instance using a slightly shifted offset to simulate a "swirl" effect.</li>
+      <li>Duration is defined by the number of BAM animation frames.</li>
+    </ul>
+  </li>
+	<li>3 &longrightarrow; Sparkle Shower
 		<ul>
-			<li>Will use the specified <code>duration</code>, but is not saved (lost upon reload).</li>
+      <li>Plays a number of animation instances a certain distance over the target. Each instance is generated following a circular pattern and slowly falling down to simulate a "shower" effect.</li>
+      <li>Duration is defined by the number of BAM animation frames.</li>
 		</ul>
 	</li>
 </ul>
-
-
-
-<div class="note info">
-  <div>
-    <strong>Info:</strong> 
-Both of these params use only the lower 16 bits (upper bits might have other function).
-
-  </div>
-</div>
-
  </div>
 		<hr />
 
@@ -25142,7 +25129,7 @@ It looks like the <code>Special</code> field is meant to override <code>Projecti
 	<div id="op328" class="opcode">
 		<span class="opnumberdata">#328 (0x148)</span>
 
-		<span class="opnamedata">State: Set State</span>
+		<span class="opnamedata">State: Set Extended or Spell State</span>
 
 		
 		
@@ -25162,7 +25149,7 @@ It looks like the <code>Special</code> field is meant to override <code>Projecti
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Sets the state of the targetted creature(s) to the value specified by the <code>Type</code> field.
+		<div class="descriptiondata"> Sets the extended or spell state of the targetted creature(s) to the value specified by the <code>Type</code> field, depending on the <code>Mode</code> value.
 <br/>These effects could be detected by the gamescript trigger <a href="../scripting/triggers/bgeetriggers.htm#0x40E1">ExtendedStateCheck()</a> (see <a href="../files/ids/bgee/extstate.htm">EXTSTATE.IDS</a>).
 <br/>Known values for <code>Type</code> are:
 <ul>
@@ -26484,25 +26471,34 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op347" class="opcode">
 		<span class="opnumberdata">#347 (0x15B)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Move View to Target</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op347">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Scroll Speed</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> To instantly zoom onto the target, leave the 'Scroll Speed' parameter at zero. To have the camera go to the target at a certain speed, set the 'Scroll Speed' parameter from 1-255, with 1 being the slowest and 255 the fastest.
  </div>
 		<hr />
 
@@ -26619,25 +26615,45 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op352" class="opcode">
 		<span class="opnumberdata">#352 (0x160)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Change Background</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op352">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> Sets the BMP file specified by the <code>resource</code> field as background image for the duration of the effect.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This opcode appears to work only if cutscene mode is active, either via <a href="../scripting/actions/psteeactions.htm#121">StartCutSceneMode()</a> or by <a href="#op356">opcode 356</a>.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -26646,25 +26662,56 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op353" class="opcode">
 		<span class="opnumberdata">#353 (0x161)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Tint Playing Screen Fade</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op353">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">RGB Colour</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> This effect tints the screen depending on the value specified by the 'Type' field, to a colour specified by the using 'RGB Colour' field.
+<br/>The 'RGB Colour' field is handled as follows:
+<br/>First byte = Red (0-255)
+<br/>Second byte  = Green (0-255)
+<br/>Third byte = Blue (0-255)
+<br/>
+<br/>Know values for 'Type' are:
+<br/>0,1,2,3 &longrightarrow; No effect
+<br/>4,5,6,7 &longrightarrow; Instant 'RGB Colour' for the duration of the effect
+<br/>8 &longrightarrow; No effect
+<br/>9 &longrightarrow; Instant inverted 'RGB Colour' for the duration of the effect
+<br/>10 &longrightarrow; Instant black for the duration of the effect
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Character colour will not be affected by this effect.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -26673,25 +26720,34 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op354" class="opcode">
 		<span class="opnumberdata">#354 (0x162)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Flash Playing Screen</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op354">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unused</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unused</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> This effects flashes the screen for a split second.
  </div>
 		<hr />
 
@@ -26700,25 +26756,34 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op355" class="opcode">
 		<span class="opnumberdata">#355 (0x163)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Spell Effect: Soul Exodus</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op355">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> Applies the Soul Exodus effect to the targeted creature(s). Does not affect the protagonist.
  </div>
 		<hr />
 
@@ -26727,25 +26792,50 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op356" class="opcode">
 		<span class="opnumberdata">#356 (0x164)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Spell Effect: Stop All Action</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op356">BGEE</a>
+			
+		
+			
 				
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Type</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> Toggles all interactive elements of the game (e.g. the GUI, character selection etc), based on the 'Type' field.
+<br/>Known values of 'Type' are:
+<br/>0 Stop actions
+<br/>1 Enable actions
+<br/>
+<br/>This effect has no duration.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+Scripts and animations continue to run.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -26754,25 +26844,41 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op357" class="opcode">
 		<span class="opnumberdata">#357 (0x165)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">State: Set State</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op357">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Action</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">State</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> Modifies the state(s) of the target according to the specified action.<br/>
+Known values for <code>Action</code> are:
+<ul>
+  <li>0 &longrightarrow; Clear state(s)</li>
+  <li>1 &longrightarrow; Set state(s)</li>
+</ul>
+
+<br/>See <a href="../files/ids/pstee/state.htm">STATE.IDS</a> for available states.
  </div>
 		<hr />
 
@@ -26781,25 +26887,34 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op358" class="opcode">
 		<span class="opnumberdata">#358 (0x166)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Incite Berserk Attack</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op358">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> This effect incites a repeating RunningAttack action on the target creature(s). The chosen target is always male/undead.
  </div>
 		<hr />
 
@@ -27250,6 +27365,11 @@ The <code>Stat Value</code> parameter can take any value. If you set it to <code
 <br/>Known values for <code>Flags</code> are:
 <ul>
   <li>BIT6 &longrightarrow; Blended</li>
+  <li>BIT19 &longrightarrow; Grayscale</li>
+  <li>BIT21 &longrightarrow; Bright</li>
+  <li>BIT24 &longrightarrow; Hide background part on movement (BAM cycles used for drawing behind the target are skipped when the target is moving.)</li>
+  <li>BIT25 &longrightarrow; Dream palette (sepia effect)</li>
+  <li>BIT27 &longrightarrow; Garbled frames? (Garbled frames are drawn in regular intervals. Meaning of this bit is unknown.)</li>
 </ul>
  </div>
 		<hr />

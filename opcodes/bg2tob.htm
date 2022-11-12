@@ -1722,33 +1722,27 @@ Using ‘Magic Fire’ or ‘Magic Cold’ as a damage type will result the game
 		
 		
 			
+				
+			
 			
 				Variants:
 				
 			
 			
-				<a class="opvariant" href="bgee.htm#op14">BGEE</a>
-			
-		
-			
-			
-			
 				<a class="opvariant" href="pst.htm#op14">PST</a>
 			
 		
-			
-				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Undefined</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Undefined</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Temporarily removes the colouring indicating frozen_death from the targeted creature(s), but does not remove the frozen_death state itself.
+		<div class="descriptiondata"> Removes <a href="../files/ids/bgee/state.htm#BIT6">STATE_FROZEN_DEATH</a> from the targeted creatures and restores them to 1 HP. Does not affect creatures without <a href="../files/ids/bgee/state.htm#BIT6">STATE_FROZEN_DEATH</a>.
  </div>
 		<hr />
 
@@ -7147,12 +7141,6 @@ Can only modify the <code><a href="../file_formats/ie_formats/cre_v1.htm#CREV1_0
 				
 			
 			
-				<a class="opvariant" href="bg1tots.htm#op98">BG1</a>
-			
-		
-			
-			
-			
 				<a class="opvariant" href="bgee.htm#op98">BGEE</a>
 			
 		
@@ -7931,12 +7919,6 @@ It is still processed, so it will still interact with <a href="#op200">Spell Tur
 				
 			
 			
-				<a class="opvariant" href="bgee.htm#op114">BGEE</a>
-			
-		
-			
-			
-			
 				<a class="opvariant" href="iwd1totl.htm#op114">IWD1</a>
 			
 		
@@ -7952,18 +7934,8 @@ It is still processed, so it will still interact with <a href="#op200">Spell Tur
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The use of this effect is unknown, and effect of its parameters are undefined.
-
-
-
-<div class="note warning">
-  <div>
-    <strong>Warning:</strong> 
-This effect has never been seen to work.
-
-  </div>
-</div>
-
+		<div class="descriptiondata"> Sets <a href="../files/ids/bgee/stats.htm#61">IDENTIFYMODE</a> to <code>1</code>.<br />
+Affected creature will be visible, targetable, and if controlled, selectable and orderable within the semi-transparent fog of war, but not within the black shroud.
  </div>
 		<hr />
 
@@ -12372,15 +12344,6 @@ Also check out the EE description <a href="bgee.htm#op163">here</a>.
 		
 		
 			
-			
-				Variants:
-				
-			
-			
-				<a class="opvariant" href="bgee.htm#op164">BGEE</a>
-			
-		
-			
 				
 		<br />
 
@@ -12392,7 +12355,7 @@ Also check out the EE description <a href="bgee.htm#op163">here</a>.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The use of this effect is unknown, and effect of its parameters are undefined.
+		<div class="descriptiondata"> Clears the drunkeness stat (as modified by <a href="#op94">opcode #94</a>).
  </div>
 		<hr />
 
@@ -12867,15 +12830,6 @@ Two 8 characters long keys that are identical up to the 7<sup>th</sup> character
 		
 		
 			
-			
-				Variants:
-				
-			
-			
-				<a class="opvariant" href="bgee.htm#op173">BGEE</a>
-			
-		
-			
 				
 		<br />
 
@@ -12887,7 +12841,21 @@ Two 8 characters long keys that are identical up to the 7<sup>th</sup> character
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Sets the Poison Resistance of the target creature(s) to the value specified by 'Statistic Modifier'.
+		<div class="descriptiondata"> Modifies the Poison Resistance of the target creature(s) to the value specified by <code>Statistic Modifier</code>.
+
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#74">RESISTPOISON</a>.
+
+
+
+<div class="note warning">
+  <div>
+    <strong>Warning:</strong> 
+In EE v2.3 and prior, including the originals, this opcode always “Set” Poison Resistance; in v2.5 and later, it always “increments” Poison Resistance (it stacks).
+
+  </div>
+</div>
+
+
 <br/>Also known as "Stat: Set Poison Resistance".
  </div>
 		<hr />

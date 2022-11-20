@@ -9509,6 +9509,10 @@ In particular:
 	<li>The oldest equipped effect will override newer equipped effects, and any equipped effect will override a non-equipped effect.</li>
 	<li>The oldest non-equipped effect will override newer non-equipped effects.</li>
 </ul>
+Testing in the original BG2 shows that if this opcode is used on an item with
+“while equipped” duration, it becomes “permanent” when the item is equiped.
+Meaning that one can equip/unequip the item multiple times to give more and
+more eg. maximum hitpoints.
 
   </div>
 </div>
@@ -18922,12 +18926,12 @@ Known values for <code>Target</code> are:
 	<li>0 &longrightarrow; <code><a href="../files/ids/bgee/object.htm#1">Myself</a></code></li>
 	<li>1 &longrightarrow; <code><a href="../files/ids/bgee/object.htm#LastHitter">LastHitter</a></code></li>
 	<li>
-		2 &longrightarrow; <code><a href="../files/ids/bgee/ea.htm#200">[EVILCUTOFF]</a></code>
+		2 &longrightarrow; <code><a href="../files/ids/bgee/object.htm#12">NearestEnemyOf<a>/code> (effectively <code><a href="../files/ids/bgee/ea.htm#200">[EVILCUTOFF]</a>)</code>
 		<ul>
 			<li>Since object specifiers are not relative to the creature, this works as expected only from the Player's perspective.</li>
 		</ul>
 	</li>
-	<li>3 &longrightarrow; <code><a href="../files/ids/bgee/object.htm#14">Nearest</a></code></li>
+	<li>3+ &longrightarrow; <code><a href="../files/ids/bgee/object.htm#14">Nearest</a></code> (effectively <code>[ANYONE]</code>)</li>
 </ul>
 
 Known values for <code>Condition</code> are:
@@ -19096,6 +19100,7 @@ The <code>Extra</code> field is also used for the following <code>Condition</cod
 
   </div>
 </div>
+
  </div>
 		<hr />
 

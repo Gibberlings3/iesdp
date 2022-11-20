@@ -83,9 +83,9 @@ regenerate: true
           <td>
             <b><a name="Header_Flags_BIT0">Unsellable (critical item)</a></b>
             <ul>
-              <li>In BG1, this flag does not affect whether the item can be sold.</li>
+              <li>In BG1 and IWD, this flag does not affect whether the item can be sold or disintegrated. See BIT11 instead.</li>
               <li>On EE games, <a href="../ie_formats/sto_v1.htm">Stores</a> can buy critical items if they are flagged as <code><a href="../ie_formats/sto_v1.htm#storv1_0_Header_0x10_BIT15">Can buy Critical</a></code>, provided they can buy its <code><a href="#Header_ItemType">itemtype</a></code>.</li>
-              <li>Will also cause the item to be moved into Player1's Inventory if the character who has it leaves or is kicked from the party.</li>
+              <li>Will also cause the item to be moved into Player1's Inventory if the character who has it leaves the party on their own.</li>
             </ul>
           </td>
           <td>
@@ -156,8 +156,9 @@ regenerate: true
             </ul>
           </td>
           <td>
-            <b><a name="Header_Flags_BIT11">Conversable</a></b>
+            <b><a name="Header_Flags_BIT11">Conversable / unsellable</a></b>
             <ul>
+              <li>In BG1 and IWD, this flag prevents the item from being sold and is not about dialogs. This includes placement into a bag of holding.</li>
               <li>Dialog can be initiated with the weapon through right-clicking in the Inventory.</li>
               <li>
                 Item needs to be listed in <a href="../../files/2da/2da_bgee/itemdial.htm">ITEMDIAL.2DA</a> as: <code>(Item ResRef) (Label StrRef) (Dialog ResRef)</code>.

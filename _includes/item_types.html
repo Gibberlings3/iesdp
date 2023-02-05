@@ -1,0 +1,37 @@
+<br />
+<div class="fileHeader"><a id="Header_ItemType">Item Types</a></div>
+<div class="indent1">
+  <br />
+  These codes are used in store files to indicate which types of items they will
+  buy. They are also used to determine which inventory slots the item is allowed
+  to go into on the inventory screen and the sound the item makes when moved in
+  the inventory.<br />
+  <br />
+  <table border="1" width="98%">
+    <colgroup>
+      <col width="10%" />
+      <col width="*" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Item type</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in site.data.file_formats.item_types %}
+      <tr>
+        <td>{{ item.code }}</td>
+
+        {% if item.type == "Unknown" %}
+          {% assign type = '<div class="unknown">Unknown</div>' %}
+        {% else %}
+          {% assign type = item.type %}
+        {% endif %}
+
+        <td>{{ type }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

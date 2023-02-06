@@ -1,0 +1,106 @@
+- desc: Signature ('STOR')
+  type: char array
+  length: 4
+
+- desc: Version ('V1.0')
+  type: char array
+  length: 4
+
+- desc: Type (0=Store, 1=Tavern, 2=Inn, 3=Temple, 5=Container)
+  type: dword
+
+- desc: name
+  type: strref
+
+- desc: |
+    Flags
+    - bit 0: User allowed to buy
+    - bit 1: User allowed to sell
+    - bit 2: User allowed to identify items
+    - bit 3: User allowed to steal
+    - bit 4: User allowed to donate money
+    - bit 5: User allowed to purchase cures
+    - bit 6: User allowed to purchase drinks
+    - bit 7: Unknown
+    - bit 8: Unknown
+    - bit 9: Quality 1 (tvrnqul0-3)
+    - bit 10: Quality 2 (tvrnqul0-3)
+    - bit 11: Unknown
+    - bit 12: Buy Fenced Goods
+    - bit 13: Reputation doesn't affect prices (BGEE)
+    - bit 14: Toggle item recharge (TobEx)
+    - bit 15: **User allowed to sell [critical]({{ "/file_formats/ie_formats/itm_v1.htm#Header_Flags_BIT0" | prepend: relurl }}) items** (BGEE)
+  type: dword
+
+- desc: Store "sell price markup" (percentage of base price store charges for items)
+  type: dword
+
+- desc: Store "buy price markup" (percentage of base price store is willing to pay)
+  type: dword
+
+- desc: Depreciation rate
+  type: dword
+
+- desc: "% chance of steal failure"
+  type: word
+
+- desc: Capacity (0=unlimited)
+  type: word
+
+- desc: Unknown
+  type: byte array
+  length: 8
+
+- desc: Offset to [items purchased](#storv1_0_Buy) section
+  type: dword
+- desc: Count of items in [items purchased](#storv1_0_Buy) section
+  type: dword
+
+- desc: Offset to [items for sale](#storv1_0_Sale) section
+  type: dword
+- desc: Count of [items for sale](#storv1_0_Sale)
+  type: dword
+
+- desc: Lore
+  type: dword
+
+- desc: ID Price
+  type: dword
+
+- desc: Rumours (Tavern)
+  type: resref
+
+- desc: Offset to [drinks](#storv1_0_Drink) section
+  type: dword
+- desc: Count of [drinks](#storv1_0_Drink)
+  type: dword
+
+- desc: Rumours (Temple)
+  type: resref
+
+- desc: |
+    Room flags
+    - bit 0: Peasant
+    - bit 1: Merchant
+    - bit 2: Noble
+    - bit 3: Royal
+  type: dword
+
+- desc: Price of a peasant room
+  type: dword
+- desc: Price of a merchant room
+  type: dword
+- desc: Price of a noble room
+  type: dword
+- desc: Price of a royal room
+  type: dword
+
+- desc: Offset to [cures](#storv1_0_Cure) section
+  type: dword
+- desc: Count of [cures](#storv1_0_Cure)
+  type: dword
+
+- desc: Unknown
+  type: byte array
+  length: 36
+  offset: 0x78

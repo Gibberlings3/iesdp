@@ -26585,25 +26585,37 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op348" class="opcode">
 		<span class="opnumberdata">#348 (0x15C)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Cloak of Warding (Non-cumulative)</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op348">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Base amount</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Amount per level</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> The target creature will absort the amount of damage as calculated by the formula:
+<br/><code>Absorbed damage amount = 'Base amount' + ('Amount per level' * 'Caster level') + 'Dice roll'</code>
+<br/>
+<br/>Modifies SPLSTATE.IDS value CLOAK_OF_WARDING accordingly. The effect ends when all damage has been absorbed.
  </div>
 		<hr />
 
@@ -26612,25 +26624,47 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op349" class="opcode">
 		<span class="opnumberdata">#349 (0x15D)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Pain Mirror (Non-cumulative)</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op349">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata"># damage effects to reflect</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unused</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> This effect reflects inflicted damage back to nearby creatures.
+<br/>
+<br/>Modifies SPLSTATE.IDS value PAIN_MIRROR accordingly. The effect is supposed to end when the specified number of damage effects have been reflected.
+
+
+
+<div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+The effect has a bug that constantly resets the target’s pain mirror counter to ‘Parameter 1’. This effect will never end on its own.
+
+	</div>
+</div>
+
  </div>
 		<hr />
 
@@ -26639,25 +26673,36 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op350" class="opcode">
 		<span class="opnumberdata">#350 (0x15E)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Guardian Mantle (Non-cumulative)</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op350">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Enabled?</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unused</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> This effect protects the target creature from physical damage unless the attacker makes a successful saving throw vs. spell at -4 penalty. The saving throw mechanism is hardcoded into <a href="#op12">opcode #12</a>.
+<br/>
+<br/>Modifies SPLSTATE.IDS value GUARDIAN_MANTLE accordingly.
  </div>
 		<hr />
 
@@ -26666,25 +26711,45 @@ This opcode should be limited to the first 12 (<code>0 – 11</code>) spell scho
 	<div id="op351" class="opcode">
 		<span class="opnumberdata">#351 (0x15F)</span>
 
-		<span class="opnamedata">Unused</span>
+		<span class="opnamedata">Armor (Non-cumulative)</span>
 
 		
 		
 		
 		
 			
+			
+				Variants:
+				
+			
+			
+				<a class="opvariant" href="bgee.htm#op351">BGEE</a>
+			
+		
+			
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Amount</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Add caster level bonus?</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused
+		<div class="descriptiondata"> Modifies SPLSTATE.IDS value ARMOR accordingly. The effect ends when all damage has been absorbed.
+
+
+
+<div class="note info">
+  <div>
+    <strong>Note:</strong> 
+This effect does not give the armor class bonus as per opcode 375.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -26767,13 +26832,13 @@ This opcode appears to work only if cutscene mode is active, either via <a href=
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effect tints the screen depending on the value specified by the 'Type' field, to a colour specified by the using 'RGB Colour' field.
+		<div class="descriptiondata"> This effect tints the screen depending on the value specified by the 'Type' field, to a colour specified by the 'RGB Colour' field.
 <br/>The 'RGB Colour' field is handled as follows:
 <br/>First byte = Red (0-255)
 <br/>Second byte  = Green (0-255)
 <br/>Third byte = Blue (0-255)
 <br/>
-<br/>Know values for 'Type' are:
+<br/>'Type' behavior is not yet fully understood. Known values are:
 <br/>0,1,2,3 &longrightarrow; No effect
 <br/>4,5,6,7 &longrightarrow; Instant 'RGB Colour' for the duration of the effect
 <br/>8 &longrightarrow; No effect
@@ -26825,7 +26890,7 @@ Character colour will not be affected by this effect.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> This effects flashes the screen for a split second.
+		<div class="descriptiondata"> This effects flashes the screen white for one frame.
  </div>
 		<hr />
 
@@ -27879,7 +27944,7 @@ This opcode mirrors functionality of <a href="pst.htm#op210">PST opcode 210</a>.
 	<div id="op377" class="opcode">
 		<span class="opnumberdata">#377 (0x179)</span>
 
-		<span class="opnamedata">Unknown</span>
+		<span class="opnamedata">Speak with Dead</span>
 
 		
 		
@@ -27897,7 +27962,9 @@ This opcode mirrors functionality of <a href="pst.htm#op210">PST opcode 210</a>.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The use of this effect is unknown, and effect of its parameters are undefined.
+		<div class="descriptiondata"> This effect is used internally by projectile 205 (Stories Bones Tell).
+<br/>
+<br/>On effect removal, if <code>Global("Speak_with_Dead","GLOBAL")</code> exists, it is set to 0. The engine applies this opcode as part of projectile 205 (Stories Bones Tell) with timing=0 (Instant/Limited) and duration=300.
  </div>
 		<hr />
 

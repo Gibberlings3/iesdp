@@ -435,7 +435,7 @@ At least in EEs, it can remove <a href="#op177">opcode #177</a> effects targetin
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Default/In Combat: only berserk while in combat.</li>
-	<li>1 &longrightarrow; Constant: always berserk, maintains <a href="../files/ids/bgee/splstate.htm#33">BERSERK_ALWAYS_ACTIVE</a> (only in EEs).</li>
+	<li>1 &longrightarrow; Constant: always berserk, maintains <a href="../files/ids/bgee/splstate.htm#33">BERSERK_ALWAYS_ACTIVE</a> and sets <a href="../files/ids/bgee/stats.htm#144">BERSERKSTAGE2</a> to 1.</li>
 	<li>2 &longrightarrow; Blood Rage: doesn't exist in EE's, values <code>2+</code> function the same as <code>0</code>.</li>
 </ul>
 
@@ -2656,7 +2656,7 @@ this is a gimped effect in bg2, unlike the rest of the games!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the <code>Type</code> field, which is suspected to be an EE extension.
+		<div class="descriptiondata"> Applies the horror effect to the targeted creature(s) in the style specified by the <code>Type</code> field, which is suspected to be an EE extension. It sets the STATE_PANIC state.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>0 &longrightarrow; Default</li>
@@ -2721,7 +2721,7 @@ this is a gimped effect in bg2, unlike the rest of the games!
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Damages the target by the 'Damage Amount' value, in the style specified by the 'Type' field.
+		<div class="descriptiondata"> Damages the target by the 'Damage Amount' value, in the style specified by the 'Type' field.  It sets the STATE_POISONED state.
 <br/>Known values for 'Type' are:
 <br/>0   Inflict 1HP per second (only if 'Damage Amount' is non-zero)
 <br/>1   Inflict 1HP per second (only if 'Damage Amount' is greater than 1)
@@ -3441,7 +3441,7 @@ When <code>Type = 3</code>, this opcode processes before saving throws are check
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the silence effect to the targeted creature(s). Sets <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> to true.<br/>
-A silenced creature cannot cast spells / use special abilities (unless flagged as <code><a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT25">Castable when silenced</a></code>) or initiate dialog.<br/>
+A silenced creature cannot cast spells / use special abilities (unless flagged as <code><a href="../file_formats/ie_formats/spl_v1.htm#Header_Flags_BIT25">Castable when silenced</a></code>), bard song or initiate dialog.<br/>
 The engine is hard-coded to allow these spells to be cast by a silenced creature:
 <ul>
 	<li><code>"SPWI219"</code> (Vocalize)</li>
@@ -4022,7 +4022,7 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Stuns the targeted creature(s). In particular:
+		<div class="descriptiondata"> Stuns the targeted creature(s) and sets HELD to 1. In particular:
 <ul>
 	<li>Maintains Portrait Icon <code><a href="../files/2da/2da_bgee/statdesc.htm#55">Stun</a></code> (EE only).</li>
 	<li>Immobilizes the creature, limiting it to instantaneous actions (<a href="../files/ids/bgee/instant.htm">INSTANT.IDS</a>).</li>
@@ -4054,6 +4054,7 @@ Applied with <code>Timing Mode</code>s <code>1/4/7</code>: will set the creature
 
   </div>
 </div>
+
  </div>
 		<hr />
 
@@ -4089,7 +4090,7 @@ Applied with <code>Timing Mode</code>s <code>1/4/7</code>: will set the creature
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unstuns the targeted creature(s) (<a href="#op45">opcode #45</a>). Also removes <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> from the creature.
+		<div class="descriptiondata"> Unstuns the targeted creature(s) (<a href="#op45">opcode #45</a> and <a href="#op109">opcode #109</a>). Also removes <a href="../files/ids/bgee/state.htm#BIT3">STATE_STUNNED</a> from the creature.
 <br/>This effect ignores durations attributed to it.
  </div>
 		<hr />
@@ -4117,7 +4118,7 @@ Applied with <code>Timing Mode</code>s <code>1/4/7</code>: will set the creature
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the invisibility effect from the targeted creature(s). Also removes <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> and <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>.
+		<div class="descriptiondata"> Removes the <a href="#op20">invisibility effect</a> from the targeted creature(s) if they don't have STATE_NONDETECTION set. Also removes <a href="../files/ids/bgee/state.htm#BIT4">STATE_INVISIBLE</a> and <a href="../files/ids/bgee/state.htm#BIT22">STATE_IMPROVEDINVISIBILITY</a>.
 <br/>This effect ignores durations attributed to it.
 
 
@@ -4156,7 +4157,7 @@ Both parameters should be <code>0</code> (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the silence effect and <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> from the targeted creature(s).
+		<div class="descriptiondata"> Removes the <a href="#op48">silence effect</a> and <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
  </div>
 		<hr />
@@ -4323,7 +4324,7 @@ Final values are capped to the bound range <code>(0,25)</code> in game (<code>40
 
 <br/>The <code>Location and Speed</code> field is handled as follows:
 <ul>
-	<li>First byte = Location</li>
+	<li>First byte = Location (not implemented in 2.5)</li>
 	<li>Third byte = Speed (<code>0 &mdash; 255</code>)</li>
 </ul>
 
@@ -7313,7 +7314,7 @@ Not seen to work in BG1.
 	<li>6 &longrightarrow; <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
 	<li>7 &longrightarrow; <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
 	<li>8 &longrightarrow; <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
-	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only; broken at least in 2.5)</li>
 </ul>
 
 <br/>To be protected from any creature, leave <code>IDS Entry</code> at <code>0</code> (zero), and <code>IDS File</code> at <code>2</code>. Protection will grant the bearer immunity from being attacked, cast a spell at, or otherwise targeted by creatures with this type.
@@ -13291,7 +13292,7 @@ IWD2: there was a note to not use this effect in older IESDP.
 	<li>6 &longrightarrow; <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
 	<li>7 &longrightarrow; <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
 	<li>8 &longrightarrow; <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
-	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only; broken at least in 2.5)</li>
 </ul>
 
 
@@ -13371,7 +13372,7 @@ This opcode uses a reverse stacking order: the “oldest” effect with matching
 	<li>6 &longrightarrow; <a href="../files/ids/bgee/specific.htm">SPECIFIC.IDS</a></li>
 	<li>7 &longrightarrow; <a href="../files/ids/bgee/gender.htm">GENDER.IDS</a></li>
 	<li>8 &longrightarrow; <a href="../files/ids/bgee/align.htm">ALIGN.IDS</a></li>
-	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only)</li>
+	<li>9 &longrightarrow; <a href="../files/ids/bgee/kit.htm">KIT.IDS</a> (EE only; broken at least in 2.5)</li>
 </ul>
 
 

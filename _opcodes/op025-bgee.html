@@ -14,7 +14,7 @@ iwd2: 0
 pst: 0
 pstee: 1
 ---
-Damages the target by a certain amount, in the style specified by the <code>Type</code> field.
+Damages the target by a certain amount, in the style specified by the <code>Type</code> field. It sets the STATE_POISONED state.
 <br/>Known values for <code>Type</code> are:
 <ul>
 	<li>
@@ -60,7 +60,7 @@ When the effect is NOT attached through <a href="#op177">opcode #177</a>, <code>
 When the <code>Type</code> field is <code>1</code>:
 <ul>
 	<li>if the <code>Frequency Multiplier</code> field is non-zero, damage is always dealt.</li>
-	<li>if the <code>Amount_1</code> field is less than <code>256</code>, damage is dealt while <code>HP > 100 / 'Amount_1'</code>.</li>
+	<li>if the <code>Amount_1</code> field is less than <code>256</code>, damage is dealt while <code>HP >= 100 / 'Amount_1'</code>.</li>
 </ul>
 {% endcapture %}
 

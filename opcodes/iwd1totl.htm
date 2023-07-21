@@ -1601,29 +1601,23 @@ This effect does not work with <code>Timing Mode 1</code>.
 	<div id="op22" class="opcode">
 		<span class="opnumberdata">#22 (0x16)</span>
 
-		<span class="opnamedata">Stat: Cumulative Luck Modifier</span>
+		<span class="opnamedata">Stat: Cumulative Luck Bonus</span>
 
 		
 		
 		
 		
 			
-				
-			
 			
 				Variants:
 				
 			
 			
-				<a class="opvariant" href="pst.htm#op22">PST</a>
+				<a class="opvariant" href="iwd2.htm#op22">IWD2</a>
 			
 		
 			
-			
-			
-				<a class="opvariant" href="bg1tots.htm#op22">BG1</a>
-			
-		
+				
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Statistic Modifier</span><br />
@@ -1634,11 +1628,67 @@ This effect does not work with <code>Timing Mode 1</code>.
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. The effect does not set STATE_LUCK.
-<br/>Known values for 'Type' are:
-<br/>0   Cumulative Modifier -> Luck = Luck + 'Statistic Modifier' value
-<br/>1   Lucky Streak
-<br/>2   Fortunes Favorite (perfect rolls)
+		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by <code>Statistic Modifier</code> amount. <code>Statistic Modifier</code> also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect does not set <a href="../files/ids/bgee/state.htm#BIT26">STATE_LUCK</a>.
+<br/>Known values for <code>Type</code> are:
+<ul>
+	<li>0 &longrightarrow; Cumulative Modifier: <code>Luck = Luck + 'Statistic Modifier' value</code></li>
+	<li>1 &longrightarrow; Flat Value Modifier: <code>Luck = 'Statistic Modifier' value</code></li>
+	<li>2 &longrightarrow; Percentage Modifier: <code>Luck = (Luck * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Effects of Luck:
+<ul>
+	<li>Modifies a creature's weapon damage die rolls (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's attack roll <code>[1d20]</code> (up/down to its maximum/minimum).</li>
+	<li>Modifies non-weapon damage die rolls dealt to the creature (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's initiative roll <code>[1d6 - 4]</code> for weapon attacks (up/down to its maximum/minimum). See <a href="#op190">opcode #190</a> for further details about weapon/attack speed.</li>
+	<li>Modifies a creatures's initiative roll <code>[1d8 - 1]</code> for movement (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d100]</code> for Hiding in Shadows (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d100]</code> for Set Traps (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d10]</code> for Open Locks (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d10]</code> for Bash Doors (up/down to its maximum/minimum).</li>
+	<li>Modifies a creatures's skill roll <code>[1d10]</code> for Disarm Trap (up/down to its maximum/minimum).</li>
+	<li>Modifies the chance for a Mirror Image to be struck, <code>chance = ('number of images' + 'Statistic Modifier') / ('number of images' + 1)</code>.</li>
+</ul>
+
+  </div>
+</div>
+
+
+
+
+<div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Here’s more info about <i>initiative roll for movement</i>:
+<ul>
+	<li>
+		Apparently, there is intentionally a random wait time between when a creature attempts to move to another creature, and when they will actually start pathing. Luck helps with this...<br />
+		<code>Wait Time = 0, when roll = 0</code><br />
+		<code>Wait Time = (8 - roll), when roll != 0</code>
+	</li>
+	<li>The natural roll range is <code>[0,7]</code>, but like many other rolls Luck alters this slightly. For every point in Luck the highest bound of the roll is converted into the lower bound.</li>
+	<li>So with <code>1</code> Luck the roll becomes <code>[0,6]</code>, with <code>0</code> having a probability of 25&percnt; instead of 12.5&percnt;. Negative luck works the same, but in reverse.</li>
+	<li>
+		<code>1</code> is the worst roll you can get, yet it is neither of the extremes. So, <code>-1</code> Luck is bad because it prevents you from bypassing the wait time, (rolling a <code>0</code>), but <b>if Luck must be negative, the lower the better</b>.
+		<ul>
+			<li><code>Luck = "-1"</code>: Worst roll possible is a <code>1</code>, you will be waiting for 7 AI updates (or, if you prefer, <small><sup>7</sup>&frasl;<sub>15</sub></small>ths of a second).</li>
+			<li><code>Luck = "-7"</code>: Worst roll possible is a <code>7</code>, you will be waiting for 1 AI update (or, if you prefer, <small><sup>1</sup>&frasl;<sub>15</sub></small>th of a second)!!</li>
+		</ul>
+	</li>
+	<li>Positive Luck will always increase the likelihood of instantaneous pathing.</li>
+	<li>Note that this wait time is only applied to creature-to-creature pathing, and never to on-the-ground destinations.</li>
+	<li>Also, every creature rolls for their own delay when they go to target a creature.</li>
+</ul>
+
+  </div>
+</div>
+
  </div>
 		<hr />
 

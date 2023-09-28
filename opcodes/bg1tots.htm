@@ -5031,39 +5031,93 @@ Known values for <code>Visual Effect</code> are:
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Control</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Mode</span><br />
 
 		
 		
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Summons a creature, with EA set to the <code>Control</code> field. The <code>Resource</code> key should be set to the filename of the creature to summon.
-<br/>Known values for <code>Control</code> are:
-<ul>
-	<li>0 &longrightarrow; Match target (hostile if no target)</li>
-	<li>1 &longrightarrow; Match target (hostile if no target)</li>
-	<li>2 &longrightarrow; As creature file</li>
-	<li>3 &longrightarrow; Match target (hostile if no target)</li>
-	<li>4 &longrightarrow; As creature file</li>
-	<li>5 &longrightarrow; Hostile to target</li>
-	<li>6 &longrightarrow; As creature file</li>
-	<li>8 &longrightarrow; As creature file</li>
-	<li>255 &longrightarrow; As creature file</li>
-</ul>
+		<div class="descriptiondata"> Summons a creature, with position and <a href="../files/ids/bgee/ea.htm">EA</a> based on the <code>Mode</code> field. The <code>Resource</code> key should be set to the filename of the creature to summon.
+<br>
+<div style="margin-top: 0.5em">Known values for <code>Mode</code> are:</div>
+<table style="width: auto">
+	<thead>
+		<tr>
+			<th>Mode</th>
+			<th>Position</th>
+			<th><a href="../files/ids/bgee/ea.htm">EA</a></th>
+		</tr>
+	</thead>
+	<tr>
+		<td>0, 1</td>
+		<td>effect</td>
+		<td>align with target creature</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>target creature</td>
+		<td>align with target creature</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>target creature</td>
+		<td>CRE file</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>effect</td>
+		<td>align against target creature</td>
+	</tr>
+	<tr>
+		<td>2, else</td>
+		<td>effect</td>
+		<td>CRE file</td>
+	</tr>
+</table>
 
 
 
 <div class="note info">
   <div>
-    <strong>Note:</strong> 
+    <strong>Info:</strong> 
+<code>Mode</code> details:
 <ul>
-	<li><code>Control</code> values <code>0</code> and <code>1</code> are identical, <code>4</code> and <code>6</code> are identical, <code>3</code> and <code>5</code> are each unique, all other values are identical with each other.</li>
-	<li><code>Control</code> values <code>3</code>, <code>4</code>, <code>5</code>, and <code>6</code> summon the creature at the location of the effect target. All other values summon the creature at the location of the ability target.</li>
+	<li>Position:</li>
+	<ul>
+		<li>3, 4 &longrightarrow; summon at target creature's position</li>
+		<li>else &longrightarrow; summon at effect position</li>
+	</ul>
+	<li><a href="../files/ids/bgee/ea.htm">EA</a>:</li>
+	<ul>
+		<li>0, 1, 3 &longrightarrow; align with target creature:</li>
+		<ul>
+			<li>target creature <a href="../files/ids/bgee/ea.htm">EA</a> &le; GOODCUTOFF (30) &longrightarrow; summon as ALLY (4)</li>
+			<li>target creature <a href="../files/ids/bgee/ea.htm">EA</a> &ge; EVILCUTOFF (200) &longrightarrow; summon as ENEMY (255)</li>
+			<li>else &longrightarrow; summon as CRE file</li>
+		</ul>
+		<li>5 &longrightarrow; align against target:</li>
+		<ul>
+			<li>target creature <a href="../files/ids/bgee/ea.htm">EA</a> &le; GOODCUTOFF (30) &longrightarrow; summon as ENEMY (255)</li>
+			<li>target creature <a href="../files/ids/bgee/ea.htm">EA</a> &ge; EVILCUTOFF (200) &longrightarrow; summon as ALLY (4)</li>
+			<li>else &longrightarrow; summon as CRE file</li>
+		</ul>
+	</ul>
 </ul>
 
   </div>
+</div>
+
+
+
+
+<div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+<code>Mode = 5</code> fails to make creatures summoned as ALLY (4) controllable. This is fixed upon reload.
+
+	</div>
 </div>
 
 

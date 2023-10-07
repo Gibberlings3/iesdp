@@ -127,7 +127,14 @@ title: "Notes and Conventions"
               <td><code>.acm</code></td>
               <td>???</td>
               <td>&nbsp;</td>
-              <td>Music.</td>
+              <td>Music. ACM compressed sound files.</td>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td><code>.acm</code></td>
+              <td>???</td>
+              <td>EE only</td>
+              <td>Music. Ogg Vorbis compressed sound files.</td>
             </tr>
             <tr>
               <td>N/A</td>
@@ -148,16 +155,23 @@ title: "Notes and Conventions"
               <td><code>.mve</code></td>
               <td>???</td>
               <td>&nbsp;</td>
-              <td>Movies. Proprietry Interplay format.</td>
+              <td>Movie. Proprietary Interplay format.</td>
             </tr>
             <tr>
               <td>0x0004</td>
-              <td><code>.wav</code>
-                <p><code>.wac</code></p>
+              <td><code>.wav</code><br/>
+                  <code>.wac</code>
               </td>
               <td>'<code>WAVC</code>'</td>
               <td>&nbsp;</td>
-              <td>Sounds. Note that 'WAVC' and 'RIFF' .wav files are used interchangeably throughout the engine; WAVC is an internal format -- more precisely, an ACM file with a header attached to simplify buffer estimation during file decompression.</td>
+              <td>Sound. Note that 'WAVC' and 'RIFF' .wav files are used interchangeably throughout the engine; WAVC is an internal format -- more precisely, an ACM file with a header attached to simplify buffer estimation during file decompression.</td>
+            </tr>
+            <tr>
+              <td>0x0004</td>
+              <td><code>.wav</code></td>
+              <td>N/A</td>
+              <td>EE only</td>
+              <td>Ogg Vorbis compressed sound file.</td>
             </tr>
             <tr>
               <td>0x0004</td>
@@ -168,7 +182,7 @@ title: "Notes and Conventions"
             </tr>
             <tr>
               <td>0x0005</td>
-              <td>N/A</td>
+              <td><code>.wfx</code></td>
               <td>'<code>WFX </code>'</td>
               <td>&nbsp;</td>
               <td>Wave FX file. WFX files are used to determine variation for playback of wave sounds.</td>
@@ -197,7 +211,7 @@ title: "Notes and Conventions"
             <tr>
               <td>0x03e9</td>
               <td><code>.wed</code></td>
-              <td>'<code>WED</code>'</td>
+              <td>'<code>WED </code>'</td>
               <td>&nbsp;</td>
               <td>Area region information.</td>
             </tr>
@@ -211,14 +225,14 @@ title: "Notes and Conventions"
             <tr>
               <td>0x03eb</td>
               <td><code>.tis</code></td>
-              <td>N/A</td>
+              <td>'<code>TIS </code>'</td>
               <td>&nbsp;</td>
               <td>Graphics, specifically area art.</td>
             </tr>
             <tr>
               <td>0x03ec</td>
               <td><code>.mos</code></td>
-              <td>'<code>MOS</code>'</td>
+              <td>'<code>MOS </code>'</td>
               <td>&nbsp;</td>
               <td>Graphics, specifically minimaps and GUI backgrounds.</td>
             </tr>
@@ -232,16 +246,16 @@ title: "Notes and Conventions"
             <tr>
               <td>0x03ed</td>
               <td><code>.itm</code></td>
-              <td>'<code>ITM</code>'</td>
+              <td>'<code>ITM </code>'</td>
               <td>&nbsp;</td>
-              <td>Items.</td>
+              <td>Item.</td>
             </tr>
             <tr>
               <td>0x03ee</td>
               <td><code>.spl</code></td>
-              <td>'<code>SPL</code>'</td>
+              <td>'<code>SPL </code>'</td>
               <td>&nbsp;</td>
-              <td>Spells.</td>
+              <td>Spell.</td>
             </tr>
             <tr>
               <td>0x03ef</td>
@@ -260,21 +274,21 @@ title: "Notes and Conventions"
             <tr>
               <td>0x03f1</td>
               <td><code>.cre</code></td>
-              <td>'<code>CRE</code>'</td>
+              <td>'<code>CRE </code>'</td>
               <td>&nbsp;</td>
-              <td>Creatures.</td>
+              <td>Creature.</td>
             </tr>
             <tr>
               <td>0x03f2</td>
               <td><code>.are</code></td>
               <td>'<code>AREA</code>'</td>
               <td>&nbsp;</td>
-              <td>Area defintion, including actor, door, region and container details.</td>
+              <td>Area definition, including actor, door, region and container details.</td>
             </tr>
             <tr>
               <td>0x03f3</td>
               <td><code>.dlg</code></td>
-              <td>'<code>DLG</code>'</td>
+              <td>'<code>DLG </code>'</td>
               <td>&nbsp;</td>
               <td>Dialog definition.</td>
             </tr>
@@ -290,21 +304,21 @@ title: "Notes and Conventions"
               <td><code>.gam</code></td>
               <td>'<code>GAME</code>'</td>
               <td>&nbsp;</td>
-              <td>Save games, specifically party details.</td>
+              <td>Saved game, specifically party details.</td>
             </tr>
             <tr>
               <td>N/A</td>
               <td><code>.sav</code></td>
-              <td>'<code>SAV</code>'</td>
+              <td>'<code>SAV </code>'</td>
               <td>&nbsp;</td>
-              <td>Save games, specifically area and store details.</td>
+              <td>Saved game, specifically area and store details.</td>
             </tr>
             <tr>
               <td>0x03f6</td>
               <td><code>.sto</code></td>
               <td>'<code>STOR</code>'</td>
               <td>&nbsp;</td>
-              <td>Stores.</td>
+              <td>Store.</td>
             </tr>
             <tr>
               <td>0x03f7</td>
@@ -315,17 +329,10 @@ title: "Notes and Conventions"
             </tr>
             <tr>
               <td>0x03f8</td>
-              <td><code>.chr</code></td>
-              <td>'<code>CHR</code>'</td>
-              <td>&nbsp;</td>
-              <td>Characters.</td>
-            </tr>
-            <tr>
-              <td>0x03f8</td>
               <td><code>.eff</code></td>
               <td>'<code>EFF </code>'</td>
               <td>ToTSC and IWD and BG2</td>
-              <td>Effects; a replacement for the 30-byte effect structure found in CRE and ITM files. The EFF V2.0 format can be found either as a standalone file or embedded in CRE, ITM and SPL files.</td>
+              <td>Effect; a replacement for the 30-byte effect structure found in CRE and ITM files. The EFF V2.0 format can be found either as a standalone file or embedded in CRE, ITM and SPL files.</td>
             </tr>
             <tr>
               <td>0x03f9</td>
@@ -337,30 +344,30 @@ title: "Notes and Conventions"
             <tr>
               <td>0x03fa</td>
               <td><code>.chr</code></td>
-              <td>'<code>CHR</code>'</td>
+              <td>'<code>CHR </code>'</td>
               <td>&nbsp;</td>
               <td>Character.</td>
             </tr>
             <tr>
               <td>0x03fb</td>
               <td><code>.vvc</code></td>
-              <td>'<code>VVC</code>'</td>
+              <td>'<code>VVC </code>'</td>
               <td>&nbsp;</td>
-              <td>Visual 'spell casting' effects.</td>
+              <td>Visual 'spell casting' effect.</td>
             </tr>
             <tr>
               <td>0x03fc</td>
               <td><code>.vef</code></td>
-              <td>???</td>
-              <td>Baldur's Gate 2 only</td>
-              <td>Visual effects. There are no known files of this type.</td>
+              <td>'<code>VEF </code>'</td>
+              <td>Baldur's Gate 2, EE games</td>
+              <td>Sequence of visual effects. Used by EE games to implement complex effects.</td>
             </tr>
             <tr>
               <td>0x03fd</td>
               <td><code>.pro</code></td>
-              <td><code>'PRO'</code></td>
+              <td>'<code>PRO </code>'</td>
               <td>&nbsp;</td>
-              <td>Projectiles.</td>
+              <td>Projectile.</td>
             </tr>
             <tr>
               <td><code>N/A</code></td>
@@ -383,70 +390,89 @@ title: "Notes and Conventions"
               <td><code>.wbm</code></td>
               <td>???</td>
               <td>EE only</td>
-              <td>Video format</td>
+              <td>WebM Video format. Used for cinematics as well as animations in ARE resources.</td>
             </tr>
             <tr>
               <td>0x0400</td>
               <td><code>.fnt</code></td>
               <td>???</td>
-              <td>Baldur's Gate Enhanced Edition / Baldur's Gate Enhanced Edition 2 only</td>
-              <td>Font.</td>
+              <td>EE only</td>
+              <td>Proprietary font format used by EE games before patch 2.0.</td>
             </tr>
             <tr>
               <td>0x0402</td>
               <td><code>.gui</code></td>
               <td>???</td>
-              <td>Baldur's Gate Enhanced Edition / Baldur's Gate Enhanced Edition 2 only</td>
-              <td>GUI definition.</td>
+              <td>Text format<br/>
+                  EE only</td>
+              <td>GUI definitions for EE games before patch 2.0.</td>
             </tr>
             <tr>
               <td>0x0403</td>
               <td><code>.sql</code></td>
               <td>???</td>
-              <td>Baldur's Gate Enhanced Edition / Baldur's Gate Enhanced Edition 2 only</td>
+              <td>Text format<br/>
+                  EE only</td>
               <td>Sql.</td>
             </tr>
             <tr>
               <td>0x0404</td>
               <td><code>.pvrz</code></td>
               <td>???</td>
-              <td>Baldur's Gate Enhanced Edition / Baldur's Gate Enhanced Edition 2 only</td>
-              <td>Compressed tileset.</td>
+              <td>EE only</td>
+              <td>Zlib-compressed PVR graphics file; referenced by BAM, MOS and TIS files.</td>
             </tr>
             <tr>
               <td>0x0405</td>
               <td><code>.glsl</code></td>
               <td>???</td>
-              <td>EE only</td>
-              <td>Shader description language.</td>
+              <td>Text format<br/>
+                  EE only</td>
+              <td>Shader description language. Used for both OpenGL and DirectX shader language variants.</td>
+            </tr>
+            <tr>
+              <td>0x0406</td>
+              <td><code>.tot</code></td>
+              <td>N/A</td>
+              <td>Icewind Dale / BG2 only</td>
+              <td>&quot;Talk Table Override Text&quot;. This is used to override to specific entries in the TLK file. TOT files are used in conjunction with the TOH file.</td>
+            </tr>
+            <tr>
+              <td>0x0407</td>
+              <td><code>.toh</code></td>
+              <td>'<code>TLK </code>'</td>
+              <td>Icewind Dale / BG2 / EE only</td>
+              <td>&quot;Talk Table Override Header&quot;. This is used to override to specific entries in the <code>TLK</code> file. In the original games TOH files are used in conjunction with the TOT file. In EE games TOH files are self-contained.</td>
             </tr>
             <tr>
               <td>0x0408</td>
               <td><code>.menu</code></td>
               <td>???</td>
-              <td>EE only</td>
-              <td>Menu definition</td>
+              <td>Text format<br/>
+                  EE only</td>
+              <td>GUI definitions for EE games since patch 2.0.</td>
             </tr>
             <tr>
               <td>0x0409</td>
-              <td><code>.menu</code></td>
+              <td><code>.lua</code></td>
               <td>???</td>
-              <td>EE only</td>
-              <td>LUA script file</td>
+              <td>Text format<br/>
+                  EE only</td>
+              <td>LUA script file.</td>
             </tr>
             <tr>
               <td>0x040a</td>
               <td><code>.ttf</code></td>
               <td>???</td>
               <td>EE only</td>
-              <td>True Type Font</td>
+              <td>True Type Font.</td>
             </tr>
             <tr>
               <td>0x040b</td>
               <td><code>.png</code></td>
               <td>???</td>
-              <td>EE patch 2+ only</td>
-              <td>Image file</td>
+              <td>EE only</td>
+              <td>Image file. Supported since EE patch 2.0.</td>
             </tr>
             <tr>
               <td>0x044c</td>
@@ -456,40 +482,33 @@ title: "Notes and Conventions"
               <td><span class="unknown">Unknown</span></td>
             </tr>
             <tr>
-              <td>N/A</td>
-              <td><code>.baf</code></td>
-              <td>N/A</td>
-              <td>Text format</td>
-              <td>Uncompiled scripts.</td>
-            </tr>
-            <tr>
               <td>0x0802</td>
               <td><code>.ini</code></td>
               <td>N/A</td>
               <td>Text format<br />
-                Planescape: Torment and Icewind Dale</td>
-              <td>Quest and spawn information.</td>
+                  Planescape: Torment, Icewind Dale, EE games</td>
+              <td>Quest and spawn information. Also used for creature animation definitions in EE games.</td>
             </tr>
             <tr>
               <td>0x0803</td>
               <td><code>.src</code></td>
               <td>N/A</td>
-              <td>Planescape: Torment only</td>
+              <td>Planescape: Torment, PST:EE</td>
               <td>Overhead text.</td>
             </tr>
             <tr>
-              <td>N/A</td>
-              <td><code>.toh</code></td>
-              <td>'<code>TLK </code>'</td>
-              <td>Icewind Dale only/BG2 only</td>
-              <td>&quot;Talk Table Override Header&quot;. This is used to override to specific entries in the <code>TLK</code> file. TOH files are used in conjunction with the TOT file.</td>
+              <td>0x0804</td>
+              <td><code>.maze</code></td>
+              <td>'<code>MAZE</code>'</td>
+              <td>PST:EE only</td>
+              <td>Modron Maze layout definition.</td>
             </tr>
             <tr>
               <td>N/A</td>
-              <td><code>.tot</code></td>
+              <td><code>.baf</code></td>
               <td>N/A</td>
-              <td>Icewind Dale only/BG2 only</td>
-              <td>&quot;Talk Table Override Text&quot;. This is used to override to specific entries in the TLK file. TOT files are used in conjunction with the TOH file.</td>
+              <td>Text format</td>
+              <td>Uncompiled script.</td>
             </tr>
             <tr>
               <td>N/A</td>

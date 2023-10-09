@@ -1016,6 +1016,50 @@ THEN
 END
 </code></pre></div></div>
 
+<p>IWDEE supports also the <code class="language-plaintext highlighter-rouge">UseItemAbility</code> signature:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  !StateCheck(Myself,STATE_MIRRORIMAGE)
+  GlobalLT("MO_UsedIlbratha","GLOBAL",1)
+  HasItemEquiped("SW1H26",Myself)  // Ilbratha +1
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    UseItemAbility("SW1H26",Myself,SLOT_AMMO3,1)  // Ilbratha +1
+    SetInterrupt(TRUE)
+    IncrementGlobal("MO_UsedIlbratha","GLOBAL",1)
+END
+</code></pre></div></div>
+
+    </div>
+  
+
+
+
+  
+    <div class="actionHeader">
+      <a id="34" class="action_name">
+        34 UseItemAbility(S:Object*,O:Target*,I:Slot*,I:Ability*)
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<span class="avariant_current">BGEE</span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/psteeactions.htm#34" title="PSTEE version is identical to this one">PSTEE</a></span>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="BG2 does not have this action">BG2</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>/<span class="avariant_missing" title="PST does not have this action">PST</span>]
+      </span>
+    
+
+  </span></div>
+    <div class="indent1 action_body">
+
+  
+  <p>See <a href="#34">UseItem.</a></p><p></p>
+
     </div>
   
 
@@ -1025,7 +1069,18 @@ END
     <div class="actionHeader">
       <a id="34" class="action_name">
         34 UseItemSlot(O:Target*,I:Slot*Slots)
-      </a></div>
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<a href="/iesdp/scripting/actions/bg1actions.htm#34" title="BG1 version is different from this one">BG1</a>/<a href="/iesdp/scripting/actions/bg2actions.htm#34" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/totlactions.htm#34" title="IWD1 version is different from this one">IWD1</a>/<a href="/iesdp/scripting/actions/iwd2actions.htm#34" title="IWD2 version is different from this one">IWD2</a>/<a href="/iesdp/scripting/actions/pstactions.htm#34" title="PST version is different from this one">PST</a>]
+      </span>
+    <span class="avariants">
+        [<span class="avariant_current">BGEE</span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/psteeactions.htm#34" title="PSTEE version is identical to this one">PSTEE</a></span>]
+      </span>
+    
+
+  </span></div>
     <div class="indent1 action_body">
 
   
@@ -1048,7 +1103,25 @@ END
     <div class="actionHeader">
       <a id="34" class="action_name">
         34 UseItemSlotAbility(O:Target*,I:Slot*Slots,I:Ability*)
-      </a></div>
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<a href="/iesdp/scripting/actions/bg2actions.htm#34" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/pstactions.htm#34" title="PST version is different from this one">PST</a>]
+      </span>
+    <span class="avariants">
+        [<span class="avariant_current">BGEE</span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/psteeactions.htm#34" title="PSTEE version is identical to this one">PSTEE</a></span>]
+      </span>
+    
+      
+      
+      
+      <span class="avariants">
+        [<span class="avariant_missing" title="BG1 does not have this action">BG1</span>/<span class="avariant_missing" title="IWD1 does not have this action">IWD1</span>/<span class="avariant_missing" title="IWD2 does not have this action">IWD2</span>]
+      </span>
+    
+
+  </span></div>
     <div class="indent1 action_body">
 
   
@@ -1067,7 +1140,18 @@ END
     <div class="actionHeader">
       <a id="36" class="action_name">
         36 Continue()
-      </a></div>
+      </a><span class="action_sisters">
+    
+    Variants:
+    <span class="avariants">
+        [<a href="/iesdp/scripting/actions/bg1actions.htm#36" title="BG1 version is different from this one">BG1</a>/<a href="/iesdp/scripting/actions/totlactions.htm#36" title="IWD1 version is different from this one">IWD1</a>/<a href="/iesdp/scripting/actions/iwd2actions.htm#36" title="IWD2 version is different from this one">IWD2</a>/<a href="/iesdp/scripting/actions/pstactions.htm#36" title="PST version is different from this one">PST</a>]
+      </span>
+    <span class="avariants">
+        [<span class="avariant_same"><a href="/iesdp/scripting/actions/bg2actions.htm#36" title="BG2 version is identical to this one">BG2</a></span>/<span class="avariant_current">BGEE</span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/psteeactions.htm#36" title="PSTEE version is identical to this one">PSTEE</a></span>]
+      </span>
+    
+
+  </span></div>
     <div class="indent1 action_body"><p></p><p>This action instructs the script parser to continue looking for actions in the active creatures action list. This is mainly included in scripts for efficiency. Continue should also be appended to any script blocks added to the top of existing scripts, to ensure correct functioning of any blocks which include the OnCreation trigger. Continue may prevent actions being completed until the script parser has finished its execution cycle. Continue() must be the last command in an action list to function correctly. Use of continue in a script block will cause the parser to treater subsequent empty response blocks as though they contained a Continue() command - this parsing can be stopped by including a NoAction() in the empty response block.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF

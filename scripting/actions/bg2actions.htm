@@ -943,7 +943,25 @@ THEN
 END
 </code></pre></div></div>
 
+<p>IWDEE supports also the <code class="language-plaintext highlighter-rouge">UseItemAbility</code> signature:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
+  !StateCheck(Myself,STATE_MIRRORIMAGE)
+  GlobalLT("MO_UsedIlbratha","GLOBAL",1)
+  HasItemEquiped("SW1H26",Myself)  // Ilbratha +1
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    UseItemAbility("SW1H26",Myself,SLOT_AMMO3,1)  // Ilbratha +1
+    SetInterrupt(TRUE)
+    IncrementGlobal("MO_UsedIlbratha","GLOBAL",1)
+END
+</code></pre></div></div>
+
     </div>
+  
+
+
+
   
 
 

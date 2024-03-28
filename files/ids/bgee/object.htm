@@ -121,6 +121,11 @@ IDS V1.0<br />
 <br />
 
 <div class="idsHeader"><a name="Player1">21 Player1</a></div>
+<div class="indent1">
+  Assigned to party members in their join order, lowest first. If a member leaves the party, the associated object
+  will be invalid until a new member joins or the game is reloaded (when the list gets compacted).<br>
+  Use the <code><a href="#Player1Fill">Player1Fill</a></code> family of objects if you want to avoid any gaps.
+</div>
 <br />
 
 <div class="idsHeader"><a name="Player2">22 Player2</a></div>
@@ -296,7 +301,9 @@ IDS V1.0<br />
 
 <div class="idsHeader"><a name="70">70 Player1Fill</a></div>
 <div class="indent1">
-  Returns the player in the first portrait slot.
+  Assigned to party members in their join order, lowest first. If a member leaves the party, objects with a
+  higher ID will be shifted one down. Eg. if Player2 is booted, previous Player3 will be accessible via Player2,
+  Player4 via Player3 and so on.
 </div>
 <br />
 
@@ -349,6 +356,9 @@ IDS V1.0<br />
 <br />
 
 <div class="idsHeader"><a name="PartySlot1">86 PartySlot1</a></div>
+<div class="indent1">
+  Returns the player in the first portrait slot.
+</div>
 <br />
 
 <div class="idsHeader"><a name="PartySlot2">87 PartySlot2</a></div>

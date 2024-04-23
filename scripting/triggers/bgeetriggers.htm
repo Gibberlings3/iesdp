@@ -128,12 +128,34 @@
 <div class="triggerHeader"><a name="0x400A">0x400A Alignment(O:Object*,I:Alignment*Align)</a></div>
 <div class="indent1">
   Returns true only if the <a href="../../files/ids/bgee/align.htm">alignment</a> of the specified object matches that in the second parameter.
+
+  
+  <div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+Doesn’t evaluate object selectors (e.g. [PC]).
+
+
+	</div>
+</div>
+
 </div>
 <br />
 
 <div class="triggerHeader"><a name="0x400B">0x400B Allegiance(O:Object*,I:Allegience*EA)</a></div>
 <div class="indent1">
   Returns true only if the <a href="../../files/ids/bgee/ea.htm">Enemy/Ally</a> status of the specified object matches that in the second parameter.
+
+  
+  <div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+Doesn’t evaluate object selectors (e.g. [PC]).
+
+
+	</div>
+</div>
+
 </div>
 <br />
 
@@ -152,6 +174,17 @@
 <div class="triggerHeader"><a name="0x400E">0x400E General(O:Object*,I:General*General)</a></div>
 <div class="indent1">
   Returns true only if the <a href="../../files/ids/bgee/general.htm">General</a> category of the specified object matches that in the second parameter.
+
+  
+  <div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+Doesn’t evaluate object selectors (e.g. [PC]).
+
+
+	</div>
+</div>
+
 </div>
 <br />
 
@@ -206,6 +239,17 @@
 <div class="triggerHeader"><a name="0x4017">0x4017 Race(O:Object*,I:Race*Race)</a></div>
 <div class="indent1">
   Returns true only if the <a href="../../files/ids/bgee/race.htm">Race</a> of the specified object is the same as that specified by the 2<small><sup>nd</sup></small> parameter.
+
+  
+  <div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+Doesn’t evaluate object selectors (e.g. [PC]).
+
+
+	</div>
+</div>
+
 </div>
 <br />
 
@@ -242,6 +286,17 @@
 <div class="triggerHeader"><a name="0x401D">0x401D Specifics(O:Object*,I:Specifics*Specific)</a></div>
 <div class="indent1">
   Returns true only if the <a href="../../files/ids/bgee/specific.htm">specifics</a> (as set in the <a href="../../file_formats/ie_formats/cre_v1.htm#CREV1_0_Header_0x274">CRE</a> file or by the <a href="../actions/bgeeactions.htm#157">ChangeSpecifics()</a> action) of the specified object is equal to the 2<small><sup>nd</sup></small> parameter.
+
+  
+  <div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+Doesn’t evaluate object selectors (e.g. [PC]).
+
+
+	</div>
+</div>
+
 </div>
 <br />
 
@@ -550,13 +605,24 @@ If we use <code>!GlobalTimerNotExpired(S:Name*,S:Area*)</code>, this will return
 
 <div class="triggerHeader"><a name="0x4043">0x4043 InParty(O:Object*)</a></div>
 <div class="indent1">
-  Returns true only if the specifed object is in the player's party.
+  Returns true only if the specified object is in the player's party.
+
+  
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Alternate object selector (e.g. [PC]) behavior — returns true if a party member matches against the selector.
+
+
+  </div>
+</div>
+
 </div>
 <br />
 
 <div class="triggerHeader"><a name="0x4044">0x4044 CheckStat(O:Object*,I:Value*,I:StatNum*Stats)</a></div>
 <div class="indent1">
-  Returns true only if the specifed object has the <a href="../../files/ids/bgee/stats.htm">statistic</a> in the 3<small><sup>rd</sup></small> parameter at the value of the 2<small><sup>nd</sup></small> parameter.
+  Returns true only if the specified object has the <a href="../../files/ids/bgee/stats.htm">statistic</a> in the 3<small><sup>rd</sup></small> parameter at the value of the 2<small><sup>nd</sup></small> parameter.
 
   
   <div class="note info">
@@ -573,7 +639,7 @@ This trigger looks at the entire value of any <code><a href="../../files/ids/bge
 
 <div class="triggerHeader"><a name="0x4045">0x4045 CheckStatGT(O:Object*,I:Value*,I:StatNum*Stats)</a></div>
 <div class="indent1">
-  Returns true only if the specifed object has the <a href="../../files/ids/bgee/stats.htm">statistic</a> in the 3<small><sup>rd</sup></small> parameter greater than the value of the 2<small><sup>nd</sup></small> parameter.
+  Returns true only if the specified object has the <a href="../../files/ids/bgee/stats.htm">statistic</a> in the 3<small><sup>rd</sup></small> parameter greater than the value of the 2<small><sup>nd</sup></small> parameter.
 
   
   <div class="note info">
@@ -590,7 +656,7 @@ This trigger looks at the entire value of any <code><a href="../../files/ids/bge
 
 <div class="triggerHeader"><a name="0x4046">0x4046 CheckStatLT(O:Object*,I:Value*,I:StatNum*Stats)</a></div>
 <div class="indent1">
-  Returns true only if the specifed object has the <a href="../../files/ids/bgee/stats.htm">statistic</a> in the 3<small><sup>rd</sup></small> parameter less than the value of the 2<small><sup>nd</sup></small> parameter.
+  Returns true only if the specified object has the <a href="../../files/ids/bgee/stats.htm">statistic</a> in the 3<small><sup>rd</sup></small> parameter less than the value of the 2<small><sup>nd</sup></small> parameter.
 
   
   <div class="note info">
@@ -655,6 +721,17 @@ Scripting uses the same random value to seed all <code><a href="#0x4047">RandomN
 <div class="triggerHeader"><a name="0x404D">0x404D Gender(O:Object*,I:Sex*Gender)</a></div>
 <div class="indent1">
   Returns true only if the <a href="../../files/ids/bgee/gender.htm">gender</a> of the specified object is that given in the 2<small><sup>nd</sup></small> parameter.
+
+  
+  <div class="note bug">
+	<div>
+		<strong>Bug:</strong> 
+Doesn’t evaluate object selectors (e.g. [PC]).
+
+
+	</div>
+</div>
+
 </div>
 <br />
 
@@ -783,7 +860,18 @@ Scripting uses the same random value to seed all <code><a href="#0x4047">RandomN
 
 <div class="triggerHeader"><a name="0x4062">0x4062 InteractingWith(O:Object*)</a></div>
 <div class="indent1">
-  NT Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a> is interacting (dialogue?) with the specified object.
+  Returns true only if the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a>'s latest target using the <code><a href="../actions/bgeeactions.htm#168">Interact()</a></code> action is the specified object.
+
+  
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Alternate object selector (e.g. [PC]) behavior — returns true if the active <a href="../../file_formats/ie_formats/cre_v1.htm">CRE</a>’s latest target using the <code><a href="../actions/bgeeactions.htm#168">Interact()</a></code> action matches against the selector.
+
+
+  </div>
+</div>
+
 </div>
 <br />
 
@@ -1061,6 +1149,17 @@ weapons.
 <div class="triggerHeader"><a name="0x4090">0x4090 InPartySlot(O:Object*,I:Slot*)</a></div>
 <div class="indent1">
   Returns true only if the specified object is in the party and in the slot specified (slots are 0-5). Party slots are based on join order; Player1 is in slot 0, Player2 in slot 1 etc.
+
+  
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Alternate object selector (e.g. [PC]) behavior — returns true if the party member in the specified slot matches against the selector.
+
+
+  </div>
+</div>
+
 </div>
 <br />
 
@@ -1224,7 +1323,7 @@ The spell level must match the spell’s definition (in <a href="../../files/ids
 <div class="triggerHeader"><a name="0x40A8">0x40A8 IsValidForPartyDialogue(O:Object*)</a></div>
 <div class="triggerHeader"><a name="0x40A8">0x40A8 IfValidForPartyDialogue(O:Object*)</a></div>
 <div class="indent1">
-  Returns true only if that specifed party member can take part in party dialogue.
+  Returns true only if that specified party member can take part in party dialogue.
 </div>
 <br />
 
@@ -1487,7 +1586,18 @@ This trigger may not act correctly until the active creature has dropped below t
 
 <div class="triggerHeader"><a name="0x40D3">0x40D3 InPartyAllowDead(O:Object*)</a></div>
 <div class="indent1">
-  NT Returns true if the specified object which can be dead or alive is in the party.
+  Returns true only if the specified object, which can be dead or alive, is in the player's party.
+
+  
+  <div class="note info">
+  <div>
+    <strong>Info:</strong> 
+Alternate object selector (e.g. [PC]) behavior — returns true if a party member, which can be dead or alive, matches against the selector.
+
+
+  </div>
+</div>
+
 </div>
 <br />
 

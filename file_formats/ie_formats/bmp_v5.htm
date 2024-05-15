@@ -1,0 +1,258 @@
+---
+title: "BMPv5 file format"
+---
+    <div class="title_main">BMP file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BG(2):EE, IWD:EE, PST:EE</div>
+    <br />
+
+    <div class="fileHeader">General Description</div>
+    <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wingdi/ns-wingdi-bitmapv5header">Microsoft format documentation</a><br />
+    The Enhanced editions support also version 5 of the BMP format. It is <a href="../bmp.htm">largely the same as version 1</a> used by the original games, but supports 32-bit colors (still 8 bits per channel, but adds one for alpha).<br />
+    <br />
+    <hr />
+    <br />
+    <a name="header">Header format</a><br />
+    <br />
+    <table border="1" width="98%">
+      <tbody>
+        <tr>
+          <th colspan="3">Name</th>
+          <th>Size</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>0x00</td>
+          <td colspan="2">Signature</td>
+          <td>2 bytes</td>
+          <td>'BM'</td>
+        </tr>
+        <tr>
+          <td>0x02</td>
+          <td colspan="2">FileSize</td>
+          <td>4 bytes</td>
+          <td>File size in bytes</td>
+        </tr>
+        <tr>
+          <td>0x06</td>
+          <td colspan="2">2 reserved words</td>
+          <td>4 bytes</td>
+          <td>unused (=0)</td>
+        </tr>
+        <tr>
+          <td>0x0a</td>
+          <td colspan="2">DataOffset</td>
+          <td>4 bytes</td>
+          <td>File offset to Raster Data</td>
+        </tr>
+
+        <tr>
+          <td>0x0e</td>
+          <td colspan="2">Size</td>
+          <td>4 bytes</td>
+          <td>Size of InfoHeader =40&nbsp;</td>
+        </tr>
+        <tr>
+          <td>0x12</td>
+          <td colspan="2">Width</td>
+          <td>4 bytes</td>
+          <td>Bitmap Width</td>
+        </tr>
+        <tr>
+          <td>0x16</td>
+          <td colspan="2">Height</td>
+          <td>4 bytes</td>
+          <td>Bitmap Height</td>
+        </tr>
+        <tr>
+          <td>0x1a</td>
+          <td colspan="2">Planes</td>
+          <td>2 bytes</td>
+          <td>Number of Planes (=1)</td>
+        </tr>
+        <tr>
+          <td>0x1c</td>
+          <td colspan="2">BitCount</td>
+          <td>2 bytes</td>
+          <td>Bits per Pixel</td>
+        </tr>
+        <tr>
+          <td>0x1e</td>
+          <td colspan="2">Compression</td>
+          <td>4 bytes</td>
+          <td>Type of Compression: BI_RGB (uncompressed), BI_BITFIELDS (uncompressed with color masks), BI_RLE4 / BI_RLE8 (with runtime encoding)</td>
+        </tr>
+        <tr>
+          <td>0x22</td>
+          <td colspan="2">ImageSize</td>
+          <td>4 bytes</td>
+          <td>(compressed) Size of Image&nbsp;<br />
+            It is valid to set this =0 if
+            Compression = 0</td>
+        </tr>
+        <tr>
+          <td>0x26</td>
+          <td colspan="2">XpixelsPerM</td>
+          <td>4 bytes</td>
+          <td>horizontal resolution:
+            Pixels/meter</td>
+        </tr>
+        <tr>
+          <td>0x2a</td>
+          <td colspan="2">YpixelsPerM</td>
+          <td>4 bytes</td>
+          <td>vertical resolution: Pixels/meter</td>
+        </tr>
+        <tr>
+          <td>0x2e</td>
+          <td colspan="2">ColorsUsed</td>
+          <td>4 bytes</td>
+          <td>Number of actually used colors</td>
+        </tr>
+        <tr>
+          <td>0x32</td>
+          <td colspan="2">ColorsImportant</td>
+          <td>4 bytes</td>
+          <td>Number of important colors&nbsp;<br />
+            0 = all</td>
+        </tr>
+
+        <tr>
+          <td>0x36</td>
+          <td colspan="3">Color masks</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td rowspan="5">&nbsp;</td>
+          <td rowspan="4">&nbsp;</td>
+          <td>Red mask</td>
+          <td>4 bytes</td>
+          <td>Mask identifying bits of red component</td>
+        </tr>
+        <tr>
+          <td>Green mask</td>
+          <td>4 bytes</td>
+          <td>Mask identifying bits of green component</td>
+        </tr>
+        <tr>
+          <td>Blue mask</td>
+          <td>4 bytes</td>
+          <td>Mask identifying bits of blue component</td>
+        </tr>
+        <tr>
+          <td>Alpha mask</td>
+          <td>4 bytes</td>
+          <td>Mask identifying bits of alpha component</td>
+        </tr>
+
+        <tr>
+          <td>0x46</td>
+          <td>CSType</td>
+          <td>4 bytes</td>
+          <td>Color space type</td>
+        </tr>
+        <tr>
+          <td>0x4a</td>
+          <td>RedX</td>
+          <td>4 bytes</td>
+          <td>X coordinate of red endpoin</td>
+        </tr>
+        <tr>
+          <td>0x4e</td>
+          <td>RedY</td>
+          <td>4 bytes</td>
+          <td>Y coordinate of red endpoin</td>
+        </tr>
+        <tr>
+          <td>0x52</td>
+          <td>RedZ</td>
+          <td>4 bytes</td>
+          <td>Z coordinate of red endpoin</td>
+        </tr>
+        <tr>
+          <td>0x56</td>
+          <td>GreenX</td>
+          <td>4 bytes</td>
+          <td>X coordinate of green endpoint</td>
+        </tr>
+        <tr>
+          <td>0x5a</td>
+          <td>GreenY</td>
+          <td>4 bytes</td>
+          <td>Y coordinate of green endpoint</td>
+        </tr>
+        <tr>
+          <td>0x5e</td>
+          <td>GreenZ</td>
+          <td>4 bytes</td>
+          <td>Z coordinate of green endpoint</td>
+        </tr>
+        <tr>
+          <td>0x62</td>
+          <td>BlueX</td>
+          <td>4 bytes</td>
+          <td>X coordinate of blue endpoint</td>
+        </tr>
+        <tr>
+          <td>0x66</td>
+          <td>BlueY</td>
+          <td>4 bytes</td>
+          <td>Y coordinate of blue endpoint</td>
+        </tr>
+        <tr>
+          <td>0x6a</td>
+          <td>BlueZ</td>
+          <td>4 bytes</td>
+          <td>Z coordinate of blue endpoint</td>
+        </tr>
+        <tr>
+          <td>0x6e</td>
+          <td>GammaRed</td>
+          <td>4 bytes</td>
+          <td>Gamma red coordinate scale value</td>
+        </tr>
+        <tr>
+          <td>0x72</td>
+          <td>GammaGreen</td>
+          <td>4 bytes</td>
+          <td>Gamma green coordinate scale value</td>
+        </tr>
+        <tr>
+          <td>0x76</td>
+          <td>GammaBlue</td>
+          <td>4 bytes</td>
+          <td>Gamma blue coordinate scale value</td>
+        </tr>
+        <tr>
+          <td>0x7a</td>
+          <td>Intent</td>
+          <td>4 bytes</td>
+          <td>Rendering intent for bitmap</td>
+        </tr>
+        <tr>
+          <td>0x7e</td>
+          <td>ProfileData</td>
+          <td>4 bytes</td>
+          <td>Offset to profile data</td>
+        </tr>
+        <tr>
+          <td>0x82</td>
+          <td>ProfileSize</td>
+          <td>4 bytes</td>
+          <td>Size of embedded profile data</td>
+        </tr>
+        <tr>
+          <td>0x86</td>
+          <td>Reserved3</td>
+          <td>4 bytes</td>
+          <td></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+

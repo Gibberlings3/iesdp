@@ -30,3 +30,11 @@ When <code>Type = 3</code>, this opcode processes before saving throws are check
 {% endcapture %}
 
 {% include info.html %}
+
+{% capture note %}
+Since at least version 2.5, <code>Type = 3</code> modifies instantly <a href="{{ '/files/ids/bgee/stats.htm#10' | prepend: relurl }}">SAVEVSWANDS</a> instead of <a href="{{ '/files/ids/bgee/stats.htm#59' | prepend: relurl }}">SAVEVSDEATH</a>.
+As a result, saving throws for effects in the same effect stack and after this opcode are not processed as expected.
+Effects proceeded after the stack are treated normaly like <code>Type = 0</code>.
+{% endcapture %}
+
+{% include bug.html %}

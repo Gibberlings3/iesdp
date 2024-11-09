@@ -28,10 +28,7 @@ The search map for BG2 is:
 | 15        | Grass           | White             | WAL_04         | yes          | yes             | yes         | yes             |
 
 
-  A sample search map (from ar0072) can be seen below.
-  <div class="indent1">
-    <img src="../images/ar0072sr.png" alt="Sample search map - AR0072" />
-  </div>
- </div>
+A sample search map (from ar0072) can be seen below.
+<div class="indent1">
+  <img src="../images/ar0072sr.png" alt="Sample search map - AR0072" />
 </div>
-

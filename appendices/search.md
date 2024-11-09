@@ -1,12 +1,12 @@
 ---
 title: "Search Maps"
 ---
-    <div class="title_main"> Search Maps</div>
+<div class="title_main"> Search Maps</div>
 
-    <br />
-    <div class="indent1">
-      All areas have a search map, which controls where the player may walk and fly, the footstep sound while walking over certain areas, what terrain projectiles can pass and whether terrain blocks clearing of the fog of war.<br />
-      The search map for BG2 is:<br />
+<br />
+All areas have a search map, which controls where the player may walk and fly, the footstep sound while walking over certain areas, what terrain projectiles can pass and whether terrain blocks clearing of the fog of war.
+
+The search map for BG2 is:
 
 | **Value** | **Description** | **Color**         | **Walk sound** | **Walkable** | **See through** | **Flyable** | **Projectiles** |
 |:---------:|:---------------:|:-----------------:|:--------------:|:------------:|:---------------:|:-----------:|:---------------:|
@@ -28,11 +28,10 @@ title: "Search Maps"
 | 15        | Grass           | White             | WAL_04         | yes          | yes             | yes         | yes             |
 
 
-      A sample search map (from ar0072) can be seen below. <br />
-      <div class="indent1">
-        <img src="../images/ar0072sr.png" alt="Sample search map - AR0072" />
-      </div>
-    </div>
+  A sample search map (from ar0072) can be seen below.
+  <div class="indent1">
+    <img src="../images/ar0072sr.png" alt="Sample search map - AR0072" />
   </div>
+ </div>
 </div>
 

@@ -4661,7 +4661,7 @@ Both parameters should be <code>0</code> (zero).
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Removes the <a href="#op48">silence effect</a> and <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> from the targeted creature(s).
+		<div class="descriptiondata"> Removes the <a href="#op38">silence effect</a> and <a href="../files/ids/bgee/state.htm#BIT12">STATE_SILENCED</a> from the targeted creature(s).
 <br/>This effect ignores durations attributed to it.
  </div>
 		<hr />
@@ -6158,7 +6158,7 @@ Known values for <code>Visual Effect</code> are:
 		Default is a hardcoded VVC using <code>"SPBOOM.BAM"</code> and palette <code>#65</code>. This is generally used as the "portal" animation.
 	</li>
 	<li>(EE only) <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x78">Resource 3</a></code> (external <a href="../file_formats/ie_formats/eff_v2.htm">EFF</a>s): Animation VVC/BAM file to be played at the location of the ability target.</li>
-	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70">Resource 2</a></code> (not exact). Creature will not appear/spawn until this animation finishes.</li>
+	<li>Applies an <a href="#op271">opcode #271</a> to the summoned creature based on the duration of the <code><a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x70">Resource 2</a></code> (not exact) and Mode set to 1 (tested only in EE). Creature will not appear/spawn until this animation finishes.</li>
 	<li>Applies a delayed <a href="#op215">opcode #215</a> with <code>resource = "SPGFLSH1"</code> to the summoned creature, <code>delayed duration = 5 ticks less</code> than the <a href="#op271">opcode #271</a>.</li>
 	<li>Applies a delayed <a href="#op68">opcode #68</a> to the summoned creature based on effect duration (unless permanent).</li>
 	<li>When summoned, any temporary changes (such as from equipped items) to the creature's <a href="../files/ids/bgee/gender.htm">gender</a> are made permanent.</li>
@@ -22047,7 +22047,7 @@ Only 8 creatures in a given area can fully clear fog of war, with priority going
 		<br />
 
 		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Mode</span><br />
 
 		
 		
@@ -22055,9 +22055,17 @@ Only 8 creatures in a given area can fully clear fog of war, with priority going
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Hides the creature's animation and selection circle, including illusionary images (Blur / Mirror Image).<br/>
-Disables the creature's AI scripts.<br/>
 The creature cannot take any action not listed in <a href="../files/ids/bgee/instant.htm">INSTANT.IDS</a> (usually through <a href="../scripting/actions/bgeeactions.htm#1">ActionOverride()</a>).<br/>
-The creature is still subject to area effect and may still be targeted directly by mouseover. </div>
+The creature is still subject to area effect and may still be targeted directly by mouseover.
+<br/><br/>
+
+Known values for <code>Mode</code> are:
+<ul>
+	<li>0 &longrightarrow; Default behavior</li>
+	<li>1 &longrightarrow; In addition, disables the creature's AI scripts, sets <a href="../files/ids/bgee/stats.htm#188">SUMMON_DISABLE_ACTION</a> to <code>1</code></li>
+</ul>
+
+<br/>This effect sets <a href="../files/ids/bgee/stats.htm#70">CasterHold</a> and <a href="../files/ids/bgee/stats.htm#150">SUMMONDISABLE</a> to <code>1</code>. </div>
 		<hr />
 
 	</div>
@@ -24631,8 +24639,18 @@ This opcode must be attached to the item itself, and does not work when applied 
 	<li>0 &longrightarrow; Normal</li>
 	<li>1 &longrightarrow; Rain</li>
 	<li>2 &longrightarrow; Snow</li>
-	<li>3 &longrightarrow; Fog (unimplemented)</li>
+	<li>3 &longrightarrow; Fog</li>
 </ul>
+
+ <div class="note info">
+  <div>
+    <strong>Note:</strong> 
+The action has no effect if <code class="language-plaintext highlighter-rouge">Weather</code> has been disabled in the game options.
+In addition, Fog option requires <code class="language-plaintext highlighter-rouge">Enable Fog</code> to be enabled in the game options.
+
+  </div>
+</div>
+
  </div>
 		<hr />
 
@@ -24803,6 +24821,8 @@ It is still processed, so it will still interact with <a href="#op200">Spell Tur
 		
 		
 		
+			<span class="parameterheading">Special:</span> <span class="parameterdata">Mode</span><br />
+		
 
 		<div class="descriptionheading">Description:</div>
 		<div class="descriptiondata"> Applies the modifier value specified by the <code>Statistic Modifier</code> field in the style specified by the <code>Type</code> field.
@@ -24810,7 +24830,12 @@ It is still processed, so it will still interact with <a href="#op200">Spell Tur
 <ul>
 	<li>0 &longrightarrow; Cumulative Modifier: <code>TurnLevel = TurnLevel + 'Statistic Modifier' value</code></li>
 	<li>1 &longrightarrow; Flat Value Modifier: <code>TurnLevel = 'Statistic Modifier' value</code></li>
-	<li>2 &longrightarrow; Percentage Modifier: <code>TurnLevel = (TurnLevel * 'Statistic Modifier' value) / 100</code></li>
+</ul>
+
+<br/><br/>Known values for <code>Mode</code> are:
+<ul>
+	<li>0 &longrightarrow; Normal: Effect functions as dictated by the <code>Type</code> field.</li>
+	<li>1 &longrightarrow; Parameter #1 is incremented by the highest target level.</li>
 </ul>
 
 <br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#55">TURNUNDEADLEVEL</a>.

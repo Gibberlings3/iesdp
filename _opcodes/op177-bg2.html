@@ -1,0 +1,116 @@
+---
+n: 177
+opname: "Use EFF File"
+param1: "IDS Entry"
+param2: "IDS File"
+param3: "Bypass probability / immunities / saving throws"
+bg1: 0
+bg2: 1
+bgee: 0
+iwd1: 0
+iwd2: 0
+pst: 0
+pstee: 0
+---
+{% include relurl.html %}
+
+Applies the <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> file specified by the
+<a href="{{ '/file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource' | prepend: relurl }}"><code>resource</code></a> key to
+the targeted creature(s), if the targeted creature(s) match the value specified by the <code>IDS Entry</code> field, in the
+specified <code>IDS File</code>.
+<br/>Known values for <code>IDS File</code> are:
+<ul>
+	<li>2 &longrightarrow; <a href="{{ '/files/ids/bgee/ea.htm' | prepend: relurl }}"><code>EA.IDS</code></a></li>
+	<li>3 &longrightarrow; <a href="{{ '/files/ids/bgee/general.htm' | prepend: relurl }}"><code>GENERAL.IDS</code></a></li>
+	<li>4 &longrightarrow; <a href="{{ '/files/ids/bgee/race.htm' | prepend: relurl }}"><code>RACE.IDS</code></a></li>
+	<li>5 &longrightarrow; <a href="{{ '/files/ids/bgee/class.htm' | prepend: relurl }}"><code>CLASS.IDS</code></a></li>
+	<li>6 &longrightarrow; <a href="{{ '/files/ids/bgee/specific.htm' | prepend: relurl }}"><code>SPECIFIC.IDS</code></a></li>
+	<li>7 &longrightarrow; <a href="{{ '/files/ids/bgee/gender.htm' | prepend: relurl }}"><code>GENDER.IDS</code></a></li>
+	<li>8 &longrightarrow; <a href="{{ '/files/ids/bgee/align.htm' | prepend: relurl }}"><code>ALIGN.IDS</code></a></li>
+</ul>
+
+When used in an external <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> file, a non-zero value for the
+<code>Bypass probability / immunities / saving throws</code> field causes the <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a>
+file to be applied regardless of the rolls / immunities of the target(s).
+
+{% capture note %}
+This effect doesn't add the opcode contained in the <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a>
+file to the targeted creature(s). Instead, the <code>op177</code> instance itself stays on the target(s) via the usual duration rules, and
+internally decodes and executes the opcode contained in the <code>EFF</code> file every time the <code>op177</code> instance is ticked.
+{% endcapture %}
+{% include important.html %}
+
+<div style="margin-top: 1em; margin-bottom: 0.5em">When ticked, the <code>op177</code> instance copies fields to/from the <code>decoded effect</code> of the same tick:</div>
+
+<ul>
+	<li>
+		<div style="margin-top: 0.5em; margin-bottom: 0.5em"><b>Every tick (before effect application)</b>, <code>op177</code> &rightarrow; <code>decoded effect</code>:</div>
+		<table style="width: auto">
+			<thead>
+				<tr>
+					<th>Field Name</th>
+					<th><a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> Offset</th>
+				</tr>
+			</thead>
+			<tr>
+				<td>Timing mode</td>
+				<td><code>[+0x24]</code></td>
+			</tr>
+			<tr>
+				<td>Duration</td>
+				<td><code>[+0x28]</code></td>
+			</tr>
+			<tr>
+				<td>Caster position</td>
+				<td><code>[+0x80]</code> and <code>[+0x84]</code></td>
+			</tr>
+			<tr>
+				<td>Target position</td>
+				<td><code>[+0x88]</code> and <code>[+0x8C]</code></td>
+			</tr>
+			<tr>
+				<td>First call flag</td>
+				<td><code>[+0xCC]</code></td>
+			</tr>
+			<tr>
+				<td>Source ID</td>
+				<td><code>(internal field)</code></td>
+			</tr>
+			<tr>
+				<td>Source target ID</td>
+				<td><code>(internal field)</code></td>
+			</tr>
+		</table>
+	</li>
+	<li>
+		<div style="margin-top: 0.5em; margin-bottom: 0.5em"><b>Every tick (after effect application)</b>, <code>decoded effect</code> &rightarrow; <code>op177</code>:</div>
+		<table style="width: auto">
+			<thead>
+				<tr>
+					<th>Field Name</th>
+					<th><a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> Offset</th>
+				</tr>
+			</thead>
+			<tr>
+				<td>First call flag</td>
+				<td><code>[+0xCC]</code></td>
+			</tr>
+		</table>
+	</li>
+</ul>
+
+{% capture note %}
+The engine specially handles cases where effects are removed by opcode, ensuring it also matches the opcode in the <a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}">
+<code>EFF</code></a> file of <code>op177</code> instances.
+{% endcapture %}
+{% include note.html %}
+
+{% capture note %}
+<a href="{{ '/file_formats/ie_formats/eff_v2.htm' | prepend: relurl }}"><code>EFF</code></a> files applied by this opcode can be blocked by <a href="#op101">opcode #101</a>.
+{% endcapture %}
+{% include important.html %}
+
+{% capture note %}
+This effect causes a crash if used by a container.<br/>
+{% endcapture %}
+{% include warning.html %}

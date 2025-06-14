@@ -25322,7 +25322,7 @@ Leaving the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource
 	<div id="op322" class="opcode">
 		<span class="opnumberdata">#322 (0x142)</span>
 
-		<span class="opnamedata">Empty</span>
+		<span class="opnamedata">Evade Area of Effect</span>
 
 		
 		
@@ -25332,8 +25332,8 @@ Leaving the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource
 				
 		<br />
 
-		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Unknown</span><br />
-		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Unknown</span><br />
+		<span class="parameterheading">Parameter #1:</span>			<span class="parameterdata">Irrelevant</span><br />
+		<span class="parameterheading">Parameter #2:</span>			<span class="parameterdata">Irrelevant</span><br />
 
 		
 		
@@ -25341,18 +25341,28 @@ Leaving the <a href="../file_formats/ie_formats/eff_v1.htm#effv1_Header_Resource
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> Unused.
+		<div class="descriptiondata"> 
 
 
 
-<div class="note info">
-  <div>
-    <strong>Note:</strong> 
-It is still processed, so it will still interact with <a href="#op200">Spell Turning</a>/<a href="#op201">Deflection</a>/etc… just like any other effect.
 
-  </div>
-</div>
 
+
+If present on a creature's effect list, this opcode enables extra logic when the creature is checking its saving throws against an effect.
+
+<div style="margin-top: 0.5em">In particular &ndash; if an incoming effect:</div>
+<ul>
+    <li>
+        Does <b>not</b> have any of the lower 5 bits of its <a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x40"><code>Saving throw type</code></a> set
+    </li>
+    <li>
+        <b>and</b> <code>BIT2</code> of its <a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x5C"><code>Dispel/Resistance</code></a> field is set
+    </li>
+</ul>
+
+&rightarrow; then the presence of this opcode causes the incoming effect's <a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x40"><code>Saving throw type</code></a>
+to be shifted 5 bits to the right. The usual saving throw logic is subsequently applied to the shifted
+<a href="../file_formats/ie_formats/eff_v2.htm#effv2_Body_0x40"><code>Saving throw type</code></a> contents.
  </div>
 		<hr />
 

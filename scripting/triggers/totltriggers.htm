@@ -1,6 +1,7 @@
 ---
 title: "IWD: TotL Script Triggers"
 ---
+    {% include relurl.html %}
     <div class="title_main"> IWD: TotL Script Triggers </div>
     <br />
     <strong>0x0001 Acquired(S:ResRef*)</strong><br />
@@ -147,8 +148,12 @@ title: "IWD: TotL Script Triggers"
     <strong>0x402E HPPercentGT(O:Object*,I:Hit Points*)</strong><br />
     See HPGT(O:Object*,I:Hit Points*) except this is for a percentage.<br />
     <br />
-    <strong>0x002F Heard(O:Object*,I:ID*SHOUTIDS)</strong><br />
-    Returns true only if the active CRE was within 30 feet of the specified object and the specified object shouted the specified number (which does not HAVE to be in SHOUTIDS.ids) in the last script round.<br />
+    <strong id="0x002F">0x002F Heard(O:Object*,I:ID*)</strong><br />
+    Returns true only if the active
+    <a href="{{ '/file_formats/ie_formats/cre_v9.htm' | prepend: relurl }}"><code>CRE</code></a>
+    was within shouting range
+    (see <a href="{{ '/scripting/actions/totlactions.htm#106' | prepend: relurl }}"><code>Shout</code></a>/<a href="{{ '/scripting/actions/totlactions.htm#212' | prepend: relurl }}"><code>GlobalShout</code></a>)
+    of the specified object and the specified object shouted the specified number in the last script round.<br />
     <br />
     <strong>0x4030 False()</strong><br />
     Never returns true, i.e. is always false. A block of triggers containing this will never return true regardless of the other triggers in the block. The

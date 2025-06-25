@@ -1,4 +1,4 @@
-bg1: 1
+pst: 1
 n: 106
 name: Shout
 params:
@@ -8,7 +8,7 @@ desc: |-
 
   This action is used to shout the specified number. The action is used in conjunction with the
   {% assign text = "<code>Heard()</code>" -%} {%- assign anchor = "0x002F" -%} {%- include trigger_link.html %}
-  trigger. Shouts can be heard within a 28-foot radius (448 pixels).
+  trigger. Shouts can be heard within the script runner's current visual range, which by default evaluates to 30 feet (480 pixels).
 
   ```
   IF
@@ -28,3 +28,7 @@ desc: |-
       Spell(LastHeardBy(),CLERIC_SLOW_POISON)
   END
   ```
+
+  {% capture note %}
+  Visual range in PST/PST:EE is defined globally and is equal to <code>(14 + Nameless One's fighter level) * 2</code> feet, (1 foot = 16 pixels).
+  {% endcapture %} {% include info.html %}

@@ -1,4 +1,5 @@
-bg1: 1
+iwd1: 1
+iwd2: 1
 n: 106
 name: Shout
 params:
@@ -8,7 +9,7 @@ desc: |-
 
   This action is used to shout the specified number. The action is used in conjunction with the
   {% assign text = "<code>Heard()</code>" -%} {%- assign anchor = "0x002F" -%} {%- include trigger_link.html %}
-  trigger. Shouts can be heard within a 28-foot radius (448 pixels).
+  trigger. Shouts can be heard within a radius of 1.5x the script runner's current visual range, which by default evaluates to 42 feet (672 pixels).
 
   ```
   IF
@@ -28,3 +29,7 @@ desc: |-
       Spell(LastHeardBy(),CLERIC_SLOW_POISON)
   END
   ```
+
+  {% capture note %}
+  Visual range in IWD1/IWD2 is defined globally and can only be changed via the <a href="#259"><code>SetVisualRange()</code></a> action.
+  {% endcapture %} {% include info.html %}

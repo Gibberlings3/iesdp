@@ -1,0 +1,29 @@
+
+{%- include relurl.html -%}
+
+{%- if anchor -%}
+	{%- assign anchor_suffix = "#" | append: anchor -%}
+{%- else -%}
+	{%- assign anchor_suffix = "" -%}
+{%- endif -%}
+
+{%- assign anchor = nil -%}
+
+{%- case game -%}
+	{%- when "bg1" -%}
+		{%- assign trigger_page = "bg1triggers.htm" -%}
+	{%- when "bg2" -%}
+		{%- assign trigger_page = "bg2triggers.htm" -%}
+	{%- when "bgee" -%}
+		{%- assign trigger_page = "bgeetriggers.htm" -%}
+	{%- when "iwd1" -%}
+		{%- assign trigger_page = "totltriggers.htm" -%}
+	{%- when "iwd2" -%}
+		{%- assign trigger_page = "iwd2triggers.htm" -%}
+	{%- when "pst" -%}
+		{%- assign trigger_page = "psttriggers.htm" -%}
+	{%- when "pstee" -%}
+		{%- assign trigger_page = "psteetriggers.htm" -%}
+{%- endcase -%}
+
+<a href="{{ '/scripting/triggers/' | prepend: relurl | append: trigger_page | append: anchor_suffix }}">{{ text }}</a>

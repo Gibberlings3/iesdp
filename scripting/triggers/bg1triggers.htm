@@ -12,11 +12,6 @@
 ">
 
   
-
-
-
-
-
   <link rel="stylesheet" href="../../css/main.css">
 
 <!--
@@ -29,11 +24,6 @@
 <body>
 
 <header class="site-header">
-
-
-
-
-
 
 
 
@@ -66,6 +56,7 @@
 <div id="nonFooter">
   <div id="content">
 
+    
     <div class="title_main"> BG1: TotS Script Triggers </div>
     <br />
     <strong>0x0001 Acquired(S:ResRef*)</strong><br />
@@ -209,8 +200,12 @@
     <strong>0x402E HPPercentGT(O:Object*,I:Hit Points*)</strong><br />
     See HPGT(O:Object*,I:Hit Points*) except this is for a percentage.<br />
     <br />
-    <strong>0x002F Heard(O:Object*,I:ID*SHOUTIDS)</strong><br />
-    Returns true only if the active CRE was within 30 feet of the specified object and the specified object shouted the specified number (which does not HAVE to be in SHOUTIDS.ids) in the last script round.<br />
+    <strong id="0x002F">0x002F Heard(O:Object*,I:ID*)</strong><br />
+    Returns true only if the active
+    <a href="../../file_formats/ie_formats/cre_v1.htm"><code>CRE</code></a>
+    was within shouting range
+    (see <a href="../../scripting/actions/bg1actions.htm#106"><code>Shout</code></a>)
+    of the specified object and the specified object shouted the specified number in the last script round.<br />
     <br />
     <strong>0x4030 False()</strong><br />
     Never returns true, i.e. is always false. A block of triggers containing this will never return true regardless of the other triggers in the block. The corresponding actions will never take place.<br />

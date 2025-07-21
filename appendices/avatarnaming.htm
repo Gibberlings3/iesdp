@@ -49,6 +49,108 @@ title: &quot;Avatar Naming Schemes&quot;
   <p>[Animation ID][(optional) Single-letter weapon ID][Sequence ID][(optional) E for +180 - +360 degrees]</p>
 </div>
 <p>Example: The armored skeleton animation MSKAAGU.BAM (battle axe, Get Up), MSKAMA1.BAM (morning star, attack-slash). </p>
+<p>Additional notes</p>
+<p>More information is available by examining the animation slot used  in  IWD.</p>
+<p> <strong>The first character</strong> of the slot indicates whether the monster has layered weapons or not.   Possible values:</p>
+<ul>
+  <li>E - Non-Layered: Monsters have weapons built into their animation.</li>
+  <li>F - Layered: Monster weapons are drawn in by the game.</li>
+</ul>
+<p><strong>The second and third characters</strong> are arbitrary designations ranging from 0-F. The second conventionally is class and the third species.   In Icewind Dale, 'class' was  broken down into relative size of the creature, or whether the  creature was undead.  </p>
+<p><strong>The fourth character</strong> is comprised of a bitfield which defines the types of  attacks the animation contains. All animations have attack 1, and the bits indicate whether additional animations are available eith one bit each for attack 2, attack 3, ranged attack (attack 4), and spell casting:</p>
+<table border="1">
+  <tr>
+    <td> Hex</td>
+    <td> Bitfield</td>
+    <td> Description</td>
+  </tr>
+  <tr>
+    <td> 0</td>
+    <td> 0000</td>
+    <td> Attack 1</td>
+  </tr>
+  <tr>
+    <td> 1</td>
+    <td> 0001</td>
+    <td> Attack 1, spell casting</td>
+  </tr>
+  <tr>
+    <td> 2</td>
+    <td> 0010</td>
+    <td> Attack 1, ranged</td>
+  </tr>
+  <tr>
+    <td> 3</td>
+    <td> 0011</td>
+    <td> Attack 1, ranged, spell casting</td>
+  </tr>
+  <tr>
+    <td> 4</td>
+    <td> 0100</td>
+    <td> Attack 1, Attack 3</td>
+  </tr>
+  <tr>
+    <td> 5</td>
+    <td> 0101</td>
+    <td> Attack 1, Attack 3, spell casting</td>
+  </tr>
+  <tr>
+    <td> 6</td>
+    <td> 0110</td>
+    <td> Attack 1, Attack 3, ranged</td>
+  </tr>
+  <tr>
+    <td> 7</td>
+    <td> 0111</td>
+    <td> Attack 1, Attack 3, ranged, spell casting</td>
+  </tr>
+  <tr>
+    <td> 8</td>
+    <td> 1000</td>
+    <td> Attack 1, Attack 2</td>
+  </tr>
+  <tr>
+    <td> 9</td>
+    <td> 1001</td>
+    <td> Attack 1, Attack 2, spell casting</td>
+  </tr>
+  <tr>
+    <td> A</td>
+    <td> 1010</td>
+    <td> Attack 1, Attack 2, ranged</td>
+  </tr>
+  <tr>
+    <td> B</td>
+    <td> 1011</td>
+    <td> Attack 1, Attack 2, ranged, spell casting</td>
+  </tr>
+  <tr>
+    <td> C</td>
+    <td> 1100</td>
+    <td> Attack 1, Attack 2, Attack 3</td>
+  </tr>
+  <tr>
+    <td> D</td>
+    <td> 1101</td>
+    <td> Attack 1, Attack 2, Attack 3, spell casting</td>
+  </tr>
+  <tr>
+    <td> E</td>
+    <td> 1110</td>
+    <td> Attack 1, Attack 2, Attack 3, ranged</td>
+  </tr>
+  <tr>
+    <td> F</td>
+    <td> 1111</td>
+    <td> Attack 1, Attack 2, Attack 3, ranged, spell casting</td>
+  </tr>
+</table>
+<p>Some examples:</p>
+<ul>
+  <li>F308 - MFGI, Fire  Giant – Layered, class 3, species 0, two attacks (attack 1 and  2).</li>
+  <li>E412 - MGO2, Goblin  w/bow		 	– Non-layered, class 4, species 1, two attacks (attack 1 and ranged)</li>
+  <li>E771 - MBA4, Barbarian  Shaman  	– Non-layered, class 7, species 7, one attack, spell casting</li>
+</ul>
 <hr />
 <p><strong>BG1 character style</strong></p>
 <p> These animations have [E] files for eastern orientations. There are only 8 orientations of which 5 are in the first file, 3 are in the second file. Both files have the full 8 orientation slots, but only 5/3 are useful.</p>

@@ -1,263 +1,203 @@
 ---
-title: "Avatar Naming Schemes"
+title: &quot;Avatar Naming Schemes&quot;
 ---
-    <div class="title_main"> Avatar Naming Schemes</div>
-
-    <br />
-    Creature animations are stored in BAM files. There are usually a series of BAM files for each animation, e.g. an attacking animation, a walking animation. The way in which these animations are split across the sequences in BAM files, and across BAM files themselves, depends on which animation scheme the creature animation uses. The EE games have externalised many properties of creature animations to <a href="../file_formats/ie_formats/ini_anim.htm">PST-style ini files</a>.<br />
-    <br />
-    There are several creature animation schemes. The list below is presented as a rough guide.<br />
-    <ul>
-      <li><a href="#iwd_style"> IWD style</a></li>
-      <li><a href="#bg1_character_style"> BG1 character style</a></li>
-      <li><a href="#bg1_monster_style"> BG1 monster style</a></li>
-      <li><a href="#pst_style"> PST style</a></li>
-      <li><a href="#bgiwd_style"> BG/IWD style</a></li>
-      <li><a href="#character"> Character animations</a></li>
-    </ul>
-    <br />
-
-    <hr />
-
-    <a id="iwd_style"></a><strong>IWD style</strong><br />
-    One optional weapon letter for weapon overlays<br />
-    <div class="indent1">
-      A: Axe<br />
-      B: Bow<br />
-      C: Club<br />
-      D: Dagger<br />
-      F: Flail<br />
-      H: Halberd<br />
-      M: Mace<br />
-      Q: Quarterstaff<br />
-      S: Sword<br />
-      W: Warhammer<br />
-    </div>
-    Actions: <br />
-    <div class="indent1">
-      <a href="avatar_naming/iwdstyle/gu.htm">GU</a> - Get up (switches to the SC/SD sequence)<br />
-      <a href="avatar_naming/iwdstyle/sd.htm">SD</a> - Stand<br />
-      <a href="avatar_naming/iwdstyle/sc.htm">SC</a> - Stance (ready for attack)<br />
-      <a href="avatar_naming/iwdstyle/gh.htm">GH</a> - Get hit (switches to the SC/DE sequence)<br />
-      <a href="avatar_naming/iwdstyle/de.htm">DE</a> - Die (switches to the TW sequence)<br />
-      <a href="avatar_naming/iwdstyle/tw.htm">TW</a> - Twitch (dead, still images most of the time). Played till the last frame, then freezes.<br />
-      <a href="avatar_naming/iwdstyle/sp.htm">SP</a> - Spell (After an arbitary number of loops, switches to CA)<br />
-      <a href="avatar_naming/iwdstyle/ca.htm">CA</a> - Cast (Ending sequence of spell casting) (switches to SC/SD)<br />
-      <a href="avatar_naming/iwdstyle/sl.htm">SL</a> - Sleep. Played till the last frame then freezes (May switch to the GU sequence).<br />
-      <a href="avatar_naming/iwdstyle/wk.htm">WK</a> - Walk<br />
-      <a href="avatar_naming/iwdstyle/a1.htm">A1</a> - Attack<br />
-      <a href="avatar_naming/iwdstyle/a2.htm">A2</a> - Attack<br />
-      A4 - Attack<br />
-    </div>
-    <br />
-    Convention:<br />
-    <div class="indent1">
-      [Animation ID][(optional) Single-letter weapon ID][Sequence ID][(optional) E for +180 - +360 degrees]
-    </div>
-    Example: The armored skeleton animation MSKAAGU.BAM (battle axe, Get Up), MSKAMA1.BAM (morning star, attack-slash).<br />
-    <br />
-    <br />
-
-    <hr />
-
-    <a id="bg1_character_style"></a><strong>BG1 character style</strong><br />
-    These animations have [E] files for eastern orientations. There are only 8 orientations of which 5 are in the first file, 3 are in the second file. Both files have the full 8 orientation slots, but only 5/3 are useful.<br />
-    <br />
-    Convention:<br />
-    <div class="indent1">
-      [Animation ID][(optional) Single-letter weapon ID]Gn[(optional) E for +180 - +360 degrees]
-    </div>
-    Example: The sirine animation MSIRG1.BAM (unarmed/creature, "left" animation), MSIRBG1E.BAM (bow, "right" animation).<br />
-    <br />
-    <br />
-
-    <hr />
-
-    <a id="bg1_monster_style"></a><strong>BG1 monster style</strong><br />
-    These have no secondary files for mirrors. There are 9 orientations for each action, the 7 eastern orientations are generated. All animations are 'G&lt;number&gt;'<br />
-    Actions:<br />
-    <div class="indent1">
-      G1 = Stand combat? (sequences 10-18, min 16 frames)<br />
-      G11 = Walk (sequences 1-9, min 8 frames)<br />
-      G12 = Stand Peaceful?<br />
-      G13 = Hit?<br />
-      G14 = Hit?<br />
-      G15 = Twitch (dead)<br />
-      G2 = Attack<br />
-      G21 = Attack<br />
-      G22 = Attack<br />
-      G23 = Ranged Attack?<br />
-      G24 = Same as G23<br />
-      G25 = Casting? Build-up of Spell?<br />
-      G26 = Release Spell?<br />
-    </div>
-    <br />
-    Convention:
-    <div class="indent1">
-      [AnimationID]Gn[(optional) Digit)][(optional) Two-letter weapon ID]
-    </div>
-    Example: The rakshasa animation MRAKG2.BAM (unarmed/creature), MRAKG2CB.BAM (crossbow).<br />
-    <br />
-    There are also minor sub-types for birds/cow/carrion crawler/dragons etc.<br />
-    <br />
-    <br />
-
-    <hr />
-
-    <a id="pst_style"></a><strong>PST style</strong><br />
-    Similar to the IWD style, there is a separate file for each action.<br />
-    Actions:<br />
-    <div class="indent1">
-      AT1 = Attack<br />
-      AT2 = Attack, etc.<br />
-      C2S = Combat to stand (put weapons away)<br />
-      C2C = Stand to comabt (draw weapons)<br />
-      CF1 = Random Standing thing (Combat)<br />
-      DFB = Die (sleep)<br />
-      HIT = Could it be hit?<br />
-      RUN = Run<br />
-      WLK = Walk<br />
-      TK1 = Talk<br />
-      TK2 = Talk, etc.<br />
-      STC = Stand in Combat<br />
-      STD = Stand in Peace<br />
-      SF1 = Random standing thing (peace)<br />
-      GUP = Get up<br />
-      SP1 = Spell casting<br />
-      SP2 = Spell casting<br />
-      yyy = Designation (e.g. ann = Annah, noa = Nameless One Axe, dkk = Dak'kon)<br />
-    </div>
-    
-    Some animations are missing SC sequences, these animations look relaxed even in combat (e.g. Morte).<br />
-    Some animations are missing SD sequences, these animations seem always agitated (e.g. Nupperibo).<br />
-    Some animations have special cycles (e.g. Fidgets).<br />
-    <br />
-    Convention:<br />
-    <div class="indent1">
-      [C/D][Action][Prefix][B]
-    </div>
-    <br />
-    <br />
-
-    <hr />
-
-    <a id="bgiwd_style"></a><strong>BG2/IWD style</strong><br />
-    These animations have no [E] files for eastern orientations. There are 9 orientations for each action, the 7 eastern orientations are generated by code. Melee animations are 'A&lt;number&gt;', CA-cast, 'SX'-xbow shot, 'SS'-sling, 'SA'-bow. Weapon overlays are in separate files.<br />
-    <br />
-    Convention:<br />
-    <div class="indent1">
-      [C/D][Animation ID] xxxx
-    </div>
-    <br />
-    <br />
-
-
-    <br /><br />
-
-    <hr />
-
-    <a id="character"></a><strong>Character</strong><br />
-    Character animation BAMS use a standard naming system. Each BAM is given an 7 character filename, corresponding to the contents of the BAM. This system is described below.<br />
-    <br />
-    
-    <table border="1" width="98%">
-      <colgroup>
-        <col class="col1" width="5%" />
-        <col class="col2" width="12%" />
-        <col class="col3" width="*" />
-      </colgroup>
-      <tr>
-        <td> Character 1</td>
-        <td> Character 2</td>
-        <td> Character 3</td>    
-        <td> Character 4</td>
-        <td> Character 5</td>
-        <td> Character 6</td>
-        <td> Character 7</td>
-      </tr>
-      <tr>
-        <td>Irrelevant</td>
-        <td>Race</td>
-        <td>Gender</td>
-        <td>Class</td>
-        <td>Armor</td>
-        <td>Action</td>
-        <td>Detail</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td>D: Dwarf/Gnome<br />
-            H: Human<br />
-            E: (Half) Elf<br />
-            I: Halfling<br />
-            O : Half-Orc
-        </td>
-        <td>F: Female<br />
-            M: Male
-        </td>
-        <td>C: Cleric<br />
-            F: Fighter/Ranger/Paladin<br />
-            M: Monk<br />
-            T: Thief/Bard<br />
-            W: Mage<br />
-            B: ?
-        </td>
-        <td>1: None<br />
-            2: Leather<br />
-            3: Robe<br />
-            4: Platemail/Mail
-        </td>
-        <td>A: Attack<br />
-            C: Cast<br />
-            G: Misc.<br />
-            S: Shooting<br />
-            W: Walking
-        </td>
-        <td>
-          Char 6 = A<br />
-            <div class="indent1">
-            1: 1-handed overhead<br />
-            2: 2-handed overhead<br />
-            3: 1-handed backslash<br />
-            4: 2-handed backslash<br />
-            5: 1-handed thrust<br />
-            6: 2-handed thrust
-            </div>
-          Char 6 = S<br />
-            <div class="indent1">
-            &lt;empty&gt; = bow<br />
-            x: crossbow<br />
-            </div>
-        </td>
-      </tr>
-    </table>
-    <br />
-    
-    If there is an E in the end of the file, it means that it's the missing part of the file without an E.<br />
-    <br />
-    Example: CIMT1CA:<br />
-    <div class="indent1"> Male halfling with no armor is casting a spell.</div><br />
-    Example: CHMF4A5 :<br />
-    <div class="indent1"> Male human fighter with plate male attacking with a dagger</div><br />
-    
-    <br /><br />
-    <strong>Weapon</strong><br />
-    Weapon animations are named in the following format: WxsAAnn<br />
-    W = All weapons animations begin with W<br />
-    x = Unknown, player or monster?<br />
-    s = Size (S = small, M = Medium, L = Large, H = Huge)<br />
-    AA = Item name (as in the itm header animation field)<br />
-    nn = Action (as sequence field, above)<br />
-    <br />
-  
-  
-    <br />
-    <br />
-    <br />
-    <br />
-  
-    <strong>PLT Files</strong><br />
-    The paperdoll image (PLT file) for an animation is named after the animation name (anisnd.ids), a number representing the armor state, then 'inv', hence mber1inv for a bear paperdoll.
-  </div>
-  </div>
-
+<div class="title_main"> Avatar Naming Schemes</div>
+<p>Creature animations are stored in BAM files. There are usually a series of BAM files for each animation, e.g. an attacking animation, a walking animation. The way in which these animations are split across the sequences in BAM files, and across BAM files themselves, depends on which animation scheme the creature animation uses. The EE games have externalised many properties of creature animations to <a href="../file_formats/ie_formats/ini_anim.htm">PST-style ini files</a>.</p>
+<p> There are several creature animation schemes. The list below is presented as a rough guide. </p>
+<ul>
+  <li><a href="#iwd_style"> IWD style</a></li>
+  <li><a href="#bg1_character_style"> BG1 character style</a></li>
+  <li><a href="#bg1_monster_style"> BG1 monster style</a></li>
+  <li><a href="#pst_style"> PST style</a></li>
+  <li><a href="#bgiwd_style"> BG/IWD style</a></li>
+  <li><a href="#character"> Character animations</a></li>
+</ul>
+<hr />
+<p> <strong>IWD style</strong></p>
+<p> One optional weapon letter for weapon overlays</p>
+<ul>
+  <li>B: Bow</li>
+  <li> C: Club</li>
+  <li> D: Dagger</li>
+  <li> F: Flail</li>
+  <li> H: Halberd</li>
+  <li> M: Mace</li>
+  <li> Q: Quarterstaff</li>
+  <li> S: Sword</li>
+  <li> W: Warhammer</li>
+</ul>
+<p>Actions:</p>
+<ul>
+  <li><a href="avatar_naming/iwdstyle/gu.htm">GU</a>- Get up (switches to the SC/SD sequence)</li>
+  <li> <a href="avatar_naming/iwdstyle/sd.htm">SD</a> - Stand</li>
+  <li> <a href="avatar_naming/iwdstyle/sc.htm">SC</a> - Stance (ready for attack)</li>
+  <li> <a href="avatar_naming/iwdstyle/gh.htm">GH</a> - Get hit (switches to the SC/DE sequence)</li>
+  <li> <a href="avatar_naming/iwdstyle/de.htm">DE</a> - Die (switches to the TW sequence)</li>
+  <li> <a href="avatar_naming/iwdstyle/tw.htm">TW</a> - Twitch (dead, still images most of the time). Played till the last frame, then freezes.</li>
+  <li> <a href="avatar_naming/iwdstyle/sp.htm">SP</a> - Spell (After an arbitary number of loops, switches to CA)</li>
+  <li> <a href="avatar_naming/iwdstyle/ca.htm">CA</a> - Cast (Ending sequence of spell casting) (switches to SC/SD)</li>
+  <li> <a href="avatar_naming/iwdstyle/sl.htm">SL</a> - Sleep. Played till the last frame then freezes (May switch to the GU sequence).</li>
+  <li> <a href="avatar_naming/iwdstyle/wk.htm">WK</a> - Walk</li>
+  <li> <a href="avatar_naming/iwdstyle/a1.htm">A1</a> - Attack</li>
+  <li> <a href="avatar_naming/iwdstyle/a2.htm">A2</a> - Attack</li>
+  <li> A3 - Attack</li>
+  <li> A4 - Attack (ranged)</li>
+</ul>
+<p>Convention:<br />
+</p>
+<div class="indent1">
+  <p>[Animation ID][(optional) Single-letter weapon ID][Sequence ID][(optional) E for +180 - +360 degrees]</p>
+</div>
+<p>Example: The armored skeleton animation MSKAAGU.BAM (battle axe, Get Up), MSKAMA1.BAM (morning star, attack-slash). </p>
+<hr />
+<p><strong>BG1 character style</strong></p>
+<p> These animations have [E] files for eastern orientations. There are only 8 orientations of which 5 are in the first file, 3 are in the second file. Both files have the full 8 orientation slots, but only 5/3 are useful.</p>
+<p> Convention: </p>
+<div class="indent1">
+  <p>[Animation ID][(optional) Single-letter weapon ID]Gn[(optional) E for +180 - +360 degrees] </p>
+</div>
+<p>Example: The sirine animation MSIRG1.BAM (unarmed/creature, &quot;left&quot; animation), MSIRBG1E.BAM (bow, &quot;right&quot; animation). </p>
+<hr />
+<p><strong>BG1 monster style</strong></p>
+<p> These have no secondary files for mirrors. There are 9 orientations for each action, the 7 eastern orientations are generated. All animations are 'G&lt;number&gt;'</p>
+<p> Actions: </p>
+<ul>
+  <li>G1 = Stand combat? (sequences 10-18, min 16 frames)</li>
+  <li> G11 = Walk (sequences 1-9, min 8 frames)</li>
+  <li> G12 = Stand Peaceful?</li>
+  <li> G13 = Hit?</li>
+  <li> G14 = Hit?</li>
+  <li> G15 = Twitch (dead)</li>
+  <li> G2 = Attack</li>
+  <li> G21 = Attack</li>
+  <li> G22 = Attack</li>
+  <li> G23 = Ranged Attack?</li>
+  <li> G24 = Same as G23</li>
+  <li> G25 = Casting? Build-up of Spell?</li>
+  <li> G26 = Release Spell?</li>
+</ul>
+<p>Convention: </p>
+<div class="indent1">
+  <p>[AnimationID]Gn[(optional) Digit)][(optional) Two-letter weapon ID] </p>
+</div>
+<p>Example: The rakshasa animation MRAKG2.BAM (unarmed/creature), MRAKG2CB.BAM (crossbow).</p>
+<p> There are also minor sub-types for birds/cow/carrion crawler/dragons etc. </p>
+<hr />
+<p><strong>PST style</strong></p>
+<p> Similar to the IWD style, there is a separate file for each action.</p>
+<p> Actions: </p>
+<ul>
+  <li>AT1 = Attack</li>
+  <li> AT2 = Attack, etc.</li>
+  <li> C2S = Combat to stand (put weapons away)</li>
+  <li> C2C = Stand to comabt (draw weapons)</li>
+  <li> CF1 = Random Standing thing (Combat)</li>
+  <li> DFB = Die (sleep)</li>
+  <li> HIT = Could it be hit?</li>
+  <li> RUN = Run</li>
+  <li> WLK = Walk</li>
+  <li> TK1 = Talk</li>
+  <li> TK2 = Talk, etc.</li>
+  <li> STC = Stand in Combat</li>
+  <li> STD = Stand in Peace</li>
+  <li> SF1 = Random standing thing (peace)</li>
+  <li> GUP = Get up</li>
+  <li> SP1 = Spell casting</li>
+  <li> SP2 = Spell casting</li>
+  <li> yyy = Designation (e.g. ann = Annah, noa = Nameless One Axe, dkk = Dak'kon)</li>
+</ul>
+<p> Some animations are missing SC sequences, these animations look relaxed even in combat (e.g. Morte). Some animations are missing SD sequences, these animations seem always agitated (e.g. Nupperibo). Some animations have special cycles (e.g. Fidgets).</p>
+<p> Convention:</p>
+<div class="indent1">
+  <p>[C/D][Action][Prefix][B] </p>
+</div>
+<hr />
+<p><strong>BG2/IWD style</strong></p>
+<p> These animations have no [E] files for eastern orientations. There are 9 orientations for each action, the 7 eastern orientations are generated by code. Melee animations are 'A&lt;number&gt;', CA-cast, 'SX'-xbow shot, 'SS'-sling, 'SA'-bow. Weapon overlays are in separate files.</p>
+<p> Convention: </p>
+<div class="indent1">
+  <p>[C/D][Animation ID] xxxx </p>
+</div>
+<hr />
+<p><strong>Character</strong></p>
+<p> Character animation BAMS use a standard naming system. Each BAM is given an 7 character filename, corresponding to the contents of the BAM. This system is described below. </p>
+<table border="1" width="98%">
+  <colgroup>
+  <col class="col1" width="5%" />
+  <col class="col2" width="12%" />
+  <col class="col3" width="*" />
+  </colgroup>
+  <tr>
+    <td> Character 1</td>
+    <td> Character 2</td>
+    <td> Character 3</td>
+    <td> Character 4</td>
+    <td> Character 5</td>
+    <td> Character 6</td>
+    <td> Character 7</td>
+  </tr>
+  <tr>
+    <td>Irrelevant</td>
+    <td>Race</td>
+    <td>Gender</td>
+    <td>Class</td>
+    <td>Armor</td>
+    <td>Action</td>
+    <td>Detail</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>D: Dwarf/Gnome<br />
+      H: Human<br />
+      E: (Half) Elf<br />
+      I: Halfling<br />
+      O : Half-Orc </td>
+    <td>F: Female<br />
+      M: Male </td>
+    <td>C: Cleric<br />
+      F: Fighter/Ranger/Paladin<br />
+      M: Monk<br />
+      T: Thief/Bard<br />
+      W: Mage<br />
+      B: ? </td>
+    <td>1: None<br />
+      2: Leather<br />
+      3: Robe<br />
+      4: Platemail/Mail </td>
+    <td>A: Attack<br />
+      C: Cast<br />
+      G: Misc.<br />
+      S: Shooting<br />
+      W: Walking </td>
+    <td> Char 6 = A<br />
+      <div class="indent1"> 1: 1-handed overhead<br />
+        2: 2-handed overhead<br />
+        3: 1-handed backslash<br />
+        4: 2-handed backslash<br />
+        5: 1-handed thrust<br />
+        6: 2-handed thrust </div>
+      Char 6 = S<br />
+      <div class="indent1"> &lt;empty&gt; = bow<br />
+        x: crossbow<br />
+      </div></td>
+  </tr>
+</table>
+<p>If there is an E in the end of the file, it means that it's the missing part of the file without an E.</p>
+<p> Example: CIMT1CA: </p>
+<div class="indent1">
+  <p>Male halfling with no armor is casting a spell. </p>
+</div>
+<p>Example: CHMF4A5: </p>
+<div class="indent1">
+  <p>Male human fighter with plate male attacking with a dagger </p>
+</div>
+<p><strong>Weapon</strong></p>
+<p> Weapon animations are named in the following format: WxsAAnn</p>
+<p> W = All weapons animations begin with W<br />
+  x = Unknown, player or monster?<br />
+  s = Size (S = small, M = Medium, L = Large, H = Huge)<br />
+  AA = Item name (as in the itm header animation field)<br />
+  nn = Action (as sequence field, above)<br />
+</p>
+<p><strong>PLT Files</strong></p>
+<p> The paperdoll image (PLT file) for an animation is named after the animation name (anisnd.ids), a number representing the armor state, then 'inv', hence mber1inv for a bear paperdoll. </p>

@@ -22351,15 +22351,6 @@ The ‘Stat Value’ parameter can take any value. If you set it to 0, you will 
 		
 		
 			
-			
-				Variants:
-				
-			
-			
-				<a class="opvariant" href="bgee.htm#op303">BGEE</a>
-			
-		
-			
 				
 		<br />
 
@@ -22372,19 +22363,17 @@ The ‘Stat Value’ parameter can take any value. If you set it to 0, you will 
 		
 
 		<div class="descriptionheading">Description:</div>
-		<div class="descriptiondata"> The targeted creature(s) will backstab with every hit.
-<br/><br/>The effect modifies stat #192 (ASSASSINATE).
+		<div class="descriptiondata"> The targeted creature(s) will backstab with every hit, regardless of invisibility or positioning (flanking).
+<br/><br/>The effect modifies <a href="../files/ids/bgee/stats.htm#192">ASSASSINATE</a> to <code>Stat Value</code>.
 
+The <code>Stat Value</code> parameter can take any value. If you set it to <code>0</code>, you will disable the effect (for its duration). If ToBEx is installed or an EE game is used, more finegrained control is available:
 
-
-<div class="note info">
-  <div>
-    <strong>Note:</strong> 
-The ‘Stat Value’ parameter can take any value. If you set it to 0, you will disable the effect (for its duration).
-
-  </div>
-</div>
-
+<ul>
+	<li>0 ⟶ Deactivate effect</li>
+	<li>1 (bit 0) ⟶ Ignore invisibility and positining requirements (classic mode)</li>
+	<li>2 (bit 1) ⟶ Ignore invisibility requirement only</li>
+	<li>4 (bit 2) ⟶ Ignore positioning requirement only</li>
+</ul>
 
 
 
@@ -22392,17 +22381,6 @@ The ‘Stat Value’ parameter can take any value. If you set it to 0, you will 
   <div>
     <strong>Important:</strong> 
 Creature must still be using a weapon valid for backstabbing.
-
-  </div>
-</div>
-
-
-
-
-<div class="note info">
-  <div>
-    <strong>Info:</strong> 
-Backstabs no longer require the creature to be invisible.
 
   </div>
 </div>

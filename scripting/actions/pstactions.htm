@@ -234,10 +234,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="5" class="action_name">
         5 BackStab(O:Target*)
@@ -271,6 +267,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -407,6 +407,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="11" class="action_name">
         11 EquipItem(S:Object*)
@@ -434,10 +438,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -508,6 +508,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="15" class="action_name">
         15 GiveItem(S:Object*,O:Target*)
@@ -548,10 +552,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -702,10 +702,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="20" class="action_name">
         20 LayHands(O:Target*)
@@ -724,6 +720,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action is a leftover from BG1 - it does not work in PST.</p>
 
     </div>
+  
+
+
+
   
 
 
@@ -1002,14 +1002,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="31" class="action_name">
         31 Spell(O:Target*,I:Spell*Spell)
@@ -1049,6 +1041,14 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -1452,10 +1452,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="53" class="action_name">
         53 ClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1474,6 +1470,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -1560,10 +1560,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="57" class="action_name">
         57 DoubleClickRButtonPoint(P:Target*,I:ScrollSpeed*Scroll)
@@ -1609,6 +1605,10 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -2202,10 +2202,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="88" class="action_name">
         88 Leader(P:Point*)
@@ -2224,6 +2220,14 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -2252,14 +2256,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="90" class="action_name">
         90 MoveToPointNoRecticle(P:Point*)
@@ -2283,6 +2279,14 @@ END
 
 
   
+
+
+
+  
+
+
+
+  
     <div class="actionHeader">
       <a id="91" class="action_name">
         91 LeaveArea(S:Area*,P:Point*,I:Face*)
@@ -2301,10 +2305,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to leave the current area.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -2417,10 +2417,6 @@ THEN
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="97" class="action_name">
         97 UseItemPoint(S:Item*,P:Target*,I:Ability*)
@@ -2439,6 +2435,10 @@ THEN
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -2693,10 +2693,6 @@ Visual range in PST/PST:EE is defined globally and is equal to <code>(14 + Namel
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="108" class="action_name">
         108 EscapeArea()
@@ -2728,6 +2724,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -2813,10 +2813,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="110" class="action_name">
         110 LeaveAreaLUA(S:Area*,P:Point*,I:Face*)
@@ -2849,6 +2845,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -3025,7 +3025,13 @@ END
     
 
   </span></div>
-    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). The item is transferred to the inventory of the active creature. The example is from AR0516.bcs.</p>
+    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). Characters are checked in current party order. The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). All slots are checked; inventory slots are checked in the following order</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0, 2, 4, 6, 8, 10, 12, 14
+1, 3, 5, 7, 9, 11, 13, 15
+</code></pre></div></div>
+
+<p>The example is from AR0516.bcs.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("ThrallOrb","GLOBAL",2)
@@ -3037,10 +3043,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3064,13 +3066,7 @@ END
     
 
   </span></div>
-    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). Characters are checked in current party order. The item is transferred to the inventory of the active creature. If there are multiple calls to TakePartyItem() in the same block, each with the same item specified, only one call will actually remove an item (on each execution of the block). All slots are checked; inventory slots are checked in the following order</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0, 2, 4, 6, 8, 10, 12, 14
-1, 3, 5, 7, 9, 11, 13, 15
-</code></pre></div></div>
-
-<p>The example is from AR0516.bcs.</p>
+    <div class="indent1 action_body"><p></p><p>This action takes a single instance of the specified item from the party (unless the item exists in a stack, in which case the entire stack is taken). The item is transferred to the inventory of the active creature. The example is from AR0516.bcs.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF
   Global("ThrallOrb","GLOBAL",2)
@@ -3082,6 +3078,10 @@ END
 </code></pre></div></div>
 
     </div>
+  
+
+
+
   
 
 
@@ -3355,10 +3355,6 @@ THEN
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="129" class="action_name">
         129 AnkhegHide()
@@ -3377,6 +3373,10 @@ THEN
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
   
 
 
@@ -3515,6 +3515,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="134" class="action_name">
         134 AttackReevaluate(O:Target*,I:ReevaluationPeriod*)
@@ -3554,10 +3558,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3656,6 +3656,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="139" class="action_name">
         139 PlayerDialog(O:Target*)
@@ -3674,10 +3678,6 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
-  
-
-
-
   
 
 
@@ -3716,6 +3716,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="141" class="action_name">
         141 GivePartyGoldGlobal(S:Name*,S:Area*)
@@ -3741,10 +3745,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -3991,6 +3991,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="151" class="action_name">
         151 DisplayString(O:Object*,I:StrRef*)
@@ -4019,10 +4023,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -4513,10 +4513,6 @@ END
 
 
   
-
-
-
-  
     <div class="actionHeader">
       <a id="169" class="action_name">
         169 DestroyItem(S:Object*,O:Target*,I:All*Boolean)
@@ -4535,6 +4531,14 @@ END
     <div class="indent1 action_body"><p></p>
 
     </div>
+  
+
+
+
+  
+
+
+
   
 
 
@@ -4566,10 +4570,6 @@ END
 </code></pre></div></div>
 
     </div>
-  
-
-
-
   
 
 
@@ -4681,6 +4681,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="176" class="action_name">
         176 EscapeAreaDestroy(I:Delay*)
@@ -4742,10 +4746,6 @@ END
     <div class="indent1 action_body"><p></p><p>This action instructs the active creature to move to the specified object. Once the active creature reaches the object, it will follow the target if it moves. This behaviour continues until a different action is issued or until the target creature travels between areas. The action must be added to action.ids before it can be used.</p>
 
     </div>
-  
-
-
-
   
 
 
@@ -4823,14 +4823,6 @@ END
 
 
   
-
-
-
-  
-
-
-
-  
     <div class="actionHeader">
       <a id="182" class="action_name">
         182 MakeUnselectable(I:Time*)
@@ -4893,6 +4885,10 @@ END
 
 
   
+
+
+
+  
     <div class="actionHeader">
       <a id="188" class="action_name">
         188 TakePartyItemAll(S:Item*)
@@ -4911,6 +4907,10 @@ END
     <div class="indent1 action_body"><p></p><p>This action removes all instances of the specified item from the party. The items are placed in the inventory of the active creature. Items contained in containers (e.g. Bag of Holding) are not taken. The action must be added to action.ids before it can be used.</p>
 
     </div>
+  
+
+
+
   
 
 

@@ -5,7 +5,9 @@ title: "IWD: TotL Identifiers"
 <br />
 Relates to offset 0x0020 in the .cre file format. <br />
 Used by the <a href="../../totltriggers.htm"> StateCheck(O:Object*,I:State*State) </a> trigger.<br />
-The file is partially extensible, new states cannot be created, though existing states can be combined to create shortcut states.<br />
+The file is partially extensible; new states cannot be created though existing states can be combined to create shortcut states. Sum their values together to get the value of the new state. When combining with states that are themselves combinations, it is safer to use bitwise OR instead of summation.<br /><br />
+The norm is to keep the value in hexadecimal format, so it is easier to see if it is a combination state and which other states it is made of.<br /><br />
+In other words, STATEs are cumulative: all those STATEs that aren't a power of 2 (only one bit set) are combinations of other STATEs. In particular, you can BOR (bitwise OR) the base STATEs (i.e., all those listed at offset 0x0020 of a CRE file) to form all the others. For instance, STATE_HARMLESS is STATE_FEEBLEMINDED | STATE_CHARMED | STATE_IMMOBILE... and STATE_IMMOBILE is STATE_HELPLESS | STATE_STUNNED | STATE_SLEEPING.<br />
 <br />
 33<br />
 0x0 STATE_NORMAL<br />

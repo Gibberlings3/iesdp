@@ -965,15 +965,8 @@ title: "CRE file format"
           </tr>
           <tr>
             <td>0x0008</td>
-            <td>1 (byte)</td>
-            <td><span class="unknown">Item expiration time - item creation hour (replace with drained item)</span></td>
-          </tr>
-          <tr>
-            <td>0x0009</td>
-            <td>1 (byte)</td>
-            <td><span class="unknown">Item expiration time - (elapsed hour count divided by 256, rounded down) + 1 (replace with drained item)<br />
-            When the game hour and elapsed hour count for the current game time exceed these values, the item is removed.
-            </span></td>
+            <td>2 (word)</td>
+            <td>Item expiration time expressed in days. If 0 or larger than 255, it has no effect. Internally it will get converted to hours and a 255 delay added. So the minimum expiry time is 279 hours or a bit over 11.6 game days. Upon that time the item will be replaced with the replacement item (0x10 in <a href="ITM_V1.htm">ITM</a>) or removed.</td>
           </tr>
           <tr>
             <td>0x000a</td>

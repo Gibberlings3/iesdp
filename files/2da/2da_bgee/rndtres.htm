@@ -3,9 +3,9 @@ title: "BG(2):EE 2DA Files : rndtres.2da"
 ---
     <div class="title_main"> rndtres.2da</div>
 <br />
-This file defines what items are generated when a creature uses an item of filename defined in the first column. The dummy item is replaced by the generated item.  Therefore, this works like a random treasure table.<br />
+This file defines what items are generated when a creature uses an item of filename defined in the first column. The placeholder item is replaced by the generated item.  Therefore, this works like a random treasure table.<br />
 <br />
-The first column of RNDTRES.2DA specifies the name of the row, which is also used as the dummy item name which is replaced by the actual item.  The rest of the columns have headers 1, 2, 3, 4, 5, ...  They can be used to add the item resource which is replaced by the dummy item defined in the first column. The chance to get an item is calculated by dividing it by the number of defined columns (excluding columns consisting of '*'). The number of supported columns is open ended. You can add more columns if you need finer control over the percentages for each item.<br />
+The first column of <code>RNDTRES.2DA</code> specifies the name of the row, which is also used as the placeholder item name which is replaced by the actual item.  The rest of the columns have headers 1, 2, 3, 4, 5, ...  They can be used to add the item resource which is replaced by the placeholder item defined in the first column. The chance to get an item is calculated by dividing it by the number of defined columns, up to the first column consisting of '*', or the end of the row. The number of supported columns is open ended, but never exceeds the number of defined header columns. You can add more columns if you need finer control over the percentages for each item.<br />
 <br />
 In BG2EE we have:<br />
 <pre>
@@ -33,6 +33,23 @@ RNDPTN02 POTN52   POTN17   POTN42   POTN24   *        *        *        *       
 RNDPTN03 POTN14   POTN11   POTN12   POTN21   POTN45   *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *
 RNDOMAGE SW1H20   SW1H43   SW1H46   SW1H48   *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *        *
 </pre>
+<br />
+Items that can be referenced:
+<ul>
+  <li>specific items (for stackable items, a <code>*#</code> suffix, that is, an asterisk followed by a number, can be added to the item ResRef to specify the amount of that item to create, e.g. <code>BOLT04*4</code> generates a single stack of 4 <code>BOLT04</code> items; for non-stackable items, a <code>*#</code> suffix does nothing; the limitations on the size of <code>#</code> are the same as that for gold pieces described below)</li>
+  <li><code>#</code>, that is, a number, refers to a gold value (e.g. <code>#=016</code> is replaced by a stack of 16 gold).  The maximum stack of gold allowable is 255 pieces. More than that listed will max out at 231 (<code>#</code> need not be three digits, so if <code>#=4</code> or <code>#=04</code> or <code>#=004</code>, a stack of 4 gold will still be generated without error) &mdash; <code>*</code>, that is, a single asterisk, generates an erroneous item, i.e. an invisible item that cannot be removed.  This is useful if you want your creature not to drop anything, but you do not want to use this for containers and item piles</li>
+  <li><code>RNDEQU##</code>, which references <code><a href="../2da_bgee/rndequip.htm">RNDEQUIP.2DA</a></code>, where <code>##</code> is the row number to use, allowing further randomisation; a D20 is rolled to determine which column of this file to use</li>
+  <li><code>RNDMAG##</code>, which references <code><a href="../2da_bgee/rndmagic.htm">RNDMAGIC.2DA</a></code>, where <code>##</code> is the row number to use, allowing further randomisation; a D20 is rolled to determine which column of this file to use</li>
+  <li><code>RNDSCR##</code>, which references <code><a href="../2da_bgee/rndscrol.htm">RNDSCROL.2DA</a></code>, where <code>##</code> is the row number to use, allowing further randomisation; a D20 is rolled to determine which column of this file to use</li>
+  <li><code>RNDTRE##</code>, which references <code><a href="../2da_bgee/rndtreas.htm">RNDTREAS.2DA</a></code>, where <code>##</code> is the row number to use, allowing further randomisation; a D20 is rolled to determine which column of this file to use</li>
+  <li><code>RNDWEP##</code>, which references <code><a href="../2da_bgee/rndweap.htm">RNDWEP.2DA</a></code>, where <code>##</code> is the row number to use, allowing a third level of randomisation; 2D10 are rolled to determine which column of this file to use</li>
+</ul>
+<br />
+Items that cannot be referenced:
+<ul>
+  <li>Placeholder item names defined in <code>RNDTRES.2DA</code> will just create empty item entries (circular loops are not possible)</li>
+</ul>
+Since <code>RNDTRES.2DA</code> can reference <code><a href="../2da_bgee/rndequip.htm">RNDEQUIP.2DA</a></code>, <code><a href="../2da_bgee/rndtreas.htm">RNDTREAS.2DA</a></code>, <code><a href="../2da_bgee/rndmagic.htm">RNDMAGIC.2DA</a></code>, <code><a href="../2da_bgee/rndscrol.htm">RNDSCROL.2DA</a></code>, and <code><a href="../2da_bgee/rndweap.htm">RNDWEP.2DA</a></code>, this 2da file is the top of the random treasure table hierarchy.
   </div>
 </div>
 

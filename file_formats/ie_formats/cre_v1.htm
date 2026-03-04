@@ -1235,7 +1235,7 @@ TRANSMUTER          0x20000000</pre>
           <tr>
             <td>0x0008</td>
             <td>2 (word)</td>
-            <td>Item expiration time expressed in days. If 0 or larger than 255, it has no effect. Internally it will get converted to hours and a 255 delay added. So the minimum expiry time is 279 hours or a bit over 11.6 game days. Upon that time the item will be replaced with the replacement item (0x10 in <a href="ITM_V1.htm">ITM</a>) or removed.</td>
+            <td>Item expiration time expressed in days. If 0 it has no effect. If above 255, the item will expire at game hour `expiration time - 255`. Since that is an absolute time, one cannot plan for it and the mode is largely useless to modders. However, if the value is within 1-255,  it will get converted to a delay in days (expiration time of 1 means 1 day and so on), but internally it will still be expressed in hours. It is used by the BG2 and EE opcodes <a href="../../opcodes/bgee.htm#op122">122</a> and <a href="../../opcodes/bgee.htm#op255">255</a>. Upon that time the item will be replaced with the replacement item (0x10 in <a href="ITM_V1.htm">ITM</a>) or removed.</td>
           </tr>
           <tr>
             <td>0x000a</td>

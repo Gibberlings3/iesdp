@@ -8,7 +8,7 @@ title: "BCS / BS file format"
     <br />
     
     <div class="fileHeader">General Description</div>
-    <div class="indent1">These files represent scripted actions. <code>.bcs</code> files are scripts attached to anything other than the player characters.&nbsp; <code>.bs</code> files are scripts which drive a characters actions automatically (AI scripts) based on criteria in the environment.<br />
+    <div class="indent1">These files represent scripted actions. <code>.bcs</code> files are scripts attached to anything other than the player characters.&nbsp; <code>.bs</code> files are scripts which drive a character's actions automatically (AI scripts) based on criteria in the environment.<br />
     Just as the files from which they are compiled, these script files make use of the concept of &quot;triggers&quot; and &quot;responses&quot;. A trigger is a condition which causes a response with a certain probability. A response is one or more calls to functions they have exposed to the script. I believe this to be the difference between <code>.bcs</code> and <code>.bs</code> files. (They are assigned different resource types in the resource management code, too.)<br />
     </div>
     <br />
@@ -19,7 +19,7 @@ title: "BCS / BS file format"
     The format will be given in a top-down sense: i.e. I will describe the formatting of top-level blocks, and then I will describe the contents of the blocks. The process will proceed recursively until the whole format is described. The top-level block is the <a href="#pFILE">script file</a>.<br />
     <br />
     <div class="fileHeader"><a name="pPARAM">Parameters</a></div>
-    First, a brief word on &quot;function parameters&quot;. Both <a href="#pTRIGGER">triggers</a> and <a href="#pACTION">actions</a> are essentially calls to functions inside the Infinity Engine. Triggers can take up to 7 arguments, and actions can take up to 10 arguments. There are three allowable forms of arguments: strings, integers, and objects. The different function calls are defined in TRIGGER.IDS and ACTION.IDS. There are also functions defined in SVTRIOBJ.IDS, which are a {sub|super} set of of the function calls defined in TRIGGER.IDS. They are probably used for {insert spiel here}. String arguments are simply quoted strings (i.e. ASCII strings delimited by the double quote character &quot;). The format of these descriptions is given below, by way of an example (from BG's TRIGGER.IDS):<br />
+    First, a brief word on &quot;function parameters&quot;. Both <a href="#pTRIGGER">triggers</a> and <a href="#pACTION">actions</a> are essentially calls to functions inside the Infinity Engine. Triggers can take up to 7 arguments, and actions can take up to 10 arguments. There are three allowable forms of arguments: strings, integers, and objects. The different function calls are defined in TRIGGER.IDS and ACTION.IDS. There are also functions defined in SVTRIOBJ.IDS, which are a {sub|super} set of the function calls defined in TRIGGER.IDS. They are probably used for {insert spiel here}. String arguments are simply quoted strings (i.e. ASCII strings delimited by the double quote character &quot;). The format of these descriptions is given below, by way of an example (from BG's TRIGGER.IDS):<br />
     <pre>0x401D Specifics(O:Object*,I:Specifics*Specific)</pre>
     The first thing on the line is the ID (in hex. IDs in scripts are typically in decimal). Next is the name of the function. Inside the parentheses, similarly to C/C++, is a comma-delimited list of argument type and argument name. The argument types are:<br />
     <div class="indent1">
@@ -93,7 +93,7 @@ title: "BCS / BS file format"
     
     <div class="fileHeader"><a name="pRESPSET">Response set</a></div>
     <div class="indent1">
-    Each response in a reponse set has a certain weight associated with it. Usually, this is 100%, but if not, then the response is only played with a certain probability. To find the chance of a particular response being chosen, sum the probabilities of all the responses in the response set. Each response Rnhas a probability <code>Pn/Sum(P)</code> of being chosen, if the response set is to be played.<br />
+    Each response in a response set has a certain weight associated with it. Usually, this is 100%, but if not, then the response is only played with a certain probability. To find the chance of a particular response being chosen, sum the probabilities of all the responses in the response set. Each response Rn has a probability <code>Pn/Sum(P)</code> of being chosen, if the response set is to be played.<br />
     <div class="indent1">
       <li><code>RS</code> (newline)
       <li><a href="#pRESPONSE">Response</a>

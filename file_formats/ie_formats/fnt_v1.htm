@@ -1,0 +1,346 @@
+---
+title: "FNT file format"
+---
+    <div class="title_main">FNT file format</div>
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BGEE, BG2EE, IWDEE, PSTEE (Enhanced Edition games prior to patch 2.0)</div>
+    <br />
+
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+    This file format describes a bitmap (texture-atlas) font. It is the proprietary font format
+    introduced by the Enhanced Edition engine and used for in-game text before the 2.0 patch
+    switched to <a href="ttf.htm">TTF</a> fonts.<br />
+    <br />
+    A FNT file holds no pixel data of its own. Instead it stores, for every glyph, a rectangle into
+    a companion bitmap that shares the same basename (e.g. <code>DIALOG.FNT</code> describes glyphs
+    drawn from <code>DIALOG.BMP</code>). A single FNT/BMP pair may contain several point sizes of the
+    same typeface; the glyphs for every size are packed into the one bitmap and indexed separately.<br />
+    <br />
+    </div>
+
+    <div class="fileHeader">Detailed Description</div>
+    <div class="indent1">
+      All values are little-endian. The file is a fixed sequence of sections with no internal offsets;
+      each section is located by computing the size of the preceding ones from the header counts.<br />
+      <br />
+      Let <code>G</code> = glyph count and <code>S</code> = size count.<br />
+      <br />
+      Overall structure:<br />
+      <div class="indent1">
+        <li><a href="#fntv1_Header">Header</a> (16 bytes)
+        <li><a href="#fntv1_CharTable">Character code table</a> (<code>G</code> &times; 4 bytes)
+        <li><a href="#fntv1_SizeMetrics">Size metrics</a> (<code>S</code> &times; 16 bytes)
+        <li><a href="#fntv1_GlyphMetrics">Glyph metrics</a> (<code>S</code> &times; <code>G</code> &times; 16 bytes)
+        <li><a href="#fntv1_Kerning">Kerning table</a> (<code>kerning count</code> &times; 8 bytes)
+        <li><a href="#fntv1_Coords">Glyph coordinate table</a> (<code>S</code> &times; <code>G</code> &times; 14 bytes)
+        <li><a href="#fntv1_Bitmap">Companion bitmap</a> (separate <code>.BMP</code> file)</li>
+      </div>
+      <br />
+    </div>
+
+    <div class="fileHeader"><a name="fntv1_Header">FNT V1 Header</a></div>
+    <div class="indent1">
+      <br />
+      The file has no signature or version string; it begins directly with the header.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Glyph count (<code>G</code>) - the number of glyphs defined for each point size</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>2 (word)</td>
+            <td>Size count (<code>S</code>) - the number of point sizes bundled in this font</td>
+          </tr>
+          <tr>
+            <td>0x0006</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown (usu. 1)</span></td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (dword)</td>
+            <td><span class="unknown">Unknown (usu. 1)</span></td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (dword)</td>
+            <td>Count of <a href="#fntv1_Kerning">kerning entries</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="fntv1_CharTable">FNT V1 Character Code Table</a></div>
+    <div class="indent1">
+      <br />
+      An array of <code>G</code> dwords, each a Unicode code point. The entry at index <code>i</code>
+      gives the character represented by glyph <code>i</code>; that same index <code>i</code> is used
+      to look the glyph up in the <a href="#fntv1_GlyphMetrics">glyph metrics</a> and
+      <a href="#fntv1_Coords">coordinate</a> tables. Code points are stored in ascending order and
+      typically begin with the control codes 0x09 (tab), 0x0A (line feed) and 0x0D (carriage return),
+      followed by 0x20 (space) and the printable characters.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Unicode code point of this glyph</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="fntv1_SizeMetrics">FNT V1 Size Metrics</a></div>
+    <div class="indent1">
+      <br />
+      An array of <code>S</code> records, one per bundled point size, in ascending size order. These
+      give the typeface-wide metrics for each size; the corresponding glyph rectangles for size
+      <code>s</code> are found in block <code>s</code> of the <a href="#fntv1_Coords">coordinate
+      table</a>. All four values are IEEE 32-bit floats.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (float)</td>
+            <td>Point size of this entry (em size)</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (float)</td>
+            <td>Line height, in pixels</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (float)</td>
+            <td><span class="unknown">Baseline / ascent, in pixels</span></td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (float)</td>
+            <td>Descent, in pixels (height below the baseline)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="fntv1_GlyphMetrics">FNT V1 Glyph Metrics</a></div>
+    <div class="indent1">
+      <br />
+      This section contains <code>S</code> blocks of <code>G</code> records (one block per point size,
+      each block ordered by glyph index). Each record is four 32-bit floats describing the layout
+      metrics of a glyph. Non-printing glyphs (tab, line feed, carriage return) are all-zero. The
+      authoritative placement and dimensions for rendering are given separately in the
+      <a href="#fntv1_Coords">coordinate table</a>; the values here are layout metrics expressed in
+      pixels.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (float)</td>
+            <td><span class="unknown">Left side bearing</span></td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (float)</td>
+            <td><span class="unknown">Advance width</span></td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>4 (float)</td>
+            <td><span class="unknown">Top side bearing / vertical offset</span></td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>4 (float)</td>
+            <td><span class="unknown">Unknown (usually 0)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="fntv1_Kerning">FNT V1 Kerning Table</a></div>
+    <div class="indent1">
+      <br />
+      An array of <code>kerning count</code> (header field at 0x000c) records, present only for fonts
+      that define kerning. Each record adjusts the spacing of a character pair.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>4 (dword)</td>
+            <td>Code point of the neighbouring character in the pair</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>4 (float)</td>
+            <td>Horizontal kerning adjustment, in pixels (commonly negative)</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <span class="unknown">The mechanism that associates a run of kerning records with its owning glyph
+      (i.e. the left-hand character of the pair) has not been fully determined.</span>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="fntv1_Coords">FNT V1 Glyph Coordinate Table</a></div>
+    <div class="indent1">
+      <br />
+      This section contains <code>S</code> blocks of <code>G</code> records (one block per point size,
+      each block ordered by glyph index). Each 14-byte record locates the glyph within the
+      <a href="#fntv1_Bitmap">companion bitmap</a> and describes how to place it. The rectangle
+      (<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>) addresses the bitmap
+      using its native bottom-up orientation, so <code>y</code> is measured from the bottom edge of
+      the image. Whitespace glyphs use a zero (or 1&times;1) rectangle.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="5%" />
+          <col width="12%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Offset</th>
+            <th>Size (data type)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x0000</td>
+            <td>2 (word)</td>
+            <td><span class="unknown">Unknown (always observed as 0; possibly a bitmap page index)</span></td>
+          </tr>
+          <tr>
+            <td>0x0002</td>
+            <td>2 (signed word)</td>
+            <td>Vertical placement offset of the glyph</td>
+          </tr>
+          <tr>
+            <td>0x0004</td>
+            <td>2 (word)</td>
+            <td>Horizontal placement offset of the glyph</td>
+          </tr>
+          <tr>
+            <td>0x0006</td>
+            <td>2 (word)</td>
+            <td>X position of the glyph rectangle in the bitmap, in pixels</td>
+          </tr>
+          <tr>
+            <td>0x0008</td>
+            <td>2 (word)</td>
+            <td>Y position of the glyph rectangle in the bitmap, in pixels (measured from the bottom)</td>
+          </tr>
+          <tr>
+            <td>0x000a</td>
+            <td>2 (word)</td>
+            <td>Width of the glyph rectangle, in pixels</td>
+          </tr>
+          <tr>
+            <td>0x000c</td>
+            <td>2 (word)</td>
+            <td>Height of the glyph rectangle, in pixels</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="fntv1_Bitmap">FNT V1 Companion Bitmap</a></div>
+    <div class="indent1">
+      <br />
+      The glyph pixels live in a standard Windows <a href="bmp.htm">BMP</a> file with the same basename
+      as the FNT (e.g. <code>SUBTITLE.FNT</code> &rarr; <code>SUBTITLE.BMP</code>). All point sizes of
+      the font share this single atlas; the <a href="#fntv1_Coords">coordinate table</a> rectangles
+      index into it. Because the bitmap is stored bottom-up, the <code>y</code> coordinate is measured
+      from the bottom of the image.<br />
+      <br />
+      Several bitmap encodings are used in practice:<br />
+      <div class="indent1">
+        <li>8 bits-per-pixel, RLE8-compressed (BI_RLE8) or uncompressed, with a 256-entry grayscale
+            palette. The palette value is the glyph's coverage (alpha); the colour is applied by the
+            engine.</li>
+        <li>24 bits-per-pixel, uncompressed BGR.</li>
+        <li>32 bits-per-pixel, BI_BITFIELDS, carrying a real alpha channel.</li>
+      </div>
+      <br />
+      The atlas background is black / zero coverage and is treated as transparent.<br />
+    </div>
+  </div>
+</div>
+

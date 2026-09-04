@@ -16,16 +16,30 @@ layout: default
 
 {% assign actions = "" | split: "" %}
 {% for action_hash in site.data.actions %}
-  {% assign actions = actions | push: action_hash[1] %}
+  {% assign action = action_hash[1] | addProp: "base_name", action_hash[0] %}
+  {% assign actions = actions | push: action %}
 {% endfor %}
 {% assign actions = actions | sort: 'name' | sort: 'n' %}
 
 
+{% assign seenAnchors = "" | split: "" %}
 {% for action in actions %}
+
+  {%- comment -%} it can happen, that a game has only suffixed versions of an action, so we need to add a dummy element to ensure also a bare anchor works. An example would be action 7 in the bgee listing {%- endcomment -%}
+  {% assign baseNameRoot = action.base_name | split: "-" | first %}
+  {% assign baseNameRootCount = actions | where: "base_name", baseNameRoot | where: game, 1 | size %}
+  {% if baseNameRootCount > 0 %}
+    {%- comment -%} nothing to do, a real element will be present {%- endcomment -%}
+  {% else %}
+    {% unless seenAnchors contains baseNameRoot %}
+      <span id="{{ baseNameRoot }}"></span>
+      {% assign seenAnchors = seenAnchors | push: baseNameRoot %}
+    {% endunless %}
+  {% endif %}
 
   {% if action[game] == 1 %}
     <div class="actionHeader">
-      <a id="{{ action.n }}" class="action_name">
+      <a id="{{ action.base_name }}" class="action_name">
         {{ action.n }} {{ action.name }}({%- assign a = action -%}{%- include action_params.html -%})
       </a>
       {%- include action_labels.html -%}

@@ -18780,7 +18780,7 @@ See <a href="#410">RandomWalkTime()</a> for further details about the time param
     <div class="actionHeader">
       <a id="469-bgee" class="action_name">
         469 WaitSync(I:Amount*)
-      </a><span class="label label-info" title="This action is not confirmed as working">not tested</span><span class="action_sisters">
+      </a><span class="action_sisters">
     
     Variants:
     <span class="avariants">
@@ -18796,7 +18796,10 @@ See <a href="#410">RandomWalkTime()</a> for further details about the time param
     
 
   </span></div>
-    <div class="indent1 action_body"><p></p><p>It is likely that it behaves like a combination of <a href="#63">Wait()</a> and <a href="#183">MultiPlayerSync()</a>.</p>
+    <div class="indent1 action_body"><p></p><p>Same as <a href="#63">Wait()</a>, but scales <code class="language-plaintext highlighter-rouge">Amount</code> according to the “Maximum Frame Rate” option in <code class="language-plaintext highlighter-rouge">Baldur.lua</code>, so that the
+action waits approximately the same number of seconds as <a href="#63">Wait()</a> would at the default frame rate of 30 FPS.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wait_ticks = &lt;Maximum Frame Rate&gt; * 15 / 30 * &lt;Amount&gt;
+</code></pre></div></div>
 
     </div>
   

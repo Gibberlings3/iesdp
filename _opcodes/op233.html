@@ -335,50 +335,61 @@ In EE games, <code>Type 99 – PROFICIENCYHALBERD</code> currently cannot use th
 {% include bug.html %}
 
 {% capture note %}
-On EE games, when the <code>Increment</code> option is used, a nonzero <code>Delta</code> means "calculate the increment needed to reach <code>Amount</code> when the effect first applies."
+<p>
+	On EE games, when the <code>Increment</code> option is used, a nonzero <code>Delta</code> means "calculate the increment needed to reach <code>Amount</code> when the effect first applies."
+</p>
 
-Suppose the reference proficiency is <code>2</code>, and <code>Amount</code> is <code>4</code>:
+<p>
+	Suppose the reference proficiency is <code>2</code>, and <code>Amount</code> is <code>4</code>:
 
-<table style="border-collapse: collapse; border: 1px solid black;">
-  <thead>
-    <tr>
-      <th style="border: 1px solid black; padding: 8px; text-align: center;">special field</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: center;">Cached bonus</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: center;">Result*</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="border: 1px solid black; padding: 8px; text-align: center;">Zero</td>
-      <td style="border: 1px solid black; padding: 8px; text-align: center;">+4</td>
-      <td style="border: 1px solid black; padding: 8px; text-align: center;">6</td>
-    </tr>
-    <tr>
-      <td style="border: 1px solid black; padding: 8px; text-align: center;">Nonzero</td>
-      <td style="border: 1px solid black; padding: 8px; text-align: center;">4 − 2 = +2</td>
-      <td style="border: 1px solid black; padding: 8px; text-align: center;">4</td>
-    </tr>
-  </tbody>
-</table>
+	<table style="border-collapse: collapse; border: 1px solid black;">
+	  <thead>
+	    <tr>
+	      <th style="border: 1px solid black; padding: 8px; text-align: center;">special field</th>
+	      <th style="border: 1px solid black; padding: 8px; text-align: center;">Cached bonus</th>
+	      <th style="border: 1px solid black; padding: 8px; text-align: center;">Result*</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td style="border: 1px solid black; padding: 8px; text-align: center;">Zero</td>
+	      <td style="border: 1px solid black; padding: 8px; text-align: center;">+4</td>
+	      <td style="border: 1px solid black; padding: 8px; text-align: center;">6</td>
+	    </tr>
+	    <tr>
+	      <td style="border: 1px solid black; padding: 8px; text-align: center;">Nonzero</td>
+	      <td style="border: 1px solid black; padding: 8px; text-align: center;">4 − 2 = +2</td>
+	      <td style="border: 1px solid black; padding: 8px; text-align: center;">4</td>
+	    </tr>
+	  </tbody>
+	</table>
+	
+	*Assuming no other modifiers.
+</p>
 
-*Assuming no other modifiers.
+<p>
+	You could use this to make one reusable effect initially bring characters with different starting proficiencies to four pips. Each character receives a different bonus, calculated from their own starting value.
+</p>
 
-You could use this to make one reusable effect initially bring characters with different starting proficiencies to four pips. Each character receives a different bonus, calculated from their own starting value.
+<p>
+	The useful distinction from ordinary Set mode is that this difference becomes a fixed bonus. In the example, the cached bonus remains <code>+2</code>: if the underlying proficiency later increases from <code>2</code> to <code>3</code>, the resulting proficiency becomes <code>5</code>.
+</p>
 
-The useful distinction from ordinary Set mode is that this difference becomes a fixed bonus. In the example, the cached bonus remains <code>+2</code>: if the underlying proficiency later increases from <code>2</code> to <code>3</code>, the resulting proficiency becomes <code>5</code>.
+<p>
+	Three details matter:
+	
+	<ul>
+		<li>The reference comes from the internal engine field <code>m_tempStats</code>, rather than necessarily the final displayed proficiency.</li>
+		<li>Starting above the target produces a negative bonus: reference <code>5</code> and <code>Amount</code> <code>4</code> gives <code>-1</code>.</li>
+		<li>
+			Unfortunately, this specific feature only works with <code>PROFICIENCYLONGSWORD</code>!
+			<ul>
+				<li>Most likely related to the <i>Black Blade of Disaster</i> spell ("The caster is considered to be proficient to the point of <u>Grand Mastery</u> in this weapon.").</li>
+			</ul>
+		</li>
+	</ul>
 
-Three details matter:
-
-<ul>
-	<li>The reference comes from the internal engine field <code>m_tempStats</code>, rather than necessarily the final displayed proficiency.</li>
-	<li>Starting above the target produces a negative bonus: reference <code>5</code> and <code>Amount</code> <code>4</code> gives <code>-1</code>.</li>
-	<li>
-		Unfortunately, this specific feature only works with <code>PROFICIENCYLONGSWORD</code>!
-		<ul>
-			<li>Most likely related to the <i>Black Blade of Disaster</i> spell ("The caster is considered to be proficient to the point of <u>Grand Mastery</u> in this weapon.").</li>
-		</ul>
-	</li>
-</ul>
+</p>
 {% endcapture %}
 
 {% include important.html %}

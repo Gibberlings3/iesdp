@@ -309,24 +309,20 @@ Sets the weapon proficiency points for the weapon type specified in the <code>Ty
 	</tbody>
 </table>
 
-{% capture note %}
-<ul>
-	<li>Every <code>STAT</code> from <code>89</code> to <code>134</code> is a weapon proficiency, even the weapon styles.</li>
-	<li>
-		Every one of those <code>STAT</code>s can be set as a weapon's proficiency and it will use that stat's value for proficiency bonuses.
-		<ul>
-			<li>
-				This includes <code>STAT</code>s like <code>CLERIC_ARMOR_OF_FAITH<small><sup>*</sup></small></code>, even though they're used for an alternative purpose.
-				<ul>
-					<li>The only thing stopping them from showing up during chargen/level-up proficiency selection is their entries (or lack there of) in <a href="../files/2da/2da_bgee/weapprof.htm">WEAPPROF.2DA</a>. A <code>NAME_REF</code> column of <code>4294967296 (-1)</code> is hardcoded to hide the proficiency during chargen/level-up. Aside from that it just needs a non-zero maximum for the current class/kit.</li>
-				</ul>
-			</li>
-		</ul>
-	</li>
-</ul>
-{% endcapture %}
+<p>
+	Every <code>STAT</code> from <code>89</code> to <code>134</code> is a weapon proficiency, even the weapon styles.<br/><br/>
 
-{% include info.html %}
+	Every one of those <code>STAT</code>s can be set as a weapon's proficiency and it will use that stat's value for proficiency bonuses.
+
+	<ul>
+		<li>
+			This includes <code>STAT</code>s like <code>CLERIC_ARMOR_OF_FAITH<small><sup>*</sup></small></code>, even though they're used for an alternative purpose.
+			<ul>
+				<li>The only thing stopping them from showing up during chargen/level-up proficiency selection is their entries (or lack there of) in <a href="../files/2da/2da_bgee/weapprof.htm">WEAPPROF.2DA</a>. A <code>NAME_REF</code> column of <code>4294967296 (-1)</code> is hardcoded to hide the proficiency during chargen/level-up. Aside from that it just needs a non-zero maximum for the current class/kit.</li>
+			</ul>
+		</li>
+	</ul>
+</p>
 
 {% capture note %}
 In EE games, <code>Type 99 – PROFICIENCYHALBERD</code> currently cannot use the <code>Increment</code> option without crashing.
@@ -334,12 +330,9 @@ In EE games, <code>Type 99 – PROFICIENCYHALBERD</code> currently cannot use th
 
 {% include bug.html %}
 
-{% capture note %}
 <p>
-	On EE games, when the <code>Increment</code> option is used, a nonzero <code>Delta</code> means "calculate the increment needed to reach <code>Amount</code> when the effect first applies."
-</p>
+	On EE games, when the <code>Increment</code> option is used, a nonzero <code>Delta</code> means "calculate the increment needed to reach <code>Amount</code> when the effect first applies."<br/><br/>
 
-<p>
 	Suppose the reference proficiency is <code>2</code>, and <code>Amount</code> is <code>4</code>:
 
 	<table style="border-collapse: collapse; border: 1px solid black;">
@@ -363,21 +356,15 @@ In EE games, <code>Type 99 – PROFICIENCYHALBERD</code> currently cannot use th
 	    </tr>
 	  </tbody>
 	</table>
-	
-	*Assuming no other modifiers.
-</p>
 
-<p>
-	You could use this to make one reusable effect initially bring characters with different starting proficiencies to four pips. Each character receives a different bonus, calculated from their own starting value.
-</p>
+	*Assuming no other modifiers.<br/><br/>
 
-<p>
-	The useful distinction from ordinary Set mode is that this difference becomes a fixed bonus. In the example, the cached bonus remains <code>+2</code>: if the underlying proficiency later increases from <code>2</code> to <code>3</code>, the resulting proficiency becomes <code>5</code>.
-</p>
+	You could use this to make one reusable effect initially bring characters with different starting proficiencies to four pips. Each character receives a different bonus, calculated from their own starting value.<br/><br/>
 
-<p>
+	The useful distinction from ordinary Set mode is that this difference becomes a fixed bonus. In the example, the cached bonus remains <code>+2</code>: if the underlying proficiency later increases from <code>2</code> to <code>3</code>, the resulting proficiency becomes <code>5</code>.<br/><br/>
+
 	Three details matter:
-	
+
 	<ul>
 		<li>The reference comes from the internal engine field <code>m_tempStats</code>, rather than necessarily the final displayed proficiency.</li>
 		<li>Starting above the target produces a negative bonus: reference <code>5</code> and <code>Amount</code> <code>4</code> gives <code>-1</code>.</li>
@@ -388,11 +375,7 @@ In EE games, <code>Type 99 – PROFICIENCYHALBERD</code> currently cannot use th
 			</ul>
 		</li>
 	</ul>
-
 </p>
-{% endcapture %}
-
-{% include important.html %}
 
 {% capture note %}
 The Proficiency Modifier effect cannot increment or decrement proficiency points, it can only SET them.

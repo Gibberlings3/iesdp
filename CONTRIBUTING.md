@@ -10,7 +10,7 @@ See above, the same applies to pull requests that aren't structural or fixing si
 # Contributing Code
 
 It's all here, developed in the master branch and then automatically generated into gh-pages
-via Travis (since we use a custom plugin and want a downloadable zip of the result).
+via GitHub Actions (since we use a custom plugin and want a downloadable zip of the result).
 
 For anything that could need wider consensus, present the idea on the forum first.
 

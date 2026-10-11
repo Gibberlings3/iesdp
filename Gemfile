@@ -1,15 +1,19 @@
 source "https://rubygems.org"
 
-gem "jekyll", group: :jekyll_plugins
+ruby file: ".ruby-version"
+
+gem "jekyll", "~> 4.4"
 
 group :jekyll_plugins do
-  gem 'jekyll-sitemap'
-  gem 'jekyll-feed'
-  gem 'jekyll-include-cache'
-
-  gem 'jekyll-liquify'
-
-  gem 'kramdown-parser-gfm'
+  gem "jekyll-sitemap", "~> 1.4"
+  gem "jekyll-feed", "~> 0.18"
+  gem "jekyll-include-cache", "~> 0.3"
+  gem "jekyll-liquify", "~> 0.1"
 end
 
-gem "webrick", "~> 1.8"
+gem "kramdown-parser-gfm", "~> 1.1"
+gem "webrick", "~> 1.9"
+
+group :development do
+  gem "bundler-audit", "~> 0.9", require: false
+end

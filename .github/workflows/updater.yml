@@ -8,21 +8,29 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    env:
+      BUNDLE_FROZEN: 'true'
+      JEKYLL_ENV: production
 
-    # ensure the zip archive has proper links ... so manually trigger the build after some prep
     steps:
     - name: Checkout
       uses: actions/checkout@v7
 
+    - name: Read RubyGems version
+      id: toolchain
+      run: |
+        rubygems_version=$(tr -d '\r\n' < .rubygems-version)
+        printf 'rubygems=%s\n' "$rubygems_version" >> "$GITHUB_OUTPUT"
+
     - name: Install dependencies
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        rubygems: ${{ steps.toolchain.outputs.rubygems }}
         bundler-cache: true
 
     - name: Build site
-      uses: limjh16/jekyll-action-ts@v2
+      run: bundle exec jekyll build --strict_front_matter --trace
 
     - name: Push cleaned up build to other branch
       run: bash deploy.sh

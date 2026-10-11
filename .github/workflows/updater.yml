@@ -5,6 +5,16 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  schedule:
+    - cron: '23 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: iesdp-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -15,7 +25,9 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
 
     - name: Read RubyGems version
       id: toolchain
@@ -24,16 +36,54 @@ jobs:
         printf 'rubygems=%s\n' "$rubygems_version" >> "$GITHUB_OUTPUT"
 
     - name: Install dependencies
-      uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
       with:
         rubygems: ${{ steps.toolchain.outputs.rubygems }}
         bundler-cache: true
 
+    - name: Audit dependencies
+      run: bundle exec bundle-audit check --update
+
     - name: Build site
       run: bundle exec jekyll build --strict_front_matter --trace
 
+    - name: Check configuration
+      run: bundle exec jekyll doctor
+
+    - name: Check generated documentation
+      run: bundle exec ruby _tools/check-site.rb _site
+
+    - name: Upload generated site
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: generated-site
+        path: _site/
+        if-no-files-found: error
+        retention-days: 1
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    concurrency:
+      group: iesdp-gh-pages
+      cancel-in-progress: false
+    steps:
+    - name: Checkout deployment script
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+
+    - name: Download validated site
+      uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        name: generated-site
+        path: _site/
+
     - name: Push cleaned up build to other branch
       run: bash deploy.sh
-      if: github.event_name == 'push'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

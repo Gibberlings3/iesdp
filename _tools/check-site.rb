@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# Validate the generated documentation against the source data, without adding
-# a test framework or an HTML parser to the site's dependency graph.
+# A successful Jekyll build can still omit documentation or render incorrect
+# offsets. Compare the generated output with the source data to catch those
+# regressions when changing the toolchain, plugins, or templates.
 require "date"
 require "json"
 require "pathname"
@@ -23,7 +24,9 @@ end
 def read_page(destination, path)
   file = destination.join(path.delete_prefix("/"))
   check(file.file?, "Missing #{path}")
-  file.read
+  text = file.read(encoding: "UTF-8")
+  check(text.valid_encoding?, "#{path}: invalid UTF-8 bytes")
+  text
 end
 
 check(JSON::VERSION == Gem.loaded_specs.fetch("json").version.to_s, "Loaded JSON differs from the bundled version; check RUBYLIB")
@@ -98,7 +101,6 @@ check(!playground.match?(/class="opnamedata">op\d+[^<]*\.html/), "Jekyll documen
 %w[index.htm main.htm files/2da/index.htm files/ids/index.htm scripting/triggers/index.htm appendices/index.htm site_info/index.htm].each do |path|
   html = read_page(destination, path)
   check(html.include?('id="content"') && html.include?('id="footer"'), "#{path}: missing page layout")
-  check(html.include?("text/html; charset=utf-8"), "#{path}: incorrect offline character encoding")
 end
 css = read_page(destination, "css/main.css")
 check(css.include?("#F6F7EB") || css.include?("#f6f7eb"), "Missing compiled background style")
@@ -112,7 +114,12 @@ check(sitemap.root.name == "urlset", "Invalid sitemap")
 %w[Gemfile Gemfile.lock README.md CONTRIBUTING.md deploy.sh cleaner .ruby-version .github _tools vendor js/html5shiv.js js/respond.js].each do |path|
   check(!destination.join(path).exist?, "Build or unused dependency file leaked into the site: #{path}")
 end
-destination.glob("**/*.{htm,html}").each do |file|
-  check(!file.read.match?(/Liquid (?:Exception|error|syntax error):|Offset mismatch\. Expected/), "Rendering error in #{file.relative_path_from(destination)}")
+html_pages = destination.glob("**/*.{htm,html}")
+html_pages.each do |file|
+  path = file.relative_path_from(destination).to_s
+  html = read_page(destination, path)
+  check(html.match?(/<meta\b[^>]*\bcharset\s*=\s*["']?utf-8\b/i), "#{path}: missing UTF-8 declaration for offline use")
+  check(!html.match?(/Liquid (?:Exception|error|syntax error):|Offset mismatch\. Expected/), "Rendering error in #{path}")
 end
+puts "PASS: UTF-8 bytes and declarations in #{html_pages.size} HTML pages"
 puts "PASS: layouts, nested rendering, styles, RSS, sitemap, and output hygiene"

@@ -111,7 +111,7 @@ check(feed.root.name == "rss", "Existing RSS feed format changed")
 sitemap = REXML::Document.new(read_page(destination, "sitemap.xml"))
 check(sitemap.root.name == "urlset", "Invalid sitemap")
 
-%w[Gemfile Gemfile.lock README.md CONTRIBUTING.md deploy.sh cleaner .ruby-version .github _tools vendor js/html5shiv.js js/respond.js].each do |path|
+%w[Gemfile Gemfile.lock README.md CONTRIBUTING.md DEVELOPMENT.md DEVELOPMENT.html deploy.sh cleaner .ruby-version .github _tools vendor js/html5shiv.js js/respond.js].each do |path|
   check(!destination.join(path).exist?, "Build or unused dependency file leaked into the site: #{path}")
 end
 html_pages = destination.glob("**/*.{htm,html}")

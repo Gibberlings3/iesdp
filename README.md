@@ -1,29 +1,54 @@
 # IESDP
 
-Visible at: https://gibberlings3.github.io/iesdp/
+The **Infinity Engine Structures Description Project** documents the file formats,
+opcodes, and scripting interfaces of the Infinity Engine. The website is built
+with Jekyll and custom Ruby plugins.
 
-# How to deploy/test
+[Live website](https://gibberlings3.github.io/iesdp/) ·
+[Contributing](CONTRIBUTING.md) · [Development guide](DEVELOPMENT.md)
 
-0. Install dependencies ([jekyll](https://jekyllrb.com/docs/installation/), jekyll-liquify)
-1. Run: `jekyll serve --incremental` in the top dir of this repo
-2. Open the url it prints, usually http://127.0.0.1:4000/iesdp/
+## Local setup
 
----
-**NOTE**
+Install Git, the Ruby version in [.ruby-version](.ruby-version), RubyGems from
+[.rubygems-version](.rubygems-version), and the Bundler version under `BUNDLED WITH`
+in [Gemfile.lock](Gemfile.lock). Native gems also need a compiler and Make.
+See the [development guide](DEVELOPMENT.md) for platform and shell instructions.
 
-On macOS you might also need the gem `webrick`.
+From the repository root:
 
----
+```text
+bundle config set --local path vendor/bundle
+bundle install
+bundle exec jekyll serve --host 127.0.0.1 --incremental
+```
 
-# How it works
+Open <http://127.0.0.1:4000/iesdp/>. Jekyll watches for edits; stop it with
+**Ctrl+C**. Restart after changing configuration, plugins, or dependencies.
 
-Since Github Pages don't allow plugins, we have to use an extra step in
-deployment to properly generate the final IESDP and push it to the
-`gh-pages` branch. That is what is displayed if you visit the URL at the top.
-Actual work happens on the `master` branch.
+## Validate changes
 
-Handy cheat sheet: http://jekyll.tips/jekyll-cheat-sheet/
+Stop the preview and run a full build after changing data, collections, shared
+templates, or dependencies; incremental builds do not track every dependency.
 
-# Contributing
+```text
+bundle exec jekyll clean
+bundle exec jekyll build --strict_front_matter --trace
+bundle exec ruby _tools/check-site.rb _site
+```
 
-See [contributing guide](CONTRIBUTING.md).
+The checker compares generated action/opcode listings and offsets with source
+data, and checks rendering, styles, feeds, UTF-8, and output exclusions. Inspect
+the generated pages in a browser, including `_site/index.htm` opened directly
+for offline use. The development guide covers
+[link comparisons and dependency maintenance](DEVELOPMENT.md#optional-link-comparison).
+
+## Publishing
+
+Work happens on `master`. GitHub Actions builds and checks pull requests and
+pushes; successful pushes to `Gibberlings3/iesdp:master` publish the generated
+files to `gh-pages`. Fork pushes and manual workflow runs only validate.
+The generated branch also provides the downloadable offline archive.
+
+Use the local preview commands for development. `deploy.sh` is CI publishing
+machinery and requires repository credentials. See [CONTRIBUTING.md](CONTRIBUTING.md)
+for content and data-format conventions.

@@ -5,27 +5,48 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Serialize publication to gh-pages; superseded PR checks can be canceled.
+concurrency:
+  group: iesdp-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    env:
+      BUNDLE_FROZEN: 'true'
 
-    # ensure the zip archive has proper links ... so manually trigger the build after some prep
     steps:
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+
+    - name: Read RubyGems version
+      id: toolchain
+      run: |
+        rubygems_version=$(tr -d '\r\n' < .rubygems-version)
+        printf 'rubygems=%s\n' "$rubygems_version" >> "$GITHUB_OUTPUT"
 
     - name: Install dependencies
-      uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
       with:
-        ruby-version: 2.7
+        rubygems: ${{ steps.toolchain.outputs.rubygems }}
         bundler-cache: true
 
     - name: Build site
-      uses: limjh16/jekyll-action-ts@v2
+      run: bundle exec jekyll build --strict_front_matter --trace
+
+    - name: Check generated documentation
+      run: bundle exec ruby _tools/check-site.rb _site
 
     - name: Push cleaned up build to other branch
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository == 'Gibberlings3/iesdp'
       run: bash deploy.sh
-      if: github.event_name == 'push'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

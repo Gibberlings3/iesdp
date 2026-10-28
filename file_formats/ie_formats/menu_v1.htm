@@ -1,0 +1,508 @@
+---
+title: "MENU file format"
+---
+    <div class="title_main">MENU file format</div>
+
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BGEE, BG2EE, IWDEE (patch 2.0 and later)</div>
+    <br />
+
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      MENU files (resource type <code>0x0408</code>, extension <code>.menu</code>) define the user interface of the Enhanced Editions since patch 2.0. A MENU file is plain text. It declares <em>menus</em> (screens and panels), the <em>items</em> (controls) they contain, and the Lua code that drives them.<br />
+      <br />
+      The engine loads exactly one MENU resource by itself: <code>UI.MENU</code>, read once at start-up after the engine's own Lua functions have been registered. The file is lexed and parsed in a single pass. Lua code embedded in it is compiled into the same global Lua state that the rest of the user interface uses. The Lua functions available to menu code are listed on the <a href="menu_lua.htm">MENU Lua interface</a> page, and the other globals the engine defines on the <a href="lua_globals.htm">Engine Lua globals</a> page.<br />
+      <br />
+      This page describes the parser and the data structures it builds, as implemented in patches 2.6.6.0 and 2.7.3.0 of BGEE, BG2EE and IWDEE. All six of these builds were examined. Their keyword tables, grammars and parser tables are identical, and the few differences that exist are listed under <a href="#menuv1_Versions">Version differences</a>. PSTEE and other patch levels were not examined.<br />
+      <br />
+      Descriptions marked &dagger; are inferred from the engine's own field and function names; the code that consumes them was not traced in detail. Everything else on this page was checked against the executables.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Lexical">Lexical structure</a></div>
+    <div class="indent1">
+      The file is read as one NUL-terminated string and split into tokens as follows:<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="20%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Rules</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>White space</td>
+            <td>Any character accepted by the C function <code>isspace</code> (space, tab, CR, LF, VT, FF) separates tokens.</td>
+          </tr>
+          <tr>
+            <td>Comment</td>
+            <td><code>--</code> starts a comment that runs to the end of the line. A single <code>-</code> is a minus sign.</td>
+          </tr>
+          <tr>
+            <td><code>{</code> <code>}</code></td>
+            <td>Open and close a block.</td>
+          </tr>
+          <tr>
+            <td>String</td>
+            <td>Text between a pair of double quotes (<code>"&hellip;"</code>) or a pair of single quotes (<code>'&hellip;'</code>). The string ends at the next occurrence of its opening quote character, so the other quote character can appear inside it. There are no escape sequences, and a string can span several lines. An unterminated string runs to the end of the file.</td>
+          </tr>
+          <tr>
+            <td>Number</td>
+            <td>A run of decimal digits, converted with <code>atoi</code>. There are no fractions or hexadecimal numbers: <code>1.5</code> is read as <code>1</code>, a skipped <code>.</code> and <code>5</code>. A negative value is written as <code>-</code> followed by a number, and the sign may be repeated (<code>- -5</code> is 5).</td>
+          </tr>
+          <tr>
+            <td>Word</td>
+            <td>A run of ASCII letters and digits that does not start with a digit. If the word matches one of the <a href="#menuv1_Keywords">keywords</a>, compared case-insensitively, it is that keyword; otherwise it is treated exactly like a string. Underscores are <em>not</em> part of a word: unquoted <code>My_Menu</code> is the string <code>My</code> followed by the keyword <code>menu</code>. Always quote names. A word of 64 or more characters makes the engine abort.</td>
+          </tr>
+          <tr>
+            <td>Inline Lua</td>
+            <td>Text between two backticks (<code>`&hellip;`</code>) is Lua code. The lexer runs it as soon as it reaches it, under the chunk name <code>menu</code>, so it runs before any part of the file that follows it is parsed. It produces no token. The engine drops the <em>last</em> character before the closing backtick, so end every inline block with a line break or a space. A compile error or a runtime error is logged and shown in a message box, and parsing continues.</td>
+          </tr>
+          <tr>
+            <td>Anything else</td>
+            <td>Any other character (for example <code>,</code> <code>;</code> <code>=</code> <code>(</code> <code>.</code>) is silently skipped, so <code>area 0, 0, 10, 10</code> is the same as <code>area 0 0 10 10</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <b>Syntax errors.</b> When a token cannot be accepted, the engine logs <code>Invalid token in menu: [<i>token</i>] on line <i>L</i>, character <i>C</i></code>. A <code>Menu Error</code> message box is shown as well when the <code>Debug Mode</code> option of the <code>Program Options</code> section is set. The line number counts the line breaks before the token, so the first line of the file is line 0, and on that line the character number is meaningless. The offending token is discarded and parsing continues. Further errors are not reported until three tokens have been accepted again.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Grammar">Grammar</a></div>
+    <div class="indent1">
+      The parser is generated by the Lemon parser generator. The grammar below was rebuilt from its tables (157 rules) and is identical in all examined builds. Quoted symbols are literal tokens. <code>+</code> means one or more and <code>|</code> separates alternatives. Keywords are case-insensitive.<br />
+      <br />
+<pre>
+file        ::= menu+
+menu        ::= 'menu' '{' menu_prop+ item+ '}'
+item        ::= item_type '{' item_prop+ '}'
+              | 'list' '{' column+ item_prop+ '}'
+item_type   ::= 'label' | 'text' | 'button' | 'edit' | 'movie' | 'slider'
+              | 'handle' | 'slot' | 'map' | 'template'
+column      ::= 'column' '{' column_prop+ item+ '}'
+column_prop ::= 'width' value
+item_prop   ::= <i>one of the item properties below</i>
+              | item                         -- a nested item
+menu_prop   ::= <i>one of the menu properties below</i>
+
+number      ::= NUMBER | '-' number
+value       ::= number | STRING | 'lua' STRING
+color       ::= value | number number number number
+halign      ::= 'left' | 'top' | 'right' | 'bottom' | 'center'
+</pre>
+      This grammar implies the following rules:<br />
+      <ul>
+        <li>Every menu needs at least one menu property and at least one item, and all menu properties must come <em>before</em> the first item.</li>
+        <li>Every item needs at least one property. An empty block such as <code>label { }</code> is a syntax error.</li>
+        <li>In a <code>list</code>, all <code>column</code> blocks come first and the list's own properties follow them. Each column starts with one or more <code>width</code> entries and then holds one or more items.</li>
+        <li>The parser accepts every item property in every item type. The type only decides which fields are used when the item is drawn and handled.</li>
+        <li>Alignment words are interchangeable: <code>left</code> and <code>top</code> both mean 0, <code>right</code> and <code>bottom</code> both mean 1, and <code>center</code> means 2.</li>
+      </ul>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Keywords">Keywords</a></div>
+    <div class="indent1">
+      The keyword table has 124 entries for 122 distinct words, and it is identical in all examined builds. Keywords are matched case-insensitively; the spelling below is the engine's. <code>name</code> and <code>top</code> each appear twice in the table with the same meaning, and <code>transparent</code> is the same keyword as <code>usealpha</code>.<br />
+      <br />
+      <code>action</code>, <code>actionalt</code>, <code>actionbar</code>, <code>actiondbl</code>, <code>actiondrag</code>, <code>actionenter</code>, <code>actionexit</code>, <code>actionHold</code>, <code>actionScroll</code>, <code>actionsimpledrag</code>, <code>actionsimpledrop</code>, <code>actionUpdate</code>, <code>align</code>, <code>area</code>, <code>areamap</code>, <code>background</code>, <code>bam</code>, <code>bitmap</code>, <code>bottom</code>, <code>button</code>, <code>center</code>, <code>clickable</code>, <code>clunkyScroll</code>, <code>color</code>, <code>colordisplay</code>, <code>column</code>, <code>count</code>, <code>dynamic</code>, <code>edit</code>, <code>enabled</code>, <code>encumbrance</code>, <code>fill</code>, <code>font</code>, <code>force</code>, <code>frame</code>, <code>frameTimes</code>, <code>full</code>, <code>func</code>, <code>glow</code>, <code>greyscale</code>, <code>handle</code>, <code>hide</code>, <code>hidehighlight</code>, <code>highlight</code>, <code>highlightgroup</code>, <code>icon</code>, <code>ignoreEsc</code>, <code>ignoreEvents</code>, <code>label</code>, <code>left</code>, <code>list</code>, <code>loop</code>, <code>lower</code>, <code>lua</code>, <code>map</code>, <code>maxchars</code>, <code>maxlines</code>, <code>memorizedSpellInfo</code>, <code>menu</code>, <code>modal</code>, <code>mosaic</code>, <code>movie</code>, <code>name</code>, <code>offset</code>, <code>on</code>, <code>onclose</code>, <code>onopen</code>, <code>opacity</code>, <code>overlayTint</code>, <code>pad</code>, <code>palette</code>, <code>panel</code>, <code>paperdoll</code>, <code>placeholder</code>, <code>point</code>, <code>portrait</code>, <code>position</code>, <code>progressbar</code>, <code>pulse</code>, <code>queuedMovie</code>, <code>rectangle</code>, <code>res</code>, <code>respectClipping</code>, <code>respectConstraints</code>, <code>right</code>, <code>rowbackground</code>, <code>rowheight</code>, <code>rowwidth</code>, <code>scaleToClip</code>, <code>scrollbar</code>, <code>seperator</code>, <code>sequence</code>, <code>sequenceonce</code>, <code>settings</code>, <code>shadow</code>, <code>size</code>, <code>skipReset</code>, <code>slider</code>, <code>sliderBackground</code>, <code>slot</code>, <code>slotinfo</code>, <code>sound</code>, <code>spellInfo</code>, <code>state</code>, <code>style</code>, <code>subtitle</code>, <code>table</code>, <code>template</code>, <code>text</code>, <code>tint</code>, <code>toggle</code>, <code>tooltip</code>, <code>top</code>, <code>transparent</code>, <code>upper</code>, <code>usages</code>, <code>usealpha</code>, <code>useFontZoom</code>, <code>useOverlayTint</code>, <code>var</code>, <code>width</code>, <code>worldmap</code><br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Values">Value forms</a></div>
+    <div class="indent1">
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="20%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Form</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>NUMBER</code></td>
+            <td>A literal integer. In a <i>value</i> it is stored as an integer constant.</td>
+          </tr>
+          <tr>
+            <td><code>STRING</code></td>
+            <td>A literal string, used exactly as written. Where a property takes Lua <i>code</i> as a string (marked <b>statement</b> or <b>expression</b> in the tables), the string is compiled into a Lua function. See <a href="#menuv1_Lua">How a menu becomes Lua</a>.</td>
+          </tr>
+          <tr>
+            <td><code>lua STRING</code></td>
+            <td>A Lua expression. It is compiled into a function that returns the expression, and the function is called every time the engine needs the value.</td>
+          </tr>
+          <tr>
+            <td><i>value</i></td>
+            <td>Any of the three forms above. A property that needs a number reads an integer constant directly, or calls the Lua function and takes its result: a number is truncated to an integer and a boolean becomes 0 or 1, while anything else, or a Lua error, gives 0. A property that needs a string reads a string constant directly, or calls the function and takes its result as a string. Integer and string constants are not converted into each other, so use the form the property expects.</td>
+          </tr>
+          <tr>
+            <td><i>color</i></td>
+            <td>Four numbers <code>a b c d</code> are packed into the 32-bit value <code>a + b&times;2<sup>8</sup> + c&times;2<sup>16</sup> + d&times;2<sup>24</sup></code>. A single number or string is a key into the global Lua table <code>fontcolors</code> (a number is converted to its decimal text). The table entry must be a hexadecimal string, and it is read <em>while the file is parsed</em>. For a number key with no matching entry the colour is <code>0xFFFFFFFF</code>; a string key must exist. <code>lua "&hellip;"</code> gives a colour that is evaluated at run time.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Menu">Menu properties</a></div>
+    <div class="indent1">
+      A menu is identified by its name together with its <code>panel</code> and <code>state</code> numbers. Names are compared case-insensitively. Menus are kept sorted by these three keys and found by binary search, so if two menus share all three, which one is found is unspecified. Every menu should have a name, because a missing name is passed to the string comparison as a null pointer. The engine stores at most 256 menus and does not check this limit.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="22%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Syntax</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>name STRING</code></td><td>Menu name, used by <code>Infinity_PushMenu</code> and similar functions.</td></tr>
+          <tr><td><code>panel <i>number</i></code></td><td>Panel number: the second part of the menu's identity (default 0).</td></tr>
+          <tr><td><code>state <i>number</i></code></td><td>State number: the third part of the menu's identity (default 0).</td></tr>
+          <tr><td><code>modal</code><br /><code>modal <i>value</i></code></td><td>Marks the menu as modal. Without an argument the value is 1. &dagger;</td></tr>
+          <tr><td><code>opacity <i>value</i></code></td><td>Menu opacity. &dagger;</td></tr>
+          <tr><td><code>greyscale <i>value</i></code></td><td>Draws the menu in greyscale. &dagger;</td></tr>
+          <tr><td><code>onopen STRING</code></td><td>Lua <b>statement</b> run when the menu opens.</td></tr>
+          <tr><td><code>onclose STRING</code></td><td>Lua <b>statement</b> run when the menu closes.</td></tr>
+          <tr><td><code>enabled STRING</code></td><td>Lua <b>expression</b> that decides whether the menu is active. &dagger;</td></tr>
+          <tr><td><code>offset <i>number number</i></code></td><td>Menu offset <i>x y</i>. It can be read and changed with <code>Infinity_GetOffset</code> and <code>Infinity_SetOffset</code>.</td></tr>
+          <tr><td><code>align <i>halign halign</i></code></td><td>Horizontal and vertical alignment of the menu (0, 1 or 2; see <a href="#menuv1_Grammar">Grammar</a>). &dagger;</td></tr>
+          <tr><td><code>size <i>number number</i></code></td><td>Menu width and height. &dagger;</td></tr>
+          <tr><td><code>ignoreEsc</code></td><td>Sets the menu's <code>ignoreEsc</code> flag, so the menu ignores the Escape key. &dagger;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Items">Item types</a></div>
+    <div class="indent1">
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="15%" />
+          <col width="22%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Keyword</th>
+            <th>Engine type</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>label</code></td><td><code>ITEM_NONE</code> (0)</td><td>Static item: text, images, rectangles.</td></tr>
+          <tr><td><code>text</code></td><td><code>ITEM_TEXT</code> (1)</td><td>Text area.</td></tr>
+          <tr><td><code>button</code></td><td><code>ITEM_BUTTON</code> (2)</td><td>Clickable item.</td></tr>
+          <tr><td><code>list</code></td><td><code>ITEM_LIST</code> (3)</td><td>Table of rows built from <code>column</code> blocks. Each list also creates an empty global Lua table; see <a href="#menuv1_Lua">How a menu becomes Lua</a>.</td></tr>
+          <tr><td><code>edit</code></td><td><code>ITEM_EDIT</code> (4)</td><td>Text input bound to a Lua variable (<code>var</code>).</td></tr>
+          <tr><td><code>movie</code></td><td><code>ITEM_MOVIE</code> (5)</td><td>Plays a WBM movie. See <code>Infinity_PlayMovie</code>.</td></tr>
+          <tr><td><code>slider</code></td><td><code>ITEM_SLIDER</code> (6)</td><td>Slider bound to a Lua variable (<code>position</code>).</td></tr>
+          <tr><td><code>handle</code></td><td><code>ITEM_HANDLE</code> (7)</td><td>Drag handle. &dagger;</td></tr>
+          <tr><td><code>slot</code></td><td><code>ITEM_SLOT</code> (9)</td><td>Inventory or spell slot.</td></tr>
+          <tr><td><code>map</code></td><td><code>ITEM_MAP</code> (10)</td><td>Area map or world map, selected with <code>areamap</code> or <code>worldmap</code>.</td></tr>
+          <tr><td><code>template</code></td><td><code>ITEM_TEMPLATE</code> (11)</td><td>Holds one nested item, which serves as the prototype for instances created with <code>Infinity_InstanceAnimation</code>.</td></tr>
+        </tbody>
+      </table>
+      <br />
+      The engine's type list also contains <code>ITEM_DRAGGABLE</code> (8), but no keyword creates it.<br />
+      <br />
+      <b>Nested items.</b> Any item can contain another item block. The parser builds items in one shared, static work record and only copies it into a new item when the closing <code>}</code> is reached. A nested block therefore receives every property the enclosing item declared <em>before</em> it, and the enclosing item starts again from defaults. Only the most recent nested block is remembered (in the enclosing item's template slot). This is why a template is written with its nested item first and its own properties after it:<br />
+      <br />
+<pre>
+template
+{
+	label
+	{
+		bam "B3TBACKG"
+		scaleToClip
+	}
+	name "B3Timer_Menu_TEMPLATE_Background"   -- after the nested item
+}
+</pre>
+      Items are kept in file order. Only top-level items are entered in <code>nameToItem</code>; nested items and items inside list columns are not.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Properties">Item properties</a></div>
+    <div class="indent1">
+      The group headings name the engine sub-record the property writes to. Properties that write the same field overwrite each other, and the last one wins.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="30%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Syntax</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th colspan="2">General</th></tr>
+          <tr><td><code>name STRING</code></td><td>Item name. Top-level items with a name are entered in <code>nameToItem</code>, which the <code>Infinity_*</code> functions use to find them.</td></tr>
+          <tr><td><code>area <i>x y w h</i></code></td><td>Position and size. All four are <i>number</i>s.</td></tr>
+          <tr><td><code>pad <i>number number number number</i></code></td><td>Padding, as four values. &dagger;</td></tr>
+          <tr><td><code>align <i>halign halign</i></code><br /><code>text align <i>halign halign</i></code></td><td>Horizontal and vertical alignment (both forms set the same fields).</td></tr>
+          <tr><td><code>enabled STRING</code></td><td>Lua <b>expression</b>. Before it is evaluated the engine sets the global <code>instanceId</code> to the item's instance number. While the expression is false, the item is not drawn.</td></tr>
+          <tr><td><code>ignoreEvents</code></td><td>The item ignores input events. &dagger;</td></tr>
+          <tr><td><code>opacity <i>value</i></code></td><td>Item opacity. &dagger;</td></tr>
+          <tr><td><code>glow <i>value</i></code></td><td>Glow effect. &dagger;</td></tr>
+          <tr><td><code>pulse <i>value</i></code></td><td>Pulse effect. &dagger;</td></tr>
+          <tr><td><code>fill <i>color</i></code></td><td>Fill colour. &dagger;</td></tr>
+          <tr><td><code>rectangle <i>number</i></code></td><td>Draws a frame rectangle of style <i>number</i>. The engine stores <i>number</i>&nbsp;+&nbsp;1 and treats 0 as &ldquo;none&rdquo;. &dagger;</td></tr>
+          <tr><td><code>rectangle opacity <i>value</i></code></td><td>Opacity of that rectangle. &dagger;</td></tr>
+          <tr><td><code>useOverlayTint STRING</code></td><td>Lua <b>expression</b> that switches the overlay tint on and off. &dagger;</td></tr>
+          <tr><td><code>overlayTint <i>number number number</i></code></td><td>Overlay tint, as three components. &dagger;</td></tr>
+
+          <tr><th colspan="2">Text (<code>text</code> record)</th></tr>
+          <tr><td><code>text STRING</code></td><td>Text, translated <em>while the file is parsed</em> by calling the global Lua function <code>getUiString</code> (2.7.3.0) or <code>t</code> (2.6.6.0) with the string. That function must already exist. The untranslated string is kept so the menus can be translated again when the language changes.</td></tr>
+          <tr><td><code>text <i>number</i></code></td><td>Text given as a string reference into <a href="tlk_v1.htm">dialog.tlk</a>.</td></tr>
+          <tr><td><code>text lua STRING</code></td><td>Lua <b>expression</b> that returns the text.</td></tr>
+          <tr><td><code>text font STRING</code></td><td>Font resource. &dagger;</td></tr>
+          <tr><td><code>text point <i>number</i></code></td><td>Font size in points. &dagger;</td></tr>
+          <tr><td><code>text useFontZoom <i>number</i></code></td><td>Whether the font-zoom option applies. &dagger;</td></tr>
+          <tr><td><code>text color <i>color</i></code></td><td>Text colour.</td></tr>
+          <tr><td><code>text upper</code> / <code>text lower</code></td><td>Upper-case or lower-case text. &dagger;</td></tr>
+          <tr><td><code>text shadow <i>value</i></code></td><td>Text shadow. &dagger;</td></tr>
+          <tr><td><code>text highlight <i>value</i></code></td><td>Text highlight. &dagger;</td></tr>
+          <tr><td><code>text style STRING</code></td><td>Copies a style from the global Lua table <code>styles[STRING]</code>, read <em>while the file is parsed</em>. The fields <code>color</code> (a key into <code>fontcolors</code>), <code>font</code>, <code>point</code>, <code>useFontZoom</code>, <code>halign</code> and <code>valign</code> are always read, so a style should define all six. <code>halign</code> and <code>valign</code> are strings: <code>"left"</code>/<code>"top"</code>&nbsp;= 0, <code>"right"</code>/<code>"bottom"</code>&nbsp;= 1, any other string&nbsp;= 2 (case-insensitive). If <code>upper</code> is present at all (even <code>false</code>), upper case is switched on. If <code>pad</code> is present, its entries 1 to 4 are read as the four padding values. The style overwrites earlier text, alignment and padding settings; later properties can override it.</td></tr>
+
+          <tr><th colspan="2">Images (<code>bam</code>, <code>mosaic</code>, <code>bmp</code> records)</th></tr>
+          <tr><td><code>bam <i>value</i></code></td><td><a href="bam_v1.htm">BAM</a> resource name.</td></tr>
+          <tr><td><code>frame <i>value</i></code></td><td>BAM frame. &dagger;</td></tr>
+          <tr><td><code>sequence <i>value</i></code></td><td>BAM sequence (cycle), animated. &dagger;</td></tr>
+          <tr><td><code>sequenceonce <i>value</i></code></td><td>BAM sequence played once. &dagger;</td></tr>
+          <tr><td><code>scaleToClip</code></td><td>Scales the BAM to the item area. &dagger;</td></tr>
+          <tr><td><code>greyscale <i>value</i></code></td><td>Draws the BAM in greyscale. &dagger;</td></tr>
+          <tr><td><code>usealpha <i>value</i></code><br /><code>transparent <i>value</i></code></td><td>Alpha blending for the BAM. <code>transparent</code> is the same keyword as <code>usealpha</code>; see the note below.</td></tr>
+          <tr><td><code>mosaic <i>value</i></code></td><td><a href="mos_v1.htm">MOS</a> resource name.</td></tr>
+          <tr><td><code>respectClipping</code></td><td>The mosaic respects clipping. &dagger;</td></tr>
+          <tr><td><code>bitmap <i>value</i></code></td><td>Bitmap resource name. &dagger;</td></tr>
+          <tr><td><code>bitmap res STRING</code></td><td>Lua <b>expression</b> that gives the bitmap resource. &dagger;</td></tr>
+          <tr><td><code>bitmap area <i>x y w h</i></code></td><td>Source area within the bitmap. &dagger;</td></tr>
+
+          <tr><th colspan="2">Tooltip (<code>tooltip</code> record)</th></tr>
+          <tr><td><code>tooltip <i>value</i></code></td><td>Tooltip text.</td></tr>
+          <tr><td><code>tooltip force <i>value</i></code></td><td>Forces the tooltip to show. &dagger;</td></tr>
+          <tr><td><code>tooltip force top</code></td><td>Sets the separate &ldquo;force top&rdquo; flag. &dagger;</td></tr>
+          <tr><td><code>tooltip position <i>number</i></code></td><td>Tooltip position. &dagger;</td></tr>
+
+          <tr><th colspan="2">Actions (all take a Lua string; see <a href="#menuv1_Lua">How a menu becomes Lua</a>)</th></tr>
+          <tr><td><code>action STRING</code></td><td><b>Statement.</b> The main action, e.g. a left click on a button. &dagger;</td></tr>
+          <tr><td><code>actionalt STRING</code></td><td><b>Statement.</b> Alternative action (right mouse button). &dagger;</td></tr>
+          <tr><td><code>actiondbl STRING</code></td><td><b>Statement.</b> Double click. &dagger;</td></tr>
+          <tr><td><code>actiondrag STRING</code></td><td><b>Expression.</b> Dragging &dagger;. Unlike the other actions, this one is compiled as an expression, so its return value is available to the engine.</td></tr>
+          <tr><td><code>actionenter STRING</code></td><td><b>Statement.</b> The mouse enters the item. &dagger;</td></tr>
+          <tr><td><code>actionexit STRING</code></td><td><b>Statement.</b> The mouse leaves the item. &dagger;</td></tr>
+          <tr><td><code>actionUpdate STRING</code></td><td><b>Statement.</b> Update while the item is captured. &dagger;</td></tr>
+          <tr><td><code>actionsimpledrag STRING</code><br /><code>actionsimpledrop STRING</code></td><td><b>Statement.</b> Start and end of a simple drag-and-drop. &dagger;</td></tr>
+          <tr><td><code>actionHold STRING</code></td><td><b>Statement.</b> The mouse button is held down. &dagger;</td></tr>
+          <tr><td><code>actionScroll STRING</code></td><td><b>Statement.</b> Mouse-wheel scrolling over the item. &dagger;</td></tr>
+
+          <tr><th colspan="2">Lists (<code>list</code> record)</th></tr>
+          <tr><td><code>table STRING</code></td><td>Lua <b>expression</b> that returns the table of rows. The engine walks this table with <code>next</code>, so the row order is Lua's table order. While each row is processed, the global <code>rowNumber</code> holds the row's key and <code>rowSelected</code> holds the list's selected row.</td></tr>
+          <tr><td><code>rowheight <i>number</i></code><br /><code>rowheight dynamic</code></td><td>Fixed row height, or rows sized to their content. &dagger;</td></tr>
+          <tr><td><code>rowwidth <i>number</i></code></td><td>Row width. &dagger;</td></tr>
+          <tr><td><code>rowbackground <i>value</i></code></td><td>Row background. &dagger;</td></tr>
+          <tr><td><code>highlight color <i>color</i></code></td><td>Colour of the highlighted row. &dagger;</td></tr>
+          <tr><td><code>hidehighlight</code></td><td>Hides the row highlight. The highlight is shown by default.</td></tr>
+          <tr><td><code>seperator STRING</code></td><td>Lua <b>expression</b> for row separators (the misspelling is the engine's). &dagger;</td></tr>
+          <tr><td><code>column { width <i>value</i> &hellip; <i>items</i> }</code></td><td>A column of the list (see <a href="#menuv1_Grammar">Grammar</a>).</td></tr>
+
+          <tr><th colspan="2">Scroll bar (<code>scrollbar</code> record)</th></tr>
+          <tr><td><code>scrollbar STRING</code></td><td>BAM resource for the scroll bar. &dagger;</td></tr>
+          <tr><td><code>scrollbar func STRING</code></td><td>Name of a scroll function (stored as text). &dagger;</td></tr>
+          <tr><td><code>scrollbar hide <i>value</i></code></td><td>Hides the scroll bar. &dagger;</td></tr>
+          <tr><td><code>scrollbar respectConstraints</code></td><td>Flag. &dagger;</td></tr>
+          <tr><td><code>scrollbar clunkyScroll <i>number</i></code></td><td>Scroll step. &dagger;</td></tr>
+          <tr><td><code>scrollbar skipReset</code></td><td>Keeps the scroll position when the content is reset. &dagger;</td></tr>
+
+          <tr><th colspan="2">Edit fields (<code>edit</code> record)</th></tr>
+          <tr><td><code>var STRING</code></td><td>Name of the global Lua variable that holds the text (<code>Infinity_EnterEdit</code> assigns this variable).</td></tr>
+          <tr><td><code>maxlines <i>number</i></code></td><td>Maximum number of lines. &dagger;</td></tr>
+          <tr><td><code>maxchars <i>number</i></code></td><td>Maximum number of characters. &dagger;</td></tr>
+          <tr><td><code>placeholder STRING</code></td><td>Placeholder text, translated while the file is parsed, like <code>text STRING</code>.</td></tr>
+
+          <tr><th colspan="2">Buttons (<code>button</code> record)</th></tr>
+          <tr><td><code>clickable <i>value</i></code></td><td>Whether the button can be clicked. This is the value <code>Infinity_IsItemEnabled</code> reports.</td></tr>
+          <tr><td><code>toggle STRING</code></td><td>Name of a Lua variable for a toggle button (stored as text). &dagger;</td></tr>
+          <tr><td><code>on STRING</code></td><td>Value of the toggle variable that means &ldquo;on&rdquo; (stored as text). &dagger;</td></tr>
+          <tr><td><code>sound STRING</code></td><td>Click sound resource. &dagger;</td></tr>
+          <tr><td><code>highlightgroup STRING</code></td><td>Highlight group name. When the item is created and no global Lua variable of that name exists yet, the engine creates one that holds the item (as light userdata), so the global refers to the group's first item.</td></tr>
+          <tr><td><code>portrait <i>value</i></code></td><td>Portrait. &dagger;</td></tr>
+          <tr><td><code>paperdoll <i>value</i></code></td><td>Paper doll. &dagger;</td></tr>
+          <tr><td><code>encumbrance</code></td><td>Encumbrance display. &dagger;</td></tr>
+          <tr><td><code>colordisplay <i>number</i></code></td><td>Colour display. &dagger;</td></tr>
+          <tr><td><code>frameTimes</code></td><td>Flag. &dagger;</td></tr>
+          <tr><td><code>actionbar <i>value</i></code></td><td>Action bar button. &dagger;</td></tr>
+
+          <tr><th colspan="2">Sliders (<code>slider</code> record)</th></tr>
+          <tr><td><code>position STRING</code></td><td>Name of the Lua variable that holds the slider position (stored as text). &dagger;</td></tr>
+          <tr><td><code>settings <i>value</i></code></td><td>Number of slider settings. &dagger;</td></tr>
+          <tr><td><code>sliderBackground STRING</code></td><td>Background resource. &dagger;</td></tr>
+          <tr><td><code>palette <i>number</i></code></td><td>Palette. &dagger;</td></tr>
+
+          <tr><th colspan="2">Movies (<code>movie</code> record)</th></tr>
+          <tr><td><code>loop</code></td><td>Loops the movie (used by <code>Infinity_PlayMovie</code>).</td></tr>
+          <tr><td><code>queuedMovie <i>value</i></code></td><td>Next movie to play. &dagger;</td></tr>
+          <tr><td><code>subtitle area <i>x y w h</i></code></td><td>Subtitle area. &dagger;</td></tr>
+          <tr><td><code>subtitle background <i>number number number number</i></code></td><td>Subtitle background colour, packed like a four-number <i>color</i>. &dagger;</td></tr>
+
+          <tr><th colspan="2">Slots (<code>slot</code> record)</th></tr>
+          <tr><td><code>icon <i>value</i></code></td><td>Icon. &dagger;</td></tr>
+          <tr><td><code>count <i>value</i></code></td><td>Stack count. &dagger;</td></tr>
+          <tr><td><code>usages <i>value</i></code></td><td>Charges. &dagger;</td></tr>
+          <tr><td><code>highlight <i>value</i></code></td><td>Slot highlight. &dagger;</td></tr>
+          <tr><td><code>tint <i>value</i></code></td><td>Slot tint. &dagger;</td></tr>
+          <tr><td><code>slotinfo STRING</code></td><td>Shorthand. With <i>T</i> as the string, it generates:<br />
+            <code>icon lua "<i>T</i>.item.icon"</code>, <code>count lua "<i>T</i>.item.count"</code>, <code>usages lua "<i>T</i>.item.usages"</code>, <code>highlight lua "<i>T</i>.highlight"</code>, <code>tint lua "<i>T</i>.item.tint"</code>, <code>tooltip lua "<i>T</i>.tooltip"</code>, <code>enabled "<i>T</i>.valid"</code>, <code>action</code> = expression <code>Infinity_SwapSlot(<i>T</i>.id)</code>, <code>actionalt</code> = statement <code>showItemDescriptionInventory(<i>T</i>.slotName)</code>, <code>actiondbl</code> = statement <code>slotDoubleClick(<i>T</i>.slotName)</code>.</td></tr>
+          <tr><td><code>spellInfo STRING</code></td><td>Shorthand. With <i>T</i> as the string, it generates:<br />
+            <code>enabled "<i>T</i> ~= nil"</code>, <code>icon lua "<i>T</i>.icon"</code>, <code>tooltip lua "Infinity_FetchString(<i>T</i>.name)"</code>, <code>greyscale lua "<i>T</i>.castable == 0"</code>, <code>bam lua "'IVSLOT'"</code>, <code>action</code> = expression <code>memorizeSpell(<i>T</i>)</code>, <code>actionalt</code> = statement <code>showSpellDetails(<i>T</i>, false)</code>.</td></tr>
+          <tr><td><code>memorizedSpellInfo STRING</code></td><td>Same as <code>spellInfo</code>, except that <code>action</code> = expression <code>unmemorizeSpell(<i>T</i>)</code> and <code>actionalt</code> = statement <code>showSpellDetails(<i>T</i>, true)</code>.</td></tr>
+
+          <tr><th colspan="2">Other</th></tr>
+          <tr><td><code>progressbar <i>value</i></code></td><td>Progress-bar percentage. &dagger;</td></tr>
+          <tr><td><code>progressbar color <i>color</i></code><br /><code>progressbar full <i>color</i></code></td><td>Bar colour, and the bar colour when full. &dagger;</td></tr>
+          <tr><td><code>areamap</code> / <code>worldmap</code></td><td>Map type: 1 = area map, 2 = world map.</td></tr>
+        </tbody>
+      </table>
+      <br />
+      <b>Note on <code>transparent</code>.</b> The engine's grammar has a rule <code>transparent <i>number</i></code> that would set a movie's transparency, but the keyword table maps the word <code>transparent</code> to the same token as <code>usealpha</code>. That rule can never be reached: <code>transparent <i>n</i></code> sets the BAM alpha flag, and a movie's transparency (read by <code>Infinity_PlayMovie</code>) cannot be set from a MENU file.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Lua">How a menu becomes Lua</a></div>
+    <div class="indent1">
+      Each property that takes Lua code is compiled while the file is parsed, by running a generated chunk that defines a <em>global</em> function. A reference to that function is then stored in the item. The global name is a fixed prefix followed by a memory address in hexadecimal (the C <code>%p</code> format). It is unique within one run, but it is not stable between runs, so never refer to these globals by name. Two chunk shapes are used:<br />
+      <br />
+<pre>
+function &lt;prefix&gt;&lt;address&gt; () &lt;code&gt; end          -- statement form
+function &lt;prefix&gt;&lt;address&gt; () return &lt;code&gt; end   -- expression form
+</pre>
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="12%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Form</th>
+            <th>Properties (prefix of the generated global in parentheses)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Statement</td><td><code>onopen</code> (<code>onopen</code>), <code>onclose</code> (<code>onclose</code>), <code>action</code> (<code>action</code>), <code>actionalt</code> (<code>actionalt</code>), <code>actiondbl</code> (<code>actiondbl</code>), <code>actionenter</code> (<code>actionenter</code>), <code>actionexit</code> (<code>actionexit</code>), <code>actionUpdate</code> (<code>actionupdate</code>), <code>actionsimpledrag</code> (<code>actionsimpledrag</code>), <code>actionsimpledrop</code> (<code>actionsimpledrop</code>), <code>actionHold</code> (<code>actionhold</code>), <code>actionScroll</code> (<code>actionscroll</code>)</td></tr>
+          <tr><td>Expression</td><td>menu and item <code>enabled</code> (<code>enabled</code>), <code>actiondrag</code> (<code>actiondrag</code>), <code>table</code> (<code>table</code>), <code>bitmap res</code> (<code>resname</code>), <code>seperator</code> (<code>seperator</code>), <code>useOverlayTint</code> (<code>useOverlayTint</code>), every <code>lua STRING</code> value (<code>variant</code>), and the values generated by <code>slotinfo</code>/<code>spellInfo</code> (<code>variant_icon</code>, <code>variant_count</code>, <code>variant_usages</code>, <code>variant_highlight</code>, <code>variant_tint</code>, <code>variant_tooltip</code>, <code>variant_greyscale</code>, <code>variant_bam</code>, <code>valid</code>, <code>enabled</code>, <code>action</code>)</td></tr>
+        </tbody>
+      </table>
+      <br />
+      The generated functions take no arguments. The code text is pasted in unchanged, so a Lua syntax error in it just leaves the function undefined; the error is not reported. Code in a property string is only compiled at load time; it runs later, so it can call functions that are defined further down in the file. In contrast, the following are evaluated <em>during</em> parsing and must exist before the menu that uses them: the translation function used by <code>text STRING</code> and <code>placeholder</code>, the <code>styles</code> table used by <code>text style</code>, and the <code>fontcolors</code> table used by <i>color</i> values. The usual way to provide them is an inline <code>`&hellip;`</code> block earlier in the file.<br />
+      <br />
+      The parser also creates these globals:<br />
+      <ul>
+        <li>One empty table per <code>list</code> item, named <code>list</code> followed by an address.</li>
+        <li>One global per new <code>highlightgroup</code> name (see Buttons above).</li>
+        <li>After the whole file has been parsed, <code>nameToItem = {}</code> is rebuilt. Then, for every top-level item with a name (menus in their sorted order, items in file order), the engine runs <code>nameToItem['<i>name</i>'] = nameToItemPointer</code>, where <code>nameToItemPointer</code> holds the item as light userdata. A later item with the same name replaces an earlier one. A name that contains <code>'</code> breaks the generated statement and is skipped.</li>
+      </ul>
+      See the <a href="menu_lua.htm">MENU Lua interface</a> page for the globals that are set at run time and for the Lua functions that operate on menus and items.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Limits">Limits</a></div>
+    <div class="indent1">
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="35%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Limit</th>
+            <th>Behaviour</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Menus: 256</td><td>Size of the engine's menu array. The parser does not check it, so exceeding it overwrites the menu stack that follows the array in memory.</td></tr>
+          <tr><td>Menu stack: 256 entries</td><td>Size of the stack of open menus.</td></tr>
+          <tr><td>Word length: 63 characters</td><td>A longer unquoted word aborts the game. Quoted strings are not limited.</td></tr>
+          <tr><td>Parser stack: 100 entries</td><td>On overflow the parser empties its stack. Ordinary nesting stays far below this limit.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Versions">Version differences</a></div>
+    <div class="indent1">
+      Keywords, grammar, parser tables and the property-to-field mapping are identical in all six examined builds (BGEE, BG2EE and IWDEE at 2.6.6.0 and 2.7.3.0). The only difference in the parser is this:<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="25%" />
+          <col width="25%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Behaviour</th>
+            <th>2.6.6.0</th>
+            <th>2.7.3.0</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Translation function called for <code>text STRING</code> and <code>placeholder STRING</code></td><td><code>t</code></td><td><code>getUiString</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menuv1_Example">Example</a></div>
+    <div class="indent1">
+<pre>
+`
+-- inline Lua: runs when the lexer reaches it (note the line break before the closing backtick)
+myMenuTitle = "Hello"
+`
+
+menu
+{
+	name "MY_MENU"            -- quoted: an unquoted name cannot contain '_'
+	align center center
+	ignoreEsc
+	onopen "Infinity_Log('opened')"
+
+	label
+	{
+		area 0 0 200 40
+		text lua "myMenuTitle"    -- evaluated at run time
+		text align center center
+	}
+
+	button
+	{
+		name "MY_MENU_CLOSE"
+		area 0 50 200 40
+		bam "MYBUTTON"            -- a BAM resource of your own
+		enabled "true"
+		action "Infinity_PopMenu()"
+	}
+}
+</pre>
+    </div>
+  </div>
+</div>

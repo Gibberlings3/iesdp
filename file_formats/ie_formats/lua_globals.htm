@@ -1,0 +1,1201 @@
+---
+title: "Engine Lua globals"
+---
+    <div class="title_main">Engine Lua globals</div>
+
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BGEE, BG2EE, IWDEE (patch 2.0 and later)</div>
+    <br />
+
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      The user interface of the Enhanced Editions runs in one global Lua state that is shared by the <a href="menu_v1.htm">MENU</a> file, the game's own Lua files and the engine. This page lists the global variables and tables that the engine itself defines in that state, the structure of every table it fills, and the Lua functions it expects the game's Lua code to provide. The engine's <code>Infinity_*</code> C functions are not covered here; those that work on menus are described on the <a href="menu_lua.htm">MENU Lua interface</a> page.<br />
+      <br />
+      The information comes from patches 2.6.6.0 and 2.7.3.0 of BGEE, BG2EE and IWDEE. All six builds define the same globals with the same structure; the only difference is listed under <a href="#luag_Versions">Version differences</a>. Descriptions marked &dagger; are inferred from the names of the engine functions that write or read the value; the code that uses them was not traced in detail.<br />
+      <br />
+      <b>Start-up order.</b>
+      <ol>
+        <li><code>bootstrapLua</code> creates the Lua state, opens the standard libraries <code>_G</code>, <code>table</code>, <code>string</code>, <code>bit32</code>, <code>math</code> and <code>debug</code> (but not <code>io</code>, <code>os</code> or <code>package</code>), replaces <code>print</code>, and runs the small Lua chunks that define <code>options</code>, <code>SetPrivateProfileString</code>, <code>getOptionsSection</code>, <code>languages</code> and <code>setLanguageVisible</code>.</li>
+        <li><code>CLUAConsole::LuaInit</code> registers the engine's C++ classes (tolua++ bindings), runs the binding's embedded Lua chunk that creates the <a href="#luag_Objects">engine objects</a>, runs <code>C = CLUAConsole:new()</code> and then executes the file <code>luaAuto.cfg</code>.</li>
+        <li>Later, during resource initialisation, <code>dimmInit</code> registers the <code>Infinity_*</code> functions, runs the Lua resource <code>INCLUDES</code> and loads <code>UI.MENU</code>.</li>
+        <li>While the game runs, engine code sets single values with <code>lua_setglobal</code>, fills the <a href="#luag_Tables">data tables</a> and calls the <a href="#luag_Expected">functions provided by the game's Lua</a>.</li>
+      </ol>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="luag_Objects">Engine objects</a></div>
+    <div class="indent1">
+      These globals are created by the Lua chunk embedded in the tolua++ bindings, which runs once at start-up:<br />
+      <br />
+<pre>
+e = g_pBaldurChitin
+startEngine = e:GetEngineStart()
+createCharScreen = e:GetEngineCreateChar()
+characterScreen = e:GetEngineCharacter()
+connectionScreen = e:GetEngineConnection()
+mageScreen = e:GetEngineWizSpell()
+priestScreen = e:GetEnginePriestSpell()
+worldScreen = e:GetEngineWorld()
+mapScreen = e:GetEngineMap()
+worldMapScreen = e:GetEngineWorldMap()
+journalScreen = e:GetEngineJournal()
+inventoryScreen = e:GetEngineInventory()
+optionsScreen = e:GetEngineOptions()
+multiplayerScreen = e:GetEngineMultiPlayer()
+chapterScreen = e:GetEngineChapter()
+loadScreen = e:GetEngineLoad()
+saveScreen = e:GetEngineSave()
+storeScreen = e:GetEngineStore()
+moviesScreen = e:GetEngineMovies()
+createPartyScreen = e:GetEngineCreateParty()
+dlcScreen = e:GetEngineDLC()
+projector = e:GetEngineProjector()
+mixer = e:GetSoundMixer()
+game = e:GetObjectGame()
+buttonArray = game:GetButtonArray()
+timer = game:GetWorldTimer()
+gameOptions = game:GetOptions() 
+</pre>
+      Each object is a userdata of a bound C++ class; its methods are called with <code>:</code> (for example <code>timer:GetCurrentHour()</code>). <code>C</code> is created separately by <code>CLUAConsole::LuaInit</code>. The binding also defines the global variable <code>g_pBaldurChitin</code> (the engine application, readable and writable) and a few <a href="#luag_Constants">constants</a>.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="18%" />
+          <col width="20%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Global</th>
+            <th>Class</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>e</code></td><td><a href="#luag_class_CBaldurChitin">CBaldurChitin</a></td><td>The engine application object (same value as the bound global variable g_pBaldurChitin).</td></tr>
+          <tr><td><code>startEngine</code></td><td><a href="#luag_class_CScreenStart">CScreenStart</a></td><td>Start screen. &dagger;</td></tr>
+          <tr><td><code>createCharScreen</code></td><td><a href="#luag_class_CScreenCreateChar">CScreenCreateChar</a></td><td>Character creation screen. &dagger;</td></tr>
+          <tr><td><code>characterScreen</code></td><td><a href="#luag_class_CScreenCharacter">CScreenCharacter</a></td><td>Character record screen. &dagger;</td></tr>
+          <tr><td><code>connectionScreen</code></td><td><a href="#luag_class_CScreenConnection">CScreenConnection</a></td><td>Multiplayer connection screen. &dagger;</td></tr>
+          <tr><td><code>mageScreen</code></td><td><a href="#luag_class_CScreenWizSpell">CScreenWizSpell</a></td><td>Mage spellbook screen. &dagger;</td></tr>
+          <tr><td><code>priestScreen</code></td><td><a href="#luag_class_CScreenPriestSpell">CScreenPriestSpell</a></td><td>Priest spellbook screen. &dagger;</td></tr>
+          <tr><td><code>worldScreen</code></td><td><a href="#luag_class_CScreenWorld">CScreenWorld</a></td><td>Main game (world) screen. &dagger;</td></tr>
+          <tr><td><code>mapScreen</code></td><td><a href="#luag_class_CScreenMap">CScreenMap</a></td><td>Area map screen. &dagger;</td></tr>
+          <tr><td><code>worldMapScreen</code></td><td><a href="#luag_class_CScreenWorldMap">CScreenWorldMap</a></td><td>World map screen. &dagger;</td></tr>
+          <tr><td><code>journalScreen</code></td><td><a href="#luag_class_CScreenJournal">CScreenJournal</a></td><td>Journal screen. &dagger;</td></tr>
+          <tr><td><code>inventoryScreen</code></td><td><a href="#luag_class_CScreenInventory">CScreenInventory</a></td><td>Inventory screen. &dagger;</td></tr>
+          <tr><td><code>optionsScreen</code></td><td><a href="#luag_class_CScreenOptions">CScreenOptions</a></td><td>Options screen. &dagger;</td></tr>
+          <tr><td><code>multiplayerScreen</code></td><td><a href="#luag_class_CScreenMultiPlayer">CScreenMultiPlayer</a></td><td>Multiplayer party screen. &dagger;</td></tr>
+          <tr><td><code>chapterScreen</code></td><td><a href="#luag_class_CScreenChapter">CScreenChapter</a></td><td>Chapter and text screens (chapter text, dreams, epilogues). &dagger;</td></tr>
+          <tr><td><code>loadScreen</code></td><td><a href="#luag_class_CScreenLoad">CScreenLoad</a></td><td>Load game screen. &dagger;</td></tr>
+          <tr><td><code>saveScreen</code></td><td><a href="#luag_class_CScreenSave">CScreenSave</a></td><td>Save game screen. &dagger;</td></tr>
+          <tr><td><code>storeScreen</code></td><td><a href="#luag_class_CScreenStore">CScreenStore</a></td><td>Store screen. &dagger;</td></tr>
+          <tr><td><code>moviesScreen</code></td><td><a href="#luag_class_CScreenMovies">CScreenMovies</a></td><td>Movies screen. &dagger;</td></tr>
+          <tr><td><code>createPartyScreen</code></td><td><a href="#luag_class_CScreenCreateParty">CScreenCreateParty</a></td><td>Party creation / import screen. &dagger;</td></tr>
+          <tr><td><code>dlcScreen</code></td><td><a href="#luag_class_CScreenDLC">CScreenDLC</a></td><td>DLC screen. &dagger;</td></tr>
+          <tr><td><code>projector</code></td><td><a href="#luag_class_CBaldurProjector">CBaldurProjector</a></td><td>Movie player (projector) engine. &dagger;</td></tr>
+          <tr><td><code>mixer</code></td><td><a href="#luag_class_CSoundMixer">CSoundMixer</a></td><td>Sound mixer. &dagger;</td></tr>
+          <tr><td><code>game</code></td><td><a href="#luag_class_CInfGame">CInfGame</a></td><td>The game object (party, areas, options, timers). &dagger;</td></tr>
+          <tr><td><code>buttonArray</code></td><td><a href="#luag_class_CInfButtonArray">CInfButtonArray</a></td><td>The action bar of the main screen. &dagger;</td></tr>
+          <tr><td><code>timer</code></td><td><a href="#luag_class_CTimerWorld">CTimerWorld</a></td><td>The world timer (game time). &dagger;</td></tr>
+          <tr><td><code>gameOptions</code></td><td><a href="#luag_class_CGameOptions">CGameOptions</a></td><td>The current game options; its fields are the option values. &dagger;</td></tr>
+          <tr><td><code>C</code></td><td><a href="#luag_class_CLUAConsole">CLUAConsole</a></td><td>Lua console object, created by the engine with CLUAConsole:new() when the console is initialised.</td></tr>
+        </tbody>
+      </table>
+      <br />
+      <b>Bound classes.</b> Methods, fields and base classes as registered by <code>luaopen_BaldurLUA</code>. Fields marked * are read-only.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="18%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Members</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><a name="luag_class_CLUAConsole">CLUAConsole</a></td><td>Methods: <code>AddGold</code>, <code>AddSpell</code>, <code>AdvanceRealTime</code>, <code>CreateCreature</code>, <code>CreateEngine</code>, <code>CreateItem</code>, <code>CreateVEFVidCell</code>, <code>DisplayAllBAMFiles</code>, <code>DisplayText</code>, <code>EnableCheatKeys</code>, <code>Eval</code>, <code>Exec</code>, <code>ExploreArea</code>, <code>GetGlobal</code>, <code>LogMessages</code>, <code>LogSet</code>, <code>MoveToArea</code>, <code>new</code>, <code>PickDialog</code>, <code>PlayMovie</code>, <code>PlaySound</code>, <code>ResetAchievements</code>, <code>SetCurrentXP</code>, <code>SetGlobal</code>, <code>SetWaterAlpha</code>, <code>SetWeather</code>, <code>StartStore</code>, <code>StrrefOff</code>, <code>StrrefOn</code>, <code>TestAllDialog</code>, <code>WorkshopUpload</code>, <code>WriteScript</code></td></tr>
+          <tr><td><a name="luag_class_CLUACheats">CLUACheats</a></td><td>Methods: <code>CowKill</code>, <code>CriticalItems</code>, <code>DrizztAttacks</code>, <code>DrizztDefends</code>, <code>ExploreArea</code>, <code>FirstAid</code>, <code>Hans</code>, <code>Midas</code>, <code>new</code>, <code>TheGreatGonzo</code></td></tr>
+          <tr><td><a name="luag_class_CTimerWorld">CTimerWorld</a></td><td>Methods: <code>AdvanceCurrentTime</code>, <code>GetCurrentHour</code>, <code>GetCurrentTime</code><br />Fields: <code>TIME_DAWN</code>*, <code>TIME_DAY</code>*, <code>TIME_DUSK</code>*, <code>TIME_NIGHT</code>*, <code>TIMESCALE_HOUR_PER_DAY</code>* (constants, see <a href="#luag_Constants">Constants</a>)</td></tr>
+          <tr><td><a name="luag_class_CInfButtonArray">CInfButtonArray</a></td><td>Methods: <code>GetButtonBam</code>, <code>GetButtonEnabled</code>, <code>GetButtonSequence</code>, <code>GetButtonType</code>, <code>OnLButtonPressed</code>, <code>OnRButtonPressed</code></td></tr>
+          <tr><td><a name="luag_class_CInfGame">CInfGame</a></td><td>Methods: <code>CenterOnGroupLeader</code>, <code>GetButtonArray</code>, <code>GetCharacterOverflowCount</code>, <code>GetJournalOpenable</code>, <code>GetMissionPackInfo</code>, <code>GetMissionPackInfo25</code>, <code>GetMissionPackInfoTBP</code>, <code>GetOptions</code>, <code>GetPaletteSize</code>, <code>GetPartyAI</code>, <code>GetPartyGold</code>, <code>GetWorldTimer</code>, <code>IsClient</code>, <code>RestParty</code>, <code>SelectAll</code>, <code>SetCampaign</code>, <code>ToggleAI</code></td></tr>
+          <tr><td><a name="luag_class_CChitin">CChitin</a></td><td>Methods: <code>HasDirectX</code>, <code>IsHosting</code>, <code>IsMultiplayer</code></td></tr>
+          <tr><td><a name="luag_class_CBaldurChitin">CBaldurChitin</a></td><td>Base class: <a href="#luag_class_CChitin">CChitin</a><br />Methods: <code>CheckGUISong</code>, <code>FullScreen</code>, <code>GetActiveEngine</code>, <code>GetEngineChapter</code>, <code>GetEngineCharacter</code>, <code>GetEngineConnection</code>, <code>GetEngineCreateChar</code>, <code>GetEngineCreateParty</code>, <code>GetEngineDLC</code>, <code>GetEngineInventory</code>, <code>GetEngineJournal</code>, <code>GetEngineLoad</code>, <code>GetEngineMap</code>, <code>GetEngineMovies</code>, <code>GetEngineMultiPlayer</code>, <code>GetEngineOptions</code>, <code>GetEnginePriestSpell</code>, <code>GetEngineProjector</code>, <code>GetEngineSave</code>, <code>GetEngineStart</code>, <code>GetEngineStore</code>, <code>GetEngineWizSpell</code>, <code>GetEngineWorld</code>, <code>GetEngineWorldMap</code>, <code>GetObjectGame</code>, <code>GetSoundMixer</code>, <code>GetVersionString</code>, <code>IsAndroid</code>, <code>IsIOS</code>, <code>IsTouchUI</code>, <code>SelectEngine</code>, <code>SetDisableBrightest</code></td></tr>
+          <tr><td><a name="luag_class_CWarp">CWarp</a></td><td>&ndash;</td></tr>
+          <tr><td><a name="luag_class_CBaldurEngine">CBaldurEngine</a></td><td>Base class: <a href="#luag_class_CWarp">CWarp</a><br />Methods: <code>OnLeftPanelButtonClick</code>, <code>OnRestButtonClick</code></td></tr>
+          <tr><td><a name="luag_class_CGameOptions">CGameOptions</a></td><td>Fields: <code>m_bAlwaysDither</code>, <code>m_bAutoPauseCenter</code>, <code>m_bCheatsEnabled</code>, <code>m_bConfirmDialog</code>, <code>m_bCriticalHitScreenShake</code>, <code>m_bDebugMode</code>, <code>m_bDisableCastingGlows</code>, <code>m_bDisableDisplayText</code>, <code>m_bDisableVEFVidCells</code>, <code>m_bDisplayExtraCombatInfo</code>, <code>m_bDuplicateFloatingText</code>, <code>m_bEnvironmentalAudio</code>, <code>m_bForceDialogPause</code>, <code>m_bHotkeysOnToolTips</code>, <code>m_bHPOverHead</code>, <code>m_bInfravision</code>, <code>m_bLowMemSounds1</code>, <code>m_bLowMemSounds2</code>, <code>m_bRenderFrameTimes</code>, <code>m_bRestHealParty</code>, <code>m_bStupidQuickItemStuff</code>, <code>m_bTerrainHugging</code>, <code>m_bUse3dAnimations</code>, <code>m_bVeryLowPerformance</code>, <code>m_bWeatherEnabled</code>, <code>m_displayVerbalText</code>, <code>m_gore</code>, <code>m_graphicsForceMirroringOff</code>, <code>m_graphicsTranslucentEffects</code>, <code>m_graphicsTranslucentShadows</code>, <code>m_guiFeedBackLevel</code>, <code>m_nAreaEffectsDensity</code>, <code>m_nAreaEffectsRefreshProb</code>, <code>m_nAttackSounds</code>, <code>m_nAutoPauseState</code>, <code>m_nBoredTime</code>, <code>m_nCommandSoundsFrequency</code>, <code>m_nDifficultyMultiplier</code>, <code>m_nEffectTextLevel</code>, <code>m_nKeyBoardScrollAmount</code>, <code>m_nMPDifficultyMultiplier</code>, <code>m_nTutorialState</code>, <code>m_scrollSpeed</code>, <code>m_soundDialogVolume</code>, <code>m_soundFootStepsOn</code>, <code>m_soundFXVolume</code>, <code>m_soundMovieVolume</code>, <code>m_soundMusicVolume</code>, <code>m_soundVoicesNo</code>, <code>m_toolTips</code></td></tr>
+          <tr><td><a name="luag_class_CSoundMixer">CSoundMixer</a></td><td>Methods: <code>StartSong</code></td></tr>
+          <tr><td><a name="luag_class_CBaldurProjector">CBaldurProjector</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>PlayMovie</code></td></tr>
+          <tr><td><a name="luag_class_CScreenStart">CScreenStart</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>DismissChooseCampaignPopup</code>, <code>GetCampaign</code>, <code>GetEngineState</code>, <code>HasGameToContinue</code>, <code>OnCampaignButtonClick</code>, <code>OnContinueGame</code>, <code>OnCreatePartyButtonClick</code>, <code>OnDLCImageClick</code>, <code>OnImportCharacterButtonClick</code>, <code>OnLoadGameButtonClick</code>, <code>OnMultiPlayerButtonClick</code>, <code>OnNewGameButtonClick</code>, <code>OnOptionsButtonClick</code>, <code>OnPreGenerateButtonClick</code>, <code>OnPregenSelectButtonClick</code>, <code>OnQuitButtonClick</code>, <code>OnSoAButtonClick</code>, <code>OnTBPButtonClick</code>, <code>OnToBButtonClick</code>, <code>OnTutorialButtonClick</code>, <code>SetEngineState</code></td></tr>
+          <tr><td><a name="luag_class_CScreenDLC">CScreenDLC</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>DecrementDLCIndex</code>, <code>GetDLCBought</code>, <code>GetDLCCount</code>, <code>GetDLCDescription</code>, <code>GetDLCImage</code>, <code>GetDLCIndex</code>, <code>GetDLCName</code>, <code>GetDLCState</code>, <code>GetDLCTitle</code>, <code>GetDownloadString</code>, <code>IncrementDLCIndex</code>, <code>OnBuyButtonClick</code>, <code>OnDoneButtonClick</code>, <code>OnErrorButtonClick</code>, <code>RestorePurchases</code>, <code>SetDLCIndex</code>, <code>UpdateDLCState</code></td></tr>
+          <tr><td><a name="luag_class_CScreenCharacter">CScreenCharacter</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>GetTempSmartScriptLocal</code>, <code>IsAppearanceButtonClickable</code>, <code>IsCharacterViewable</code>, <code>IsDoneButtonClickable</code>, <code>IsDualClassButtonClickable</code>, <code>IsExportButtonClickable</code>, <code>IsInGame</code>, <code>IsLevelUpButtonClickable</code>, <code>IsMultiPlayerModifyable</code>, <code>IsReformPartyButtonClickable</code>, <code>OnAppearanceButtonClick</code>, <code>OnCancelButtonClick</code>, <code>OnCusomizeBiographyButtonClick</code>, <code>OnCustomizeButtonClick</code>, <code>OnDoneButtonClick</code>, <code>OnDualClassButtonClick</code>, <code>OnErrorButtonClick</code>, <code>OnExportButtonClick</code>, <code>OnHairSkinButtonClick</code>, <code>OnLevelUpButtonClick</code>, <code>OnPlayButtonClick</code>, <code>OnReformPartyButtonClick</code>, <code>OnScriptButtonClick</code>, <code>OnSoundsButtonClick</code>, <code>SetTempSmartScriptLocal</code></td></tr>
+          <tr><td><a name="luag_class_CScreenStore">CScreenStore</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>GetGroupCost</code>, <code>GetIdentifyCost</code>, <code>GetMenuName</code>, <code>GetPanelButtonEnabled</code>, <code>GetPanelButtonId</code>, <code>GetPanelButtonPanelId</code>, <code>GetPanelButtonSequence</code>, <code>GetPanelButtonToolTip</code>, <code>GetRoomCost</code>, <code>GetRoomType</code>, <code>GetSpellCost</code>, <code>GetStoreCost</code>, <code>GetStoreName</code>, <code>IsBuyItemButtonClickable</code>, <code>IsBuySpellButtonClickable</code>, <code>IsCloseBagButtonClickable</code>, <code>IsContainer</code>, <code>IsDonateButtonClickable</code>, <code>IsDoneButtonClickable</code>, <code>IsIdentifyItemButtonClickable</code>, <code>IsMainCancelButtonClickable</code>, <code>IsMainDoneButtonClickable</code>, <code>IsRentRoomButtonClickable</code>, <code>IsRoomTypeClickable</code>, <code>IsSellItemButtonClickable</code>, <code>IsSpriteOrderable</code>, <code>IsStealEnabled</code>, <code>IsStealItemButtonClickable</code>, <code>OnBuyDrinkButtonClick</code>, <code>OnBuyItemButtonClick</code>, <code>OnBuySpellButtonClick</code>, <code>OnCloseBagButtonClick</code>, <code>OnDonateButtonClick</code>, <code>OnIdentifyItemButtonClick</code>, <code>OnMainDoneButtonClick</code>, <code>OnRentRoomButtonClick</code>, <code>OnSellItemButtonClick</code>, <code>OnStealItemButtonClick</code>, <code>OpenBag</code>, <code>RestParty</code>, <code>SelectGroupItem</code>, <code>SelectIdentifyItem</code>, <code>SelectSpellItem</code>, <code>SelectStoreItem</code>, <code>SetGroupItemCount</code>, <code>SetRoomType</code>, <code>SetStoreItemCount</code>, <code>UpdateBuyDrinksPanel</code>, <code>UpdateBuySellPanel</code>, <code>UpdateBuySpellPanel</code>, <code>UpdateDonatePanel</code>, <code>UpdateIdentifyPanel</code>, <code>UpdateRentRoomPanel</code>, <code>UpdateStealPanel</code></td></tr>
+          <tr><td><a name="luag_class_CScreenConnection">CScreenConnection</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>CancelJoinGame</code>, <code>ClearSessions</code>, <code>HasServiceProvider</code>, <code>IsValidAddress</code>, <code>JoinGame</code>, <code>JoinGameIPAddress</code>, <code>OnJoinGameButtonClick</code>, <code>OnLoadGameButtonClick</code>, <code>OnMainCancelButtonClick</code>, <code>OnNewGameButtonClick</code>, <code>SelectServiceProvider</code>, <code>SetPlayerName</code>, <code>StopConnectingToProvider</code></td></tr>
+          <tr><td><a name="luag_class_CScreenWizSpell">CScreenWizSpell</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>CancelSequencingSpells</code>, <code>DoneSequencingSpells</code>, <code>EraseKnownSpell</code>, <code>GetSpellLevel</code>, <code>MemorizeSpell</code>, <code>OnDispellButtonClick</code>, <code>OnEraseButtonClick</code>, <code>SequenceSpell</code>, <code>SetSpellLevel</code>, <code>SpellAllowedForContingency</code>, <code>SpellSwappedInContingency</code>, <code>UnmemorizeSpell</code>, <code>UnSequenceSpell</code></td></tr>
+          <tr><td><a name="luag_class_CScreenPriestSpell">CScreenPriestSpell</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>GetSpellLevel</code>, <code>MemorizeSpell</code>, <code>SetSpellLevel</code>, <code>UnmemorizeSpell</code></td></tr>
+          <tr><td><a name="luag_class_CScreenWorld">CScreenWorld</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>CheckIfPaused</code>, <code>ContainerScrollEnabled</code>, <code>GetCurrentTimeString</code>, <code>GetHardPaused</code>, <code>GetInControlOfDialog</code>, <code>GetPickPartyCharacterId</code>, <code>GetPickPartyPortrait</code>, <code>GetPickPartyRemoveCharacterId</code>, <code>GetTopContainerItem</code>, <code>GetTopGroundItem</code>, <code>GetTopGroupItem</code>, <code>GroundScrollEnabled</code>, <code>GroupScrollEnabled</code>, <code>IsPickPartyDoneButtonClickable</code>, <code>IsPickPartyRemoveButtonClickable</code>, <code>OnContainerButtonClick</code>, <code>OnContainerScroll</code>, <code>OnDeathLoad</code>, <code>OnDeathQuit</code>, <code>OnDialogReplyClick</code>, <code>OnGroundButtonClick</code>, <code>OnGroundScroll</code>, <code>OnGroupScroll</code>, <code>OnHelpButtonClick</code>, <code>OnPickPartyDoneButtonClick</code>, <code>OnPickPartyPortraitButtonClick</code>, <code>OnQuickSaveButtonClick</code>, <code>OnSelectionButtonClick</code>, <code>RemoveCharacterFromParty</code>, <code>SetHighlightEnabled</code>, <code>StartGroundItems</code>, <code>StepDialog</code>, <code>StopGroundItems</code>, <code>SwapPortraits</code>, <code>TakeAllFromContainer</code>, <code>TogglePauseGame</code></td></tr>
+          <tr><td><a name="luag_class_CScreenMap">CScreenMap</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>DisplayExploredMap</code>, <code>GetColorChoice</code>, <code>IsNoteVisible</code>, <code>OnColorChoice</code>, <code>OnMapAddNote</code>, <code>OnUserNoteClick</code>, <code>OnUserNoteDeleteButtonClick</code>, <code>OnUserNoteDoneButtonClick</code>, <code>ToggleDisplayExploredMap</code></td></tr>
+          <tr><td><a name="luag_class_CScreenWorldMap">CScreenWorldMap</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>CenterMarker</code>, <code>IsTravelButtonClickable</code>, <code>IsTravelButtonVisible</code>, <code>OnCancelButtonClick</code>, <code>OnMapMouseDown</code>, <code>OnMapMouseMove</code>, <code>OnMapMouseUp</code>, <code>StartWorldMap</code>, <code>TravelToSelected</code></td></tr>
+          <tr><td><a name="luag_class_CScreenJournal">CScreenJournal</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a></td></tr>
+          <tr><td><a name="luag_class_CScreenInventory">CScreenInventory</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>IsMultiPlayerViewable</code>, <code>IsSpriteOrderable</code></td></tr>
+          <tr><td><a name="luag_class_CScreenOptions">CScreenOptions</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>LoadGame</code>, <code>QuitGame</code>, <code>SaveGame</code>, <code>SetEngineState</code></td></tr>
+          <tr><td><a name="luag_class_CScreenMultiPlayer">CScreenMultiPlayer</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>GetEngineState</code>, <code>KickPlayer</code>, <code>Logout</code>, <code>ModifyCharacters</code>, <code>OnCancelButtonClick</code>, <code>OnDoneButtonClick</code>, <code>OnKickPlayerButtonClick</code>, <code>OnLogoutButtonClick</code>, <code>OnMainDoneButtonClick</code>, <code>OnModifyButtonClick</code>, <code>OnModifyCharacterDelete</code>, <code>OnPermissionButtonClick</code>, <code>OnPlayerSelection</code>, <code>OnPortraitButtonClick</code>, <code>OnReadyButtonClick</code>, <code>SetCharacterSlot</code>, <code>SetImportSetting</code>, <code>SetModifiedCharacterSlot</code>, <code>ToggleAllowReformParty</code>, <code>ToggleListenToJoin</code>, <code>UpdateModifyCharacterPanel</code></td></tr>
+          <tr><td><a name="luag_class_CScreenChapter">CScreenChapter</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>IsDoneButtonClickable</code>, <code>IsReplayButtonClickable</code>, <code>OnDoneButtonClick</code>, <code>OnReplayButtonClick</code>, <code>StartTextScreen</code></td></tr>
+          <tr><td><a name="luag_class_CScreenLoad">CScreenLoad</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>DeleteGame</code>, <code>LoadGame</code>, <code>OnMainCancelButtonClick</code></td></tr>
+          <tr><td><a name="luag_class_CScreenSave">CScreenSave</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>DeleteGame</code>, <code>OnMainCancelButtonClick</code>, <code>RefreshGameSlots</code>, <code>SaveGame</code></td></tr>
+          <tr><td><a name="luag_class_CScreenCreateChar">CScreenCreateChar</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>AcceptCharacter</code>, <code>DecCurrentPortrait</code>, <code>GetCurrentPortrait</code>, <code>GetCurrentStep</code>, <code>GetEngineState</code>, <code>GetImportableCharacters</code>, <code>GetImportState</code>, <code>HasMoreMageLevels</code>, <code>IncCurrentPortrait</code>, <code>IsAbilityRecallButtonClickable</code>, <code>IsAdvancedButtonClickable</code>, <code>IsChargenComplete</code>, <code>IsDoneButtonClickable</code>, <code>IsHighLevelAbilitiesButtonClickable</code>, <code>IsMainBackButtonClickable</code>, <code>IsThiefSkillPlusMinusButtonClickable</code>, <code>OnAbilityPlusMinusButtonClick</code>, <code>OnAbilityRecallButtonClick</code>, <code>OnAbilityReRollButtonClick</code>, <code>OnAbilityStoreButtonClick</code>, <code>OnAdvancedButtonClick</code>, <code>OnAlignmentSelectButtonClick</code>, <code>OnBiographyButtonClick</code>, <code>OnCancelButtonClick</code>, <code>OnCharacterExportItemSelect</code>, <code>OnCheatyMcCheaterson</code>, <code>OnClassSelectButtonClick</code>, <code>OnDoneButtonClick</code>, <code>OnGenderSelectButtonClick</code>, <code>OnHighLevelAbilitiesButtonClick</code>, <code>OnHLAButtonClick</code>, <code>OnImportCharacterButtonClick</code>, <code>OnImportCharacterFileButtonClick</code>, <code>OnImportSaveButtonClick</code>, <code>OnKitSelectButtonClick</code>, <code>OnLearnMageSpellButtonClick</code>, <code>OnMainBackButtonClick</code>, <code>OnMainCancelButtonClick</code>, <code>OnMemorizeMageSpellButtonClick</code>, <code>OnMemorizePriestSpellButtonClick</code>, <code>OnMenuButtonClick</code>, <code>OnPlayButtonClick</code>, <code>OnPrerollCancelButtonClick</code>, <code>OnPrerollCharacterPick</code>, <code>OnProficiencyPlusMinusButtonClick</code>, <code>OnRaceSelectButtonClick</code>, <code>OnRacialEnemySelectButtonClick</code>, <code>OnSoundItemSelect</code>, <code>OnThiefSkillPlusMinusButtonClick</code>, <code>SetAbilityHelpInfo</code>, <code>SetEngineState</code>, <code>SetSpriteId</code>, <code>ShowPortraitPanel</code></td></tr>
+          <tr><td><a name="luag_class_CScreenCreateParty">CScreenCreateParty</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>OnBackButtonClick</code>, <code>OnCreateDeleteButtonClick</code>, <code>OnDoneButtonClick</code>, <code>OnPortraitButtonClick</code></td></tr>
+          <tr><td><a name="luag_class_CInfToolTip">CInfToolTip</a></td><td>Methods: <code>FormatTooltipPrefix</code></td></tr>
+          <tr><td><a name="luag_class_CScreenMovies">CScreenMovies</a></td><td>Base class: <a href="#luag_class_CBaldurEngine">CBaldurEngine</a><br />Methods: <code>IsPlayButtonClickable</code>, <code>OnCreditsButtonClick</code>, <code>OnDoneButtonClick</code>, <code>OnMovieItemSelect</code>, <code>OnPlayButtonClick</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="luag_Constants">Constants</a></div>
+    <div class="indent1">
+      These are all the constants the engine defines in Lua. The global ones are plain numbers registered by the bindings. The <code>CTimerWorld</code> ones are read-only static members of the class: they can be read through the class table (<code>CTimerWorld.TIME_DAWN</code>) or through the <code>timer</code> object (<code>timer.TIME_DAWN</code>), and they have no setter. Game time is counted in ticks: 15 ticks per second, 4500 per game hour and 108000 per day. <code>timer:GetCurrentTime()</code> returns the timer's tick counter, and <code>timer:GetCurrentHour()</code> returns (that counter modulo 108000) divided by 4500, i.e. the hour of the day (0&ndash;23).<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="34%" />
+          <col width="8%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>CINFINITY_WEATHER_TYPE_NOWEATHER</code></td><td>0</td><td>Weather type: none. Argument of <code>C:SetWeather(type)</code>.</td></tr>
+          <tr><td><code>CINFINITY_WEATHER_TYPE_RAIN</code></td><td>1</td><td>Weather type: rain. Argument of <code>C:SetWeather(type)</code>.</td></tr>
+          <tr><td><code>CINFINITY_WEATHER_TYPE_SNOW</code></td><td>2</td><td>Weather type: snow. Argument of <code>C:SetWeather(type)</code>.</td></tr>
+          <tr><td><code>CTimerWorld.TIME_DAWN</code></td><td>27000</td><td>Start of dawn: 27000 ticks into the day = 06:00.</td></tr>
+          <tr><td><code>CTimerWorld.TIME_DAY</code></td><td>31500</td><td>Start of day: 31500 ticks into the day = 07:00.</td></tr>
+          <tr><td><code>CTimerWorld.TIME_DUSK</code></td><td>94500</td><td>Start of dusk: 94500 ticks into the day = 21:00.</td></tr>
+          <tr><td><code>CTimerWorld.TIME_NIGHT</code></td><td>99000</td><td>Start of night: 99000 ticks into the day = 22:00.</td></tr>
+          <tr><td><code>CTimerWorld.TIMESCALE_HOUR_PER_DAY</code></td><td>24</td><td>Hours in a game day.</td></tr>
+          <tr><td><code>CGAMEOPTIONS_GUIFEEDBACK_LOWEST</code></td><td>1</td><td>Feedback level &ldquo;lowest&rdquo;, a value of <code>gameOptions.m_guiFeedBackLevel</code>. &dagger;</td></tr>
+          <tr><td><code>CGAMEOPTIONS_GUIFEEDBACK_LOW</code></td><td>2</td><td>Feedback level &ldquo;low&rdquo;. &dagger;</td></tr>
+          <tr><td><code>CGAMEOPTIONS_GUIFEEDBACK_MEDIUM</code></td><td>3</td><td>Feedback level &ldquo;medium&rdquo;. &dagger;</td></tr>
+          <tr><td><code>CGAMEOPTIONS_GUIFEEDBACK_HIGH</code></td><td>4</td><td>Feedback level &ldquo;high&rdquo;. &dagger;</td></tr>
+          <tr><td><code>CGAMEOPTIONS_GUIFEEDBACK_HIGHEST</code></td><td>6</td><td>Feedback level &ldquo;highest&rdquo;. Note that the value is 6; no constant has the value 5. &dagger;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="luag_Tables">Data tables</a></div>
+    <div class="indent1">
+      These tables are created or filled by engine code. Each structure lists the keys the engine writes and the Lua type it stores. <code>[n]</code> stands for a numeric index (lists start at 1), <code>[string]</code> for a key the engine builds at run time (for example an equipment slot name). A table written by &ldquo;assigned by&rdquo; functions is replaced as a whole; the others are created by the game's Lua and only filled by the engine. Fields called <code>strRef</code>, <code>name</code>, <code>desc</code>, <code>description</code> and <code>helpStrRef</code> that hold numbers are string references into dialog.tlk.<br />
+      <br />
+      <a name="luag_t_characters"><b>characters</b></a> &ndash; Character sheet data for the record, inventory, spellbook and party screens, keyed by character id. Rebuilt by CGameSprite::UpdateLuaStats (with UpdateLuaEquipment and UpdateLuaSpells) whenever a screen requests it (e.g. Infinity_UpdateLuaStats).<br />
+      Filled by: <code>CGameSprite::UpdateLuaStats</code>.<br />
+      Note: <code>proficiencies.weapons</code> and <code>proficiencies.fightingstyles</code> are first set to the list of proficiencies and then, by the next statement, replaced with a single <code>{current, strRef, helpStrRef}</code> record of the same name; only the record remains.<br />
+<pre>
+characters
+  [n]: table
+    AC: table
+      crushing: number
+      current: number
+      details: string
+      missile: number
+      piercing: number
+      slashing: number
+    alignment: number
+    attr: table
+      cha: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      con: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      dex: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      int: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      str: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      wis: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+    biography: number
+    class: string
+    colors: table
+      hair: number
+      major: number
+      minor: number
+      skin: number
+    contingencySpells: table
+      [n]: table
+        condition: number
+        dispellable: boolean
+        resref: string
+        spells: table
+          [n]: table
+            castableCount: number
+            description: number
+            icon: string
+            index: number
+            level: number
+            masterResref: string
+            memorizedCount: number
+            memorizedIndex: number
+            name: number
+            resref: string
+        target: number
+    damage: table
+      details: string
+      detailsOffhand: string
+      max: number
+      maxOffhand: number or nil
+      min: number
+      minOffhand: number or nil
+    equipment: table
+      [string]: table
+        abilities: table
+          [n]: table
+            icon: string
+            itemNum: number
+            selected: number
+            text: string
+        abilityMode: number
+        empty: number
+        highlight: number
+        id: number
+        item: table
+          icon: string
+        slotName: string
+        tooltip: string
+        useMode: number
+        valid: number
+    gender: number
+    gold: number
+    hasClericBook: boolean
+    hasMageBook: boolean
+    hasShamanBook: boolean
+    hasSorcererBook: boolean
+    HP: table
+      current: number
+      details: string
+      max: number
+    kitDesc: string
+    mageDetails: table
+      [n]: table
+        maxMemorized: number
+        slotsRemaining: number
+    mageSpells: table
+      [n]: table
+        [n]: table
+          castableCount: number
+          description: number
+          icon: string
+          index: number
+          level: number
+          masterResref: string
+          memorizedCount: number
+          memorizedIndex: number
+          name: number
+          resref: string
+    name: string
+    PC: number
+    portrait: string
+    priestDetails: table
+      [n]: table
+        maxMemorized: number
+        slotsRemaining: number
+    priestSpells: table
+      [n]: table
+        [n]: table
+          castableCount: number
+          description: number
+          icon: string
+          index: number
+          level: number
+          masterResref: string
+          memorizedCount: number
+          memorizedIndex: number
+          name: number
+          resref: string
+    proficiencies: table
+      ability: table
+        [n]: table
+          current: string
+          helpStrRef: number
+          strRef: number
+      baseTHAC0: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      class_skills: table
+        [n]: table
+          current: string
+          helpStrRef: number
+          strRef: number
+      crushingACMod: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      currentScript: string
+      details: string
+      fightingstyles: table
+        current: string
+        helpStrRef: number
+        strRef: number
+        [n]: table
+          current: string
+          helpStrRef: number
+          strRef: number
+      lore: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      missileACMod: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      numAttacks: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      piercingACMod: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      reputation: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      resistances: string
+      saveBreath: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      saveDeath: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      savePoly: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      saveSpell: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      saveWand: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      savingThrows: string
+      slashingACMod: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      THAC0Left: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      THAC0Right: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      weapons: table
+        current: string
+        helpStrRef: number
+        strRef: number
+        [n]: table
+          current: string
+          helpStrRef: number
+          strRef: number
+      weaponStyleBonus: string or nil
+    race: number
+    sequencerSpells: table
+      [n]: table
+        dispellable: boolean
+        resref: string
+        spells: table
+          [n]: table
+            castableCount: number
+            description: number
+            icon: string
+            index: number
+            level: number
+            masterResref: string
+            memorizedCount: number
+            memorizedIndex: number
+            name: number
+            resref: string
+    Stats: table
+      bestenemy: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      chapkills: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      chapxpvalue: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      favspell: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      favweapon: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      gamekills: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      gamexpvalue: table
+        current: string
+        helpStrRef: number
+        strRef: number
+      partychapkills: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      partychapxp: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      partygamekills: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      partygamexp: table
+        base: number
+        current: number
+        extra: number (key 'str' only)
+        extraBase: number (key 'str' only)
+        strRef: number
+      timespent: table
+        current: string
+        helpStrRef: number
+        strRef: number
+    statusEffects: table
+      [string]: table
+        bam: string
+        current: number
+        strRef: number
+    THAC0: table
+      current: number
+      details: string
+      detailsOffhand: string
+      offhand: number or nil
+    weaponName: string
+</pre>
+      <a name="luag_t_chargen"><b>chargen</b></a> &ndash; State of the character creation screen: the option lists of each creation step and the current selection details. &dagger;<br />
+      Filled by: <code>CScreenCreateChar::OnAbilityPlusMinusButtonClick</code>, <code>CScreenCreateChar::OnDoneButtonClick</code>, <code>CScreenCreateChar::OnMenuButtonClick</code>, <code>CScreenCreateChar::OnPrerollCharacterPick</code>, <code>CScreenCreateChar::ResetGenderPanel</code>, <code>CScreenCreateChar::ResetMemorizeMagePanel</code>, <code>CScreenCreateChar::ResetMemorizePriestPanel</code>, <code>CScreenCreateChar::UpdateAbilitiesPanel</code>, <code>CScreenCreateChar::UpdateChooseMagePanel</code>, <code>CScreenCreateChar::UpdateClassPanel</code>, <code>CScreenCreateChar::UpdateHatedRacePanel</code>, <code>CScreenCreateChar::UpdateHighLevelAbilitiesPanel</code>, <code>CScreenCreateChar::UpdateMainPanel</code>, <code>CScreenCreateChar::UpdateMemorizeMagePanel</code>, <code>CScreenCreateChar::UpdateMemorizePriestPanel</code>, <code>CScreenCreateChar::UpdateProficienciesPanel</code>.<br />
+<pre>
+chargen
+  ability: table
+    [n]: table
+      roll: string
+  abilityReachedMax: boolean
+  abilityReachedMin: boolean
+  alignment: table
+    [n]: table
+      desc: number
+      id: number
+      name: number
+  charInfo: string
+  choose_spell: table
+    [n]: table
+      count: number
+      enabled: boolean
+      key: string
+  class: table
+    [n]: table
+      desc: number
+      id: number
+      name: number
+  currentSpellLevelChoice: number
+  customSound: table
+    [n]: string
+  extraAbilityPoints: number
+  extraProficiencySlots: number
+  extraSkillPoints: number
+  extraSpells: number
+  hatedRace: table
+    [n]: table
+      desc: number
+      id: number
+      name: number
+  helpText: string
+  HLAs: table
+    [n]: table
+      canAdd: boolean
+      canSubtract: boolean
+      count: number
+      description: number
+      icon: string
+      name: number
+      resref: string
+  information: string
+  kit: table
+    [n]: table
+      desc: number
+      id: number
+      name: number
+  levelInfo: string
+  levelingUp: boolean
+  name: string
+  numHLAs: number
+  portrait: string
+  proficiency: table
+    [n]: table
+      desc: number
+      id: number
+      max: number
+      min: number
+      name: number
+      value: number
+  races: table
+    [n]: table
+      desc: number
+      id: number
+      name: number
+  thief_skill: table
+    [n]: table
+      description: number
+      id: number
+      name: number
+      value: number
+  title: string
+  totalRoll: number
+</pre>
+      <a name="luag_t_store"><b>store</b></a> &ndash; State of the store screen panels (drinks, healing spells, room text, donation). &dagger;<br />
+      Assigned by: <code>CScreenStore::OnDonateButtonClick</code>.<br />
+      Filled by: <code>CScreenStore::EngineActivated</code>, <code>CScreenStore::OnDonateButtonClick</code>, <code>CScreenStore::RestParty</code>, <code>CScreenStore::UpdateBuyDrinksPanel</code>, <code>CScreenStore::UpdateBuySpellPanel</code>, <code>CScreenStore::UpdateIdentifyPanel</code>, <code>CScreenStore::UpdateRentRoomPanel</code>.<br />
+<pre>
+store
+  donateText: table or string
+  drinks: table
+    [n]: table
+      name: string
+      valid: number
+      value: number
+  drinkText: string
+  groupItems: table
+    [n]: table
+      count: number or nil
+      highlight: number
+      item: table
+        count: number
+        descPicture: string
+        description: string
+        icon: string
+        identified: number
+        isBag: number
+        name: string
+        res: string
+        tint: string
+        usages: number
+      label: string
+      numInStock: number
+      valid: number
+      value: number
+  hasDonated: number
+  healingSpells: table
+    [n]: table
+      description: number
+      highlight: number
+      icon: string
+      label: string
+      name: number
+      tint: string
+      valid: number
+      value: number
+  icon: string
+  identifyItems: table
+    [n]: table
+      highlight: number
+      item: table
+        count: number
+        descPicture: string
+        description: string
+        icon: string
+        identified: number
+        isBag: number
+        name: string
+        res: string
+        tint: string
+        usages: number
+      label: string
+      valid: number
+      value: number
+  identifyText: table or string
+  qualityIcon: string
+  roomText: string
+  spellText: string
+  storeItems: table
+    [n]: table
+      amountSelected: number
+      clickable: number
+      highlight: number
+      item: table
+        count: number
+        descPicture: string
+        description: string
+        icon: string
+        identified: number
+        isBag: number
+        name: string
+        res: string
+        stackSize: number
+        tint: string
+        usages: number
+      label: string
+      maxCount: number
+      valid: number
+      value: number
+</pre>
+      <a name="luag_t_loot"><b>loot</b></a> &ndash; Container, group and ground items shown by the main screen's loot panels; each item is a CItem::PushToLua record. &dagger;<br />
+      Assigned by: <code>CScreenWorld::UpdateLua</code>.<br />
+      Filled by: <code>CGameSprite::UpdateVisibleGroundItems</code>, <code>CScreenWorld::AsynchronousUpdate</code>, <code>CScreenWorld::StartContainer</code>, <code>CScreenWorld::UpdateLua</code>.<br />
+<pre>
+loot
+  containerIcon: string
+  containerItems: table
+    [n]: table
+      item: table or nil
+        count: number
+        descPicture: string
+        description: string
+        icon: string
+        identified: number
+        isBag: number
+        name: string
+        res: string
+        tint: string
+        usages: number
+  groundItems: table
+    [n]: table
+      containerId: number
+      item: table
+        count: number
+        descPicture: string
+        description: string
+        icon: string
+        identified: number
+        isBag: number
+        name: string
+        res: string
+        tint: string
+        usages: number
+      slotId: number
+  groupItems: table
+    [n]: table
+      item: table or nil
+        count: number
+        descPicture: string
+        description: string
+        icon: string
+        identified: number
+        isBag: number
+        name: string
+        res: string
+        tint: string
+        usages: number
+</pre>
+      <a name="luag_t_multiplayer"><b>multiplayer</b></a> &ndash; State of the multiplayer party screen (character and player slots, permissions, button states). &dagger;<br />
+      Filled by: <code>CScreenMultiPlayer::UpdateLuaTables</code>.<br />
+<pre>
+multiplayer
+  allowreformparty: boolean
+  character: table
+    [n]: table
+      controlled: string
+      controlledclickable: boolean
+      name: string
+      nameclickable: boolean
+      portrait: string
+      portraitclickable: boolean
+      ready: boolean
+      readyclickable: boolean
+  donebuttonclickable: boolean
+  importsetting: number
+  listentojoin: boolean
+  modifybuttonclickable: boolean
+  player: table
+    [n]: table
+      name: string
+      permissions: table
+        [n]: boolean
+</pre>
+      <a name="luag_t_connection"><b>connection</b></a> &ndash; Players currently connected (multiplayer connection screen). &dagger;<br />
+      Filled by: <code>CScreenConnection::UpdateLuaTables</code>.<br />
+<pre>
+connection
+  currentPlayers: table
+    [n]: table
+      name: string
+</pre>
+      <a name="luag_t_partyImport"><b>partyImport</b></a> &ndash; Party creation slots (multiplayer/party import screen). &dagger;<br />
+      Filled by: <code>CScreenCreateParty::UpdateLuaTables</code>.<br />
+<pre>
+partyImport
+  character: table
+    [n]: table
+      createdelete: string
+      name: string
+      portrait: string
+  playbuttonclickable: boolean
+</pre>
+      <a name="luag_t_gameSaves"><b>gameSaves</b></a> &ndash; Saved games listed on the load/save screens. &dagger;<br />
+      Assigned by: <code>CScreenLoad::RefreshGameSlots</code>, <code>CScreenSave::RefreshGameSlots</code>.<br />
+<pre>
+gameSaves
+  currentGameInfo: table
+    chapter: string
+    time: string
+  files: table
+    [n]: table
+      chapter: string
+      fileName: string
+      fileTime: number
+      hasPortrait0: number
+      hasPortrait1: number
+      hasPortrait2: number
+      hasPortrait3: number
+      hasPortrait4: number
+      hasPortrait5: number
+      hasScreenShot: number
+      portrait0: light userdata
+      portrait1: light userdata
+      portrait2: light userdata
+      portrait3: light userdata
+      portrait4: light userdata
+      portrait5: light userdata
+      screenshot: light userdata
+      slotIndex: number
+      slotName: string
+      sName: string
+      time: string
+  isImporting: number
+</pre>
+      <a name="luag_t_mapnoteSettings"><b>mapnoteSettings</b></a> &ndash; Map notes of the current area, keyed by note id. &dagger;<br />
+      Filled by: <code>CGameAreaNotes::PushNoteToLua</code>.<br />
+<pre>
+mapnoteSettings
+  [n]: table
+    screenCoord: table
+      x: number
+      y: number
+    sequence: number
+    text: number
+    worldCoord: table
+      x: number
+      y: number
+</pre>
+      <a name="luag_t_areaNoteGrid"><b>areaNoteGrid</b></a> &ndash; Grid lookup of map notes by position, used by the engine to find a note at a point. &dagger;<br />
+      Assigned by: <code>CGameAreaNotes::IntrnlInitialize</code>.<br />
+<pre>
+areaNoteGrid
+  [n]: table
+    [n]: table or nil
+</pre>
+      <a name="luag_t_worldPlayerDialogChoices"><b>worldPlayerDialogChoices</b></a> &ndash; Player response choices of the current dialog. &dagger;<br />
+      Assigned by: <code>CGameDialogSprite::EnterDialog</code>, <code>CScreenWorld::EndDialog</code>.<br />
+      Filled by: <code>CScreenWorld::DisplayText</code>.<br />
+<pre>
+worldPlayerDialogChoices
+  [n]: table
+    marker: number
+    text: string
+</pre>
+      <a name="luag_t_tempStats"><b>tempStats</b></a> &ndash; Character stats with and without a candidate item equipped, used for item comparison. &dagger;<br />
+      Filled by: <code>CGameSprite::GetRatingWithItem</code>.<br />
+<pre>
+tempStats
+  [n]: table
+    AC: number
+    currentHP: number
+    dmgMax: number
+    dmgMin: number
+    equippedItem: string
+    maxHP: number
+    tempItem: string
+    THAC0: number
+</pre>
+      <a name="luag_t_character_select"><b>character_select</b></a> &ndash; Pre-rolled characters offered by character creation. &dagger;<br />
+      Assigned by: <code>CScreenCreateChar::ResetPrerollPanel</code>.<br />
+<pre>
+character_select
+  [n]: table
+    desc: string
+    id: number
+    name: string
+    portrait: string
+</pre>
+      <a name="luag_t_prerollCharacters"><b>prerollCharacters</b></a> &ndash; Importable characters (character creation). &dagger;<br />
+      Assigned by: <code>CScreenCreateChar::GetImportableCharacters</code>.<br />
+<pre>
+prerollCharacters
+  [n]: table
+    description: string
+    file: string
+    image: string
+    name: string
+</pre>
+      <a name="luag_t_mageSpells"><b>mageSpells</b></a> &ndash; Mage spells per level offered by character creation. &dagger;<br />
+      Assigned by: <code>CScreenCreateChar::ResetSpellTables</code>.<br />
+<pre>
+mageSpells
+  [n]: table
+</pre>
+      <a name="luag_t_priestSpells"><b>priestSpells</b></a> &ndash; Priest spells per level offered by character creation. &dagger;<br />
+      Assigned by: <code>CScreenCreateChar::ResetSpellTables</code>.<br />
+<pre>
+priestSpells
+  [n]: table
+</pre>
+      <a name="luag_t_spellBook"><b>spellBook</b></a> &ndash; Spell selection state of character creation (learn spells). &dagger;<br />
+      Assigned by: <code>CScreenCreateChar::UpdateChooseMagePanel</code>.<br />
+<pre>
+spellBook
+  choose_spell: table
+  extraSpells: number
+  [n]: table
+</pre>
+      <a name="luag_t_contingencyConditions"><b>contingencyConditions</b></a> &ndash; Conditions offered when creating a contingency. &dagger;<br />
+      Assigned by: <code>CScreenWizSpell::UpdateMainPanel</code>.<br />
+<pre>
+contingencyConditions
+  [n]: table
+    desc: number
+    strref: number
+</pre>
+      <a name="luag_t_contingencyTargets"><b>contingencyTargets</b></a> &ndash; Targets offered when creating a contingency. &dagger;<br />
+      Assigned by: <code>CScreenWizSpell::UpdateMainPanel</code>.<br />
+<pre>
+contingencyTargets
+  [n]: table
+    desc: number
+    strref: number
+</pre>
+      <a name="luag_t_mp_sessions"><b>mp_sessions</b></a> &ndash; Known multiplayer sessions. &dagger;<br />
+      Assigned by: <code>DPWrapper::Close</code>, <code>DPWrapper::CloseSession</code>.<br />
+      Filled by: <code>?0DPProviderEnet</code>.<br />
+<pre>
+mp_sessions
+  [n]: table
+    flags: table or number
+    name: string
+    players: number
+    type: number
+    updated_at: number
+    version: string
+</pre>
+      <a name="luag_t_mp_sessions_jid"><b>mp_sessions_jid</b></a> &ndash; Multiplayer sessions keyed by Jabber ID (online play). &dagger;<br />
+      Assigned by: <code>DPWrapper::Close</code>, <code>DPWrapper::CloseSession</code>.<br />
+      Filled by: <code>DPProviderJingle::AddRoom</code>.<br />
+<pre>
+mp_sessions_jid
+  [string]: table or number
+</pre>
+      <a name="luag_t_sidebarVisible"><b>sidebarVisible</b></a> &ndash; Visibility of the LEFT and RIGHT side bars, saved with the game. &dagger;<br />
+      Filled by: <code>CInfGame::Unmarshal</code>.<br />
+<pre>
+sidebarVisible
+  LEFT: table or number
+  RIGHT: table or number
+</pre>
+      <a name="luag_t_OverrideStrings"><b>OverrideStrings</b></a> &ndash; TLK override strings (user journal entries and similar), keyed by string reference. &dagger;<br />
+      Assigned by: <code>CTlkFileOverride::Open</code>.<br />
+      Filled by: <code>CTlkFileOverride::Add</code>, <code>CTlkFileOverride::AddUserEntry</code>, <code>CTlkFileOverride::Open</code>, <code>CTlkFileOverride::Remove</code>.<br />
+<pre>
+OverrideStrings
+  [n]: nil or string
+</pre>
+      <a name="luag_t_actionBarTooltip"><b>actionBarTooltip</b></a> &ndash; Action bar tooltip texts, keyed by button. &dagger;<br />
+      Filled by: <code>CInfButtonArray::SetTooltip</code>.<br />
+<pre>
+actionBarTooltip
+  [n]: string
+</pre>
+      <a name="luag_t_scriptList"><b>scriptList</b></a> &ndash; AI script names listed on the record screen. &dagger;<br />
+      Assigned by: <code>CScreenCharacter::RefreshScripts</code>.<br />
+<pre>
+scriptList
+  [n]: string
+</pre>
+      <a name="luag_t_list_GUIREC_20_5"><b>list_GUIREC_20_5</b></a> &ndash; Sound set names listed on the record screen. &dagger;<br />
+      Assigned by: <code>CScreenCharacter::OnSoundsButtonClick</code>.<br />
+<pre>
+list_GUIREC_20_5
+  [n]: string
+</pre>
+      <a name="luag_t_list_GUIMOVIE_0_0"><b>list_GUIMOVIE_0_0</b></a> &ndash; Movies listed on the movies screen. &dagger;<br />
+      Assigned by: <code>CScreenMovies::EngineActivated</code>.<br />
+<pre>
+list_GUIMOVIE_0_0
+  [n]: table
+    description: string
+    movieCode: string
+</pre>
+      <a name="luag_t_combatLog"><b>combatLog</b></a> &ndash; Combat log lines (emptied when a game starts). &dagger;<br />
+      Assigned by: <code>CInfGame::InitGame</code>.<br />
+<pre>
+combatLog
+  [n]: string
+</pre>
+      <a name="luag_t_sequencerSpells"><b>sequencerSpells</b></a> &ndash; Spells chosen for the sequencer or contingency being built; set to nil when done. &dagger;<br />
+      Assigned by: <code>CScreenWizSpell::DoneSequencingSpells</code>, <code>CScreenWizSpell::OnContingency</code>.<br />
+<pre>
+sequencerSpells
+  [n]: table
+    castableCount: number
+    description: number
+    icon: string
+    index: number
+    level: number
+    masterResref: string
+    memorizedCount: number
+    memorizedIndex: number
+    name: number
+    resref: string
+</pre>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="luag_Values">Other globals set by the engine</a></div>
+    <div class="indent1">
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="22%" />
+          <col width="10%" />
+          <col width="30%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Global</th>
+            <th>Type</th>
+            <th>Set by</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>aiButtonToggle</code></td><td>number</td><td><code>CInfGame::InitGame</code>, <code>CInfGame::ToggleAI</code>, <code>CInfGame::Unmarshal</code></td><td>State of the party AI button. &dagger;</td></tr>
+          <tr><td><code>areaName</code></td><td>string</td><td><code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Area name shown on the multiplayer screen. &dagger;</td></tr>
+          <tr><td><code>bookMode</code></td><td>number</td><td><code>CScreenWizSpell::UpdateMainPanel</code></td><td>Mode of the mage spellbook screen. &dagger;</td></tr>
+          <tr><td><code>cellNumber</code></td><td>number</td><td><code>setListRowCellSelected</code></td><td>Column of the list cell that was clicked. &dagger;</td></tr>
+          <tr><td><code>chapter</code></td><td>number</td><td><code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Current chapter (multiplayer screen); also read by the journal. &dagger;</td></tr>
+          <tr><td><code>chapterBackground</code></td><td>string</td><td><code>CScreenChapter::StartDream</code>, <code>CScreenChapter::StartTextScreen</code></td><td>Background image of the chapter/text screen. &dagger;</td></tr>
+          <tr><td><code>characterExportCharacterEdit</code></td><td>string</td><td><code>CScreenCharacter::OnCharacterItemSelect</code>, <code>CScreenCharacter::OnExportButtonClick</code></td><td>File name edit field of character export (record screen). &dagger;</td></tr>
+          <tr><td><code>chargenExportCharacterEdit</code></td><td>string</td><td><code>CScreenCreateChar::AcceptCharacter</code>, <code>CScreenCreateChar::OnCharacterExportItemSelect</code></td><td>File name edit field of character export (character creation). &dagger;</td></tr>
+          <tr><td><code>chargenProficiencyHelpText</code></td><td>number</td><td><code>CScreenCreateChar::OnProficiencyPlusMinusButtonClick</code></td><td>Help text of the proficiency step (character creation). &dagger;</td></tr>
+          <tr><td><code>charNameEdit</code></td><td>string</td><td><code>CScreenCreateChar::OnMainBackButtonClick</code></td><td>Text of the character name edit field (character creation). &dagger;</td></tr>
+          <tr><td><code>chatboxScrollToBottom</code></td><td>number</td><td><code>CGameDialogSprite::AsynchronousUpdate</code>, <code>CScreenWorld::DisplayChatMessage</code>, <code>CScreenWorld::DisplayText</code></td><td>Request to scroll the dialog/chat box to the bottom. &dagger;</td></tr>
+          <tr><td><code>Chitin_GetSectionCallback</code></td><td>C function</td><td><code>bootstrapLua</code></td><td>Engine callback used by getOptionsSection to hand INI entries back to the engine.</td></tr>
+          <tr><td><code>combatLog</code></td><td>table</td><td><code>CInfGame::InitGame</code></td><td>Combat log lines (emptied when a game starts). &dagger;</td></tr>
+          <tr><td><code>CONNECTION_ERROR_MESSAGE</code></td><td>number</td><td><code>CScreenConnection::SetPlayerName</code></td><td>Error message of the connection screen (string reference). &dagger;</td></tr>
+          <tr><td><code>connectionPlayerNameEdit</code></td><td>string</td><td><code>CScreenConnection::HandleJoinCompletion</code>, <code>CScreenConnection::InitializeSessionData</code></td><td>Player name edit field (connection screen). &dagger;</td></tr>
+          <tr><td><code>connectionSessionNameEdit</code></td><td>string</td><td><code>CScreenConnection::InitializeSessionData</code></td><td>Session name edit field (connection screen). &dagger;</td></tr>
+          <tr><td><code>contingencyMaxSpells</code></td><td>number</td><td><code>CScreenWizSpell::UpdateMainPanel</code></td><td>Number of spells the contingency holds. &dagger;</td></tr>
+          <tr><td><code>contingencyResRef</code></td><td>string</td><td><code>CScreenWizSpell::UpdateMainPanel</code></td><td>Resource of the contingency spell being cast. &dagger;</td></tr>
+          <tr><td><code>contingencySwapTable</code></td><td>table</td><td><code>CScreenWizSpell::SpellSwappedInContingency</code></td><td>Spells swapped while building a contingency. &dagger;</td></tr>
+          <tr><td><code>createBioEdit</code></td><td>string</td><td><code>CScreenCreateChar::OnBiographyButtonClick</code></td><td>Text of the biography edit field (character creation). &dagger;</td></tr>
+          <tr><td><code>createCharGenderHelp</code></td><td>number</td><td><code>CScreenCreateChar::OnGenderSelectButtonClick</code></td><td>Help text of the gender step (character creation). &dagger;</td></tr>
+          <tr><td><code>currentChargenCustomSound</code></td><td>number</td><td><code>CScreenCreateChar::OnDoneButtonClick</code></td><td>Selected custom sound set (character creation). &dagger;</td></tr>
+          <tr><td><code>currentChargenHatedRace</code></td><td>number</td><td><code>CScreenCreateChar::UpdateHatedRacePanel</code></td><td>Selected hated race (character creation). &dagger;</td></tr>
+          <tr><td><code>currentChargenKit</code></td><td>number</td><td><code>CScreenCreateChar::UpdateKitPanel</code></td><td>Selected kit (character creation). &dagger;</td></tr>
+          <tr><td><code>currentID</code></td><td>number</td><td><code>CScreenCharacter::UpdateMainPanel</code>, <code>CScreenCreateChar::UpdateProficienciesPanel</code>, <code>CScreenCreateParty::OnPortraitButtonClick</code>, <code>CScreenMultiPlayer::OnPortraitButtonClick</code></td><td>Id of the selected character. &dagger;</td></tr>
+          <tr><td><code>currentPanelID</code></td><td>number</td><td><code>CScreenCharacter::OnCharacterExport</code>, <code>CScreenCharacter::OnErrorButtonClick</code></td><td>Current panel of the character record screen. &dagger;</td></tr>
+          <tr><td><code>debugResponseTable</code></td><td>copy of a value or nil</td><td><code>CGameDialogSprite::AsynchronousUpdate</code>, <code>CLUAConsole::PickDialog</code></td><td>Dialog responses offered by the console's dialog debugging. &dagger;</td></tr>
+          <tr><td><code>dialogButtonText</code></td><td>string</td><td><code>CGameDialogEntry::Display</code></td><td>Text of the dialog continue/end button. &dagger;</td></tr>
+          <tr><td><code>epilogueImage</code></td><td>string</td><td><code>CScreenChapter::StartDream</code>, <code>CScreenChapter::StartTextScreen</code>, <code>CScreenChapter::TimerAsynchronousUpdate</code></td><td>Image of the epilogue/dream screen. &dagger;</td></tr>
+          <tr><td><code>eventXCoord</code></td><td>number</td><td><code>continueMapCapture</code>, <code>startItemCapture</code></td><td>X coordinate of the current mouse event, relative to the item. &dagger;</td></tr>
+          <tr><td><code>eventYCoord</code></td><td>number</td><td><code>continueMapCapture</code>, <code>startItemCapture</code></td><td>Y coordinate of the current mouse event, relative to the item. &dagger;</td></tr>
+          <tr><td><code>getOptionsSection</code></td><td>function</td><td>&ndash;</td><td>Defined by the engine's bootstrap Lua: calls Chitin_GetSectionCallback for every key of options[sectionName].</td></tr>
+          <tr><td><code>groundItemsButtonToggle</code></td><td>number</td><td><code>CInfGame::Unmarshal</code>, <code>CScreenCreateChar::AcceptCharacter</code>, <code>CScreenWorld::OnKeyDown</code></td><td>State of the ground items button. &dagger;</td></tr>
+          <tr><td><code>highlightButtonToggle</code></td><td>number</td><td><code>CInfGame::Unmarshal</code>, <code>CScreenCreateChar::AcceptCharacter</code>, <code>CScreenWorld::EngineGameInit</code>, <code>CScreenWorld::OnKeyDown</code>, <code>CScreenWorld::OnKeyUp</code></td><td>State of the highlight button. &dagger;</td></tr>
+          <tr><td><code>id</code></td><td>number</td><td><code>CScreenInventory::OnPortraitLClick</code>, <code>CScreenPriestSpell::UpdateMainPanel</code>, <code>CScreenWizSpell::UpdateMainPanel</code>, <code>Infinity_OnPortraitLClick</code>, <code>Infinity_UpdateLuaStats</code></td><td>Id of the character the current screen shows. &dagger;</td></tr>
+          <tr><td><code>instanceId</code></td><td>number</td><td><code>continueButtonCapture</code>, <code>drawItem</code>, <code>drawTooltipFromItem</code>, <code>eventMenu</code>, <code>isPointOverMenu</code>, <code>lastItemUnderPoint</code>, <code>pushButton</code>, <code>uiIsPointOverMenu</code></td><td>See the <a href="menu_lua.htm">MENU Lua interface</a> page.</td></tr>
+          <tr><td><code>io</code></td><td>table</td><td>&ndash;</td><td>Stub replacing the standard io library (output() does nothing), installed only with test-automation support.</td></tr>
+          <tr><td><code>key_pressed</code></td><td>nil or number</td><td><code>continueEditCapture</code></td><td>Key code typed into an edit field (nil when none). &dagger;</td></tr>
+          <tr><td><code>languages</code></td><td>table</td><td>&ndash;</td><td>Available languages; created by the engine's bootstrap Lua, filled through setLanguageVisible.</td></tr>
+          <tr><td><code>letter_pressed</code></td><td>nil or string</td><td><code>continueEditCapture</code></td><td>Character typed into an edit field (nil when none). &dagger;</td></tr>
+          <tr><td><code>list_GUIREC_20_5_idx</code></td><td>number</td><td><code>CScreenCharacter::OnSoundsButtonClick</code></td><td>Index of the selected sound set. &dagger;</td></tr>
+          <tr><td><code>luaEdit</code></td><td>string</td><td><code>CScreenWorld::OnKeyDown</code>, <code>Infinity_LuaConsoleInput</code></td><td>Text of the Lua console edit field. &dagger;</td></tr>
+          <tr><td><code>luaEditDebugDump</code></td><td>number</td><td><code>CScreenWorld::OnKeyDown</code></td><td>Set by the console key handler. &dagger;</td></tr>
+          <tr><td><code>luaEditObjectId</code></td><td>light userdata</td><td><code>CScreenWorld::OnKeyDown</code></td><td>Object under the cursor when the console was opened. &dagger;</td></tr>
+          <tr><td><code>mageBookEnabled</code></td><td>boolean</td><td><code>CScreenWizSpell::UpdateMainPanel</code></td><td>Whether the mage book is available. &dagger;</td></tr>
+          <tr><td><code>mageName</code></td><td>string</td><td><code>CScreenWizSpell::UpdateMainPanel</code></td><td>Character name shown on the mage spellbook screen. &dagger;</td></tr>
+          <tr><td><code>mapNoteEdit</code></td><td>string</td><td><code>CScreenMap::OnMapAddNote</code>, <code>CScreenMap::OnUserNoteClick</code></td><td>Text of the map note edit field. &dagger;</td></tr>
+          <tr><td><code>maxMagePage</code></td><td>number</td><td><code>CScreenWizSpell::UpdateMainPanel</code></td><td>Number of mage spellbook pages. &dagger;</td></tr>
+          <tr><td><code>maxPriestPage</code></td><td>number</td><td><code>CScreenPriestSpell::UpdateMainPanel</code></td><td>Number of priest spellbook pages. &dagger;</td></tr>
+          <tr><td><code>messageScreenText</code></td><td>number</td><td><code>CInfinity::Render</code></td><td>Text of the full-screen message. &dagger;</td></tr>
+          <tr><td><code>motionX</code></td><td>number</td><td><code>continueHandleCapture</code></td><td>Horizontal movement while dragging a handle. &dagger;</td></tr>
+          <tr><td><code>motionY</code></td><td>number</td><td><code>continueHandleCapture</code></td><td>Vertical movement while dragging a handle. &dagger;</td></tr>
+          <tr><td><code>mouseoverRow</code></td><td>number</td><td><code>eventMenu</code></td><td>List row under the mouse. &dagger;</td></tr>
+          <tr><td><code>mp_shownSessions</code></td><td>table</td><td>&ndash;</td><td>Multiplayer sessions currently listed (emptied by the engine). &dagger;</td></tr>
+          <tr><td><code>mpChatboxScrollToBottom</code></td><td>number</td><td><code>CScreenWorld::DisplayChatMessage</code></td><td>Request to scroll the multiplayer chat box to the bottom. &dagger;</td></tr>
+          <tr><td><code>mpChatLength</code></td><td>number</td><td><code>CScreenWorld::ClearChatMessages</code></td><td>Number of multiplayer chat lines. &dagger;</td></tr>
+          <tr><td><code>mpChatTable</code></td><td>table</td><td><code>CScreenWorld::ClearChatMessages</code></td><td>Multiplayer chat lines (emptied by the engine). &dagger;</td></tr>
+          <tr><td><code>mpChatText</code></td><td>string</td><td><code>CScreenWorld::ClearChatMessages</code></td><td>Multiplayer chat text. &dagger;</td></tr>
+          <tr><td><code>mpErrorState</code></td><td>number</td><td><code>CScreenMultiPlayer::OnKickPlayerButtonClick</code>, <code>CScreenMultiPlayer::OnLogoutButtonClick</code>, <code>CScreenMultiPlayer::OnModifyButtonClick</code>, <code>CScreenMultiPlayer::OnPlayerSelection</code>, <code>CScreenMultiPlayer::TimerAsynchronousUpdate</code></td><td>Error state of the multiplayer screen. &dagger;</td></tr>
+          <tr><td><code>mpErrorText</code></td><td>number</td><td><code>CScreenMultiPlayer::OnKickPlayerButtonClick</code>, <code>CScreenMultiPlayer::OnLogoutButtonClick</code>, <code>CScreenMultiPlayer::OnModifyButtonClick</code>, <code>CScreenMultiPlayer::OnPlayerSelection</code>, <code>CScreenMultiPlayer::TimerAsynchronousUpdate</code></td><td>Error message of the multiplayer screen (string reference). &dagger;</td></tr>
+          <tr><td><code>multiplayerFromInGame</code></td><td>boolean</td><td><code>CMultiplayerSettings::SetArbitrationLockStatus</code></td><td>Whether the multiplayer screen was opened from a running game. &dagger;</td></tr>
+          <tr><td><code>multiplayerLocalPlayerID</code></td><td>number</td><td><code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Id of the local player. &dagger;</td></tr>
+          <tr><td><code>nameToItemPointer</code></td><td>light userdata</td><td><code>initNameMap</code></td><td>See the <a href="menu_lua.htm">MENU Lua interface</a> page.</td></tr>
+          <tr><td><code>oldOverlayMenuName</code></td><td>nil</td><td><code>CBaldurChitin::ConfirmQuit</code></td><td>Cleared by the quit confirmation before it shows QuitMenu. &dagger;</td></tr>
+          <tr><td><code>options</code></td><td>table</td><td>&ndash;</td><td>INI options by section and key; created by the engine's bootstrap Lua and filled through SetPrivateProfileString.</td></tr>
+          <tr><td><code>os</code></td><td>table</td><td>&ndash;</td><td>Stub replacing the standard os library (getenv() returns nil), installed only with test-automation support.</td></tr>
+          <tr><td><code>priestBookEnabled</code></td><td>boolean</td><td><code>CScreenPriestSpell::UpdateMainPanel</code></td><td>Whether the priest book is available. &dagger;</td></tr>
+          <tr><td><code>priestName</code></td><td>string</td><td><code>CScreenPriestSpell::UpdateMainPanel</code></td><td>Character name shown on the priest spellbook screen. &dagger;</td></tr>
+          <tr><td><code>print</code></td><td>C function</td><td><code>bootstrapLua</code></td><td>Replacement for Lua's print, registered by the engine's Lua bootstrap. &dagger;</td></tr>
+          <tr><td><code>recBioEdit</code></td><td>string</td><td><code>CScreenCharacter::OnCusomizeBiographyButtonClick</code></td><td>Text of the biography edit field (record screen). &dagger;</td></tr>
+          <tr><td><code>rowNumber</code></td><td>copy of a value</td><td><code>Infinity_GetListHeight</code>, <code>Infinity_SelectDialogueOption</code>, <code>Infinity_SelectListItem</code>, <code>RenderListCallback</code></td><td>See the <a href="menu_lua.htm">MENU Lua interface</a> page.</td></tr>
+          <tr><td><code>rowSelected</code></td><td>number</td><td><code>Infinity_GetListHeight</code>, <code>Infinity_SelectDialogueOption</code>, <code>Infinity_SelectListItem</code>, <code>RenderListCallback</code></td><td>See the <a href="menu_lua.htm">MENU Lua interface</a> page.</td></tr>
+          <tr><td><code>scriptDescription</code></td><td>string</td><td><code>CScreenCharacter::OnScriptItemSelect</code></td><td>Description of the selected AI script. &dagger;</td></tr>
+          <tr><td><code>scriptList_idx</code></td><td>number</td><td><code>CScreenCharacter::RefreshScripts</code></td><td>Index of the selected AI script. &dagger;</td></tr>
+          <tr><td><code>scrollDirection</code></td><td>number</td><td><code>eventMenu</code></td><td>Direction of the last mouse-wheel event. &dagger;</td></tr>
+          <tr><td><code>selectedSlot</code></td><td>string</td><td><code>CInfButtonArray::OnRButtonPressed</code></td><td>Slot name of the action bar button that was right-clicked. &dagger;</td></tr>
+          <tr><td><code>selectionButtonToggle</code></td><td>boolean</td><td><code>CGameArea::OnActionButtonUp</code></td><td>State of the selection button. &dagger;</td></tr>
+          <tr><td><code>sequencerSpells</code></td><td>nil or table</td><td><code>CScreenWizSpell::DoneSequencingSpells</code>, <code>CScreenWizSpell::OnContingency</code></td><td>Spells chosen for the sequencer or contingency being built; set to nil when done. &dagger;</td></tr>
+          <tr><td><code>setLanguageVisible</code></td><td>function</td><td>&ndash;</td><td>Defined by the engine's bootstrap Lua: languages[locale] = {0, 0, locale}. Called by the engine for every language found.</td></tr>
+          <tr><td><code>SetPrivateProfileString</code></td><td>function</td><td>&ndash;</td><td>Defined by the engine's bootstrap Lua: stores options[section][key] = value.</td></tr>
+          <tr><td><code>showContingency</code></td><td>boolean</td><td><code>CScreenWizSpell::UpdateMainPanel</code></td><td>Whether the contingency panel is shown. &dagger;</td></tr>
+          <tr><td><code>showJournal</code></td><td>number</td><td><code>CBaldurEngine::OnLeftPanelButtonClick</code>, <code>CBaldurEngine::SelectEngine</code>, <code>CScreenWorld::EngineGameUninit</code></td><td>Whether the journal is open. &dagger;</td></tr>
+          <tr><td><code>showMpChat</code></td><td>number</td><td><code>CScreenWorld::OnKeyDown</code>, <code>CScreenWorld::ToggleChatEditBox</code></td><td>Whether the multiplayer chat is shown. &dagger;</td></tr>
+          <tr><td><code>showNotes</code></td><td>number</td><td><code>CScreenMap::UpdateMainPanel</code></td><td>Whether map notes are shown. &dagger;</td></tr>
+          <tr><td><code>storeDonateAmountEdit</code></td><td>string</td><td><code>CScreenStore::OnDonateButtonClick</code></td><td>Donation amount edit field (store). &dagger;</td></tr>
+          <tr><td><code>text_CHAPTERSCROLL</code></td><td>string</td><td><code>CScreenChapter::SwitchMainPanel</code></td><td>Text of the scrolling chapter screen. &dagger;</td></tr>
+          <tr><td><code>text_CHAPTERSCROLL_auto</code></td><td>number</td><td><code>CScreenChapter::OnMixerInitialize</code>, <code>CScreenChapter::OnReplayButtonClick</code>, <code>CScreenChapter::SwitchMainPanel</code></td><td>Whether the chapter text scrolls automatically. &dagger;</td></tr>
+          <tr><td><code>text_CHAPTERSCROLL_timeStart</code></td><td>number</td><td><code>CScreenChapter::OnMixerInitialize</code>, <code>CScreenChapter::OnReplayButtonClick</code>, <code>CScreenChapter::SwitchMainPanel</code></td><td>Start time of the chapter text scrolling. &dagger;</td></tr>
+          <tr><td><code>TEXT_inventoryError</code></td><td>string</td><td><code>CScreenInventory::SetErrorString</code></td><td>Inventory error message. &dagger;</td></tr>
+          <tr><td><code>TEXT_popup_info</code></td><td>number or string</td><td><code>CScreenConnection::ShowSessionTerminatedMessage</code>, <code>CScreenInventory::OnUseButtonClick</code>, <code>CScreenInventory::TimerAsynchronousUpdate</code>, <code>CScreenJournal::OnRestButtonClick</code>, <code>CScreenOptions::SaveGame</code>, <code>CScreenStart::TimerAsynchronousUpdate</code>, <code>uiPushDialog</code></td><td>Message for the information popup (string reference or text). &dagger;</td></tr>
+          <tr><td><code>textflashes</code></td><td>table</td><td><code>CScreenWorld::EngineGameUninit</code></td><td>Floating text entries (emptied when the game screen closes). &dagger;</td></tr>
+          <tr><td><code>uiTranslationFile</code></td><td>nil</td><td><code>dimmInit</code></td><td>Cleared at start-up. &dagger;</td></tr>
+          <tr><td><code>worldDeathStr</code></td><td>number</td><td><code>CScreenWorld::AsynchronousUpdate</code></td><td>Death message, also logged by the engine. &dagger;</td></tr>
+          <tr><td><code>worldMessageBoxClickedOnce</code></td><td>number</td><td><code>CInfGame::LoadOptions</code></td><td>Message box state, saved with the options. &dagger;</td></tr>
+          <tr><td><code>worldMessageBoxLength</code></td><td>number</td><td><code>CScreenWorld::EngineGameUninit</code></td><td>Number of message box lines. &dagger;</td></tr>
+          <tr><td><code>worldMessageBoxText</code></td><td>string</td><td><code>CScreenWorld::EngineGameUninit</code></td><td>Message box text. &dagger;</td></tr>
+          <tr><td><code>worldMessageBoxTop</code></td><td>number</td><td><code>CInfGame::LoadOptions</code></td><td>Message box scroll position, saved with the options. &dagger;</td></tr>
+          <tr><td><code>worldNPCDialogText</code></td><td>string</td><td><code>CScreenWorld::DisplayText</code>, <code>CScreenWorld::EndDialog</code></td><td>Text of the current NPC dialog line. &dagger;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="luag_Expected">Functions the engine expects</a></div>
+    <div class="indent1">
+      The engine calls these global Lua functions but does not define them; the game's own Lua code (UI.MENU and the Lua resources it loads) has to. Arguments are listed in order with the Lua type the engine pushes; where several argument lists are shown, different call sites pass different types.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="22%" />
+          <col width="18%" />
+          <col width="28%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Arguments</th>
+            <th>Called by</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>buildQuestsTable</code></td><td>()</td><td><code>CBaldurChitin::Init</code>, <code>CInfGame::UpdateTokens</code></td><td>Rebuild the quest list (journal). &dagger;</td></tr>
+          <tr><td><code>chapterText</code></td><td>()</td><td><code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Called for the chapter text of the multiplayer screen. &dagger;</td></tr>
+          <tr><td><code>checkDoubleClickScheduled</code></td><td>(string)</td><td><code>CMessageContainerAddItem::Run</code></td><td>Called when an item is added to a container, with the item's resource name. &dagger;</td></tr>
+          <tr><td><code>checkEntryComplete</code></td><td>(number, number)</td><td><code>CGameJournal::AddEntry</code></td><td>Called when a journal entry is added (entry string reference and type). &dagger;</td></tr>
+          <tr><td><code>clearCharacterSlot</code></td><td>(number, boolean)</td><td><code>CInfGame::ClearCharacterSlot</code>, <code>CNetwork::OnCloseSession</code>, <code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Clear a character slot of the multiplayer screen. &dagger;</td></tr>
+          <tr><td><code>clearPlayerSlot</code></td><td>(number, boolean)</td><td><code>CNetwork::OnCloseSession</code>, <code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Clear a player slot of the multiplayer screen. &dagger;</td></tr>
+          <tr><td><code>clearSessionsBefore</code></td><td>(number)</td><td><code>DPProviderJingle::Pump</code></td><td>Forget multiplayer sessions older than the given time. &dagger;</td></tr>
+          <tr><td><code>connectionBuildGameList</code></td><td>()</td><td><code>XmppHandler::Pump</code></td><td>Rebuild the list of online games. &dagger;</td></tr>
+          <tr><td><code>destroyMemorizationSparkle</code></td><td>(number)</td><td><code>CScreenPriestSpell::TimerAsynchronousUpdate</code>, <code>CScreenWizSpell::TimerAsynchronousUpdate</code></td><td>Remove the memorisation effect of a spellbook slot. &dagger;</td></tr>
+          <tr><td><code>getDialogButtonEnabled</code></td><td>()</td><td><code>CScreenWorld::OnKeyDown</code></td><td>Whether the dialog continue/end button is enabled (result read as a number/boolean). &dagger;</td></tr>
+          <tr><td><code>getUiString</code></td><td>(string)</td><td><code>CGameOptions::SetDifficulty</code>, <code>CGameOptions::SetStoryMode</code>, <code>CGameSprite::UpdateLuaStats</code>, <code>CScreenCharacter::OnDoneButtonClick</code>, <code>CScreenCharacter::OnScriptItemSelect</code>, <code>CScreenCharacter::RefreshScripts</code>, <code>CScreenMap::UpdateMainPanel</code>, <code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code>, <code>CScreenStore::OnRentRoomButtonClick</code>, <code>translateString</code>, <code>yy_reduce</code></td><td>Translate a UI string key (2.7.3.0; the key is passed as a string and the translated text is returned).</td></tr>
+          <tr><td><code>keyExists</code></td><td>(string, number)</td><td><code>CInfButtonArray::UpdateButtons</code></td><td>Whether a key binding exists (action bar). &dagger;</td></tr>
+          <tr><td><code>log</code></td><td>(string)</td><td><code>Infinity_Log</code></td><td>Called by Infinity_Log with the message.</td></tr>
+          <tr><td><code>matchMultiplayerGameType</code></td><td>(string)</td><td><code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Select the multiplayer game type entry. &dagger;</td></tr>
+          <tr><td><code>popSidebars</code></td><td>()</td><td><code>CScreenWizSpell::EngineDeactivated</code>, <code>CScreenWorld::EngineDeactivated</code></td><td>Hide the side bars when the spellbook or game screen deactivates. &dagger;</td></tr>
+          <tr><td><code>popupDetails</code></td><td>(number, number, number, string)</td><td><code>CInfButtonArray::OnRButtonPressed</code></td><td>Show the details popup of an action bar item. &dagger;</td></tr>
+          <tr><td><code>popupInfo</code></td><td>(number)</td><td><code>CScreenCharacter::OnRestButtonClick</code>, <code>CScreenCreateChar::OnDoneButtonClick</code>, <code>CScreenSave::SaveGame</code>, <code>CScreenStore::OnBuyDrinkButtonClick</code>, <code>CScreenStore::OnBuyItemButtonClick</code>, <code>CScreenStore::OnBuySpellButtonClick</code>, <code>CScreenStore::OnIdentifyItemButtonClick</code>, <code>CScreenStore::OnRentRoomButtonClick</code>, <code>CScreenStore::OnSellItemButtonClick</code></td><td>Show an information popup with a string reference. &dagger;</td></tr>
+          <tr><td><code>printIni</code></td><td>(light userdata)</td><td><code>chWriteInifile</code></td><td>Write the INI options out (called while saving the INI, with the file handle). &dagger;</td></tr>
+          <tr><td><code>pushSidebars</code></td><td>()</td><td><code>CScreenWizSpell::EngineActivated</code>, <code>CScreenWorld::EngineActivated</code></td><td>Show the side bars when the spellbook or game screen activates. &dagger;</td></tr>
+          <tr><td><code>refreshMageBook</code></td><td>()</td><td><code>CScreenWizSpell::SequenceSpell</code>, <code>CScreenWizSpell::UnSequenceSpell</code>, <code>CScreenWizSpell::UpdateMainPanel</code></td><td>Refresh the mage spellbook screen. &dagger;</td></tr>
+          <tr><td><code>refreshMageContingency</code></td><td>()</td><td><code>CScreenWizSpell::OnDispellButtonClick</code></td><td>Refresh the contingency display. &dagger;</td></tr>
+          <tr><td><code>refreshPriestBook</code></td><td>()</td><td><code>CScreenPriestSpell::UpdateMainPanel</code></td><td>Refresh the priest spellbook screen. &dagger;</td></tr>
+          <tr><td><code>removeUserEntry</code></td><td>(number)</td><td><code>CGameJournal::ChangeEntry</code></td><td>Remove a user journal entry. &dagger;</td></tr>
+          <tr><td><code>resizeDialog</code></td><td>()</td><td><code>CScreenWorld::DisplayText</code></td><td>Resize the dialog panel after new text. &dagger;</td></tr>
+          <tr><td><code>setChapterBackground</code></td><td>(number)</td><td><code>CScreenChapter::SwitchMainPanel</code></td><td>Set the background of the chapter screen. &dagger;</td></tr>
+          <tr><td><code>showItemDescription</code></td><td>(number)</td><td><code>CInfButtonArray::OnRButtonPressed</code></td><td>Show the description of an action bar item. &dagger;</td></tr>
+          <tr><td><code>storeRest</code></td><td>()</td><td><code>CScreenStore::OnRentRoomButtonClick</code></td><td>Rest at the inn (store screen). &dagger;</td></tr>
+          <tr><td><code>t</code></td><td>(string)</td><td><code>CGameOptions::SetDifficulty</code>, <code>CGameOptions::SetStoryMode</code>, <code>CGameSprite::UpdateLuaStats</code>, <code>CScreenCharacter::OnDoneButtonClick</code>, <code>CScreenCharacter::OnScriptItemSelect</code>, <code>CScreenCharacter::RefreshScripts</code>, <code>CScreenMap::UpdateMainPanel</code>, <code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code>, <code>CScreenStore::OnRentRoomButtonClick</code>, <code>translateString</code>, <code>yy_reduce</code></td><td>Translation function used by the MENU parser in 2.6.6.0 (same role as getUiString).</td></tr>
+          <tr><td><code>tick_cucumber</code></td><td>()</td><td><code>CChitin::Update</code></td><td>Per-frame hook of the test-automation support (only with that support enabled). &dagger;</td></tr>
+          <tr><td><code>toggleSidebar</code></td><td>(string)</td><td><code>CScreenWorld::OnKeyUp</code></td><td>Toggle a side bar (LEFT or RIGHT). &dagger;</td></tr>
+          <tr><td><code>unmemorizingMageSpell</code></td><td>(string)</td><td><code>CScreenWizSpell::UnmemorizeSpell</code></td><td>Called when a mage spell is unmemorised. &dagger;</td></tr>
+          <tr><td><code>unmemorizingPriestSpell</code></td><td>(string)</td><td><code>CScreenPriestSpell::UnmemorizeSpell</code></td><td>Called when a priest spell is unmemorised. &dagger;</td></tr>
+          <tr><td><code>updateJournalEntry</code></td><td>(number, number, number, number, string)</td><td><code>CGameJournal::UpdateJournalEntry</code></td><td>Update a journal entry. &dagger;</td></tr>
+          <tr><td><code>updateMPChatPreview</code></td><td>(string)</td><td><code>CScreenWorld::DisplayChatMessage</code></td><td>Show a new multiplayer chat line. &dagger;</td></tr>
+          <tr><td><code>updateMultiplayerCharacterSlot</code></td><td>(number, string, boolean) | (number, string, number) | (number, string, string)</td><td><code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Update a character slot of the multiplayer screen. &dagger;</td></tr>
+          <tr><td><code>updateMultiplayerPlayerSlot</code></td><td>(number, string, number) | (number, string, string)</td><td><code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Update a player slot of the multiplayer screen. &dagger;</td></tr>
+          <tr><td><code>updateMultiplayerSessionData</code></td><td>(string, string, string, string, number)</td><td><code>CScreenMultiPlayer::SetMultiplayerScreenInformation</code></td><td>Update the session information of the multiplayer screen. &dagger;</td></tr>
+          <tr><td><code>autopickMageSpells</code></td><td>run as a Lua statement</td><td><code>CScreenCreateChar::UpdateChooseMagePanel</code></td><td>Pick the initial mage spells automatically (character creation). &dagger;</td></tr>
+          <tr><td><code>initQuests</code></td><td>run as a Lua statement</td><td><code>CInfGame::InitGame</code></td><td>Initialise the quest list when a game starts. &dagger;</td></tr>
+          <tr><td><code>loadBindings</code></td><td>run as a Lua statement</td><td><code>CInfGame::InitGame</code>, <code>CInfGame::LoadKeymap</code></td><td>Load key bindings. &dagger;</td></tr>
+          <tr><td><code>removeStringTokenLua</code></td><td>run as a Lua statement</td><td><code>CScreenDLC::GetDownloadString</code></td><td>Remove a string token. &dagger;</td></tr>
+          <tr><td><code>resetStatsDisplay</code></td><td>run as a Lua statement</td><td><code>CScreenInventory::SwapWithPortrait</code>, <code>CScreenInventory::SwapWithSlot</code></td><td>Refresh the inventory stats after an equipment change. &dagger;</td></tr>
+          <tr><td><code>sortSaves</code></td><td>run as a Lua statement</td><td><code>CScreenLoad::RefreshGameSlots</code>, <code>CScreenSave::RefreshGameSlots</code></td><td>Sort gameSaves. &dagger;</td></tr>
+          <tr><td><code>updateAttrTable</code></td><td>run as a Lua statement</td><td><code>CInfGame::ChangeBiography</code>, <code>CScreenCharacter::UpdateMainPanel</code>, <code>Infinity_OnPortraitLClick</code></td><td>Refresh the attribute table of the record screen. &dagger;</td></tr>
+          <tr><td><code>updateChatViewed</code></td><td>run as a Lua statement</td><td><code>CScreenWorld::DisplayChatMessage</code></td><td>Mark multiplayer chat as viewed. &dagger;</td></tr>
+        </tbody>
+      </table>
+      <br />
+      The engine also reads these globals, which the game's Lua code sets (for example the variables of MENU edit fields):<br />
+      <br />
+      <code>connectionIsHosting</code> (<code>CScreenConnection::JoinGame</code>, <code>CScreenConnection::TimerAsynchronousUpdate</code>), <code>currentAnimationID</code> (<code>Infinity_InstanceAnimation</code>), <code>currentChargenAlignment</code> (<code>CScreenCreateChar::IsDoneButtonClickable</code>), <code>currentContingencyCondition</code> (<code>CScreenWizSpell::DoneSequencingSpells</code>), <code>currentContingencyTarget</code> (<code>CScreenWizSpell::DoneSequencingSpells</code>), <code>debugResponseIndex</code> (<code>CGameDialogSprite::AsynchronousUpdate</code>), <code>draggedPortrait</code> (<code>CGameArea::AIUpdate</code>), <code>engine_mode</code> (<code>initEngineSettings</code>), <code>engine_name</code> (<code>initEngineSettings</code>), <code>font_colors</code> (<code>CVidFont::SetResRef</code>), <code>fontcolors</code> (<code>drawLetters</code>, <code>fontIsCommandLetter</code>), <code>languages</code> (<code>dimmInit</code>), <code>length</code> (<code>?0DPProviderEnet</code>), <code>list_GUICG_18_2</code> (<code>CScreenCreateChar::IsDoneButtonClickable</code>), <code>list_GUICG_18_4</code> (<code>CScreenCreateChar::IsDoneButtonClickable</code>), <code>listMetaInfo</code> (<code>RenderListCallback</code>), <code>loc_screenshot</code> (<code>CChitin::ProcessEvents</code>), <code>mouseOverPortrait</code> (<code>CScreenWorld::AsynchronousUpdate</code>, <code>eventMenu</code>), <code>mouseOverQuicklootContainer</code> (<code>CScreenWorld::AsynchronousUpdate</code>), <code>mulitplayerPreexistingDifficulty</code> (<code>CScreenConnection::HandleEMEvent</code>), <code>nameToItem</code> (<code>findItemByName</code>), <code>options</code> (<code>BGDefaultPrivateProfileString</code>, <code>BGRemovePrivateProfileObject</code>), <code>package</code> (<code>enableCucumberSupport</code>), <code>popup2Button</code> (<code>CScreenStore::OnRentRoomButtonClick</code>), <code>purchasedDLC</code> (<code>CPlatform::HasDLC</code>, <code>CPlatform::HasDLCContent</code>), <code>standalone</code> (<code>initEngineSettings</code>), <code>storeCurMenuId</code> (<code>CScreenStore::IsBuySpellButtonClickable</code>, <code>CScreenStore::IsCharacterInRange</code>), <code>styles</code> (<code>yy_reduce</code>), <code>uiMenuStack</code> (<code>restoreMenuStack</code>), <code>usingSODStartMenu</code> (<code>CScreenStart::TimerAsynchronousUpdate</code>).<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="luag_Versions">Version differences</a></div>
+    <div class="indent1">
+      The bindings, the embedded chunk, the constants and their values, the globals set by the engine and the table structures are identical in all six examined builds. The only difference is the translation function the engine calls: <code>t</code> in 2.6.6.0 and <code>getUiString</code> in 2.7.3.0 (see also the <a href="menu_v1.htm#menuv1_Versions">MENU page</a>).<br />
+    </div>
+  </div>
+</div>

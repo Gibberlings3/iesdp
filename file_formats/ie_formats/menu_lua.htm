@@ -1,0 +1,122 @@
+---
+title: "MENU Lua interface"
+---
+    <div class="title_main">MENU Lua interface</div>
+
+    <br />
+    <div class="fileHeader">Applies to:</div>
+    <div class="indent1">BGEE, BG2EE, IWDEE (patch 2.0 and later)</div>
+    <br />
+
+    <div class="fileHeader">General Description</div>
+    <div class="indent1">
+      This page lists the parts of the engine's Lua interface that deal with <a href="menu_v1.htm">MENU</a> menus and items: the global variables the engine creates or reads for them, and the Lua functions that operate on them. It does not cover the rest of the engine's Lua functions, nor the Lua code that the games ship in their own <code>UI.MENU</code> and Lua files. The other globals the engine defines (engine objects such as <code>game</code> and <code>worldScreen</code>, data tables such as <code>characters</code> and <code>chargen</code>, and the callbacks it expects) are listed on the <a href="lua_globals.htm">Engine Lua globals</a> page.<br />
+      <br />
+      The information comes from patches 2.6.6.0 and 2.7.3.0 of BGEE, BG2EE and IWDEE. All six builds register the same menu functions with the same arguments. Descriptions marked &dagger; are inferred from the engine's own field and function names; the code that consumes them was not traced in detail.<br />
+      <br />
+      <b>Item handles.</b> Several functions take or return an <i>item</i>: a Lua light userdata that points to the engine's record of a menu item. Handles come from <code>nameToItem</code>, <code>Infinity_FindUIItemByName</code>, <code>Infinity_GetMenuItemByName</code>, <code>Infinity_FindItemWithBam</code> or <code>Infinity_FindItemWithText</code>. Functions that take an item <i>name</i> look it up in <code>nameToItem</code>.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menulua_Globals">Global variables</a></div>
+    <div class="indent1">
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="22%" />
+          <col width="14%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Direction</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>nameToItem</code></td><td>Set by engine</td><td>Table that maps item names to item handles. It is rebuilt after the MENU file has been parsed, and it covers top-level items with a <code>name</code>. The engine's lookup by item name reads this table, so Lua code can add entries to it or replace them.</td></tr>
+          <tr><td><code>nameToItemPointer</code></td><td>Set by engine</td><td>Temporary variable used while <code>nameToItem</code> is built. It is left holding the last item entered.</td></tr>
+          <tr><td><code>instanceId</code></td><td>Set by engine</td><td>Set to the instance number of the item being processed before its <code>enabled</code> expression is evaluated, and before the engine runs that item's Lua for drawing, events and tooltips. Items created with <code>Infinity_InstanceAnimation</code> receive the value of <code>currentAnimationID</code> as their instance number; all other items have 0.</td></tr>
+          <tr><td><code>rowNumber</code></td><td>Set by engine</td><td>While a list is drawn or measured: the key of the current row in the table returned by the list's <code>table</code> expression.</td></tr>
+          <tr><td><code>rowSelected</code></td><td>Set by engine</td><td>While a list is drawn or measured: the list's selected row.</td></tr>
+          <tr><td><code>list</code><i>&lt;address&gt;</i></td><td>Set by engine</td><td>One empty table per <code>list</code> item, created when the item is parsed. No other engine code refers to it.</td></tr>
+          <tr><td><i>highlight group name</i></td><td>Set by engine</td><td>For each <code>highlightgroup</code> name that is not yet a global, a global of that name holding the first item of the group.</td></tr>
+          <tr><td><i>prefix</i><i>&lt;address&gt;</i></td><td>Set by engine</td><td>The functions generated from Lua strings in the MENU file (for example <code>action</code>, <code>enabled</code> and <code>variant</code> followed by an address). See <a href="menu_v1.htm#menuv1_Lua">How a menu becomes Lua</a>.</td></tr>
+          <tr><td><code>getUiString</code> (2.7.3.0)<br /><code>t</code> (2.6.6.0)</td><td>Read by engine</td><td>Function that the engine calls with one string to translate the text of <code>text STRING</code> and <code>placeholder STRING</code> while the MENU file is parsed. It must return a string. Other engine code calls <code>getUiString</code> as well.</td></tr>
+          <tr><td><code>styles</code></td><td>Read by engine</td><td>Table of text styles used by <code>text style</code>, read while the MENU file is parsed.</td></tr>
+          <tr><td><code>fontcolors</code></td><td>Read by engine</td><td>Table that maps colour names (and numbers as text) to hexadecimal colour strings. MENU <i>color</i> values read it while the file is parsed, and the font renderer reads it as well.</td></tr>
+          <tr><td><code>currentAnimationID</code></td><td>Read by engine</td><td>Read by <code>Infinity_InstanceAnimation</code> as the instance number of the new item. The engine never changes it, so the Lua code must set it.</td></tr>
+          <tr><td>edit, slider and toggle variables</td><td>Read and written</td><td>The globals named by an item's <code>var</code>, <code>position</code> and <code>toggle</code> strings. <code>Infinity_EnterEdit</code> assigns the <code>var</code> variable. &dagger;</td></tr>
+        </tbody>
+      </table>
+      <br />
+      Functions generated from MENU strings are called without arguments, with a traceback handler installed, so a run-time error does not stop the engine. Their context comes from the globals above.<br />
+    </div>
+    <br />
+
+    <div class="fileHeader"><a name="menulua_Functions">Functions</a></div>
+    <div class="indent1">
+      A function is listed here if it, or a function it calls directly, uses the engine's menu records: the menu table, the menu stack, the overlay and background menus, the item under the mouse, the lookup by item name, item construction, or item text measurement. Two functions that receive an item handle and read its fields (<code>Infinity_ClickItem</code> and <code>Infinity_IsItemEnabled</code>) are included as well. Numeric arguments that are left out count as 0. Menus are looked up by <i>name</i>, <i>panel</i> and <i>state</i> as described on the <a href="menu_v1.htm#menuv1_Menu">MENU page</a>.<br />
+      <br />
+      <table border="1" width="98%">
+        <colgroup>
+          <col width="34%" />
+          <col width="14%" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Call</th>
+            <th>Returns</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th colspan="3">Menu stack</th></tr>
+          <tr><td><code>Infinity_PushMenu(name, panel, state)</code></td><td>&ndash;</td><td>Pushes the menu onto the menu stack. It also reads the menu's <code>modal</code> value to adjust the mouse cursor, and saves the world view position. &dagger;</td></tr>
+          <tr><td><code>Infinity_PopMenu()</code><br /><code>Infinity_PopMenu(name, panel, state)</code></td><td>&ndash;</td><td>With no arguments, closes the top menu. With a name, closes that menu if it is on the stack. Before closing, it runs the <code>actionexit</code> code of the item under the mouse if that item belongs to the menu.</td></tr>
+          <tr><td><code>Infinity_TransitionMenu(name, panel, state)</code></td><td>&ndash;</td><td>When a menu is open, records a transition from the top menu to the named menu. When the stack is empty, pushes the named menu. &dagger;</td></tr>
+          <tr><td><code>Infinity_IsMenuOnStack(name)</code></td><td><code>1</code> or <code>nil</code></td><td>Whether the named menu is currently on the stack.</td></tr>
+          <tr><td><code>Infinity_GetCurrentScreenName()</code></td><td>string</td><td>Name of the top menu, or <code>""</code> if the stack is empty.</td></tr>
+          <tr><td><code>Infinity_SetBackground(name)</code><br /><code>Infinity_SetBackground(nil)</code></td><td>&ndash;</td><td>Makes the menu (with panel 0 and state 0) the background menu. The old background menu receives a close event and the new one an open event. With an explicit <code>nil</code>, clears the background menu without any events.</td></tr>
+          <tr><td><code>Infinity_SetOverlay(name)</code><br /><code>Infinity_SetOverlay(nil)</code></td><td>&ndash;</td><td>Does the same as <code>Infinity_SetBackground</code>, for the overlay menu.</td></tr>
+          <tr><td><code>Infinity_SetLanguage(language, subtitles)</code></td><td>&ndash;</td><td>Writes the language and subtitle options to the INI. It then switches the game language, reloads the dialog files, runs the Lua resource <code>L_<i>language</i></code> and translates all menus again from their original strings. 2.7.3.0 also writes the font-zoom option.</td></tr>
+
+          <tr><th colspan="3">Menu geometry</th></tr>
+          <tr><td><code>Infinity_GetMenuArea(name)</code></td><td><i>x, y, w, h</i></td><td>The menu's <code>offset</code> (<i>x, y</i>) and <code>size</code> (<i>w, h</i>), for the menu with panel 0 and state 0.</td></tr>
+          <tr><td><code>Infinity_GetOffset(name)</code></td><td><i>x, y</i></td><td>The menu's <code>offset</code> (panel 0, state 0).</td></tr>
+          <tr><td><code>Infinity_SetOffset(name, x, y)</code></td><td>&ndash;</td><td>Sets the menu's <code>offset</code>. A <code>nil</code> argument leaves that coordinate unchanged.</td></tr>
+          <tr><td><code>Infinity_GetMousePosition()</code></td><td><i>x, y</i></td><td>Mouse position converted to user-interface coordinates for the top menu. &dagger;</td></tr>
+
+          <tr><th colspan="3">Items by name</th></tr>
+          <tr><td><code>Infinity_FindUIItemByName(name)</code></td><td><i>item</i></td><td>The item named in <code>nameToItem</code>. If there is none, it returns a <em>null</em> light userdata, not <code>nil</code>.</td></tr>
+          <tr><td><code>Infinity_GetArea(name)</code></td><td><i>x, y, w, h</i></td><td>The item's <code>area</code>.</td></tr>
+          <tr><td><code>Infinity_SetArea(name, x, y, w, h)</code></td><td>&ndash;</td><td>Sets the item's <code>area</code>. A <code>nil</code> argument leaves that value unchanged.</td></tr>
+          <tr><td><code>Infinity_ScaleToText(name)</code></td><td>&ndash;</td><td>Sets the item's height to the height of its text at its current width.</td></tr>
+          <tr><td><code>Infinity_SetScrollTop(name, top)</code></td><td>&ndash;</td><td>Scrolls the item's content to <i>top</i>, clamped to the content height.</td></tr>
+          <tr><td><code>Infinity_GetListHeight(name)</code></td><td>number</td><td>Total height of the list's rows. To compute it, the function evaluates the list's <code>table</code> and sets <code>rowNumber</code>/<code>rowSelected</code> for each row.</td></tr>
+          <tr><td><code>Infinity_FocusTextEdit(name)</code></td><td>&ndash;</td><td>Starts text input in the named <code>edit</code> item, which must have a <code>var</code>. If no such item exists, it ends the current text input. &dagger;</td></tr>
+          <tr><td><code>Infinity_PlayMovie(movie, name)</code></td><td>&ndash;</td><td>Loads the WBM resource <i>movie</i> into the named <code>movie</code> item, replacing the previous movie. The item's <code>loop</code> flag decides whether the movie loops.</td></tr>
+          <tr><td><code>Infinity_StopMovie(name)</code></td><td>&ndash;</td><td>Releases the movie of the named item.</td></tr>
+          <tr><td><code>Infinity_StartItemCapture(name)</code></td><td>&ndash;</td><td>Starts mouse capture for the named item, as if it had been clicked. &dagger;</td></tr>
+          <tr><td><code>Infinity_StopItemCapture()</code></td><td>&ndash;</td><td>Ends any mouse capture.</td></tr>
+
+          <tr><th colspan="3">Template instances</th></tr>
+          <tr><td><code>Infinity_InstanceAnimation(template, unused, x, y, w, h, list, row)</code></td><td>&ndash;</td><td>Creates a copy of the item nested in the named <code>template</code> and appends it to the template's menu. The copy gets these values: the instance number from the global <code>currentAnimationID</code>; position <i>x, y</i>; size <i>w, h</i> (unless both are 0); and the template's name as its template name. If <i>list</i> names a list item, the position is made relative to that list, and for lists with a row height or row width it is moved to row <i>row</i> (rows count from 1, and &minus;1 selects the list's selected row). The arguments are read from the top of the Lua stack downwards, so all eight must be passed. The second one is read but not used.</td></tr>
+          <tr><td><code>Infinity_DestroyAnimation(template, id)</code></td><td>&ndash;</td><td>Removes and frees every item of the template's menu whose template name is <i>template</i> (compared case-sensitively) and whose instance number is <i>id</i>.</td></tr>
+
+          <tr><th colspan="3">Items by handle and search</th></tr>
+          <tr><td><code>Infinity_GetMenuItemByName(name)</code></td><td><i>item</i> or <code>nil</code></td><td>Searches the items of the menus on the stack for one with this <code>name</code> (case-insensitive).</td></tr>
+          <tr><td><code>Infinity_FindItemWithBam(bam, sequence)</code></td><td><i>item</i> or <code>nil</code></td><td>Searches the menus on the stack for an item whose <code>bam</code> (or slot <code>icon</code>) is <i>bam</i>, compared case-insensitively. If <i>sequence</i> is given, the item's BAM <code>sequence</code> must match it as well.</td></tr>
+          <tr><td><code>Infinity_FindItemWithText(text)</code></td><td><i>item</i> or <code>nil</code></td><td>Searches the menus on the stack for an item whose text, either a string or a dialog.tlk string reference, equals <i>text</i>.</td></tr>
+          <tr><td><code>Infinity_IsItemEnabled(item)</code></td><td>boolean</td><td>Returns the item's <code>clickable</code> value. Despite the function's name, it does <em>not</em> evaluate the item's <code>enabled</code> expression.</td></tr>
+          <tr><td><code>Infinity_ClickItem(item)</code></td><td>&ndash;</td><td>Simulates a mouse click on the item by posting input events at a point inside its area.</td></tr>
+          <tr><td><code>Infinity_EnterEdit(name, text)</code></td><td>&ndash;</td><td>Finds the named item in the top menu and assigns <i>text</i> to the global variable named by its <code>var</code>.</td></tr>
+          <tr><td><code>Infinity_ScrollLists(amount)</code></td><td>&ndash;</td><td>Scrolls the lists of the top menu. &dagger;</td></tr>
+          <tr><td><code>Infinity_SelectListItem(name, text, n)</code></td><td>&ndash;</td><td>Simulates a click on a row of a list in the top menu, chosen by text or by number. &dagger;</td></tr>
+          <tr><td><code>Infinity_SelectDialogueOption(n)</code></td><td>&ndash;</td><td>Simulates a click on dialogue option <i>n</i> in the <code>WORLD_DIALOG</code> menu. &dagger;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

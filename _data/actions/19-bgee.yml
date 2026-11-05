@@ -1,0 +1,20 @@
+bgee: 1
+n: 19
+name: JoinParty
+instant: true
+desc: |-
+  This action adds the active creature to the party. If the party is currently full the 'select party members' dialog is shown. JoinParty clears the ActionQueue of the active creature.
+
+  ```
+  IF
+    See([PC])
+    Global("KRJOINPARTY","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      JoinParty()
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

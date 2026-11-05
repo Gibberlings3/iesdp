@@ -1,0 +1,31 @@
+bgee: 1
+n: 147
+name: RemoveSpell
+params:
+  - name: Spell
+    type: i
+    ids: spell
+instant: true
+desc: |-
+  This action removes one memorised indtance of the specified spell from the spellbook of the active creature. The spell can be an innate ability, a priest spell or a wizard spell, but must be listed in [spell.ids]({{ ids }}/spell.htm).
+
+  ```
+  IF
+    Global("KR_ANTI_PALADIN_CHANGE","LOCALS",1)
+  THEN
+    RESPONSE #100
+      RemoveSpell(PALADIN_LAY_ON_HANDS)
+      RemoveSpell(PALADIN_DETECT_EVIL)
+      RemoveSpell(PALADIN_PROTECTION_FROM_EVIL)
+      SetGlobal("KR_ANTI_PALADIN_CHANGE","LOCALS",2)
+  END
+  ```
+
+  {% capture note %}
+  Scripts can handle `RES` filenames with `+`, Dialogs and the console cannot. Same with the `~`, `` ` ``, `'`, `@`, `$`, `^`, and `&` characters, maybe some more.
+  - This action will default to a spell matching the first 7 characters in Dialogs/Console *IF* the 8<sup>th</sup> character isn't valid.
+  {% endcapture %} {% include note.html %}
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

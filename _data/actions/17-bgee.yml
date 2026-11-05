@@ -1,0 +1,37 @@
+bgee: 1
+n: 17
+name: Help
+instant: true
+desc: |-
+  This action acts similar to shout, but does not accept values. The range of the Help action is larger than the default visual radius of NPCs (see description of `Shout`).
+
+  ```
+  IF
+    HitBy([ANYONE],CRUSHING)
+  THEN
+    RESPONSE #50
+      Help()
+      Attack(NearestEnemyOf(Myself))
+    RESPONSE #50
+      RunAwayFrom(NearestEnemyOf(Myself),75)
+  END
+
+  IF
+    Help([0.0.GIBBERLING])
+  THEN
+    RESPONSE #100
+      Attack(NearestEnemyOf(LastHelp(Myself)))
+  END
+
+  IF
+    See(NearestEnemyOf(Myself))
+  THEN
+    RESPONSE #100
+      Help()
+      AttackReevaluate(NearestEnemyOf(Myself),30)
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

@@ -1,0 +1,21 @@
+bgee: 1
+n: 135
+name: LockScroll
+instant: true
+desc: |-
+  This action locks the screen on the active creature, preventing the screen from being scrolled away. The action only works when executed by a creature (its own script or via `ActionOverride`).
+
+  ```
+  IF
+    CombatCounter(0)
+  THEN
+    RESPONSE #100
+      LockScroll()
+  END
+  ```
+
+  {% capture note %}
+  The viewport is locked onto the creature that performs the action. [UnlockScroll()](#136), which any script runner can perform, releases it.
+
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

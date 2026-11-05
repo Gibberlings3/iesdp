@@ -1,0 +1,20 @@
+bgee: 1
+n: 10
+name: Enemy
+instant: true
+desc: |-
+  This action is used to change the allegiance of the active creature to enemy (making them hostile to the PC). This example script, from a peasant, will turn the creature hostile if it is attacked.
+
+  ```
+  IF
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    Allegiance(Myself,NEUTRAL)
+  THEN
+    RESPONSE #100
+      Enemy()
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

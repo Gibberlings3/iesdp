@@ -1,0 +1,29 @@
+bgee: 1
+n: 48
+name: JumpToPoint
+params:
+  - name: Target
+    type: p
+instant: true
+desc: |-
+  This action instantly moves the active creature to the specified point.
+
+  ```
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      ClearAllActions()
+      FadeToColor([20.0],0)
+      MoveViewPoint([1738.543],INSTANT)
+      JumpToPoint([1738.543])
+      Wait(1)
+      CreateVisualEffectObject("SPCLOUD1",Player1)
+      Wait(1)
+      CreateVisualEffectObject("SPFLESHS",Player1)
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

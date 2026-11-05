@@ -1,10 +1,14 @@
 bgee: 1
-pstee: 1
 n: 353
 name: AdvanceTime
 params:
   - name: Time
     type: i
     ids: gtimes
+instant: true
 desc: |-
   This action advances the game-time by the amount specified by the Time parameter.
+
+  {% capture note %}
+  `Time` is measured in seconds: the engine adds `Time` × 15 ticks to the world clock. One game hour is 4500 ticks, so `AdvanceTime(300)` advances the clock by one hour. Advances of 900 ticks or less (`Time` ≤ 60) are ignored.
+  {% endcapture %} {% include info.html %}

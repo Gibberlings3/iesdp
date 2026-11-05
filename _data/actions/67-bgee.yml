@@ -1,0 +1,25 @@
+bgee: 1
+n: 67
+name: Weather
+params:
+  - name: Weather
+    type: i
+    ids: weather
+instant: true
+desc: |-
+  This action changes the weather. The action only works in outdoors areas that have weather enabled in the ARE file. Values for the weather parameter are from [weather.ids]({{ ids }}/weather.htm). Note that the fog weather type does not work.
+
+  ```
+  IF
+    Global("KRSTORM","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      Weather(RAIN)
+      SetGlobal("KRSTORM","GLOBAL",1)
+  END
+  ```
+
+  {% capture note %}
+  In the EE's, the action has no effect if `Weather` has been disabled in the game options.
+  In addition, Fog option needs `Enable Fog` to be enabled in the game options.
+  {% endcapture %} {% include note.html %}

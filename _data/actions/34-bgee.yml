@@ -1,0 +1,41 @@
+bgee: 1
+n: 34
+name: UseItem
+params:
+  - name: Object
+    type: s
+  - name: Target
+    type: o
+desc: |-
+  This action instructs the active creature to use the specified item (object) on the specified target (target). The ability number (i.e. extended header index) to use may be specified. This action is most often used to allow use of potions and wands. The item to be used must exist in the active creature's inventory (not in a container within the inventory) - though it need not be equipped.
+
+  ```
+  IF
+    HPPercentLT(Myself,50)
+    HasItem("potn52",Myself)
+  THEN
+    RESPONSE #100
+      DisplayStringHead(Myself,46150) //quaffs a potion
+      UseItem("potn52",Myself)
+      Continue()
+  END
+  ```
+
+  **IWD:EE** supports also the `UseItemAbility` signature:
+  ```
+  IF
+    !StateCheck(Myself,STATE_MIRRORIMAGE)
+    GlobalLT("MO_UsedIlbratha","GLOBAL",1)
+    HasItemEquiped("SW1H26",Myself)  // Ilbratha +1
+  THEN
+    RESPONSE #100
+      SetInterrupt(FALSE)
+      UseItemAbility("SW1H26",Myself,SLOT_AMMO3,1)  // Ilbratha +1
+      SetInterrupt(TRUE)
+      IncrementGlobal("MO_UsedIlbratha","GLOBAL",1)
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

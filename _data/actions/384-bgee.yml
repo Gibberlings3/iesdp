@@ -1,9 +1,13 @@
 bgee: 1
-pstee: 1
 n: 384
 name: AddXPWorth
 params:
   - name: Object
     type: o
+instant: true
 desc: |-
   This action gives the amount of experience worth the specified object to the party. The XP amount is distributed among all current living party members.
+
+  {% capture note %}
+  The target's current XP value is added to the party's experience. When the second integer parameter is non-zero (`AddXPWorthOnce()`), the engine also sets the target's base [XP value]({{ "/file_formats/ie_formats/cre_v1.htm" | prepend: relurl }}) (CRE offset 0x14) to 0, so the target cannot award it again.
+  {% endcapture %} {% include info.html %}

@@ -1,7 +1,13 @@
 bgee: 1
 n: 409
 name: ResetPlayerAI
-not_tested: true
+instant: true
 desc: |-
   This action restores the player ai script for the active creature, as defined in [PARTYAI.2DA](../../files/2da/2da_bgee/partyai.htm).
   {% capture note %} Even though this action is primarily intended for (potential) party members, it does work for any creature in the game. {% endcapture %} {% include info.html %}
+
+  {% capture note %}
+  The default script returned by the rule tables is installed in the creature's CLASS script slot.
+
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

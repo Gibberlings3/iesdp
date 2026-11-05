@@ -1,0 +1,22 @@
+bgee: 1
+n: 175
+name: SetLeavePartyDialogFile
+instant: true
+desc: |-
+  This action sets the dialog for the active creature to their leave dialog.
+
+  ```
+  IF
+    !InParty(Myself)
+    HPGT(Myself,0)
+  THEN
+    RESPONSE #100
+      SetLeavePartyDialogFile()
+      Dialogue(Player1)
+      ChangeAIScript("",DEFAULT)
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

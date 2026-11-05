@@ -1,0 +1,34 @@
+bgee: 1
+n: 110
+name: LeaveAreaLUA
+params:
+  - name: Area
+    type: s
+  - name: Parchment
+    type: s
+  - name: Point
+    type: p
+  - name: Face
+    type: i
+    ids: dir
+desc: |-
+  This action changes the current area. Parchment is the MOS image to use in the area transition loading screen. Only EE games support IDS symbols for `Face`.
+
+  ```
+  IF
+    Global("MissionPackSave","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      TextScreen("toscst")
+      ActionOverride(Player1,LeaveAreaLUA("AR1000","",[3048.831],4))
+      ActionOverride(Player2,LeaveAreaLUA("AR1000","",[3055.917],4))
+      ActionOverride(Player3,LeaveAreaLUA("AR1000","",[2990.913],4))
+      ActionOverride(Player4,LeaveAreaLUA("AR1000","",[2992.812],4))
+      ActionOverride(Player5,LeaveAreaLUA("AR1000","",[3079.737],4))
+      ActionOverride(Player6,LeaveAreaLUA("AR1000","",[3005.742],4))
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

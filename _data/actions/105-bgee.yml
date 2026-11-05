@@ -1,5 +1,4 @@
 bgee: 1
-pstee: 1
 n: 105
 name: AttackOneRound
 params:
@@ -17,3 +16,7 @@ desc: |-
   END
   ```
   {% capture note %} This action shares most of its code with [AttackReevaluate()](#134). In fact, it is 'AttackReevaluate()' with an extra hardcoded bit that forces it to terminate after one round. This means that, unlike in 'AttackReevaluate()', [ActionListEmpty()](../triggers/bgeetriggers.htm#0x402B) will return TRUE once a round is up - and unless you immediately reinstate 'AttackOneRound()', the creature won't continue attacking. {% endcapture %} {% include note.html %}
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

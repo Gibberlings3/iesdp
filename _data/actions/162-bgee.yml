@@ -1,0 +1,18 @@
+bgee: 1
+n: 162
+name: ReputationSet
+params:
+  - name: Reputation
+    type: i
+instant: true
+desc: |-
+  This action sets the reputation to the specified value.
+  ```
+  IF
+    Global("KRGOODDEED","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      ReputationSet(20)
+      SG("KRGOODDEED",1)
+  END
+  ```

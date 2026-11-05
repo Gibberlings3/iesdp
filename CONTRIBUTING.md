@@ -84,6 +84,9 @@ not_tested: true         # optional, "untested" label
 no_result: true          # optional, "does not work" label
 unknown: true            # optional, "unknown" label
 unreliable: true         # optional, "unreliable" label
+instant: true            # optional, "instant" label: the engine code always completes the action in the
+                         # AI update in which it runs (it never returns a "still running" result).
+                         # Unrelated to INSTANT.IDS. Set only when proven from the executable.
 alias: true              # optional, sets desc to "See N". By default N=n, but they aren't equal, alias can take a numerical value instead:
 # alias: 147             # this sets desc to "See #147"
 

@@ -1,5 +1,4 @@
 bgee: 1
-pstee: 1
 n: 277
 name: EscapeAreaObjectMove
 params:
@@ -16,3 +15,7 @@ params:
     ids: dir
 desc: |-
   This action instructs the target object to leave the current area, either by walking, or, if the path is blocked, by simply disappearing. The action functions as a combination of EscapeAreaDestroy() and MoveBetweenAreas(). The parameters are similar to MoveBetweenAreas(), in that it takes in all the same information, but unlike MoveBetweenAras(), the character will search for the nearest travel trigger, move to that, then execute his movement to the specified area. If he cannot find a travel trigger, he will execute the movement.
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

@@ -1,0 +1,43 @@
+bgee: 1
+n: 120
+name: StartCutScene
+params:
+  - name: CutScene
+    type: s
+instant: true
+desc: |-
+  This action starts a cutscene; a cinematic sequence that removes the GUI and player control. The cutscene parameter is the script name to run.
+  The second variant can enable condition checking (trigger evaluation, off by default) when the second parameter is set to TRUE.
+
+  The example script is from cutscene BDCUT17B.bcs and shows how they can be reused. With `StartCutSceneEx("BDCUT17B",TRUE)` it executes
+  only one script block depending on the specified conditions. With `StartCutSceneEx("BDCUT17B",FALSE)` it will execute both blocks
+  regardless of condition.
+
+  ```
+  IF
+    GlobalLT("bd_cut17b_cycle","bd1000",10)
+    !NearLocation(Player1,4535,550,30)
+  THEN
+    RESPONSE #100
+      CutSceneId("bdcutid")
+      IncrementGlobal("bd_cut17b_cycle","bd1000",1)
+      Wait(1)
+      StartCutSceneEx("bdcut17b",TRUE)
+  END
+
+  IF
+    OR(2)
+      GlobalGT("bd_cut17b_cycle","bd1000",9)
+      NearLocation(Player1,4535,550,30)
+  THEN
+    RESPONSE #100
+      CutSceneId("bdcutid")
+      SmallWait(10)
+      SetCutSceneBreakable(FALSE)
+      SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",0)
+      SetAreaScript("",OVERRIDE)
+      SmallWait(5)
+      SetGlobalTimer("bd_mdd016b_timer","bd1000",TWO_ROUNDS)
+      ActionOverride("bdcaelar",StartDialogNoSet(Player1))
+  END
+  ```

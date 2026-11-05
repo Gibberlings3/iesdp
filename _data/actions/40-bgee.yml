@@ -1,0 +1,25 @@
+bgee: 1
+n: 40
+name: PlayDead
+params:
+  - name: Time
+    type: i
+desc: |-
+  This action instructs the active creature to "play dead", i.e. to lay on the ground, for the specified interval (measured in AI updates per second (AI updates default to 15 per second). If used on a PC, the player can override the action by issuing a standard move command.
+
+  ```
+  IF
+    HPPercentLT(Myself,30)
+  THEN
+    RESPONSE #100
+      PlayDead(240)
+  END
+  ```
+
+  {% capture note %}
+  The `Time` counter is decreased by one each time the action executes; when it reaches zero the creature gets up and the action completes.
+
+  Unlike [PlayDeadInterruptable()](#290), which shares its implementation, this action is not interruptible: the engine keeps it running until the time is up, even when an interruption is pending.
+
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

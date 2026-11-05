@@ -1,0 +1,22 @@
+bgee: 1
+n: 8
+name: Dialogue
+params:
+  - name: Object
+    type: o
+desc: |-
+  This action instructs the active creature to initiate dialog with the target creature. Dialog will not be initiated if the creature using this action has been assigned a dialog that has all top level conditions returning false.
+
+  ```
+  IF
+    GlobalTimerExpired("Yeslick","GLOBAL")
+    Global("FLOODED","GLOBAL",0)
+  THEN
+    RESPONSE #100
+      Dialogue([PC])
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

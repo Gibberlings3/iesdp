@@ -1,0 +1,24 @@
+bgee: 1
+n: 138
+name: SetDialog
+params:
+  - name: DialogFile
+    type: s
+instant: true
+desc: |-
+  This action sets the dialog file of the active creature to the specified file. SetDialogue("") will set the dialog file to nothing.
+
+  ```
+  IF
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    Global("KR_CHANGE_DIALOG","LOCALS",0)
+  THEN
+    RESPONSE #100
+      SetDialogue("")
+      SetGlobal("KR_CHANGE_DIALOG","LOCALS",1)
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

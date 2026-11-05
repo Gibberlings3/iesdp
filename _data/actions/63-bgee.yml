@@ -1,0 +1,27 @@
+bgee: 1
+n: 63
+name: Wait
+params:
+  - name: Time
+    type: i
+desc: |-
+  This action causes a delay in script processing. The time is measured in seconds.
+
+  ```
+  IF
+    See(Player1)
+    See(Player6)
+  THEN
+    RESPONSE #100
+      MoveToObject(Player1)
+      Wait(2)
+      MoveToObject(Player6)
+      Wait(4)
+  END
+  ```
+
+  {% capture note %}
+  When the action starts, `Time` is converted to `Time` × 15 action updates, which are then counted down once per update. For a hasted or slowed creature the countdown is adjusted so that the wait lasts the same real time. The action is interruptible.
+
+  [WaitFromRandomWalk()](#205) uses the same implementation.
+  {% endcapture %} {% include info.html %}

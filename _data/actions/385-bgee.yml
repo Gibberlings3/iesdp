@@ -12,6 +12,7 @@ params:
   - name: EquipUnEquip
     type: i
     ids: xequip
+instant: true
 desc: |-
   This action puts the item specified by the Item parameter in the slot specified by the Slot parameter of the creature specified by the Object parameter in the style specified by the Equip/UnEquip parameter.
 
@@ -24,3 +25,7 @@ desc: |-
       XEquipItem("HAMM01",Protagonist,SLOT_WEAPON1,EQUIP)  // War Hammer
   END
   ```
+
+  {% capture note %}
+  `EquipUnEquip` follows xequip.ids: `0` (`UNEQUIP`) unequips the item in `Slot`, and any other value equips it. This is the reverse of [EquipItemEx()](#11-2-bgee). A `Slot` above 39 makes the action fail.
+  {% endcapture %} {% include info.html %}

@@ -1,0 +1,17 @@
+bgee: 1
+n: 102
+name: MoraleSet
+params:
+  - name: Target
+    type: o
+  - name: Morale
+    type: i
+instant: true
+desc: |-
+  This action sets the morale of the active creature.
+
+  {% capture note %}
+  In the Enhanced Editions the `Morale` parameter is ignored. The engine applies a permanent [opcode #23]({{ "/opcodes/bgee.htm#op23" | prepend: relurl }}) effect to the target, but leaves its *Mode* (special) field at 0. In that mode the opcode replaces the parameters with a flat value of 10, so [MoraleSet()](#102), [MoraleInc()](#103) and [MoraleDec()](#104) all reset the target's morale to 10. When the target is berserk, they do nothing.
+
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include warning.html %}

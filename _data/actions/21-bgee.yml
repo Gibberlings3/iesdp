@@ -1,0 +1,22 @@
+bgee: 1
+n: 21
+name: LeaveParty
+instant: true
+desc: |-
+  This action causes the active creature to leave the party. This action calls DropInventory() as part of its execution.
+
+  ```
+  IF
+    HappinessLT(Myself,-299)
+  THEN
+    RESPONSE #100
+      ChangeAIScript("",DEFAULT)
+      SetLeavePartyDialogFile()
+      LeaveParty()
+      EscapeArea()
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

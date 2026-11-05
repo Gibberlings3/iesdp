@@ -1,0 +1,28 @@
+bgee: 1
+n: 14
+name: GetItem
+params:
+  - name: Object
+    type: s
+  - name: Target
+    type: o
+no_result: true
+instant: true
+desc: |-
+  ```
+  IF
+    See([ANYONE])
+    !HasItem("Sw1h01",Myself)
+    HasItem("Sw1h01",LastSeenBy ())
+  THEN
+    RESPONSE #100
+      MoveToObject(LastSeenBy())
+      GetItem("Sw1h01",LastSeenBy())
+  END
+  ```
+
+  {% capture note %}
+  The Enhanced Edition engine implements this action as a stub: it only looks up the target and then completes at once without any effect.
+
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

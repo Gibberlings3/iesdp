@@ -1,5 +1,4 @@
 bgee: 1
-pstee: 1
 n: 368
 name: WaitRandom
 params:
@@ -9,3 +8,7 @@ params:
     type: i
 desc: |-
   Similar to [Wait(x)](#63), but waits at least MinTime and at most MaxTime (seconds).
+
+  {% capture note %}
+  The engine picks a random whole number of seconds between `MinTime` and `MaxTime` (inclusive; the order of the two does not matter). It then turns the action into [Wait()](#63-bgee) with that time, so the wait is interruptible.
+  {% endcapture %} {% include info.html %}

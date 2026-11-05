@@ -1,0 +1,24 @@
+bgee: 1
+n: 13
+name: FindTraps
+instant: true
+desc: |-
+  This action instructs the active creature to enter Detect Traps modal state. This action can be used for any creature (not just thieves) though success in detecting traps is dependent on points in the Find Traps skill.
+
+  ```
+  IF
+    ActionListEmpty()
+    !Exists([EVILCUTOFF])
+    !ModalState( Myself,DETECTTRAPS)
+    OR(2)
+    !StateCheck(Myself,STATE_INVISIBLE)
+    !StateChe ck(Myself,STATE_IMPROVEDINVISIBILITY)
+  THEN
+    RESPONSE #100
+      FindTraps()
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

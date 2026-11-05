@@ -1,0 +1,25 @@
+bgee: 1
+n: 166
+name: SetNumTimesTalkedTo
+params:
+  - name: Num
+    type: i
+instant: true
+desc: |-
+  This action sets the number of times the active creature has been talked to (by player characters). The example script is from ar0103.bcs.
+
+  ```
+  IF
+    Global("BrielbaraMove","GLOBAL",1)
+    !Exists("Brielbara")
+    !Dead("Brielbara")
+  THEN
+    RESPONSE #100
+      CreateCreature("BRIELB",[418.376],0)
+      ActionOverride("Brielbara",SetNumTimesTalkedTo(1))
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

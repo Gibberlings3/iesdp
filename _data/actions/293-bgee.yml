@@ -1,5 +1,4 @@
 bgee: 1
-pstee: 1
 n: 293
 name: StartDialogOverride
 params:
@@ -10,3 +9,7 @@ params:
 desc: |-
   This action instructs the active creature to start the specified dialog with the specified target. The dialog can be initiated from a distance and must have at least one state with all its top level conditions true else it will not initiate. The active creature will not have its dialog file permanently set to the file specified by the DialogFile parameter.
   The second signature of this action is not listed in the action.ids file provided with the game. When using this signature, the third integer parameter can be used to indicate the dialog is initiated by an item (e.g. Lilarcor) - if this is the case, the item name will be used as the creature name in the feedback window.
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

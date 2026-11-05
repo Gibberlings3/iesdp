@@ -1,0 +1,32 @@
+bgee: 1
+n: 92
+name: SelectWeaponAbility
+params:
+  - name: WeaponNum
+    type: i
+    ids: slots
+  - name: AbilityNum
+    type: i
+instant: true
+desc: |-
+  This action instructs the active creature to select the specified slot, and use the ability in the extended header specified by the ability parameter. The example script is from ankheg.bcs.
+
+  ```
+  IF
+    See(NearestEnemyOf(Myself))
+    Range(NearestEnemyOf(Myself),5)
+    Delay(12)
+  THEN
+    RESPONSE #40
+      SelectWeaponAbility(SLOT_WEAPON,0)
+      RunAwayFrom(NearestEnemyOf(Myself),45)
+      AttackReevaluate(NearestEnemyOf(Myself),15)
+    RESPONSE #60
+      SelectWeaponAbility(SLOT_WEAPON1,0)
+      AttackReevaluate(NearestEnemyOf(Myself),15)
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

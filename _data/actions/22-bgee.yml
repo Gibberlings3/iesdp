@@ -1,0 +1,22 @@
+bgee: 1
+n: 22
+name: MoveToObject
+params:
+  - name: Target
+    type: o
+desc: |-
+  This action instructs the active creature to move to the specified object. The action does not update the current position of the actor, saved in ARE files. The example script shows the creature moving towards the nearest enemy.
+
+  ```
+  IF
+    See(NearestEnemyOf())
+    !Range(NearestEnemyOf(),4)
+  THEN
+    RESPONSE #100
+      MoveToObject(NearestEnemyOf())
+  END
+  ```
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
+  {% endcapture %} {% include info.html %}

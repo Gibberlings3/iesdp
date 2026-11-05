@@ -1,5 +1,4 @@
 bgee: 1
-pstee: 1
 n: 11
 name: EquipItemEx
 params:
@@ -7,12 +6,18 @@ params:
     type: s
   - name: EquipUnEquip
     type: i
+instant: true
 desc: |-
-  This action instructs the active creature to equip/unequip the specified item.
+  This action instructs the active creature to equip or unequip the specified item.
 
   {% capture note %}
-  - Item must be in the creature's inventory for the script action to function.
-  - When used to <code><a href="../../files/ids/bgee/xequip.htm#EQUIP">EQUIP</a></code>, item's global effects (`timing_mode=2`) are applied to the creature each time the action is performed, and avatar animations are updated to reflect the new item.
-  - When is used to <code><a href="../../files/ids/bgee/xequip.htm#UNEQUIP">UNEQUIP</a></code>, it removes one instance of the item's global equipped effects (global effects with other timing modes are not removed).
-  - The item itself never moves in the inventory, whether using the <code><a href="../../files/ids/bgee/xequip.htm#EQUIP">EQUIP</a></code> or <code><a href="../../files/ids/bgee/xequip.htm#UNEQUIP">UNEQUIP</a></code> mode, or whether or not the item was in the backpack or equipped.
+  - The item must be in the creature's inventory for the action to work; otherwise the action fails.
+  - The engine equips the item when `EquipUnEquip` is `0` and unequips it for any other value. These values are the reverse of <code><a href="{{ '/files/ids/bgee/xequip.htm' | prepend: relurl }}">xequip.ids</a></code> (`0` = `UNEQUIP`, `1` = `EQUIP`), so `EquipItemEx("item",EQUIP)` unequips the item.
+  - When equipping, the item's global effects (`timing_mode=2`) are applied to the creature each time the action is performed, and avatar animations are updated to reflect the new item.
+  - When unequipping, one instance of the item's global equipped effects is removed (global effects with other timing modes are not removed).
+  - The item itself never moves in the inventory, in either mode, whether or not it was in the backpack or equipped.
+  {% endcapture %} {% include info.html %}
+
+  {% capture note %}
+  Only creatures can perform this action. When another script runner (a door, container, region, or an area or global script) executes it, it fails at once without any effect.
   {% endcapture %} {% include info.html %}

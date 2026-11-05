@@ -1,0 +1,22 @@
+bgee: 1
+n: 26
+name: PlaySound
+params:
+  - name: Sound
+    type: s
+instant: true
+desc: |-
+  This action will cause the active creature to play the specified sound. Both WAV and WAVC files can be played by the action. Sound is played through the sound effects channel.
+
+  ```
+  IF
+    True()
+  THEN
+    RESPONSE #100
+      PlaySound("CAS_M06")
+  END
+  ```
+
+  {% capture note %}
+  In the Enhanced Editions, [PlaySound()](#26) and [PlaySoundNotRanged()](#457-bgee) run identical code. The sound is placed at the centre of the viewport at the moment it starts, not at the script runner's position, and is played fire-and-forget. A sound resource set to loop is not played, and the action fails.
+  {% endcapture %} {% include info.html %}

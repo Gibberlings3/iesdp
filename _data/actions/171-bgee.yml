@@ -1,0 +1,23 @@
+bgee: 1
+n: 171
+name: GiveGoldForce
+params:
+  - name: Amount
+    type: i
+instant: true
+desc: |-
+  This action gives the specified amount of gold to the party. The active creature need not have the gold in its "money variable". A negative amount will remove gold from the active creature.
+
+  ```
+  IF
+    NumTimesTalkedTo(30)
+  THEN
+    RESPONSE #100
+      SetNumTimesTalkedTo(31)
+      GiveGoldForce(300)
+  END
+  ```
+
+  {% capture note %}
+  In the Enhanced Editions this action never changes the gold of the creature that performs it: `Amount`, including a negative one, is passed unchanged to the party's gold. The capped and deducted transfer belongs to [GivePartyGold()](#118), which shares this implementation.
+  {% endcapture %} {% include warning.html %}

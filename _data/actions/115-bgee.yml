@@ -1,0 +1,30 @@
+bgee: 1
+n: 115
+name: SetGlobalTimer
+params:
+  - name: Name
+    type: s
+  - name: Area
+    type: s
+  - name: Time
+    type: i
+    ids: gtimes
+instant: true
+desc: |-
+  This action sets a global timer. The timer is checked by the GlobalTimerExpired trigger or GlobalTimerNotExpired trigger.
+
+  ```
+  IF
+    GlobalTimerExpired("Areana","GLOBAL")
+    !Exists("TorLobo")
+    !Dead("TorLobo")
+  THEN
+    RESPONSE #100
+      ActionOverride("Areana",DestroySelf())
+      CreateCreature("TORLOB",[349.474],0)
+  END
+  ```
+
+  {% capture note %}
+  The timer expires `Time` × 15 game ticks after the current world time. A `LOCALS` timer has no effect unless the script runner is a creature. [RealSetGlobalTimer()](#268) and SetGlobalTimerRandom() (377) use the same implementation.
+  {% endcapture %} {% include info.html %}

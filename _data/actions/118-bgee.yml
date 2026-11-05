@@ -1,0 +1,23 @@
+bgee: 1
+n: 118
+name: GivePartyGold
+params:
+  - name: Amount
+    type: i
+instant: true
+desc: |-
+  This action gives the specified amount of gold to the party. The active creature must have the gold in its "money variable".
+
+  ```
+  IF
+    G("KRGIVEGOLD",0)
+  THEN
+    RESPONSE #100
+      GivePartyGold(500)
+      SG("KRGIVEGOLD",1)
+  END
+  ```
+
+  {% capture note %}
+  When a creature performs this action, the amount is capped at the gold that creature carries and is deducted from it. When any other script runner performs it, the full amount is given. [GiveGoldForce()](#171) uses the same implementation, but never takes gold from the creature.
+  {% endcapture %} {% include info.html %}

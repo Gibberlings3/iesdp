@@ -1,0 +1,67 @@
+// Git hooks and linters for IESDP (https://hk.jdx.dev).
+//
+// hk and every linter below come from the Nix dev shell (flake.nix). The hk
+// schema package must be the same version as the hk binary; the flake's
+// `hk-schema` check enforces that and verifies the published package by hash.
+// (hk 2.8.1's embedded evaluator cannot verify `::sha256:` URI checksums.)
+// Bump the binary and schema together (see DEVELOPMENT.md).
+//
+// Top-level `steps` define the `check`, `fix`, and `pre-commit` hooks.
+amends "package://github.com/jdx/hk/releases/download/v2.8.1/hk@2.8.1#/Config.pkl"
+
+import "package://github.com/jdx/hk/releases/download/v2.8.1/hk@2.8.1#/Builtins.pkl"
+
+min_hk_version = "2.8.1"
+
+// Whitespace and end-of-file hygiene is enforced on tooling and project
+// documentation only. Content pages and data (_data, _opcodes, files, ...)
+// are excluded: whitespace there can be significant in <pre> tables.
+local tooling = List(
+  "*.md",
+  "*.nix",
+  "*.pkl",
+  ".envrc",
+  ".gitattributes",
+  ".gitignore",
+  ".ruby-version",
+  ".rubygems-version",
+  "Gemfile",
+  "_config.yml",
+  "cleaner",
+  "deploy.sh",
+  ".github/**",
+  "_plugins/**",
+  "_tools/**"
+)
+
+steps {
+  // Repository-wide safety checks.
+  ["check_merge_conflict"] = Builtins.check_merge_conflict
+  ["check_case_conflict"] = Builtins.check_case_conflict
+  ["byte_order_marker"] = Builtins.byte_order_marker
+  ["mixed_line_ending"] = Builtins.mixed_line_ending
+  ["check_executables_have_shebangs"] = Builtins.check_executables_have_shebangs
+
+  // Tooling hygiene.
+  ["trailing_whitespace"] = (Builtins.trailing_whitespace) { glob = tooling }
+  ["newlines"] = (Builtins.newlines) { glob = tooling }
+
+  // Nix
+  ["nix_fmt"] = Builtins.nix_fmt
+  ["deadnix"] = Builtins.deadnix
+
+  // GitHub Actions
+  ["actionlint"] = Builtins.actionlint
+
+  // Shell
+  // `cleaner` and `_tools/prepare-ops.sh` are historical one-off migration
+  // scripts (2016) that rely on deliberate word splitting; they are kept for
+  // reference and are not linted.
+  ["shellcheck"] = (Builtins.shellcheck) {
+    exclude = List("cleaner", "_tools/prepare-ops.sh")
+  }
+
+  // Python
+  ["ruff"] = Builtins.ruff
+  ["ruff_format"] = Builtins.ruff_format
+}

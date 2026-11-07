@@ -10,9 +10,9 @@ function doGame() {
   mkdir $tdir
   cd $tdir
 
-  ../../op-extractor.sh "../$file" $1 $2 $3 $4 $5 $6 | 
+  ../../op-extractor.sh "../$file" $1 $2 $3 $4 $5 $6 |
     csplit -s -b "-%03d" -n3 -z -f "${games[$7]}" - /@@@/ "{*}" # ideally -b "%d-${games[$7]}.html" -f "op"
-  
+
   cd -
 }
 

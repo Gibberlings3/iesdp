@@ -27,26 +27,42 @@ jobs:
       with:
         persist-credentials: false
 
-    - name: Read RubyGems version
-      id: toolchain
-      run: |
-        rubygems_version=$(tr -d '\r\n' < .rubygems-version)
-        printf 'rubygems=%s\n' "$rubygems_version" >> "$GITHUB_OUTPUT"
-
-    - name: Install dependencies
-      uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
+    # The toolchain comes only from flake.nix / flake.lock, substituted from
+    # cache.nixos.org; no extra binary caches or flake-provided config are trusted.
+    - name: Install Nix
+      uses: cachix/install-nix-action@75c75c31ebece974e48ebc36b4ad125bd97bd97b # v31.11.3
       with:
-        rubygems: ${{ steps.toolchain.outputs.rubygems }}
-        bundler-cache: true
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+          sandbox = true
+          accept-flake-config = false
+
+    - name: Check flake
+      run: nix flake check --print-build-logs
+
+    - name: Report toolchain
+      run: nix develop --command sh -c 'command -v ruby gem bundle python3 hk; ruby --version; gem --version; bundle --version; python3 --version; hk --version'
+
+    - name: Lint (hk)
+      run: nix develop --command hk check --all
+
+    - name: Cache gems
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: vendor/bundle
+        key: gems-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('flake.lock', 'Gemfile.lock') }}
+
+    - name: Install gems
+      run: nix develop --command bundle install
 
     - name: Build site
-      run: bundle exec jekyll build --strict_front_matter --trace
+      run: nix develop --command bundle exec jekyll build --strict_front_matter --trace
 
     - name: Check generated documentation
-      run: bundle exec ruby _tools/check-site.rb _site
+      run: nix develop --command bundle exec ruby _tools/check-site.rb _site
 
     - name: Push cleaned up build to other branch
       if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository == 'Gibberlings3/iesdp'
-      run: bash deploy.sh
+      run: nix develop --command bash deploy.sh
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

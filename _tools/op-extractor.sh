@@ -12,7 +12,7 @@ sed -n '
 # bah, not sure why this is needed for some cases
   /opnumberdata/d
   /descriptionheading/d
-  
+
   /class="opcode"/ { s,^[^=]*="op\([^"]*\)".*$,@@@\n---\nn: \1,p; t; }
 
   # 153 opcode names lack the extra spurious hex in brackets, so we must not be too specific

@@ -12,6 +12,11 @@ See above, the same applies to pull requests that aren't structural or fixing si
 It's all here, developed in the master branch and then automatically generated into gh-pages
 via GitHub Actions (since we use a custom plugin and want a downloadable zip of the result).
 
+Build and check changes in the official Nix environment, which CI also uses; see the
+[development guide](DEVELOPMENT.md#nix-environment). Install the git hooks with `hk install`
+inside `nix develop`, and make sure `hk check --all` passes. Run `nix flake check` when touching
+the flake, toolchain pins, or hk version.
+
 For anything that could need wider consensus, present the idea on the forum first.
 
 Try not to introduce spelling and grammar bugs.
@@ -28,7 +33,8 @@ Certain file format and action data is externalized into [Jekyll data files](htt
 
 Description `desc` field in both Actions and File formats takes Markdown, HTML, Liquid. The preferred syntax is **Markdown**. HTML and Liquid should be used sparingly, only when there's no Markdown equivalent.
 
-URLs should be canonical (start from website root, don't use `../`s), with `relurl` filter. This is to ensure that links in both online and offline versions of IESDP work properly.  
+URLs should be canonical (start from website root, don't use `../`s), with `relurl` filter. This is to ensure that links in both online and offline versions of IESDP work properly.
+
 One exception to this rule is linking anchors on the same page, they don't need `relurl`.
 
 - **Right**:

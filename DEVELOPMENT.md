@@ -1,211 +1,154 @@
 # Development setup and maintenance
 
 The [README](README.md) covers the everyday preview and validation commands.
-This guide adds platform setup, shell-specific toolchain installation,
-troubleshooting, and optional maintenance. Run project commands from the
-repository root unless stated otherwise.
+This guide covers the official Nix environment, git hooks and linters,
+reproducing CI locally, troubleshooting, setup without Nix, and maintenance. Run project commands from
+the repository root unless stated otherwise.
 
-## Platform prerequisites
+## Nix environment
 
-Use the exact Ruby version in [.ruby-version](.ruby-version). If you already have
-a Ruby version manager, keep using it. The examples below use
-[rbenv](https://github.com/rbenv/rbenv) and
-[ruby-build](https://github.com/rbenv/ruby-build) on Linux, macOS, and WSL.
+[flake.nix](flake.nix) defines the official toolchain for local development and
+CI. It has two inputs, both pinned by revision and content hash in
+[flake.lock](flake.lock): `nixpkgs` (the `nixos-26.05` release) for everything,
+and `nixpkgs-unstable`, used only for [hk](https://hk.jdx.dev), which the release
+does not package. Supported systems are `x86_64-linux`, `aarch64-linux`,
+`x86_64-darwin`, and `aarch64-darwin`. CI exercises `x86_64-linux`; the other
+systems are evaluated by `nix flake check` but are not run in CI. nixpkgs 26.05
+is the last release that supports `x86_64-darwin`, so Intel Macs lose support
+when the flake moves to a later nixpkgs release.
 
-### Linux
+The development shell provides:
 
-On Ubuntu or Debian, install the tools and libraries needed to compile Ruby and
-native gems:
+- Ruby from nixpkgs (`ruby_4_0`) with the RubyGems and Bundler that ship with it
+- Python 3 for `_tools/check-links.py`, and Git
+- hk and the linters it runs: `nixfmt`, `deadnix`, `actionlint`, `shellcheck`,
+  and `ruff` (see [Git hooks and linters](#git-hooks-and-linters))
+- a C/C++ compiler, Make, `pkg-config`, and the libraries native gems link against
+- `BUNDLE_PATH=vendor/bundle` and a UTF-8 locale. The shell also unsets
+  `RUBYLIB`, `RUBYOPT`, `GEM_HOME`, and `GEM_PATH` so a host Ruby setup cannot
+  leak in.
 
-```bash
-sudo apt update
-sudo apt install -y git curl build-essential autoconf bison pkg-config \
-  libssl-dev libyaml-dev zlib1g-dev libffi-dev libgmp-dev \
-  libreadline-dev libncurses-dev
-```
+Gems are not managed by Nix. Bundler installs them from [Gemfile.lock](Gemfile.lock)
+into the ignored `vendor/bundle` directory and verifies each against the
+lockfile's `CHECKSUMS`. The shell never touches the network on its own; it only
+prints a reminder when the git hooks are not installed.
 
-For other distributions, use ruby-build's
-[build environment guide](https://github.com/rbenv/ruby-build/wiki#suggested-build-environment).
-If rbenv and ruby-build are not already installed:
+### Install Nix
 
-```bash
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-mkdir -p ~/.rbenv/plugins
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-~/.rbenv/bin/rbenv init
-```
-
-Run the initializer from your usual interactive shell and open a fresh terminal.
-It supports Bash, Zsh, and Fish. To add Fish to an existing setup, run
-`~/.rbenv/bin/rbenv init fish`.
-
-### macOS
-
-Install Apple's Command Line Tools, complete the installer, then install
-[Homebrew](https://brew.sh/) if needed:
-
-```bash
-xcode-select --install
-```
-
-With Homebrew available in your shell:
-
-```bash
-brew install git rbenv ruby-build openssl@3 readline libyaml gmp autoconf pkgconf
-rbenv init
-```
-
-Open a fresh terminal. Use the version-manager Ruby rather than macOS's system
-Ruby. This applies to both Apple Silicon and Intel Macs.
-
-For Fish, initialize Homebrew in `~/.config/fish/config.fish`:
-
-```fish
-if test -x /opt/homebrew/bin/brew
-    /opt/homebrew/bin/brew shellenv fish | source
-else if test -x /usr/local/bin/brew
-    /usr/local/bin/brew shellenv fish | source
-end
-```
-
-Run that block in the current Fish terminal before the `brew install` command.
-`rbenv init` configures the shell it runs from; use `rbenv init fish` to add Fish
-to an existing setup. See Homebrew's
-[shell environment documentation](https://docs.brew.sh/Manpage#shellenv-shell-).
-
-### Windows
-
-**WSL2 with Ubuntu is the preferred setup.** In PowerShell as Administrator:
-
-```powershell
-wsl --install
-```
-
-Restart if prompted, finish Ubuntu's account setup, and follow the Linux steps
-inside Ubuntu. Keep the checkout in the Linux filesystem, such as `~/src/iesdp`.
-Use your normal Windows browser for the preview. See Microsoft's
-[WSL installation guide](https://learn.microsoft.com/en-us/windows/wsl/install).
-
-For native Windows, install [Git for Windows](https://gitforwindows.org/) and the
-**Ruby+Devkit** release matching `.ruby-version` from
-[RubyInstaller](https://rubyinstaller.org/downloads/), using its
-[archives](https://rubyinstaller.org/downloads/archives/) when needed. Choose the
-matching architecture, usually x64, and add Ruby to `PATH`. In a new PowerShell:
-
-```powershell
-ridk install
-ridk enable
-```
-
-Select **MSYS2 and MINGW development toolchain** when prompted. Run `ridk enable`
-in later terminals when compiling native gems. Jekyll does not officially
-support native Windows; consult its
-[Windows guide](https://jekyllrb.com/docs/installation/windows/) for troubleshooting.
-
-## Install the project toolchain
-
-If needed, clone the repository and enter its root:
-
-```text
-git clone https://github.com/Gibberlings3/iesdp.git
-cd iesdp
-```
-
-### Select Ruby
-
-With rbenv, install the version selected automatically by `.ruby-version`.
-
-**Bash / Zsh:**
-
-```bash
-rbenv install -s "$(cat .ruby-version)"
-ruby --version
-```
-
-**Fish:**
-
-```fish
-rbenv install -s (string trim < .ruby-version)
-ruby --version
-```
-
-On native Windows, confirm RubyInstaller supplied the required version:
-
-```powershell
-Get-Content .ruby-version
-ruby --version
-```
-
-### Install RubyGems, Bundler, and gems
-
-Read RubyGems from `.rubygems-version` and Bundler from `Gemfile.lock` so setup
-and CI use the same pins. Internet access is required for initial installation.
-
-**Bash / Zsh:**
-
-```bash
-rubygems_version=$(tr -d '\r\n' < .rubygems-version)
-bundler_version=$(ruby -e 'puts File.read("Gemfile.lock")[/^BUNDLED WITH\s+(\S+)/, 1]')
-gem update --system "$rubygems_version" --no-document
-gem install bundler --version "$bundler_version" --no-document
-```
-
-**Fish:**
-
-```fish
-set -l rubygems_version (string trim < .rubygems-version)
-set -l bundler_version (ruby -e 'puts File.read("Gemfile.lock")[/^BUNDLED WITH\s+(\S+)/, 1]')
-gem update --system "$rubygems_version" --no-document
-gem install bundler --version "$bundler_version" --no-document
-```
-
-**PowerShell:**
-
-```powershell
-$rubyGemsVersion = (Get-Content .rubygems-version -Raw).Trim()
-$bundlerVersion = [regex]::Match((Get-Content Gemfile.lock -Raw), '(?m)^BUNDLED WITH\s+(\S+)').Groups[1].Value
-gem update --system $rubyGemsVersion --no-document
-gem install bundler --version $bundlerVersion --no-document
-```
-
-Then, on every platform:
-
-```text
-bundle config set --local path vendor/bundle
-bundle install
-gem --version
-bundle --version
-bundle exec jekyll --version
-```
-
-Gems and local configuration live in the ignored `vendor/bundle` and `.bundle`
-directories. Use `bundle exec` for project commands and `bundle install` after
-pulling dependency changes. Review any lockfile platform additions on a new OS
-or architecture; reserve `bundle update` for intentional upgrades.
-
-## Verification and troubleshooting
-
-Before the README's full-build checks, verify installation with the lockfile
-frozen, as CI does.
-
-**Bash / Zsh / Fish:**
+Use the official multi-user installer on Linux, macOS, or WSL2 (see
+[the Nix download page](https://nixos.org/download/)):
 
 ```sh
-env BUNDLE_FROZEN=true bundle install
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
 ```
 
-**PowerShell:**
+Open a new terminal and enable flakes in `~/.config/nix/nix.conf`, or in
+`/etc/nix/nix.conf` for all users:
 
-```powershell
-$env:BUNDLE_FROZEN = "true"
+```text
+experimental-features = nix-command flakes
+```
+
+On NixOS, set `nix.settings.experimental-features = [ "nix-command" "flakes" ];`
+instead.
+
+**Windows:** install WSL2 with Ubuntu from an Administrator PowerShell
+(`wsl --install`), then follow the Linux steps inside Ubuntu. Keep the checkout
+in the Linux filesystem, such as `~/src/iesdp`, and use your normal Windows
+browser for the preview. See Microsoft's
+[WSL installation guide](https://learn.microsoft.com/en-us/windows/wsl/install).
+
+**NixOS hosts:** the precompiled `sass-embedded` gem ships a Dart runtime that
+expects a standard Linux dynamic loader. Enable `programs.nix-ld.enable = true;`
+in your NixOS configuration. Other Linux distributions, macOS, and WSL need nothing extra.
+
+### Enter the environment
+
+```sh
+nix develop          # interactive shell
 bundle install
-Remove-Item Env:BUNDLE_FROZEN
 ```
+
+To run a single command without an interactive shell, prefix it with
+`nix develop --command`, as CI does. [direnv](https://direnv.net/) users with
+[nix-direnv](https://github.com/nix-community/nix-direnv) can run `direnv allow`
+once; the checked-in [.envrc](.envrc) then loads the shell on `cd`. direnv is
+optional.
+
+## Git hooks and linters
+
+[hk.pkl](hk.pkl) configures [hk](https://hk.jdx.dev) git hooks and linters. All
+the tools come from the dev shell. Install the hooks once per clone, from inside
+`nix develop`:
+
+```sh
+hk install
+```
+
+The `pre-commit` hook then checks staged files and fixes what it can before each
+commit. It runs only for commits made from inside the dev shell (or a
+direnv-loaded directory): hk installs config-based hooks, which need Git 2.54 or
+later, and the linters exist only in the shell. The shell provides a recent
+enough Git.
+
+| Scope | Steps |
+| --- | --- |
+| Whole repository | merge-conflict markers, case conflicts, byte order marks, mixed line endings, executables without shebangs |
+| Tooling and project docs only | trailing whitespace, final newline |
+| `flake.nix` | `nixfmt`, `deadnix` |
+| `.github/workflows` | `actionlint` (which also runs `shellcheck` on `run:` blocks) |
+| Shell scripts | `shellcheck`; `cleaner` and `_tools/prepare-ops.sh` are historical one-off migration scripts and are excluded |
+| `_tools/check-links.py` | `ruff check`, `ruff format` |
+
+Whitespace rules skip content pages and data (`_data`, `_opcodes`, `files`, and
+others), where whitespace inside `<pre>` tables can be significant. "Tooling"
+means the paths listed in `hk.pkl`.
+
+Common commands:
+
+```sh
+hk check --all                            # what CI runs
+hk fix --all                              # apply available fixes
+hk check --all --no-fail-fast             # report every failing step
+HK_SKIP_STEPS=shellcheck git commit ...   # skip a step once
+hk validate                               # check hk.pkl itself
+```
+
+hk downloads its pinned Pkl schema package from the hk GitHub release the first
+time it runs, then caches it. The `hk-schema` flake check
+[verifies that package](#git-hooks-and-linters-updates).
+
+### Reproduce CI locally
+
+This is the sequence the [CI workflow](.github/workflows/updater.yml) runs, minus
+publishing:
+
+```sh
+nix flake check --print-build-logs
+nix develop --command sh -c 'command -v ruby gem bundle python3 hk; ruby --version; gem --version; bundle --version; hk --version'
+nix develop --command hk check --all
+nix develop --command env BUNDLE_FROZEN=true bundle install
+nix develop --command bundle exec jekyll clean
+nix develop --command bundle exec jekyll build --strict_front_matter --trace
+nix develop --command bundle exec ruby _tools/check-site.rb _site
+```
+
+`nix flake check` runs two checks:
+
+- `toolchain-pins` fails if `.ruby-version`, `.rubygems-version`, or the
+  `Gemfile.lock` `RUBY VERSION` and `BUNDLED WITH` entries differ from what the
+  locked Ruby provides.
+- `hk-schema` fails if the hk binary, the schema version in `hk.pkl`, and the
+  pinned schema package disagree. It also fails if the published package no
+  longer matches the hashes pinned in `flake.nix`.
+
+Formatting and linting of `flake.nix` run through hk (`hk check --all`). `nix fmt`
+formats it directly.
 
 Stop at any command failure. After a full build, serve the exact generated files
 without rebuilding:
 
-```text
+```sh
 bundle exec jekyll serve --host 127.0.0.1 --skip-initial-build --no-watch
 ```
 
@@ -213,10 +156,19 @@ Inspect navigation, action/opcode listings, offset tables, images, and deep
 links at <http://127.0.0.1:4000/iesdp/>, including a narrow browser window.
 Open `_site/index.htm` directly and follow nested links to check offline use.
 
+## Troubleshooting
+
 | Symptom | Action |
 | --- | --- |
-| Wrong Ruby version or gem permission errors | Check `ruby --version` and `rbenv version` in a fresh, initialized terminal. Install gems with the project Ruby without `sudo`. |
-| Native extension compilation fails | Check the platform prerequisites. Finish Command Line Tools installation on macOS; run `ridk enable` on native Windows. |
+| `experimental Nix feature 'nix-command' is disabled` or `'flakes' is disabled` | Enable flakes as described under [Install Nix](#install-nix), or pass `--extra-experimental-features 'nix-command flakes'`. |
+| Commits skip the hooks | Install them with `hk install` inside `nix develop`, and commit from inside the shell or a direnv-loaded directory. A system Git older than 2.54 ignores hk's config-based hooks. |
+| A hook step reports `command not found` | The commit ran outside the dev shell. Commit from inside `nix develop`. |
+| `hk-schema` check fails | hk, `hk.pkl`, and the pinned package disagree. Follow [Git hooks and linters updates](#git-hooks-and-linters-updates). |
+| hk cannot load `hk.pkl` while offline | The schema package is not cached yet. Run any hk command once with network access. |
+| `toolchain-pins` check fails | The text pins and `flake.lock` disagree. Follow [Toolchain updates](#toolchain-updates); do not edit only one side. |
+| Gem load errors or native extension mismatches after a Ruby update | Delete the stale gems with `rm -rf vendor/bundle`, then run `bundle install` again. |
+| `sass-embedded` fails to start on NixOS | Enable `programs.nix-ld` (see [Install Nix](#install-nix)). |
+| `check-site.rb` reports JSON/REXML version mismatches | Something set `RUBYLIB`; run inside `nix develop`, which clears it. |
 | Edits do not appear | Stop the preview, run `bundle exec jekyll clean`, and restart. Incremental tracking is incomplete for data and collections. |
 | File changes are not detected | Keep WSL checkouts in its Linux filesystem. Try the preview's `--force_polling` option if needed. |
 | Port 4000 is busy | Stop the other preview or use `--port 4001` and open `http://127.0.0.1:4001/iesdp/`. |
@@ -234,23 +186,94 @@ build before changing dependencies, then compare the new output with it:
 python3 _tools/check-links.py _site --baseline "/path/to/previous-build"
 ```
 
-On native Windows:
-
-```powershell
-py -3 _tools/check-links.py _site --baseline "C:\path\to\previous-build"
-```
-
 With a baseline, the command fails only on newly introduced issues. Without
 `--baseline`, it reports all current issues and fails if any are found.
 
-## Manual dependency maintenance
+## Setup without Nix
 
-Dependencies and toolchain pins are updated manually. CI validates pushes, pull
-requests, and manual runs; it does not schedule audits or update dependencies.
+This path is not supported or tested in CI. Use it only if you cannot use Nix.
+You must match the same pins: the Ruby version in [.ruby-version](.ruby-version),
+RubyGems from [.rubygems-version](.rubygems-version), and the Bundler version
+under `BUNDLED WITH` in [Gemfile.lock](Gemfile.lock). Native gems also need a
+compiler and Make.
+
+- **Linux / WSL / macOS:** use a Ruby version manager such as
+  [rbenv](https://github.com/rbenv/rbenv) with
+  [ruby-build](https://github.com/rbenv/ruby-build), and install that tool's
+  [build prerequisites](https://github.com/rbenv/ruby-build/wiki#suggested-build-environment).
+  Run `rbenv install -s "$(cat .ruby-version)"`.
+- **Native Windows:** install the **Ruby+Devkit** release matching
+  `.ruby-version` from [RubyInstaller](https://rubyinstaller.org/downloads/)
+  (see its [archives](https://rubyinstaller.org/downloads/archives/)), then run
+  `ridk install` and `ridk enable`. Jekyll does not officially support native
+  Windows; see its [Windows guide](https://jekyllrb.com/docs/installation/windows/).
+
+Then install the pinned RubyGems and Bundler, and the gems:
+
+```sh
+gem update --system "$(tr -d '\r\n' < .rubygems-version)" --no-document
+gem install bundler --no-document --version "$(ruby -e 'puts File.read("Gemfile.lock")[/^BUNDLED WITH\s+(\S+)/, 1]')"
+bundle config set --local path vendor/bundle
+bundle install
+```
+
+In PowerShell, read the pins with `(Get-Content .rubygems-version -Raw).Trim()`
+and `[regex]::Match((Get-Content Gemfile.lock -Raw), '(?m)^BUNDLED WITH\s+(\S+)').Groups[1].Value`.
+
+## Dependency and toolchain maintenance
+
+Dependencies, toolchain pins, and linters are updated manually, inside `nix develop`. CI
+validates pushes, pull requests, and manual runs; it does not schedule audits or
+update dependencies.
+
+### Toolchain updates
+
+`flake.lock` is the source of truth for Ruby, RubyGems, and Bundler. To update:
+
+1. `nix flake update nixpkgs`. To move to a newer release, first edit the
+   `nixpkgs` branch and, if needed, the `ruby_4_0` attribute in `flake.nix`.
+2. Read the new versions with
+   `nix develop --command sh -c 'ruby -e "puts RUBY_VERSION"; gem --version; bundle --version'`.
+3. Write the Ruby version to `.ruby-version` and the RubyGems version to
+   `.rubygems-version`.
+4. `rm -rf vendor/bundle`, then inside `nix develop` run `bundle update --ruby`
+   and `bundle update --bundler="<new Bundler version>"`. Then run
+   `bundle lock --add-checksums` and `bundle install`.
+5. `nix flake check` and the full [CI sequence](#reproduce-ci-locally), plus a
+   [link comparison](#optional-link-comparison) against a build from before the update.
+
+In the pull request, review the `flake.lock` diff (`rev`, `narHash`,
+`lastModified`). Check that the `Gemfile.lock` diff changes only the toolchain
+entries unless you also meant to update gems.
+
+### Git hooks and linters updates
+
+hk comes from `nixpkgs-unstable`, and `hk.pkl` must amend the schema package for
+the same hk version:
+
+1. `nix flake update nixpkgs-unstable`, then read the new version with
+   `nix develop --command hk --version`.
+2. In `hk.pkl`, change both `hk@<version>` package URIs and `min_hk_version`.
+3. In `flake.nix`, update `hkSchema.version` and its two hashes:
+
+   ```sh
+   v=<version>
+   nix store prefetch-file --json "https://github.com/jdx/hk/releases/download/v$v/hk@$v" | jq -r .hash
+   nix store prefetch-file --json "https://github.com/jdx/hk/releases/download/v$v/hk@$v.zip" | jq -r .hash
+   ```
+
+4. `nix flake check`, then `hk check --all`. Review new findings from updated
+   linters (`nixfmt`, `ruff`, and others) before you accept fixes.
+
+hk 2.8.1's embedded Pkl evaluator cannot verify `::sha256:` checksums in package
+URIs, so `hk.pkl` pins the version only, and `hk-schema` verifies the package.
+Revisit this when moving to a newer hk.
+
+### Gem updates
 
 For an intentional gem refresh:
 
-```text
+```sh
 bundle update
 bundle lock --add-checksums
 bundle outdated --strict
@@ -258,16 +281,14 @@ bundle outdated --strict
 
 Run the full build, documentation checks, link comparison, and browser checks.
 `bundle outdated` without `--strict` also lists releases outside current
-constraints; review upstream compatibility before widening them.
+constraints; review upstream compatibility before widening them. The lockfile
+lists platforms for every supported system (`x86_64-linux`,
+`aarch64-linux-gnu`, `x86_64-darwin`, `arm64-darwin`, and the generic `ruby`
+platform). Keep them when updating, so precompiled native gems resolve everywhere.
 
 An optional local audit checks locked gems against current advisories. It needs
 Git and network access to update its advisory database:
 
-```text
+```sh
 bundle exec bundle-audit check --update
 ```
-
-For Ruby or RubyGems updates, edit `.ruby-version` or `.rubygems-version`, install
-that toolchain, and run `bundle update --ruby` with the selected interpreter.
-For Bundler, use `bundle update --bundler`. Repeat installation and validation
-after any toolchain update; CI reads the checked-in pins.

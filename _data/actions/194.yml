@@ -1,5 +1,7 @@
 bg2: 1
 bgee: 1
+iwd1: 1
+iwd2: 1
 pstee: 1
 n: 194
 name: ChangeAnimation
@@ -7,4 +9,43 @@ params:
   - name: ResRef
     type: s
 desc: |-
-  This action will change the animation of the active creature to match that of the specified CRE file. If the active creature is in the party, the action will create the specified creature.
+  {%- include act194-base.html %}
+  <table style="width: auto">
+    {%- include act194-fields-header.html %}
+    <tr>
+      <td>{% assign text = "<code>ARE Actor [+0x24]</code>" -%} {%- assign anchor = "Actor_Destination_X" -%} {%- include are_link.html %}</td>
+      <td>Destination X coordinate</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{% assign text = "<code>ARE Actor [+0x26]</code>" -%} {%- assign anchor = "Actor_Destination_Y" -%} {%- include are_link.html %}</td>
+      <td>Destination Y coordinate</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{% assign text = "<code>ARE Actor [+0x34]</code>" -%} {%- assign anchor = "Actor_Orientation" -%} {%- include are_link.html %}</td>
+      <td>Actor orientation</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{% assign text = "<code>ARE Actor [+0x38]</code>" -%} {%- assign anchor = "Actor_Removal_Timer" -%} {%- include are_link.html %}</td>
+      <td>Actor removal timer</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{% assign text = "<code>ARE Actor [+0x3C]</code>" -%} {%- assign anchor = "Movement_Restriction_Distance" -%} {%- include are_link.html %}</td>
+      <td>Movement restriction distance</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{% assign text = "<code>ARE Actor [+0x3E]</code>" -%} {%- assign anchor = "Movement_Restriction_Distance_Move" -%} {%- include are_link.html %}</td>
+      <td>Movement restriction distance (move to object)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{% assign text = "<code>ARE Actor [+0x40]</code>" -%} {%- assign anchor = "Actor_Appearance_Schedule" -%} {%- include are_link.html %}</td>
+      <td>Actor appearance schedule</td>
+      <td></td>
+    </tr>
+    {%- include act194-common-fields.html %}
+  </table>

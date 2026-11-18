@@ -1,0 +1,23 @@
+
+{%- include relurl.html -%}
+
+{%- if anchor -%}
+	{%- assign anchor_suffix = "#" | append: anchor -%}
+{%- else -%}
+	{%- assign anchor_suffix = "" -%}
+{%- endif -%}
+
+{%- assign anchor = nil -%}
+
+{%- case game -%}
+	{%- when "bg1", "bg2", "bgee", "pstee" -%}
+		{%- assign cre_page = "cre_v1.htm" -%}
+	{%- when "iwd1" -%}
+		{%- assign cre_page = "cre_v9.htm" -%}
+	{%- when "iwd2" -%}
+		{%- assign cre_page = "cre_v2.2.htm" -%}
+	{%- when "pst" -%}
+		{%- assign cre_page = "cre_v1.2.htm" -%}
+{%- endcase -%}
+
+<a href="{{ '/file_formats/ie_formats/' | prepend: relurl | append: cre_page | append: anchor_suffix }}">{{ text }}</a>

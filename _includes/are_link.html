@@ -1,0 +1,19 @@
+
+{%- include relurl.html -%}
+
+{%- if anchor -%}
+	{%- assign anchor_suffix = "#" | append: anchor -%}
+{%- else -%}
+	{%- assign anchor_suffix = "" -%}
+{%- endif -%}
+
+{%- assign anchor = nil -%}
+
+{%- case game -%}
+	{%- when "bg1", "bg2", "bgee", "iwd1", "pst", "pstee" -%}
+		{%- assign are_page = "are_v1.htm" -%}
+	{%- when "iwd2" -%}
+		{%- assign are_page = "are_v9.1.htm" -%}
+{%- endcase -%}
+
+<a href="{{ '/file_formats/ie_formats/' | prepend: relurl | append: are_page | append: anchor_suffix }}">{{ text }}</a>

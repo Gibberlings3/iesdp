@@ -6220,10 +6220,10 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
     
     Variants:
     <span class="avariants">
-        [<span class="avariant_current">BG1</span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/totlactions.htm#194" title="IWD1 version is identical to this one">IWD1</a></span>/<span class="avariant_same"><a href="/iesdp/scripting/actions/iwd2actions.htm#194" title="IWD2 version is identical to this one">IWD2</a></span>]
+        [<span class="avariant_current">BG1</span>]
       </span>
     <span class="avariants">
-        [<a href="/iesdp/scripting/actions/bg2actions.htm#194" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/bgeeactions.htm#194" title="BGEE version is different from this one">BGEE</a>/<a href="/iesdp/scripting/actions/psteeactions.htm#194" title="PSTEE version is different from this one">PSTEE</a>]
+        [<a href="/iesdp/scripting/actions/bg2actions.htm#194" title="BG2 version is different from this one">BG2</a>/<a href="/iesdp/scripting/actions/bgeeactions.htm#194" title="BGEE version is different from this one">BGEE</a>/<a href="/iesdp/scripting/actions/totlactions.htm#194" title="IWD1 version is different from this one">IWD1</a>/<a href="/iesdp/scripting/actions/iwd2actions.htm#194" title="IWD2 version is different from this one">IWD2</a>/<a href="/iesdp/scripting/actions/psteeactions.htm#194" title="PSTEE version is different from this one">PSTEE</a>]
       </span>
     
       
@@ -6235,7 +6235,26 @@ Scripts can handle <code class="language-plaintext highlighter-rouge">RES</code>
     
 
   </span></div>
-    <div class="indent1 action_body"><p></p><p>This action will change the animation of the active creature to match that of the specified CRE file.</p>
+    <div class="indent1 action_body"><p></p><p>This action spawns a new creature in the same position as the current sprite. The script runner is removed from the area (if it is not a core party member), giving the illusion that the current sprite changed its animation to that of the new creature.</p>
+
+<p>The spawned creature copies the working value of the following fields from the script runner:</p>
+<table style="width: auto"><thead>
+  <tr>
+    <th>Field</th>
+    <th>Name</th>
+    <th>Notes</th>
+  </tr>
+</thead><tr>
+  <td><a href="../../file_formats/ie_formats/cre_v1.htm#Current_Hit_Points"><code>CRE [+0x24]</code></a></td>
+  <td>Current hit points</td>
+  <td></td>
+</tr>
+<tr>
+  <td><code>CRE Effects</code></td>
+  <td><code>&lt;All creature effects&gt;</code></td>
+  <td>Excludes effects with <code>Timing mode == 2 (Instant/While equipped)</code>.</td>
+</tr>
+</table>
 
     </div>
   
